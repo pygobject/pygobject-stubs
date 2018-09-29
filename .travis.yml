@@ -7,7 +7,9 @@ matrix:
       python: "3.7"
 
 install:
-  - python3 -m pip install flake8 flake8-pyi
+  - python3 -m pip install flake8 flake8-pyi mypy
 
 script:
   - python3 -m flake8
+  - python3 -m pip install --no-deps .
+  - python3 -m mypy examples

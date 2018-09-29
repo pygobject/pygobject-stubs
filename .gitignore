@@ -1,0 +1,6 @@
+*.pyc
+.mypy_cache
+MANIFEST
+build
+dist
+*.egg-info
