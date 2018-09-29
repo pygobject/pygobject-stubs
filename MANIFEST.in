@@ -1,1 +1,2 @@
 include examples/*.py
+include setup.cfg
