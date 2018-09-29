@@ -1,0 +1,13 @@
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      sudo: required
+      language: python
+      python: "3.7"
+
+install:
+  - python3 -m pip install flake8 flake8-pyi
+
+script:
+  - python3 -m flake8
