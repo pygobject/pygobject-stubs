@@ -2742,6 +2742,20 @@ class GLContext:
     def set_use_es(*args, **kwargs): ...
     
 
+class Geometry:
+    base_height: int
+    base_width: int
+    height_inc: int
+    max_aspect: float
+    max_height: int
+    max_width: int
+    min_aspect: float
+    min_height: int
+    min_width: int
+    width_inc: int
+    win_gravity: Gravity
+
+
 class GLTexture:
     def new(*args, **kwargs): ...
     def release(*args, **kwargs): ...
