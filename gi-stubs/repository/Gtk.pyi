@@ -481,6 +481,9 @@ def true(*args, **kwargs): ...
 
 
 class AboutDialog(Dialog):
+    """
+    The Gtk.AboutDialog offers a simple way to display information about a program like its logo, name, copyright, website and license.
+    """
     def add_credit_section(self, section_name: str, people: list[str]) -> None: ...
     def get_artists(*args, **kwargs): ...
     def get_authors(*args, **kwargs): ...
@@ -940,6 +943,9 @@ class Border:
     
 
 class Box(Orientable, Container):
+    """
+    The Gtk.Box widget arranges child widgets into a single row or column, depending upon the value of its Gtk.Orientable :orientation property.
+    """
     container = ...
 
     def __init__(self, orientation: Optional[Orientation] = None, spacing: Optional[int] = None) -> None: ...
@@ -1017,6 +1023,9 @@ class Builder(GObject.Object):
     
 
 class Button(Actionable, Activatable, Bin):
+    """
+    The Gtk.Button widget is generally used to trigger a callback function that is called when the button is pressed.
+    """
     bin = ...
 
     def __init__(self, label: Optional[str] = ...) -> None: ...
@@ -1639,6 +1648,9 @@ class EditableInterface:
     
 
 class Entry(Widget, CellEditable, Editable):
+    """
+    The Gtk.Entry widget is a single line text entry widget.
+    """
     def get_activates_default(*args, **kwargs): ...
     def get_alignment(*args, **kwargs): ...
     def get_attributes(*args, **kwargs): ...
@@ -2234,6 +2246,9 @@ class Gradient:
     
 
 class Grid(Container, Orientable):
+    """
+    Gtk.Grid is a container which arranges its child widgets in rows and columns, with arbitrary positions and horizontal/vertical spans.
+    """
     container = ...
 
     def __init__(self, row_spacing: Optional[int] = None, column_spacing: Optional[int] = None) -> None: ...
@@ -2666,6 +2681,9 @@ class Invisible:
 
 
 class Label(Misc):
+    """
+    The Gtk.Label widget displays a small amount of text.
+    """
     misc = ...
 
     def __init__(self, label: Optional[str] = None) -> None: ...
