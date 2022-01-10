@@ -2608,7 +2608,7 @@ class Image(Widget):
     def set_pixel_size(*args, **kwargs): ...
     
 
-class ImageMenuItem:
+class ImageMenuItem(MenuItem):
     menu_item = ...
     
     def get_always_show_image(*args, **kwargs): ...
@@ -3501,7 +3501,7 @@ class RadioButton:
     def do_group_changed(self, *args, **kwargs): ...
     
 
-class RadioMenuItem:
+class RadioMenuItem(CheckMenuItem):
     check_menu_item = ...
     
     def get_group(*args, **kwargs): ...
@@ -3912,7 +3912,7 @@ class Separator(Orientable, Widget):
     def new(*args, **kwargs): ...
     
 
-class SeparatorMenuItem:
+class SeparatorMenuItem(MenuItem):
     menu_item = ...
     
 
@@ -4398,7 +4398,7 @@ class TargetPair:
     target = ...
     
 
-class TearoffMenuItem:
+class TearoffMenuItem(MenuItem):
     menu_item = ...
     
 
