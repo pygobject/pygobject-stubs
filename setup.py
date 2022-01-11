@@ -12,6 +12,12 @@ setup(
     author="Christoph Reiter",
     author_email="reiter.christoph@gmail.com",
     version="0.0.5",
+    classifiers=[
+        'Intended Audience :: Developers',
+        "Programming Language :: Python",
+        'License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)',
+        'Operating System :: OS Independent',
+    ],
     package_data={"gi-stubs": ["*.pyi", "*/*.pyi"]},
     packages=["gi-stubs"],
     install_requires=["PyGObject"],
