@@ -11,7 +11,7 @@ setup(
     url="https://github.com/pygobject/pygobject-stubs",
     author="Christoph Reiter",
     author_email="reiter.christoph@gmail.com",
-    version="0.0.4",
+    version="0.0.5",
     package_data={"gi-stubs": ["*.pyi", "*/*.pyi"]},
     packages=["gi-stubs"],
     install_requires=["PyGObject"],
