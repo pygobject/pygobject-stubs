@@ -17,7 +17,6 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
 import cairo
-import Gtk
 
 BINARY_AGE: int = ...
 INPUT_ERROR: int = ...
