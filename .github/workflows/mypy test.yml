@@ -1,6 +1,6 @@
 name: Test with mypy
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   mypy:
