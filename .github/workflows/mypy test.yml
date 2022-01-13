@@ -12,7 +12,7 @@ jobs:
           python-version: 3.7.12
       - name: Checkout
         uses: actions/checkout@v1
-      - run: pip install mypy
-      - run: python3 -m pip install --no-deps .
+      - name: Install Dependencies
+        run: pip install mypy && pip install --no-deps .
       - name: run mypy
         run: mypy examples
