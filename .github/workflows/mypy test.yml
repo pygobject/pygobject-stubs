@@ -1,0 +1,21 @@
+name: Test with mypy
+
+on: [push, pull_request]
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7.12
+
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install Dependencies
+        run: pip install mypy && pip install --no-deps .
+
+      - name: Run mypy
+        run: mypy examples

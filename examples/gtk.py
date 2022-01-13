@@ -1,4 +1,4 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk, GdkPixbuf, Gio, Atk, Gst
 
 Gtk.Button
 
@@ -9,3 +9,15 @@ Gtk.MINOR_VERSION
 Gtk.DirectionType
 
 Gtk.Actionable
+
+Gtk.AboutDialog
+
+GdkPixbuf.Pixbuf
+
+Gdk.Atom
+
+Gio.Action
+
+Gst.Bin
+
+Atk.Component
