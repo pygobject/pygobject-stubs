@@ -787,6 +787,15 @@ class AppChooserWidget(AppChooser, Box):
 class Application(Gio.Application):
     parent = ...
 
+    class Props:
+        active_window: Window
+        app_menu: Gio.MenuModel
+        menubar: Gio.MenuModel
+        register_session: bool
+        screensaver_active: bool
+
+    props: Props
+
     def __init__(self, application_id: Optional[str] = None, flags: Optional[Gio.ApplicationFlags] = None) -> None: ...
     def add_accelerator(*args, **kwargs): ...
     def add_window(*args, **kwargs): ...
