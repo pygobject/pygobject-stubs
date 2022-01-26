@@ -11,7 +11,7 @@ setup(
     url="https://github.com/pygobject/pygobject-stubs",
     author="Christoph Reiter",
     author_email="reiter.christoph@gmail.com",
-    version="0.0.6",
+    version="0.0.7",
     classifiers=[
         'Intended Audience :: Developers',
         "Programming Language :: Python",
