@@ -5900,7 +5900,75 @@ class WidgetPath:
 
 class Window(Bin):
     bin = ...
-    
+
+    class Props:
+        accept_focus: bool
+        application: Application
+        attached_to: Widget
+        decorated: bool
+        default_height: int
+        default_width: int
+        deletable: bool
+        destroy_with_parent: bool
+        focus_on_map: bool
+        focus_visible: bool
+        gravity: Gdk.Gravity
+        has_resize_grip: bool
+        has_toplevel_focus: bool
+        hide_titlebar_when_maximized: bool
+        icon: GdkPixbuf.Pixbuf
+        icon_name: str
+        is_active: bool
+        is_maximized: bool
+        mnemonics_visible: bool
+        modal: bool
+        resizeable: bool
+        resize_grip_visible: bool
+        role: str
+        screen: Gdk.Screen
+        skip_pager_hint: bool
+        skip_taskbar_hint: bool
+        startup_id: str
+        title: str
+        transient_for: Window
+        type: WindowType
+        type_hint: Gdk.WindowTypeHint
+        urgency_hint: bool
+        window_position: WindowPosition
+
+    props: Props
+
+    def __init__(self,
+                 accept_focus: bool = ...,
+                 application: Application = ...,
+                 attached_to: Widget = ...,
+                 decorated: bool = ...,
+                 default_height: int = ...,
+                 default_width: int = ...,
+                 deletable: bool = ...,
+                 destroy_with_parent: bool = ...,
+                 focus_on_map: bool = ...,
+                 focus_visible: bool = ...,
+                 gravity: Gdk.Gravity = ...,
+                 has_resize_grip: bool = ...,
+                 hide_titlebar_when_maximized: bool = ...,
+                 icon: GdkPixbuf.Pixbuf = ...,
+                 icon_name: str = ...,
+                 mnemonics_visible: bool = ...,
+                 modal: bool = ...,
+                 resizeable: bool = ...,
+                 role: str = ...,
+                 screen: Gdk.Screen = ...,
+                 skip_pager_hint: bool = ...,
+                 skip_taskbar_hint: bool = ...,
+                 startup_id: str = ...,
+                 title: str = ...,
+                 transient_for: Window = ...,
+                 type: WindowType = ...,
+                 type_hint: Gdk.WindowTypeHint = ...,
+                 urgency_hint: bool = ...,
+                 window_position: WindowPosition = ...) -> None: ...
+
     def activate_default(self) -> bool: ...
     def activate_focus(self) -> bool: ...
     def activate_key(self, event: Gdk.EventKey) -> bool: ...
