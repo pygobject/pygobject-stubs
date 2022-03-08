@@ -1,4 +1,11 @@
+import gi
 from gi.repository import Gtk, Gdk, GdkPixbuf, Gio, Atk, Gst
+
+gi.__version__
+
+gi.require_version
+
+gi.require_versions
 
 Gtk.Button
 
