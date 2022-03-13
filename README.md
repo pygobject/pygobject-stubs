@@ -1,6 +1,6 @@
 # Typing Stubs for PyGObject
 
-[![image](https://travis-ci.org/pygobject/pygobject-stubs.svg?branch=master)](https://travis-ci.org/pygobject/pygobject-stubs)
+[![Python Tests](https://github.com/pygobject/pygobject-stubs/actions/workflows/python-tests.yml/badge.svg)](https://github.com/pygobject/pygobject-stubs/actions/workflows/python-tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/pygobject-stubs)](https://pypi.org/project/PyGObject-stubs)
 
 ## Installation
