@@ -13,3 +13,7 @@ pip install PyGObject-stubs
 Check the `tools` folder
 
 Usage: `python generate.py -h`
+
+## Contributing
+
+[Guide](./CONTRIBUTING.md)
