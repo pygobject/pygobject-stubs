@@ -4,7 +4,8 @@
 [![PyPI](https://img.shields.io/pypi/v/pygobject-stubs)](https://pypi.org/project/PyGObject-stubs)
 
 ## Installation
-```
+
+```bash
 pip install PyGObject-stubs
 ```
 

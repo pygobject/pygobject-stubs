@@ -1,3 +1,5 @@
+# Contributing
+
 ## Rules for a great git commit message style
 
 - Separate subject from body with a blank line

@@ -1,5 +1,5 @@
 import gi
-from gi.repository import Gtk, Gdk, GdkPixbuf, Gio, Atk, Gst
+from gi.repository import Atk, Gdk, GdkPixbuf, Gio, Gst, Gtk
 
 gi.__version__
 
