@@ -11,8 +11,8 @@ import re
 from types import ModuleType
 from typing import Any, Callable, Type, Union
 
-import gi  # type: ignore[import]
-from gi.repository import GObject  # type: ignore[import]
+import gi
+from gi.repository import GObject
 
 _identifier_re = r"^[A-Za-z_]\w*$"
 
@@ -165,7 +165,7 @@ def find_methods(obj: type[Any]) -> list[str]:
         other_attrs.update(dir(obj))
 
     obj_attrs = all_attrs - other_attrs
-    return sorted(list(obj_attrs))
+    return sorted(obj_attrs)
 
 
 def get_gname(obj: type[Any]) -> str | None:
