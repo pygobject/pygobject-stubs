@@ -17,7 +17,7 @@ Usage:
 $ python tools/generate.py -h
 usage: generate.py [-h] module version
 
-Generate module stubs Usage: generate.py Gdk 3.0 > Gdk.py
+Generate module stubs Usage: generate.py Gdk 3.0 > Gdk.pyi
 
 positional arguments:
   module      Gdk, Gtk, ...
