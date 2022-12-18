@@ -1,3 +1,9 @@
+# 2.1.0 (18 Dec 2022)
+
+## Changes
+
+* Port to pyproject.toml
+
 # 2.0.0 (18 Dec 2022)
 
 ## Changes
