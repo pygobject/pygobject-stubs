@@ -21,6 +21,7 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 
 ObjectT = Union[ModuleType, Type[Any]]
 
+
 def build(parent: ObjectT) -> str:
     return _gi_build_stub(parent, dir(parent))
 
@@ -98,7 +99,7 @@ def _gi_build_stub(parent: ObjectT, childs: list[str]) -> str:
         ret += "\n"
 
     for name in sorted(functions):
-        if name.startswith('_'):
+        if name.startswith("_"):
             continue
         ret += f"def {name}(*args, **kwargs): ...\n"
 
@@ -106,7 +107,7 @@ def _gi_build_stub(parent: ObjectT, childs: list[str]) -> str:
         ret += "\n"
 
     for name in sorted(methods):
-        if name.startswith('_'):
+        if name.startswith("_"):
             continue
         ret += f"def {name}(self, *args, **kwargs): ...\n"
 
@@ -124,33 +125,32 @@ def _gi_build_stub(parent: ObjectT, childs: list[str]) -> str:
             ret += "    " + line + "\n"
         ret += "\n"
 
-    for name, obj in sorted(flags. items()):
-        base = 'GObject.GFlags'
+    for name, obj in sorted(flags.items()):
+        base = "GObject.GFlags"
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
-            if not key.startswith('__'):
+            if not key.startswith("__"):
                 ret += f"    {key} = ...\n"
-        ret += '\n'
+        ret += "\n"
 
     for name, obj in sorted(enums.items()):
-        base = 'GObject.GEnum'
+        base = "GObject.GEnum"
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
-            if not key.startswith('__'):
+            if not key.startswith("__"):
                 ret += f"    {key} = ...\n"
-        ret += '\n'
+        ret += "\n"
     return ret
 
 
-
 def is_valid_class(name: str) -> bool:
-    if 'Accessible' in name:
+    if "Accessible" in name:
         return False
-    if name.endswith('Private'):
+    if name.endswith("Private"):
         return False
-    if name.endswith('Class'):
+    if name.endswith("Class"):
         return False
-    if name.endswith('Iface'):
+    if name.endswith("Iface"):
         return False
     return True
 
@@ -172,21 +172,19 @@ def find_methods(obj: Type[Any]) -> list[str]:
 
 
 def get_gname(obj: Type[Any]) -> Optional[str]:
-    if not hasattr(obj, '__gtype__'):
+    if not hasattr(obj, "__gtype__"):
         return None
     return obj.__gtype__.name  # type: ignore
 
 
-description = 'Generate module stubs\n\nUsage: generate.py Gdk 3.0 > Gdk.py'
+description = "Generate module stubs\n\nUsage: generate.py Gdk 3.0 > Gdk.py"
 
 parser = argparse.ArgumentParser(description=description)
-parser.add_argument('module', type=str,
-                    help='Gdk, Gtk, ...')
-parser.add_argument('version', type=str,
-                    help='3.0, 4.0, ...')
+parser.add_argument("module", type=str, help="Gdk, Gtk, ...")
+parser.add_argument("version", type=str, help="3.0, 4.0, ...")
 
 args = parser.parse_args()
 
 gi.require_version(args.module, args.version)
-module = importlib.import_module(f'.{args.module}', 'gi.repository')
+module = importlib.import_module(f".{args.module}", "gi.repository")
 print(build(module))
