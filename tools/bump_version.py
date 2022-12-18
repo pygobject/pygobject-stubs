@@ -9,14 +9,14 @@ import sys
 REPO_DIR = Path(__file__).resolve().parent.parent
 
 
-SETUP_CFG = REPO_DIR / "setup.cfg"
+PYPROJECT_TOML = REPO_DIR / "pyproject.toml"
 CHANGELOG = REPO_DIR / "CHANGELOG.md"
 
-VERSION_RX = r"version = (\d+\.\d+\.\d+)"
+VERSION_RX = r"version = \"(\d+\.\d+\.\d+)"
 
 
 def get_current_version() -> str:
-    with SETUP_CFG.open("r") as f:
+    with PYPROJECT_TOML.open("r") as f:
         content = f.read()
 
     match = re.search(VERSION_RX, content)
@@ -25,13 +25,13 @@ def get_current_version() -> str:
     return match[1]
 
 
-def bump_setup_cfg(current_version: str, new_version: str) -> None:
-    with SETUP_CFG.open("r", encoding="utf8") as f:
+def bump_pyproject_toml(current_version: str, new_version: str) -> None:
+    with PYPROJECT_TOML.open("r", encoding="utf8") as f:
         content = f.read()
 
     content = content.replace(current_version, new_version, 1)
 
-    with SETUP_CFG.open("w", encoding="utf8") as f:
+    with PYPROJECT_TOML.open("w", encoding="utf8") as f:
         f.write(content)
 
 
@@ -58,5 +58,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     current_version = get_current_version()
-    bump_setup_cfg(current_version, args.version)
+    bump_pyproject_toml(current_version, args.version)
     make_changelog(args.version)
