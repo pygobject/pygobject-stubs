@@ -32,7 +32,7 @@ homepage = "https://github.com/pygobject/pygobject-stubs"
 repository = "https://github.com/pygobject/pygobject-stubs"
 
 [tool.setuptools.packages.find]
-where = ["gi-stubs"]
+where = ["src"]
 
 [tool.setuptools.package-data]
 "*" = ["*.pyi"]
