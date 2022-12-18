@@ -16,8 +16,14 @@ currently imported under the namespace `Gtk` only stubs for one can be installed
 You need to decide this at install time with setting the ENV var
 `PYGOBJECT_STUB_CONFIG`.
 
+If you install from pypi the most current version of a library is installed
+by default without any further configuration needed. 
+
+If you want older versions installed, currently you need to install from git
+and specify them.
+
 Example:
-`PYGOBJECT_STUB_CONFIG=Gtk4,Soup3 pip install .`
+`PYGOBJECT_STUB_CONFIG=Gtk3,Soup2 pip install git+https://github.com/pygobject/pygobject-stubs.git`
 
 ## Contributing
 
