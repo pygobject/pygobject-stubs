@@ -1,6 +1,41 @@
 [build-system]
-requires = ["wheel", "setuptools"]
+requires = ["setuptools >= 65.0.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyGObject-stubs"
+version = "2.0.0"
+description = "Typing stubs for PyGObject"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "LGPL-2.1"}
+authors = [
+  {email = "reiter.christoph@gmail.com"},
+  {name = "Christoph Reiter"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "black",
+    "PyGObject",
+]
+
+[project.urls]
+homepage = "https://github.com/pygobject/pygobject-stubs"
+repository = "https://github.com/pygobject/pygobject-stubs"
+
+[tool.setuptools.packages.find]
+where = ["gi-stubs"]
+
+[tool.setuptools.package-data]
+"*" = ["*.pyi"]
 
 [tool.black]
 line-length = 88
