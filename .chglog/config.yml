@@ -1,0 +1,39 @@
+style: gitlab
+template: CHANGELOG.tpl.md
+info:
+  title: CHANGELOG
+  repository_url: https://dev.gajim.org/gajim/gajim
+options:
+  commits:
+    filters:
+      Type:
+        - typing
+        - imprv
+        - change
+        - fix
+  commit_groups:
+    sort_by: Custom
+    title_order:
+      - typing
+      - change
+      - typing
+      - fix
+    title_maps:
+      typing: Typing
+      imprv: Improvements
+      change: Change
+      fix: Bug Fixes
+  header:
+    pattern: "^(\\w*)\\:\\s(.*)$"
+    pattern_maps:
+      - Type
+      - Subject
+  issues:
+    prefix:
+      - "#"
+  refs:
+    actions:
+      - Fixes
+  notes:
+    keywords:
+      - NOTES
