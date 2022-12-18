@@ -18,7 +18,7 @@ jobs:
         run: |
           pip install -U pip
           sudo apt install libgirepository1.0-dev
-          PYGOBJECT_STUB_CONFIG=Gtk3 pip install '.[dev]'
+          pip install '.[dev]'
 
       - name: Run mypy
         run: mypy examples
