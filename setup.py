@@ -17,7 +17,7 @@ def _get_lib_config() -> List[str]:
 
 class build(build_py):
     def _copy_multi_version_stubs(self) -> None:
-        package_dir = Path(self.build_lib) / "gi-stubs"
+        package_dir = Path(self.build_lib)
         src_dir = package_dir / "__multi_version_stubs"
         dst_dir = package_dir / "repository"
 
