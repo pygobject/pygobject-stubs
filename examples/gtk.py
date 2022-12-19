@@ -21,7 +21,7 @@ Gtk.AboutDialog
 
 GdkPixbuf.Pixbuf
 
-Gdk.Atom
+Gdk.AppLaunchContext
 
 Gio.Action
 
