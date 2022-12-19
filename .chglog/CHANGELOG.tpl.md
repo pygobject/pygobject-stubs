@@ -2,7 +2,7 @@
 # {{ .Tag.Name }} ({{ datetime "02 Jan 2006" .Tag.Date }})
 
 {{ range .CommitGroups -}}
-{{ if .Title }}  ## {{ .Title }}{{end}}
+{{ if .Title }}## {{ .Title }}{{end}}
 
 {{ range .Commits -}}
 {{ if .Subject }}* {{ .Subject }}{{end}}{{if .Refs}} ({{range .Refs}}#{{.Ref}}{{end}}){{end}}
