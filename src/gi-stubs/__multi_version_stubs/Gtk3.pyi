@@ -1778,13 +1778,57 @@ class CssSection:
     def ref(*args, **kwargs): ...
     def unref(*args, **kwargs): ...
 
+class _DialogProps(_WindowProps):
+    use_header_bar: bool
+
 class Dialog(Window):
     _old_arg_names = ...
     action_area = ...
     vbox = ...
     window = ...
 
-    def __init__(self, title: Optional[str] = None, **kwargs: Any) -> None: ...
+    props: _DialogProps
+
+    def __init__(
+        self,
+        *,
+        # Window Properties
+        accept_focus: bool = True,
+        application: Optional[Application] = None,
+        attached_to: Optional[Widget] = None,
+        decorated: bool = True,
+        default_height: int = -1,
+        default_width: int = -1,
+        deletable: bool = True,
+        destroy_with_parent: bool = False,
+        focus_on_map: bool = True,
+        focus_visible: bool = True,
+        gravity: Gdk.Gravity = Gdk.Gravity.NORTH_WEST,
+        has_resize_grip: bool = False,
+        has_toplevel_focus: bool = False,
+        hide_titlebar_when_maximized: bool = False,
+        icon: Optional[GdkPixbuf.Pixbuf] = None,
+        icon_name: Optional[str] = None,
+        is_active: bool = False,
+        is_maximized: bool = False,
+        mnemonics_visible: bool = True,
+        modal: bool = False,
+        resizable: bool = True,
+        resize_grip_visible: bool = False,
+        role: Optional[str] = None,
+        screen: Optional[Gdk.Screen] = None,
+        skip_pager_hint: bool = False,
+        skip_taskbar_hint: bool = False,
+        startup_id: Optional[str] = None,
+        title: Optional[str] = None,
+        transient_for: Optional[Window] = None,
+        type: WindowType = WindowType.TOPLEVEL,
+        type_hint: Gdk.WindowTypeHint = Gdk.WindowTypeHint.NORMAL,
+        urgency_hint: bool = False,
+        window_position: WindowPosition = WindowPosition.NONE,
+        # Dialog Properties
+        use_header_bar: bool = False,
+    ) -> None: ...
     def add_action_widget(*args, **kwargs): ...
     def add_button(self, buton_text: str, response_id: int) -> Widget: ...
     def add_buttons(*args: Any) -> None: ...
@@ -3178,13 +3222,75 @@ class MenuToolButton:
     def set_menu(*args, **kwargs): ...
     def do_show_menu(self, *args, **kwargs): ...
 
+class _MessageDialogProps(_DialogProps):
+    buttons: ButtonsType
+    image: Optional[Widget]
+    message_area: Optional[Widget]
+    message_type: MessageType
+    secondary_text: Optional[str]
+    secondary_use_markup: bool
+    text: str
+    use_markup: bool
+
 class MessageDialog(Dialog):
+
+    props: _MessageDialogProps
+
+    def __init__(
+        self,
+        *,
+        # Window Properties
+        accept_focus: bool = True,
+        application: Optional[Application] = None,
+        attached_to: Optional[Widget] = None,
+        decorated: bool = True,
+        default_height: int = -1,
+        default_width: int = -1,
+        deletable: bool = True,
+        destroy_with_parent: bool = False,
+        focus_on_map: bool = True,
+        focus_visible: bool = True,
+        gravity: Gdk.Gravity = Gdk.Gravity.NORTH_WEST,
+        has_resize_grip: bool = False,
+        has_toplevel_focus: bool = False,
+        hide_titlebar_when_maximized: bool = False,
+        icon: Optional[GdkPixbuf.Pixbuf] = None,
+        icon_name: Optional[str] = None,
+        is_active: bool = False,
+        is_maximized: bool = False,
+        mnemonics_visible: bool = True,
+        modal: bool = False,
+        resizable: bool = True,
+        resize_grip_visible: bool = False,
+        role: Optional[str] = None,
+        screen: Optional[Gdk.Screen] = None,
+        skip_pager_hint: bool = False,
+        skip_taskbar_hint: bool = False,
+        startup_id: Optional[str] = None,
+        title: Optional[str] = None,
+        transient_for: Optional[Window] = None,
+        type: WindowType = WindowType.TOPLEVEL,
+        type_hint: Gdk.WindowTypeHint = Gdk.WindowTypeHint.NORMAL,
+        urgency_hint: bool = False,
+        window_position: WindowPosition = WindowPosition.NONE,
+        # Dialog Properties
+        use_header_bar: bool = False,
+        # MessageDialog Properties
+        buttons: ButtonsType = ButtonsType.NONE,
+        image: Optional[Widget] = None,
+        message_area: Optional[Widget] = None,
+        message_type: MessageType = MessageType.INFO,
+        secondary_text: Optional[str] = None,
+        secondary_use_markup: bool = False,
+        text: str = "",
+        use_markup: bool = False,
+    ) -> None: ...
     def format_secondary_markup(self, message_format: str) -> None: ...
-    def format_secondary_text(*args, **kwargs): ...
-    def get_image(*args, **kwargs): ...
-    def get_message_area(*args, **kwargs): ...
-    def set_image(*args, **kwargs): ...
-    def set_markup(*args, **kwargs): ...
+    def format_secondary_text(self, message_format: str) -> None: ...
+    def get_image(self) -> Image: ...
+    def get_message_area(self) -> Box: ...
+    def set_image(self, image: Image) -> None: ...
+    def set_markup(self, str: str) -> None: ...
 
 class Misc(Widget):
     widget = ...
@@ -6079,76 +6185,85 @@ class WidgetPath:
     def to_string(*args, **kwargs): ...
     def unref(*args, **kwargs): ...
 
+class _WindowProps:
+    accept_focus: bool
+    application: Application
+    attached_to: Widget
+    decorated: bool
+    default_height: int
+    default_width: int
+    deletable: bool
+    destroy_with_parent: bool
+    focus_on_map: bool
+    focus_visible: bool
+    gravity: Gdk.Gravity
+    has_resize_grip: bool
+    has_toplevel_focus: bool
+    hide_titlebar_when_maximized: bool
+    icon: GdkPixbuf.Pixbuf
+    icon_name: str
+    is_active: bool
+    is_maximized: bool
+    mnemonics_visible: bool
+    modal: bool
+    resizeable: bool
+    resize_grip_visible: bool
+    role: str
+    screen: Gdk.Screen
+    skip_pager_hint: bool
+    skip_taskbar_hint: bool
+    startup_id: str
+    title: str
+    transient_for: Window
+    type: WindowType
+    type_hint: Gdk.WindowTypeHint
+    urgency_hint: bool
+    window_position: WindowPosition
+    # Dialog Properties
+    use_header_bar: bool
+
 class Window(Bin):
     bin = ...
 
-    class Props:
-        accept_focus: bool
-        application: Application
-        attached_to: Widget
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: Gdk.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizeable: bool
-        resize_grip_visible: bool
-        role: str
-        screen: Gdk.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        startup_id: str
-        title: str
-        transient_for: Window
-        type: WindowType
-        type_hint: Gdk.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-    props: Props
+    props: _WindowProps
 
     def __init__(
         self,
-        accept_focus: bool = ...,
-        application: Application = ...,
-        attached_to: Widget = ...,
-        decorated: bool = ...,
-        default_height: int = ...,
-        default_width: int = ...,
-        deletable: bool = ...,
-        destroy_with_parent: bool = ...,
-        focus_on_map: bool = ...,
-        focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
-        has_resize_grip: bool = ...,
-        hide_titlebar_when_maximized: bool = ...,
-        icon: GdkPixbuf.Pixbuf = ...,
-        icon_name: str = ...,
-        mnemonics_visible: bool = ...,
-        modal: bool = ...,
-        resizeable: bool = ...,
-        role: str = ...,
-        screen: Gdk.Screen = ...,
-        skip_pager_hint: bool = ...,
-        skip_taskbar_hint: bool = ...,
-        startup_id: str = ...,
-        title: str = ...,
-        transient_for: Window = ...,
-        type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
-        urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        *,
+        # Window Properties
+        accept_focus: bool = True,
+        application: Optional[Application] = None,
+        attached_to: Optional[Widget] = None,
+        decorated: bool = True,
+        default_height: int = -1,
+        default_width: int = -1,
+        deletable: bool = True,
+        destroy_with_parent: bool = False,
+        focus_on_map: bool = True,
+        focus_visible: bool = True,
+        gravity: Gdk.Gravity = Gdk.Gravity.NORTH_WEST,
+        has_resize_grip: bool = False,
+        has_toplevel_focus: bool = False,
+        hide_titlebar_when_maximized: bool = False,
+        icon: Optional[GdkPixbuf.Pixbuf] = None,
+        icon_name: Optional[str] = None,
+        is_active: bool = False,
+        is_maximized: bool = False,
+        mnemonics_visible: bool = True,
+        modal: bool = False,
+        resizable: bool = True,
+        resize_grip_visible: bool = False,
+        role: Optional[str] = None,
+        screen: Optional[Gdk.Screen] = None,
+        skip_pager_hint: bool = False,
+        skip_taskbar_hint: bool = False,
+        startup_id: Optional[str] = None,
+        title: Optional[str] = None,
+        transient_for: Optional[Window] = None,
+        type: WindowType = WindowType.TOPLEVEL,
+        type_hint: Gdk.WindowTypeHint = Gdk.WindowTypeHint.NORMAL,
+        urgency_hint: bool = False,
+        window_position: WindowPosition = WindowPosition.NONE,
     ) -> None: ...
     def activate_default(self) -> bool: ...
     def activate_focus(self) -> bool: ...
