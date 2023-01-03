@@ -5,25 +5,24 @@
 
 ## Installation
 ```
-pip install PyGObject-stubs
+pip install pygobject-stubs
 ```
 
-### Installation of Multi Version stubs
+### Configuration
 
 Some libraries exist in multiple versions like Gtk3/4. As both libraries are
 currently imported under the namespace `Gtk` only stubs for one can be installed.
 
-You need to decide this at install time with setting the ENV var
-`PYGOBJECT_STUB_CONFIG`.
+You need to decide this at install time either by using the `--config-settings` option
+with pip
 
-If you install from pypi the most current version of a library is installed
-by default without any further configuration needed. 
+	$ pip install pygobject-stubs --config-settings=config=Gtk3,Gdk3,Soup2
 
-If you want older versions installed, currently you need to install from git
-and specify them.
+or by setting the `PYGOBJECT_STUB_CONFIG` env variable
 
-Example:
-`PYGOBJECT_STUB_CONFIG=Gtk3,Soup2 pip install git+https://github.com/pygobject/pygobject-stubs.git`
+	$ PYGOBJECT_STUB_CONFIG=Gtk3,Gdk3,Soup2 pip install pygobject-stubs
+
+If no configuration is set, the most recent version of each library is installed. 
 
 ## Contributing
 
