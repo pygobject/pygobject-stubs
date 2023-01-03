@@ -30,7 +30,7 @@ jobs:
         pip install build
 
     - name: Build package
-      run: python -m build
+      run: python -m build -s
 
     - name: Publish Package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1

@@ -1,0 +1,3 @@
+include CHANGELOG.md
+recursive-include pep517backend *
+prune */__pycache__
