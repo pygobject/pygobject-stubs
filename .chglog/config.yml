@@ -2,25 +2,28 @@ style: gitlab
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://dev.gajim.org/gajim/gajim
+  repository_url: https://github.com/pygobject/pygobject-stubs
 options:
   commits:
     filters:
       Type:
-        - typing
+        - feat
         - imprv
+        - typing
         - change
         - fix
   commit_groups:
     sort_by: Custom
     title_order:
+      - feat
+      - imprv
       - typing
       - change
-      - typing
       - fix
     title_maps:
-      typing: Typing
+      feat: Feature
       imprv: Improvements
+      typing: Typing
       change: Change
       fix: Bug Fixes
   header:
