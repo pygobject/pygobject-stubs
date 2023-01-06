@@ -1,11 +1,4 @@
-## Rules for a great git commit message style
-
-- Separate subject from body with a blank line
-- Do not end the subject line with a period
-- Capitalize the subject line and each paragraph
-- Use the imperative mood in the subject line
-- Wrap lines at 72 characters
-- Use the body to explain what and why you have done something. In most cases, you can leave out details about how a change has been made.
+# Contributing
 
 ## Generating base stubs for module
 
@@ -34,8 +27,41 @@ pip install mypy PyGObject
 python generate.py Gdk 3.0 > Gdk.py
 ```
 
-## Testing generated stubs are correctly typed
+## Install development dependencies
 
-```bash
-mypy examples
-```
+    $ pip install .[dev]
+
+## Use pre-commit
+
+pre-commit is a library which executes checks defined in this repository.
+
+    $ pre-commit install
+
+## Commit Messages
+
+A good article regarding [good commit messages](https://chris.beams.io/posts/git-commit/)
+
+Every commit message must be prefixed with one of the following tags:
+
+Changelog relevant
+
+- feat      (a new feature was added)
+- fix       (something was fixed)
+- imprv     (improvements)
+- change    (existing functionality was changed)
+- typing    (whenever type hints are added to a module, Example: typing: GLib: Add hints)
+
+Prefixes for development
+
+- new       (new code, but the end user will not notice)
+- ci        (ci related changes)
+- cq        (code quality changes e.g. formatting, codestyle)
+- cfix      (code fixes which should not show up in the changelog)
+- refactor  (code was changed, but the end user will not notice)
+- chore     (reoccuring tasks which need to be done)
+- release   (only used for release commits)
+- other     (everything which does not fit any categories)
+
+Example:
+
+`feat: New Button which does something`
