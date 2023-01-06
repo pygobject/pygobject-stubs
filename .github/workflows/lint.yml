@@ -12,3 +12,4 @@ jobs:
           options: "--check --verbose"
           src: "."
           version: "~= 22.0"
+      - uses: isort/isort-action@master
