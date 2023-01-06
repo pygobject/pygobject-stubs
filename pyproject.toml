@@ -25,6 +25,7 @@ classifiers = [
 dev = [
     "mypy",
     "black",
+    "codespell",
     "PyGObject",
 ]
 
@@ -42,3 +43,7 @@ where = ["src"]
 line-length = 88
 target-version = ['py37']
 include = '\.pyi?$'
+
+[tool.codespell]
+skip = "*__pycache__*,.mypy_cache,.git,test,*.pyi"
+ignore-words-list = "astroid"
