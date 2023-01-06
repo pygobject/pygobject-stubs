@@ -4,9 +4,9 @@ from typing import Optional
 from typing import Tuple
 from typing import TypeVar
 
-from gi.repository import GObject
-from gi.repository import GdkPixbuf
 import cairo
+from gi.repository import GdkPixbuf
+from gi.repository import GObject
 
 BUTTON_MIDDLE: int = ...
 BUTTON_PRIMARY: int = ...

@@ -1,4 +1,7 @@
-from typing import Any, Literal, Optional, Union
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 from gi.repository import GObject
 

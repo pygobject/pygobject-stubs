@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import itertools
 import logging
@@ -9,7 +10,6 @@ import shutil
 from pathlib import Path
 
 import setuptools.build_meta as _orig
-
 
 logging.basicConfig(level="INFO", format="%(levelname)s: %(message)s")
 log = logging.getLogger()

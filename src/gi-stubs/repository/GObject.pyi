@@ -1,11 +1,11 @@
 from typing import Any
-from typing import Optional
 from typing import Callable
-from typing import TypeVar
+from typing import Optional
 from typing import Type
+from typing import TypeVar
 
-from enum import Flag
 from enum import Enum
+from enum import Flag
 
 from gi.repository import GLib
 

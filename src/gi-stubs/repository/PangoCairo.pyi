@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Optional
 from typing import TypeVar
 
+import cairo
 from gi.repository import GObject
 from gi.repository import Pango
-import cairo
 
 _namespace: str = ...
 _version: str = ...

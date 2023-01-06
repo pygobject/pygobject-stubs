@@ -1,6 +1,13 @@
-from gi.repository import Gtk, GObject, Gdk, Gio, GLib, Pango
+from __future__ import annotations
 
 from typing import Union
+
+from gi.repository import Gdk
+from gi.repository import Gio
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Pango
 
 DURATION_INFINITE: int = ...
 MAJOR_VERSION: int = ...

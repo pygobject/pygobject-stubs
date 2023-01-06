@@ -5,11 +5,12 @@ from typing import Callable
 from typing import Iterator
 from typing import Literal
 from typing import Optional
+from typing import overload
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
-from typing import overload
 
+import cairo
 from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -17,7 +18,6 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
-import cairo
 
 BINARY_AGE: int = ...
 INPUT_ERROR: int = ...

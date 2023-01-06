@@ -1,6 +1,6 @@
 from typing import Any
-from typing import Optional
 from typing import Callable
+from typing import Optional
 
 from gi.repository import Gio
 from gi.repository import GObject

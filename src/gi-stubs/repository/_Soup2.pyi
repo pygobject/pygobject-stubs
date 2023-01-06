@@ -3,8 +3,8 @@ from typing import Callable
 from typing import Optional
 from typing import overload
 
-from gi.repository import GLib
 from gi.repository import Gio
+from gi.repository import GLib
 from gi.repository import GObject
 
 SessionCallbackU = Callable[[Session, Message, Any], None]

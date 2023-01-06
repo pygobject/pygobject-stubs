@@ -4,14 +4,16 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Union
+from typing import Any
+from typing import Callable
 from typing import Optional
 from typing import Type
+from typing import Union
 
 import argparse
 import importlib
-import re
 import inspect
+import re
 from types import ModuleType
 
 import gi

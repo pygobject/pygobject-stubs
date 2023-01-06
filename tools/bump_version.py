@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
 import argparse
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 REPO_DIR = Path(__file__).resolve().parent.parent
 

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Optional
 
-from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import Gtk
 
 INDICATOR_SIGNAL_CONNECTION_CHANGED: str = ...
 INDICATOR_SIGNAL_NEW_ATTENTION_ICON: str = ...
