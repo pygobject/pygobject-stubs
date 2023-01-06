@@ -23,10 +23,11 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "mypy",
     "black",
-    "isort",
     "codespell",
+    "isort",
+    "mypy",
+    "pre-commit",
     "PyGObject",
 ]
 
