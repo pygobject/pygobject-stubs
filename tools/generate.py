@@ -26,7 +26,7 @@ def build(parent: ObjectT) -> str:
     return _gi_build_stub(parent, dir(parent))
 
 
-def _gi_build_stub(parent: ObjectT, childs: list[str]) -> str:
+def _gi_build_stub(parent: ObjectT, children: list[str]) -> str:
     """
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
@@ -38,7 +38,7 @@ def _gi_build_stub(parent: ObjectT, childs: list[str]) -> str:
     flags: dict[str, Type[Any]] = {}
     enums: dict[str, Type[Any]] = {}
 
-    for name in childs:
+    for name in children:
         if name.startswith("__"):
             continue
 
