@@ -1,7 +1,6 @@
 from typing import Any
 from typing import Callable
 from typing import Optional
-from typing import overload
 from typing import Union
 
 from gi.repository import GObject
