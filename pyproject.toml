@@ -48,7 +48,9 @@ include = '\.pyi?$'
 
 [tool.codespell]
 skip = "*__pycache__*,.mypy_cache,.git,test,*.pyi"
-ignore-words-list = "astroid"
+ignore-words-list = """
+    astroid,
+    inout"""
 
 [tool.isort]
 force_alphabetical_sort_within_sections = true
