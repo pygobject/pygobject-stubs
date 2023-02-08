@@ -26,6 +26,26 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 ObjectT = Union[ModuleType, Type[Any]]
 
 
+def object_get_writeable_or_construct_properties(
+    obj: GIRepository.ObjectInfo,
+) -> list[GIRepository.PropertyInfo]:
+    props: list[GIRepository.PropertyInfo] = []
+    for p in obj.get_properties():
+        f = p.get_flags()
+        if (
+            f & GObject.ParamFlags.CONSTRUCT
+            or f & GObject.ParamFlags.CONSTRUCT_ONLY
+            or f & GObject.ParamFlags.WRITABLE
+        ):
+            props.append(p)
+
+    parent = obj.get_parent()
+    if parent and isinstance(parent, GIRepository.ObjectInfo):
+        props.extend(object_get_writeable_or_construct_properties(obj.get_parent()))
+
+    return props
+
+
 def callable_get_arguments(
     type: GIRepository.CallbackInfo, current_namespace: str
 ) -> Tuple[set[str], list[str], list[str], list[str]]:
@@ -329,6 +349,7 @@ def _gi_build_stub(
             obj, current_namespace, find_methods(obj), needed_namespaces, obj
         )
 
+        properties: list[GIRepository.PropertyInfo] = []
         parents: list[str] = []
         fields: list[str] = []
         if hasattr(obj, "__info__"):
@@ -370,6 +391,9 @@ def _gi_build_stub(
                     if n in dir(obj):
                         fields.append(f"{n}: {t}")
 
+                # Properties
+                properties = object_get_writeable_or_construct_properties(object_info)
+
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
                     parents.append(f"GBoxed")
@@ -388,10 +412,27 @@ def _gi_build_stub(
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
 
-        if not classret and len(fields) == 0:
+        if not classret and len(fields) == 0 and len(properties) == 0:
             ret += f"class {name}{string_parents}: ...\n"
         else:
             ret += f"class {name}{string_parents}:\n"
+
+        if len(properties) > 0:
+            names: list[str] = []
+            s: list[str] = []
+            for p in properties:
+                name = p.get_name().replace("-", "_")
+                if name in names:
+                    # Avoid duplicates
+                    continue
+                names.append(name)
+                (ns, t) = type_to_python(
+                    p.get_type(), current_namespace, needed_namespaces
+                )
+                needed_namespaces.update(ns)
+                s.append(f"{name}: {t} = ...")
+
+            ret += f"    def __init__(self, {', '.join(s)}): ...\n"
 
         for field in fields:
             ret += f"    {field} = ...\n"
