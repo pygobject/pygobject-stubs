@@ -7,6 +7,7 @@ import itertools
 import logging
 import os
 import shutil
+from dataclasses import dataclass
 from pathlib import Path
 
 import setuptools.build_meta as _orig
@@ -16,10 +17,40 @@ log = logging.getLogger()
 
 PACKAGE_DIR = Path("src/gi-stubs")
 GI_REPOSITORY_DIR = PACKAGE_DIR / "repository"
-DEFAULT_STUB_CONFIG = ["Gdk4", "Gtk4", "GtkSource5", "Soup3"]
 
 
-def _get_settings_stub_config(config_settings: Optional[dict[str, str]]) -> list[str]:
+@dataclass
+class LibVersion:
+    name: str
+    version: str
+
+    @classmethod
+    def from_str(cls, string: str) -> LibVersion:
+        name = string[:-1]
+        version = string[-1]
+        return cls(name=name, version=version)
+
+    def __eq__(self, obj: object) -> bool:
+        if not isinstance(obj, LibVersion):
+            return False
+        return obj.name == self.name
+
+    def __str__(self) -> str:
+        return f"{self.name}{self.version}"
+
+
+DEFAULT_STUB_CONFIG = [
+    LibVersion("Gdk", "4"),
+    LibVersion("Gtk", "4"),
+    LibVersion("GtkSource", "5"),
+    LibVersion("Soup", "3"),
+]
+
+
+def _get_settings_stub_config(
+    config_settings: Optional[dict[str, str]]
+) -> list[LibVersion]:
+
     libs = []
     if config_settings is None:
         return libs
@@ -30,29 +61,33 @@ def _get_settings_stub_config(config_settings: Optional[dict[str, str]]) -> list
 
     libs = [lib.strip() for lib in config.split(",")]
     log.info("Settings stub config: %s", libs)
-    return libs
+    return list(map(LibVersion.from_str, libs))
 
 
-def _get_env_stub_config() -> list[str]:
+def _get_env_stub_config() -> list[LibVersion]:
     libs = []
     env_var = os.environ.get("PYGOBJECT_STUB_CONFIG")
     if env_var is not None:
         libs = [lib.strip() for lib in env_var.split(",")]
     log.info("Env stub config: %s", libs)
-    return libs
+    return list(map(LibVersion.from_str, libs))
 
 
-def _check_config(stub_config: list[str]) -> None:
+def _check_config(stub_config: list[LibVersion]) -> None:
     for lib in stub_config:
         stub_path = GI_REPOSITORY_DIR / f"_{lib}.pyi"
         if not stub_path.exists():
             raise ValueError(f"Unknown library {lib}")
 
 
-def _install_stubs(stub_config: list[str]) -> None:
+def _install_stubs(stub_config: list[LibVersion]) -> None:
+    for lib in stub_config:
+        if lib in DEFAULT_STUB_CONFIG:
+            DEFAULT_STUB_CONFIG.remove(lib)
+
     for lib in itertools.chain(stub_config, DEFAULT_STUB_CONFIG):
         stub_path = GI_REPOSITORY_DIR / f"_{lib}.pyi"
-        new_stub_path = GI_REPOSITORY_DIR / f"{lib[:-1]}.pyi"
+        new_stub_path = GI_REPOSITORY_DIR / f"{lib.name}.pyi"
         log.info("Install %s", lib)
         shutil.copy(stub_path, new_stub_path)
 
