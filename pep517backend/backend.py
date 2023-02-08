@@ -53,9 +53,8 @@ def _install_stubs(stub_config: list[str]) -> None:
     for lib in itertools.chain(stub_config, DEFAULT_STUB_CONFIG):
         stub_path = GI_REPOSITORY_DIR / f"_{lib}.pyi"
         new_stub_path = GI_REPOSITORY_DIR / f"{lib[:-1]}.pyi"
-        if not new_stub_path.exists():
-            log.info("Install %s", lib)
-            shutil.copy(stub_path, new_stub_path)
+        log.info("Install %s", lib)
+        shutil.copy(stub_path, new_stub_path)
 
 
 def get_requires_for_build_sdist(*args: Any, **kwargs: Any) -> str:
