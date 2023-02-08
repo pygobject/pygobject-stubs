@@ -1,3 +1,25 @@
+# 2.3.0 (08 Feb 2023)
+
+## Feature
+
+* Add GtkSource5
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Gdk3
+    - GeoClue
+    - GObject
+    - Gtk3
+    - Gtk4
+    - Manette
+
+## Bug Fixes
+
+* Default to GtkSource5 when installing
+* Overwrite existing files when building from source
+
 # 2.2.0 (03 Jan 2023)
 
 ## Feature
