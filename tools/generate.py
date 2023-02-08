@@ -86,7 +86,8 @@ def callable_get_arguments(
                 names.append(arg.get_name())
 
     if accept_optional_args:
-        args.append("*args")
+        names.append("*args")
+        args.append("Any")
 
     (ns, return_type) = type_to_python(
         type.get_return_type(), current_namespace, needed_namespaces
@@ -155,7 +156,7 @@ def type_to_python(
     if tag == tags.INTERFACE:
         interface = type.get_interface()
         if isinstance(interface, GIRepository.CallbackInfo):
-            (ns, _, args, return_args) = callable_get_arguments(
+            (ns, names, args, return_args) = callable_get_arguments(
                 interface, current_namespace
             )
             needed_namespaces.update(ns)
@@ -167,7 +168,7 @@ def type_to_python(
                 return_type = f"Tuple[{', '.join(return_args)}]"
 
             # FIXME, how to express Callable with variable arguments?
-            if len(args) > 0 and args[-1] == "*args":
+            if len(names) > 0 and names[-1] == "*args":
                 return (needed_namespaces, f"Callable[..., {return_type}]")
             else:
                 return (
@@ -191,7 +192,7 @@ def type_to_python(
 def build(parent: ObjectT, namespace: str) -> str:
     (ret, ns) = _gi_build_stub(parent, namespace, dir(parent))
 
-    typings = "from typing import Callable, Optional, Tuple"
+    typings = "from typing import Any, Callable, Optional, Tuple"
     imports = [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
