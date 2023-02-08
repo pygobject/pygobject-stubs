@@ -1,3 +1,9 @@
+# 2.3.1 (08 Feb 2023)
+
+## Bug Fixes
+
+* Fix installing multilib stubs
+
 # 2.3.0 (08 Feb 2023)
 
 ## Feature
