@@ -135,11 +135,7 @@ def type_to_python(
         return (needed_namespaces, "list")
 
     if tag == tags.GTYPE:
-        if current_namespace == "GObject":
-            return (needed_namespaces, "GType")
-        else:
-            needed_namespaces.add("GObject")
-            return (needed_namespaces, "GObject.GType")
+        return (needed_namespaces, "Type")
 
     if tag in (
         tags.INT8,
@@ -177,11 +173,16 @@ def type_to_python(
                 )
         else:
             namespace = interface.get_namespace()
+            name = interface.get_name()
+
+            if namespace == "GObject" and name == "Value":
+                return (needed_namespaces, "Any")
+
             if current_namespace == namespace:
-                return (needed_namespaces, f"{interface.get_name()}")
+                return (needed_namespaces, f"{name}")
             else:
                 needed_namespaces.add(namespace)
-                return (needed_namespaces, f"{namespace}.{interface.get_name()}")
+                return (needed_namespaces, f"{namespace}.{name}")
 
     if tag == tags.VOID:
         return (needed_namespaces, "None")
@@ -192,7 +193,7 @@ def type_to_python(
 def build(parent: ObjectT, namespace: str) -> str:
     (ret, ns) = _gi_build_stub(parent, namespace, dir(parent))
 
-    typings = "from typing import Any, Callable, Optional, Tuple"
+    typings = "from typing import Any, Callable, Optional, Tuple, Type"
     imports = [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
