@@ -491,13 +491,25 @@ def find_methods(obj: Type[Any]) -> list[str]:
 
     all_attrs = set(dir(obj))
     other_attrs: set[str] = set()
-    for obj in mro[1:]:
-        name = get_gname(obj)
+    for o in mro[1:]:
+        name = get_gname(o)
         if name == main_name:
             continue
-        other_attrs.update(dir(obj))
+        other_attrs.update(dir(o))
 
     obj_attrs = all_attrs - other_attrs
+
+    # Search for overridden methods
+    if hasattr(obj, "__info__"):
+        obj_info = obj.__info__ # type: ignore
+        if isinstance(obj_info, (GIRepository.ObjectInfo,
+                                 GIRepository.StructInfo)):
+            methods = obj_info.get_methods()
+            for m in methods:
+                name = m.get_name()
+                if name in dir(obj) and not name in obj_attrs:
+                    obj_attrs.add(name)
+
     return sorted(list(obj_attrs))
 
 
