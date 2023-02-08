@@ -177,7 +177,6 @@ def _gi_build_stub(parent: ObjectT,
     classes: dict[str, Type[Any]] = {}
     functions: dict[str, Callable[..., Any]] = {}
     constants: dict[str, Any] = {}
-    methods: dict[str, Callable[..., Any]] = {}
     flags: dict[str, Type[Any]] = {}
     enums: dict[str, Type[Any]] = {}
 
@@ -206,7 +205,7 @@ def _gi_build_stub(parent: ObjectT,
         elif inspect.isfunction(obj) or inspect.isbuiltin(obj):
             functions[name] = obj
         elif inspect.ismethod(obj) or inspect.ismethoddescriptor(obj):
-            methods[name] = obj
+            functions[name] = obj
         elif (
             str(obj).startswith("<flags")
             or str(obj).startswith("<enum ")
@@ -246,9 +245,10 @@ def _gi_build_stub(parent: ObjectT,
             continue
 
         function = functions[name]
-        if hasattr(function, "get_arguments"):
+        if (isinstance(function, GIRepository.FunctionInfo) or
+            isinstance(function, GIRepository.VFuncInfo)):
             constructor: bool = False
-            method: bool = False
+            method: bool = isinstance(function, GIRepository.VFuncInfo)
             static: bool = False
 
             # Flags
@@ -288,14 +288,6 @@ def _gi_build_stub(parent: ObjectT,
             ret += f"# TODO\ndef {name}(*args, **kwargs): ...\n"
 
     if ret and functions:
-        ret += "\n"
-
-    for name in sorted(methods):
-        if name.startswith("_"):
-            continue
-        ret += f"def {name}(self, *args, **kwargs): ...\n"
-
-    if ret and methods:
         ret += "\n"
 
     for name, obj in sorted(classes.items()):
