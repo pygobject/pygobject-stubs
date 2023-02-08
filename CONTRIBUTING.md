@@ -31,6 +31,8 @@ python generate.py Gdk 3.0 > Gdk.py
 
     $ pip install .[dev]
 
+Using editable install `pip install -e .` does not currently work for libraries which have multiple versions
+
 ## Use pre-commit
 
 pre-commit is a library which executes checks defined in this repository.
