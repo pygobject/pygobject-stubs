@@ -503,9 +503,8 @@ def find_methods(obj: Type[Any]) -> list[str]:
 
     # Search for overridden methods
     if hasattr(obj, "__info__"):
-        obj_info = obj.__info__ # type: ignore
-        if isinstance(obj_info, (GIRepository.ObjectInfo,
-                                 GIRepository.StructInfo)):
+        obj_info = obj.__info__  # type: ignore
+        if isinstance(obj_info, (GIRepository.ObjectInfo, GIRepository.StructInfo)):
             methods = obj_info.get_methods()
             for m in methods:
                 name = m.get_name()
