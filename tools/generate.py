@@ -169,7 +169,7 @@ def _gi_build_stub(parent: ObjectT,
                    current_namespace: str,
                    children: list[str],
                    needed_namespaces: set[str] = set(),
-                   in_class: bool = False) -> Tuple[str, set[str]]:
+                   in_class: Optional[Any] = None) -> Tuple[str, set[str]]:
     """
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
@@ -206,18 +206,28 @@ def _gi_build_stub(parent: ObjectT,
             functions[name] = obj
         elif inspect.ismethod(obj) or inspect.ismethoddescriptor(obj):
             functions[name] = obj
-        elif (
-            str(obj).startswith("<flags")
-            or str(obj).startswith("<enum ")
-            or str(obj).startswith("<GType ")
-            or inspect.isdatadescriptor(obj)
-        ):
-            constants[name] = 0
-        elif isinstance(obj, (int, str, float)):
-            constants[name] = obj
         elif callable(obj):
             # Fall back to a function for anything callable
             functions[name] = obj
+        elif in_class:
+            # Check if obj was already processed
+            if hasattr(in_class, "__info__"):
+                obj_info = in_class.__info__
+                if isinstance(obj_info, (GIRepository.StructInfo,
+                                         GIRepository.ObjectInfo)):
+                    if not (name in [f.get_name() for f in obj_info.get_fields()]):
+                        constants[name] = 0
+                else:
+                    constants[name] = 0
+            else:
+                constants[name] = 0
+        elif (str(obj).startswith("<flags")
+              or str(obj).startswith("<enum ")
+              or str(obj).startswith("<GType ")
+              or inspect.isdatadescriptor(obj)):
+            constants[name] = 0
+        elif isinstance(obj, (int, str, float)):
+            constants[name] = obj
         else:
             # Assume everything else is some manner of constant
             constants[name] = 0
@@ -295,11 +305,20 @@ def _gi_build_stub(parent: ObjectT,
                                                        current_namespace,
                                                        find_methods(obj),
                                                        needed_namespaces,
-                                                       True)
+                                                       obj)
 
         parents: list[str] = []
+        fields: list[str] = []
         if hasattr(obj, "__info__"):
             object_info = obj.__info__ # type: ignore
+
+            if isinstance(object_info, GIRepository.StructInfo):
+                for f in object_info.get_fields():
+                    (ns, t) = type_to_python(f.get_type(), current_namespace, needed_namespaces)
+                    needed_namespaces.update(ns)
+                    n = f.get_name()
+                    if n in dir(obj):
+                        fields.append(f"{n}: {t}")
 
             if isinstance(object_info, GIRepository.ObjectInfo):
                 p = object_info.get_parent()
@@ -317,6 +336,13 @@ def _gi_build_stub(parent: ObjectT,
                     else:
                         parents.append(f"{i.get_namespace()}.{i.get_name()}")
                         needed_namespaces.add(i.get_namespace())
+
+                for f in object_info.get_fields():
+                    (ns, t) = type_to_python(f.get_type(), current_namespace, needed_namespaces)
+                    needed_namespaces.update(ns)
+                    n = f.get_name()
+                    if n in dir(obj):
+                        fields.append(f"{n}: {t}")
 
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
@@ -336,13 +362,17 @@ def _gi_build_stub(parent: ObjectT,
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
 
-        if not classret:
+        if not classret and len(fields) == 0:
             ret += f"class {name}{string_parents}: ...\n"
         else:
             ret += f"class {name}{string_parents}:\n"
 
+        for field in fields:
+            ret += f"    {field} = ...\n"
+
         for line in classret.splitlines():
             ret += "    " + line + "\n"
+
         ret += "\n"
 
     for name, obj in sorted(flags.items()):
