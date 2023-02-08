@@ -308,6 +308,10 @@ def _gi_build_stub(
             if constructor:
                 args_types.insert(0, "cls")
                 prepend = "@classmethod\n"
+                # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
+                rt = function.get_container().get_name()
+                if return_type != f"Optional[{rt}]":
+                    return_type = rt
             elif method:
                 args_types.insert(0, "self")
             elif static:
