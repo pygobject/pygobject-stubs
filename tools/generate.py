@@ -26,8 +26,9 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 ObjectT = Union[ModuleType, Type[Any]]
 
 
-def callable_get_arguments(type: GIRepository.CallbackInfo,
-                           current_namespace: str) -> Tuple[set[str], list[str], list[str], list[str]]:
+def callable_get_arguments(
+    type: GIRepository.CallbackInfo, current_namespace: str
+) -> Tuple[set[str], list[str], list[str], list[str]]:
     needed_namespaces: set[str] = set()
     function_args = type.get_arguments()
     accept_optional_args = False
@@ -36,9 +37,7 @@ def callable_get_arguments(type: GIRepository.CallbackInfo,
     return_args: list[str] = []
     skip: list[int] = []
     for (i, arg) in enumerate(function_args):
-        (ns, t) = type_to_python(arg.get_type(),
-                                 current_namespace,
-                                 needed_namespaces)
+        (ns, t) = type_to_python(arg.get_type(), current_namespace, needed_namespaces)
         needed_namespaces.update(ns)
 
         if i in skip:
@@ -51,9 +50,15 @@ def callable_get_arguments(type: GIRepository.CallbackInfo,
 
         if arg.get_closure() != i and arg.get_destroy() != i:
             direction = arg.get_direction()
-            if direction == GIRepository.Direction.OUT or direction == GIRepository.Direction.INOUT:
+            if (
+                direction == GIRepository.Direction.OUT
+                or direction == GIRepository.Direction.INOUT
+            ):
                 return_args.append(t)
-            elif direction == GIRepository.Direction.IN or direction == GIRepository.Direction.INOUT:
+            elif (
+                direction == GIRepository.Direction.IN
+                or direction == GIRepository.Direction.INOUT
+            ):
                 if arg.may_be_null() and t != "None":
                     args.append(f"Optional[{t}]")
                 else:
@@ -63,9 +68,9 @@ def callable_get_arguments(type: GIRepository.CallbackInfo,
     if accept_optional_args:
         args.append("*args")
 
-    (ns, return_type) = type_to_python(type.get_return_type(),
-                                       current_namespace,
-                                       needed_namespaces)
+    (ns, return_type) = type_to_python(
+        type.get_return_type(), current_namespace, needed_namespaces
+    )
     needed_namespaces.update(ns)
     if type.may_return_null() and return_type != "None":
         return_type = f"Optional[{return_type}]"
@@ -73,12 +78,12 @@ def callable_get_arguments(type: GIRepository.CallbackInfo,
     if return_type != "None" or len(return_args) == 0:
         return_args.insert(0, return_type)
 
-    return (needed_namespaces, names, args, return_args);
+    return (needed_namespaces, names, args, return_args)
 
 
-def type_to_python(type: GIRepository.GTypeInfo,
-                   current_namespace: str,
-                   needed_namespaces: set[str]) -> Tuple[set[str], str]:
+def type_to_python(
+    type: GIRepository.GTypeInfo, current_namespace: str, needed_namespaces: set[str]
+) -> Tuple[set[str], str]:
     tag = type.get_tag()
     tags = GIRepository.TypeTag
 
@@ -115,20 +120,24 @@ def type_to_python(type: GIRepository.GTypeInfo,
             needed_namespaces.add("GObject")
             return (needed_namespaces, "GObject.GType")
 
-    if tag in (tags.INT8,
-               tags.INT16,
-               tags.INT32,
-               tags.INT64,
-               tags.UINT8,
-               tags.UINT16,
-               tags.UINT32,
-               tags.UINT64):
+    if tag in (
+        tags.INT8,
+        tags.INT16,
+        tags.INT32,
+        tags.INT64,
+        tags.UINT8,
+        tags.UINT16,
+        tags.UINT32,
+        tags.UINT64,
+    ):
         return (needed_namespaces, "int")
 
     if tag == tags.INTERFACE:
         interface = type.get_interface()
         if isinstance(interface, GIRepository.CallbackInfo):
-            (ns, _, args, return_args) = callable_get_arguments(interface, current_namespace)
+            (ns, _, args, return_args) = callable_get_arguments(
+                interface, current_namespace
+            )
             needed_namespaces.update(ns)
 
             return_type = ""
@@ -141,7 +150,10 @@ def type_to_python(type: GIRepository.GTypeInfo,
             if len(args) > 0 and args[-1] == "*args":
                 return (needed_namespaces, f"Callable[..., {return_type}]")
             else:
-                return (needed_namespaces, f"Callable[[{', '.join(args)}], {return_type}]")
+                return (
+                    needed_namespaces,
+                    f"Callable[[{', '.join(args)}], {return_type}]",
+                )
         else:
             namespace = interface.get_namespace()
             if current_namespace == namespace:
@@ -165,11 +177,13 @@ def build(parent: ObjectT, namespace: str) -> str:
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
 
 
-def _gi_build_stub(parent: ObjectT,
-                   current_namespace: str,
-                   children: list[str],
-                   needed_namespaces: set[str] = set(),
-                   in_class: Optional[Any] = None) -> Tuple[str, set[str]]:
+def _gi_build_stub(
+    parent: ObjectT,
+    current_namespace: str,
+    children: list[str],
+    needed_namespaces: set[str] = set(),
+    in_class: Optional[Any] = None,
+) -> Tuple[str, set[str]]:
     """
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
@@ -213,18 +227,21 @@ def _gi_build_stub(parent: ObjectT,
             # Check if obj was already processed
             if hasattr(in_class, "__info__"):
                 obj_info = in_class.__info__
-                if isinstance(obj_info, (GIRepository.StructInfo,
-                                         GIRepository.ObjectInfo)):
+                if isinstance(
+                    obj_info, (GIRepository.StructInfo, GIRepository.ObjectInfo)
+                ):
                     if not (name in [f.get_name() for f in obj_info.get_fields()]):
                         constants[name] = 0
                 else:
                     constants[name] = 0
             else:
                 constants[name] = 0
-        elif (str(obj).startswith("<flags")
-              or str(obj).startswith("<enum ")
-              or str(obj).startswith("<GType ")
-              or inspect.isdatadescriptor(obj)):
+        elif (
+            str(obj).startswith("<flags")
+            or str(obj).startswith("<enum ")
+            or str(obj).startswith("<GType ")
+            or inspect.isdatadescriptor(obj)
+        ):
             constants[name] = 0
         elif isinstance(obj, (int, str, float)):
             constants[name] = obj
@@ -255,8 +272,9 @@ def _gi_build_stub(parent: ObjectT,
             continue
 
         function = functions[name]
-        if (isinstance(function, GIRepository.FunctionInfo) or
-            isinstance(function, GIRepository.VFuncInfo)):
+        if isinstance(function, GIRepository.FunctionInfo) or isinstance(
+            function, GIRepository.VFuncInfo
+        ):
             constructor: bool = False
             method: bool = isinstance(function, GIRepository.VFuncInfo)
             static: bool = False
@@ -273,7 +291,9 @@ def _gi_build_stub(parent: ObjectT,
                 static = True
 
             # Arguments
-            (ns, names, args, return_args) = callable_get_arguments(function, current_namespace);
+            (ns, names, args, return_args) = callable_get_arguments(
+                function, current_namespace
+            )
             needed_namespaces.update(ns)
             args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
 
@@ -301,20 +321,20 @@ def _gi_build_stub(parent: ObjectT,
         ret += "\n"
 
     for name, obj in sorted(classes.items()):
-        (classret, needed_namespaces) = _gi_build_stub(obj,
-                                                       current_namespace,
-                                                       find_methods(obj),
-                                                       needed_namespaces,
-                                                       obj)
+        (classret, needed_namespaces) = _gi_build_stub(
+            obj, current_namespace, find_methods(obj), needed_namespaces, obj
+        )
 
         parents: list[str] = []
         fields: list[str] = []
         if hasattr(obj, "__info__"):
-            object_info = obj.__info__ # type: ignore
+            object_info = obj.__info__  # type: ignore
 
             if isinstance(object_info, GIRepository.StructInfo):
                 for f in object_info.get_fields():
-                    (ns, t) = type_to_python(f.get_type(), current_namespace, needed_namespaces)
+                    (ns, t) = type_to_python(
+                        f.get_type(), current_namespace, needed_namespaces
+                    )
                     needed_namespaces.update(ns)
                     n = f.get_name()
                     if n in dir(obj):
@@ -338,7 +358,9 @@ def _gi_build_stub(parent: ObjectT,
                         needed_namespaces.add(i.get_namespace())
 
                 for f in object_info.get_fields():
-                    (ns, t) = type_to_python(f.get_type(), current_namespace, needed_namespaces)
+                    (ns, t) = type_to_python(
+                        f.get_type(), current_namespace, needed_namespaces
+                    )
                     needed_namespaces.update(ns)
                     n = f.get_name()
                     if n in dir(obj):
