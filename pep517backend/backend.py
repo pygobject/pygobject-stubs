@@ -16,7 +16,7 @@ log = logging.getLogger()
 
 PACKAGE_DIR = Path("src/gi-stubs")
 GI_REPOSITORY_DIR = PACKAGE_DIR / "repository"
-DEFAULT_STUB_CONFIG = ["Gdk4", "Gtk4", "Soup3"]
+DEFAULT_STUB_CONFIG = ["Gdk4", "Gtk4", "GtkSource5", "Soup3"]
 
 
 def _get_settings_stub_config(config_settings: Optional[dict[str, str]]) -> list[str]:
