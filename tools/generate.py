@@ -423,17 +423,20 @@ def _gi_build_stub(
             names: list[str] = []
             s: list[str] = []
             for p in properties:
-                name = p.get_name().replace("-", "_")
-                if name in names:
+                n = p.get_name().replace("-", "_")
+                if n in names:
                     # Avoid duplicates
                     continue
-                names.append(name)
+                names.append(n)
                 (ns, t) = type_to_python(
                     p.get_type(), current_namespace, needed_namespaces
                 )
                 needed_namespaces.update(ns)
-                s.append(f"{name}: {t} = ...")
+                s.append(f"{n}: {t} = ...")
 
+            separator = "\n        "
+            ret += f"    class {name}__Props:\n        {separator.join(s)}\n"
+            ret += f"    props: {name}__Props = ...\n"
             ret += f"    def __init__(self, {', '.join(s)}): ...\n"
 
         for field in fields:
