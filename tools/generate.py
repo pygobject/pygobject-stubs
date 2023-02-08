@@ -26,14 +26,15 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 ObjectT = Union[ModuleType, Type[Any]]
 
 
-def object_get_writeable_or_construct_properties(
-    obj: GIRepository.ObjectInfo,
+def object_get_props(
+    obj: GIRepository.ObjectInfo, all: bool = False
 ) -> list[GIRepository.PropertyInfo]:
     props: list[GIRepository.PropertyInfo] = []
     for p in obj.get_properties():
         f = p.get_flags()
         if (
-            f & GObject.ParamFlags.CONSTRUCT
+            all
+            or f & GObject.ParamFlags.CONSTRUCT
             or f & GObject.ParamFlags.CONSTRUCT_ONLY
             or f & GObject.ParamFlags.WRITABLE
         ):
@@ -41,7 +42,7 @@ def object_get_writeable_or_construct_properties(
 
     parent = obj.get_parent()
     if parent and isinstance(parent, GIRepository.ObjectInfo):
-        props.extend(object_get_writeable_or_construct_properties(obj.get_parent()))
+        props.extend(object_get_props(obj.get_parent(), all))
 
     return props
 
@@ -351,7 +352,8 @@ def _gi_build_stub(
             obj, current_namespace, find_methods(obj), needed_namespaces, obj
         )
 
-        properties: list[GIRepository.PropertyInfo] = []
+        writable_props: list[GIRepository.PropertyInfo] = []
+        all_props: list[GIRepository.ProperyInfo] = []
         parents: list[str] = []
         fields: list[str] = []
         if hasattr(obj, "__info__"):
@@ -394,7 +396,8 @@ def _gi_build_stub(
                         fields.append(f"{n}: {t}")
 
                 # Properties
-                properties = object_get_writeable_or_construct_properties(object_info)
+                writable_props = object_get_props(object_info, False)
+                all_props = object_get_props(object_info, True)
 
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
@@ -414,15 +417,20 @@ def _gi_build_stub(
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
 
-        if not classret and len(fields) == 0 and len(properties) == 0:
+        if (
+            not classret
+            and len(fields) == 0
+            and len(writable_props) == 0
+            and len(all_props) == 0
+        ):
             ret += f"class {name}{string_parents}: ...\n"
         else:
             ret += f"class {name}{string_parents}:\n"
 
-        if len(properties) > 0:
+        if len(all_props) > 0:
             names: list[str] = []
             s: list[str] = []
-            for p in properties:
+            for p in all_props:
                 n = p.get_name().replace("-", "_")
                 if n in names:
                     # Avoid duplicates
@@ -437,6 +445,22 @@ def _gi_build_stub(
             separator = "\n        "
             ret += f"    class {name}__Props:\n        {separator.join(s)}\n"
             ret += f"    props: {name}__Props = ...\n"
+
+        if len(writable_props) > 0:
+            names: list[str] = []
+            s: list[str] = []
+            for p in writable_props:
+                n = p.get_name().replace("-", "_")
+                if n in names:
+                    # Avoid duplicates
+                    continue
+                names.append(n)
+                (ns, t) = type_to_python(
+                    p.get_type(), current_namespace, needed_namespaces
+                )
+                needed_namespaces.update(ns)
+                s.append(f"{n}: {t} = ...")
+
             ret += f"    def __init__(self, {', '.join(s)}): ...\n"
 
         for field in fields:
