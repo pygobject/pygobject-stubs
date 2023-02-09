@@ -440,11 +440,11 @@ def _gi_build_stub(
                     p.get_type(), current_namespace, needed_namespaces
                 )
                 needed_namespaces.update(ns)
-                s.append(f"{n}: {t} = ...")
+                s.append(f"{n}: {t}")
 
             separator = "\n        "
-            ret += f"    class {name}__Props:\n        {separator.join(s)}\n"
-            ret += f"    props: {name}__Props = ...\n"
+            ret += f"    class Props:\n        {separator.join(s)}\n"
+            ret += f"    props: Props = ...\n"
 
         if len(writable_props) > 0:
             names: list[str] = []
