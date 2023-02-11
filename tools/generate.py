@@ -14,11 +14,13 @@ from typing import Union
 import argparse
 import importlib
 import inspect
+import pprint
 import re
 from types import ModuleType
 
 import gi
 import gi._gi as GIRepository
+import parse
 from gi.repository import GObject
 
 _identifier_re = r"^[A-Za-z_]\w*$"
@@ -268,6 +270,13 @@ def _build_function(
         return definition
 
 
+def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Optional[str]:
+    full_name = _generate_full_name(prefix, name)
+    if full_name in overrides:
+        return "# override\n" + overrides[full_name]
+    return None
+
+
 def _gi_build_stub(
     parent: ObjectT,
     current_namespace: str,
@@ -291,12 +300,6 @@ def _gi_build_stub(
 
     for name in children:
         if name.startswith("__"):
-            continue
-
-        full_name = _generate_full_name(prefix_name, name)
-
-        if full_name in overrides:
-            ret += f"# override\n{overrides[full_name]}\n"
             continue
 
         # Check if this is a valid name in python
@@ -346,6 +349,11 @@ def _gi_build_stub(
             # Gdk.EventType.2BUTTON_PRESS
             continue
 
+        override = _check_override(prefix_name, name, overrides)
+        if override:
+            ret += override + "\n"
+            continue
+
         val = constants[name]
 
         if str(val).startswith(("<flags", "<enum")):
@@ -363,6 +371,11 @@ def _gi_build_stub(
 
     # Functions
     for name in sorted(functions):
+        override = _check_override(prefix_name, name, overrides)
+        if override:
+            ret += override + "\n"
+            continue
+
         ret += _build_function(
             current_namespace, name, functions[name], in_class, needed_namespaces
         )
@@ -372,12 +385,12 @@ def _gi_build_stub(
 
     # Classes
     for name, obj in sorted(classes.items()):
-        full_name = _generate_full_name(prefix_name, name)
-        class_constructor: Optional[str] = None
+        override = _check_override(prefix_name, name, overrides)
+        if override:
+            ret += override + "\n\n"
+            continue
 
-        constructor_symbol = f"{full_name}.__init__"
-        if constructor_symbol in overrides:
-            class_constructor = overrides[constructor_symbol]
+        full_name = _generate_full_name(prefix_name, name)
 
         classret = _gi_build_stub(
             obj,
@@ -403,7 +416,11 @@ def _gi_build_stub(
                     )
                     n = f.get_name()
                     if n in dir(obj):
-                        fields.append(f"{n}: {t}")
+                        override = _check_override(full_name, n, overrides)
+                        if override:
+                            fields.append(override)
+                        else:
+                            fields.append(f"{n}: {t}")
 
             if isinstance(object_info, GIRepository.ObjectInfo):
                 p = object_info.get_parent()
@@ -428,7 +445,11 @@ def _gi_build_stub(
                     )
                     n = f.get_name()
                     if n in dir(obj):
-                        fields.append(f"{n}: {t}")
+                        override = _check_override(full_name, n, overrides)
+                        if override:
+                            fields.append(override)
+                        else:
+                            fields.append(f"{n}: {t}")
 
                 # Properties
                 writable_props = _object_get_props(object_info, False)
@@ -462,7 +483,11 @@ def _gi_build_stub(
         else:
             ret += f"class {name}{string_parents}:\n"
 
-        if len(all_props) > 0:
+        props_override = _check_override(full_name, "Props", overrides)
+        if props_override:
+            for line in props_override.splitlines():
+                ret += "    " + line + "\n"
+        elif len(all_props) > 0:
             names: list[str] = []
             s: list[str] = []
             for p in all_props:
@@ -478,7 +503,11 @@ def _gi_build_stub(
             ret += f"    class Props:\n        {separator.join(s)}\n"
             ret += f"    props: Props = ...\n"
 
-        if len(writable_props) > 0 and not class_constructor:
+        class_constructor_override = _check_override(full_name, "__init__", overrides)
+        if class_constructor_override:
+            for line in class_constructor_override.splitlines():
+                ret += "    " + line + "\n"
+        elif len(writable_props) > 0:
             names: list[str] = []
             s: list[str] = []
             for p in writable_props:
@@ -493,9 +522,6 @@ def _gi_build_stub(
             separator = ",\n                 "
             ret += f"    def __init__(self, {separator.join(s)}): ...\n"
 
-        if class_constructor:
-            ret += f"# override\n    {class_constructor}\n"
-
         for field in fields:
             ret += f"    {field} = ...\n"
 
@@ -506,6 +532,13 @@ def _gi_build_stub(
 
     # Flags
     for name, obj in sorted(flags.items()):
+        override = _check_override(prefix_name, name, overrides)
+        if override:
+            ret += override + "\n\n"
+            continue
+
+        full_name = _generate_full_name(prefix_name, name)
+
         if current_namespace == "GObject":
             if name != "GFlags":
                 base = "GFlags"
@@ -518,6 +551,12 @@ def _gi_build_stub(
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
+                continue
+
+            override = _check_override(full_name, key, overrides)
+            if override:
+                for line in override.splitlines():
+                    ret += "    " + line + "\n"
                 continue
 
             o = getattr(obj, key)
@@ -536,6 +575,13 @@ def _gi_build_stub(
 
     # Enums
     for name, obj in sorted(enums.items()):
+        override = _check_override(prefix_name, name, overrides)
+        if override:
+            ret += override + "\n\n"
+            continue
+
+        full_name = _generate_full_name(prefix_name, name)
+
         if current_namespace == "GObject":
             if name != "GEnum":
                 base = "GEnum"
@@ -548,6 +594,12 @@ def _gi_build_stub(
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
+                continue
+
+            override = _check_override(full_name, key, overrides)
+            if override:
+                for line in override.splitlines():
+                    ret += "    " + line + "\n"
                 continue
 
             o = getattr(obj, key)
@@ -612,6 +664,21 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("module", type=str, help="Gdk, Gtk, ...")
     parser.add_argument("version", type=str, help="3.0, 4.0, ...")
+    parser.add_argument("-o", dest="output", type=str, help="Output file")
 
     args = parser.parse_args()
-    print(start(args.module, args.version, {}))
+
+    if args.output:
+        overrides: dict[str, str] = {}
+        try:
+            with open(args.output, "r") as file:
+                overrides = parse.parse(file.read())
+        except FileNotFoundError:
+            pass
+        output = start(args.module, args.version, overrides)
+        print("Running with this overrides:")
+        pprint.pprint(overrides)
+        with open(args.output, "w+") as file:
+            file.write(output)
+    else:
+        print(start(args.module, args.version, {}))
