@@ -517,17 +517,21 @@ def _gi_build_stub(
 
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
-            if not key.startswith("__"):
-                o = getattr(obj, key)
-                if isinstance(o, GIRepository.FunctionInfo):
-                    function_ret = _build_function(
-                        current_namespace, key, o, obj, needed_namespaces
-                    )
-                    for line in function_ret.splitlines():
-                        ret += "    " + line + "\n"
-                else:
-                    value = o.real
-                    ret += f"    {key} = {value}\n"
+            if key.startswith("__") or key[0].isdigit():
+                continue
+
+            o = getattr(obj, key)
+            if isinstance(o, GIRepository.FunctionInfo):
+                function_ret = _build_function(
+                    current_namespace, key, o, obj, needed_namespaces
+                )
+                for line in function_ret.splitlines():
+                    ret += "    " + line + "\n"
+            elif hasattr(o, "real"):
+                value = o.real
+                ret += f"    {key} = {value}\n"
+            else:
+                ret += f"    {key} = ... # FIXME Flags\n"
         ret += "\n"
 
     # Enums
@@ -543,17 +547,21 @@ def _gi_build_stub(
 
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
-            if not key.startswith("__"):
-                o = getattr(obj, key)
-                if isinstance(o, GIRepository.FunctionInfo):
-                    function_ret = _build_function(
-                        current_namespace, key, o, obj, needed_namespaces
-                    )
-                    for line in function_ret.splitlines():
-                        ret += "    " + line + "\n"
-                else:
-                    value = o.real
-                    ret += f"    {key} = {value}\n"
+            if key.startswith("__") or key[0].isdigit():
+                continue
+
+            o = getattr(obj, key)
+            if isinstance(o, GIRepository.FunctionInfo):
+                function_ret = _build_function(
+                    current_namespace, key, o, obj, needed_namespaces
+                )
+                for line in function_ret.splitlines():
+                    ret += "    " + line + "\n"
+            elif hasattr(o, "real"):
+                value = o.real
+                ret += f"    {key} = {value}\n"
+            else:
+                ret += f"    {key} = ... # FIXME Enum\n"
         ret += "\n"
 
     return ret
