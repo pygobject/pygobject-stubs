@@ -29,7 +29,7 @@ ObjectT = Union[ModuleType, Type[Any]]
 def _object_get_props(
     obj: GIRepository.ObjectInfo, all: bool = False
 ) -> list[GIRepository.PropertyInfo]:
-    parents:  list[GIRepository.ObjectInfo] = []
+    parents: list[GIRepository.ObjectInfo] = []
     parent: Optional[GIRepository.ObjectInfo] = obj.get_parent()
     while parent:
         parents.append(parent)
@@ -37,7 +37,9 @@ def _object_get_props(
 
     interfaces: list[GIRepository.InterfaceInfo] = list(obj.get_interfaces())
 
-    subclasses: list[GIRepository.ObjectInfo | GIRepository.InterfaceInfo] = parents + interfaces
+    subclasses: list[GIRepository.ObjectInfo | GIRepository.InterfaceInfo] = (
+        parents + interfaces
+    )
 
     props: list[GIRepository.PropertyInfo] = list(obj.get_properties())
     for s in subclasses:
@@ -196,11 +198,74 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
 
 
-def generate_full_name(prefix: str, name: str) -> str:
+def _generate_full_name(prefix: str, name: str) -> str:
     full_name = name
     if len(prefix) > 0:
         full_name = f"{prefix}.{name}"
     return full_name
+
+
+def _build_function(
+    current_namespace: str,
+    name: str,
+    function: (GIRepository.FunctionInfo | GIRepository.VFuncInfo),
+    in_class: Optional[Any],
+    needed_namespaces: set[str],
+) -> str:
+    if name.startswith("_"):
+        return ""
+
+    if isinstance(function, GIRepository.FunctionInfo) or isinstance(
+        function, GIRepository.VFuncInfo
+    ):
+        constructor: bool = False
+        method: bool = isinstance(function, GIRepository.VFuncInfo)
+        static: bool = False
+
+        # Flags
+        function_flags = function.get_flags()
+        if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
+            constructor = True
+
+        if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
+            method = True
+
+        if in_class and not method and not constructor:
+            static = True
+
+        # Arguments
+        (names, args, return_args) = _callable_get_arguments(
+            function, current_namespace, needed_namespaces
+        )
+        args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
+
+        # Return type
+        if len(return_args) > 1:
+            return_type = f"Tuple[{', '.join(return_args)}]"
+        else:
+            return_type = f"{', '.join(return_args)}"
+
+        # Generate string
+        prepend = ""
+        if constructor:
+            args_types.insert(0, "cls")
+            prepend = "@classmethod\n"
+            # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
+            rt = function.get_container().get_name()
+            if return_type != f"Optional[{rt}]":
+                return_type = rt
+        elif method:
+            args_types.insert(0, "self")
+        elif static:
+            prepend = "@staticmethod\n"
+
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
+    else:
+        if in_class:
+            definition = f"def {name}(self, *args, **kwargs): ... # FIXME Method\n"
+        else:
+            definition = f"def {name}(*args, **kwargs): ... # FIXME Function\n"
+        return definition
 
 
 def _gi_build_stub(
@@ -228,7 +293,7 @@ def _gi_build_stub(
         if name.startswith("__"):
             continue
 
-        full_name = generate_full_name(prefix_name, name)
+        full_name = _generate_full_name(prefix_name, name)
 
         if full_name in overrides:
             ret += f"# override\n{overrides[full_name]}\n"
@@ -265,23 +330,14 @@ def _gi_build_stub(
                     obj_info, (GIRepository.StructInfo, GIRepository.ObjectInfo)
                 ):
                     if not (name in [f.get_name() for f in obj_info.get_fields()]):
-                        constants[name] = 0
+                        constants[name] = obj
                 else:
-                    constants[name] = 0
+                    constants[name] = obj
             else:
-                constants[name] = 0
-        elif (
-            str(obj).startswith("<flags")
-            or str(obj).startswith("<enum ")
-            or str(obj).startswith("<GType ")
-            or inspect.isdatadescriptor(obj)
-        ):
-            constants[name] = 0
-        elif isinstance(obj, (int, str, float)):
-            constants[name] = obj
+                constants[name] = obj
         else:
             # Assume everything else is some manner of constant
-            constants[name] = 0
+            constants[name] = obj
 
     # Constants
     for name in sorted(constants):
@@ -291,79 +347,32 @@ def _gi_build_stub(
             continue
 
         val = constants[name]
-        if val == 0:
-            ret += f"{name} = ...\n"
-        elif isinstance(val, (int, str, float)):
-            ret += f"{name}: {val.__class__.__name__} = ...\n"
+
+        if str(val).startswith(("<flags", "<enum")):
+            val = val.real
+
+        if isinstance(val, str):
+            ret += f'{name}: {val.__class__.__name__} = "{val}"\n'
+        elif isinstance(val, (bool, float, int)):
+            ret += f"{name}: {val.__class__.__name__} = {val}\n"
         else:
-            raise ValueError
+            ret += f"{name} = ... # FIXME Constant\n"
+
     if ret and constants:
         ret += "\n"
 
     # Functions
     for name in sorted(functions):
-        if name.startswith("_"):
-            continue
-
-        function = functions[name]
-        if isinstance(function, GIRepository.FunctionInfo) or isinstance(
-            function, GIRepository.VFuncInfo
-        ):
-            constructor: bool = False
-            method: bool = isinstance(function, GIRepository.VFuncInfo)
-            static: bool = False
-
-            # Flags
-            function_flags = function.get_flags()
-            if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
-                constructor = True
-
-            if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
-                method = True
-
-            if in_class and not method and not constructor:
-                static = True
-
-            # Arguments
-            (names, args, return_args) = _callable_get_arguments(
-                function, current_namespace, needed_namespaces
-            )
-            args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
-
-            # Return type
-            if len(return_args) > 1:
-                return_type = f"Tuple[{', '.join(return_args)}]"
-            else:
-                return_type = f"{', '.join(return_args)}"
-
-            # Generate string
-            prepend = ""
-            if constructor:
-                args_types.insert(0, "cls")
-                prepend = "@classmethod\n"
-                # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
-                rt = function.get_container().get_name()
-                if return_type != f"Optional[{rt}]":
-                    return_type = rt
-            elif method:
-                args_types.insert(0, "self")
-            elif static:
-                prepend = "@staticmethod\n"
-
-            ret += f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
-        else:
-            if in_class:
-                definition = f"def {name}(self, *args, **kwargs): ... # FIXME\n"
-            else:
-                definition = f"def {name}(*args, **kwargs): ... # FIXME\n"
-            ret += definition
+        ret += _build_function(
+            current_namespace, name, functions[name], in_class, needed_namespaces
+        )
 
     if ret and functions:
         ret += "\n"
 
     # Classes
     for name, obj in sorted(classes.items()):
-        full_name = generate_full_name(prefix_name, name)
+        full_name = _generate_full_name(prefix_name, name)
         class_constructor: Optional[str] = None
 
         constructor_symbol = f"{full_name}.__init__"
@@ -509,7 +518,16 @@ def _gi_build_stub(
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
             if not key.startswith("__"):
-                ret += f"    {key} = ...\n"
+                o = getattr(obj, key)
+                if isinstance(o, GIRepository.FunctionInfo):
+                    function_ret = _build_function(
+                        current_namespace, key, o, obj, needed_namespaces
+                    )
+                    for line in function_ret.splitlines():
+                        ret += "    " + line + "\n"
+                else:
+                    value = o.real
+                    ret += f"    {key} = {value}\n"
         ret += "\n"
 
     # Enums
@@ -526,7 +544,16 @@ def _gi_build_stub(
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
             if not key.startswith("__"):
-                ret += f"    {key} = ...\n"
+                o = getattr(obj, key)
+                if isinstance(o, GIRepository.FunctionInfo):
+                    function_ret = _build_function(
+                        current_namespace, key, o, obj, needed_namespaces
+                    )
+                    for line in function_ret.splitlines():
+                        ret += "    " + line + "\n"
+                else:
+                    value = o.real
+                    ret += f"    {key} = {value}\n"
         ret += "\n"
 
     return ret
