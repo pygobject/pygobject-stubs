@@ -29,21 +29,24 @@ ObjectT = Union[ModuleType, Type[Any]]
 def _object_get_props(
     obj: GIRepository.ObjectInfo, all: bool = False
 ) -> list[GIRepository.PropertyInfo]:
-    props: list[GIRepository.PropertyInfo] = []
-    for p in obj.get_properties():
-        f = p.get_flags()
-        if (
-            all
-            or f & GObject.ParamFlags.CONSTRUCT
-            or f & GObject.ParamFlags.CONSTRUCT_ONLY
-            or f & GObject.ParamFlags.WRITABLE
-        ):
-            props.append(p)
+    parents:  list[GIRepository.ObjectInfo] = []
+    parent: Optional[GIRepository.ObjectInfo] = obj.get_parent()
+    while parent:
+        parents.append(parent)
+        parent = parent.get_parent()
 
-    parent = obj.get_parent()
-    if parent and isinstance(parent, GIRepository.ObjectInfo):
-        props.extend(_object_get_props(obj.get_parent(), all))
+    interfaces: list[GIRepository.InterfaceInfo] = list(obj.get_interfaces())
 
+    subclasses: list[GIRepository.ObjectInfo | GIRepository.InterfaceInfo] = parents + interfaces
+
+    props: list[GIRepository.PropertyInfo] = list(obj.get_properties())
+    for s in subclasses:
+        props.extend(s.get_properties())
+
+    if all:
+        return props
+
+    props = list(filter(lambda p: (p.get_flags() & GObject.ParamFlags.WRITABLE), props))
     return props
 
 
@@ -478,7 +481,8 @@ def _gi_build_stub(
                 t = _type_to_python(p.get_type(), current_namespace, needed_namespaces)
                 s.append(f"{n}: {t} = ...")
 
-            ret += f"    def __init__(self, {', '.join(s)}): ...\n"
+            separator = ",\n                 "
+            ret += f"    def __init__(self, {separator.join(s)}): ...\n"
 
         if class_constructor:
             ret += f"# override\n    {class_constructor}\n"
