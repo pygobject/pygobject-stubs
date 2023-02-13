@@ -63,6 +63,12 @@ def _callable_get_arguments(
     args: list[str] = []
     return_args: list[str] = []
     skip: list[int] = []
+
+    # Filter out array length arguments for return type
+    ret_type = type.get_return_type()
+    if ret_type.get_array_length() >= 0:
+        skip.append(ret_type.get_array_length())
+
     for (i, arg) in enumerate(function_args):
         t = _type_to_python(arg.get_type(), current_namespace, needed_namespaces)
 
@@ -74,6 +80,12 @@ def _callable_get_arguments(
             skip.append(arg.get_closure())
             skip.append(arg.get_destroy())
 
+        # Filter out array length args
+        arg_type = arg.get_type()
+        if arg_type.get_array_length() > 0:
+            skip.append(arg_type.get_array_length())
+
+        # Need to check because user_data can be the first arg
         if arg.get_closure() != i and arg.get_destroy() != i:
             direction = arg.get_direction()
             if (
