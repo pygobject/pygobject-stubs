@@ -55,12 +55,17 @@ def _object_get_props(
 
 
 def _callable_get_arguments(
-    type: GIRepository.CallbackInfo, current_namespace: str, needed_namespaces: set[str]
+    type: GIRepository.CallbackInfo,
+    current_namespace: str,
+    needed_namespaces: set[str],
+    can_default: bool = False,
 ) -> Tuple[list[str], list[str], list[str]]:
     function_args = type.get_arguments()
     accept_optional_args = False
+    optional_args_name = ""
     names: list[str] = []
-    args: list[str] = []
+    args: list[GIRepository.ArgInfo] = []
+    str_args: list[str] = []
     return_args: list[str] = []
     skip: list[int] = []
 
@@ -75,6 +80,7 @@ def _callable_get_arguments(
 
         if arg.get_closure() >= 0:
             accept_optional_args = True
+            optional_args_name = function_args[arg.get_closure()].get_name()
             skip.append(arg.get_closure())
             skip.append(arg.get_destroy())
 
@@ -99,19 +105,27 @@ def _callable_get_arguments(
                 direction == GIRepository.Direction.IN
                 or direction == GIRepository.Direction.INOUT
             ):
-                t = _type_to_python(
-                    arg.get_type(), current_namespace, needed_namespaces
-                )
-
-                if arg.may_be_null() and t != "None":
-                    args.append(f"Optional[{t}]")
-                else:
-                    args.append(t)
                 names.append(arg.get_name())
+                args.append(arg)
+
+    # Traverse args in reverse to check for optional args
+    for a in reversed(args):
+        t = _type_to_python(a.get_type(), current_namespace, needed_namespaces)
+
+        if a.may_be_null() and t != "None":
+            if can_default:
+                str_args.append(f"Optional[{t}] = None")
+            else:
+                str_args.append(f"Optional[{t}]")
+        else:
+            can_default = False
+            str_args.append(t)
+
+    str_args = list(reversed(str_args))
 
     if accept_optional_args:
-        names.append("*args")
-        args.append("Any")
+        names.append(f"*{optional_args_name}")
+        str_args.append("Any")
 
     return_type = _type_to_python(
         type.get_return_type(), current_namespace, needed_namespaces, True
@@ -122,7 +136,7 @@ def _callable_get_arguments(
     if return_type != "None" or len(return_args) == 0:
         return_args.insert(0, return_type)
 
-    return (names, args, return_args)
+    return (names, str_args, return_args)
 
 
 def _type_to_python(
@@ -196,7 +210,7 @@ def _type_to_python(
                 return_type = f"Tuple[{', '.join(return_args)}]"
 
             # FIXME, how to express Callable with variable arguments?
-            if len(names) > 0 and names[-1] == "*args":
+            if len(names) > 0 and names[-1].startswith("*"):
                 return f"Callable[..., {return_type}]"
             else:
                 return f"Callable[[{', '.join(args)}], {return_type}]"
@@ -206,6 +220,9 @@ def _type_to_python(
 
             if namespace == "GObject" and name == "Value":
                 return "Any"
+
+            if namespace == "GObject" and name == "Closure":
+                return "Callable"
 
             if current_namespace == namespace:
                 return f"{name}"
@@ -223,7 +240,7 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typings = "from typing import Any, Callable, Optional, Tuple, Type"
+    typings = "from typing import Any, Callable, Optional, Tuple, Type, Sequence"
     imports = [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
@@ -266,7 +283,7 @@ def _build_function(
 
         # Arguments
         (names, args, return_args) = _callable_get_arguments(
-            function, current_namespace, needed_namespaces
+            function, current_namespace, needed_namespaces, True
         )
         args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
 
