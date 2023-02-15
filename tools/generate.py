@@ -501,6 +501,13 @@ def _gi_build_stub(
                 writable_props = _object_get_props(object_info, False)
                 all_props = _object_get_props(object_info, True)
 
+            if isinstance(object_info, GIRepository.InterfaceInfo):
+                if current_namespace == "GObject":
+                    parents.append("Object")
+                else:
+                    parents.append("GObject.Object")
+                    needed_namespaces.add("GObject")
+
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
                     parents.append(f"GBoxed")
