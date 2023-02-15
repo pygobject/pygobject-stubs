@@ -7,6 +7,7 @@ ParseResult = dict[str, str]
 
 OVERRIDE_PATTERN = r"^.*#\s*override.*$"
 CLASS_PATTERN = r"^\s*class\s*(?P<symbol>\w*)\s*(\(|:)"
+CONSTANT_INDEX = 2
 SYMBOLS_PATTERNS = [
     r"^\s*def\s+(?P<symbol>\w*)\s*\(",  # Functions
     CLASS_PATTERN,
@@ -34,7 +35,7 @@ def _search_overridden_symbols(input: str) -> list[str]:
         if re.match(OVERRIDE_PATTERN, line):
             is_override = True
 
-        for pattern in SYMBOLS_PATTERNS:
+        for (index, pattern) in enumerate(SYMBOLS_PATTERNS):
             res = re.match(pattern, line)
             if res and res["symbol"]:
                 symbol = res["symbol"]
@@ -51,8 +52,16 @@ def _search_overridden_symbols(input: str) -> list[str]:
                 if indentation_level > last_indentation_level:
                     if last_class:
                         parents.append(last_class)
+                        last_class = None
                     else:
-                        raise ParseError(f"Wrong indentation at line: {i}")
+                        if index != CONSTANT_INDEX:
+                            raise ParseError(f"Wrong indentation at line: {i}")
+                        else:
+                            # Regex for constant trigger also on functions arguments
+                            print(
+                                f"Wrong indentation for constant at line {i}, skipping"
+                            )
+                            continue
                 elif indentation_level < last_indentation_level:
                     while indentation_level < last_indentation_level:
                         parents.pop()
