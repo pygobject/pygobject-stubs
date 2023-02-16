@@ -153,7 +153,7 @@ def _type_to_python(
         t = _type_to_python(array_type, current_namespace, needed_namespaces)
         if out_arg:
             # As output argument array of type uint8 are returned as bytes
-            if array_type == GIRepository.TypeTag.UINT8:
+            if array_type.get_tag() == GIRepository.TypeTag.UINT8:
                 return f"bytes"
             return f"list[{t}]"
 
