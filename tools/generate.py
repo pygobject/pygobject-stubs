@@ -222,7 +222,7 @@ def _type_to_python(
                 return "Any"
 
             if namespace == "GObject" and name == "Closure":
-                return "Callable"
+                return "Callable[..., Any]"
 
             if current_namespace == namespace:
                 return f"{name}"
