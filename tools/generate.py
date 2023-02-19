@@ -178,7 +178,10 @@ def _type_to_python(
             needed_namespaces.add("GLib")
             return "GLib.Error"
 
-    if tag in (tags.FILENAME, tags.GHASH, tags.UTF8, tags.UNICHAR):
+    if tag == tags.GHASH:
+        return "dict[str, str]"
+
+    if tag in (tags.FILENAME, tags.UTF8, tags.UNICHAR):
         return "str"
 
     if tag == tags.GTYPE:
