@@ -227,6 +227,9 @@ def _type_to_python(
             if namespace == "GObject" and name == "Closure":
                 return "Callable[..., Any]"
 
+            if namespace == "cairo" and name == "Context" and not out_arg:
+                return "cairo.Context[_SomeSurface]"
+
             if current_namespace == namespace:
                 return f"{name}"
             else:
@@ -244,7 +247,13 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
     typings = "from typing import Any, Callable, Optional, Tuple, Type, Sequence"
-    imports = [f"from gi.repository import {n}" for n in sorted(ns)]
+
+    imports: list[str] = []
+    if "cairo" in ns:
+        imports = ["import cairo"]
+        ns.remove("cairo")
+
+    imports += [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
 
@@ -412,6 +421,8 @@ def _gi_build_stub(
             ret += f'{name}: {val.__class__.__name__} = "{val}"\n'
         elif isinstance(val, (bool, float, int)):
             ret += f"{name}: {val.__class__.__name__} = {val}\n"
+        elif val.__class__.__name__ == "Atom":
+            ret += f"{name}: {val.__class__.__name__} = ...\n"
         else:
             ret += f"{name} = ... # FIXME Constant\n"
 
@@ -561,6 +572,9 @@ def _gi_build_stub(
             ret += f"    class Props:\n        {separator.join(s)}\n"
             ret += f"    props: Props = ...\n"
 
+        for field in fields:
+            ret += f"    {field} = ...\n"
+
         class_constructor_override = _check_override(full_name, "__init__", overrides)
         if class_constructor_override:
             for line in class_constructor_override.splitlines():
@@ -579,9 +593,6 @@ def _gi_build_stub(
 
             separator = ",\n                 "
             ret += f"    def __init__(self, {separator.join(s)}): ...\n"
-
-        for field in fields:
-            ret += f"    {field} = ...\n"
 
         for line in classret.splitlines():
             ret += "    " + line + "\n"
