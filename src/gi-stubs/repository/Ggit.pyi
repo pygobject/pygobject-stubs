@@ -4,6 +4,7 @@ from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -836,6 +837,8 @@ class OId(GObject.GBoxed):
     def new_from_string(cls, str: str) -> Optional[OId]: ...
     def to_string(self) -> Optional[str]: ...
 
+_O = TypeVar("O", bound=Object)
+
 class Object(Native):
     class Props:
         native: None
@@ -1242,7 +1245,8 @@ class Repository(Native, Gio.Initable):
     def list_remotes(self) -> Optional[list[str]]: ...
     def list_tags(self) -> Optional[list[str]]: ...
     def list_tags_match(self, pattern: Optional[str] = None) -> Optional[list[str]]: ...
-    def lookup(self, oid: OId, gtype: Type) -> Optional[Object]: ...
+    # override
+    def lookup(self, oid: OId, gtype: Type[_O]) -> Optional[_O]: ...
     def lookup_blob(self, oid: OId) -> Optional[Blob]: ...
     def lookup_branch(
         self, branch_name: str, branch_type: BranchType
