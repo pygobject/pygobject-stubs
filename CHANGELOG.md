@@ -1,3 +1,27 @@
+# 2.4.0 (19 Feb 2023)
+
+## Feature
+
+* Add Ggit
+
+## Improvements
+
+* Use GObject introspection to generate more accurate stubs ([#98](https://github.com/pygobject/pygobject-stubs/issues/98)) (#98)
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Atk
+    - Gdk3
+    - Gdk4
+    - GdkPixbuf
+    - Geoclue
+    - Gio
+    - GLib
+    - GSound
+    - Soup3
+
 # 2.3.1 (08 Feb 2023)
 
 ## Bug Fixes
