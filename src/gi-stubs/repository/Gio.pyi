@@ -6,6 +6,7 @@ from gi.repository import GObject
 from typing_extensions import Self
 
 T = typing.TypeVar("T")
+D = typing.TypeVar("D")
 ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object)
 
 DBUS_METHOD_INVOCATION_HANDLED: bool = True
@@ -6040,17 +6041,23 @@ class InputVector(GObject.GPointer):
     size: int = ...
 
 # override
-class ListModel(GObject.GInterface):
-    def __contains__(self, item: object) -> bool: ...
-    def __getitem__(self, position: int) -> GObject.Object: ...
-    def __iter__(self) -> typing.Iterator[GObject.Object]: ...
+class ListModel(GObject.GInterface, typing.Generic[ObjectItemType]):
+    # override
+    def __contains__(self, item: ObjectItemType) -> bool: ...
+    # override
+    def __getitem__(self, position: int) -> ObjectItemType: ...
+    # override
+    def __iter__(self) -> typing.Iterator[ObjectItemType]: ...
     def __len__(self) -> int: ...
-    def get_item(self, position: int) -> typing.Optional[GObject.Object]: ...
-    def get_item_type(self) -> typing.Type[typing.Any]: ...
+    # override
+    def get_item(self, position: int) -> typing.Optional[ObjectItemType]: ...
+    # override
+    def get_item_type(self) -> typing.Type[ObjectItemType]: ...
     def get_n_items(self) -> int: ...
     def items_changed(self, position: int, removed: int, added: int) -> None: ...
 
-class ListModelInterface(GObject.GPointer):
+# override
+class ListModelInterface(GObject.GPointer, typing.Generic[ObjectItemType]):
     """
     :Constructors:
 
@@ -6060,11 +6067,21 @@ class ListModelInterface(GObject.GPointer):
     """
 
     g_iface: GObject.TypeInterface = ...
-    get_item_type: typing.Callable[[ListModel], typing.Type[typing.Any]] = ...
-    get_n_items: typing.Callable[[ListModel], int] = ...
-    get_item: typing.Callable[[ListModel, int], typing.Optional[GObject.Object]] = ...
+    # override
+    get_item_type: typing.Callable[
+        [ListModel[ObjectItemType]], typing.Type[ObjectItemType]
+    ] = ...
+    # override
+    get_n_items: typing.Callable[[ListModel[ObjectItemType]], int] = ...
+    # override
+    get_item: typing.Callable[
+        [ListModel[ObjectItemType], int], typing.Optional[ObjectItemType]
+    ] = ...
 
-class ListStore(GObject.Object, ListModel, typing.Generic[ObjectItemType]):
+# override
+class ListStore(
+    GObject.Object, ListModel[ObjectItemType], typing.Generic[ObjectItemType]
+):
     """
     :Constructors:
 
@@ -6086,47 +6103,80 @@ class ListStore(GObject.Object, ListModel, typing.Generic[ObjectItemType]):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        item_type: typing.Type[typing.Any]
+        # override
+        item_type: typing.Type[ObjectItemType]
         n_items: int
 
     props: Props = ...
-    def __init__(self, *, item_type: typing.Type[typing.Any] = ...) -> None: ...
-    def __setitem__(
-        self, key, value
-    ): ...  # FIXME: Override is missing typing annotation
-    def append(self, item: GObject.Object) -> None: ...
-    def find(self, item: GObject.Object) -> typing.Tuple[bool, int]: ...
     # override
+    def __init__(self, *, item_type: typing.Type[ObjectItemType] = ...) -> None: ...
+    # override
+    def __setitem__(
+        self,
+        key: int,
+        value: ObjectItemType,
+    ): ...
+    # override
+    def append(self, item: ObjectItemType) -> None: ...
+    # override
+    def find(self, item: ObjectItemType) -> typing.Tuple[bool, int]: ...
+    # override
+    @typing.overload
     def find_with_equal_func(
         self,
-        item: typing.Optional[GObject.Object],
-        equal_func: typing.Callable[..., bool],
-        *user_data: typing.Any,
+        item: ObjectItemType,
+        equal_func: typing.Callable[[ObjectItemType, ObjectItemType, D], bool],
+        *user_data: D,
     ) -> typing.Tuple[bool, int]: ...
+    # override
+    @typing.overload
+    def find_with_equal_func(
+        self,
+        item: None,
+        equal_func: typing.Callable[[None, ObjectItemType, D], bool],
+        *user_data: D,
+    ) -> typing.Tuple[bool, int]: ...
+    # override
+    @typing.overload
     def find_with_equal_func_full(
         self,
-        item: typing.Optional[GObject.Object],
-        equal_func: typing.Callable[..., bool],
-        *user_data: typing.Any,
+        item: None,
+        equal_func: typing.Callable[[None, ObjectItemType, D], bool],
+        *user_data: D,
     ) -> typing.Tuple[bool, int]: ...
-    def insert(self, position: int, item: GObject.Object) -> None: ...
+    # override
+    @typing.overload
+    def find_with_equal_func_full(
+        self,
+        item: ObjectItemType,
+        equal_func: typing.Callable[[ObjectItemType, ObjectItemType, D], bool],
+        *user_data: D,
+    ) -> typing.Tuple[bool, int]: ...
+    # override
+    def insert(self, position: int, item: ObjectItemType) -> None: ...
     # override
     def insert_sorted(
         self,
-        item: GObject.Object,
-        compare_func: typing.Callable[..., int],
-        *user_data: typing.Any,
-    ) -> int: ...
+        item: ObjectItemType,
+        compare_func: typing.Callable[[ObjectItemType, ObjectItemType, D], int],
+        *user_data: D,
+    ) -> int: ...  # FIXME Function
+    # override
     @classmethod
-    def new(cls, item_type: typing.Type[typing.Any]) -> ListStore: ...
+    def new(
+        cls, item_type: typing.Type[ObjectItemType]
+    ) -> ListStore[ObjectItemType]: ...
     def remove(self, position: int) -> None: ...
     def remove_all(self) -> None: ...
     # override
     def sort(
-        self, compare_func: typing.Callable[..., int], *user_data: typing.Any
+        self,
+        compare_func: typing.Callable[[ObjectItemType, ObjectItemType, D], int],
+        *user_data: D,
     ) -> int: ...
+    # override
     def splice(
-        self, position: int, n_removals: int, additions: typing.Sequence[GObject.Object]
+        self, position: int, n_removals: int, additions: typing.Sequence[ObjectItemType]
     ) -> None: ...
 
 class ListStoreClass(GObject.GPointer):
