@@ -1791,6 +1791,7 @@ class Dialog(Window):
 
     def __init__(
         self,
+        title: Optional[str] = None,
         *,
         # Window Properties
         accept_focus: bool = True,
@@ -1820,7 +1821,7 @@ class Dialog(Window):
         skip_pager_hint: bool = False,
         skip_taskbar_hint: bool = False,
         startup_id: Optional[str] = None,
-        title: Optional[str] = None,
+        #title: Optional[str] = None,
         transient_for: Optional[Window] = None,
         type: WindowType = WindowType.TOPLEVEL,
         type_hint: Gdk.WindowTypeHint = Gdk.WindowTypeHint.NORMAL,
@@ -1828,6 +1829,8 @@ class Dialog(Window):
         window_position: WindowPosition = WindowPosition.NONE,
         # Dialog Properties
         use_header_bar: bool = False,
+        # new_with_buttons?
+        buttons: list[Any] = [],
     ) -> None: ...
     def add_action_widget(*args, **kwargs): ...
     def add_button(self, buton_text: str, response_id: int) -> Widget: ...
