@@ -519,7 +519,7 @@ def _gi_build_stub(
                 if current_namespace == "GObject":
                     parents.append("Object")
                 else:
-                    parents.append("GObject.Object")
+                    parents.append("GObject.GInterface")
                     needed_namespaces.add("GObject")
 
             if issubclass(obj, GObject.GBoxed):
