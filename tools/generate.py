@@ -179,7 +179,11 @@ def _type_to_python(
             return "GLib.Error"
 
     if tag == tags.GHASH:
-        return "dict[str, str]"
+        key_type = type.get_param_type(0)
+        value_type = type.get_param_type(1)
+        kt = _type_to_python(key_type, current_namespace, needed_namespaces)
+        vt = _type_to_python(value_type, current_namespace, needed_namespaces)
+        return f"dict[{kt}, {vt}]"
 
     if tag in (tags.FILENAME, tags.UTF8, tags.UNICHAR):
         return "str"
