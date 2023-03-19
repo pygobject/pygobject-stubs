@@ -250,7 +250,9 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typings = "from typing import Any, Callable, Optional, Tuple, Type, Sequence"
+    typings = (
+        "from typing import Any, Callable, Literal, Optional, Tuple, Type, Sequence"
+    )
 
     imports: list[str] = []
     if "cairo" in ns:
@@ -269,67 +271,141 @@ def _generate_full_name(prefix: str, name: str) -> str:
     return full_name
 
 
-def _build_function(
+def _build_function_info(
     current_namespace: str,
     name: str,
     function: (GIRepository.FunctionInfo | GIRepository.VFuncInfo),
+    in_class: Optional[Any],
+    needed_namespaces: set[str],
+    return_signature: Optional[str] = None,
+    comment: Optional[str] = None,
+) -> str:
+    constructor: bool = False
+    method: bool = isinstance(function, GIRepository.VFuncInfo)
+    static: bool = False
+
+    # Flags
+    function_flags = function.get_flags()
+    if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
+        constructor = True
+
+    if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
+        method = True
+
+    if in_class and not method and not constructor:
+        static = True
+
+    # Arguments
+    (names, args, return_args) = _callable_get_arguments(
+        function, current_namespace, needed_namespaces, True
+    )
+    args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
+
+    # Return type
+    if return_signature:
+        return_type = return_signature
+    elif len(return_args) > 1:
+        return_type = f"Tuple[{', '.join(return_args)}]"
+    else:
+        return_type = f"{return_args[0]}"
+
+    # Generate string
+    prepend = ""
+    if constructor:
+        args_types.insert(0, "cls")
+        prepend = "@classmethod\n"
+        # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
+        rt = function.get_container().get_name()
+        if return_type != f"Optional[{rt}]":
+            return_type = rt
+    elif method:
+        args_types.insert(0, "self")
+    elif static:
+        prepend = "@staticmethod\n"
+
+    if comment:
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ... # {comment}\n"
+    else:
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
+
+
+def _wrapped_strip_boolean_result(
+    current_namespace: str,
+    name: str,
+    function: Any,
+    in_class: Optional[Any],
+    needed_namespaces: set[str],
+) -> str:
+    real_function = function.__wrapped__
+    fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
+
+    (_, _, return_args) = _callable_get_arguments(
+        real_function, current_namespace, needed_namespaces
+    )
+    return_args = return_args[1:]  # Strip first return value
+
+    if len(return_args) > 1:
+        return_signature = f"Tuple[{', '.join(return_args)}]"
+    else:
+        return_signature = f"{return_args[0]}"
+
+    if fail_ret is None:
+        return_signature = f"Optional[{return_signature}]"
+    else:
+        if type(fail_ret) is tuple:
+            if len(fail_ret) > 0:
+                return_signature = f"({return_signature} | Tuple{str(fail_ret).replace('(', '[').replace(')', ']')})"
+            else:
+                return_signature = f"({return_signature} | Tuple[()])"
+        else:
+            return_signature = f"({return_signature} | Literal[{fail_ret}])"
+
+    return _build_function_info(
+        current_namespace,
+        name,
+        real_function,
+        in_class,
+        needed_namespaces,
+        return_signature,
+        "CHECK Wrapped function",
+    )
+
+
+def _build_function(
+    current_namespace: str,
+    name: str,
+    function: Any,
     in_class: Optional[Any],
     needed_namespaces: set[str],
 ) -> str:
     if name.startswith("_"):
         return ""
 
+    if hasattr(function, "__wrapped__"):
+        if "strip_boolean_result" in str(function):
+            return _wrapped_strip_boolean_result(
+                current_namespace, name, function, in_class, needed_namespaces
+            )
+
     if isinstance(function, GIRepository.FunctionInfo) or isinstance(
         function, GIRepository.VFuncInfo
     ):
-        constructor: bool = False
-        method: bool = isinstance(function, GIRepository.VFuncInfo)
-        static: bool = False
-
-        # Flags
-        function_flags = function.get_flags()
-        if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
-            constructor = True
-
-        if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
-            method = True
-
-        if in_class and not method and not constructor:
-            static = True
-
-        # Arguments
-        (names, args, return_args) = _callable_get_arguments(
-            function, current_namespace, needed_namespaces, True
+        return _build_function_info(
+            current_namespace, name, function, in_class, needed_namespaces
         )
-        args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
 
-        # Return type
-        if len(return_args) > 1:
-            return_type = f"Tuple[{', '.join(return_args)}]"
-        else:
-            return_type = f"{', '.join(return_args)}"
-
-        # Generate string
-        prepend = ""
-        if constructor:
-            args_types.insert(0, "cls")
-            prepend = "@classmethod\n"
-            # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
-            rt = function.get_container().get_name()
-            if return_type != f"Optional[{rt}]":
-                return_type = rt
-        elif method:
-            args_types.insert(0, "self")
-        elif static:
-            prepend = "@staticmethod\n"
-
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
-    else:
+    signature: Optional[str] = None
+    try:
+        signature = str(inspect.signature(function))
+    except:
         if in_class:
-            definition = f"def {name}(self, *args, **kwargs): ... # FIXME Method\n"
+            signature = "(self, *args, **kwargs)"
         else:
-            definition = f"def {name}(*args, **kwargs): ... # FIXME Function\n"
-        return definition
+            signature = "(*args, **kwargs)"
+
+    definition = f"def {name}{signature}: ... # FIXME Function\n"
+
+    return definition
 
 
 def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Optional[str]:
