@@ -254,14 +254,24 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
         "from typing import Any, Callable, Literal, Optional, Tuple, Type, Sequence"
     )
 
+    typevars: list[str] = []
     imports: list[str] = []
     if "cairo" in ns:
         imports = ["import cairo"]
+        typevars.append('_SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)')
         ns.remove("cairo")
 
     imports += [f"from gi.repository import {n}" for n in sorted(ns)]
 
-    return typings + "\n\n" + "\n".join(imports) + "\n\n\n" + ret
+    return (
+        typings
+        + "\n\n"
+        + "\n".join(imports)
+        + "\n"
+        + "\n".join(typevars)
+        + "\n\n"
+        + ret
+    )
 
 
 def _generate_full_name(prefix: str, name: str) -> str:
