@@ -1,3 +1,31 @@
+# 2.5.0 (21 Mar 2023)
+
+## Feature
+
+* Add Vte (#7)
+* Add Rsvg (#116)
+
+## Improvements
+
+* generator: Make file executable
+* generator: Add TypeVar _SomeSurface
+* generator: Better hints for functions
+
+## Typing
+
+* Improve type hints for
+    - Gdk4
+    - Gio
+    - Gio
+    - Gtk3
+    - Gtk4
+    - GtkSource4
+
+## Bug Fixes
+
+* generator: Fix hash maps
+* generator: Use GObject.GInterface for ifaces
+
 # 2.4.0 (19 Feb 2023)
 
 ## Feature
