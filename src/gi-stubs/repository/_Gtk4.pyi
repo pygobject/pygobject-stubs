@@ -5453,7 +5453,7 @@ class Editable(GObject.GInterface):
     def get_position(self) -> int: ...
     def get_selection_bounds(
         self,
-    ) -> (Tuple[int, int] | Tuple[()]): ...  # CHECK Wrapped function
+    ) -> Tuple[int, int] | Tuple[()]: ...  # CHECK Wrapped function
     def get_text(self) -> str: ...
     def get_width_chars(self) -> int: ...
     def init_delegate(self) -> None: ...
@@ -15701,7 +15701,7 @@ class TextBuffer(GObject.Object):
     def get_selection_bound(self) -> TextMark: ...
     def get_selection_bounds(
         self,
-    ) -> (Tuple[TextIter, TextIter] | Tuple[()]): ...  # CHECK Wrapped function
+    ) -> Tuple[TextIter, TextIter] | Tuple[()]: ...  # CHECK Wrapped function
     def get_selection_content(self) -> Gdk.ContentProvider: ...
     def get_slice(
         self, start: TextIter, end: TextIter, include_hidden_chars: bool
@@ -16930,7 +16930,7 @@ class TreeSelection(GObject.Object):
 class TreeSortable(GObject.GInterface):
     def get_sort_column_id(
         self,
-    ) -> (Tuple[int, SortType] | Tuple[None, None]): ...  # CHECK Wrapped function
+    ) -> Tuple[int, SortType] | Tuple[None, None]: ...  # CHECK Wrapped function
     def has_default_sort_func(self) -> bool: ...
     def set_default_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
     def set_sort_column_id(self, sort_column_id: int, order: SortType) -> None: ...

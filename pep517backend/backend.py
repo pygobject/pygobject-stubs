@@ -50,7 +50,6 @@ DEFAULT_STUB_CONFIG = [
 def _get_settings_stub_config(
     config_settings: Optional[dict[str, str]]
 ) -> list[LibVersion]:
-
     libs = []
     if config_settings is None:
         return libs
@@ -113,7 +112,6 @@ def build_wheel(
     config_settings: Optional[dict[str, str]] = None,
     metadata_directory: Optional[str] = None,
 ) -> str:
-
     stub_config = _get_settings_stub_config(config_settings)
     if not stub_config:
         stub_config = _get_env_stub_config()

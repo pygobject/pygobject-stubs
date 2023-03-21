@@ -74,7 +74,7 @@ def _callable_get_arguments(
     if ret_type.get_array_length() >= 0:
         skip.append(ret_type.get_array_length())
 
-    for (i, arg) in enumerate(function_args):
+    for i, arg in enumerate(function_args):
         if i in skip:
             continue
 

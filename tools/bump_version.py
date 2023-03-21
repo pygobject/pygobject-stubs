@@ -36,7 +36,6 @@ def bump_pyproject_toml(current_version: str, new_version: str) -> None:
 
 
 def make_changelog(new_version: str) -> None:
-
     cmd = ["git-chglog", "--next-tag", new_version]
 
     result = subprocess.run(

@@ -11,5 +11,5 @@ jobs:
         with:
           options: "--check --verbose"
           src: "."
-          version: "~= 22.0"
+          version: "~= 23.1"
       - uses: isort/isort-action@master

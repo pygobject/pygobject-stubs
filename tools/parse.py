@@ -35,7 +35,7 @@ def _search_overridden_symbols(input: str) -> list[str]:
         if re.match(OVERRIDE_PATTERN, line):
             is_override = True
 
-        for (index, pattern) in enumerate(SYMBOLS_PATTERNS):
+        for index, pattern in enumerate(SYMBOLS_PATTERNS):
             res = re.match(pattern, line)
             if res and res["symbol"]:
                 symbol = res["symbol"]
