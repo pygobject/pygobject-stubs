@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install codespell
+          pip install codespell==2.2.4
           pip install tomli
 
       - name: Run Codespell
