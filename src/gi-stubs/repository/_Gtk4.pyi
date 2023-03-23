@@ -5,6 +5,7 @@ from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 import cairo
 from gi.repository import Gdk
@@ -19,10 +20,10 @@ from gi.repository import Pango
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 ACCESSIBLE_VALUE_UNDEFINED: int = -1
-BINARY_AGE: int = 802
+BINARY_AGE: int = 803
 IM_MODULE_EXTENSION_POINT_NAME: str = "gtk-im-module"
 INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 2
+INTERFACE_AGE: int = 3
 INVALID_LIST_POSITION: int = 4294967295
 LEVEL_BAR_OFFSET_FULL: str = "full"
 LEVEL_BAR_OFFSET_HIGH: str = "high"
@@ -30,7 +31,7 @@ LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 4
 MAX_COMPOSE_LEN: int = 7
 MEDIA_FILE_EXTENSION_POINT_NAME: str = "gtk-media-file"
-MICRO_VERSION: int = 2
+MICRO_VERSION: int = 3
 MINOR_VERSION: int = 8
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
@@ -346,25 +347,25 @@ class AboutDialog(
     class Props:
         artists: list[str]
         authors: list[str]
-        comments: str
-        copyright: str
+        comments: Optional[str]
+        copyright: Optional[str]
         documenters: list[str]
-        license: str
+        license: Optional[str]
         license_type: License
-        logo: Gdk.Paintable
-        logo_icon_name: str
-        program_name: str
-        system_information: str
-        translator_credits: str
-        version: str
-        website: str
-        website_label: str
+        logo: Optional[Gdk.Paintable]
+        logo_icon_name: Optional[str]
+        program_name: Optional[str]
+        system_information: Optional[str]
+        translator_credits: Optional[str]
+        version: Optional[str]
+        website: Optional[str]
+        website_label: Optional[str]
         wrap_license: bool
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -374,21 +375,20 @@ class AboutDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -398,7 +398,7 @@ class AboutDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -406,19 +406,20 @@ class AboutDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -562,7 +563,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -572,7 +573,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -580,13 +581,13 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -756,7 +757,7 @@ class AppChooser(GObject.GInterface):
 
 class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
     class Props:
-        heading: str
+        heading: Optional[str]
         modal: bool
         show_default_item: bool
         show_dialog_item: bool
@@ -764,7 +765,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -774,7 +775,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -782,13 +783,13 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -861,13 +862,13 @@ class AppChooserDialog(
 ):
     class Props:
         gfile: Gio.File
-        heading: str
+        heading: Optional[str]
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -877,21 +878,20 @@ class AppChooserDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -901,7 +901,7 @@ class AppChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -909,13 +909,13 @@ class AppChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -923,6 +923,7 @@ class AppChooserDialog(
         width_request: int
         accessible_role: AccessibleRole
         content_type: str
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -998,7 +999,7 @@ class AppChooserDialog(
 
 class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
     class Props:
-        default_text: str
+        default_text: Optional[str]
         show_all: bool
         show_default: bool
         show_fallback: bool
@@ -1008,7 +1009,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1018,7 +1019,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1026,13 +1027,13 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1098,18 +1099,18 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
 
 class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
     class Props:
-        active_window: Window
-        menubar: Gio.MenuModel
+        active_window: Optional[Window]
+        menubar: Optional[Gio.MenuModel]
         register_session: bool
         screensaver_active: bool
-        action_group: Gio.ActionGroup
-        application_id: str
+        application_id: Optional[str]
         flags: Gio.ApplicationFlags
         inactivity_timeout: int
         is_busy: bool
         is_registered: bool
         is_remote: bool
-        resource_base_path: str
+        resource_base_path: Optional[str]
+        action_group: Gio.ActionGroup
     props: Props = ...
     parent_instance: Gio.Application = ...
     def __init__(
@@ -1169,11 +1170,11 @@ class ApplicationWindow(
 ):
     class Props:
         show_menubar: bool
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -1183,21 +1184,20 @@ class ApplicationWindow(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1207,7 +1207,7 @@ class ApplicationWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1215,19 +1215,20 @@ class ApplicationWindow(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -1303,7 +1304,7 @@ class ApplicationWindowClass(GObject.GPointer):
 
 class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         obey_child: bool
         ratio: float
         xalign: float
@@ -1312,7 +1313,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1322,7 +1323,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1330,13 +1331,13 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1403,11 +1404,11 @@ class Assistant(
     class Props:
         pages: Gio.ListModel
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -1417,21 +1418,20 @@ class Assistant(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1441,7 +1441,7 @@ class Assistant(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1449,19 +1449,20 @@ class Assistant(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -1623,7 +1624,7 @@ class BitsetIter(GObject.GBoxed):
 
 class BookmarkList(GObject.Object, Gio.ListModel):
     class Props:
-        attributes: str
+        attributes: Optional[str]
         filename: str
         io_priority: int
         item_type: Type
@@ -1649,7 +1650,7 @@ class BookmarkListClass(GObject.GPointer):
 
 class BoolFilter(Filter):
     class Props:
-        expression: Expression
+        expression: Optional[Expression]
         invert: bool
     props: Props = ...
     def __init__(self, expression: Expression = ..., invert: bool = ...): ...
@@ -1682,7 +1683,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1692,7 +1693,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1700,13 +1701,13 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1840,9 +1841,9 @@ class BuildableParser(GObject.GPointer):
 
 class Builder(GObject.Object):
     class Props:
-        current_object: GObject.Object
+        current_object: Optional[GObject.Object]
         scope: BuilderScope
-        translation_domain: str
+        translation_domain: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -1953,8 +1954,8 @@ class BuilderClass(GObject.GPointer): ...
 class BuilderListItemFactory(ListItemFactory):
     class Props:
         bytes: GLib.Bytes
-        resource: str
-        scope: BuilderScope
+        resource: Optional[str]
+        scope: Optional[BuilderScope]
     props: Props = ...
     def __init__(
         self, bytes: GLib.Bytes = ..., resource: str = ..., scope: BuilderScope = ...
@@ -1985,16 +1986,16 @@ class BuilderScopeInterface(GObject.GPointer):
 
 class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         has_frame: bool
-        icon_name: str
-        label: str
+        icon_name: Optional[str]
+        label: Optional[str]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -2004,7 +2005,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2012,20 +2013,20 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
     props: Props = ...
     parent_instance: Widget = ...
@@ -2122,7 +2123,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -2132,7 +2133,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2140,13 +2141,13 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -2218,9 +2219,9 @@ class CallbackActionClass(GObject.GPointer): ...
 
 class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     class Props:
-        edit_widget: CellEditable
-        edited_cell: CellRenderer
-        focus_cell: CellRenderer
+        edit_widget: Optional[CellEditable]
+        edited_cell: Optional[CellRenderer]
+        focus_cell: Optional[CellRenderer]
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     def __init__(self, focus_cell: CellRenderer = ...): ...
@@ -2437,9 +2438,9 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
 class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
     class Props:
         spacing: int
-        edit_widget: CellEditable
-        edited_cell: CellRenderer
-        focus_cell: CellRenderer
+        edit_widget: Optional[CellEditable]
+        edited_cell: Optional[CellRenderer]
+        focus_cell: Optional[CellRenderer]
         orientation: Orientation
     props: Props = ...
     def __init__(
@@ -2608,7 +2609,6 @@ class CellLayoutIface(GObject.GPointer):
 
 class CellRenderer(GObject.InitiallyUnowned):
     class Props:
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -2623,6 +2623,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: CellRendererPrivate = ...
@@ -2751,7 +2752,6 @@ class CellRendererAccel(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_rgba: Gdk.RGBA
         background_set: bool
         editable: bool
@@ -2762,12 +2762,10 @@ class CellRendererAccel(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -2794,7 +2792,6 @@ class CellRendererAccel(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -2809,6 +2806,10 @@ class CellRendererAccel(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -2943,7 +2944,6 @@ class CellRendererCombo(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_rgba: Gdk.RGBA
         background_set: bool
         editable: bool
@@ -2954,12 +2954,10 @@ class CellRendererCombo(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -2986,7 +2984,6 @@ class CellRendererCombo(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3001,6 +2998,10 @@ class CellRendererCombo(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3076,11 +3077,9 @@ class CellRendererPixbuf(CellRenderer):
         gicon: Gio.Icon
         icon_name: str
         icon_size: IconSize
-        pixbuf: GdkPixbuf.Pixbuf
         pixbuf_expander_closed: GdkPixbuf.Pixbuf
         pixbuf_expander_open: GdkPixbuf.Pixbuf
         texture: Gdk.Texture
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3095,6 +3094,8 @@ class CellRendererPixbuf(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        pixbuf: GdkPixbuf.Pixbuf
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3133,7 +3134,6 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float
         text_yalign: float
         value: int
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3149,6 +3149,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         yalign: float
         ypad: int
         orientation: Orientation
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3185,7 +3186,6 @@ class CellRendererSpin(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_rgba: Gdk.RGBA
         background_set: bool
         editable: bool
@@ -3196,12 +3196,10 @@ class CellRendererSpin(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -3228,7 +3226,6 @@ class CellRendererSpin(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3243,6 +3240,10 @@ class CellRendererSpin(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3318,7 +3319,6 @@ class CellRendererSpinner(CellRenderer):
         active: bool
         pulse: int
         size: IconSize
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3333,6 +3333,7 @@ class CellRendererSpinner(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3362,7 +3363,6 @@ class CellRendererText(CellRenderer):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_rgba: Gdk.RGBA
         background_set: bool
         editable: bool
@@ -3373,12 +3373,10 @@ class CellRendererText(CellRenderer):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -3405,7 +3403,6 @@ class CellRendererText(CellRenderer):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3420,6 +3417,10 @@ class CellRendererText(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     parent: CellRenderer = ...
     def __init__(
@@ -3501,7 +3502,6 @@ class CellRendererToggle(CellRenderer):
         active: bool
         inconsistent: bool
         radio: bool
-        cell_background: str
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -3516,6 +3516,7 @@ class CellRendererToggle(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     def __init__(
         self,
@@ -3553,12 +3554,12 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         cell_area_context: CellAreaContext
         draw_sensitive: bool
         fit_model: bool
-        model: TreeModel
+        model: Optional[TreeModel]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3568,7 +3569,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3576,13 +3577,13 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -3656,7 +3657,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3666,7 +3667,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3674,13 +3675,13 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -3757,16 +3758,15 @@ class CenterLayoutClass(GObject.GPointer):
 class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
         active: bool
-        child: Widget
-        group: CheckButton
+        child: Optional[Widget]
         inconsistent: bool
-        label: str
+        label: Optional[str]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3776,7 +3776,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3784,21 +3784,22 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
+        group: CheckButton
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -3887,7 +3888,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3897,7 +3898,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3905,13 +3906,13 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -3994,11 +3995,11 @@ class ColorChooserDialog(
     class Props:
         show_editor: bool
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -4008,21 +4009,20 @@ class ColorChooserDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4032,7 +4032,7 @@ class ColorChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4040,13 +4040,13 @@ class ColorChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -4055,6 +4055,7 @@ class ColorChooserDialog(
         accessible_role: AccessibleRole
         rgba: Gdk.RGBA
         use_alpha: bool
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -4138,7 +4139,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4148,7 +4149,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4156,13 +4157,13 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -4215,17 +4216,17 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     class Props:
         columns: Gio.ListModel
         enable_rubberband: bool
-        model: SelectionModel
+        model: Optional[SelectionModel]
         reorderable: bool
         show_column_separators: bool
         show_row_separators: bool
         single_click_activate: bool
-        sorter: Sorter
+        sorter: Optional[Sorter]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4235,7 +4236,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4243,22 +4244,22 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -4331,14 +4332,14 @@ class ColumnViewClass(GObject.GPointer): ...
 
 class ColumnViewColumn(GObject.Object):
     class Props:
-        column_view: ColumnView
+        column_view: Optional[ColumnView]
         expand: bool
-        factory: ListItemFactory
+        factory: Optional[ListItemFactory]
         fixed_width: int
-        header_menu: Gio.MenuModel
+        header_menu: Optional[Gio.MenuModel]
         resizable: bool
-        sorter: Sorter
-        title: str
+        sorter: Optional[Sorter]
+        title: Optional[str]
         visible: bool
     props: Props = ...
     def __init__(
@@ -4381,21 +4382,21 @@ class ComboBox(
 ):
     class Props:
         active: int
-        active_id: str
+        active_id: Optional[str]
         button_sensitivity: SensitivityType
-        child: Widget
+        child: Optional[Widget]
         entry_text_column: int
         has_entry: bool
         has_frame: bool
         id_column: int
-        model: TreeModel
+        model: Optional[TreeModel]
         popup_fixed_width: bool
         popup_shown: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4405,7 +4406,7 @@ class ComboBox(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4413,13 +4414,13 @@ class ComboBox(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -4522,21 +4523,21 @@ class ComboBoxText(
 ):
     class Props:
         active: int
-        active_id: str
+        active_id: Optional[str]
         button_sensitivity: SensitivityType
-        child: Widget
+        child: Optional[Widget]
         entry_text_column: int
         has_entry: bool
         has_frame: bool
         id_column: int
-        model: TreeModel
+        model: Optional[TreeModel]
         popup_fixed_width: bool
         popup_shown: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4546,7 +4547,7 @@ class ComboBoxText(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4554,13 +4555,13 @@ class ComboBoxText(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -4637,10 +4638,10 @@ class Constraint(GObject.Object):
         constant: float
         multiplier: float
         relation: ConstraintRelation
-        source: ConstraintTarget
+        source: Optional[ConstraintTarget]
         source_attribute: ConstraintAttribute
         strength: int
-        target: ConstraintTarget
+        target: Optional[ConstraintTarget]
         target_attribute: ConstraintAttribute
     props: Props = ...
     def __init__(
@@ -4696,7 +4697,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
         max_width: int
         min_height: int
         min_width: int
-        name: str
+        name: Optional[str]
         nat_height: int
         nat_width: int
         strength: ConstraintStrength
@@ -4837,11 +4838,11 @@ class Dialog(
 ):
     class Props:
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -4851,21 +4852,20 @@ class Dialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4875,7 +4875,7 @@ class Dialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4883,19 +4883,20 @@ class Dialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -4978,9 +4979,9 @@ class DialogClass(GObject.GPointer):
 
 class DirectoryList(GObject.Object, Gio.ListModel):
     class Props:
-        attributes: str
-        error: GLib.Error
-        file: Gio.File
+        attributes: Optional[str]
+        error: Optional[GLib.Error]
+        file: Optional[Gio.File]
         io_priority: int
         item_type: Type
         loading: bool
@@ -5014,12 +5015,12 @@ class DirectoryListClass(GObject.GPointer):
 
 class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5029,7 +5030,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5037,13 +5038,13 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5102,12 +5103,12 @@ class DragIconClass(GObject.GPointer):
 class DragSource(GestureSingle):
     class Props:
         actions: Gdk.DragAction
-        content: Gdk.ContentProvider
+        content: Optional[Gdk.ContentProvider]
         button: int
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -5146,7 +5147,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5156,7 +5157,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5164,13 +5165,13 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5233,9 +5234,9 @@ class DrawingAreaClass(GObject.GPointer):
 class DropControllerMotion(EventController):
     class Props:
         contains_pointer: bool
-        drop: Gdk.Drop
+        drop: Optional[Gdk.Drop]
         is_pointer: bool
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -5257,18 +5258,18 @@ class DropControllerMotionClass(GObject.GPointer): ...
 class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         enable_search: bool
-        expression: Expression
-        factory: ListItemFactory
-        list_factory: ListItemFactory
-        model: Gio.ListModel
+        expression: Optional[Expression]
+        factory: Optional[ListItemFactory]
+        list_factory: Optional[ListItemFactory]
+        model: Optional[Gio.ListModel]
         selected: int
-        selected_item: GObject.Object
+        selected_item: Optional[GObject.Object]
         show_arrow: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5278,7 +5279,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5286,13 +5287,13 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5370,11 +5371,11 @@ class DropDownClass(GObject.GPointer):
 class DropTarget(EventController):
     class Props:
         actions: Gdk.DragAction
-        current_drop: Gdk.Drop
-        formats: Gdk.ContentFormats
+        current_drop: Optional[Gdk.Drop]
+        formats: Optional[Gdk.ContentFormats]
         preload: bool
-        value: Any
-        name: str
+        value: Optional[Any]
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -5405,8 +5406,8 @@ class DropTarget(EventController):
 class DropTargetAsync(EventController):
     class Props:
         actions: Gdk.DragAction
-        formats: Gdk.ContentFormats
-        name: str
+        formats: Optional[Gdk.ContentFormats]
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -5490,7 +5491,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5500,7 +5501,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5508,13 +5509,13 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5585,7 +5586,7 @@ class EmojiChooser(
     class Props:
         autohide: bool
         cascade_popdown: bool
-        child: Widget
+        child: Optional[Widget]
         default_widget: Widget
         has_arrow: bool
         mnemonics_visible: bool
@@ -5595,7 +5596,7 @@ class EmojiChooser(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5605,7 +5606,7 @@ class EmojiChooser(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5613,13 +5614,13 @@ class EmojiChooser(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5676,11 +5677,11 @@ class EmojiChooserClass(GObject.GPointer): ...
 class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Editable):
     class Props:
         activates_default: bool
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         buffer: EntryBuffer
-        completion: EntryCompletion
+        completion: Optional[EntryCompletion]
         enable_emoji_completion: bool
-        extra_menu: Gio.MenuModel
+        extra_menu: Optional[Gio.MenuModel]
         has_frame: bool
         im_module: str
         input_hints: InputHints
@@ -5689,7 +5690,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         invisible_char_set: bool
         max_length: int
         overwrite_mode: bool
-        placeholder_text: str
+        placeholder_text: Optional[str]
         primary_icon_activatable: bool
         primary_icon_gicon: Gio.Icon
         primary_icon_name: str
@@ -5710,7 +5711,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         secondary_icon_tooltip_markup: str
         secondary_icon_tooltip_text: str
         show_emoji_icon: bool
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         text_length: int
         truncate_multiline: bool
         visibility: bool
@@ -5718,7 +5719,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -5728,7 +5729,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5736,13 +5737,13 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -5975,7 +5976,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
-        model: TreeModel
+        model: Optional[TreeModel]
         popup_completion: bool
         popup_set_width: bool
         popup_single_match: bool
@@ -6022,7 +6023,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
 
 class EventController(GObject.Object):
     class Props:
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6053,7 +6054,7 @@ class EventControllerFocus(EventController):
     class Props:
         contains_focus: bool
         is_focus: bool
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6073,7 +6074,7 @@ class EventControllerFocusClass(GObject.GPointer): ...
 
 class EventControllerKey(EventController):
     class Props:
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6095,7 +6096,7 @@ class EventControllerKeyClass(GObject.GPointer): ...
 
 class EventControllerLegacy(EventController):
     class Props:
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6115,7 +6116,7 @@ class EventControllerMotion(EventController):
     class Props:
         contains_pointer: bool
         is_pointer: bool
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6136,7 +6137,7 @@ class EventControllerMotionClass(GObject.GPointer): ...
 class EventControllerScroll(EventController):
     class Props:
         flags: EventControllerScrollFlags
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -6168,10 +6169,10 @@ class EveryFilterClass(GObject.GPointer): ...
 
 class Expander(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         expanded: bool
-        label: str
-        label_widget: Widget
+        label: Optional[str]
+        label_widget: Optional[Widget]
         resize_toplevel: bool
         use_markup: bool
         use_underline: bool
@@ -6179,7 +6180,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6189,7 +6190,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6197,13 +6198,13 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6340,11 +6341,11 @@ class FileChooserDialog(
 ):
     class Props:
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -6354,21 +6355,20 @@ class FileChooserDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6378,7 +6378,7 @@ class FileChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6386,13 +6386,13 @@ class FileChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6401,10 +6401,11 @@ class FileChooserDialog(
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
-        filter: FileFilter
+        filter: Optional[FileFilter]
         filters: Gio.ListModel
         select_multiple: bool
         shortcut_folders: Gio.ListModel
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -6470,15 +6471,15 @@ class FileChooserDialog(
 
 class FileChooserNative(NativeDialog, FileChooser):
     class Props:
-        accept_label: str
-        cancel_label: str
+        accept_label: Optional[str]
+        cancel_label: Optional[str]
         modal: bool
-        title: str
-        transient_for: Window
+        title: Optional[str]
+        transient_for: Optional[Window]
         visible: bool
         action: FileChooserAction
         create_folders: bool
-        filter: FileFilter
+        filter: Optional[FileFilter]
         filters: Gio.ListModel
         select_multiple: bool
         shortcut_folders: Gio.ListModel
@@ -6521,7 +6522,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6531,7 +6532,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6539,13 +6540,13 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6554,7 +6555,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
-        filter: FileFilter
+        filter: Optional[FileFilter]
         filters: Gio.ListModel
         select_multiple: bool
         shortcut_folders: Gio.ListModel
@@ -6602,7 +6603,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
 
 class FileFilter(Filter, Buildable):
     class Props:
-        name: str
+        name: Optional[str]
     props: Props = ...
     def __init__(self, name: str = ...): ...
     def add_mime_type(self, mime_type: str) -> None: ...
@@ -6641,10 +6642,10 @@ class FilterClass(GObject.GPointer):
 
 class FilterListModel(GObject.Object, Gio.ListModel):
     class Props:
-        filter: Filter
+        filter: Optional[Filter]
         incremental: bool
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
         pending: int
     props: Props = ...
@@ -6672,7 +6673,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6682,7 +6683,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6690,13 +6691,13 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6759,7 +6760,7 @@ class FixedLayout(LayoutManager):
 
 class FixedLayoutChild(LayoutChild):
     class Props:
-        transform: Gsk.Transform
+        transform: Optional[Gsk.Transform]
         child_widget: Widget
         layout_manager: LayoutManager
     props: Props = ...
@@ -6781,7 +6782,7 @@ class FixedLayoutClass(GObject.GPointer):
 class FlattenListModel(GObject.Object, Gio.ListModel):
     class Props:
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
@@ -6808,7 +6809,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6818,7 +6819,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6826,13 +6827,13 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6930,12 +6931,12 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
 
 class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6945,7 +6946,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6953,13 +6954,13 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7026,7 +7027,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7036,7 +7037,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7044,21 +7045,21 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: str
-        font_desc: Pango.FontDescription
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
@@ -7156,11 +7157,11 @@ class FontChooserDialog(
 ):
     class Props:
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -7170,21 +7171,20 @@ class FontChooserDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7194,7 +7194,7 @@ class FontChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7202,26 +7202,27 @@ class FontChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: str
-        font_desc: Pango.FontDescription
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -7309,7 +7310,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7319,7 +7320,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7327,21 +7328,21 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: str
-        font_desc: Pango.FontDescription
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
@@ -7392,15 +7393,15 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
 
 class Frame(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
-        label: str
-        label_widget: Widget
+        child: Optional[Widget]
+        label: Optional[str]
+        label_widget: Optional[Widget]
         label_xalign: float
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7410,7 +7411,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7418,13 +7419,13 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7490,7 +7491,7 @@ class FrameClass(GObject.GPointer):
 class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         auto_render: bool
-        context: Gdk.GLContext
+        context: Optional[Gdk.GLContext]
         has_depth_buffer: bool
         has_stencil_buffer: bool
         use_es: bool
@@ -7498,7 +7499,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7508,7 +7509,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7516,13 +7517,13 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7599,7 +7600,7 @@ class GLAreaClass(GObject.GPointer):
 class Gesture(EventController):
     class Props:
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7645,7 +7646,7 @@ class GestureClick(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7671,7 +7672,7 @@ class GestureDrag(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7700,7 +7701,7 @@ class GestureLongPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7730,7 +7731,7 @@ class GesturePan(GestureDrag):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7756,7 +7757,7 @@ class GesturePanClass(GObject.GPointer): ...
 class GestureRotate(Gesture):
     class Props:
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7780,7 +7781,7 @@ class GestureSingle(Gesture):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7812,7 +7813,7 @@ class GestureStylus(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7842,7 +7843,7 @@ class GestureSwipe(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7866,7 +7867,7 @@ class GestureSwipeClass(GObject.GPointer): ...
 class GestureZoom(Gesture):
     class Props:
         n_points: int
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -7895,7 +7896,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7905,7 +7906,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7913,13 +7914,13 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8075,17 +8076,17 @@ class GridView(
 ):
     class Props:
         enable_rubberband: bool
-        factory: ListItemFactory
+        factory: Optional[ListItemFactory]
         max_columns: int
         min_columns: int
-        model: SelectionModel
+        model: Optional[SelectionModel]
         single_click_activate: bool
         orientation: Orientation
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8095,7 +8096,7 @@ class GridView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8103,22 +8104,22 @@ class GridView(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -8188,14 +8189,14 @@ class GridViewClass(GObject.GPointer): ...
 
 class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        decoration_layout: str
+        decoration_layout: Optional[str]
         show_title_buttons: bool
-        title_widget: Widget
+        title_widget: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8205,7 +8206,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8213,13 +8214,13 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8407,8 +8408,8 @@ class IMMulticontextPrivate(GObject.GPointer): ...
 
 class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
     class Props:
-        file: Gio.File
-        icon_name: str
+        file: Optional[Gio.File]
+        icon_name: Optional[str]
         is_symbolic: bool
     props: Props = ...
     def __init__(
@@ -8422,10 +8423,10 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
 
 class IconTheme(GObject.Object):
     class Props:
-        display: Gdk.Display
+        display: Optional[Gdk.Display]
         icon_names: list[str]
-        resource_path: list[str]
-        search_path: list[str]
+        resource_path: Optional[list[str]]
+        search_path: Optional[list[str]]
         theme_name: str
     props: Props = ...
     def __init__(
@@ -8481,7 +8482,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         item_width: int
         margin: int
         markup_column: int
-        model: TreeModel
+        model: Optional[TreeModel]
         pixbuf_column: int
         reorderable: bool
         row_spacing: int
@@ -8493,7 +8494,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8503,7 +8504,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8511,22 +8512,22 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -8678,10 +8679,10 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
 class Image(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         file: str
-        gicon: Gio.Icon
-        icon_name: str
+        gicon: Optional[Gio.Icon]
+        icon_name: Optional[str]
         icon_size: IconSize
-        paintable: Gdk.Paintable
+        paintable: Optional[Gdk.Paintable]
         pixel_size: int
         resource: str
         storage_type: ImageType
@@ -8690,7 +8691,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8700,7 +8701,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8708,13 +8709,13 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8802,7 +8803,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8812,7 +8813,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8820,13 +8821,13 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8889,13 +8890,12 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
 
 class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        attributes: Pango.AttrList
-        markup: str
+        attributes: Optional[Pango.AttrList]
         min_chars: int
         min_lines: int
         nat_chars: int
         nat_lines: int
-        text: str
+        text: Optional[str]
         text_overflow: InscriptionOverflow
         wrap_mode: Pango.WrapMode
         xalign: float
@@ -8904,7 +8904,7 @@ class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8914,7 +8914,7 @@ class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8922,19 +8922,20 @@ class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        markup: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -9022,19 +9023,19 @@ class KeyvalTriggerClass(GObject.GPointer): ...
 
 class Label(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         ellipsize: Pango.EllipsizeMode
-        extra_menu: Gio.MenuModel
+        extra_menu: Optional[Gio.MenuModel]
         justify: Justification
         label: str
         lines: int
         max_width_chars: int
         mnemonic_keyval: int
-        mnemonic_widget: Widget
+        mnemonic_widget: Optional[Widget]
         natural_wrap_mode: NaturalWrapMode
         selectable: bool
         single_line_mode: bool
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         use_markup: bool
         use_underline: bool
         width_chars: int
@@ -9046,7 +9047,7 @@ class Label(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9056,7 +9057,7 @@ class Label(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9064,13 +9065,13 @@ class Label(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9248,7 +9249,7 @@ class LevelBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9258,7 +9259,7 @@ class LevelBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9266,13 +9267,13 @@ class LevelBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9342,16 +9343,16 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
         uri: str
         visited: bool
-        child: Widget
+        child: Optional[Widget]
         has_frame: bool
-        icon_name: str
-        label: str
+        icon_name: Optional[str]
+        label: Optional[str]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9361,7 +9362,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9369,20 +9370,20 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
     props: Props = ...
     def __init__(
@@ -9443,7 +9444,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9453,7 +9454,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9461,22 +9462,22 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -9530,7 +9531,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9540,7 +9541,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9548,13 +9549,13 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9647,13 +9648,13 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
 class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
         activatable: bool
-        child: Widget
+        child: Optional[Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9663,7 +9664,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9671,20 +9672,20 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
     props: Props = ...
     parent_instance: Widget = ...
@@ -9749,8 +9750,8 @@ class ListBoxRowClass(GObject.GPointer):
 class ListItem(GObject.Object):
     class Props:
         activatable: bool
-        child: Widget
-        item: GObject.Object
+        child: Optional[Widget]
+        item: Optional[GObject.Object]
         position: int
         selectable: bool
         selected: bool
@@ -9816,8 +9817,8 @@ class ListView(
 ):
     class Props:
         enable_rubberband: bool
-        factory: ListItemFactory
-        model: SelectionModel
+        factory: Optional[ListItemFactory]
+        model: Optional[SelectionModel]
         show_separators: bool
         single_click_activate: bool
         orientation: Orientation
@@ -9825,7 +9826,7 @@ class ListView(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9835,7 +9836,7 @@ class ListView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9843,22 +9844,22 @@ class ListView(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -9925,22 +9926,22 @@ class ListViewClass(GObject.GPointer): ...
 
 class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
-        permission: Gio.Permission
+        permission: Optional[Gio.Permission]
         text_lock: str
         text_unlock: str
         tooltip_lock: str
         tooltip_not_authorized: str
         tooltip_unlock: str
-        child: Widget
+        child: Optional[Widget]
         has_frame: bool
-        icon_name: str
-        label: str
+        icon_name: Optional[str]
+        label: Optional[str]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9950,7 +9951,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9958,20 +9959,20 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
     props: Props = ...
     def __init__(
@@ -10029,7 +10030,7 @@ class MapListModel(GObject.Object, Gio.ListModel):
     class Props:
         has_map: bool
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
@@ -10052,12 +10053,12 @@ class MapListModelClass(GObject.GPointer):
 
 class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        media_stream: MediaStream
+        media_stream: Optional[MediaStream]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10067,7 +10068,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10075,13 +10076,13 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10133,11 +10134,11 @@ class MediaControlsClass(GObject.GPointer):
 
 class MediaFile(MediaStream, Gdk.Paintable):
     class Props:
-        file: Gio.File
-        input_stream: Gio.InputStream
+        file: Optional[Gio.File]
+        input_stream: Optional[Gio.InputStream]
         duration: int
         ended: bool
-        error: GLib.Error
+        error: Optional[GLib.Error]
         has_audio: bool
         has_video: bool
         loop: bool
@@ -10193,7 +10194,7 @@ class MediaStream(GObject.Object, Gdk.Paintable):
     class Props:
         duration: int
         ended: bool
-        error: GLib.Error
+        error: Optional[GLib.Error]
         has_audio: bool
         has_video: bool
         loop: bool
@@ -10272,20 +10273,20 @@ class MediaStreamClass(GObject.GPointer):
 class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         always_show_arrow: bool
-        child: Widget
+        child: Optional[Widget]
         direction: ArrowType
         has_frame: bool
-        icon_name: str
-        label: str
-        menu_model: Gio.MenuModel
-        popover: Popover
+        icon_name: Optional[str]
+        label: Optional[str]
+        menu_model: Optional[Gio.MenuModel]
+        popover: Optional[Popover]
         primary: bool
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10295,7 +10296,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10303,13 +10304,13 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10392,7 +10393,6 @@ class MessageDialog(
     Dialog, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
 ):
     class Props:
-        buttons: ButtonsType
         message_area: Widget
         message_type: MessageType
         secondary_text: str
@@ -10400,11 +10400,11 @@ class MessageDialog(
         text: str
         use_markup: bool
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -10414,21 +10414,20 @@ class MessageDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10438,7 +10437,7 @@ class MessageDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10446,19 +10445,21 @@ class MessageDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        buttons: ButtonsType
+        startup_id: str
     props: Props = ...
     parent_instance: Dialog = ...
     def __init__(
@@ -10550,16 +10551,16 @@ class MountOperation(Gio.MountOperation):
     class Props:
         display: Gdk.Display
         is_showing: bool
-        parent: Window
+        parent: Optional[Window]
         anonymous: bool
         choice: int
-        domain: str
+        domain: Optional[str]
         is_tcrypt_hidden_volume: bool
         is_tcrypt_system_volume: bool
-        password: str
+        password: Optional[str]
         password_save: Gio.PasswordSave
         pim: int
-        username: str
+        username: Optional[str]
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
     priv: MountOperationPrivate = ...
@@ -10607,7 +10608,7 @@ class MultiFilterClass(GObject.GPointer): ...
 class MultiSelection(GObject.Object, Gio.ListModel, SelectionModel):
     class Props:
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
@@ -10655,8 +10656,8 @@ class Native(GObject.GInterface):
 class NativeDialog(GObject.Object):
     class Props:
         modal: bool
-        title: str
-        transient_for: Window
+        title: Optional[str]
+        transient_for: Optional[Window]
         visible: bool
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -10702,7 +10703,7 @@ class NeverTriggerClass(GObject.GPointer): ...
 class NoSelection(GObject.Object, Gio.ListModel, SelectionModel):
     class Props:
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
@@ -10717,7 +10718,7 @@ class NoSelectionClass(GObject.GPointer):
 class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         enable_popup: bool
-        group_name: str
+        group_name: Optional[str]
         page: int
         pages: Gio.ListModel
         scrollable: bool
@@ -10728,7 +10729,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10738,7 +10739,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10746,13 +10747,13 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10907,7 +10908,7 @@ class NothingActionClass(GObject.GPointer): ...
 
 class NumericSorter(Sorter):
     class Props:
-        expression: Expression
+        expression: Optional[Expression]
         sort_order: SortType
     props: Props = ...
     def __init__(self, expression: Expression = ..., sort_order: SortType = ...): ...
@@ -10935,12 +10936,12 @@ class OrientableIface(GObject.GPointer):
 
 class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10950,7 +10951,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10958,13 +10959,13 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11057,7 +11058,7 @@ class PadController(EventController):
     class Props:
         action_group: Gio.ActionGroup
         pad: Gdk.Device
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
@@ -11129,11 +11130,11 @@ class PageSetupUnixDialog(
 ):
     class Props:
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -11143,21 +11144,20 @@ class PageSetupUnixDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11167,7 +11167,7 @@ class PageSetupUnixDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11175,19 +11175,20 @@ class PageSetupUnixDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -11259,7 +11260,7 @@ class PageSetupUnixDialog(
 
 class Paned(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
-        end_child: Widget
+        end_child: Optional[Widget]
         max_position: int
         min_position: int
         position: int
@@ -11268,13 +11269,13 @@ class Paned(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         resize_start_child: bool
         shrink_end_child: bool
         shrink_start_child: bool
-        start_child: Widget
+        start_child: Optional[Widget]
         wide_handle: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11284,7 +11285,7 @@ class Paned(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11292,13 +11293,13 @@ class Paned(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11416,14 +11417,14 @@ class ParamSpecExpression(GObject.ParamSpec):
 class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     class Props:
         activates_default: bool
-        extra_menu: Gio.MenuModel
+        extra_menu: Optional[Gio.MenuModel]
         placeholder_text: str
         show_peek_icon: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11433,7 +11434,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11441,13 +11442,13 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11530,17 +11531,17 @@ class PasswordEntryClass(GObject.GPointer): ...
 
 class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        alternative_text: str
+        alternative_text: Optional[str]
         can_shrink: bool
         content_fit: ContentFit
-        file: Gio.File
+        file: Optional[Gio.File]
         keep_aspect_ratio: bool
-        paintable: Gdk.Paintable
+        paintable: Optional[Gdk.Paintable]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11550,7 +11551,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11558,13 +11559,13 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11648,7 +11649,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     class Props:
         autohide: bool
         cascade_popdown: bool
-        child: Widget
+        child: Optional[Widget]
         default_widget: Widget
         has_arrow: bool
         mnemonics_visible: bool
@@ -11658,7 +11659,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11668,7 +11669,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11676,13 +11677,13 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11767,11 +11768,11 @@ class PopoverMenu(
     Popover, Accessible, Buildable, ConstraintTarget, Native, ShortcutManager
 ):
     class Props:
-        menu_model: Gio.MenuModel
+        menu_model: Optional[Gio.MenuModel]
         visible_submenu: str
         autohide: bool
         cascade_popdown: bool
-        child: Widget
+        child: Optional[Widget]
         default_widget: Widget
         has_arrow: bool
         mnemonics_visible: bool
@@ -11781,7 +11782,7 @@ class PopoverMenu(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11791,7 +11792,7 @@ class PopoverMenu(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11799,13 +11800,13 @@ class PopoverMenu(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11869,12 +11870,12 @@ class PopoverMenu(
 
 class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        menu_model: Gio.MenuModel
+        menu_model: Optional[Gio.MenuModel]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11884,7 +11885,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11892,13 +11893,13 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12030,10 +12031,10 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         embed_page_setup: bool
         export_filename: str
         has_selection: bool
-        job_name: str
-        n_pages: int
+        job_name: Optional[str]
+        n_pages: Optional[int]
         n_pages_to_print: int
-        print_settings: PrintSettings
+        print_settings: Optional[PrintSettings]
         show_progress: bool
         status: PrintStatus
         status_string: str
@@ -12260,14 +12261,14 @@ class PrintUnixDialog(
         manual_capabilities: PrintCapabilities
         page_setup: PageSetup
         print_settings: PrintSettings
-        selected_printer: Printer
+        selected_printer: Optional[Printer]
         support_selection: bool
         use_header_bar: int
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -12277,21 +12278,20 @@ class PrintUnixDialog(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12301,7 +12301,7 @@ class PrintUnixDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12309,19 +12309,20 @@ class PrintUnixDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -12463,12 +12464,12 @@ class ProgressBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         inverted: bool
         pulse_step: float
         show_text: bool
-        text: str
+        text: Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12478,7 +12479,7 @@ class ProgressBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12486,13 +12487,13 @@ class ProgressBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12587,7 +12588,7 @@ class Range(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12597,7 +12598,7 @@ class Range(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12605,13 +12606,13 @@ class Range(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12784,7 +12785,7 @@ class Requisition(GObject.GBoxed):
 
 class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         child_revealed: bool
         reveal_child: bool
         transition_duration: int
@@ -12793,7 +12794,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12803,7 +12804,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12811,13 +12812,13 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12897,7 +12898,7 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12907,7 +12908,7 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12915,13 +12916,13 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13005,13 +13006,13 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
 class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
         adjustment: Adjustment
-        icons: list[str]
+        icons: Optional[list[str]]
         value: float
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13021,7 +13022,7 @@ class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13029,13 +13030,13 @@ class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13128,7 +13129,7 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13138,7 +13139,7 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13146,13 +13147,13 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13205,7 +13206,7 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
 
 class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         hadjustment: Adjustment
         has_frame: bool
         hscrollbar_policy: PolicyType
@@ -13224,7 +13225,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13234,7 +13235,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13242,13 +13243,13 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13342,15 +13343,15 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
 
 class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
-        key_capture_widget: Widget
+        child: Optional[Widget]
+        key_capture_widget: Optional[Widget]
         search_mode_enabled: bool
         show_close_button: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13360,7 +13361,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13368,13 +13369,13 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13440,7 +13441,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13450,7 +13451,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13458,13 +13459,13 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13532,7 +13533,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
 class SelectionFilterModel(GObject.Object, Gio.ListModel):
     class Props:
         item_type: Type
-        model: SelectionModel
+        model: Optional[SelectionModel]
         n_items: int
     props: Props = ...
     def __init__(self, model: SelectionModel = ...): ...
@@ -13577,7 +13578,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13587,7 +13588,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13595,13 +13596,13 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13761,9 +13762,9 @@ class Settings(GObject.Object, StyleProvider):
 
 class Shortcut(GObject.Object):
     class Props:
-        action: ShortcutAction
-        arguments: GLib.Variant
-        trigger: ShortcutTrigger
+        action: Optional[ShortcutAction]
+        arguments: Optional[GLib.Variant]
+        trigger: Optional[ShortcutTrigger]
     props: Props = ...
     def __init__(
         self,
@@ -13805,13 +13806,13 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
     class Props:
         item_type: Type
         mnemonic_modifiers: Gdk.ModifierType
-        model: Gio.ListModel
         n_items: int
         scope: ShortcutScope
-        name: str
+        name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+        model: Gio.ListModel
     props: Props = ...
     def __init__(
         self,
@@ -13837,13 +13838,13 @@ class ShortcutControllerClass(GObject.GPointer): ...
 
 class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        accelerator: str
-        disabled_text: str
+        accelerator: Optional[str]
+        disabled_text: Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13853,7 +13854,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13861,13 +13862,13 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13941,10 +13942,8 @@ class ShortcutTriggerClass(GObject.GPointer): ...
 
 class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
-        accel_size_group: SizeGroup
         height: int
         title: str
-        title_size_group: SizeGroup
         view: str
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -13953,7 +13952,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13963,7 +13962,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -13971,13 +13970,13 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13985,6 +13984,8 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+        accel_size_group: SizeGroup
+        title_size_group: SizeGroup
     props: Props = ...
     def __init__(
         self,
@@ -14043,7 +14044,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14053,7 +14054,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14061,13 +14062,13 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14122,7 +14123,6 @@ class ShortcutsSectionClass(GObject.GPointer): ...
 
 class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        accel_size_group: SizeGroup
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -14132,12 +14132,11 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         subtitle: str
         subtitle_set: bool
         title: str
-        title_size_group: SizeGroup
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14147,7 +14146,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14155,19 +14154,21 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        accel_size_group: SizeGroup
+        title_size_group: SizeGroup
     props: Props = ...
     def __init__(
         self,
@@ -14222,11 +14223,11 @@ class ShortcutsWindow(
     class Props:
         section_name: str
         view_name: str
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -14236,21 +14237,20 @@ class ShortcutsWindow(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14260,7 +14260,7 @@ class ShortcutsWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14268,19 +14268,20 @@ class ShortcutsWindow(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     def __init__(
         self,
@@ -14363,10 +14364,10 @@ class SingleSelection(GObject.Object, Gio.ListModel, SelectionModel):
         autoselect: bool
         can_unselect: bool
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
         selected: int
-        selected_item: GObject.Object
+        selected_item: Optional[GObject.Object]
     props: Props = ...
     def __init__(
         self,
@@ -14407,7 +14408,7 @@ class SizeGroup(GObject.Object, Buildable):
 class SliceListModel(GObject.Object, Gio.ListModel):
     class Props:
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
         offset: int
         size: int
@@ -14563,10 +14564,10 @@ class SortListModel(GObject.Object, Gio.ListModel):
     class Props:
         incremental: bool
         item_type: Type
-        model: Gio.ListModel
+        model: Optional[Gio.ListModel]
         n_items: int
         pending: int
-        sorter: Sorter
+        sorter: Optional[Sorter]
     props: Props = ...
     def __init__(
         self, incremental: bool = ..., model: Gio.ListModel = ..., sorter: Sorter = ...
@@ -14629,7 +14630,7 @@ class SpinButton(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14639,7 +14640,7 @@ class SpinButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14647,13 +14648,13 @@ class SpinButton(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14760,7 +14761,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14770,7 +14771,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14778,13 +14779,13 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14842,13 +14843,13 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         transition_running: bool
         transition_type: StackTransitionType
         vhomogeneous: bool
-        visible_child: Widget
-        visible_child_name: str
+        visible_child: Optional[Widget]
+        visible_child_name: Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14858,7 +14859,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -14866,13 +14867,13 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14953,10 +14954,10 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
 class StackPage(GObject.Object, Accessible):
     class Props:
         child: Widget
-        icon_name: str
-        name: str
+        icon_name: Optional[str]
+        name: Optional[str]
         needs_attention: bool
-        title: str
+        title: Optional[str]
         use_underline: bool
         visible: bool
         accessible_role: AccessibleRole
@@ -14988,12 +14989,12 @@ class StackPage(GObject.Object, Accessible):
 
 class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        stack: Stack
+        stack: Optional[Stack]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15003,7 +15004,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -15011,13 +15012,13 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15066,12 +15067,12 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
 
 class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
-        stack: Stack
+        stack: Optional[Stack]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15081,7 +15082,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -15089,13 +15090,13 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15150,7 +15151,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15160,7 +15161,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -15168,13 +15169,13 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15225,10 +15226,10 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
 
 class StringFilter(Filter):
     class Props:
-        expression: Expression
+        expression: Optional[Expression]
         ignore_case: bool
         match_mode: StringFilterMatchMode
-        search: str
+        search: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -15278,7 +15279,7 @@ class StringObjectClass(GObject.GPointer):
 
 class StringSorter(Sorter):
     class Props:
-        expression: Expression
+        expression: Optional[Expression]
         ignore_case: bool
     props: Props = ...
     def __init__(self, expression: Expression = ..., ignore_case: bool = ...): ...
@@ -15345,7 +15346,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15355,7 +15356,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -15363,20 +15364,20 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
     props: Props = ...
     def __init__(
@@ -15457,10 +15458,10 @@ class Template:
 class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     class Props:
         activates_default: bool
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         buffer: EntryBuffer
         enable_emoji_completion: bool
-        extra_menu: Gio.MenuModel
+        extra_menu: Optional[Gio.MenuModel]
         im_module: str
         input_hints: InputHints
         input_purpose: InputPurpose
@@ -15468,17 +15469,17 @@ class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         invisible_char_set: bool
         max_length: int
         overwrite_mode: bool
-        placeholder_text: str
+        placeholder_text: Optional[str]
         propagate_text_width: bool
         scroll_offset: int
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         truncate_multiline: bool
         visibility: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15488,7 +15489,7 @@ class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -15496,13 +15497,13 @@ class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15919,7 +15920,7 @@ class TextIter(GObject.GBoxed):
 class TextMark(GObject.Object):
     class Props:
         left_gravity: bool
-        name: str
+        name: Optional[str]
     props: Props = ...
     parent_instance: GObject.Object = ...
     segment: None = ...
@@ -15942,7 +15943,6 @@ class TextTag(GObject.Object):
         accumulative_margin: bool
         allow_breaks: bool
         allow_breaks_set: bool
-        background: str
         background_full_height: bool
         background_full_height_set: bool
         background_rgba: Gdk.RGBA
@@ -15958,7 +15958,6 @@ class TextTag(GObject.Object):
         font_desc: Pango.FontDescription
         font_features: str
         font_features_set: bool
-        foreground: str
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         indent: int
@@ -15982,7 +15981,6 @@ class TextTag(GObject.Object):
         overline_rgba: Gdk.RGBA
         overline_rgba_set: bool
         overline_set: bool
-        paragraph_background: str
         paragraph_background_rgba: Gdk.RGBA
         paragraph_background_set: bool
         pixels_above_lines: int
@@ -16028,6 +16026,9 @@ class TextTag(GObject.Object):
         word_set: bool
         wrap_mode: WrapMode
         wrap_mode_set: bool
+        background: str
+        foreground: str
+        paragraph_background: str
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextTagPrivate = ...
@@ -16164,14 +16165,14 @@ class TextView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         pixels_below_lines: int
         pixels_inside_wrap: int
         right_margin: int
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         top_margin: int
         wrap_mode: WrapMode
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16181,7 +16182,7 @@ class TextView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -16189,22 +16190,22 @@ class TextView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     parent_instance: Widget = ...
@@ -16409,17 +16410,16 @@ class TextViewPrivate(GObject.GPointer): ...
 class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
         active: bool
-        group: ToggleButton
-        child: Widget
+        child: Optional[Widget]
         has_frame: bool
-        icon_name: str
-        label: str
+        icon_name: Optional[str]
+        label: Optional[str]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16429,7 +16429,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -16437,21 +16437,22 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: str
+        action_name: Optional[str]
         action_target: GLib.Variant
+        group: ToggleButton
     props: Props = ...
     button: Button = ...
     def __init__(
@@ -16546,15 +16547,15 @@ class TreeDragSourceIface(GObject.GPointer):
 
 class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         indent_for_icon: bool
-        item: GObject.Object
-        list_row: TreeListRow
+        item: Optional[GObject.Object]
+        list_row: Optional[TreeListRow]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16564,7 +16565,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -16572,13 +16573,13 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -16673,11 +16674,11 @@ class TreeListModelClass(GObject.GPointer):
 
 class TreeListRow(GObject.Object):
     class Props:
-        children: Gio.ListModel
+        children: Optional[Gio.ListModel]
         depth: int
         expandable: bool
         expanded: bool
-        item: GObject.Object
+        item: Optional[GObject.Object]
     props: Props = ...
     def __init__(self, expanded: bool = ...): ...
     def get_child_row(self, position: int) -> Optional[TreeListRow]: ...
@@ -16695,7 +16696,7 @@ class TreeListRowClass(GObject.GPointer):
 
 class TreeListRowSorter(Sorter):
     class Props:
-        sorter: Sorter
+        sorter: Optional[Sorter]
     props: Props = ...
     def __init__(self, sorter: Sorter = ...): ...
     def get_sorter(self) -> Optional[Sorter]: ...
@@ -16995,14 +16996,14 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         enable_grid_lines: TreeViewGridLines
         enable_search: bool
         enable_tree_lines: bool
-        expander_column: TreeViewColumn
+        expander_column: Optional[TreeViewColumn]
         fixed_height_mode: bool
         headers_clickable: bool
         headers_visible: bool
         hover_expand: bool
         hover_selection: bool
         level_indentation: int
-        model: TreeModel
+        model: Optional[TreeModel]
         reorderable: bool
         rubber_banding: bool
         search_column: int
@@ -17012,7 +17013,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17022,7 +17023,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -17030,22 +17031,22 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     parent_instance: Widget = ...
@@ -17317,7 +17318,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         spacing: int
         title: str
         visible: bool
-        widget: Widget
+        widget: Optional[Widget]
         width: int
         x_offset: int
     props: Props = ...
@@ -17411,14 +17412,14 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
 class Video(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         autoplay: bool
-        file: Gio.File
+        file: Optional[Gio.File]
         loop: bool
-        media_stream: MediaStream
+        media_stream: Optional[MediaStream]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17428,7 +17429,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -17436,13 +17437,13 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -17513,13 +17514,13 @@ class VideoClass(GObject.GPointer):
 
 class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         scroll_to_focus: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17529,7 +17530,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -17537,22 +17538,22 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: Adjustment
+        hadjustment: Optional[Adjustment]
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
     props: Props = ...
     def __init__(
@@ -17609,13 +17610,13 @@ class VolumeButton(ScaleButton, Accessible, Buildable, ConstraintTarget, Orienta
     class Props:
         use_symbolic: bool
         adjustment: Adjustment
-        icons: list[str]
+        icons: Optional[list[str]]
         value: float
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17625,7 +17626,7 @@ class VolumeButton(ScaleButton, Accessible, Buildable, ConstraintTarget, Orienta
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -17633,13 +17634,13 @@ class VolumeButton(ScaleButton, Accessible, Buildable, ConstraintTarget, Orienta
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -17696,7 +17697,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17706,7 +17707,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -17714,13 +17715,13 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -18072,7 +18073,7 @@ class WidgetClassPrivate(GObject.GPointer): ...
 
 class WidgetPaintable(GObject.Object, Gdk.Paintable):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
     props: Props = ...
     def __init__(self, widget: Widget = ...): ...
     def get_widget(self) -> Optional[Widget]: ...
@@ -18089,11 +18090,11 @@ class Window(
     Widget, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
 ):
     class Props:
-        application: Application
-        child: Widget
+        application: Optional[Application]
+        child: Optional[Widget]
         decorated: bool
         default_height: int
-        default_widget: Widget
+        default_widget: Optional[Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
@@ -18103,21 +18104,20 @@ class Window(
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: str
+        icon_name: Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        startup_id: str
-        title: str
-        titlebar: Widget
-        transient_for: Window
+        title: Optional[str]
+        titlebar: Optional[Widget]
+        transient_for: Optional[Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18127,7 +18127,7 @@ class Window(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -18135,19 +18135,20 @@ class Window(
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+        startup_id: str
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -18291,14 +18292,14 @@ class WindowClass(GObject.GPointer):
 
 class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        decoration_layout: str
+        decoration_layout: Optional[str]
         empty: bool
         side: PackType
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18308,7 +18309,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -18316,13 +18317,13 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -18396,12 +18397,12 @@ class WindowGroupPrivate(GObject.GPointer): ...
 
 class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
-        child: Widget
+        child: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Gdk.Cursor
+        cursor: Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18411,7 +18412,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: LayoutManager
+        layout_manager: Optional[LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -18419,13 +18420,13 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget
+        parent: Optional[Widget]
         receives_default: bool
-        root: Root
+        root: Optional[Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
