@@ -16,13 +16,15 @@ from typing import Union
 import argparse
 import importlib
 import inspect
+import itertools
 import pprint
 import re
 from types import ModuleType
 
 import gi
-import gi._gi as GIRepository
+import gi._gi as GI
 import parse
+from gi.repository import GIRepository
 from gi.repository import GObject
 
 _identifier_re = r"^[A-Za-z_]\w*$"
@@ -31,33 +33,63 @@ ObjectT = Union[ModuleType, Type[Any]]
 
 
 def _object_get_props(
-    obj: GIRepository.ObjectInfo, all: bool = False
-) -> list[GIRepository.PropertyInfo]:
-    parents: list[GIRepository.ObjectInfo] = []
-    parent: Optional[GIRepository.ObjectInfo] = obj.get_parent()
+    obj: GI.ObjectInfo,
+) -> Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
+    parents: list[GI.ObjectInfo] = []
+    parent: Optional[GI.ObjectInfo] = obj.get_parent()
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
 
-    interfaces: list[GIRepository.InterfaceInfo] = list(obj.get_interfaces())
+    interfaces: list[GI.InterfaceInfo] = list(obj.get_interfaces())
 
-    subclasses: list[GIRepository.ObjectInfo | GIRepository.InterfaceInfo] = (
-        parents + interfaces
-    )
+    subclasses: list[GI.ObjectInfo | GI.InterfaceInfo] = parents + interfaces
 
-    props: list[GIRepository.PropertyInfo] = list(obj.get_properties())
+    props: list[GI.PropertyInfo] = list(obj.get_properties())
     for s in subclasses:
         props.extend(s.get_properties())
 
-    if all:
-        return props
+    readable_props: list[GIRepository.BaseInfo] = []
+    writable_props: list[GIRepository.BaseInfo] = []
+    for prop in props:
+        repo = GIRepository.Repository.get_default()
+        namespace = prop.get_namespace()
+        container = prop.get_container()
+        class_info = repo.find_by_name(namespace, container.get_name())
+        if class_info is None:
+            raise Exception(f"Unable to find {namespace}.{container}")
 
-    props = list(filter(lambda p: (p.get_flags() & GObject.ParamFlags.WRITABLE), props))
-    return props
+        if class_info.get_type() == GIRepository.InfoType.OBJECT:
+            n_props = GIRepository.object_info_get_n_properties(class_info)
+            for i in range(n_props):
+                p: GIRepository.BaseInfo = GIRepository.object_info_get_property(
+                    class_info, i
+                )
+                if p.get_name() == prop.get_name():
+                    flags = GIRepository.property_info_get_flags(p)
+                    if flags & GObject.ParamFlags.READABLE:
+                        readable_props.append(p)
+                    if flags & GObject.ParamFlags.WRITABLE:
+                        writable_props.append(p)
+
+        if class_info.get_type() == GIRepository.InfoType.INTERFACE:
+            n_props = GIRepository.interface_info_get_n_properties(class_info)
+            for i in range(n_props):
+                p: GIRepository.BaseInfo = GIRepository.interface_info_get_property(
+                    class_info, i
+                )
+                if p.get_name() == prop.get_name():
+                    flags = GIRepository.property_info_get_flags(p)
+                    if flags & GObject.ParamFlags.READABLE:
+                        readable_props.append(p)
+                    if flags & GObject.ParamFlags.WRITABLE:
+                        writable_props.append(p)
+
+    return (readable_props, writable_props)
 
 
 def _callable_get_arguments(
-    type: GIRepository.CallbackInfo,
+    type: GI.CallbackInfo,
     current_namespace: str,
     needed_namespaces: set[str],
     can_default: bool = False,
@@ -66,7 +98,7 @@ def _callable_get_arguments(
     accept_optional_args = False
     optional_args_name = ""
     names: list[str] = []
-    args: list[GIRepository.ArgInfo] = []
+    args: list[GI.ArgInfo] = []
     str_args: list[str] = []
     return_args: list[str] = []
     skip: list[int] = []
@@ -94,19 +126,13 @@ def _callable_get_arguments(
         # Need to check because user_data can be the first arg
         if arg.get_closure() != i and arg.get_destroy() != i:
             direction = arg.get_direction()
-            if (
-                direction == GIRepository.Direction.OUT
-                or direction == GIRepository.Direction.INOUT
-            ):
+            if direction == GI.Direction.OUT or direction == GI.Direction.INOUT:
                 t = _type_to_python(
                     arg.get_type(), current_namespace, needed_namespaces, True
                 )
 
                 return_args.append(t)
-            elif (
-                direction == GIRepository.Direction.IN
-                or direction == GIRepository.Direction.INOUT
-            ):
+            elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
                 names.append(arg.get_name())
                 args.append(arg)
 
@@ -141,21 +167,61 @@ def _callable_get_arguments(
     return (names, str_args, return_args)
 
 
+class TypeInfo:
+    def __init__(
+        self,
+        obj: Any,
+        get_tag: Callable[[TypeInfo], int],
+        get_param_type: Callable[[TypeInfo, int], TypeInfo],
+        get_interface: Callable[[TypeInfo], TypeInfo],
+    ):
+        self.obj = obj
+        self._get_tag = get_tag
+        self._get_param_type = get_param_type
+        self._get_interface = get_interface
+
+    def get_tag(self) -> int:
+        return self._get_tag(self.obj)
+
+    def get_param_type(self, n: int) -> TypeInfo:
+        type = self._get_param_type(self.obj, n)
+        return TypeInfo(type, self._get_tag, self._get_param_type, self._get_interface)
+
+    def get_interface(self) -> TypeInfo:
+        type = self._get_interface(self.obj)
+        return TypeInfo(type, self._get_tag, self._get_param_type, self._get_interface)
+
+    def get_name(self) -> str:
+        return self.obj.get_name()
+
+    def get_namespace(self) -> str:
+        return self.obj.get_namespace()
+
+
+def _build_type(type: GIRepository.BaseInfo) -> TypeInfo:
+    return TypeInfo(
+        type,
+        GIRepository.type_info_get_tag,
+        GIRepository.type_info_get_param_type,
+        GIRepository.type_info_get_interface,
+    )
+
+
 def _type_to_python(
-    type: GIRepository.GTypeInfo,
+    type: TypeInfo,
     current_namespace: str,
     needed_namespaces: set[str],
     out_arg: bool = False,
 ) -> str:
     tag = type.get_tag()
-    tags = GIRepository.TypeTag
+    tags = GI.TypeTag
 
     if tag == tags.ARRAY:
         array_type = type.get_param_type(0)
         t = _type_to_python(array_type, current_namespace, needed_namespaces)
         if out_arg:
             # As output argument array of type uint8 are returned as bytes
-            if array_type.get_tag() == GIRepository.TypeTag.UINT8:
+            if array_type.get_tag() == GI.TypeTag.UINT8:
                 return f"bytes"
             return f"list[{t}]"
 
@@ -207,7 +273,7 @@ def _type_to_python(
 
     if tag == tags.INTERFACE:
         interface = type.get_interface()
-        if isinstance(interface, GIRepository.CallbackInfo):
+        if isinstance(interface, GI.CallbackInfo):
             (names, args, return_args) = _callable_get_arguments(
                 interface, current_namespace, needed_namespaces
             )
@@ -252,9 +318,7 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typings = (
-        "from typing import Any, Callable, Literal, Optional, Tuple, Type, Sequence"
-    )
+    typings = "from typing import Any, Callable, Literal, Optional, Tuple, Type, TypeVar, Sequence"
 
     typevars: list[str] = []
     imports: list[str] = []
@@ -286,22 +350,22 @@ def _generate_full_name(prefix: str, name: str) -> str:
 def _build_function_info(
     current_namespace: str,
     name: str,
-    function: (GIRepository.FunctionInfo | GIRepository.VFuncInfo),
+    function: (GI.FunctionInfo | GI.VFuncInfo),
     in_class: Optional[Any],
     needed_namespaces: set[str],
     return_signature: Optional[str] = None,
     comment: Optional[str] = None,
 ) -> str:
     constructor: bool = False
-    method: bool = isinstance(function, GIRepository.VFuncInfo)
+    method: bool = isinstance(function, GI.VFuncInfo)
     static: bool = False
 
     # Flags
     function_flags = function.get_flags()
-    if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
+    if function_flags & GI.FunctionInfoFlags.IS_CONSTRUCTOR:
         constructor = True
 
-    if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
+    if function_flags & GI.FunctionInfoFlags.IS_METHOD:
         method = True
 
     if in_class and not method and not constructor:
@@ -399,9 +463,7 @@ def _build_function(
                 current_namespace, name, function, in_class, needed_namespaces
             )
 
-    if isinstance(function, GIRepository.FunctionInfo) or isinstance(
-        function, GIRepository.VFuncInfo
-    ):
+    if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
         return _build_function_info(
             current_namespace, name, function, in_class, needed_namespaces
         )
@@ -479,9 +541,7 @@ def _gi_build_stub(
             # Check if obj was already processed
             if hasattr(in_class, "__info__"):
                 obj_info = in_class.__info__
-                if isinstance(
-                    obj_info, (GIRepository.StructInfo, GIRepository.ObjectInfo)
-                ):
+                if isinstance(obj_info, (GI.StructInfo, GI.ObjectInfo)):
                     if not (name in [f.get_name() for f in obj_info.get_fields()]):
                         constants[name] = obj
                 else:
@@ -554,14 +614,14 @@ def _gi_build_stub(
             full_name,
         )
 
-        writable_props: list[GIRepository.PropertyInfo] = []
-        all_props: list[GIRepository.ProperyInfo] = []
+        readable_props: list[GIRepository.BaseInfo] = []
+        writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
         fields: list[str] = []
         if hasattr(obj, "__info__"):
             object_info = obj.__info__  # type: ignore
 
-            if isinstance(object_info, GIRepository.StructInfo):
+            if isinstance(object_info, GI.StructInfo):
                 for f in object_info.get_fields():
                     t = _type_to_python(
                         f.get_type(), current_namespace, needed_namespaces, True
@@ -574,7 +634,7 @@ def _gi_build_stub(
                         else:
                             fields.append(f"{n}: {t}")
 
-            if isinstance(object_info, GIRepository.ObjectInfo):
+            if isinstance(object_info, GI.ObjectInfo):
                 p = object_info.get_parent()
                 if p:
                     if current_namespace == p.get_namespace():
@@ -604,10 +664,11 @@ def _gi_build_stub(
                             fields.append(f"{n}: {t}")
 
                 # Properties
-                writable_props = _object_get_props(object_info, False)
-                all_props = _object_get_props(object_info, True)
+                (rp, wp) = _object_get_props(object_info)
+                readable_props.extend(rp)
+                writable_props.extend(wp)
 
-            if isinstance(object_info, GIRepository.InterfaceInfo):
+            if isinstance(object_info, GI.InterfaceInfo):
                 if current_namespace == "GObject":
                     parents.append("Object")
                 else:
@@ -635,8 +696,8 @@ def _gi_build_stub(
         if (
             not classret
             and len(fields) == 0
+            and len(readable_props) == 0
             and len(writable_props) == 0
-            and len(all_props) == 0
         ):
             ret += f"class {name}{string_parents}: ...\n"
         else:
@@ -646,19 +707,32 @@ def _gi_build_stub(
         if props_override:
             for line in props_override.splitlines():
                 ret += "    " + line + "\n"
-        elif len(all_props) > 0:
+        elif len(readable_props) > 0 or len(writable_props) > 0:
             names: list[str] = []
             s: list[str] = []
-            for p in all_props:
+            for p in itertools.chain(readable_props, writable_props):
                 n = p.get_name().replace("-", "_")
                 if n in names:
                     # Avoid duplicates
                     continue
                 names.append(n)
-                t = _type_to_python(
-                    p.get_type(), current_namespace, needed_namespaces, True
-                )
-                s.append(f"{n}: {t}")
+                type = _build_type(GIRepository.property_info_get_type(p))
+                t = _type_to_python(type, current_namespace, needed_namespaces, True)
+
+                # Check getter/setter
+                getter = GIRepository.property_info_get_getter(p)
+                setter = GIRepository.property_info_get_setter(p)
+                if getter and GIRepository.callable_info_may_return_null(getter):
+                    s.append(f"{n}: Optional[{t}]")
+                elif setter and not getter:
+                    # If is writable only prop check if setter can accept NULL
+                    arg_info = GIRepository.callable_info_get_arg(setter, 1)
+                    if GIRepository.arg_info_may_be_null(arg_info):
+                        s.append(f"{n}: Optional[{t}]")
+                    else:
+                        s.append(f"{n}: {t}")
+                else:
+                    s.append(f"{n}: {t}")
 
             separator = "\n        "
             ret += f"    class Props:\n        {separator.join(s)}\n"
@@ -680,7 +754,8 @@ def _gi_build_stub(
                     # Avoid duplicates
                     continue
                 names.append(n)
-                t = _type_to_python(p.get_type(), current_namespace, needed_namespaces)
+                type = _build_type(GIRepository.property_info_get_type(p))
+                t = _type_to_python(type, current_namespace, needed_namespaces)
                 s.append(f"{n}: {t} = ...")
 
             separator = ",\n                 "
@@ -721,7 +796,7 @@ def _gi_build_stub(
                 continue
 
             o = getattr(obj, key)
-            if isinstance(o, GIRepository.FunctionInfo):
+            if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
                     current_namespace, key, o, obj, needed_namespaces
                 )
@@ -764,7 +839,7 @@ def _gi_build_stub(
                 continue
 
             o = getattr(obj, key)
-            if isinstance(o, GIRepository.FunctionInfo):
+            if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
                     current_namespace, key, o, obj, needed_namespaces
                 )
@@ -797,7 +872,7 @@ def _find_methods(obj: Type[Any]) -> list[str]:
     # Search for overridden methods
     if hasattr(obj, "__info__"):
         obj_info = obj.__info__  # type: ignore
-        if isinstance(obj_info, (GIRepository.ObjectInfo, GIRepository.StructInfo)):
+        if isinstance(obj_info, (GI.ObjectInfo, GI.StructInfo)):
             methods = obj_info.get_methods()
             for m in methods:
                 name = m.get_name()
