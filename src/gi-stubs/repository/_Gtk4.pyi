@@ -1110,7 +1110,7 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
         is_registered: bool
         is_remote: bool
         resource_base_path: Optional[str]
-        action_group: Gio.ActionGroup
+        action_group: Optional[Gio.ActionGroup]
     props: Props = ...
     parent_instance: Gio.Application = ...
     def __init__(
@@ -3799,7 +3799,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
-        group: CheckButton
+        group: Optional[CheckButton]
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -5587,7 +5587,7 @@ class EmojiChooser(
         autohide: bool
         cascade_popdown: bool
         child: Optional[Widget]
-        default_widget: Widget
+        default_widget: Optional[Widget]
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -11650,7 +11650,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         autohide: bool
         cascade_popdown: bool
         child: Optional[Widget]
-        default_widget: Widget
+        default_widget: Optional[Widget]
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -11773,7 +11773,7 @@ class PopoverMenu(
         autohide: bool
         cascade_popdown: bool
         child: Optional[Widget]
-        default_widget: Widget
+        default_widget: Optional[Widget]
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -12026,13 +12026,13 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     class Props:
         allow_async: bool
         current_page: int
-        custom_tab_label: str
+        custom_tab_label: Optional[str]
         default_page_setup: PageSetup
         embed_page_setup: bool
         export_filename: str
         has_selection: bool
-        job_name: Optional[str]
-        n_pages: Optional[int]
+        job_name: str
+        n_pages: int
         n_pages_to_print: int
         print_settings: Optional[PrintSettings]
         show_progress: bool
@@ -13006,7 +13006,7 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
 class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
         adjustment: Adjustment
-        icons: Optional[list[str]]
+        icons: list[str]
         value: float
         can_focus: bool
         can_target: bool
@@ -16452,7 +16452,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
-        group: ToggleButton
+        group: Optional[ToggleButton]
     props: Props = ...
     button: Button = ...
     def __init__(
@@ -17610,7 +17610,7 @@ class VolumeButton(ScaleButton, Accessible, Buildable, ConstraintTarget, Orienta
     class Props:
         use_symbolic: bool
         adjustment: Adjustment
-        icons: Optional[list[str]]
+        icons: list[str]
         value: float
         can_focus: bool
         can_target: bool
