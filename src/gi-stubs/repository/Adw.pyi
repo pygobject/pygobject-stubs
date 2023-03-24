@@ -422,7 +422,7 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
         is_registered: bool
         is_remote: bool
         resource_base_path: Optional[str]
-        action_group: Gio.ActionGroup
+        action_group: Optional[Gio.ActionGroup]
     props: Props = ...
     parent_instance: Gtk.Application = ...
     def __init__(
