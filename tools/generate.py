@@ -726,7 +726,7 @@ def _gi_build_stub(
                     s.append(f"{n}: Optional[{t}]")
                 elif setter and not getter:
                     # If is writable only prop check if setter can accept NULL
-                    arg_info = GIRepository.callable_info_get_arg(setter, 1)
+                    arg_info = GIRepository.callable_info_get_arg(setter, 0)
                     if GIRepository.arg_info_may_be_null(arg_info):
                         s.append(f"{n}: Optional[{t}]")
                     else:
