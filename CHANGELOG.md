@@ -1,3 +1,25 @@
+# 2.6.0 (08 Apr 2023)
+
+## Improvements
+
+* Generator: Correctly type optional props
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - GObject
+    - Graphene
+    - Gsk
+    - Gtk3
+    - Gtk4
+    - GtkSource5
+    - Pango
+
+## Bug Fixes
+
+* Generator: Correct arg info for setter
+
 # 2.5.0 (21 Mar 2023)
 
 ## Feature
