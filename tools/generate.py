@@ -19,6 +19,7 @@ import inspect
 import itertools
 import pprint
 import re
+import textwrap
 from types import ModuleType
 
 import gi
@@ -702,6 +703,16 @@ def _gi_build_stub(
             ret += f"class {name}{string_parents}: ...\n"
         else:
             ret += f"class {name}{string_parents}:\n"
+
+            # extracting docs
+            doc = getattr(obj, "__doc__", "") or ""
+            gdoc = getattr(obj, "__gdoc__", "") or ""
+
+            txt = doc + "\n" + gdoc
+            if txt:
+                txt = '"""' + txt + '"""' + "\n"
+                txt = textwrap.indent(txt, "    ")
+                ret += txt
 
         props_override = _check_override(full_name, "Props", overrides)
         if props_override:
