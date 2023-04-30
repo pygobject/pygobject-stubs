@@ -5,6 +5,7 @@ from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 import cairo
 from gi.repository import GdkPixbuf
@@ -2335,7 +2336,9 @@ def content_deserialize_async(
     type: Type,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[Callable[..., None]] = None,
+    callback: Optional[
+        Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+    ] = None,
     *user_data: Any,
 ) -> None: ...
 def content_deserialize_finish(result: Gio.AsyncResult) -> Tuple[bool, Any]: ...
@@ -2358,7 +2361,9 @@ def content_serialize_async(
     value: Any,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[Callable[..., None]] = None,
+    callback: Optional[
+        Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+    ] = None,
     *user_data: Any,
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
@@ -2403,15 +2408,15 @@ class ButtonEvent(Event):
 
 class CairoContext(DrawContext):
     class Props:
-        display: Display
-        surface: Surface
+        display: Optional[Display]
+        surface: Optional[Surface]
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def cairo_create(self) -> Optional[cairo.Context]: ...
 
 class Clipboard(GObject.Object):
     class Props:
-        content: ContentProvider
+        content: Optional[ContentProvider]
         display: Display
         formats: ContentFormats
         local: bool
@@ -2426,7 +2431,9 @@ class Clipboard(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -2435,14 +2442,18 @@ class Clipboard(GObject.Object):
     def read_text_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_text_finish(self, result: Gio.AsyncResult) -> Optional[str]: ...
     def read_texture_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_texture_finish(self, result: Gio.AsyncResult) -> Optional[Texture]: ...
@@ -2451,7 +2462,9 @@ class Clipboard(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
@@ -2461,7 +2474,9 @@ class Clipboard(GObject.Object):
         self,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2532,7 +2547,9 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def do_write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2553,7 +2570,9 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2590,11 +2609,11 @@ class CrossingEvent(Event):
 
 class Cursor(GObject.Object):
     class Props:
-        fallback: Cursor
+        fallback: Optional[Cursor]
         hotspot_x: int
         hotspot_y: int
-        name: str
-        texture: Texture
+        name: Optional[str]
+        texture: Optional[Texture]
     props: Props = ...
     def __init__(
         self,
@@ -2639,12 +2658,12 @@ class Device(GObject.Object):
         name: str
         num_lock_state: bool
         num_touches: int
-        product_id: str
+        product_id: Optional[str]
         scroll_lock_state: bool
         seat: Seat
         source: InputSource
         tool: DeviceTool
-        vendor_id: str
+        vendor_id: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -2718,7 +2737,7 @@ class Display(GObject.Object):
     @staticmethod
     def get_default() -> Optional[Display]: ...
     def get_default_seat(self) -> Optional[Seat]: ...
-    def get_monitor_at_surface(self, surface: Surface) -> Monitor: ...
+    def get_monitor_at_surface(self, surface: Surface) -> Optional[Monitor]: ...
     def get_monitors(self) -> Gio.ListModel: ...
     def get_name(self) -> str: ...
     def get_primary_clipboard(self) -> Clipboard: ...
@@ -2732,7 +2751,7 @@ class Display(GObject.Object):
     def map_keyval(self, keyval: int) -> Tuple[bool, list[KeymapKey]]: ...
     def notify_startup_complete(self, startup_id: str) -> None: ...
     @staticmethod
-    def open(display_name: str) -> Optional[Display]: ...
+    def open(display_name: Optional[str] = None) -> Optional[Display]: ...
     def prepare_gl(self) -> bool: ...
     def put_event(self, event: Event) -> None: ...
     def supports_input_shapes(self) -> bool: ...
@@ -2743,7 +2762,7 @@ class Display(GObject.Object):
 
 class DisplayManager(GObject.Object):
     class Props:
-        default_display: Display
+        default_display: Optional[Display]
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
@@ -2799,8 +2818,8 @@ class DragSurfaceInterface(GObject.GPointer): ...
 
 class DrawContext(GObject.Object):
     class Props:
-        display: Display
-        surface: Surface
+        display: Optional[Display]
+        surface: Optional[Surface]
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def begin_frame(self, region: cairo.Region) -> None: ...
@@ -2815,7 +2834,7 @@ class Drop(GObject.Object):
         actions: DragAction
         device: Device
         display: Display
-        drag: Drag
+        drag: Optional[Drag]
         formats: ContentFormats
         surface: Surface
     props: Props = ...
@@ -2839,7 +2858,9 @@ class Drop(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -2850,7 +2871,9 @@ class Drop(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
@@ -2916,9 +2939,9 @@ class GLContext(DrawContext):
     class Props:
         allowed_apis: GLAPI
         api: GLAPI
-        shared_context: GLContext
-        display: Display
-        surface: Surface
+        shared_context: Optional[GLContext]
+        display: Optional[Display]
+        surface: Optional[Surface]
     props: Props = ...
     def __init__(
         self,
@@ -3010,12 +3033,13 @@ class MemoryTextureClass(GObject.GPointer): ...
 
 class Monitor(GObject.Object):
     class Props:
-        connector: str
+        connector: Optional[str]
+        description: Optional[str]
         display: Display
         geometry: Rectangle
         height_mm: int
-        manufacturer: str
-        model: str
+        manufacturer: Optional[str]
+        model: Optional[str]
         refresh_rate: int
         scale_factor: int
         subpixel_layout: SubpixelLayout
@@ -3024,6 +3048,7 @@ class Monitor(GObject.Object):
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_connector(self) -> Optional[str]: ...
+    def get_description(self) -> Optional[str]: ...
     def get_display(self) -> Display: ...
     def get_geometry(self) -> Rectangle: ...
     def get_height_mm(self) -> int: ...
@@ -3156,7 +3181,7 @@ class SnapshotClass(GObject.GPointer): ...
 
 class Surface(GObject.Object):
     class Props:
-        cursor: Cursor
+        cursor: Optional[Cursor]
         display: Display
         frame_clock: FrameClock
         height: int
@@ -3212,6 +3237,7 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     def download(self, data: Sequence[int], stride: int) -> None: ...
+    def get_format(self) -> MemoryFormat: ...
     def get_height(self) -> int: ...
     def get_width(self) -> int: ...
     @classmethod
@@ -3230,6 +3256,18 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     def save_to_tiff_bytes(self) -> GLib.Bytes: ...
 
 class TextureClass(GObject.GPointer): ...
+
+class TextureDownloader(GObject.GBoxed):
+    def copy(self) -> TextureDownloader: ...
+    def download_bytes(self) -> Tuple[GLib.Bytes, int]: ...
+    def download_into(self, data: Sequence[int], stride: int) -> None: ...
+    def free(self) -> None: ...
+    def get_format(self) -> MemoryFormat: ...
+    def get_texture(self) -> Texture: ...
+    @classmethod
+    def new(cls, texture: Texture) -> TextureDownloader: ...
+    def set_format(self, format: MemoryFormat) -> None: ...
+    def set_texture(self, texture: Texture) -> None: ...
 
 class TimeCoord(GObject.GPointer):
     time: int = ...
@@ -3306,8 +3344,8 @@ class TouchpadEvent(Event):
 
 class VulkanContext(DrawContext, Gio.Initable):
     class Props:
-        display: Display
-        surface: Surface
+        display: Optional[Display]
+        surface: Optional[Surface]
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
 
