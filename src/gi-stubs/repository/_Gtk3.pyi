@@ -31,15 +31,15 @@ CellRendererT = TypeVar(
     CellRendererToggle,
 )
 
-BINARY_AGE: int = 2434
+BINARY_AGE: int = 2437
 INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 30
+INTERFACE_AGE: int = 32
 LEVEL_BAR_OFFSET_FULL: str = "full"
 LEVEL_BAR_OFFSET_HIGH: str = "high"
 LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 3
 MAX_COMPOSE_LEN: int = 7
-MICRO_VERSION: int = 34
+MICRO_VERSION: int = 37
 MINOR_VERSION: int = 24
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
@@ -294,6 +294,7 @@ TEXT_VIEW_PRIORITY_VALIDATE: int = 125
 TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: int = -1
 TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: int = -2
 _introspection_module = ...  # FIXME Constant
+_lock = ...  # FIXME Constant
 _namespace: str = "Gtk"
 _overrides_module = ...  # FIXME Constant
 _version: str = "3.0"
@@ -914,7 +915,7 @@ def show_uri_on_window(parent: Optional[Window], uri: str, timestamp: int) -> bo
 def stock_add(items: Sequence[StockItem]) -> None: ...
 def stock_add_static(items: Sequence[StockItem]) -> None: ...
 def stock_list_ids() -> list[str]: ...
-def stock_lookup(*args, **kwargs): ...  # FIXME Function
+def stock_lookup(stock_id: str) -> Optional[StockItem]: ...  # CHECK Wrapped function
 def stock_set_translate_func(
     domain: str, func: Callable[..., str], *data: Any
 ) -> None: ...
@@ -975,8 +976,8 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         wrap_license: bool
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -988,27 +989,25 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -1036,19 +1035,21 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: AboutDialogPrivate = ...
@@ -1250,10 +1251,10 @@ class AccelKey(GObject.GPointer):
 
 class AccelLabel(Label, Atk.ImplementorIface, Buildable):
     class Props:
-        accel_closure: Callable[..., Any]
-        accel_widget: Widget
+        accel_closure: Optional[Callable[..., Any]]
+        accel_widget: Optional[Widget]
         angle: float
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         cursor_position: int
         ellipsize: Pango.EllipsizeMode
         justify: Justification
@@ -1261,8 +1262,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         lines: int
         max_width_chars: int
         mnemonic_keyval: int
-        mnemonic_widget: Widget
-        pattern: str
+        mnemonic_widget: Optional[Widget]
         selectable: bool
         selection_bound: int
         single_line_mode: bool
@@ -1302,19 +1302,20 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        pattern: str
     props: Props = ...
     label: Label = ...
     priv: AccelLabelPrivate = ...
@@ -1453,7 +1454,7 @@ class AccelMapClass(GObject.GPointer): ...
 
 class Accessible(Atk.Object):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -1604,7 +1605,6 @@ class Action(GObject.Object, Buildable):
 class ActionBar(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -1632,19 +1632,20 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     def __init__(
@@ -1748,9 +1749,11 @@ class ActionGroup(GObject.Object, Buildable):
     def add_action_with_accel(
         self, action: Action, accelerator: Optional[str] = None
     ) -> None: ...
-    def add_actions(self, *args, **kwargs): ...  # FIXME Method
-    def add_radio_actions(self, *args, **kwargs): ...  # FIXME Method
-    def add_toggle_actions(self, *args, **kwargs): ...  # FIXME Method
+    def add_actions(self, entries, user_data=None): ...  # FIXME Function
+    def add_radio_actions(
+        self, entries, value=None, on_change=None, user_data=None
+    ): ...  # FIXME Function
+    def add_toggle_actions(self, entries, user_data=None): ...  # FIXME Function
     def do_get_action(self, action_name: str) -> Action: ...
     def get_accel_group(self) -> AccelGroup: ...
     def get_action(self, action_name: str) -> Action: ...
@@ -1888,7 +1891,6 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         yalign: float
         yscale: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -1916,19 +1918,20 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: AlignmentPrivate = ...
@@ -2016,11 +2019,11 @@ class AppChooserButton(
     ComboBox, Atk.ImplementorIface, AppChooser, Buildable, CellEditable, CellLayout
 ):
     class Props:
-        heading: str
+        heading: Optional[str]
         show_default_item: bool
         show_dialog_item: bool
         active: int
-        active_id: str
+        active_id: Optional[str]
         add_tearoffs: bool
         button_sensitivity: SensitivityType
         cell_area: CellArea
@@ -2036,7 +2039,6 @@ class AppChooserButton(
         tearoff_title: str
         wrap_width: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -2064,21 +2066,22 @@ class AppChooserButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         content_type: str
         editing_canceled: bool
+        child: Widget
     props: Props = ...
     parent: ComboBox = ...
     priv: AppChooserButtonPrivate = ...
@@ -2167,11 +2170,11 @@ class AppChooserButtonPrivate(GObject.GPointer): ...
 class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
     class Props:
         gfile: Gio.File
-        heading: str
+        heading: Optional[str]
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -2183,27 +2186,25 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -2231,20 +2232,22 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         content_type: str
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent: Dialog = ...
     priv: AppChooserDialogPrivate = ...
@@ -2353,7 +2356,6 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -2381,21 +2383,22 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         content_type: str
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent: Box = ...
     priv: AppChooserWidgetPrivate = ...
@@ -2481,19 +2484,19 @@ class AppChooserWidgetPrivate(GObject.GPointer): ...
 
 class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
     class Props:
-        active_window: Window
-        app_menu: Gio.MenuModel
+        active_window: Optional[Window]
+        app_menu: Optional[Gio.MenuModel]
         menubar: Gio.MenuModel
         register_session: bool
         screensaver_active: bool
-        action_group: Gio.ActionGroup
-        application_id: str
+        application_id: Optional[str]
         flags: Gio.ApplicationFlags
         inactivity_timeout: int
         is_busy: bool
         is_registered: bool
         is_remote: bool
-        resource_base_path: str
+        resource_base_path: Optional[str]
+        action_group: Optional[Gio.ActionGroup]
     props: Props = ...
     parent: Gio.Application = ...
     priv: ApplicationPrivate = ...
@@ -2563,8 +2566,8 @@ class ApplicationWindow(
     class Props:
         show_menubar: bool
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -2576,27 +2579,25 @@ class ApplicationWindow(
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -2624,19 +2625,21 @@ class ApplicationWindow(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Window = ...
     priv: ApplicationWindowPrivate = ...
@@ -2762,19 +2765,19 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     misc: Misc = ...
     priv: ArrowPrivate = ...
@@ -2829,7 +2832,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
 
 class ArrowAccessible(WidgetAccessible, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -2885,13 +2888,12 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         ratio: float
         xalign: float
         yalign: float
-        label: str
-        label_widget: Widget
+        label: Optional[str]
+        label_widget: Optional[Widget]
         label_xalign: float
         label_yalign: float
         shadow_type: ShadowType
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -2919,19 +2921,20 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     frame: Frame = ...
     priv: AspectFramePrivate = ...
@@ -3012,8 +3015,8 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -3025,27 +3028,25 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -3073,19 +3074,21 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent: Window = ...
     priv: AssistantPrivate = ...
@@ -3218,7 +3221,6 @@ class AssistantPrivate(GObject.GPointer): ...
 class Bin(Container, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -3246,19 +3248,20 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: BinPrivate = ...
@@ -3378,7 +3381,7 @@ class BooleanCellAccessible(
 ):
     class Props:
         renderer: CellRenderer
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -3436,7 +3439,6 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -3464,20 +3466,21 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: BoxPrivate = ...
@@ -3681,7 +3684,7 @@ class BuilderPrivate(GObject.GPointer): ...
 class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     class Props:
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -3690,7 +3693,6 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -3718,23 +3720,24 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: ButtonPrivate = ...
@@ -3804,7 +3807,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     def get_alignment(self) -> Tuple[float, float]: ...
     def get_always_show_image(self) -> bool: ...
     def get_event_window(self) -> Gdk.Window: ...
-    def get_focus_on_click(self, *args, **kwargs): ...  # FIXME Method
+    def get_focus_on_click(self, *args, **kwargs): ...  # FIXME Function
     def get_image(self) -> Optional[Widget]: ...
     def get_image_position(self) -> PositionType: ...
     def get_label(self) -> str: ...
@@ -3826,7 +3829,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     def released(self) -> None: ...
     def set_alignment(self, xalign: float, yalign: float) -> None: ...
     def set_always_show_image(self, always_show: bool) -> None: ...
-    def set_focus_on_click(self, *args, **kwargs): ...  # FIXME Method
+    def set_focus_on_click(self, *args, **kwargs): ...  # FIXME Function
     def set_image(self, image: Optional[Widget] = None) -> None: ...
     def set_image_position(self, position: PositionType) -> None: ...
     def set_label(self, label: str) -> None: ...
@@ -3836,7 +3839,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
 
 class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -3884,7 +3887,6 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -3912,20 +3914,21 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     box: Box = ...
     priv: ButtonBoxPrivate = ...
@@ -4049,19 +4052,19 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     widget: Widget = ...
     priv: CalendarPrivate = ...
@@ -4158,7 +4161,7 @@ class CalendarPrivate(GObject.GPointer): ...
 
 class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -4664,7 +4667,6 @@ class CellLayoutIface(GObject.GPointer):
 
 class CellRenderer(GObject.InitiallyUnowned):
     class Props:
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -4680,6 +4682,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: CellRendererPrivate = ...
@@ -4812,7 +4815,6 @@ class CellRendererAccel(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_gdk: Gdk.Color
         background_rgba: Gdk.RGBA
         background_set: bool
@@ -4824,13 +4826,11 @@ class CellRendererAccel(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_gdk: Gdk.Color
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -4857,7 +4857,6 @@ class CellRendererAccel(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -4873,6 +4872,10 @@ class CellRendererAccel(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererAccelPrivate = ...
@@ -5041,7 +5044,6 @@ class CellRendererCombo(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_gdk: Gdk.Color
         background_rgba: Gdk.RGBA
         background_set: bool
@@ -5053,13 +5055,11 @@ class CellRendererCombo(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_gdk: Gdk.Color
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -5086,7 +5086,6 @@ class CellRendererCombo(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5102,6 +5101,10 @@ class CellRendererCombo(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererComboPrivate = ...
@@ -5198,7 +5201,6 @@ class CellRendererPixbuf(CellRenderer):
         stock_id: str
         stock_size: int
         surface: cairo.Surface
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5214,6 +5216,7 @@ class CellRendererPixbuf(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererPixbufPrivate = ...
@@ -5266,7 +5269,6 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float
         text_yalign: float
         value: int
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5283,6 +5285,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         yalign: float
         ypad: int
         orientation: Orientation
+        cell_background: str
     props: Props = ...
     parent_instance: CellRenderer = ...
     priv: CellRendererProgressPrivate = ...
@@ -5331,7 +5334,6 @@ class CellRendererSpin(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_gdk: Gdk.Color
         background_rgba: Gdk.RGBA
         background_set: bool
@@ -5343,13 +5345,11 @@ class CellRendererSpin(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_gdk: Gdk.Color
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -5376,7 +5376,6 @@ class CellRendererSpin(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5392,6 +5391,10 @@ class CellRendererSpin(CellRendererText):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererSpinPrivate = ...
@@ -5481,7 +5484,6 @@ class CellRendererSpinner(CellRenderer):
         active: bool
         pulse: int
         size: IconSize
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5497,6 +5499,7 @@ class CellRendererSpinner(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererSpinnerPrivate = ...
@@ -5538,7 +5541,6 @@ class CellRendererText(CellRenderer):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background: str
         background_gdk: Gdk.Color
         background_rgba: Gdk.RGBA
         background_set: bool
@@ -5550,13 +5552,11 @@ class CellRendererText(CellRenderer):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground: str
         foreground_gdk: Gdk.Color
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
         language: str
         language_set: bool
-        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -5583,7 +5583,6 @@ class CellRendererText(CellRenderer):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5599,6 +5598,10 @@ class CellRendererText(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        background: str
+        foreground: str
+        markup: str
+        cell_background: str
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererTextPrivate = ...
@@ -5690,7 +5693,6 @@ class CellRendererToggle(CellRenderer):
         inconsistent: bool
         indicator_size: int
         radio: bool
-        cell_background: str
         cell_background_gdk: Gdk.Color
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
@@ -5706,6 +5708,7 @@ class CellRendererToggle(CellRenderer):
         xpad: int
         yalign: float
         ypad: int
+        cell_background: str
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererTogglePrivate = ...
@@ -5754,7 +5757,6 @@ class CellRendererTogglePrivate(GObject.GPointer): ...
 
 class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
     class Props:
-        background: str
         background_gdk: Gdk.Color
         background_rgba: Gdk.RGBA
         background_set: bool
@@ -5762,7 +5764,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         cell_area_context: CellAreaContext
         draw_sensitive: bool
         fit_model: bool
-        model: TreeModel
+        model: Optional[TreeModel]
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -5789,20 +5791,21 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        background: str
     props: Props = ...
     parent_instance: Widget = ...
     priv: CellViewPrivate = ...
@@ -5894,7 +5897,7 @@ class CheckButton(
         draw_indicator: bool
         inconsistent: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -5903,7 +5906,6 @@ class CheckButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -5931,23 +5933,24 @@ class CheckButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     toggle_button: ToggleButton = ...
     def __init__(
@@ -6029,13 +6032,12 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         active: bool
         draw_as_radio: bool
         inconsistent: bool
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6063,23 +6065,24 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     menu_item: MenuItem = ...
     priv: CheckMenuItemPrivate = ...
@@ -6157,7 +6160,7 @@ class CheckMenuItemAccessible(
     MenuItemAccessible, Atk.Action, Atk.Component, Atk.Selection
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -6219,6 +6222,7 @@ class Clipboard(GObject.Object):
     @staticmethod
     def get_for_display(display: Gdk.Display, selection: Gdk.Atom) -> Clipboard: ...
     def get_owner(self) -> Optional[GObject.Object]: ...
+    def get_selection(self) -> Gdk.Atom: ...
     def request_contents(
         self, target: Gdk.Atom, callback: Callable[..., None], *user_data: Any
     ) -> None: ...
@@ -6262,7 +6266,7 @@ class ColorButton(
         title: str
         use_alpha: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -6271,7 +6275,6 @@ class ColorButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6299,23 +6302,24 @@ class ColorButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     button: Button = ...
     priv: ColorButtonPrivate = ...
@@ -6424,8 +6428,8 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         show_editor: bool
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -6437,27 +6441,25 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6485,21 +6487,23 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         rgba: Gdk.RGBA
         use_alpha: bool
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: ColorChooserDialogPrivate = ...
@@ -6611,7 +6615,6 @@ class ColorChooserWidget(
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6639,22 +6642,23 @@ class ColorChooserWidget(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         rgba: Gdk.RGBA
         use_alpha: bool
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_instance: Box = ...
     priv: ColorChooserWidgetPrivate = ...
@@ -6734,7 +6738,6 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6762,20 +6765,21 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_instance: Box = ...
     private_data: ColorSelectionPrivate = ...
@@ -6871,8 +6875,8 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         ok_button: Widget
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -6884,27 +6888,25 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -6932,19 +6934,21 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: ColorSelectionDialogPrivate = ...
@@ -7037,7 +7041,7 @@ class ColorSelectionPrivate(GObject.GPointer): ...
 class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
     class Props:
         active: int
-        active_id: str
+        active_id: Optional[str]
         add_tearoffs: bool
         button_sensitivity: SensitivityType
         cell_area: CellArea
@@ -7053,7 +7057,6 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         tearoff_title: str
         wrap_width: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -7081,20 +7084,21 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         editing_canceled: bool
+        child: Widget
     props: Props = ...
     parent_instance: Bin = ...
     priv: ComboBoxPrivate = ...
@@ -7208,7 +7212,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
 
 class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -7262,7 +7266,7 @@ class ComboBoxPrivate(GObject.GPointer): ...
 class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
     class Props:
         active: int
-        active_id: str
+        active_id: Optional[str]
         add_tearoffs: bool
         button_sensitivity: SensitivityType
         cell_area: CellArea
@@ -7278,7 +7282,6 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         tearoff_title: str
         wrap_width: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -7306,20 +7309,21 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         editing_canceled: bool
+        child: Widget
     props: Props = ...
     parent_instance: ComboBox = ...
     priv: ComboBoxTextPrivate = ...
@@ -7407,7 +7411,6 @@ class ComboBoxTextPrivate(GObject.GPointer): ...
 class Container(Widget, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -7435,19 +7438,20 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     widget: Widget = ...
     priv: ContainerPrivate = ...
@@ -7495,13 +7499,15 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
     ): ...
     def add(self, widget: Widget) -> None: ...
     def check_resize(self) -> None: ...
-    def child_get(self, *args, **kwargs): ...  # FIXME Method
-    def child_get_property(self, *args, **kwargs): ...  # FIXME Method
+    def child_get(self, child, *prop_names): ...  # FIXME Function
+    def child_get_property(
+        self, child, property_name, value=None
+    ): ...  # FIXME Function
     def child_notify(self, child: Widget, child_property: str) -> None: ...
     def child_notify_by_pspec(
         self, child: Widget, pspec: GObject.ParamSpec
     ) -> None: ...
-    def child_set(self, *args, **kwargs): ...  # FIXME Method
+    def child_set(self, child, **kwargs): ...  # FIXME Function
     def child_set_property(
         self, child: Widget, property_name: str, value: Any
     ) -> None: ...
@@ -7532,7 +7538,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
     def foreach(self, callback: Callable[..., None], *callback_data: Any) -> None: ...
     def get_border_width(self) -> int: ...
     def get_children(self) -> list[Widget]: ...
-    def get_focus_chain(self, *args, **kwargs): ...  # FIXME Method
+    def get_focus_chain(self) -> Optional[list[Widget]]: ...  # CHECK Wrapped function
     def get_focus_child(self) -> Optional[Widget]: ...
     def get_focus_hadjustment(self) -> Optional[Adjustment]: ...
     def get_focus_vadjustment(self) -> Optional[Adjustment]: ...
@@ -7562,7 +7568,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
 
 class ContainerAccessible(WidgetAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -7607,7 +7613,7 @@ class ContainerAccessiblePrivate(GObject.GPointer): ...
 
 class ContainerCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.TableCell):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -7732,8 +7738,8 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -7745,27 +7751,25 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -7793,19 +7797,21 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     window: Window = ...
     priv: DialogPrivate = ...
@@ -7887,7 +7893,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
 
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
     def add_button(self, button_text: str, response_id: int) -> Widget: ...
-    def add_buttons(self, *args, **kwargs): ...  # FIXME Method
+    def add_buttons(self, *args): ...  # FIXME Function
     def do_close(self) -> None: ...
     def do_response(self, response_id: int) -> None: ...
     def get_action_area(self) -> Box: ...
@@ -7898,7 +7904,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
     @classmethod
     def new(cls) -> Dialog: ...
     def response(self, response_id: int) -> None: ...
-    def run(self, *args, **kwargs): ...  # FIXME Method
+    def run(self, *args, **kwargs): ...  # FIXME Function
     def set_alternative_button_order_from_array(
         self, n_params: int, new_order: Sequence[int]
     ) -> None: ...
@@ -7944,19 +7950,19 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     widget: Widget = ...
     dummy: None = ...
@@ -8017,8 +8023,10 @@ class Editable(GObject.GInterface):
     def get_chars(self, start_pos: int, end_pos: int) -> str: ...
     def get_editable(self) -> bool: ...
     def get_position(self) -> int: ...
-    def get_selection_bounds(self, *args, **kwargs): ...  # FIXME Method
-    def insert_text(self, *args, **kwargs): ...  # FIXME Method
+    def get_selection_bounds(
+        self,
+    ) -> Tuple[int, int] | Tuple[()]: ...  # CHECK Wrapped function
+    def insert_text(self, text, position): ...  # FIXME Function
     def paste_clipboard(self) -> None: ...
     def select_region(self, start_pos: int, end_pos: int) -> None: ...
     def set_editable(self, is_editable: bool) -> None: ...
@@ -8040,7 +8048,7 @@ class EditableInterface(GObject.GPointer):
 class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
     class Props:
         activates_default: bool
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         buffer: EntryBuffer
         caps_lock_warning: bool
         completion: EntryCompletion
@@ -8049,7 +8057,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         enable_emoji_completion: bool
         has_frame: bool
         im_module: str
-        inner_border: Border
+        inner_border: Optional[Border]
         input_hints: InputHints
         input_purpose: InputPurpose
         invisible_char: int
@@ -8083,7 +8091,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         selection_bound: int
         shadow_type: ShadowType
         show_emoji_icon: bool
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         text: str
         text_length: int
         truncate_multiline: bool
@@ -8116,19 +8124,19 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         editing_canceled: bool
     props: Props = ...
     parent_instance: Widget = ...
@@ -8343,7 +8351,7 @@ class EntryAccessible(
     WidgetAccessible, Atk.Action, Atk.Component, Atk.EditableText, Atk.Text
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -8459,7 +8467,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
-        model: TreeModel
+        model: Optional[TreeModel]
         popup_completion: bool
         popup_set_width: bool
         popup_single_match: bool
@@ -8568,7 +8576,6 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         above_child: bool
         visible_window: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -8596,19 +8603,20 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: EventBoxPrivate = ...
@@ -8742,15 +8750,14 @@ class EventControllerScrollClass(GObject.GPointer): ...
 class Expander(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         expanded: bool
-        label: str
+        label: Optional[str]
         label_fill: bool
-        label_widget: Widget
+        label_widget: Optional[Widget]
         resize_toplevel: bool
         spacing: int
         use_markup: bool
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -8778,19 +8785,20 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: ExpanderPrivate = ...
@@ -8868,7 +8876,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
 
 class ExpanderAccessible(ContainerAccessible, Atk.Action, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -8994,14 +9002,12 @@ class FileChooser(GObject.GInterface):
 
 class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orientable):
     class Props:
-        dialog: FileChooser
         title: str
         width_chars: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9029,31 +9035,33 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget
-        filter: FileFilter
+        extra_widget: Optional[Widget]
+        filter: Optional[FileFilter]
         local_only: bool
-        preview_widget: Widget
+        preview_widget: Optional[Widget]
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
         orientation: Orientation
+        dialog: FileChooser
+        child: Widget
     props: Props = ...
     parent: Box = ...
     priv: FileChooserButtonPrivate = ...
@@ -9143,8 +9151,8 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -9156,27 +9164,25 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9204,30 +9210,32 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget
-        filter: FileFilter
+        extra_widget: Optional[Widget]
+        filter: Optional[FileFilter]
         local_only: bool
-        preview_widget: Widget
+        preview_widget: Optional[Widget]
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FileChooserDialogPrivate = ...
@@ -9326,19 +9334,19 @@ class FileChooserDialogPrivate(GObject.GPointer): ...
 
 class FileChooserNative(NativeDialog, FileChooser):
     class Props:
-        accept_label: str
-        cancel_label: str
+        accept_label: Optional[str]
+        cancel_label: Optional[str]
         modal: bool
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         visible: bool
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget
-        filter: FileFilter
+        extra_widget: Optional[Widget]
+        filter: Optional[FileFilter]
         local_only: bool
-        preview_widget: Widget
+        preview_widget: Optional[Widget]
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
@@ -9389,7 +9397,6 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9417,31 +9424,32 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget
-        filter: FileFilter
+        extra_widget: Optional[Widget]
+        filter: Optional[FileFilter]
         local_only: bool
-        preview_widget: Widget
+        preview_widget: Optional[Widget]
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_instance: Box = ...
     priv: FileChooserWidgetPrivate = ...
@@ -9508,7 +9516,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
 
 class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -9585,7 +9593,6 @@ class FileFilterInfo(GObject.GPointer):
 class Fixed(Container, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9613,19 +9620,20 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: FixedPrivate = ...
@@ -9700,7 +9708,6 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         row_spacing: int
         selection_mode: SelectionMode
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9728,20 +9735,21 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     container: Container = ...
     def __init__(
@@ -9845,7 +9853,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
 
 class FlowBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -9889,7 +9897,6 @@ class FlowBoxAccessiblePrivate(GObject.GPointer): ...
 class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -9917,19 +9924,20 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -9983,7 +9991,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
 
 class FlowBoxChildAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -10054,7 +10062,7 @@ class FontButton(
         use_font: bool
         use_size: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -10063,7 +10071,6 @@ class FontButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10091,30 +10098,31 @@ class FontButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        font: str
-        font_desc: Pango.FontDescription
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
+        child: Widget
     props: Props = ...
     button: Button = ...
     priv: FontButtonPrivate = ...
@@ -10240,8 +10248,8 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -10253,27 +10261,25 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10301,26 +10307,28 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        font: str
-        font_desc: Pango.FontDescription
+        window: Optional[Gdk.Window]
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FontChooserDialogPrivate = ...
@@ -10434,7 +10442,6 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10462,27 +10469,28 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        font: str
-        font_desc: Pango.FontDescription
+        window: Optional[Gdk.Window]
+        font: Optional[str]
+        font_desc: Optional[Pango.FontDescription]
         font_features: str
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_instance: Box = ...
     priv: FontChooserWidgetPrivate = ...
@@ -10562,7 +10570,6 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10590,20 +10597,21 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_instance: Box = ...
     priv: FontSelectionPrivate = ...
@@ -10681,8 +10689,8 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -10694,27 +10702,25 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10742,19 +10748,21 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FontSelectionDialogPrivate = ...
@@ -10852,13 +10860,12 @@ class FontSelectionPrivate(GObject.GPointer): ...
 
 class Frame(Bin, Atk.ImplementorIface, Buildable):
     class Props:
-        label: str
-        label_widget: Widget
+        label: Optional[str]
+        label_widget: Optional[Widget]
         label_xalign: float
         label_yalign: float
         shadow_type: ShadowType
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -10886,19 +10893,20 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: FramePrivate = ...
@@ -10963,7 +10971,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
 
 class FrameAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -11048,19 +11056,19 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -11140,7 +11148,7 @@ class GLAreaClass(GObject.GPointer):
 class Gesture(EventController):
     class Props:
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11187,7 +11195,7 @@ class GestureDrag(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11215,7 +11223,7 @@ class GestureLongPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11241,7 +11249,7 @@ class GestureMultiPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11269,7 +11277,7 @@ class GesturePan(GestureDrag):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11294,7 +11302,7 @@ class GesturePanClass(GObject.GPointer): ...
 class GestureRotate(Gesture):
     class Props:
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11317,7 +11325,7 @@ class GestureSingle(Gesture):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11348,7 +11356,7 @@ class GestureStylus(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11376,7 +11384,7 @@ class GestureSwipe(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11399,7 +11407,7 @@ class GestureSwipeClass(GObject.GPointer): ...
 class GestureZoom(Gesture):
     class Props:
         n_points: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
     props: Props = ...
@@ -11438,7 +11446,6 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         row_homogeneous: bool
         row_spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -11466,20 +11473,21 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: GridPrivate = ...
@@ -11582,7 +11590,6 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -11610,20 +11617,21 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     box: Box = ...
     def __init__(
@@ -11685,7 +11693,6 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -11713,20 +11720,21 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     button_box: ButtonBox = ...
     def __init__(
@@ -11790,7 +11798,6 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         position_set: bool
         wide_handle: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -11818,20 +11825,21 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     paned: Paned = ...
     def __init__(
@@ -11914,19 +11922,19 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     parent_instance: Widget = ...
     priv: HSVPrivate = ...
@@ -12032,19 +12040,19 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     scale: Scale = ...
@@ -12144,19 +12152,19 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     scrollbar: Scrollbar = ...
@@ -12242,19 +12250,19 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     separator: Separator = ...
@@ -12312,7 +12320,6 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         snap_edge: PositionType
         snap_edge_set: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -12340,19 +12347,20 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: HandleBoxPrivate = ...
@@ -12427,16 +12435,15 @@ class HandleBoxPrivate(GObject.GPointer): ...
 
 class HeaderBar(Container, Atk.ImplementorIface, Buildable):
     class Props:
-        custom_title: Widget
+        custom_title: Optional[Widget]
         decoration_layout: str
         decoration_layout_set: bool
         has_subtitle: bool
         show_close_button: bool
         spacing: int
-        subtitle: str
-        title: str
+        subtitle: Optional[str]
+        title: Optional[str]
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -12464,19 +12471,20 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     def __init__(
@@ -12548,7 +12556,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
 
 class HeaderBarAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -12627,7 +12635,9 @@ class IMContext(GObject.Object):
     def focus_in(self) -> None: ...
     def focus_out(self) -> None: ...
     def get_preedit_string(self) -> Tuple[str, Pango.AttrList, int]: ...
-    def get_surrounding(self, *args, **kwargs): ...  # FIXME Method
+    def get_surrounding(
+        self,
+    ) -> Optional[Tuple[str, int]]: ...  # CHECK Wrapped function
     def reset(self) -> None: ...
     def set_client_window(self, window: Optional[Gdk.Window] = None) -> None: ...
     def set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
@@ -12744,7 +12754,9 @@ class IconInfo(GObject.Object):
     def load_icon_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def load_icon_finish(self, res: Gio.AsyncResult) -> GdkPixbuf.Pixbuf: ...
@@ -12766,7 +12778,9 @@ class IconInfo(GObject.Object):
         warning_color: Optional[Gdk.RGBA] = None,
         error_color: Optional[Gdk.RGBA] = None,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def load_symbolic_finish(
@@ -12779,7 +12793,9 @@ class IconInfo(GObject.Object):
         self,
         context: StyleContext,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def load_symbolic_for_context_finish(
@@ -12932,7 +12948,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         item_width: int
         margin: int
         markup_column: int
-        model: TreeModel
+        model: Optional[TreeModel]
         pixbuf_column: int
         reorderable: bool
         row_spacing: int
@@ -12941,7 +12957,6 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         text_column: int
         tooltip_column: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -12968,23 +12983,24 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
     props: Props = ...
     parent: Container = ...
     priv: IconViewPrivate = ...
@@ -13078,9 +13094,13 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
     def get_column_spacing(self) -> int: ...
     def get_columns(self) -> int: ...
     def get_cursor(self) -> Tuple[bool, TreePath, CellRenderer]: ...
-    def get_dest_item_at_pos(self, *args, **kwargs): ...  # FIXME Method
+    def get_dest_item_at_pos(
+        self, drag_x: int, drag_y: int
+    ) -> Optional[Tuple[TreePath, IconViewDropPosition]]: ...  # CHECK Wrapped function
     def get_drag_dest_item(self) -> Tuple[TreePath, IconViewDropPosition]: ...
-    def get_item_at_pos(self, *args, **kwargs): ...  # FIXME Method
+    def get_item_at_pos(
+        self, x: int, y: int
+    ) -> Optional[Tuple[TreePath, CellRenderer]]: ...  # CHECK Wrapped function
     def get_item_column(self, path: TreePath) -> int: ...
     def get_item_orientation(self) -> Orientation: ...
     def get_item_padding(self) -> int: ...
@@ -13101,7 +13121,9 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
     def get_tooltip_context(
         self, keyboard_tip: bool
     ) -> Tuple[bool, int, int, TreeModel, TreePath, TreeIter]: ...
-    def get_visible_range(self, *args, **kwargs): ...  # FIXME Method
+    def get_visible_range(
+        self,
+    ) -> Optional[Tuple[TreePath, TreePath]]: ...  # CHECK Wrapped function
     def item_activated(self, path: TreePath) -> None: ...
     @classmethod
     def new(cls) -> IconView: ...
@@ -13149,7 +13171,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
 
 class IconViewAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -13214,7 +13236,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         icon_name: str
         icon_set: IconSet
         icon_size: int
-        pixbuf: GdkPixbuf.Pixbuf
+        pixbuf: Optional[GdkPixbuf.Pixbuf]
         pixbuf_animation: GdkPixbuf.PixbufAnimation
         pixel_size: int
         resource: str
@@ -13252,19 +13274,19 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     misc: Misc = ...
     priv: ImagePrivate = ...
@@ -13365,7 +13387,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
 
 class ImageAccessible(WidgetAccessible, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -13411,7 +13433,7 @@ class ImageCellAccessible(
 ):
     class Props:
         renderer: CellRenderer
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -13462,17 +13484,15 @@ class ImageClass(GObject.GPointer):
 
 class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     class Props:
-        accel_group: AccelGroup
         always_show_image: bool
         image: Widget
         use_stock: bool
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -13500,23 +13520,25 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        accel_group: AccelGroup
+        child: Widget
     props: Props = ...
     menu_item: MenuItem = ...
     priv: ImageMenuItemPrivate = ...
@@ -13612,7 +13634,6 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -13640,20 +13661,21 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent: Box = ...
     priv: InfoBarPrivate = ...
@@ -13764,19 +13786,19 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     widget: Widget = ...
     priv: InvisiblePrivate = ...
@@ -13839,7 +13861,7 @@ class InvisiblePrivate(GObject.GPointer): ...
 class Label(Misc, Atk.ImplementorIface, Buildable):
     class Props:
         angle: float
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         cursor_position: int
         ellipsize: Pango.EllipsizeMode
         justify: Justification
@@ -13847,8 +13869,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         lines: int
         max_width_chars: int
         mnemonic_keyval: int
-        mnemonic_widget: Widget
-        pattern: str
+        mnemonic_widget: Optional[Widget]
         selectable: bool
         selection_bound: int
         single_line_mode: bool
@@ -13888,19 +13909,20 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        pattern: str
     props: Props = ...
     misc: Misc = ...
     priv: LabelPrivate = ...
@@ -14025,7 +14047,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
 
 class LabelAccessible(WidgetAccessible, Atk.Component, Atk.Hypertext, Atk.Text):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -14089,7 +14111,6 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         height: int
         width: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -14117,23 +14138,24 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: LayoutPrivate = ...
@@ -14243,19 +14265,19 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     parent: Widget = ...
@@ -14326,7 +14348,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
 
 class LevelBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -14379,7 +14401,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         uri: str
         visited: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -14388,7 +14410,6 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -14416,23 +14437,24 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent_instance: Button = ...
     priv: LinkButtonPrivate = ...
@@ -14507,7 +14529,7 @@ class LinkButtonAccessible(
     ButtonAccessible, Atk.Action, Atk.Component, Atk.HyperlinkImpl, Atk.Image
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -14563,7 +14585,6 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         activate_on_single_click: bool
         selection_mode: SelectionMode
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -14591,19 +14612,20 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Container = ...
     def __init__(
@@ -14702,7 +14724,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
 
 class ListBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -14762,7 +14784,6 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         activatable: bool
         selectable: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -14790,21 +14811,22 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
+        child: Widget
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -14868,7 +14890,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
 
 class ListBoxRowAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -14918,14 +14940,15 @@ class ListStore(
 ):
     parent: GObject.Object = ...
     priv: ListStorePrivate = ...
+
     def __init__(self, *args: Any) -> None: ...
     def append(
         self, row: Union[list[Any], tuple[Any, ...], None] = None
     ) -> TreeIter: ...
     def clear(self) -> None: ...
-    def insert(self, *args, **kwargs): ...  # FIXME Method
-    def insert_after(self, *args, **kwargs): ...  # FIXME Method
-    def insert_before(self, *args, **kwargs): ...  # FIXME Method
+    def insert(self, *args, **kwargs): ...
+    def insert_after(self, *args, **kwargs): ...
+    def insert_before(self, *args, **kwargs): ...
     def insert_with_values(
         self, position: int, columns: Sequence[int], values: Sequence[Any]
     ) -> TreeIter: ...
@@ -14974,7 +14997,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         tooltip_not_authorized: str
         tooltip_unlock: str
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -14983,7 +15006,6 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15011,23 +15033,24 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: Button = ...
     priv: LockButtonPrivate = ...
@@ -15099,7 +15122,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
 
 class LockButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -15169,7 +15192,6 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         tearoff_title: str
         take_focus: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15197,19 +15219,20 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     menu_shell: MenuShell = ...
     priv: MenuPrivate = ...
@@ -15347,7 +15370,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
 
 class MenuAccessible(MenuShellAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -15394,7 +15417,6 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         pack_direction: PackDirection
         take_focus: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15422,19 +15444,20 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     menu_shell: MenuShell = ...
     priv: MenuBarPrivate = ...
@@ -15505,17 +15528,17 @@ class MenuButton(
     ToggleButton, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        align_widget: Container
+        align_widget: Optional[Container]
         direction: ArrowType
-        menu_model: Gio.MenuModel
-        popover: Popover
-        popup: Menu
+        menu_model: Optional[Gio.MenuModel]
+        popover: Optional[Popover]
+        popup: Optional[Menu]
         use_popover: bool
         active: bool
         draw_indicator: bool
         inconsistent: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -15524,7 +15547,6 @@ class MenuButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15552,23 +15574,24 @@ class MenuButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: ToggleButton = ...
     priv: MenuButtonPrivate = ...
@@ -15655,7 +15678,7 @@ class MenuButtonAccessible(
     ToggleButtonAccessible, Atk.Action, Atk.Component, Atk.Image
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -15714,13 +15737,12 @@ class MenuClass(GObject.GPointer):
 
 class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     class Props:
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15748,23 +15770,24 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: MenuItemPrivate = ...
@@ -15853,7 +15876,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
 
 class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -15917,7 +15940,6 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
     class Props:
         take_focus: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -15945,19 +15967,20 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: MenuShellPrivate = ...
@@ -16035,7 +16058,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
 
 class MenuShellAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -16100,17 +16123,16 @@ class MenuToolButton(
 ):
     class Props:
         menu: Menu
-        icon_name: str
-        icon_widget: Widget
-        label: str
-        label_widget: Widget
+        icon_name: Optional[str]
+        icon_widget: Optional[Widget]
+        label: Optional[str]
+        label_widget: Optional[Widget]
         stock_id: str
         use_underline: bool
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -16138,23 +16160,24 @@ class MenuToolButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: ToolButton = ...
     priv: MenuToolButtonPrivate = ...
@@ -16238,7 +16261,6 @@ class MenuToolButtonPrivate(GObject.GPointer): ...
 
 class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
     class Props:
-        buttons: ButtonsType
         image: Widget
         message_area: Widget
         message_type: MessageType
@@ -16248,8 +16270,8 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         use_markup: bool
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -16261,27 +16283,25 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -16309,19 +16329,22 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        buttons: ButtonsType
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_instance: Dialog = ...
     priv: MessageDialogPrivate = ...
@@ -16454,19 +16477,19 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     widget: Widget = ...
     priv: MiscPrivate = ...
@@ -16539,7 +16562,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         text: str
         use_markup: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -16548,7 +16571,6 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -16576,23 +16598,24 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -16668,13 +16691,13 @@ class MountOperation(Gio.MountOperation):
         screen: Gdk.Screen
         anonymous: bool
         choice: int
-        domain: str
+        domain: Optional[str]
         is_tcrypt_hidden_volume: bool
         is_tcrypt_system_volume: bool
-        password: str
+        password: Optional[str]
         password_save: Gio.PasswordSave
         pim: int
-        username: str
+        username: Optional[str]
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
     priv: MountOperationPrivate = ...
@@ -16712,7 +16735,7 @@ class MountOperationPrivate(GObject.GPointer): ...
 class NativeDialog(GObject.Object):
     class Props:
         modal: bool
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         visible: bool
     props: Props = ...
@@ -16752,14 +16775,13 @@ class NativeDialogClass(GObject.GPointer):
 class Notebook(Container, Atk.ImplementorIface, Buildable):
     class Props:
         enable_popup: bool
-        group_name: str
+        group_name: Optional[str]
         page: int
         scrollable: bool
         show_border: bool
         show_tabs: bool
         tab_pos: PositionType
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -16787,19 +16809,20 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: NotebookPrivate = ...
@@ -16937,7 +16960,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
 
 class NotebookAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -17050,10 +17073,10 @@ class NotebookPrivate(GObject.GPointer): ...
 class NumerableIcon(Gio.EmblemedIcon, Gio.Icon):
     class Props:
         background_icon: Gio.Icon
-        background_icon_name: str
+        background_icon_name: Optional[str]
         count: int
-        label: str
-        style_context: StyleContext
+        label: Optional[str]
+        style_context: Optional[StyleContext]
         gicon: Gio.Icon
     props: Props = ...
     parent: Gio.EmblemedIcon = ...
@@ -17093,8 +17116,8 @@ class NumerableIconPrivate(GObject.GPointer): ...
 class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
     class Props:
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -17106,27 +17129,25 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -17154,19 +17175,21 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     parent_object: Window = ...
     def __init__(
@@ -17262,7 +17285,6 @@ class OrientableIface(GObject.GPointer):
 class Overlay(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -17290,19 +17312,20 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent: Bin = ...
     priv: OverlayPrivate = ...
@@ -17455,7 +17478,6 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         position_set: bool
         wide_handle: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -17483,20 +17505,21 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: PanedPrivate = ...
@@ -17570,7 +17593,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
 
 class PanedAccessible(ContainerAccessible, Atk.Component, Atk.Value):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -17670,7 +17693,7 @@ class PaperSize(GObject.GBoxed):
 class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
     class Props:
         local_only: bool
-        location: Gio.File
+        location: Optional[Gio.File]
         open_flags: PlacesOpenFlags
         populate_all: bool
         show_connect_to_server: bool
@@ -17696,7 +17719,6 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         window_placement: CornerType
         window_placement_set: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -17724,19 +17746,20 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -17841,10 +17864,10 @@ class PlacesSidebarClass(GObject.GPointer): ...
 class Plug(Window, Atk.ImplementorIface, Buildable):
     class Props:
         embedded: bool
-        socket_window: Gdk.Window
+        socket_window: Optional[Gdk.Window]
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -17856,27 +17879,25 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -17904,19 +17925,21 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     window: Window = ...
     priv: PlugPrivate = ...
@@ -18004,7 +18027,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
 
 class PlugAccessible(WindowAccessible, Atk.Component, Atk.Window):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -18065,7 +18088,6 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         relative_to: Widget
         transitions_enabled: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -18093,19 +18115,20 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Bin = ...
     priv: PopoverPrivate = ...
@@ -18188,7 +18211,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
 
 class PopoverAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -18241,7 +18264,6 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         relative_to: Widget
         transitions_enabled: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -18269,19 +18291,20 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -18361,7 +18384,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     class Props:
         allow_async: bool
         current_page: int
-        custom_tab_label: str
+        custom_tab_label: Optional[str]
         default_page_setup: PageSetup
         embed_page_setup: bool
         export_filename: str
@@ -18600,7 +18623,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         inverted: bool
         pulse_step: float
         show_text: bool
-        text: str
+        text: Optional[str]
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -18627,19 +18650,19 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     parent: Widget = ...
@@ -18708,7 +18731,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
 
 class ProgressBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -18761,12 +18784,12 @@ class ProgressBarPrivate(GObject.GPointer): ...
 class PyGTKDeprecationWarning:
     args = ...  # FIXME Constant
 
-    def with_traceback(self, *args, **kwargs): ...  # FIXME Method
+    def add_note(self, *args, **kwargs): ...  # FIXME Function
+    def with_traceback(self, *args, **kwargs): ...  # FIXME Function
 
 class RadioAction(ToggleAction, Buildable):
     class Props:
         current_value: int
-        group: RadioAction
         value: int
         active: bool
         draw_as_radio: bool
@@ -18786,6 +18809,7 @@ class RadioAction(ToggleAction, Buildable):
         visible_horizontal: bool
         visible_overflown: bool
         visible_vertical: bool
+        group: Optional[RadioAction]
     props: Props = ...
     parent: ToggleAction = ...
     private_data: RadioActionPrivate = ...
@@ -18851,12 +18875,11 @@ class RadioButton(
     CheckButton, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        group: RadioButton
         active: bool
         draw_indicator: bool
         inconsistent: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -18865,7 +18888,6 @@ class RadioButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -18893,23 +18915,25 @@ class RadioButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        group: Optional[RadioButton]
+        child: Widget
     props: Props = ...
     check_button: CheckButton = ...
     priv: RadioButtonPrivate = ...
@@ -19003,7 +19027,7 @@ class RadioButtonAccessible(
     ToggleButtonAccessible, Atk.Action, Atk.Component, Atk.Image
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -19058,17 +19082,15 @@ class RadioMenuItem(
     CheckMenuItem, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        group: RadioMenuItem
         active: bool
         draw_as_radio: bool
         inconsistent: bool
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -19096,23 +19118,25 @@ class RadioMenuItem(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        group: Optional[RadioMenuItem]
+        child: Widget
     props: Props = ...
     check_menu_item: CheckMenuItem = ...
     priv: RadioMenuItemPrivate = ...
@@ -19202,7 +19226,7 @@ class RadioMenuItemAccessible(
     CheckMenuItemAccessible, Atk.Action, Atk.Component, Atk.Selection
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -19257,19 +19281,17 @@ class RadioToolButton(
     ToggleToolButton, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        group: RadioToolButton
         active: bool
-        icon_name: str
-        icon_widget: Widget
-        label: str
-        label_widget: Widget
+        icon_name: Optional[str]
+        icon_widget: Optional[Widget]
+        label: Optional[str]
+        label_widget: Optional[Widget]
         stock_id: str
         use_underline: bool
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -19297,23 +19319,25 @@ class RadioToolButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        group: Optional[RadioToolButton]
+        child: Widget
     props: Props = ...
     parent: ToggleToolButton = ...
     def __init__(
@@ -19433,19 +19457,19 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     widget: Widget = ...
@@ -19537,7 +19561,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
 
 class RangeAccessible(WidgetAccessible, Atk.Component, Atk.Value):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -19676,13 +19700,13 @@ class RecentAction(Action, Buildable, RecentChooser):
         filter: RecentFilter
         limit: int
         local_only: bool
-        recent_manager: RecentManager
         select_multiple: bool
         show_icons: bool
         show_not_found: bool
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
+        recent_manager: RecentManager
     props: Props = ...
     parent_instance: Action = ...
     priv: RecentActionPrivate = ...
@@ -19782,8 +19806,8 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
     class Props:
         use_header_bar: int
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -19795,27 +19819,25 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -19843,29 +19865,31 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         filter: RecentFilter
         limit: int
         local_only: bool
-        recent_manager: RecentManager
         select_multiple: bool
         show_icons: bool
         show_not_found: bool
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
+        startup_id: str
+        child: Widget
+        recent_manager: RecentManager
     props: Props = ...
     parent_instance: Dialog = ...
     priv: RecentChooserDialogPrivate = ...
@@ -19997,7 +20021,6 @@ class RecentChooserMenu(
         tearoff_title: str
         take_focus: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -20025,31 +20048,32 @@ class RecentChooserMenu(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         related_action: Action
         use_action_appearance: bool
         filter: RecentFilter
         limit: int
         local_only: bool
-        recent_manager: RecentManager
         select_multiple: bool
         show_icons: bool
         show_not_found: bool
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
+        child: Widget
+        recent_manager: RecentManager
     props: Props = ...
     parent_instance: Menu = ...
     priv: RecentChooserMenuPrivate = ...
@@ -20145,7 +20169,6 @@ class RecentChooserWidget(
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -20173,30 +20196,31 @@ class RecentChooserWidget(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
         filter: RecentFilter
         limit: int
         local_only: bool
-        recent_manager: RecentManager
         select_multiple: bool
         show_icons: bool
         show_not_found: bool
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
+        child: Widget
+        recent_manager: RecentManager
     props: Props = ...
     parent_instance: Box = ...
     priv: RecentChooserWidgetPrivate = ...
@@ -20312,7 +20336,9 @@ class RecentInfo(GObject.GBoxed):
     def exists(self) -> bool: ...
     def get_added(self) -> int: ...
     def get_age(self) -> int: ...
-    def get_application_info(self, *args, **kwargs): ...  # FIXME Method
+    def get_application_info(
+        self, app_name: str
+    ) -> Optional[Tuple[str, int, int]]: ...  # CHECK Wrapped function
     def get_applications(self) -> list[str]: ...
     def get_description(self) -> str: ...
     def get_display_name(self) -> str: ...
@@ -20369,7 +20395,7 @@ class RecentManagerPrivate(GObject.GPointer): ...
 class RendererCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.TableCell):
     class Props:
         renderer: CellRenderer
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -20433,7 +20459,6 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         transition_duration: int
         transition_type: RevealerTransitionType
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -20461,19 +20486,20 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -20574,19 +20600,19 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     range: Range = ...
@@ -20671,7 +20697,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
 
 class ScaleAccessible(RangeAccessible, Atk.Component, Atk.Value):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -20721,7 +20747,7 @@ class ScaleButton(
         size: IconSize
         value: float
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -20730,7 +20756,6 @@ class ScaleButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -20758,24 +20783,25 @@ class ScaleButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent: Button = ...
     priv: ScaleButtonPrivate = ...
@@ -20862,7 +20888,7 @@ class ScaleButtonAccessible(
     ButtonAccessible, Atk.Action, Atk.Component, Atk.Image, Atk.Value
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -20976,19 +21002,19 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     range: Range = ...
@@ -21070,7 +21096,6 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         window_placement: CornerType
         window_placement_set: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -21098,19 +21123,20 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Bin = ...
     priv: ScrolledWindowPrivate = ...
@@ -21216,7 +21242,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
 
 class ScrolledWindowAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -21274,7 +21300,6 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         search_mode_enabled: bool
         show_close_button: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -21302,19 +21327,20 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent: Bin = ...
     def __init__(
@@ -21380,7 +21406,7 @@ class SearchBarClass(GObject.GPointer):
 class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable):
     class Props:
         activates_default: bool
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         buffer: EntryBuffer
         caps_lock_warning: bool
         completion: EntryCompletion
@@ -21389,7 +21415,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         enable_emoji_completion: bool
         has_frame: bool
         im_module: str
-        inner_border: Border
+        inner_border: Optional[Border]
         input_hints: InputHints
         input_purpose: InputPurpose
         invisible_char: int
@@ -21423,7 +21449,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         selection_bound: int
         shadow_type: ShadowType
         show_emoji_icon: bool
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         text: str
         text_length: int
         truncate_multiline: bool
@@ -21456,19 +21482,19 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         editing_canceled: bool
     props: Props = ...
     parent: Entry = ...
@@ -21623,19 +21649,19 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     widget: Widget = ...
@@ -21694,13 +21720,12 @@ class SeparatorMenuItem(
     MenuItem, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -21728,23 +21753,24 @@ class SeparatorMenuItem(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     menu_item: MenuItem = ...
     def __init__(
@@ -21817,7 +21843,6 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -21845,21 +21870,22 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: ToolItem = ...
     priv: SeparatorToolItemPrivate = ...
@@ -22134,13 +22160,12 @@ class SettingsValue(GObject.GPointer):
 
 class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
     class Props:
-        accelerator: str
-        disabled_text: str
+        accelerator: Optional[str]
+        disabled_text: Optional[str]
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22168,20 +22193,21 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -22242,16 +22268,13 @@ class ShortcutLabelClass(GObject.GPointer): ...
 
 class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
     class Props:
-        accel_size_group: SizeGroup
         height: int
         title: str
-        title_size_group: SizeGroup
         view: str
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22279,20 +22302,23 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        accel_size_group: SizeGroup
+        title_size_group: SizeGroup
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -22357,7 +22383,6 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22385,20 +22410,21 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -22455,7 +22481,6 @@ class ShortcutsSectionClass(GObject.GPointer): ...
 
 class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
     class Props:
-        accel_size_group: SizeGroup
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -22465,12 +22490,10 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         subtitle: str
         subtitle_set: bool
         title: str
-        title_size_group: SizeGroup
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22498,20 +22521,23 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        accel_size_group: SizeGroup
+        title_size_group: SizeGroup
+        child: Widget
     props: Props = ...
     def __init__(
         self,
@@ -22578,8 +22604,8 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         section_name: str
         view_name: str
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -22591,27 +22617,25 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22639,19 +22663,21 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     window: Window = ...
     def __init__(
@@ -22765,7 +22791,6 @@ class SizeGroupPrivate(GObject.GPointer): ...
 class Socket(Container, Atk.ImplementorIface, Buildable):
     class Props:
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -22793,19 +22818,20 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: SocketPrivate = ...
@@ -22861,7 +22887,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
 
 class SocketAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -22927,7 +22953,7 @@ class SpinButton(
         value: float
         wrap: bool
         activates_default: bool
-        attributes: Pango.AttrList
+        attributes: Optional[Pango.AttrList]
         buffer: EntryBuffer
         caps_lock_warning: bool
         completion: EntryCompletion
@@ -22936,7 +22962,7 @@ class SpinButton(
         enable_emoji_completion: bool
         has_frame: bool
         im_module: str
-        inner_border: Border
+        inner_border: Optional[Border]
         input_hints: InputHints
         input_purpose: InputPurpose
         invisible_char: int
@@ -22970,7 +22996,7 @@ class SpinButton(
         selection_bound: int
         shadow_type: ShadowType
         show_emoji_icon: bool
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         text: str
         text_length: int
         truncate_multiline: bool
@@ -23003,19 +23029,19 @@ class SpinButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         editing_canceled: bool
         orientation: Orientation
     props: Props = ...
@@ -23155,7 +23181,7 @@ class SpinButtonAccessible(
     EntryAccessible, Atk.Action, Atk.Component, Atk.EditableText, Atk.Text, Atk.Value
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -23239,19 +23265,19 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     parent: Widget = ...
     priv: SpinnerPrivate = ...
@@ -23302,7 +23328,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
 
 class SpinnerAccessible(WidgetAccessible, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -23361,10 +23387,9 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         transition_running: bool
         transition_type: StackTransitionType
         vhomogeneous: bool
-        visible_child: Widget
-        visible_child_name: str
+        visible_child: Optional[Widget]
+        visible_child_name: Optional[str]
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -23392,19 +23417,20 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Container = ...
     def __init__(
@@ -23525,7 +23551,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
 
 class StackAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -23568,9 +23594,8 @@ class StackClass(GObject.GPointer):
 
 class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
     class Props:
-        stack: Stack
+        stack: Optional[Stack]
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -23598,19 +23623,20 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent: Bin = ...
     def __init__(
@@ -23673,12 +23699,11 @@ class StackSidebarPrivate(GObject.GPointer): ...
 class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
     class Props:
         icon_size: int
-        stack: Stack
+        stack: Optional[Stack]
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -23706,20 +23731,21 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     widget: Box = ...
     def __init__(
@@ -23785,20 +23811,20 @@ class StackSwitcherClass(GObject.GPointer):
 class StatusIcon(GObject.Object):
     class Props:
         embedded: bool
-        file: str
-        gicon: Gio.Icon
+        gicon: Optional[Gio.Icon]
         has_tooltip: bool
-        icon_name: str
+        icon_name: Optional[str]
         orientation: Orientation
-        pixbuf: GdkPixbuf.Pixbuf
+        pixbuf: Optional[GdkPixbuf.Pixbuf]
         screen: Gdk.Screen
         size: int
-        stock: str
+        stock: Optional[str]
         storage_type: ImageType
         title: str
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         visible: bool
+        file: str
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: StatusIconPrivate = ...
@@ -23889,7 +23915,6 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -23917,20 +23942,21 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent_widget: Box = ...
     priv: StatusbarPrivate = ...
@@ -23993,7 +24019,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
 
 class StatusbarAccessible(ContainerAccessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -24688,7 +24714,7 @@ class StyleContext(GObject.Object):
     class Props:
         direction: TextDirection
         paint_clock: Gdk.FrameClock
-        parent: StyleContext
+        parent: Optional[StyleContext]
         screen: Gdk.Screen
     props: Props = ...
     parent_object: GObject.Object = ...
@@ -24842,20 +24868,20 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
@@ -24918,7 +24944,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
 
 class SwitchAccessible(WidgetAccessible, Atk.Action, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -25001,7 +25027,6 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         n_rows: int
         row_spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -25029,19 +25054,20 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: TablePrivate = ...
@@ -25092,6 +25118,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
+    # override
     def attach(self, *args, **kwargs): ...  # FIXME Method
     def attach_defaults(
         self,
@@ -25184,13 +25211,12 @@ class TearoffMenuItem(
     MenuItem, Atk.ImplementorIface, Actionable, Activatable, Buildable
 ):
     class Props:
-        accel_path: str
+        accel_path: Optional[str]
         label: str
         right_justified: bool
-        submenu: Menu
+        submenu: Optional[Menu]
         use_underline: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -25218,23 +25244,24 @@ class TearoffMenuItem(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     menu_item: MenuItem = ...
     priv: TearoffMenuItemPrivate = ...
@@ -25302,9 +25329,9 @@ class TearoffMenuItemClass(GObject.GPointer):
 class TearoffMenuItemPrivate(GObject.GPointer): ...
 
 class Template:
-    def from_file(self, *args, **kwargs): ...  # FIXME Method
-    def from_resource(self, *args, **kwargs): ...  # FIXME Method
-    def from_string(self, *args, **kwargs): ...  # FIXME Method
+    def from_file(filename): ...  # FIXME Function
+    def from_resource(resource_path): ...  # FIXME Function
+    def from_string(string): ...  # FIXME Function
 
     class Callback: ...
     class Child: ...
@@ -25464,7 +25491,7 @@ class TextBuffer(GObject.Object):
     def insert_range_interactive(
         self, iter: TextIter, start: TextIter, end: TextIter, default_editable: bool
     ) -> bool: ...
-    def insert_with_tags(self, *args, **kwargs): ...  # FIXME Method
+    def insert_with_tags(self, iter, text, *tags): ...  # FIXME Function
     # override
     def insert_with_tags_by_name(
         self, iter: TextIter, text: str, *tags: Any
@@ -25487,7 +25514,7 @@ class TextBuffer(GObject.Object):
         self, tagset_name: Optional[str] = None
     ) -> Gdk.Atom: ...
     def register_serialize_format(
-        self, mime_type: str, function: Callable[..., Optional[int]], *user_data: Any
+        self, mime_type: str, function: Callable[..., Optional[bytes]], *user_data: Any
     ) -> Gdk.Atom: ...
     def register_serialize_tagset(
         self, tagset_name: Optional[str] = None
@@ -25537,7 +25564,7 @@ class TextCellAccessible(
 ):
     class Props:
         renderer: CellRenderer
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -25721,7 +25748,7 @@ class TextIter(GObject.GBoxed):
 class TextMark(GObject.Object):
     class Props:
         left_gravity: bool
-        name: str
+        name: Optional[str]
     props: Props = ...
     parent_instance: GObject.Object = ...
     segment: None = ...
@@ -25745,7 +25772,6 @@ class TextMarkClass(GObject.GPointer):
 class TextTag(GObject.Object):
     class Props:
         accumulative_margin: bool
-        background: str
         background_full_height: bool
         background_full_height_set: bool
         background_gdk: Gdk.Color
@@ -25762,7 +25788,6 @@ class TextTag(GObject.Object):
         font_desc: Pango.FontDescription
         font_features: str
         font_features_set: bool
-        foreground: str
         foreground_gdk: Gdk.Color
         foreground_rgba: Gdk.RGBA
         foreground_set: bool
@@ -25779,7 +25804,6 @@ class TextTag(GObject.Object):
         letter_spacing: int
         letter_spacing_set: bool
         name: str
-        paragraph_background: str
         paragraph_background_gdk: Gdk.Color
         paragraph_background_rgba: Gdk.RGBA
         paragraph_background_set: bool
@@ -25818,6 +25842,9 @@ class TextTag(GObject.Object):
         weight_set: bool
         wrap_mode: WrapMode
         wrap_mode_set: bool
+        background: str
+        foreground: str
+        paragraph_background: str
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextTagPrivate = ...
@@ -25966,11 +25993,10 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         pixels_inside_wrap: int
         populate_all: bool
         right_margin: int
-        tabs: Pango.TabArray
+        tabs: Optional[Pango.TabArray]
         top_margin: int
         wrap_mode: WrapMode
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -25998,23 +26024,24 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
     props: Props = ...
     parent_instance: Container = ...
     priv: TextViewPrivate = ...
@@ -26214,7 +26241,7 @@ class TextViewAccessible(
     Atk.Text,
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -26606,7 +26633,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         draw_indicator: bool
         inconsistent: bool
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -26615,7 +26642,6 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -26643,23 +26669,24 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     button: Button = ...
     priv: ToggleButtonPrivate = ...
@@ -26738,7 +26765,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
 
 class ToggleButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Image):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -26794,17 +26821,16 @@ class ToggleToolButton(
 ):
     class Props:
         active: bool
-        icon_name: str
-        icon_widget: Widget
-        label: str
-        label_widget: Widget
+        icon_name: Optional[str]
+        icon_widget: Optional[Widget]
+        label: Optional[str]
+        label_widget: Optional[Widget]
         stock_id: str
         use_underline: bool
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -26832,23 +26858,24 @@ class ToggleToolButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: ToolButton = ...
     priv: ToggleToolButtonPrivate = ...
@@ -26928,17 +26955,16 @@ class ToggleToolButtonPrivate(GObject.GPointer): ...
 
 class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     class Props:
-        icon_name: str
-        icon_widget: Widget
-        label: str
-        label_widget: Widget
+        icon_name: Optional[str]
+        icon_widget: Optional[Widget]
+        label: Optional[str]
+        label_widget: Optional[Widget]
         stock_id: str
         use_underline: bool
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -26966,23 +26992,24 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: ToolItem = ...
     priv: ToolButtonPrivate = ...
@@ -27078,7 +27105,6 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         visible_horizontal: bool
         visible_vertical: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -27106,21 +27132,22 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         related_action: Action
         use_action_appearance: bool
+        child: Widget
     props: Props = ...
     parent: Bin = ...
     priv: ToolItemPrivate = ...
@@ -27222,7 +27249,6 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         label: str
         label_widget: Widget
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -27250,19 +27276,20 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        child: Widget
     props: Props = ...
     parent_instance: Container = ...
     priv: ToolItemGroupPrivate = ...
@@ -27348,7 +27375,6 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         icon_size_set: bool
         toolbar_style: ToolbarStyle
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -27376,24 +27402,25 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
     props: Props = ...
     parent_instance: Container = ...
     priv: ToolPalettePrivate = ...
@@ -27518,7 +27545,6 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         show_arrow: bool
         toolbar_style: ToolbarStyle
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -27546,20 +27572,21 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     container: Container = ...
     priv: ToolbarPrivate = ...
@@ -27733,7 +27760,6 @@ class TreeIter(GObject.GBoxed):
 
 # override
 class TreeModel(GObject.GInterface):
-    # override
     def filter_new(self, root: Optional[TreePath] = None) -> TreeModelFilter: ...
     def foreach(self, func: Callable[..., bool], *user_data: Any) -> None: ...
     def get(self, treeiter: TreeIter, *columns: list[str]) -> tuple[Any, ...]: ...
@@ -27766,11 +27792,9 @@ class TreeModel(GObject.GInterface):
     def set_row(self, treeiter: TreeIter, row: list[Any]): ...
     def sort_new_with_model(self) -> TreeModelSort: ...
     def unref_node(self, iter: TreeIter) -> None: ...
-    # override
     def __getitem__(
         self, item: Union[TreeIter, TreePath, str, int]
     ) -> TreeModelRow: ...
-    # override
     def __delitem__(self, item: Union[TreeIter, TreePath, str, int]) -> None: ...
 
 class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
@@ -27805,7 +27829,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
         func: Callable[..., Any],
         *data: Any,
     ) -> None: ...
-    def set_value(self, *args, **kwargs): ...  # FIXME Method
+    def set_value(self, iter, column, value): ...  # FIXME Function
     def set_visible_column(self, column: int) -> None: ...
     # override
     def set_visible_func(
@@ -27852,28 +27876,24 @@ class TreeModelIface(GObject.GPointer):
     ref_node: Callable[[TreeModel, TreeIter], None] = ...
     unref_node: Callable[[TreeModel, TreeIter], None] = ...
 
+# override
 class TreeModelRow:
-    # override
     iter: TreeIter
-    # override
     model: TreeModel
     next = ...  # FIXME Constant
     parent = ...  # FIXME Constant
     path = ...  # FIXME Constant
     previous = ...  # FIXME Constant
 
-    def get_next(self, *args, **kwargs): ...  # FIXME Method
-    def get_parent(self, *args, **kwargs): ...  # FIXME Method
-    def get_previous(self, *args, **kwargs): ...  # FIXME Method
-    # override
+    def get_next(self): ...  # FIXME Function
+    def get_parent(self): ...  # FIXME Function
+    def get_previous(self): ...  # FIXME Function
     def iterchildren(self) -> Iterator[TreeModelRow]: ...
-    # override
     def __getitem__(self, key: int) -> Any: ...
-    # override
     def __setitem__(self, key: int, value: Any) -> None: ...
 
 class TreeModelRowIter:
-    def next(self, *args, **kwargs): ...  # FIXME Method
+    def next(self): ...  # FIXME Function
 
 class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     class Props:
@@ -27994,9 +28014,11 @@ class TreeSelectionClass(GObject.GPointer):
 class TreeSelectionPrivate(GObject.GPointer): ...
 
 class TreeSortable(GObject.GInterface):
-    def get_sort_column_id(self, *args, **kwargs): ...  # FIXME Method
+    def get_sort_column_id(
+        self,
+    ) -> Tuple[int, SortType] | Tuple[None, None]: ...  # CHECK Wrapped function
     def has_default_sort_func(self) -> bool: ...
-    def set_default_sort_func(self, *args, **kwargs): ...  # FIXME Method
+    def set_default_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
     def set_sort_column_id(self, sort_column_id: int, order: SortType) -> None: ...
     # override
     def set_sort_func(
@@ -28026,9 +28048,9 @@ class TreeStore(
         self, parent: Optional[TreeIter], row: Optional[list[Any]] = None
     ) -> TreeIter: ...
     def clear(self) -> None: ...
-    def insert(self, *args, **kwargs): ...  # FIXME Method
-    def insert_after(self, *args, **kwargs): ...  # FIXME Method
-    def insert_before(self, *args, **kwargs): ...  # FIXME Method
+    def insert(self, parent, position, row=None): ...  # FIXME Function
+    def insert_after(self, parent, sibling, row=None): ...  # FIXME Function
+    def insert_before(self, parent, sibling, row=None): ...  # FIXME Function
     def insert_with_values(
         self,
         parent: Optional[TreeIter],
@@ -28047,11 +28069,11 @@ class TreeStore(
     ) -> None: ...
     @classmethod
     def new(cls, n_columns: int, types: Sequence[Type]) -> TreeStore: ...
-    def prepend(self, *args, **kwargs): ...  # FIXME Method
+    def prepend(self, parent, row=None): ...  # FIXME Function
     def remove(self, iter: TreeIter) -> bool: ...
-    def set(self, *args, **kwargs): ...  # FIXME Method
+    def set(self, treeiter, *args): ...  # FIXME Function
     def set_column_types(self, n_columns: int, types: Sequence[Type]) -> None: ...
-    def set_value(self, *args, **kwargs): ...  # FIXME Method
+    def set_value(self, treeiter, column, value): ...  # FIXME Function
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
 class TreeStoreClass(GObject.GPointer):
@@ -28134,6 +28156,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     props: Props = ...
     parent: Container = ...
     priv: TreeViewPrivate = ...
+
     def __init__(
         self,
         activate_on_single_click: bool = ...,
@@ -28252,7 +28275,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         self, path: Optional[TreePath] = None, column: Optional[TreeViewColumn] = None
     ) -> Gdk.Rectangle: ...
     def get_bin_window(self) -> Optional[Gdk.Window]: ...
-    def get_cell_area(self, *args, **kwargs): ...  # FIXME Method
+    def get_cell_area(self, *args, **kwargs): ...
     def get_column(self, n: int) -> Optional[TreeViewColumn]: ...
     def get_columns(self) -> list[TreeViewColumn]: ...
     def get_cursor(self) -> Tuple[TreePath, TreeViewColumn]: ...
@@ -28284,12 +28307,11 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def get_selection(self) -> TreeSelection: ...
     def get_show_expanders(self) -> bool: ...
     def get_tooltip_column(self) -> int: ...
-    # override
     def get_tooltip_context(
         self, x: int, y: int, keyboard_tip: bool
     ) -> tuple[bool, int, int, Optional[TreeModel], TreePath, TreeIter]: ...
     def get_vadjustment(self) -> Adjustment: ...
-    def get_visible_range(self, *args, **kwargs): ...  # FIXME Method
+    def get_visible_range(self, *args, **kwargs): ...
     def get_visible_rect(self) -> Gdk.Rectangle: ...
     def insert_column(self, column: TreeViewColumn, position: int) -> int: ...
     def insert_column_with_attributes(
@@ -28394,7 +28416,7 @@ class TreeViewAccessible(
     ContainerAccessible, Atk.Component, Atk.Selection, Atk.Table, CellAccessibleParent
 ):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -28479,7 +28501,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         spacing: int
         title: str
         visible: bool
-        widget: Widget
+        widget: Optional[Widget]
         width: int
         x_offset: int
     props: Props = ...
@@ -28508,7 +28530,9 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
     ) -> None: ...
-    def cell_get_position(self, *args, **kwargs): ...  # FIXME Method
+    def cell_get_position(
+        self, cell_renderer: CellRenderer
+    ) -> Optional[Tuple[int, int]]: ...  # CHECK Wrapped function
     def cell_get_size(
         self, cell_area: Optional[Gdk.Rectangle] = None
     ) -> Tuple[int, int, int, int]: ...
@@ -28553,7 +28577,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def pack_start(self, cell: CellRenderer, expand: bool) -> None: ...
     def queue_resize(self) -> None: ...
     def set_alignment(self, xalign: float) -> None: ...
-    def set_attributes(self, *args, **kwargs): ...  # FIXME Method
+    def set_attributes(self, cell_renderer, **attributes): ...  # FIXME Function
     # override
     def set_cell_data_func(
         self,
@@ -28607,7 +28631,7 @@ class UIManager(GObject.Object, Buildable):
     ) -> None: ...
     def add_ui_from_file(self, filename: str) -> int: ...
     def add_ui_from_resource(self, resource_path: str) -> int: ...
-    def add_ui_from_string(self, *args, **kwargs): ...  # FIXME Method
+    def add_ui_from_string(self, buffer): ...  # FIXME Function
     def do_actions_changed(self) -> None: ...
     def do_add_widget(self, widget: Widget) -> None: ...
     def do_connect_proxy(self, action: Action, proxy: Widget) -> None: ...
@@ -28624,7 +28648,7 @@ class UIManager(GObject.Object, Buildable):
     def get_toplevels(self, types: UIManagerItemType) -> list[Widget]: ...
     def get_ui(self) -> str: ...
     def get_widget(self, path: str) -> Widget: ...
-    def insert_action_group(self, *args, **kwargs): ...  # FIXME Method
+    def insert_action_group(self, buffer, length=-1): ...  # FIXME Function
     @classmethod
     def new(cls) -> UIManager: ...
     def new_merge_id(self) -> int: ...
@@ -28655,7 +28679,6 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -28683,20 +28706,21 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     box: Box = ...
     def __init__(
@@ -28758,7 +28782,6 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         homogeneous: bool
         spacing: int
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -28786,20 +28809,21 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     button_box: ButtonBox = ...
     def __init__(
@@ -28863,7 +28887,6 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         position_set: bool
         wide_handle: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -28891,20 +28914,21 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
+        child: Widget
     props: Props = ...
     paned: Paned = ...
     def __init__(
@@ -28999,19 +29023,19 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     scale: Scale = ...
@@ -29111,19 +29135,19 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     scrollbar: Scrollbar = ...
@@ -29209,19 +29233,19 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         orientation: Orientation
     props: Props = ...
     separator: Separator = ...
@@ -29275,7 +29299,6 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
     class Props:
         shadow_type: ShadowType
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -29303,23 +29326,24 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: ViewportPrivate = ...
@@ -29404,7 +29428,7 @@ class VolumeButton(
         size: IconSize
         value: float
         always_show_image: bool
-        image: Widget
+        image: Optional[Widget]
         image_position: PositionType
         label: str
         relief: ReliefStyle
@@ -29413,7 +29437,6 @@ class VolumeButton(
         xalign: float
         yalign: float
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -29441,24 +29464,25 @@ class VolumeButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
-        action_name: str
+        window: Optional[Gdk.Window]
+        action_name: Optional[str]
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
         orientation: Orientation
+        child: Widget
     props: Props = ...
     parent: ScaleButton = ...
     def __init__(
@@ -29560,19 +29584,19 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: WidgetPrivate = ...
@@ -29828,7 +29852,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_source_set_icon_name(self, icon_name: str) -> None: ...
     def drag_source_set_icon_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> None: ...
     def drag_source_set_icon_stock(self, stock_id: str) -> None: ...
-    def drag_source_set_target_list(self, *args, **kwargs): ...  # FIXME Method
+    def drag_source_set_target_list(self, target_list): ...  # FIXME Function
     def drag_source_unset(self) -> None: ...
     def drag_unhighlight(self) -> None: ...
     def draw(self, cr: cairo.Context[_SomeSurface]) -> None: ...
@@ -29836,7 +29860,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def error_bell(self) -> None: ...
     def event(self, event: Gdk.Event) -> bool: ...
     def find_style_property(self, property_name: str) -> GObject.ParamSpec: ...
-    def freeze_child_notify(self, *args, **kwargs): ...  # FIXME Method
+    def freeze_child_notify(self): ...  # FIXME Function
     def get_accessible(self) -> Atk.Object: ...
     def get_action_group(self, prefix: str) -> Optional[Gio.ActionGroup]: ...
     def get_allocated_baseline(self) -> int: ...
@@ -30102,9 +30126,11 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     ) -> None: ...
     def size_request(self) -> Requisition: ...
     def style_attach(self) -> None: ...
-    def style_get_property(self, *args, **kwargs): ...  # FIXME Method
+    def style_get_property(self, property_name, value=None): ...  # FIXME Function
     def thaw_child_notify(self) -> None: ...
-    def translate_coordinates(self, *args, **kwargs): ...  # FIXME Method
+    def translate_coordinates(
+        self, dest_widget: Widget, src_x: int, src_y: int
+    ) -> Optional[Tuple[int, int]]: ...  # CHECK Wrapped function
     def trigger_tooltip_query(self) -> None: ...
     def unmap(self) -> None: ...
     def unparent(self) -> None: ...
@@ -30114,7 +30140,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
 
 class WidgetAccessible(Accessible, Atk.Component):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -30321,8 +30347,8 @@ class WidgetPrivate(GObject.GPointer): ...
 class Window(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         accept_focus: bool
-        application: Application
-        attached_to: Widget
+        application: Optional[Application]
+        attached_to: Optional[Widget]
         decorated: bool
         default_height: int
         default_width: int
@@ -30334,27 +30360,25 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf
-        icon_name: str
+        icon: Optional[GdkPixbuf.Pixbuf]
+        icon_name: Optional[str]
         is_active: bool
         is_maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         resize_grip_visible: bool
-        role: str
+        role: Optional[str]
         screen: Gdk.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str
+        title: Optional[str]
         transient_for: Optional[Window]
         type: WindowType
         type_hint: Gdk.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -30382,19 +30406,21 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
+        startup_id: str
+        child: Widget
     props: Props = ...
     bin: Bin = ...
     priv: WindowPrivate = ...
@@ -30620,7 +30646,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
 
 class WindowAccessible(ContainerAccessible, Atk.Component, Atk.Window):
     class Props:
-        widget: Widget
+        widget: Optional[Widget]
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -30694,6 +30720,32 @@ class WindowGroupClass(GObject.GPointer):
 
 class WindowGroupPrivate(GObject.GPointer): ...
 class WindowPrivate(GObject.GPointer): ...
+class _MountOperationHandler(GObject.GPointer): ...
+
+class _MountOperationHandlerIface(GObject.GPointer):
+    parent_iface: GObject.TypeInterface = ...
+    handle_ask_password: None = ...
+    handle_ask_question: None = ...
+    handle_close: None = ...
+    handle_show_processes: None = ...
+
+class _MountOperationHandlerProxy(GObject.GPointer):
+    parent_instance: Gio.DBusProxy = ...
+    priv: None = ...
+
+class _MountOperationHandlerProxyClass(GObject.GPointer):
+    parent_class: Gio.DBusProxyClass = ...
+
+class _MountOperationHandlerProxyPrivate(GObject.GPointer): ...
+
+class _MountOperationHandlerSkeleton(GObject.GPointer):
+    parent_instance: Gio.DBusInterfaceSkeleton = ...
+    priv: None = ...
+
+class _MountOperationHandlerSkeletonClass(GObject.GPointer):
+    parent_class: Gio.DBusInterfaceSkeletonClass = ...
+
+class _MountOperationHandlerSkeletonPrivate(GObject.GPointer): ...
 
 class AccelFlags(GObject.GFlags):
     LOCKED = 2
