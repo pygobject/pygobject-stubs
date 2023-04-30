@@ -20,10 +20,10 @@ from gi.repository import Pango
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 ACCESSIBLE_VALUE_UNDEFINED: int = -1
-BINARY_AGE: int = 803
+BINARY_AGE: int = 1001
 IM_MODULE_EXTENSION_POINT_NAME: str = "gtk-im-module"
 INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 3
+INTERFACE_AGE: int = 1
 INVALID_LIST_POSITION: int = 4294967295
 LEVEL_BAR_OFFSET_FULL: str = "full"
 LEVEL_BAR_OFFSET_HIGH: str = "high"
@@ -31,8 +31,8 @@ LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 4
 MAX_COMPOSE_LEN: int = 7
 MEDIA_FILE_EXTENSION_POINT_NAME: str = "gtk-media-file"
-MICRO_VERSION: int = 3
-MINOR_VERSION: int = 8
+MICRO_VERSION: int = 1
+MINOR_VERSION: int = 10
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
 PAPER_NAME_A5: str = "iso_a5"
@@ -128,6 +128,7 @@ def check_version(
 def constraint_vfl_parser_error_quark() -> int: ...
 def css_parser_error_quark() -> int: ...
 def css_parser_warning_quark() -> int: ...
+def dialog_error_quark() -> int: ...
 def disable_setlocale() -> None: ...
 def distribute_natural_allocation(
     extra_space: int, n_requested_sizes: int, sizes: Sequence[RequestedSize]
@@ -277,7 +278,9 @@ def show_uri_full(
     uri: str,
     timestamp: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[Callable[..., None]] = None,
+    callback: Optional[
+        Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+    ] = None,
     *user_data: Any,
 ) -> None: ...
 def show_uri_full_finish(parent: Window, result: Gio.AsyncResult) -> bool: ...
@@ -534,10 +537,24 @@ class AboutDialog(
     def set_wrap_license(self, wrap_license: bool) -> None: ...
 
 class Accessible(GObject.GInterface):
+    def get_accessible_parent(self) -> Optional[Accessible]: ...
     def get_accessible_role(self) -> AccessibleRole: ...
+    def get_at_context(self) -> ATContext: ...
+    def get_bounds(self) -> Tuple[bool, int, int, int, int]: ...
+    def get_first_accessible_child(self) -> Optional[Accessible]: ...
+    def get_next_accessible_sibling(self) -> Optional[Accessible]: ...
+    def get_platform_state(self, state: AccessiblePlatformState) -> bool: ...
     def reset_property(self, property: AccessibleProperty) -> None: ...
     def reset_relation(self, relation: AccessibleRelation) -> None: ...
     def reset_state(self, state: AccessibleState) -> None: ...
+    def set_accessible_parent(
+        self,
+        parent: Optional[Accessible] = None,
+        next_sibling: Optional[Accessible] = None,
+    ) -> None: ...
+    def update_next_accessible_sibling(
+        self, new_sibling: Optional[Accessible] = None
+    ) -> None: ...
     def update_property(
         self,
         n_properties: int,
@@ -554,7 +571,20 @@ class Accessible(GObject.GInterface):
         self, n_states: int, states: Sequence[AccessibleState], values: Sequence[Any]
     ) -> None: ...
 
-class AccessibleInterface(GObject.GPointer): ...
+class AccessibleInterface(GObject.GPointer):
+    g_iface: GObject.TypeInterface = ...
+    get_at_context: Callable[[Accessible], Optional[ATContext]] = ...
+    get_platform_state: Callable[[Accessible, AccessiblePlatformState], bool] = ...
+    get_accessible_parent: Callable[[Accessible], Optional[Accessible]] = ...
+    get_first_accessible_child: Callable[[Accessible], Optional[Accessible]] = ...
+    get_next_accessible_sibling: Callable[[Accessible], Optional[Accessible]] = ...
+    get_bounds: Callable[[Accessible], Tuple[bool, int, int, int, int]] = ...
+
+class AccessibleRange(GObject.GInterface): ...
+
+class AccessibleRangeInterface(GObject.GPointer):
+    g_iface: GObject.TypeInterface = ...
+    set_current_value: Callable[[AccessibleRange, float], bool] = ...
 
 class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
@@ -724,6 +754,51 @@ class AdjustmentClass(GObject.GPointer):
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
+
+class AlertDialog(GObject.Object):
+    class Props:
+        buttons: Optional[list[str]]
+        cancel_button: int
+        default_button: int
+        detail: str
+        message: str
+        modal: bool
+    props: Props = ...
+    def __init__(
+        self,
+        buttons: Sequence[str] = ...,
+        cancel_button: int = ...,
+        default_button: int = ...,
+        detail: str = ...,
+        message: str = ...,
+        modal: bool = ...,
+    ): ...
+    def choose(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_finish(self, result: Gio.AsyncResult) -> int: ...
+    def get_buttons(self) -> Optional[list[str]]: ...
+    def get_cancel_button(self) -> int: ...
+    def get_default_button(self) -> int: ...
+    def get_detail(self) -> str: ...
+    def get_message(self) -> str: ...
+    def get_modal(self) -> bool: ...
+    def set_buttons(self, labels: Sequence[str]) -> None: ...
+    def set_cancel_button(self, button: int) -> None: ...
+    def set_default_button(self, button: int) -> None: ...
+    def set_detail(self, detail: str) -> None: ...
+    def set_message(self, message: str) -> None: ...
+    def set_modal(self, modal: bool) -> None: ...
+    def show(self, parent: Optional[Window] = None) -> None: ...
+
+class AlertDialogClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
 
 class AlternativeTrigger(ShortcutTrigger):
     class Props:
@@ -2080,7 +2155,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     @classmethod
     def new(cls) -> Button: ...
     @classmethod
-    def new_from_icon_name(cls, icon_name: Optional[str] = None) -> Button: ...
+    def new_from_icon_name(cls, icon_name: str) -> Button: ...
     @classmethod
     def new_with_label(cls, label: str) -> Button: ...
     @classmethod
@@ -2104,7 +2179,12 @@ class CClosureExpression(Expression):
     def new(
         cls,
         value_type: Type,
-        marshal: Optional[Callable[..., None]],
+        marshal: Optional[
+            Callable[
+                [Callable[..., Any], Optional[Any], int, Sequence[Any], None, None],
+                None,
+            ]
+        ],
         n_params: int,
         params: Sequence[Expression],
         callback_func: Callable[[], None],
@@ -3653,6 +3733,9 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
 class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     class Props:
         baseline_position: BaselinePosition
+        center_widget: Optional[Widget]
+        end_widget: Optional[Widget]
+        start_widget: Optional[Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -3693,6 +3776,9 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
+        center_widget: Widget = ...,
+        end_widget: Widget = ...,
+        start_widget: Widget = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -4212,6 +4298,121 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
     @classmethod
     def new(cls) -> ColorChooserWidget: ...
 
+class ColorDialog(GObject.Object):
+    class Props:
+        modal: bool
+        title: str
+        with_alpha: bool
+    props: Props = ...
+    def __init__(self, modal: bool = ..., title: str = ..., with_alpha: bool = ...): ...
+    def choose_rgba(
+        self,
+        parent: Optional[Window] = None,
+        initial_color: Optional[Gdk.RGBA] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_rgba_finish(self, result: Gio.AsyncResult) -> Optional[Gdk.RGBA]: ...
+    def get_modal(self) -> bool: ...
+    def get_title(self) -> str: ...
+    def get_with_alpha(self) -> bool: ...
+    @classmethod
+    def new(cls) -> ColorDialog: ...
+    def set_modal(self, modal: bool) -> None: ...
+    def set_title(self, title: str) -> None: ...
+    def set_with_alpha(self, with_alpha: bool) -> None: ...
+
+class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
+    class Props:
+        dialog: Optional[ColorDialog]
+        rgba: Gdk.RGBA
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Overflow
+        parent: Optional[Widget]
+        receives_default: bool
+        root: Optional[Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: AccessibleRole
+    props: Props = ...
+    def __init__(
+        self,
+        dialog: ColorDialog = ...,
+        rgba: Gdk.RGBA = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Gdk.Cursor = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: LayoutManager = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: str = ...,
+        tooltip_text: str = ...,
+        valign: Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: AccessibleRole = ...,
+    ): ...
+    def get_dialog(self) -> Optional[ColorDialog]: ...
+    def get_rgba(self) -> Gdk.RGBA: ...
+    @classmethod
+    def new(cls, dialog: Optional[ColorDialog] = None) -> ColorDialogButton: ...
+    def set_dialog(self, dialog: ColorDialog) -> None: ...
+    def set_rgba(self, color: Gdk.RGBA) -> None: ...
+
+class ColorDialogButtonClass(GObject.GPointer):
+    parent_class: WidgetClass = ...
+
+class ColorDialogClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
+
 class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     class Props:
         columns: Gio.ListModel
@@ -4337,6 +4538,7 @@ class ColumnViewColumn(GObject.Object):
         factory: Optional[ListItemFactory]
         fixed_width: int
         header_menu: Optional[Gio.MenuModel]
+        id: Optional[str]
         resizable: bool
         sorter: Optional[Sorter]
         title: Optional[str]
@@ -4348,6 +4550,7 @@ class ColumnViewColumn(GObject.Object):
         factory: ListItemFactory = ...,
         fixed_width: int = ...,
         header_menu: Gio.MenuModel = ...,
+        id: str = ...,
         resizable: bool = ...,
         sorter: Sorter = ...,
         title: str = ...,
@@ -4358,6 +4561,7 @@ class ColumnViewColumn(GObject.Object):
     def get_factory(self) -> Optional[ListItemFactory]: ...
     def get_fixed_width(self) -> int: ...
     def get_header_menu(self) -> Optional[Gio.MenuModel]: ...
+    def get_id(self) -> Optional[str]: ...
     def get_resizable(self) -> bool: ...
     def get_sorter(self) -> Optional[Sorter]: ...
     def get_title(self) -> Optional[str]: ...
@@ -4370,12 +4574,28 @@ class ColumnViewColumn(GObject.Object):
     def set_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_fixed_width(self, fixed_width: int) -> None: ...
     def set_header_menu(self, menu: Optional[Gio.MenuModel] = None) -> None: ...
+    def set_id(self, id: Optional[str] = None) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
     def set_sorter(self, sorter: Optional[Sorter] = None) -> None: ...
     def set_title(self, title: Optional[str] = None) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
 class ColumnViewColumnClass(GObject.GPointer): ...
+
+class ColumnViewSorter(Sorter):
+    class Props:
+        primary_sort_column: Optional[ColumnViewColumn]
+        primary_sort_order: SortType
+    props: Props = ...
+    def get_n_sort_columns(self) -> int: ...
+    def get_nth_sort_column(
+        self, position: int
+    ) -> Tuple[Optional[ColumnViewColumn], SortType]: ...
+    def get_primary_sort_column(self) -> Optional[ColumnViewColumn]: ...
+    def get_primary_sort_order(self) -> SortType: ...
+
+class ColumnViewSorterClass(GObject.GPointer):
+    parent_class: SorterClass = ...
 
 class ComboBox(
     Widget, Accessible, Buildable, CellEditable, CellLayout, ConstraintTarget
@@ -4774,7 +4994,7 @@ class CssLocation(GObject.GPointer):
 
 class CssProvider(GObject.Object, StyleProvider):
     parent_instance: GObject.Object = ...
-    def load_from_data(self, data: Sequence[int]) -> None: ...
+    def load_from_data(self, data: str, length: int) -> None: ...
     def load_from_file(self, file: Gio.File) -> None: ...
     def load_from_path(self, path: str) -> None: ...
     def load_from_resource(self, resource_path: str) -> None: ...
@@ -5434,6 +5654,9 @@ class DropTargetAsyncClass(GObject.GPointer): ...
 class DropTargetClass(GObject.GPointer): ...
 
 class Editable(GObject.GInterface):
+    def delegate_get_accessible_platform_state(
+        self, state: AccessiblePlatformState
+    ) -> bool: ...
     @staticmethod
     def delegate_get_property(
         object: GObject.Object, prop_id: int, value: Any, pspec: GObject.ParamSpec
@@ -6517,6 +6740,7 @@ class FileChooserNativeClass(GObject.GPointer):
 class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileChooser):
     class Props:
         search_mode: bool
+        show_time: bool
         subtitle: str
         can_focus: bool
         can_target: bool
@@ -6601,11 +6825,118 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
     @classmethod
     def new(cls, action: FileChooserAction) -> FileChooserWidget: ...
 
+class FileDialog(GObject.Object):
+    class Props:
+        accept_label: Optional[str]
+        default_filter: Optional[FileFilter]
+        filters: Optional[Gio.ListModel]
+        initial_file: Optional[Gio.File]
+        initial_folder: Optional[Gio.File]
+        initial_name: Optional[str]
+        modal: bool
+        title: str
+    props: Props = ...
+    def __init__(
+        self,
+        accept_label: str = ...,
+        default_filter: FileFilter = ...,
+        filters: Gio.ListModel = ...,
+        initial_file: Gio.File = ...,
+        initial_folder: Gio.File = ...,
+        initial_name: str = ...,
+        modal: bool = ...,
+        title: str = ...,
+    ): ...
+    def get_accept_label(self) -> Optional[str]: ...
+    def get_default_filter(self) -> Optional[FileFilter]: ...
+    def get_filters(self) -> Optional[Gio.ListModel]: ...
+    def get_initial_file(self) -> Optional[Gio.File]: ...
+    def get_initial_folder(self) -> Optional[Gio.File]: ...
+    def get_initial_name(self) -> Optional[str]: ...
+    def get_modal(self) -> bool: ...
+    def get_title(self) -> str: ...
+    @classmethod
+    def new(cls) -> FileDialog: ...
+    def open(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def open_finish(self, result: Gio.AsyncResult) -> Optional[Gio.File]: ...
+    def open_multiple(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def open_multiple_finish(
+        self, result: Gio.AsyncResult
+    ) -> Optional[Gio.ListModel]: ...
+    def save(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def save_finish(self, result: Gio.AsyncResult) -> Optional[Gio.File]: ...
+    def select_folder(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def select_folder_finish(self, result: Gio.AsyncResult) -> Optional[Gio.File]: ...
+    def select_multiple_folders(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def select_multiple_folders_finish(
+        self, result: Gio.AsyncResult
+    ) -> Optional[Gio.ListModel]: ...
+    def set_accept_label(self, accept_label: Optional[str] = None) -> None: ...
+    def set_default_filter(self, filter: Optional[FileFilter] = None) -> None: ...
+    def set_filters(self, filters: Gio.ListModel) -> None: ...
+    def set_initial_file(self, file: Optional[Gio.File] = None) -> None: ...
+    def set_initial_folder(self, folder: Optional[Gio.File] = None) -> None: ...
+    def set_initial_name(self, name: Optional[str] = None) -> None: ...
+    def set_modal(self, modal: bool) -> None: ...
+    def set_title(self, title: str) -> None: ...
+
+class FileDialogClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
+
 class FileFilter(Filter, Buildable):
     class Props:
         name: Optional[str]
+        mime_types: list[str]
+        patterns: list[str]
+        suffixes: list[str]
     props: Props = ...
-    def __init__(self, name: str = ...): ...
+    def __init__(
+        self,
+        mime_types: Sequence[str] = ...,
+        name: str = ...,
+        patterns: Sequence[str] = ...,
+        suffixes: Sequence[str] = ...,
+    ): ...
     def add_mime_type(self, mime_type: str) -> None: ...
     def add_pattern(self, pattern: str) -> None: ...
     def add_pixbuf_formats(self) -> None: ...
@@ -6618,6 +6949,39 @@ class FileFilter(Filter, Buildable):
     def new_from_gvariant(cls, variant: GLib.Variant) -> FileFilter: ...
     def set_name(self, name: Optional[str] = None) -> None: ...
     def to_gvariant(self) -> GLib.Variant: ...
+
+class FileLauncher(GObject.Object):
+    class Props:
+        file: Optional[Gio.File]
+    props: Props = ...
+    def __init__(self, file: Gio.File = ...): ...
+    def get_file(self) -> Optional[Gio.File]: ...
+    def launch(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
+    @classmethod
+    def new(cls, file: Optional[Gio.File] = None) -> FileLauncher: ...
+    def open_containing_folder(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def open_containing_folder_finish(self, result: Gio.AsyncResult) -> bool: ...
+    def set_file(self, file: Optional[Gio.File] = None) -> None: ...
+
+class FileLauncherClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
 
 class Filter(GObject.Object):
     parent_instance: GObject.Object = ...
@@ -7391,6 +7755,195 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
     @classmethod
     def new(cls) -> FontChooserWidget: ...
 
+class FontDialog(GObject.Object):
+    class Props:
+        filter: Optional[Filter]
+        font_map: Optional[Pango.FontMap]
+        language: Optional[Pango.Language]
+        modal: bool
+        title: str
+    props: Props = ...
+    def __init__(
+        self,
+        filter: Filter = ...,
+        font_map: Pango.FontMap = ...,
+        language: Pango.Language = ...,
+        modal: bool = ...,
+        title: str = ...,
+    ): ...
+    def choose_face(
+        self,
+        parent: Optional[Window] = None,
+        initial_value: Optional[Pango.FontFace] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_face_finish(
+        self, result: Gio.AsyncResult
+    ) -> Optional[Pango.FontFace]: ...
+    def choose_family(
+        self,
+        parent: Optional[Window] = None,
+        initial_value: Optional[Pango.FontFamily] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_family_finish(
+        self, result: Gio.AsyncResult
+    ) -> Optional[Pango.FontFamily]: ...
+    def choose_font(
+        self,
+        parent: Optional[Window] = None,
+        initial_value: Optional[Pango.FontDescription] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_font_and_features(
+        self,
+        parent: Optional[Window] = None,
+        initial_value: Optional[Pango.FontDescription] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_font_and_features_finish(
+        self, result: Gio.AsyncResult
+    ) -> Tuple[bool, Pango.FontDescription, str, Pango.Language]: ...
+    def choose_font_finish(
+        self, result: Gio.AsyncResult
+    ) -> Optional[Pango.FontDescription]: ...
+    def get_filter(self) -> Optional[Filter]: ...
+    def get_font_map(self) -> Optional[Pango.FontMap]: ...
+    def get_language(self) -> Optional[Pango.Language]: ...
+    def get_modal(self) -> bool: ...
+    def get_title(self) -> str: ...
+    @classmethod
+    def new(cls) -> FontDialog: ...
+    def set_filter(self, filter: Optional[Filter] = None) -> None: ...
+    def set_font_map(self, fontmap: Optional[Pango.FontMap] = None) -> None: ...
+    def set_language(self, language: Pango.Language) -> None: ...
+    def set_modal(self, modal: bool) -> None: ...
+    def set_title(self, title: str) -> None: ...
+
+class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
+    class Props:
+        dialog: Optional[FontDialog]
+        font_desc: Optional[Pango.FontDescription]
+        font_features: Optional[str]
+        language: Optional[Pango.Language]
+        level: FontLevel
+        use_font: bool
+        use_size: bool
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Overflow
+        parent: Optional[Widget]
+        receives_default: bool
+        root: Optional[Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: AccessibleRole
+    props: Props = ...
+    def __init__(
+        self,
+        dialog: FontDialog = ...,
+        font_desc: Pango.FontDescription = ...,
+        font_features: str = ...,
+        language: Pango.Language = ...,
+        level: FontLevel = ...,
+        use_font: bool = ...,
+        use_size: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Gdk.Cursor = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: LayoutManager = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: str = ...,
+        tooltip_text: str = ...,
+        valign: Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: AccessibleRole = ...,
+    ): ...
+    def get_dialog(self) -> Optional[FontDialog]: ...
+    def get_font_desc(self) -> Optional[Pango.FontDescription]: ...
+    def get_font_features(self) -> Optional[str]: ...
+    def get_language(self) -> Optional[Pango.Language]: ...
+    def get_level(self) -> FontLevel: ...
+    def get_use_font(self) -> bool: ...
+    def get_use_size(self) -> bool: ...
+    @classmethod
+    def new(cls, dialog: Optional[FontDialog] = None) -> FontDialogButton: ...
+    def set_dialog(self, dialog: FontDialog) -> None: ...
+    def set_font_desc(self, font_desc: Pango.FontDescription) -> None: ...
+    def set_font_features(self, font_features: Optional[str] = None) -> None: ...
+    def set_language(self, language: Optional[Pango.Language] = None) -> None: ...
+    def set_level(self, level: FontLevel) -> None: ...
+    def set_use_font(self, use_font: bool) -> None: ...
+    def set_use_size(self, use_size: bool) -> None: ...
+
+class FontDialogButtonClass(GObject.GPointer):
+    parent_class: WidgetClass = ...
+
+class FontDialogClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
+
 class Frame(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         child: Optional[Widget]
@@ -7809,6 +8362,7 @@ class GestureSingleClass(GObject.GPointer): ...
 
 class GestureStylus(GestureSingle):
     class Props:
+        stylus_only: bool
         button: int
         exclusive: bool
         touch_only: bool
@@ -7820,6 +8374,7 @@ class GestureStylus(GestureSingle):
     props: Props = ...
     def __init__(
         self,
+        stylus_only: bool = ...,
         button: int = ...,
         exclusive: bool = ...,
         touch_only: bool = ...,
@@ -7832,8 +8387,10 @@ class GestureStylus(GestureSingle):
     def get_axis(self, axis: Gdk.AxisUse) -> Tuple[bool, float]: ...
     def get_backlog(self) -> Tuple[bool, list[Gdk.TimeCoord]]: ...
     def get_device_tool(self) -> Optional[Gdk.DeviceTool]: ...
+    def get_stylus_only(self) -> bool: ...
     @classmethod
     def new(cls) -> GestureStylus: ...
+    def set_stylus_only(self, stylus_only: bool) -> None: ...
 
 class GestureStylusClass(GObject.GPointer): ...
 
@@ -8286,6 +8843,7 @@ class IMContext(GObject.Object):
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ): ...
     def delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
+    def do_activate_osk(self) -> None: ...
     def do_commit(self, str: str) -> None: ...
     def do_delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
     def do_filter_keypress(self, event: Gdk.Event) -> bool: ...
@@ -8357,11 +8915,11 @@ class IMContextClass(GObject.GPointer):
     get_surrounding_with_selection: Callable[
         [IMContext], Tuple[bool, str, int, int]
     ] = ...
+    activate_osk: Callable[[IMContext], None] = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
-    _gtk_reserved5: None = ...
 
 class IMContextSimple(IMContext):
     class Props:
@@ -9238,7 +9796,9 @@ class LayoutManagerClass(GObject.GPointer):
     unroot: Callable[[LayoutManager], None] = ...
     _padding: list[None] = ...
 
-class LevelBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class LevelBar(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         inverted: bool
         max_value: float
@@ -10272,6 +10832,7 @@ class MediaStreamClass(GObject.GPointer):
 
 class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
+        active: bool
         always_show_arrow: bool
         child: Optional[Widget]
         direction: ArrowType
@@ -10320,6 +10881,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
+        active: bool = ...,
         always_show_arrow: bool = ...,
         child: Widget = ...,
         direction: ArrowType = ...,
@@ -10361,6 +10923,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    def get_active(self) -> bool: ...
     def get_always_show_arrow(self) -> bool: ...
     def get_child(self) -> Optional[Widget]: ...
     def get_direction(self) -> ArrowType: ...
@@ -10375,6 +10938,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls) -> MenuButton: ...
     def popdown(self) -> None: ...
     def popup(self) -> None: ...
+    def set_active(self, active: bool) -> None: ...
     def set_always_show_arrow(self, always_show_arrow: bool) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_create_popup_func(
@@ -11258,7 +11822,9 @@ class PageSetupUnixDialog(
         self, print_settings: Optional[PrintSettings] = None
     ) -> None: ...
 
-class Paned(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Paned(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         end_child: Optional[Widget]
         max_position: int
@@ -12457,7 +13023,9 @@ class Printer(GObject.Object):
     def new(cls, name: str, backend: PrintBackend, virtual_: bool) -> Printer: ...
     def request_details(self) -> None: ...
 
-class ProgressBar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class ProgressBar(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         ellipsize: Pango.EllipsizeMode
         fraction: float
@@ -12576,7 +13144,9 @@ class PyGTKDeprecationWarning:
     def add_note(self, *args, **kwargs): ...  # FIXME Function
     def with_traceback(self, *args, **kwargs): ...  # FIXME Function
 
-class Range(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Range(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         adjustment: Adjustment
         fill_level: float
@@ -12882,7 +13452,9 @@ class Root(GObject.GInterface):
 
 class RootInterface(GObject.GPointer): ...
 
-class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
+class Scale(
+    Range, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         digits: int
         draw_value: bool
@@ -13003,8 +13575,11 @@ class Scale(Range, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_has_origin(self, has_origin: bool) -> None: ...
     def set_value_pos(self, pos: PositionType) -> None: ...
 
-class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class ScaleButton(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
+        active: bool
         adjustment: Adjustment
         icons: list[str]
         value: float
@@ -13084,6 +13659,7 @@ class ScaleButton(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation = ...,
     ): ...
     def do_value_changed(self, value: float) -> None: ...
+    def get_active(self) -> bool: ...
     def get_adjustment(self) -> Adjustment: ...
     def get_minus_button(self) -> Button: ...
     def get_plus_button(self) -> Button: ...
@@ -13435,7 +14011,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
 class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     class Props:
         activates_default: bool
-        placeholder_text: str
+        placeholder_text: Optional[str]
         search_delay: int
         can_focus: bool
         can_target: bool
@@ -13524,10 +14100,12 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         xalign: float = ...,
     ): ...
     def get_key_capture_widget(self) -> Optional[Widget]: ...
+    def get_placeholder_text(self) -> Optional[str]: ...
     def get_search_delay(self) -> int: ...
     @classmethod
     def new(cls) -> SearchEntry: ...
     def set_key_capture_widget(self, widget: Optional[Widget] = None) -> None: ...
+    def set_placeholder_text(self, text: Optional[str] = None) -> None: ...
     def set_search_delay(self, delay: int) -> None: ...
 
 class SelectionFilterModel(GObject.Object, Gio.ListModel):
@@ -14500,6 +15078,9 @@ class Snapshot(Gdk.Snapshot):
         end: float,
         stops: Sequence[Gsk.ColorStop],
     ) -> None: ...
+    def append_scaled_texture(
+        self, texture: Gdk.Texture, filter: Gsk.ScalingFilter, bounds: Graphene.Rect
+    ) -> None: ...
     def append_texture(self, texture: Gdk.Texture, bounds: Graphene.Rect) -> None: ...
     def gl_shader_pop_texture(self) -> None: ...
     @classmethod
@@ -14516,6 +15097,7 @@ class Snapshot(Gdk.Snapshot):
     def push_gl_shader(
         self, shader: Gsk.GLShader, bounds: Graphene.Rect, take_args: GLib.Bytes
     ) -> None: ...
+    def push_mask(self, mask_mode: Gsk.MaskMode) -> None: ...
     def push_opacity(self, opacity: float) -> None: ...
     def push_repeat(
         self, bounds: Graphene.Rect, child_bounds: Optional[Graphene.Rect] = None
@@ -14615,7 +15197,14 @@ class SorterClass(GObject.GPointer):
     _gtk_reserved8: None = ...
 
 class SpinButton(
-    Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Editable, Orientable
+    Widget,
+    Accessible,
+    AccessibleRange,
+    Buildable,
+    CellEditable,
+    ConstraintTarget,
+    Editable,
+    Orientable,
 ):
     class Props:
         adjustment: Adjustment
@@ -15253,6 +15842,10 @@ class StringFilterClass(GObject.GPointer):
     parent_class: FilterClass = ...
 
 class StringList(GObject.Object, Gio.ListModel, Buildable):
+    class Props:
+        strings: list[str]
+    props: Props = ...
+    def __init__(self, strings: Sequence[str] = ...): ...
     def append(self, string: str) -> None: ...
     def get_string(self, position: int) -> Optional[str]: ...
     @classmethod
@@ -15279,14 +15872,22 @@ class StringObjectClass(GObject.GPointer):
 
 class StringSorter(Sorter):
     class Props:
+        collation: Collation
         expression: Optional[Expression]
         ignore_case: bool
     props: Props = ...
-    def __init__(self, expression: Expression = ..., ignore_case: bool = ...): ...
+    def __init__(
+        self,
+        collation: Collation = ...,
+        expression: Expression = ...,
+        ignore_case: bool = ...,
+    ): ...
+    def get_collation(self) -> Collation: ...
     def get_expression(self) -> Optional[Expression]: ...
     def get_ignore_case(self) -> bool: ...
     @classmethod
     def new(cls, expression: Optional[Expression] = None) -> StringSorter: ...
+    def set_collation(self, collation: Collation) -> None: ...
     def set_expression(self, expression: Optional[Expression] = None) -> None: ...
     def set_ignore_case(self, ignore_case: bool) -> None: ...
 
@@ -16551,6 +17152,8 @@ class TreeDragSourceIface(GObject.GPointer):
 class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         child: Optional[Widget]
+        hide_expander: bool
+        indent_for_depth: bool
         indent_for_icon: bool
         item: Optional[GObject.Object]
         list_row: Optional[TreeListRow]
@@ -16593,6 +17196,8 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     def __init__(
         self,
         child: Widget = ...,
+        hide_expander: bool = ...,
+        indent_for_depth: bool = ...,
         indent_for_icon: bool = ...,
         list_row: TreeListRow = ...,
         can_focus: bool = ...,
@@ -16627,12 +17232,16 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ): ...
     def get_child(self) -> Optional[Widget]: ...
+    def get_hide_expander(self) -> bool: ...
+    def get_indent_for_depth(self) -> bool: ...
     def get_indent_for_icon(self) -> bool: ...
     def get_item(self) -> Optional[GObject.Object]: ...
     def get_list_row(self) -> Optional[TreeListRow]: ...
     @classmethod
     def new(cls) -> TreeExpander: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
+    def set_hide_expander(self, hide_expander: bool) -> None: ...
+    def set_indent_for_depth(self, indent_for_depth: bool) -> None: ...
     def set_indent_for_icon(self, indent_for_icon: bool) -> None: ...
     def set_list_row(self, list_row: Optional[TreeListRow] = None) -> None: ...
 
@@ -17412,6 +18021,29 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def set_visible(self, visible: bool) -> None: ...
     def set_widget(self, widget: Optional[Widget] = None) -> None: ...
 
+class UriLauncher(GObject.Object):
+    class Props:
+        uri: Optional[str]
+    props: Props = ...
+    def __init__(self, uri: str = ...): ...
+    def get_uri(self) -> Optional[str]: ...
+    def launch(
+        self,
+        parent: Optional[Window] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
+    @classmethod
+    def new(cls, uri: Optional[str] = None) -> UriLauncher: ...
+    def set_uri(self, uri: Optional[str] = None) -> None: ...
+
+class UriLauncherClass(GObject.GPointer):
+    parent_class: GObject.ObjectClass = ...
+
 class Video(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         autoplay: bool
@@ -17609,9 +18241,12 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_scroll_to_focus(self, scroll_to_focus: bool) -> None: ...
 
-class VolumeButton(ScaleButton, Accessible, Buildable, ConstraintTarget, Orientable):
+class VolumeButton(
+    ScaleButton, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     class Props:
         use_symbolic: bool
+        active: bool
         adjustment: Adjustment
         icons: list[str]
         value: float
@@ -17847,6 +18482,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def get_can_target(self) -> bool: ...
     def get_child_visible(self) -> bool: ...
     def get_clipboard(self) -> Gdk.Clipboard: ...
+    def get_color(self) -> Gdk.RGBA: ...
     def get_css_classes(self) -> list[str]: ...
     def get_css_name(self) -> str: ...
     def get_cursor(self) -> Optional[Gdk.Cursor]: ...
@@ -17924,7 +18560,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         self,
         action_name: str,
         parameter_type: Optional[str],
-        activate: Callable[[Widget, str, GLib.Variant], None],
+        activate: Callable[[Widget, str, Optional[GLib.Variant]], None],
     ) -> None: ...
     def install_property_action(self, action_name: str, property_name: str) -> None: ...
     def is_ancestor(self, ancestor: Widget) -> bool: ...
@@ -18057,7 +18693,7 @@ class WidgetClass(GObject.GPointer):
         self,
         action_name: str,
         parameter_type: Optional[str],
-        activate: Callable[[Widget, str, GLib.Variant], None],
+        activate: Callable[[Widget, str, Optional[GLib.Variant]], None],
     ) -> None: ...
     def install_property_action(self, action_name: str, property_name: str) -> None: ...
     def query_action(
@@ -18627,6 +19263,11 @@ class AccessibleInvalidState(GObject.GEnum):
     SPELLING = 3
     TRUE = 1
 
+class AccessiblePlatformState(GObject.GEnum):
+    ACTIVE = 2
+    FOCUSABLE = 0
+    FOCUSED = 1
+
 class AccessibleProperty(GObject.GEnum):
     AUTOCOMPLETE = 0
     DESCRIPTION = 1
@@ -18744,6 +19385,7 @@ class AccessibleRole(GObject.GEnum):
     TEXT_BOX = 68
     TIME = 69
     TIMER = 70
+    TOGGLE_BUTTON = 78
     TOOLBAR = 71
     TOOLTIP = 72
     TREE = 73
@@ -18850,6 +19492,11 @@ class CellRendererMode(GObject.GEnum):
     EDITABLE = 2
     INERT = 0
 
+class Collation(GObject.GEnum):
+    FILENAME = 2
+    NONE = 0
+    UNICODE = 1
+
 class ConstraintAttribute(GObject.GEnum):
     BASELINE = 11
     BOTTOM = 4
@@ -18919,6 +19566,13 @@ class DeleteType(GObject.GEnum):
     WORDS = 2
     WORD_ENDS = 1
 
+class DialogError(GObject.GEnum):
+    CANCELLED = 1
+    DISMISSED = 2
+    FAILED = 0
+    @staticmethod
+    def quark() -> int: ...
+
 class DirectionType(GObject.GEnum):
     DOWN = 3
     LEFT = 4
@@ -18969,6 +19623,12 @@ class FilterMatch(GObject.GEnum):
     ALL = 2
     NONE = 1
     SOME = 0
+
+class FontLevel(GObject.GEnum):
+    FACE = 1
+    FAMILY = 0
+    FEATURES = 3
+    FONT = 2
 
 class IconSize(GObject.GEnum):
     INHERIT = 0
