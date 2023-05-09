@@ -1,3 +1,15 @@
+# 2.7.0 (28 Apr 2023)
+
+## Improvements
+
+* Extract class' docstring
+
+## Typing
+
+* Improve type hints for
+    - Gdk4
+    - Gtk3
+
 # 2.6.0 (08 Apr 2023)
 
 ## Improvements
