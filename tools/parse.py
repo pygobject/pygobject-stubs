@@ -13,6 +13,7 @@ SYMBOLS_PATTERNS = [
     CLASS_PATTERN,
     r"^\s*(?P<symbol>\w*)\s*(:|=)[^,)]*$",  # Constants
 ]
+DOCUMENTATION_PATTERN = r'^\s*"""\s*$'
 INDENTATION_SPACES = 4
 
 OverridableSymbols = ast.ClassDef | ast.FunctionDef | ast.AnnAssign | ast.Assign
@@ -31,7 +32,15 @@ def _search_overridden_symbols(input: str) -> list[str]:
 
     is_override: bool = False
 
+    is_doc: bool = False
+
     for i, line in enumerate(input.splitlines()):
+        if re.match(DOCUMENTATION_PATTERN, line):
+            is_doc = not is_doc
+
+        if is_doc:
+            continue
+
         if re.match(OVERRIDE_PATTERN, line):
             is_override = True
 
