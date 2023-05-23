@@ -139,7 +139,13 @@ def _callable_get_arguments(
 
     # Traverse args in reverse to check for optional args
     for a in reversed(args):
-        t = _type_to_python(a.get_type(), current_namespace, needed_namespaces)
+        t = _type_to_python(
+            a.get_type(),
+            current_namespace,
+            needed_namespaces,
+            False,
+            a.get_closure() >= 0,  # True if function admits variable arguments
+        )
 
         if a.may_be_null() and t != "None":
             if can_default:
@@ -213,6 +219,7 @@ def _type_to_python(
     current_namespace: str,
     needed_namespaces: set[str],
     out_arg: bool = False,
+    varargs: bool = False,
 ) -> str:
     tag = type.get_tag()
     tags = GI.TypeTag
@@ -286,7 +293,7 @@ def _type_to_python(
                 return_type = f"Tuple[{', '.join(return_args)}]"
 
             # FIXME, how to express Callable with variable arguments?
-            if len(names) > 0 and names[-1].startswith("*"):
+            if (len(names) > 0 and names[-1].startswith("*")) or varargs:
                 return f"Callable[..., {return_type}]"
             else:
                 return f"Callable[[{', '.join(args)}], {return_type}]"
