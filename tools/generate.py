@@ -767,7 +767,15 @@ def _gi_build_stub(
                 names.append(n)
                 type = _build_type(GIRepository.property_info_get_type(p))
                 t = _type_to_python(type, current_namespace, needed_namespaces)
-                s.append(f"{n}: {t} = ...")
+                setter = GIRepository.property_info_get_setter(p)
+                if setter:
+                    arg_info = GIRepository.callable_info_get_arg(setter, 0)
+                    if GIRepository.arg_info_may_be_null(arg_info):
+                        s.append(f"{n}: Optional[{t}] = ...")
+                    else:
+                        s.append(f"{n}: {t} = ...")
+                else:
+                    s.append(f"{n}: {t} = ...")
 
             separator = ",\n                 "
             ret += f"    def __init__(self, {separator.join(s)}): ...\n"
