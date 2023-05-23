@@ -16,9 +16,9 @@ from gi.repository import Pango
 
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 3
-MINOR_VERSION: int = 2
-VERSION_S: str = "1.2.3"
+MICRO_VERSION: int = 2
+MINOR_VERSION: int = 3
+VERSION_S: str = "1.3.2"
 _lock = ...  # FIXME Constant
 _namespace: str = "Adw"
 _version: str = "1"
@@ -41,6 +41,133 @@ class AboutWindow(
     Gtk.Root,
     Gtk.ShortcutManager,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        AboutWindow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwAboutWindow
+
+    Signals from AdwAboutWindow:
+      activate-link (gchararray) -> gboolean
+
+    Properties from AdwAboutWindow:
+      application-icon -> gchararray: application-icon
+      application-name -> gchararray: application-name
+      developer-name -> gchararray: developer-name
+      version -> gchararray: version
+      release-notes-version -> gchararray: release-notes-version
+      release-notes -> gchararray: release-notes
+      comments -> gchararray: comments
+      website -> gchararray: website
+      support-url -> gchararray: support-url
+      issue-url -> gchararray: issue-url
+      debug-info -> gchararray: debug-info
+      debug-info-filename -> gchararray: debug-info-filename
+      developers -> GStrv: developers
+      designers -> GStrv: designers
+      artists -> GStrv: artists
+      documenters -> GStrv: documenters
+      translator-credits -> gchararray: translator-credits
+      copyright -> gchararray: copyright
+      license-type -> GtkLicense: license-type
+      license -> gchararray: license
+
+    Properties from AdwWindow:
+      content -> GtkWidget: content
+
+    Signals from GtkWindow:
+      keys-changed ()
+      activate-focus ()
+      activate-default ()
+      enable-debugging (gboolean) -> gboolean
+      close-request () -> gboolean
+
+    Properties from GtkWindow:
+      title -> gchararray: title
+      resizable -> gboolean: resizable
+      modal -> gboolean: modal
+      default-width -> gint: default-width
+      default-height -> gint: default-height
+      destroy-with-parent -> gboolean: destroy-with-parent
+      hide-on-close -> gboolean: hide-on-close
+      icon-name -> gchararray: icon-name
+      display -> GdkDisplay: display
+      decorated -> gboolean: decorated
+      deletable -> gboolean: deletable
+      transient-for -> GtkWindow: transient-for
+      application -> GtkApplication: application
+      default-widget -> GtkWidget: default-widget
+      focus-widget -> GtkWidget: focus-widget
+      child -> GtkWidget: child
+      titlebar -> GtkWidget: titlebar
+      handle-menubar-accel -> gboolean: handle-menubar-accel
+      is-active -> gboolean: is-active
+      startup-id -> gchararray: startup-id
+      mnemonics-visible -> gboolean: mnemonics-visible
+      focus-visible -> gboolean: focus-visible
+      maximized -> gboolean: maximized
+      fullscreened -> gboolean: fullscreened
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         application_icon: str
         application_name: str
@@ -127,15 +254,15 @@ class AboutWindow(
         self,
         application_icon: str = ...,
         application_name: str = ...,
-        artists: Sequence[str] = ...,
+        artists: Optional[Sequence[str]] = ...,
         comments: str = ...,
         copyright: str = ...,
         debug_info: str = ...,
         debug_info_filename: str = ...,
-        designers: Sequence[str] = ...,
+        designers: Optional[Sequence[str]] = ...,
         developer_name: str = ...,
-        developers: Sequence[str] = ...,
-        documenters: Sequence[str] = ...,
+        developers: Optional[Sequence[str]] = ...,
+        documenters: Optional[Sequence[str]] = ...,
         issue_url: str = ...,
         license: str = ...,
         license_type: Gtk.License = ...,
@@ -145,12 +272,12 @@ class AboutWindow(
         translator_credits: str = ...,
         version: str = ...,
         website: str = ...,
-        content: Gtk.Widget = ...,
-        application: Gtk.Application = ...,
-        child: Gtk.Widget = ...,
+        content: Optional[Gtk.Widget] = ...,
+        application: Optional[Gtk.Application] = ...,
+        child: Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Gtk.Widget = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
@@ -160,20 +287,20 @@ class AboutWindow(
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: str = ...,
-        titlebar: Gtk.Widget = ...,
-        transient_for: Gtk.Window = ...,
+        title: Optional[str] = ...,
+        titlebar: Optional[Gtk.Widget] = ...,
+        transient_for: Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -181,7 +308,7 @@ class AboutWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -191,8 +318,8 @@ class AboutWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -258,16 +385,117 @@ class AboutWindow(
     def set_website(self, website: str) -> None: ...
 
 class AboutWindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AboutWindowClass()
+
+    """
+
     parent_class: WindowClass = ...
 
 class ActionRow(
     PreferencesRow, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ActionRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwActionRow
+
+    Signals from AdwActionRow:
+      activated ()
+
+    Properties from AdwActionRow:
+      subtitle -> gchararray: subtitle
+      icon-name -> gchararray: icon-name
+      activatable-widget -> GtkWidget: activatable-widget
+      title-lines -> gint: title-lines
+      subtitle-lines -> gint: subtitle-lines
+      subtitle-selectable -> gboolean: subtitle-selectable
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         activatable_widget: Optional[Gtk.Widget]
         icon_name: Optional[str]
         subtitle: Optional[str]
         subtitle_lines: int
+        subtitle_selectable: bool
         title_lines: int
         title: str
         title_selectable: bool
@@ -317,23 +545,24 @@ class ActionRow(
     parent_instance: PreferencesRow = ...
     def __init__(
         self,
-        activatable_widget: Gtk.Widget = ...,
-        icon_name: str = ...,
+        activatable_widget: Optional[Gtk.Widget] = ...,
+        icon_name: Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
+        subtitle_selectable: bool = ...,
         title_lines: int = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -341,7 +570,7 @@ class ActionRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -351,15 +580,15 @@ class ActionRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
     def activate(self) -> None: ...
@@ -369,6 +598,7 @@ class ActionRow(
     def get_icon_name(self) -> Optional[str]: ...
     def get_subtitle(self) -> Optional[str]: ...
     def get_subtitle_lines(self) -> int: ...
+    def get_subtitle_selectable(self) -> bool: ...
     def get_title_lines(self) -> int: ...
     @classmethod
     def new(cls) -> ActionRow: ...
@@ -377,22 +607,63 @@ class ActionRow(
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
+    def set_subtitle_selectable(self, subtitle_selectable: bool) -> None: ...
     def set_title_lines(self, title_lines: int) -> None: ...
 
 class ActionRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ActionRowClass()
+
+    """
+
     parent_class: PreferencesRowClass = ...
     activate: Callable[[ActionRow], None] = ...
     padding: list[None] = ...
 
 class Animation(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Animation(**properties)
+
+    Object AdwAnimation
+
+    Signals from AdwAnimation:
+      done ()
+
+    Properties from AdwAnimation:
+      widget -> GtkWidget: widget
+      target -> AdwAnimationTarget: target
+      value -> gdouble: value
+      state -> AdwAnimationState: state
+      follow-enable-animations-setting -> gboolean: follow-enable-animations-setting
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
+        follow_enable_animations_setting: bool
         state: AnimationState
         target: AnimationTarget
         value: float
         widget: Gtk.Widget
     props: Props = ...
     parent_instance: GObject.Object = ...
-    def __init__(self, target: AnimationTarget = ..., widget: Gtk.Widget = ...): ...
+    def __init__(
+        self,
+        follow_enable_animations_setting: bool = ...,
+        target: AnimationTarget = ...,
+        widget: Gtk.Widget = ...,
+    ): ...
+    def get_follow_enable_animations_setting(self) -> bool: ...
     def get_state(self) -> AnimationState: ...
     def get_target(self) -> AnimationTarget: ...
     def get_value(self) -> float: ...
@@ -401,6 +672,7 @@ class Animation(GObject.Object):
     def play(self) -> None: ...
     def reset(self) -> None: ...
     def resume(self) -> None: ...
+    def set_follow_enable_animations_setting(self, setting: bool) -> None: ...
     def set_target(self, target: AnimationTarget) -> None: ...
     def skip(self) -> None: ...
 
@@ -409,6 +681,80 @@ class AnimationTarget(GObject.Object): ...
 class AnimationTargetClass(GObject.GPointer): ...
 
 class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
+    """
+    :Constructors:
+
+    ::
+
+        Application(**properties)
+        new(application_id:str=None, flags:Gio.ApplicationFlags) -> Adw.Application
+
+    Object AdwApplication
+
+    Properties from AdwApplication:
+      style-manager -> AdwStyleManager: style-manager
+
+    Signals from GActionGroup:
+      action-added (gchararray)
+      action-removed (gchararray)
+      action-enabled-changed (gchararray, gboolean)
+      action-state-changed (gchararray, GVariant)
+
+    Signals from GtkApplication:
+      window-added (GtkWindow)
+      window-removed (GtkWindow)
+      query-end ()
+
+    Properties from GtkApplication:
+      register-session -> gboolean: register-session
+      screensaver-active -> gboolean: screensaver-active
+      menubar -> GMenuModel: menubar
+      active-window -> GtkWindow: active-window
+
+    Signals from GActionGroup:
+      action-added (gchararray)
+      action-removed (gchararray)
+      action-enabled-changed (gchararray, gboolean)
+      action-state-changed (gchararray, GVariant)
+
+    Signals from GApplication:
+      activate ()
+      startup ()
+      shutdown ()
+      open (gpointer, gint, gchararray)
+      command-line (GApplicationCommandLine) -> gint
+      handle-local-options (GVariantDict) -> gint
+      name-lost () -> gboolean
+
+    Properties from GApplication:
+      application-id -> gchararray: Application identifier
+        The unique identifier for the application
+      flags -> GApplicationFlags: Application flags
+        Flags specifying the behaviour of the application
+      resource-base-path -> gchararray: Resource base path
+        The base resource path for the application
+      is-registered -> gboolean: Is registered
+        If g_application_register() has been called
+      is-remote -> gboolean: Is remote
+        If this application instance is remote
+      inactivity-timeout -> guint: Inactivity timeout
+        Time (ms) to stay alive after becoming idle
+      action-group -> GActionGroup: Action group
+        The group of actions that the application exports
+      is-busy -> gboolean: Is busy
+        If this application is currently marked busy
+
+    Signals from GActionGroup:
+      action-added (gchararray)
+      action-removed (gchararray)
+      action-enabled-changed (gchararray, gboolean)
+      action-state-changed (gchararray, GVariant)
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         style_manager: StyleManager
         active_window: Optional[Gtk.Window]
@@ -427,13 +773,13 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
     parent_instance: Gtk.Application = ...
     def __init__(
         self,
-        menubar: Gio.MenuModel = ...,
+        menubar: Optional[Gio.MenuModel] = ...,
         register_session: bool = ...,
-        action_group: Gio.ActionGroup = ...,
-        application_id: str = ...,
+        action_group: Optional[Gio.ActionGroup] = ...,
+        application_id: Optional[str] = ...,
         flags: Gio.ApplicationFlags = ...,
         inactivity_timeout: int = ...,
-        resource_base_path: str = ...,
+        resource_base_path: Optional[str] = ...,
     ): ...
     def get_style_manager(self) -> StyleManager: ...
     @classmethod
@@ -442,6 +788,15 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
     ) -> Application: ...
 
 class ApplicationClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ApplicationClass()
+
+    """
+
     parent_class: Gtk.ApplicationClass = ...
     padding: list[None] = ...
 
@@ -456,6 +811,123 @@ class ApplicationWindow(
     Gtk.Root,
     Gtk.ShortcutManager,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ApplicationWindow(**properties)
+        new(app:Gtk.Application) -> Gtk.Widget
+
+    Object AdwApplicationWindow
+
+    Properties from AdwApplicationWindow:
+      content -> GtkWidget: content
+
+    Signals from GActionGroup:
+      action-added (gchararray)
+      action-removed (gchararray)
+      action-enabled-changed (gchararray, gboolean)
+      action-state-changed (gchararray, GVariant)
+
+    Properties from GtkApplicationWindow:
+      show-menubar -> gboolean: show-menubar
+
+    Signals from GActionGroup:
+      action-added (gchararray)
+      action-removed (gchararray)
+      action-enabled-changed (gchararray, gboolean)
+      action-state-changed (gchararray, GVariant)
+
+    Signals from GtkWindow:
+      keys-changed ()
+      activate-focus ()
+      activate-default ()
+      enable-debugging (gboolean) -> gboolean
+      close-request () -> gboolean
+
+    Properties from GtkWindow:
+      title -> gchararray: title
+      resizable -> gboolean: resizable
+      modal -> gboolean: modal
+      default-width -> gint: default-width
+      default-height -> gint: default-height
+      destroy-with-parent -> gboolean: destroy-with-parent
+      hide-on-close -> gboolean: hide-on-close
+      icon-name -> gchararray: icon-name
+      display -> GdkDisplay: display
+      decorated -> gboolean: decorated
+      deletable -> gboolean: deletable
+      transient-for -> GtkWindow: transient-for
+      application -> GtkApplication: application
+      default-widget -> GtkWidget: default-widget
+      focus-widget -> GtkWidget: focus-widget
+      child -> GtkWidget: child
+      titlebar -> GtkWidget: titlebar
+      handle-menubar-accel -> gboolean: handle-menubar-accel
+      is-active -> gboolean: is-active
+      startup-id -> gchararray: startup-id
+      mnemonics-visible -> gboolean: mnemonics-visible
+      focus-visible -> gboolean: focus-visible
+      maximized -> gboolean: maximized
+      fullscreened -> gboolean: fullscreened
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         content: Optional[Gtk.Widget]
         show_menubar: bool
@@ -522,13 +994,13 @@ class ApplicationWindow(
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
         self,
-        content: Gtk.Widget = ...,
+        content: Optional[Gtk.Widget] = ...,
         show_menubar: bool = ...,
-        application: Gtk.Application = ...,
-        child: Gtk.Widget = ...,
+        application: Optional[Gtk.Application] = ...,
+        child: Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Gtk.Widget = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
@@ -538,20 +1010,20 @@ class ApplicationWindow(
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: str = ...,
-        titlebar: Gtk.Widget = ...,
-        transient_for: Gtk.Window = ...,
+        title: Optional[str] = ...,
+        titlebar: Optional[Gtk.Widget] = ...,
+        transient_for: Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -559,7 +1031,7 @@ class ApplicationWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -569,8 +1041,8 @@ class ApplicationWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -584,10 +1056,92 @@ class ApplicationWindow(
     def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
 
 class ApplicationWindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ApplicationWindowClass()
+
+    """
+
     parent_class: Gtk.ApplicationWindowClass = ...
     padding: list[None] = ...
 
 class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        Avatar(**properties)
+        new(size:int, text:str=None, show_initials:bool) -> Gtk.Widget
+
+    Object AdwAvatar
+
+    Properties from AdwAvatar:
+      icon-name -> gchararray: icon-name
+      text -> gchararray: text
+      show-initials -> gboolean: show-initials
+      custom-image -> GdkPaintable: custom-image
+      size -> gint: size
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         custom_image: Optional[Gdk.Paintable]
         icon_name: Optional[str]
@@ -632,16 +1186,16 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        custom_image: Gdk.Paintable = ...,
-        icon_name: str = ...,
+        custom_image: Optional[Gdk.Paintable] = ...,
+        icon_name: Optional[str] = ...,
         show_initials: bool = ...,
         size: int = ...,
-        text: str = ...,
+        text: Optional[str] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -649,7 +1203,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -659,8 +1213,8 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -685,9 +1239,270 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def set_text(self, text: Optional[str] = None) -> None: ...
 
 class AvatarClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AvatarClass()
+
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class Banner(
+    Gtk.Widget, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
+):
+    """
+    :Constructors:
+
+    ::
+
+        Banner(**properties)
+        new(title:str) -> Gtk.Widget
+
+    Object AdwBanner
+
+    Signals from AdwBanner:
+      button-clicked ()
+
+    Properties from AdwBanner:
+      title -> gchararray: title
+      button-label -> gchararray: button-label
+      revealed -> gboolean: revealed
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
+    class Props:
+        button_label: Optional[str]
+        revealed: bool
+        title: str
+        use_markup: bool
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        action_name: Optional[str]
+        action_target: GLib.Variant
+    props: Props = ...
+    def __init__(
+        self,
+        button_label: Optional[str] = ...,
+        revealed: bool = ...,
+        title: str = ...,
+        use_markup: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        action_name: Optional[str] = ...,
+        action_target: GLib.Variant = ...,
+    ): ...
+    def get_button_label(self) -> Optional[str]: ...
+    def get_revealed(self) -> bool: ...
+    def get_title(self) -> str: ...
+    def get_use_markup(self) -> bool: ...
+    @classmethod
+    def new(cls, title: str) -> Banner: ...
+    def set_button_label(self, label: Optional[str] = None) -> None: ...
+    def set_revealed(self, revealed: bool) -> None: ...
+    def set_title(self, title: str) -> None: ...
+    def set_use_markup(self, use_markup: bool) -> None: ...
+
+class BannerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BannerClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        Bin(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwBin
+
+    Properties from AdwBin:
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         can_focus: bool
@@ -729,12 +1544,12 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -742,7 +1557,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -752,8 +1567,8 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -767,9 +1582,89 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
 
 class BinClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BinClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ButtonContent(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwButtonContent
+
+    Properties from AdwButtonContent:
+      icon-name -> gchararray: icon-name
+      label -> gchararray: label
+      use-underline -> gboolean: use-underline
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         icon_name: str
         label: str
@@ -819,7 +1714,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -827,7 +1722,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -837,8 +1732,8 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -856,9 +1751,33 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     def set_use_underline(self, use_underline: bool) -> None: ...
 
 class ButtonContentClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ButtonContentClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class CallbackAnimationTarget(AnimationTarget):
+    """
+    :Constructors:
+
+    ::
+
+        CallbackAnimationTarget(**properties)
+        new(callback:Adw.AnimationTargetFunc=None) -> Adw.AnimationTarget
+
+    Object AdwCallbackAnimationTarget
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     @classmethod
     def new(
         cls, callback: Callable[..., None], *user_data: Any
@@ -874,6 +1793,86 @@ class Carousel(
     Gtk.ConstraintTarget,
     Gtk.Orientable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Carousel(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwCarousel
+
+    Signals from AdwCarousel:
+      page-changed (guint)
+
+    Properties from AdwCarousel:
+      n-pages -> guint: n-pages
+      position -> gdouble: position
+      interactive -> gboolean: interactive
+      spacing -> guint: spacing
+      scroll-params -> AdwSpringParams: scroll-params
+      allow-mouse-drag -> gboolean: allow-mouse-drag
+      allow-scroll-wheel -> gboolean: allow-scroll-wheel
+      allow-long-swipes -> gboolean: allow-long-swipes
+      reveal-duration -> guint: reveal-duration
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         allow_long_swipes: bool
         allow_mouse_drag: bool
@@ -934,7 +1933,7 @@ class Carousel(
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -942,7 +1941,7 @@ class Carousel(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -952,8 +1951,8 @@ class Carousel(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -989,11 +1988,89 @@ class Carousel(
     def set_spacing(self, spacing: int) -> None: ...
 
 class CarouselClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CarouselClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class CarouselIndicatorDots(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        CarouselIndicatorDots(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwCarouselIndicatorDots
+
+    Properties from AdwCarouselIndicatorDots:
+      carousel -> AdwCarousel: carousel
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         carousel: Optional[Carousel]
         can_focus: bool
@@ -1035,12 +2112,12 @@ class CarouselIndicatorDots(
     props: Props = ...
     def __init__(
         self,
-        carousel: Carousel = ...,
+        carousel: Optional[Carousel] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1048,7 +2125,7 @@ class CarouselIndicatorDots(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1058,8 +2135,8 @@ class CarouselIndicatorDots(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1074,11 +2151,89 @@ class CarouselIndicatorDots(
     def set_carousel(self, carousel: Optional[Carousel] = None) -> None: ...
 
 class CarouselIndicatorDotsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CarouselIndicatorDotsClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class CarouselIndicatorLines(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        CarouselIndicatorLines(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwCarouselIndicatorLines
+
+    Properties from AdwCarouselIndicatorLines:
+      carousel -> AdwCarousel: carousel
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         carousel: Optional[Carousel]
         can_focus: bool
@@ -1120,12 +2275,12 @@ class CarouselIndicatorLines(
     props: Props = ...
     def __init__(
         self,
-        carousel: Carousel = ...,
+        carousel: Optional[Carousel] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1133,7 +2288,7 @@ class CarouselIndicatorLines(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1143,8 +2298,8 @@ class CarouselIndicatorLines(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1159,11 +2314,91 @@ class CarouselIndicatorLines(
     def set_carousel(self, carousel: Optional[Carousel] = None) -> None: ...
 
 class CarouselIndicatorLinesClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CarouselIndicatorLinesClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class Clamp(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Clamp(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwClamp
+
+    Properties from AdwClamp:
+      child -> GtkWidget: child
+      maximum-size -> gint: maximum-size
+      tightening-threshold -> gint: tightening-threshold
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         maximum_size: int
@@ -1207,14 +2442,14 @@ class Clamp(
     props: Props = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1222,7 +2457,7 @@ class Clamp(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1232,8 +2467,8 @@ class Clamp(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1252,9 +2487,37 @@ class Clamp(
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
 
 class ClampClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClampClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ClampLayout(Gtk.LayoutManager, Gtk.Orientable):
+    """
+    :Constructors:
+
+    ::
+
+        ClampLayout(**properties)
+        new() -> Gtk.LayoutManager
+
+    Object AdwClampLayout
+
+    Properties from AdwClampLayout:
+      maximum-size -> gint: maximum-size
+      tightening-threshold -> gint: tightening-threshold
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         maximum_size: int
         tightening_threshold: int
@@ -1274,6 +2537,15 @@ class ClampLayout(Gtk.LayoutManager, Gtk.Orientable):
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
 
 class ClampLayoutClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClampLayoutClass()
+
+    """
+
     parent_class: Gtk.LayoutManagerClass = ...
 
 class ClampScrollable(
@@ -1284,6 +2556,77 @@ class ClampScrollable(
     Gtk.Orientable,
     Gtk.Scrollable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ClampScrollable(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwClampScrollable
+
+    Properties from AdwClampScrollable:
+      child -> GtkWidget: child
+      maximum-size -> gint: maximum-size
+      tightening-threshold -> gint: tightening-threshold
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         maximum_size: int
@@ -1331,14 +2674,14 @@ class ClampScrollable(
     props: Props = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1346,7 +2689,7 @@ class ClampScrollable(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1356,8 +2699,8 @@ class ClampScrollable(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1365,9 +2708,9 @@ class ClampScrollable(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-        hadjustment: Gtk.Adjustment = ...,
+        hadjustment: Optional[Gtk.Adjustment] = ...,
         hscroll_policy: Gtk.ScrollablePolicy = ...,
-        vadjustment: Gtk.Adjustment = ...,
+        vadjustment: Optional[Gtk.Adjustment] = ...,
         vscroll_policy: Gtk.ScrollablePolicy = ...,
     ): ...
     def get_child(self) -> Optional[Gtk.Widget]: ...
@@ -1380,11 +2723,121 @@ class ClampScrollable(
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
 
 class ClampScrollableClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClampScrollableClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ComboRow(
     ActionRow, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ComboRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwComboRow
+
+    Properties from AdwComboRow:
+      selected -> guint: selected
+      selected-item -> GObject: selected-item
+      model -> GListModel: model
+      factory -> GtkListItemFactory: factory
+      list-factory -> GtkListItemFactory: list-factory
+      expression -> GtkExpression: Expression
+        Expression to determine strings to search for
+      use-subtitle -> gboolean: use-subtitle
+
+    Signals from AdwActionRow:
+      activated ()
+
+    Properties from AdwActionRow:
+      subtitle -> gchararray: subtitle
+      icon-name -> gchararray: icon-name
+      activatable-widget -> GtkWidget: activatable-widget
+      title-lines -> gint: title-lines
+      subtitle-lines -> gint: subtitle-lines
+      subtitle-selectable -> gboolean: subtitle-selectable
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         expression: Optional[Gtk.Expression]
         factory: Optional[Gtk.ListItemFactory]
@@ -1397,6 +2850,7 @@ class ComboRow(
         icon_name: Optional[str]
         subtitle: Optional[str]
         subtitle_lines: int
+        subtitle_selectable: bool
         title_lines: int
         title: str
         title_selectable: bool
@@ -1446,29 +2900,30 @@ class ComboRow(
     parent_instance: ActionRow = ...
     def __init__(
         self,
-        expression: Gtk.Expression = ...,
-        factory: Gtk.ListItemFactory = ...,
-        list_factory: Gtk.ListItemFactory = ...,
-        model: Gio.ListModel = ...,
+        expression: Optional[Gtk.Expression] = ...,
+        factory: Optional[Gtk.ListItemFactory] = ...,
+        list_factory: Optional[Gtk.ListItemFactory] = ...,
+        model: Optional[Gio.ListModel] = ...,
         selected: int = ...,
         use_subtitle: bool = ...,
-        activatable_widget: Gtk.Widget = ...,
-        icon_name: str = ...,
+        activatable_widget: Optional[Gtk.Widget] = ...,
+        icon_name: Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
+        subtitle_selectable: bool = ...,
         title_lines: int = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1476,7 +2931,7 @@ class ComboRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1486,15 +2941,15 @@ class ComboRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
     def get_expression(self) -> Optional[Gtk.Expression]: ...
@@ -1516,6 +2971,15 @@ class ComboRow(
     def set_use_subtitle(self, use_subtitle: bool) -> None: ...
 
 class ComboRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ComboRowClass()
+
+    """
+
     parent_class: ActionRowClass = ...
     padding: list[None] = ...
 
@@ -1527,6 +2991,103 @@ class EntryRow(
     Gtk.ConstraintTarget,
     Gtk.Editable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        EntryRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwEntryRow
+
+    Signals from AdwEntryRow:
+      apply ()
+      entry-activated ()
+
+    Properties from AdwEntryRow:
+      show-apply-button -> gboolean: show-apply-button
+      input-hints -> GtkInputHints: input-hints
+      input-purpose -> GtkInputPurpose: input-purpose
+      attributes -> PangoAttrList: attributes
+      enable-emoji-completion -> gboolean: enable-emoji-completion
+      activates-default -> gboolean: activates-default
+
+    Signals from GtkEditable:
+      changed ()
+      insert-text (gchararray, gint, gpointer)
+      delete-text (gint, gint)
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         activates_default: bool
         attributes: Optional[Pango.AttrList]
@@ -1591,7 +3152,7 @@ class EntryRow(
     def __init__(
         self,
         activates_default: bool = ...,
-        attributes: Pango.AttrList = ...,
+        attributes: Optional[Pango.AttrList] = ...,
         enable_emoji_completion: bool = ...,
         input_hints: Gtk.InputHints = ...,
         input_purpose: Gtk.InputPurpose = ...,
@@ -1601,13 +3162,13 @@ class EntryRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1615,7 +3176,7 @@ class EntryRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1625,15 +3186,15 @@ class EntryRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
         editable: bool = ...,
         enable_undo: bool = ...,
@@ -1650,6 +3211,7 @@ class EntryRow(
     def get_input_hints(self) -> Gtk.InputHints: ...
     def get_input_purpose(self) -> Gtk.InputPurpose: ...
     def get_show_apply_button(self) -> bool: ...
+    def grab_focus_without_selecting(self) -> bool: ...
     @classmethod
     def new(cls) -> EntryRow: ...
     def remove(self, widget: Gtk.Widget) -> None: ...
@@ -1661,9 +3223,37 @@ class EntryRow(
     def set_show_apply_button(self, show_apply_button: bool) -> None: ...
 
 class EntryRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        EntryRowClass()
+
+    """
+
     parent_class: PreferencesRowClass = ...
 
 class EnumListItem(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        EnumListItem(**properties)
+
+    Object AdwEnumListItem
+
+    Properties from AdwEnumListItem:
+      value -> gint: value
+      name -> gchararray: name
+      nick -> gchararray: nick
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         name: str
         nick: str
@@ -1674,9 +3264,39 @@ class EnumListItem(GObject.Object):
     def get_value(self) -> int: ...
 
 class EnumListItemClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        EnumListItemClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class EnumListModel(GObject.Object, Gio.ListModel):
+    """
+    :Constructors:
+
+    ::
+
+        EnumListModel(**properties)
+        new(enum_type:GType) -> Adw.EnumListModel
+
+    Object AdwEnumListModel
+
+    Properties from AdwEnumListModel:
+      enum-type -> GType: enum-type
+
+    Signals from GListModel:
+      items-changed (guint, guint, guint)
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         enum_type: Type
     props: Props = ...
@@ -1687,17 +3307,117 @@ class EnumListModel(GObject.Object, Gio.ListModel):
     def new(cls, enum_type: Type) -> EnumListModel: ...
 
 class EnumListModelClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        EnumListModelClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class ExpanderRow(
     PreferencesRow, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ExpanderRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwExpanderRow
+
+    Properties from AdwExpanderRow:
+      subtitle -> gchararray: subtitle
+      icon-name -> gchararray: icon-name
+      expanded -> gboolean: expanded
+      enable-expansion -> gboolean: enable-expansion
+      show-enable-switch -> gboolean: show-enable-switch
+      title-lines -> gint: title-lines
+      subtitle-lines -> gint: subtitle-lines
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         enable_expansion: bool
         expanded: bool
         icon_name: Optional[str]
         show_enable_switch: bool
         subtitle: str
+        subtitle_lines: int
+        title_lines: int
         title: str
         title_selectable: bool
         use_markup: bool
@@ -1748,21 +3468,23 @@ class ExpanderRow(
         self,
         enable_expansion: bool = ...,
         expanded: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         show_enable_switch: bool = ...,
         subtitle: str = ...,
+        subtitle_lines: int = ...,
+        title_lines: int = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1770,7 +3492,7 @@ class ExpanderRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1780,15 +3502,15 @@ class ExpanderRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
     def add_action(self, widget: Gtk.Widget) -> None: ...
@@ -1799,6 +3521,8 @@ class ExpanderRow(
     def get_icon_name(self) -> Optional[str]: ...
     def get_show_enable_switch(self) -> bool: ...
     def get_subtitle(self) -> str: ...
+    def get_subtitle_lines(self) -> bool: ...
+    def get_title_lines(self) -> bool: ...
     @classmethod
     def new(cls) -> ExpanderRow: ...
     def remove(self, child: Gtk.Widget) -> None: ...
@@ -1807,8 +3531,19 @@ class ExpanderRow(
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_show_enable_switch(self, show_enable_switch: bool) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
+    def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
+    def set_title_lines(self, title_lines: int) -> None: ...
 
 class ExpanderRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ExpanderRowClass()
+
+    """
+
     parent_class: PreferencesRowClass = ...
     padding: list[None] = ...
 
@@ -1820,6 +3555,90 @@ class Flap(
     Gtk.ConstraintTarget,
     Gtk.Orientable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Flap(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwFlap
+
+    Properties from AdwFlap:
+      content -> GtkWidget: content
+      flap -> GtkWidget: flap
+      separator -> GtkWidget: separator
+      flap-position -> GtkPackType: flap-position
+      reveal-flap -> gboolean: reveal-flap
+      reveal-params -> AdwSpringParams: reveal-params
+      reveal-progress -> gdouble: reveal-progress
+      fold-policy -> AdwFlapFoldPolicy: fold-policy
+      fold-threshold-policy -> AdwFoldThresholdPolicy: fold-threshold-policy
+      fold-duration -> guint: fold-duration
+      folded -> gboolean: folded
+      locked -> gboolean: locked
+      transition-type -> AdwFlapTransitionType: transition-type
+      modal -> gboolean: modal
+      swipe-to-open -> gboolean: swipe-to-open
+      swipe-to-close -> gboolean: swipe-to-close
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         content: Optional[Gtk.Widget]
         flap: Optional[Gtk.Widget]
@@ -1876,8 +3695,8 @@ class Flap(
     props: Props = ...
     def __init__(
         self,
-        content: Gtk.Widget = ...,
-        flap: Gtk.Widget = ...,
+        content: Optional[Gtk.Widget] = ...,
+        flap: Optional[Gtk.Widget] = ...,
         flap_position: Gtk.PackType = ...,
         fold_duration: int = ...,
         fold_policy: FlapFoldPolicy = ...,
@@ -1886,7 +3705,7 @@ class Flap(
         modal: bool = ...,
         reveal_flap: bool = ...,
         reveal_params: SpringParams = ...,
-        separator: Gtk.Widget = ...,
+        separator: Optional[Gtk.Widget] = ...,
         swipe_to_close: bool = ...,
         swipe_to_open: bool = ...,
         transition_type: FlapTransitionType = ...,
@@ -1894,7 +3713,7 @@ class Flap(
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1902,7 +3721,7 @@ class Flap(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1912,8 +3731,8 @@ class Flap(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1956,9 +3775,91 @@ class Flap(
     def set_transition_type(self, transition_type: FlapTransitionType) -> None: ...
 
 class FlapClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FlapClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        HeaderBar(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwHeaderBar
+
+    Properties from AdwHeaderBar:
+      title-widget -> GtkWidget: title-widget
+      show-start-title-buttons -> gboolean: show-start-title-buttons
+      show-end-title-buttons -> gboolean: show-end-title-buttons
+      decoration-layout -> gchararray: decoration-layout
+      centering-policy -> AdwCenteringPolicy: centering-policy
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         centering_policy: CenteringPolicy
         decoration_layout: Optional[str]
@@ -2004,15 +3905,15 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     def __init__(
         self,
         centering_policy: CenteringPolicy = ...,
-        decoration_layout: str = ...,
+        decoration_layout: Optional[str] = ...,
         show_end_title_buttons: bool = ...,
         show_start_title_buttons: bool = ...,
-        title_widget: Gtk.Widget = ...,
+        title_widget: Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2020,7 +3921,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2030,8 +3931,8 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2056,6 +3957,15 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     def set_title_widget(self, title_widget: Optional[Gtk.Widget] = None) -> None: ...
 
 class HeaderBarClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        HeaderBarClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class Leaflet(
@@ -2066,6 +3976,87 @@ class Leaflet(
     Gtk.ConstraintTarget,
     Gtk.Orientable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Leaflet(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwLeaflet
+
+    Properties from AdwLeaflet:
+      can-unfold -> gboolean: can-unfold
+      folded -> gboolean: folded
+      fold-threshold-policy -> AdwFoldThresholdPolicy: fold-threshold-policy
+      homogeneous -> gboolean: homogeneous
+      visible-child -> GtkWidget: visible-child
+      visible-child-name -> gchararray: visible-child-name
+      transition-type -> AdwLeafletTransitionType: transition-type
+      mode-transition-duration -> guint: mode-transition-duration
+      child-transition-params -> AdwSpringParams: child-transition-params
+      child-transition-running -> gboolean: child-transition-running
+      can-navigate-back -> gboolean: can-navigate-back
+      can-navigate-forward -> gboolean: can-navigate-forward
+      pages -> GtkSelectionModel: pages
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         can_navigate_back: bool
         can_navigate_forward: bool
@@ -2133,7 +4124,7 @@ class Leaflet(
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2141,7 +4132,7 @@ class Leaflet(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2151,8 +4142,8 @@ class Leaflet(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2203,16 +4194,47 @@ class Leaflet(
     def set_visible_child_name(self, name: str) -> None: ...
 
 class LeafletClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LeafletClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class LeafletPage(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        LeafletPage(**properties)
+
+    Object AdwLeafletPage
+
+    Properties from AdwLeafletPage:
+      child -> GtkWidget: child
+      name -> gchararray: name
+      navigatable -> gboolean: navigatable
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Gtk.Widget
         name: Optional[str]
         navigatable: bool
     props: Props = ...
     def __init__(
-        self, child: Gtk.Widget = ..., name: str = ..., navigatable: bool = ...
+        self,
+        child: Gtk.Widget = ...,
+        name: Optional[str] = ...,
+        navigatable: bool = ...,
     ): ...
     def get_child(self) -> Gtk.Widget: ...
     def get_name(self) -> Optional[str]: ...
@@ -2221,6 +4243,15 @@ class LeafletPage(GObject.Object):
     def set_navigatable(self, navigatable: bool) -> None: ...
 
 class LeafletPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LeafletPageClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class MessageDialog(
@@ -2232,6 +4263,117 @@ class MessageDialog(
     Gtk.Root,
     Gtk.ShortcutManager,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        MessageDialog(**properties)
+        new(parent:Gtk.Window=None, heading:str=None, body:str=None) -> Gtk.Widget
+
+    Object AdwMessageDialog
+
+    Signals from AdwMessageDialog:
+      response (gchararray)
+
+    Properties from AdwMessageDialog:
+      heading -> gchararray: heading
+      heading-use-markup -> gboolean: heading-use-markup
+      body -> gchararray: body
+      body-use-markup -> gboolean: body-use-markup
+      extra-child -> GtkWidget: extra-child
+      default-response -> gchararray: default-response
+      close-response -> gchararray: close-response
+
+    Signals from GtkWindow:
+      keys-changed ()
+      activate-focus ()
+      activate-default ()
+      enable-debugging (gboolean) -> gboolean
+      close-request () -> gboolean
+
+    Properties from GtkWindow:
+      title -> gchararray: title
+      resizable -> gboolean: resizable
+      modal -> gboolean: modal
+      default-width -> gint: default-width
+      default-height -> gint: default-height
+      destroy-with-parent -> gboolean: destroy-with-parent
+      hide-on-close -> gboolean: hide-on-close
+      icon-name -> gchararray: icon-name
+      display -> GdkDisplay: display
+      decorated -> gboolean: decorated
+      deletable -> gboolean: deletable
+      transient-for -> GtkWindow: transient-for
+      application -> GtkApplication: application
+      default-widget -> GtkWidget: default-widget
+      focus-widget -> GtkWidget: focus-widget
+      child -> GtkWidget: child
+      titlebar -> GtkWidget: titlebar
+      handle-menubar-accel -> gboolean: handle-menubar-accel
+      is-active -> gboolean: is-active
+      startup-id -> gchararray: startup-id
+      mnemonics-visible -> gboolean: mnemonics-visible
+      focus-visible -> gboolean: focus-visible
+      maximized -> gboolean: maximized
+      fullscreened -> gboolean: fullscreened
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         body: str
         body_use_markup: bool
@@ -2306,15 +4448,15 @@ class MessageDialog(
         body: str = ...,
         body_use_markup: bool = ...,
         close_response: str = ...,
-        default_response: str = ...,
-        extra_child: Gtk.Widget = ...,
-        heading: str = ...,
+        default_response: Optional[str] = ...,
+        extra_child: Optional[Gtk.Widget] = ...,
+        heading: Optional[str] = ...,
         heading_use_markup: bool = ...,
-        application: Gtk.Application = ...,
-        child: Gtk.Widget = ...,
+        application: Optional[Gtk.Application] = ...,
+        child: Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Gtk.Widget = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
@@ -2324,20 +4466,20 @@ class MessageDialog(
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: str = ...,
-        titlebar: Gtk.Widget = ...,
-        transient_for: Gtk.Window = ...,
+        title: Optional[str] = ...,
+        titlebar: Optional[Gtk.Widget] = ...,
+        transient_for: Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2345,7 +4487,7 @@ class MessageDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2355,8 +4497,8 @@ class MessageDialog(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2365,6 +4507,15 @@ class MessageDialog(
         accessible_role: Gtk.AccessibleRole = ...,
     ): ...
     def add_response(self, id: str, label: str) -> None: ...
+    def choose(
+        self,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[
+            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
+        ] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
     def get_body(self) -> str: ...
     def get_body_use_markup(self) -> bool: ...
@@ -2399,6 +4550,15 @@ class MessageDialog(
     def set_response_label(self, response: str, label: str) -> None: ...
 
 class MessageDialogClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MessageDialogClass()
+
+    """
+
     parent_class: Gtk.WindowClass = ...
     response: Callable[[MessageDialog, str], None] = ...
     padding: list[None] = ...
@@ -2411,6 +4571,108 @@ class PasswordEntryRow(
     Gtk.ConstraintTarget,
     Gtk.Editable,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        PasswordEntryRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwPasswordEntryRow
+
+    Signals from GtkEditable:
+      changed ()
+      insert-text (gchararray, gint, gpointer)
+      delete-text (gint, gint)
+
+    Signals from AdwEntryRow:
+      apply ()
+      entry-activated ()
+
+    Properties from AdwEntryRow:
+      show-apply-button -> gboolean: show-apply-button
+      input-hints -> GtkInputHints: input-hints
+      input-purpose -> GtkInputPurpose: input-purpose
+      attributes -> PangoAttrList: attributes
+      enable-emoji-completion -> gboolean: enable-emoji-completion
+      activates-default -> gboolean: activates-default
+
+    Signals from GtkEditable:
+      changed ()
+      insert-text (gchararray, gint, gpointer)
+      delete-text (gint, gint)
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         activates_default: bool
         attributes: Optional[Pango.AttrList]
@@ -2474,7 +4736,7 @@ class PasswordEntryRow(
     def __init__(
         self,
         activates_default: bool = ...,
-        attributes: Pango.AttrList = ...,
+        attributes: Optional[Pango.AttrList] = ...,
         enable_emoji_completion: bool = ...,
         input_hints: Gtk.InputHints = ...,
         input_purpose: Gtk.InputPurpose = ...,
@@ -2484,13 +4746,13 @@ class PasswordEntryRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2498,7 +4760,7 @@ class PasswordEntryRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2508,15 +4770,15 @@ class PasswordEntryRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
         editable: bool = ...,
         enable_undo: bool = ...,
@@ -2529,9 +4791,89 @@ class PasswordEntryRow(
     def new(cls) -> PasswordEntryRow: ...
 
 class PasswordEntryRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PasswordEntryRowClass()
+
+    """
+
     parent_class: EntryRowClass = ...
 
 class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesGroup(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwPreferencesGroup
+
+    Properties from AdwPreferencesGroup:
+      title -> gchararray: title
+      description -> gchararray: description
+      header-suffix -> GtkWidget: header-suffix
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         description: Optional[str]
         header_suffix: Optional[Gtk.Widget]
@@ -2575,14 +4917,14 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        description: str = ...,
-        header_suffix: Gtk.Widget = ...,
+        description: Optional[str] = ...,
+        header_suffix: Optional[Gtk.Widget] = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2590,7 +4932,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2600,8 +4942,8 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2621,10 +4963,91 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     def set_title(self, title: str) -> None: ...
 
 class PreferencesGroupClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesGroupClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
     padding: list[None] = ...
 
 class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesPage(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwPreferencesPage
+
+    Properties from AdwPreferencesPage:
+      icon-name -> gchararray: icon-name
+      title -> gchararray: title
+      name -> gchararray: name
+      use-underline -> gboolean: use-underline
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         icon_name: Optional[str]
         name: Optional[str]
@@ -2668,15 +5091,15 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        icon_name: str = ...,
-        name: str = ...,
+        icon_name: Optional[str] = ...,
+        name: Optional[str] = ...,
         title: str = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2684,7 +5107,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2693,8 +5116,8 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2710,18 +5133,108 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     @classmethod
     def new(cls) -> PreferencesPage: ...
     def remove(self, group: PreferencesGroup) -> None: ...
+    def scroll_to_top(self) -> None: ...
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_name(self, name: Optional[str] = None) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
 class PreferencesPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesPageClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
     padding: list[None] = ...
 
 class PreferencesRow(
     Gtk.ListBoxRow, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwPreferencesRow
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         title: str
         title_selectable: bool
@@ -2776,13 +5289,13 @@ class PreferencesRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2790,7 +5303,7 @@ class PreferencesRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2800,15 +5313,15 @@ class PreferencesRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
     def get_title(self) -> str: ...
@@ -2823,6 +5336,15 @@ class PreferencesRow(
     def set_use_underline(self, use_underline: bool) -> None: ...
 
 class PreferencesRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesRowClass()
+
+    """
+
     parent_class: Gtk.ListBoxRowClass = ...
     padding: list[None] = ...
 
@@ -2835,6 +5357,114 @@ class PreferencesWindow(
     Gtk.Root,
     Gtk.ShortcutManager,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesWindow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwPreferencesWindow
+
+    Properties from AdwPreferencesWindow:
+      visible-page -> GtkWidget: visible-page
+      visible-page-name -> gchararray: visible-page-name
+      search-enabled -> gboolean: search-enabled
+      can-navigate-back -> gboolean: can-navigate-back
+
+    Properties from AdwWindow:
+      content -> GtkWidget: content
+
+    Signals from GtkWindow:
+      keys-changed ()
+      activate-focus ()
+      activate-default ()
+      enable-debugging (gboolean) -> gboolean
+      close-request () -> gboolean
+
+    Properties from GtkWindow:
+      title -> gchararray: title
+      resizable -> gboolean: resizable
+      modal -> gboolean: modal
+      default-width -> gint: default-width
+      default-height -> gint: default-height
+      destroy-with-parent -> gboolean: destroy-with-parent
+      hide-on-close -> gboolean: hide-on-close
+      icon-name -> gchararray: icon-name
+      display -> GdkDisplay: display
+      decorated -> gboolean: decorated
+      deletable -> gboolean: deletable
+      transient-for -> GtkWindow: transient-for
+      application -> GtkApplication: application
+      default-widget -> GtkWidget: default-widget
+      focus-widget -> GtkWidget: focus-widget
+      child -> GtkWidget: child
+      titlebar -> GtkWidget: titlebar
+      handle-menubar-accel -> gboolean: handle-menubar-accel
+      is-active -> gboolean: is-active
+      startup-id -> gchararray: startup-id
+      mnemonics-visible -> gboolean: mnemonics-visible
+      focus-visible -> gboolean: focus-visible
+      maximized -> gboolean: maximized
+      fullscreened -> gboolean: fullscreened
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         can_navigate_back: bool
         search_enabled: bool
@@ -2908,12 +5538,12 @@ class PreferencesWindow(
         search_enabled: bool = ...,
         visible_page: Gtk.Widget = ...,
         visible_page_name: str = ...,
-        content: Gtk.Widget = ...,
-        application: Gtk.Application = ...,
-        child: Gtk.Widget = ...,
+        content: Optional[Gtk.Widget] = ...,
+        application: Optional[Gtk.Application] = ...,
+        child: Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Gtk.Widget = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
@@ -2923,20 +5553,20 @@ class PreferencesWindow(
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: str = ...,
-        titlebar: Gtk.Widget = ...,
-        transient_for: Gtk.Window = ...,
+        title: Optional[str] = ...,
+        titlebar: Optional[Gtk.Widget] = ...,
+        transient_for: Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2944,7 +5574,7 @@ class PreferencesWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2954,8 +5584,8 @@ class PreferencesWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2980,10 +5610,39 @@ class PreferencesWindow(
     def set_visible_page_name(self, name: str) -> None: ...
 
 class PreferencesWindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesWindowClass()
+
+    """
+
     parent_class: WindowClass = ...
     padding: list[None] = ...
 
 class PropertyAnimationTarget(AnimationTarget):
+    """
+    :Constructors:
+
+    ::
+
+        PropertyAnimationTarget(**properties)
+        new(object:GObject.Object, property_name:str) -> Adw.AnimationTarget
+        new_for_pspec(object:GObject.Object, pspec:GObject.ParamSpec) -> Adw.AnimationTarget
+
+    Object AdwPropertyAnimationTarget
+
+    Properties from AdwPropertyAnimationTarget:
+      object -> GObject: object
+      pspec -> GParam: pspec
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         object: GObject.Object
         pspec: GObject.ParamSpec
@@ -3007,6 +5666,86 @@ class PropertyAnimationTargetClass(GObject.GPointer): ...
 class SplitButton(
     Gtk.Widget, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        SplitButton(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwSplitButton
+
+    Signals from AdwSplitButton:
+      activate ()
+      clicked ()
+
+    Properties from AdwSplitButton:
+      label -> gchararray: label
+      use-underline -> gboolean: use-underline
+      icon-name -> gchararray: icon-name
+      child -> GtkWidget: child
+      menu-model -> GMenuModel: menu-model
+      popover -> GtkPopover: popover
+      direction -> GtkArrowType: direction
+      dropdown-tooltip -> gchararray: dropdown-tooltip
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         direction: Gtk.ArrowType
@@ -3056,19 +5795,19 @@ class SplitButton(
     props: Props = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         direction: Gtk.ArrowType = ...,
         dropdown_tooltip: str = ...,
         icon_name: str = ...,
         label: str = ...,
-        menu_model: Gio.MenuModel = ...,
-        popover: Gtk.Popover = ...,
+        menu_model: Optional[Gio.MenuModel] = ...,
+        popover: Optional[Gtk.Popover] = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3076,7 +5815,7 @@ class SplitButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3086,15 +5825,15 @@ class SplitButton(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
     def get_child(self) -> Optional[Gtk.Widget]: ...
@@ -3119,9 +5858,53 @@ class SplitButton(
     def set_use_underline(self, use_underline: bool) -> None: ...
 
 class SplitButtonClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SplitButtonClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class SpringAnimation(Animation):
+    """
+    :Constructors:
+
+    ::
+
+        SpringAnimation(**properties)
+        new(widget:Gtk.Widget, from_:float, to:float, spring_params:Adw.SpringParams, target:Adw.AnimationTarget) -> Adw.Animation
+
+    Object AdwSpringAnimation
+
+    Properties from AdwSpringAnimation:
+      value-from -> gdouble: value-from
+      value-to -> gdouble: value-to
+      spring-params -> AdwSpringParams: spring-params
+      initial-velocity -> gdouble: initial-velocity
+      epsilon -> gdouble: epsilon
+      clamp -> gboolean: clamp
+      estimated-duration -> guint: estimated-duration
+      velocity -> gdouble: velocity
+
+    Signals from AdwAnimation:
+      done ()
+
+    Properties from AdwAnimation:
+      widget -> GtkWidget: widget
+      target -> AdwAnimationTarget: target
+      value -> gdouble: value
+      state -> AdwAnimationState: state
+      follow-enable-animations-setting -> gboolean: follow-enable-animations-setting
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         clamp: bool
         epsilon: float
@@ -3131,6 +5914,7 @@ class SpringAnimation(Animation):
         value_from: float
         value_to: float
         velocity: float
+        follow_enable_animations_setting: bool
         state: AnimationState
         target: AnimationTarget
         value: float
@@ -3144,9 +5928,12 @@ class SpringAnimation(Animation):
         spring_params: SpringParams = ...,
         value_from: float = ...,
         value_to: float = ...,
+        follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: Gtk.Widget = ...,
     ): ...
+    def calculate_value(self, time: int) -> float: ...
+    def calculate_velocity(self, time: int) -> float: ...
     def get_clamp(self) -> bool: ...
     def get_epsilon(self) -> float: ...
     def get_estimated_duration(self) -> int: ...
@@ -3174,6 +5961,16 @@ class SpringAnimation(Animation):
 class SpringAnimationClass(GObject.GPointer): ...
 
 class SpringParams(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(damping_ratio:float, mass:float, stiffness:float) -> Adw.SpringParams
+        new_full(damping:float, mass:float, stiffness:float) -> Adw.SpringParams
+
+    """
+
     def get_damping(self) -> float: ...
     def get_damping_ratio(self) -> float: ...
     def get_mass(self) -> float: ...
@@ -3192,6 +5989,85 @@ class SpringParams(GObject.GBoxed):
 class Squeezer(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Squeezer(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwSqueezer
+
+    Properties from AdwSqueezer:
+      visible-child -> GtkWidget: visible-child
+      homogeneous -> gboolean: homogeneous
+      switch-threshold-policy -> AdwFoldThresholdPolicy: switch-threshold-policy
+      allow-none -> gboolean: allow-none
+      transition-duration -> guint: transition-duration
+      transition-type -> AdwSqueezerTransitionType: transition-type
+      transition-running -> gboolean: transition-running
+      interpolate-size -> gboolean: interpolate-size
+      xalign -> gfloat: xalign
+      yalign -> gfloat: yalign
+      pages -> GtkSelectionModel: pages
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         allow_none: bool
         homogeneous: bool
@@ -3255,7 +6131,7 @@ class Squeezer(
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3263,7 +6139,7 @@ class Squeezer(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3273,8 +6149,8 @@ class Squeezer(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3309,9 +6185,36 @@ class Squeezer(
     def set_yalign(self, yalign: float) -> None: ...
 
 class SqueezerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SqueezerClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class SqueezerPage(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        SqueezerPage(**properties)
+
+    Object AdwSqueezerPage
+
+    Properties from AdwSqueezerPage:
+      child -> GtkWidget: child
+      enabled -> gboolean: enabled
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Gtk.Widget
         enabled: bool
@@ -3322,9 +6225,91 @@ class SqueezerPage(GObject.Object):
     def set_enabled(self, enabled: bool) -> None: ...
 
 class SqueezerPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SqueezerPageClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        StatusPage(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwStatusPage
+
+    Properties from AdwStatusPage:
+      icon-name -> gchararray: icon-name
+      paintable -> GdkPaintable: paintable
+      title -> gchararray: title
+      description -> gchararray: description
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         description: Optional[str]
@@ -3369,16 +6354,16 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     props: Props = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
-        description: str = ...,
-        icon_name: str = ...,
-        paintable: Gdk.Paintable = ...,
+        child: Optional[Gtk.Widget] = ...,
+        description: Optional[str] = ...,
+        icon_name: Optional[str] = ...,
+        paintable: Optional[Gdk.Paintable] = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3386,7 +6371,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3396,8 +6381,8 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3419,9 +6404,39 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     def set_title(self, title: str) -> None: ...
 
 class StatusPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StatusPageClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class StyleManager(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        StyleManager(**properties)
+
+    Object AdwStyleManager
+
+    Properties from AdwStyleManager:
+      display -> GdkDisplay: display
+      color-scheme -> AdwColorScheme: color-scheme
+      system-supports-color-schemes -> gboolean: system-supports-color-schemes
+      dark -> gboolean: dark
+      high-contrast -> gboolean: high-contrast
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         color_scheme: ColorScheme
         dark: bool
@@ -3442,9 +6457,46 @@ class StyleManager(GObject.Object):
     def set_color_scheme(self, color_scheme: ColorScheme) -> None: ...
 
 class StyleManagerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StyleManagerClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class SwipeTracker(GObject.Object, Gtk.Orientable):
+    """
+    :Constructors:
+
+    ::
+
+        SwipeTracker(**properties)
+        new(swipeable:Adw.Swipeable) -> Adw.SwipeTracker
+
+    Object AdwSwipeTracker
+
+    Signals from AdwSwipeTracker:
+      prepare (AdwNavigationDirection)
+      begin-swipe ()
+      update-swipe (gdouble)
+      end-swipe (gdouble, gdouble)
+
+    Properties from AdwSwipeTracker:
+      swipeable -> AdwSwipeable: swipeable
+      enabled -> gboolean: enabled
+      reversed -> gboolean: reversed
+      allow-mouse-drag -> gboolean: allow-mouse-drag
+      allow-long-swipes -> gboolean: allow-long-swipes
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         allow_long_swipes: bool
         allow_mouse_drag: bool
@@ -3476,9 +6528,26 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
     def shift_position(self, delta: float) -> None: ...
 
 class SwipeTrackerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SwipeTrackerClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class Swipeable(GObject.GInterface):
+    """
+    Interface AdwSwipeable
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     def get_cancel_progress(self) -> float: ...
     def get_distance(self) -> float: ...
     def get_progress(self) -> float: ...
@@ -3488,6 +6557,15 @@ class Swipeable(GObject.GInterface):
     ) -> Gdk.Rectangle: ...
 
 class SwipeableInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SwipeableInterface()
+
+    """
+
     parent: GObject.TypeInterface = ...
     get_distance: Callable[[Swipeable], float] = ...
     get_snap_points: Callable[[Swipeable], list[float]] = ...
@@ -3499,10 +6577,92 @@ class SwipeableInterface(GObject.GPointer):
     padding: list[None] = ...
 
 class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        TabBar(**properties)
+        new() -> Adw.TabBar
+
+    Object AdwTabBar
+
+    Signals from AdwTabBar:
+      extra-drag-drop (AdwTabPage, GValue) -> gboolean
+      extra-drag-value (AdwTabPage, GValue) -> GdkDragAction
+
+    Properties from AdwTabBar:
+      view -> AdwTabView: view
+      start-action-widget -> GtkWidget: start-action-widget
+      end-action-widget -> GtkWidget: end-action-widget
+      autohide -> gboolean: autohide
+      tabs-revealed -> gboolean: tabs-revealed
+      expand-tabs -> gboolean: expand-tabs
+      inverted -> gboolean: inverted
+      is-overflowing -> gboolean: is-overflowing
+      extra-drag-preload -> gboolean: extra-drag-preload
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         autohide: bool
         end_action_widget: Optional[Gtk.Widget]
         expand_tabs: bool
+        extra_drag_preload: bool
         inverted: bool
         is_overflowing: bool
         start_action_widget: Optional[Gtk.Widget]
@@ -3547,16 +6707,17 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def __init__(
         self,
         autohide: bool = ...,
-        end_action_widget: Gtk.Widget = ...,
+        end_action_widget: Optional[Gtk.Widget] = ...,
         expand_tabs: bool = ...,
+        extra_drag_preload: bool = ...,
         inverted: bool = ...,
-        start_action_widget: Gtk.Widget = ...,
-        view: TabView = ...,
+        start_action_widget: Optional[Gtk.Widget] = ...,
+        view: Optional[TabView] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3564,7 +6725,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3574,8 +6735,8 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3586,6 +6747,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def get_autohide(self) -> bool: ...
     def get_end_action_widget(self) -> Optional[Gtk.Widget]: ...
     def get_expand_tabs(self) -> bool: ...
+    def get_extra_drag_preload(self) -> bool: ...
     def get_inverted(self) -> bool: ...
     def get_is_overflowing(self) -> bool: ...
     def get_start_action_widget(self) -> Optional[Gtk.Widget]: ...
@@ -3596,6 +6758,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def set_autohide(self, autohide: bool) -> None: ...
     def set_end_action_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
     def set_expand_tabs(self, expand_tabs: bool) -> None: ...
+    def set_extra_drag_preload(self, preload: bool) -> None: ...
     def set_inverted(self, inverted: bool) -> None: ...
     def set_start_action_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
     def set_view(self, view: Optional[TabView] = None) -> None: ...
@@ -3604,61 +6767,601 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     ) -> None: ...
 
 class TabBarClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TabBarClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
-class TabPage(GObject.Object):
+class TabButton(
+    Gtk.Widget, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
+):
+    """
+    :Constructors:
+
+    ::
+
+        TabButton(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwTabButton
+
+    Signals from AdwTabButton:
+      activate ()
+      clicked ()
+
+    Properties from AdwTabButton:
+      view -> AdwTabView: view
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
+    class Props:
+        view: Optional[TabView]
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        action_name: Optional[str]
+        action_target: GLib.Variant
+    props: Props = ...
+    def __init__(
+        self,
+        view: Optional[TabView] = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        action_name: Optional[str] = ...,
+        action_target: GLib.Variant = ...,
+    ): ...
+    def get_view(self) -> Optional[TabView]: ...
+    @classmethod
+    def new(cls) -> TabButton: ...
+    def set_view(self, view: Optional[TabView] = None) -> None: ...
+
+class TabButtonClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TabButtonClass()
+
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        TabOverview(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwTabOverview
+
+    Signals from AdwTabOverview:
+      extra-drag-drop (AdwTabPage, GValue) -> gboolean
+      extra-drag-value (AdwTabPage, GValue) -> GdkDragAction
+      create-tab () -> AdwTabPage
+
+    Properties from AdwTabOverview:
+      view -> AdwTabView: view
+      child -> GtkWidget: child
+      open -> gboolean: open
+      inverted -> gboolean: inverted
+      enable-search -> gboolean: enable-search
+      search-active -> gboolean: search-active
+      enable-new-tab -> gboolean: enable-new-tab
+      secondary-menu -> GMenuModel: secondary-menu
+      show-start-title-buttons -> gboolean: show-start-title-buttons
+      show-end-title-buttons -> gboolean: show-end-title-buttons
+      extra-drag-preload -> gboolean: extra-drag-preload
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
+    class Props:
+        child: Optional[Gtk.Widget]
+        enable_new_tab: bool
+        enable_search: bool
+        extra_drag_preload: bool
+        inverted: bool
+        open: bool
+        search_active: bool
+        secondary_menu: Optional[Gio.MenuModel]
+        show_end_title_buttons: bool
+        show_start_title_buttons: bool
+        view: Optional[TabView]
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+    props: Props = ...
+    def __init__(
+        self,
+        child: Optional[Gtk.Widget] = ...,
+        enable_new_tab: bool = ...,
+        enable_search: bool = ...,
+        extra_drag_preload: bool = ...,
+        inverted: bool = ...,
+        open: bool = ...,
+        secondary_menu: Optional[Gio.MenuModel] = ...,
+        show_end_title_buttons: bool = ...,
+        show_start_title_buttons: bool = ...,
+        view: Optional[TabView] = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ): ...
+    def get_child(self) -> Optional[Gtk.Widget]: ...
+    def get_enable_new_tab(self) -> bool: ...
+    def get_enable_search(self) -> bool: ...
+    def get_extra_drag_preload(self) -> bool: ...
+    def get_inverted(self) -> bool: ...
+    def get_open(self) -> bool: ...
+    def get_search_active(self) -> bool: ...
+    def get_secondary_menu(self) -> Optional[Gio.MenuModel]: ...
+    def get_show_end_title_buttons(self) -> bool: ...
+    def get_show_start_title_buttons(self) -> bool: ...
+    def get_view(self) -> Optional[TabView]: ...
+    @classmethod
+    def new(cls) -> TabOverview: ...
+    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_enable_new_tab(self, enable_new_tab: bool) -> None: ...
+    def set_enable_search(self, enable_search: bool) -> None: ...
+    def set_extra_drag_preload(self, preload: bool) -> None: ...
+    def set_inverted(self, inverted: bool) -> None: ...
+    def set_open(self, open: bool) -> None: ...
+    def set_secondary_menu(
+        self, secondary_menu: Optional[Gio.MenuModel] = None
+    ) -> None: ...
+    def set_show_end_title_buttons(self, show_end_title_buttons: bool) -> None: ...
+    def set_show_start_title_buttons(self, show_start_title_buttons: bool) -> None: ...
+    def set_view(self, view: Optional[TabView] = None) -> None: ...
+    def setup_extra_drop_target(
+        self, actions: Gdk.DragAction, types: Optional[Sequence[Type]] = None
+    ) -> None: ...
+
+class TabOverviewClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TabOverviewClass()
+
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class TabPage(GObject.Object, Gtk.Accessible):
+    """
+    :Constructors:
+
+    ::
+
+        TabPage(**properties)
+
+    Object AdwTabPage
+
+    Properties from AdwTabPage:
+      child -> GtkWidget: child
+      parent -> AdwTabPage: parent
+      selected -> gboolean: selected
+      pinned -> gboolean: pinned
+      title -> gchararray: title
+      tooltip -> gchararray: tooltip
+      icon -> GIcon: icon
+      loading -> gboolean: loading
+      indicator-icon -> GIcon: indicator-icon
+      indicator-tooltip -> gchararray: indicator-tooltip
+      indicator-activatable -> gboolean: indicator-activatable
+      needs-attention -> gboolean: needs-attention
+      keyword -> gchararray: keyword
+      thumbnail-xalign -> gfloat: thumbnail-xalign
+      thumbnail-yalign -> gfloat: thumbnail-yalign
+      live-thumbnail -> gboolean: live-thumbnail
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Gtk.Widget
         icon: Optional[Gio.Icon]
         indicator_activatable: bool
         indicator_icon: Optional[Gio.Icon]
         indicator_tooltip: str
+        keyword: Optional[str]
+        live_thumbnail: bool
         loading: bool
         needs_attention: bool
         parent: Optional[TabPage]
         pinned: bool
         selected: bool
+        thumbnail_xalign: float
+        thumbnail_yalign: float
         title: str
         tooltip: Optional[str]
+        accessible_role: Gtk.AccessibleRole
     props: Props = ...
     def __init__(
         self,
         child: Gtk.Widget = ...,
-        icon: Gio.Icon = ...,
+        icon: Optional[Gio.Icon] = ...,
         indicator_activatable: bool = ...,
-        indicator_icon: Gio.Icon = ...,
+        indicator_icon: Optional[Gio.Icon] = ...,
         indicator_tooltip: str = ...,
+        keyword: str = ...,
+        live_thumbnail: bool = ...,
         loading: bool = ...,
         needs_attention: bool = ...,
         parent: TabPage = ...,
+        thumbnail_xalign: float = ...,
+        thumbnail_yalign: float = ...,
         title: str = ...,
         tooltip: str = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
     ): ...
     def get_child(self) -> Gtk.Widget: ...
     def get_icon(self) -> Optional[Gio.Icon]: ...
     def get_indicator_activatable(self) -> bool: ...
     def get_indicator_icon(self) -> Optional[Gio.Icon]: ...
     def get_indicator_tooltip(self) -> str: ...
+    def get_keyword(self) -> Optional[str]: ...
+    def get_live_thumbnail(self) -> bool: ...
     def get_loading(self) -> bool: ...
     def get_needs_attention(self) -> bool: ...
     def get_parent(self) -> Optional[TabPage]: ...
     def get_pinned(self) -> bool: ...
     def get_selected(self) -> bool: ...
+    def get_thumbnail_xalign(self) -> float: ...
+    def get_thumbnail_yalign(self) -> float: ...
     def get_title(self) -> str: ...
     def get_tooltip(self) -> Optional[str]: ...
+    def invalidate_thumbnail(self) -> None: ...
     def set_icon(self, icon: Optional[Gio.Icon] = None) -> None: ...
     def set_indicator_activatable(self, activatable: bool) -> None: ...
     def set_indicator_icon(self, indicator_icon: Optional[Gio.Icon] = None) -> None: ...
     def set_indicator_tooltip(self, tooltip: str) -> None: ...
+    def set_keyword(self, keyword: str) -> None: ...
+    def set_live_thumbnail(self, live_thumbnail: bool) -> None: ...
     def set_loading(self, loading: bool) -> None: ...
     def set_needs_attention(self, needs_attention: bool) -> None: ...
+    def set_thumbnail_xalign(self, xalign: float) -> None: ...
+    def set_thumbnail_yalign(self, yalign: float) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_tooltip(self, tooltip: str) -> None: ...
 
 class TabPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TabPageClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        TabView(**properties)
+        new() -> Adw.TabView
+
+    Object AdwTabView
+
+    Signals from AdwTabView:
+      page-attached (AdwTabPage, gint)
+      page-detached (AdwTabPage, gint)
+      page-reordered (AdwTabPage, gint)
+      close-page (AdwTabPage) -> gboolean
+      setup-menu (AdwTabPage)
+      create-window () -> AdwTabView
+      indicator-activated (AdwTabPage)
+
+    Properties from AdwTabView:
+      n-pages -> gint: n-pages
+      n-pinned-pages -> gint: n-pinned-pages
+      is-transferring-page -> gboolean: is-transferring-page
+      selected-page -> AdwTabPage: selected-page
+      default-icon -> GIcon: default-icon
+      menu-model -> GMenuModel: menu-model
+      shortcuts -> AdwTabViewShortcuts: shortcuts
+      pages -> GtkSelectionModel: pages
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         default_icon: Gio.Icon
         is_transferring_page: bool
@@ -3707,14 +7410,14 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def __init__(
         self,
         default_icon: Gio.Icon = ...,
-        menu_model: Gio.MenuModel = ...,
+        menu_model: Optional[Gio.MenuModel] = ...,
         selected_page: TabPage = ...,
         shortcuts: TabViewShortcuts = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3722,7 +7425,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3732,8 +7435,8 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3765,6 +7468,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def get_shortcuts(self) -> TabViewShortcuts: ...
     def insert(self, child: Gtk.Widget, position: int) -> TabPage: ...
     def insert_pinned(self, child: Gtk.Widget, position: int) -> TabPage: ...
+    def invalidate_thumbnails(self) -> None: ...
     @classmethod
     def new(cls) -> TabView: ...
     def prepend(self, child: Gtk.Widget) -> TabPage: ...
@@ -3787,9 +7491,52 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     ) -> None: ...
 
 class TabViewClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TabViewClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class TimedAnimation(Animation):
+    """
+    :Constructors:
+
+    ::
+
+        TimedAnimation(**properties)
+        new(widget:Gtk.Widget, from_:float, to:float, duration:int, target:Adw.AnimationTarget) -> Adw.Animation
+
+    Object AdwTimedAnimation
+
+    Properties from AdwTimedAnimation:
+      value-from -> gdouble: value-from
+      value-to -> gdouble: value-to
+      duration -> guint: duration
+      easing -> AdwEasing: easing
+      repeat-count -> guint: repeat-count
+      reverse -> gboolean: reverse
+      alternate -> gboolean: alternate
+
+    Signals from AdwAnimation:
+      done ()
+
+    Properties from AdwAnimation:
+      widget -> GtkWidget: widget
+      target -> AdwAnimationTarget: target
+      value -> gdouble: value
+      state -> AdwAnimationState: state
+      follow-enable-animations-setting -> gboolean: follow-enable-animations-setting
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         alternate: bool
         duration: int
@@ -3798,6 +7545,7 @@ class TimedAnimation(Animation):
         reverse: bool
         value_from: float
         value_to: float
+        follow_enable_animations_setting: bool
         state: AnimationState
         target: AnimationTarget
         value: float
@@ -3812,6 +7560,7 @@ class TimedAnimation(Animation):
         reverse: bool = ...,
         value_from: float = ...,
         value_to: float = ...,
+        follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: Gtk.Widget = ...,
     ): ...
@@ -3842,6 +7591,34 @@ class TimedAnimation(Animation):
 class TimedAnimationClass(GObject.GPointer): ...
 
 class Toast(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Toast(**properties)
+        new(title:str) -> Adw.Toast
+
+    Object AdwToast
+
+    Signals from AdwToast:
+      button-clicked ()
+      dismissed ()
+
+    Properties from AdwToast:
+      title -> gchararray: title
+      button-label -> gchararray: button-label
+      action-name -> gchararray: action-name
+      action-target -> GVariant: action-target
+      priority -> AdwToastPriority: priority
+      timeout -> guint: timeout
+      custom-title -> GtkWidget: custom-title
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         action_name: Optional[str]
         action_target: GLib.Variant
@@ -3853,10 +7630,10 @@ class Toast(GObject.Object):
     props: Props = ...
     def __init__(
         self,
-        action_name: str = ...,
+        action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
-        button_label: str = ...,
-        custom_title: Gtk.Widget = ...,
+        button_label: Optional[str] = ...,
+        custom_title: Optional[Gtk.Widget] = ...,
         priority: ToastPriority = ...,
         timeout: int = ...,
         title: str = ...,
@@ -3885,9 +7662,87 @@ class Toast(GObject.Object):
     def set_title(self, title: str) -> None: ...
 
 class ToastClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ToastClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ToastOverlay(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwToastOverlay
+
+    Properties from AdwToastOverlay:
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         child: Optional[Gtk.Widget]
         can_focus: bool
@@ -3928,12 +7783,12 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     props: Props = ...
     def __init__(
         self,
-        child: Gtk.Widget = ...,
+        child: Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3941,7 +7796,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3951,8 +7806,8 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3967,9 +7822,91 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
 
 class ToastOverlayClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ToastOverlayClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ViewStack(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwViewStack
+
+    Properties from AdwViewStack:
+      hhomogeneous -> gboolean: hhomogeneous
+      vhomogeneous -> gboolean: vhomogeneous
+      visible-child -> GtkWidget: visible-child
+      visible-child-name -> gchararray: visible-child-name
+      pages -> GtkSelectionModel: pages
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         hhomogeneous: bool
         pages: Gtk.SelectionModel
@@ -4022,7 +7959,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4030,7 +7967,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4040,8 +7977,8 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4075,9 +8012,42 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     def set_visible_child_name(self, name: str) -> None: ...
 
 class ViewStackClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ViewStackClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
-class ViewStackPage(GObject.Object):
+class ViewStackPage(GObject.Object, Gtk.Accessible):
+    """
+    :Constructors:
+
+    ::
+
+        ViewStackPage(**properties)
+
+    Object AdwViewStackPage
+
+    Properties from AdwViewStackPage:
+      child -> GtkWidget: child
+      name -> gchararray: name
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      icon-name -> gchararray: icon-name
+      needs-attention -> gboolean: needs-attention
+      badge-number -> guint: badge-number
+      visible -> gboolean: visible
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         badge_number: int
         child: Gtk.Widget
@@ -4087,17 +8057,19 @@ class ViewStackPage(GObject.Object):
         title: Optional[str]
         use_underline: bool
         visible: bool
+        accessible_role: Gtk.AccessibleRole
     props: Props = ...
     def __init__(
         self,
         badge_number: int = ...,
         child: Gtk.Widget = ...,
-        icon_name: str = ...,
-        name: str = ...,
+        icon_name: Optional[str] = ...,
+        name: Optional[str] = ...,
         needs_attention: bool = ...,
-        title: str = ...,
+        title: Optional[str] = ...,
         use_underline: bool = ...,
         visible: bool = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
     ): ...
     def get_badge_number(self) -> int: ...
     def get_child(self) -> Gtk.Widget: ...
@@ -4116,9 +8088,88 @@ class ViewStackPage(GObject.Object):
     def set_visible(self, visible: bool) -> None: ...
 
 class ViewStackPageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ViewStackPageClass()
+
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcher(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwViewSwitcher
+
+    Properties from AdwViewSwitcher:
+      policy -> AdwViewSwitcherPolicy: policy
+      stack -> AdwViewStack: stack
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         policy: ViewSwitcherPolicy
         stack: Optional[ViewStack]
@@ -4161,12 +8212,12 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     def __init__(
         self,
         policy: ViewSwitcherPolicy = ...,
-        stack: ViewStack = ...,
+        stack: Optional[ViewStack] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4174,7 +8225,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4184,8 +8235,8 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4201,6 +8252,76 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
 
 class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherBar(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwViewSwitcherBar
+
+    Properties from AdwViewSwitcherBar:
+      stack -> AdwViewStack: stack
+      reveal -> gboolean: reveal
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         reveal: bool
         stack: Optional[ViewStack]
@@ -4243,12 +8364,12 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def __init__(
         self,
         reveal: bool = ...,
-        stack: ViewStack = ...,
+        stack: Optional[ViewStack] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4256,7 +8377,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4266,8 +8387,8 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4283,14 +8404,105 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
 
 class ViewSwitcherBarClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherBarClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ViewSwitcherClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class ViewSwitcherTitle(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherTitle(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwViewSwitcherTitle
+
+    Properties from AdwViewSwitcherTitle:
+      stack -> AdwViewStack: stack
+      title -> gchararray: title
+      subtitle -> gchararray: subtitle
+      view-switcher-enabled -> gboolean: view-switcher-enabled
+      title-visible -> gboolean: title-visible
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         stack: Optional[ViewStack]
         subtitle: str
@@ -4335,7 +8547,7 @@ class ViewSwitcherTitle(
     props: Props = ...
     def __init__(
         self,
-        stack: ViewStack = ...,
+        stack: Optional[ViewStack] = ...,
         subtitle: str = ...,
         title: str = ...,
         view_switcher_enabled: bool = ...,
@@ -4343,7 +8555,7 @@ class ViewSwitcherTitle(
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4351,7 +8563,7 @@ class ViewSwitcherTitle(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4361,8 +8573,8 @@ class ViewSwitcherTitle(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4383,6 +8595,15 @@ class ViewSwitcherTitle(
     def set_view_switcher_enabled(self, enabled: bool) -> None: ...
 
 class ViewSwitcherTitleClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherTitleClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class Window(
@@ -4394,6 +8615,108 @@ class Window(
     Gtk.Root,
     Gtk.ShortcutManager,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        Window(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwWindow
+
+    Properties from AdwWindow:
+      content -> GtkWidget: content
+
+    Signals from GtkWindow:
+      keys-changed ()
+      activate-focus ()
+      activate-default ()
+      enable-debugging (gboolean) -> gboolean
+      close-request () -> gboolean
+
+    Properties from GtkWindow:
+      title -> gchararray: title
+      resizable -> gboolean: resizable
+      modal -> gboolean: modal
+      default-width -> gint: default-width
+      default-height -> gint: default-height
+      destroy-with-parent -> gboolean: destroy-with-parent
+      hide-on-close -> gboolean: hide-on-close
+      icon-name -> gchararray: icon-name
+      display -> GdkDisplay: display
+      decorated -> gboolean: decorated
+      deletable -> gboolean: deletable
+      transient-for -> GtkWindow: transient-for
+      application -> GtkApplication: application
+      default-widget -> GtkWidget: default-widget
+      focus-widget -> GtkWidget: focus-widget
+      child -> GtkWidget: child
+      titlebar -> GtkWidget: titlebar
+      handle-menubar-accel -> gboolean: handle-menubar-accel
+      is-active -> gboolean: is-active
+      startup-id -> gchararray: startup-id
+      mnemonics-visible -> gboolean: mnemonics-visible
+      focus-visible -> gboolean: focus-visible
+      maximized -> gboolean: maximized
+      fullscreened -> gboolean: fullscreened
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         content: Optional[Gtk.Widget]
         application: Optional[Gtk.Application]
@@ -4459,12 +8782,12 @@ class Window(
     parent_instance: Gtk.Window = ...
     def __init__(
         self,
-        content: Gtk.Widget = ...,
-        application: Gtk.Application = ...,
-        child: Gtk.Widget = ...,
+        content: Optional[Gtk.Widget] = ...,
+        application: Optional[Gtk.Application] = ...,
+        child: Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Gtk.Widget = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
@@ -4474,20 +8797,20 @@ class Window(
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: str = ...,
-        titlebar: Gtk.Widget = ...,
-        transient_for: Gtk.Window = ...,
+        title: Optional[str] = ...,
+        titlebar: Optional[Gtk.Widget] = ...,
+        transient_for: Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4495,7 +8818,7 @@ class Window(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4505,8 +8828,8 @@ class Window(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4520,10 +8843,89 @@ class Window(
     def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
 
 class WindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowClass()
+
+    """
+
     parent_class: Gtk.WindowClass = ...
     padding: list[None] = ...
 
 class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        WindowTitle(**properties)
+        new(title:str, subtitle:str) -> Gtk.Widget
+
+    Object AdwWindowTitle
+
+    Properties from AdwWindowTitle:
+      title -> gchararray: title
+      subtitle -> gchararray: subtitle
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+
+    """
+
     class Props:
         subtitle: str
         title: str
@@ -4571,7 +8973,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Gdk.Cursor = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4579,7 +8981,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Gtk.LayoutManager = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4589,8 +8991,8 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4606,6 +9008,15 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     def set_title(self, title: str) -> None: ...
 
 class WindowTitleClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowTitleClass()
+
+    """
+
     parent_class: Gtk.WidgetClass = ...
 
 class TabViewShortcuts(GObject.GFlags):
