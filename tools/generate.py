@@ -96,8 +96,10 @@ def _callable_get_arguments(
     current_namespace: str,
     needed_namespaces: set[str],
     can_default: bool = False,
+    varargs: bool = False,
 ) -> Tuple[list[str], list[str], list[str]]:
     function_args = type.get_arguments()
+    args_len = len(function_args)
     accept_optional_args = False
     optional_args_name = ""
     dict_names: dict[int, str] = {}
@@ -115,11 +117,18 @@ def _callable_get_arguments(
         if i in skip:
             continue
 
-        if arg.get_closure() >= 0:
-            accept_optional_args = True
-            optional_args_name = function_args[arg.get_closure()].get_name()
-            skip.append(arg.get_closure())
-            skip.append(arg.get_destroy())
+        closure_arg = arg.get_closure()
+        destroy_arg = arg.get_destroy()
+        if closure_arg >= 0 or destroy_arg >= 0:
+            if (destroy_arg < 0 and closure_arg == args_len - 1) or (
+                destroy_arg >= 0
+                and destroy_arg == args_len - 1
+                and closure_arg == args_len - 2
+            ):
+                accept_optional_args = True
+                optional_args_name = function_args[closure_arg].get_name()
+                skip.append(closure_arg)
+            skip.append(destroy_arg)
 
         # Filter out array length args
         arg_type = arg.get_type()
@@ -132,17 +141,38 @@ def _callable_get_arguments(
                 dict_return_args.pop(len_arg, None)
 
         # Need to check because user_data can be the first arg
-        if arg.get_closure() != i and arg.get_destroy() != i:
+        if i not in skip:
             direction = arg.get_direction()
             if direction == GI.Direction.OUT or direction == GI.Direction.INOUT:
                 t = _type_to_python(
-                    arg.get_type(), current_namespace, needed_namespaces, True
+                    arg.get_type(),
+                    current_namespace,
+                    needed_namespaces,
+                    out_arg=True,
+                    cant_be_none=True,
                 )
 
                 dict_return_args[i] = t
             elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
                 dict_names[i] = arg.get_name()
                 dict_args[i] = arg
+
+    if varargs and not accept_optional_args:
+        # User data is missing from annotations. It's the last argument?
+        bad = False
+        if len(function_args) > 0:
+            i = len(function_args) - 1
+            last_arg = function_args[i]
+            if last_arg.get_type().get_tag() == GI.TypeTag.VOID:
+                dict_names.pop(i, None)
+                dict_args.pop(i, None)
+                accept_optional_args = True
+            else:
+                bad = True
+        else:
+            bad = True
+        if bad:
+            print(f"Could not find user_data argument for {type.get_name()}")
 
     # Traverse args in reverse to check for optional args
     args = list(dict_args.values())
@@ -151,8 +181,9 @@ def _callable_get_arguments(
             a.get_type(),
             current_namespace,
             needed_namespaces,
-            False,
-            a.get_closure() >= 0,  # True if function admits variable arguments
+            out_arg=False,
+            cant_be_none=True,
+            varargs=a.get_closure() >= 0,
         )
 
         if a.may_be_null() and t != "None":
@@ -172,7 +203,7 @@ def _callable_get_arguments(
         str_args.append("Any")
 
     return_type = _type_to_python(
-        type.get_return_type(), current_namespace, needed_namespaces, True
+        type.get_return_type(), current_namespace, needed_namespaces, out_arg=True
     )
     if type.may_return_null() and return_type != "None":
         return_type = f"Optional[{return_type}]"
@@ -229,6 +260,7 @@ def _type_to_python(
     current_namespace: str,
     needed_namespaces: set[str],
     out_arg: bool = False,
+    cant_be_none: bool = False,
     varargs: bool = False,
 ) -> str:
     tag = type.get_tag()
@@ -293,7 +325,7 @@ def _type_to_python(
         interface = type.get_interface()
         if isinstance(interface, GI.CallbackInfo):
             (names, args, return_args) = _callable_get_arguments(
-                interface, current_namespace, needed_namespaces
+                interface, current_namespace, needed_namespaces, varargs=varargs
             )
 
             return_type = ""
@@ -302,9 +334,12 @@ def _type_to_python(
             else:
                 return_type = f"Tuple[{', '.join(return_args)}]"
 
-            # FIXME, how to express Callable with variable arguments?
-            if (len(names) > 0 and names[-1].startswith("*")) or varargs:
-                return f"Callable[..., {return_type}]"
+            if len(names) > 0 and names[-1].startswith("*"):
+                args = args[:-1]  # Closure data is always the last argument
+                if len(args) > 0:
+                    return f"Callable[Concatenate[{', '.join(args)}, _VarArgs], {return_type}]"
+                else:
+                    return f"Callable[Concatenate[_VarArgs], {return_type}]"
             else:
                 return f"Callable[[{', '.join(args)}], {return_type}]"
         else:
@@ -336,9 +371,25 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typings = "from typing import Any, Callable, Literal, Optional, Tuple, Type, TypeVar, Sequence"
+    typings_list = [
+        "Any",
+        "Callable",
+        "Literal",
+        "Optional",
+        "Tuple",
+        "Type",
+        "TypeVar",
+        "Sequence",
+    ]
 
-    typevars: list[str] = []
+    typing_extensions_list = ["Concatenate", "ParamSpec"]
+
+    typings = f"from typing import {' ,'.join(typings_list)}"
+    typing_extensions = (
+        f"from typing_extensions import {' ,'.join(typing_extensions_list)}"
+    )
+
+    typevars: list[str] = ["_VarArgs = ParamSpec('_VarArgs')"]
     imports: list[str] = []
     if "cairo" in ns:
         imports = ["import cairo"]
@@ -349,6 +400,8 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
 
     return (
         typings
+        + "\n\n"
+        + typing_extensions
         + "\n\n"
         + "\n".join(imports)
         + "\n"
@@ -642,7 +695,11 @@ def _gi_build_stub(
             if isinstance(object_info, GI.StructInfo):
                 for f in object_info.get_fields():
                     t = _type_to_python(
-                        f.get_type(), current_namespace, needed_namespaces, True
+                        f.get_type(),
+                        current_namespace,
+                        needed_namespaces,
+                        out_arg=True,
+                        cant_be_none=True,
                     )
                     n = f.get_name()
                     if n in dir(obj):
@@ -671,7 +728,11 @@ def _gi_build_stub(
 
                 for f in object_info.get_fields():
                     t = _type_to_python(
-                        f.get_type(), current_namespace, needed_namespaces, True
+                        f.get_type(),
+                        current_namespace,
+                        needed_namespaces,
+                        out_arg=True,
+                        cant_be_none=True,
                     )
                     n = f.get_name()
                     if n in dir(obj):
@@ -745,7 +806,13 @@ def _gi_build_stub(
                     continue
                 names.append(n)
                 type = _build_type(GIRepository.property_info_get_type(p))
-                t = _type_to_python(type, current_namespace, needed_namespaces, True)
+                t = _type_to_python(
+                    type,
+                    current_namespace,
+                    needed_namespaces,
+                    out_arg=True,
+                    cant_be_none=True,
+                )
 
                 # Check getter/setter
                 getter = GIRepository.property_info_get_getter(p)
