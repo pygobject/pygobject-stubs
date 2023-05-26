@@ -715,9 +715,9 @@ def _gi_build_stub(
             doc = getattr(obj, "__doc__", "") or ""
             gdoc = getattr(obj, "__gdoc__", "") or ""
 
-            txt = doc + "\n" + gdoc
+            txt = doc.strip() + "\n\n" + gdoc.strip()
             if txt:
-                txt = '"""' + txt + '"""' + "\n"
+                txt = '"""\n' + txt.strip() + '\n"""' + "\n"
                 txt = textwrap.indent(txt, "    ")
                 ret += txt
 
