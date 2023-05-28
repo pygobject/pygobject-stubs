@@ -1,3 +1,20 @@
+# 2.8.0 (24 May 2023)
+
+## Improvements
+
+* generator: Check nullability for __init__
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Gtk4
+
+## Bug Fixes
+
+* generate: Force varargs if function has closure
+* parse: Ignore documentation
+
 # 2.7.0 (28 Apr 2023)
 
 ## Improvements
