@@ -714,7 +714,7 @@ def type_interface_peek(
 def type_interface_prerequisites(interface_type: Type) -> list[Type]: ...
 def type_interfaces(type: Type) -> list[Type]: ...
 def type_is_a(type: Type, is_a_type: Type) -> bool: ...
-def type_name(type: Type) -> str: ...
+def type_name(type: Type) -> Optional[str]: ...
 def type_name_from_class(g_class: TypeClass) -> str: ...
 def type_name_from_instance(instance: TypeInstance) -> str: ...
 def type_next_base(leaf_type: Type, root_type: Type) -> Type: ...
@@ -748,6 +748,31 @@ class _HandlerBlockManager:
     def __exit__(self, exc_type, exc_value, traceback) -> None: ...
 
 class Binding(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Binding(**properties)
+
+    Object GBinding
+
+    Properties from GBinding:
+      source -> GObject: Source
+        The source of the binding
+      target -> GObject: Target
+        The target of the binding
+      source-property -> gchararray: Source Property
+        The property on the source to bind
+      target-property -> gchararray: Target Property
+        The property on the target to bind
+      flags -> GBindingFlags: Flags
+        The binding flags
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         flags: BindingFlags
         source: Optional[Object]
@@ -773,10 +798,28 @@ class Binding(Object):
     def unbind(self): ...  # FIXME Function
 
 class BindingGroup(Object):
+    """
+    :Constructors:
+
+    ::
+
+        BindingGroup(**properties)
+        new() -> GObject.BindingGroup
+
+    Object GBindingGroup
+
+    Properties from GBindingGroup:
+      source -> GObject: Source
+        The source GObject used for binding properties.
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         source: Optional[Object]
     props: Props = ...
-    def __init__(self, source: Object = ...): ...
+    def __init__(self, source: Optional[Object] = ...): ...
     def bind(
         self,
         source_property: str,
@@ -799,6 +842,14 @@ class BindingGroup(Object):
     def set_source(self, source: Optional[Object] = None) -> None: ...
 
 class CClosure(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CClosure()
+    """
+
     closure: Callable[..., Any] = ...
     callback: None = ...
     @staticmethod
@@ -1010,6 +1061,16 @@ class CClosure(GPointer):
     ) -> None: ...
 
 class Closure(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Closure()
+        new_object(sizeof_closure:int, object:GObject.Object) -> GObject.Closure
+        new_simple(sizeof_closure:int, data=None) -> GObject.Closure
+    """
+
     ref_count: int = ...
     meta_marshal_nouse: int = ...
     n_guards: int = ...
@@ -1036,10 +1097,26 @@ class Closure(GBoxed):
     def unref(self) -> None: ...
 
 class ClosureNotifyData(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClosureNotifyData()
+    """
+
     data: None = ...
     notify: Callable[[None, Callable[..., Any]], None] = ...
 
 class EnumClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        EnumClass()
+    """
+
     g_type_class: TypeClass = ...
     minimum: int = ...
     maximum: int = ...
@@ -1047,25 +1124,53 @@ class EnumClass(GPointer):
     values: EnumValue = ...
 
 class EnumValue(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        EnumValue()
+    """
+
     value: int = ...
     value_name: str = ...
     value_nick: str = ...
 
 class FlagsClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FlagsClass()
+    """
+
     g_type_class: TypeClass = ...
     mask: int = ...
     n_values: int = ...
     values: FlagsValue = ...
 
 class FlagsValue(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FlagsValue()
+    """
+
     value: int = ...
     value_name: str = ...
     value_nick: str = ...
 
 class GBoxed:
+    """ """
+
     def copy(self, *args, **kwargs): ...  # FIXME Function
 
 class GError:
+    """ """
+
     def copy(self): ...  # FIXME Function
     def matches(self, domain, code): ...  # FIXME Function
     def new_literal(domain, message, code): ...  # FIXME Function
@@ -1168,12 +1273,18 @@ class GInterface(Protocol):
 class GObject(Object): ...
 
 class GObjectWeakRef:
+    """
+    A GObject weak reference
+    """
+
     def unref(self, *args, **kwargs): ...  # FIXME Function
 
 class GParamSpec: ...
 class GPointer: ...
 
 class GType:
+    """ """
+
     children = ...  # FIXME Constant
     depth = ...  # FIXME Constant
     fundamental = ...  # FIXME Constant
@@ -1195,6 +1306,15 @@ class GType:
     def is_value_type(self, *args, **kwargs): ...  # FIXME Function
 
 class Idle(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Source()
+        new(source_funcs:GLib.SourceFuncs, struct_size:int) -> GLib.Source
+    """
+
     callback_data: None = ...
     callback_funcs: GLib.SourceCallbackFuncs = ...
     source_funcs: GLib.SourceFuncs = ...
@@ -1253,11 +1373,32 @@ class Idle(GBoxed):
     def unref(self) -> None: ...
 
 class InitiallyUnowned(Object):
+    """
+    :Constructors:
+
+    ::
+
+        InitiallyUnowned(**properties)
+
+    Object GInitiallyUnowned
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     g_type_instance: TypeInstance = ...
     ref_count: int = ...
     qdata: GLib.Data = ...
 
 class InitiallyUnownedClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        InitiallyUnownedClass()
+    """
+
     g_type_class: TypeClass = ...
     construct_properties: list[None] = ...
     constructor: None = ...
@@ -1275,11 +1416,28 @@ class InitiallyUnownedClass(GPointer):
     pdummy: list[None] = ...
 
 class InterfaceInfo(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        InterfaceInfo()
+    """
+
     interface_init: Callable[[TypeInterface, None], None] = ...
     interface_finalize: Callable[[TypeInterface, None], None] = ...
     interface_data: None = ...
 
 class MainContext(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> GLib.MainContext
+        new_with_flags(flags:GLib.MainContextFlags) -> GLib.MainContext
+    """
+
     def acquire(self) -> bool: ...
     def add_poll(self, fd: GLib.PollFD, priority: int) -> None: ...
     def check(self, max_priority: int, fds: Sequence[GLib.PollFD]) -> bool: ...
@@ -1317,6 +1475,14 @@ class MainContext(GBoxed):
     def wakeup(self) -> None: ...
 
 class MainLoop(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(context:GLib.MainContext=None, is_running:bool) -> GLib.MainLoop
+    """
+
     def get_context(self) -> GLib.MainContext: ...
     def is_running(self) -> bool: ...
     @classmethod
@@ -1327,6 +1493,20 @@ class MainLoop(GBoxed):
     def unref(self) -> None: ...
 
 class Object:
+    """
+    :Constructors:
+
+    ::
+
+        Object(**properties)
+        newv(object_type:GType, parameters:list) -> GObject.Object
+
+    Object GObject
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     g_type_instance: TypeInstance = ...
     ref_count: int = ...
     qdata: GLib.Data = ...
@@ -1418,6 +1598,14 @@ class Object:
     def weak_ref(self, callback: Callable[..., Any], *args: Any) -> None: ...
 
 class ObjectClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectClass()
+    """
+
     g_type_class: TypeClass = ...
     construct_properties: list[None] = ...
     constructor: None = ...
@@ -1442,10 +1630,20 @@ class ObjectClass(GPointer):
     def override_property(self, property_id: int, name: str) -> None: ...
 
 class ObjectConstructParam(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectConstructParam()
+    """
+
     pspec: ParamSpec = ...
     value: Any = ...
 
 class OptionContext:
+    """ """
+
     def add_group(self, *args, **kwargs): ...  # FIXME Function
     def get_help_enabled(self, *args, **kwargs): ...  # FIXME Function
     def get_ignore_unknown_options(self, *args, **kwargs): ...  # FIXME Function
@@ -1456,10 +1654,20 @@ class OptionContext:
     def set_main_group(self, *args, **kwargs): ...  # FIXME Function
 
 class OptionGroup:
+    """ """
+
     def add_entries(self, *args, **kwargs): ...  # FIXME Function
     def set_translation_domain(self, *args, **kwargs): ...  # FIXME Function
 
 class ParamSpec:
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpec(**properties)
+    """
+
     g_type_instance: TypeInstance = ...
     name: str = ...
     flags: ParamFlags = ...
@@ -1489,19 +1697,51 @@ class ParamSpec:
     def steal_qdata(self, quark: int) -> None: ...
 
 class ParamSpecBoolean(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecBoolean(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     default_value: bool = ...
 
 class ParamSpecBoxed(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecBoxed(**properties)
+    """
+
     parent_instance: ParamSpec = ...
 
 class ParamSpecChar(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecChar(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecClass()
+    """
+
     g_type_class: TypeClass = ...
     value_type: Type = ...
     finalize: Callable[[ParamSpec], None] = ...
@@ -1512,6 +1752,14 @@ class ParamSpecClass(GPointer):
     dummy: list[None] = ...
 
 class ParamSpecDouble(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecDouble(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: float = ...
     maximum: float = ...
@@ -1519,16 +1767,40 @@ class ParamSpecDouble(ParamSpec):
     epsilon: float = ...
 
 class ParamSpecEnum(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecEnum(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     enum_class: EnumClass = ...
     default_value: int = ...
 
 class ParamSpecFlags(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecFlags(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     flags_class: FlagsClass = ...
     default_value: int = ...
 
 class ParamSpecFloat(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecFloat(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: float = ...
     maximum: float = ...
@@ -1536,41 +1808,107 @@ class ParamSpecFloat(ParamSpec):
     epsilon: float = ...
 
 class ParamSpecGType(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecGType(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     is_a_type: Type = ...
 
 class ParamSpecInt(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecInt(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecInt64(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecInt64(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecLong(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecLong(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecObject(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecObject(**properties)
+    """
+
     parent_instance: ParamSpec = ...
 
 class ParamSpecOverride(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecOverride(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     overridden: ParamSpec = ...
 
 class ParamSpecParam(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecParam(**properties)
+    """
+
     parent_instance: ParamSpec = ...
 
 class ParamSpecPointer(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecPointer(**properties)
+    """
+
     parent_instance: ParamSpec = ...
 
 class ParamSpecPool(GPointer):
+    """ """
+
     def insert(self, pspec: ParamSpec, owner_type: Type) -> None: ...
     def list(self, owner_type: Type) -> list[ParamSpec]: ...
     def list_owned(self, owner_type: Type) -> list[ParamSpec]: ...
@@ -1580,6 +1918,14 @@ class ParamSpecPool(GPointer):
     def remove(self, pspec: ParamSpec) -> None: ...
 
 class ParamSpecString(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecString(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     default_value: str = ...
     cset_first: str = ...
@@ -1589,6 +1935,14 @@ class ParamSpecString(ParamSpec):
     ensure_non_null: int = ...
 
 class ParamSpecTypeInfo(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecTypeInfo()
+    """
+
     instance_size: int = ...
     n_preallocs: int = ...
     instance_init: Callable[[ParamSpec], None] = ...
@@ -1599,49 +1953,115 @@ class ParamSpecTypeInfo(GPointer):
     values_cmp: Callable[[ParamSpec, Any, Any], int] = ...
 
 class ParamSpecUChar(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecUChar(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecUInt(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecUInt(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecUInt64(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecUInt64(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecULong(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecULong(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     minimum: int = ...
     maximum: int = ...
     default_value: int = ...
 
 class ParamSpecUnichar(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecUnichar(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     default_value: str = ...
 
 class ParamSpecValueArray(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecValueArray(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     element_spec: ParamSpec = ...
     fixed_n_elements: int = ...
 
 class ParamSpecVariant(ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecVariant(**properties)
+    """
+
     parent_instance: ParamSpec = ...
     type: GLib.VariantType = ...
     default_value: GLib.Variant = ...
     padding: list[None] = ...
 
 class Parameter(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Parameter()
+    """
+
     name: str = ...
     value: Any = ...
 
 class Pid:
+    """ """
+
     denominator = ...  # FIXME Constant
     imag = ...  # FIXME Constant
     numerator = ...  # FIXME Constant
@@ -1656,6 +2076,14 @@ class Pid:
     def to_bytes(self, *args, **kwargs): ...  # FIXME Method
 
 class PollFD(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        PollFD()
+    """
+
     fd: int = ...
     events: int = ...
     revents: int = ...
@@ -1714,11 +2142,35 @@ class Signal(str):
         def emit(self, *args, **kargs): ...
 
 class SignalGroup(Object):
+    """
+    :Constructors:
+
+    ::
+
+        SignalGroup(**properties)
+        new(target_type:GType) -> GObject.SignalGroup
+
+    Object GSignalGroup
+
+    Signals from GSignalGroup:
+      bind (GObject)
+      unbind ()
+
+    Properties from GSignalGroup:
+      target -> GObject: Target
+        The target instance used when connecting signals.
+      target-type -> GType: Target Type
+        The GType of the target property.
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         target: Optional[Object]
         target_type: Type
     props: Props = ...
-    def __init__(self, target: Object = ..., target_type: Type = ...): ...
+    def __init__(self, target: Optional[Object] = ..., target_type: Type = ...): ...
     def block(self) -> None: ...
     def connect_closure(
         self, detailed_signal: str, closure: Callable[..., Any], after: bool
@@ -1726,12 +2178,12 @@ class SignalGroup(Object):
     def connect_data(
         self,
         detailed_signal: str,
-        c_handler: Callable[[], None],
+        c_handler: Callable[..., None],
         flags: ConnectFlags,
         *data: Any,
     ) -> None: ...
     def connect_swapped(
-        self, detailed_signal: str, c_handler: Callable[[], None], *data: Any
+        self, detailed_signal: str, c_handler: Callable[..., None], *data: Any
     ) -> None: ...
     def dup_target(self) -> Optional[Object]: ...
     @classmethod
@@ -1740,6 +2192,14 @@ class SignalGroup(Object):
     def unblock(self) -> None: ...
 
 class SignalInvocationHint(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SignalInvocationHint()
+    """
+
     signal_id: int = ...
     detail: int = ...
     run_type: SignalFlags = ...
@@ -1749,6 +2209,14 @@ class SignalOverride(Signal):
     def get_signal_args(self) -> Literal["override"]: ...
 
 class SignalQuery(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SignalQuery()
+    """
+
     signal_id: int = ...
     signal_name: str = ...
     itype: Type = ...
@@ -1758,6 +2226,15 @@ class SignalQuery(GPointer):
     param_types: list[Type] = ...
 
 class Source(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Source()
+        new(source_funcs:GLib.SourceFuncs, struct_size:int) -> GLib.Source
+    """
+
     callback_data: None = ...
     callback_funcs: GLib.SourceCallbackFuncs = ...
     source_funcs: GLib.SourceFuncs = ...
@@ -1816,6 +2293,15 @@ class Source(GBoxed):
     def unref(self) -> None: ...
 
 class Timeout(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Source()
+        new(source_funcs:GLib.SourceFuncs, struct_size:int) -> GLib.Source
+    """
+
     callback_data: None = ...
     callback_funcs: GLib.SourceCallbackFuncs = ...
     source_funcs: GLib.SourceFuncs = ...
@@ -1876,6 +2362,14 @@ class Timeout(GBoxed):
 class TypeCValue(GPointer): ...
 
 class TypeClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeClass()
+    """
+
     g_type: Type = ...
     def add_private(self, private_size: int) -> None: ...
     @staticmethod
@@ -1891,9 +2385,25 @@ class TypeClass(GPointer):
     def unref(self) -> None: ...
 
 class TypeFundamentalInfo(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeFundamentalInfo()
+    """
+
     type_flags: TypeFundamentalFlags = ...
 
 class TypeInfo(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeInfo()
+    """
+
     class_size: int = ...
     base_init: Callable[[TypeClass], None] = ...
     base_finalize: Callable[[TypeClass], None] = ...
@@ -1906,10 +2416,26 @@ class TypeInfo(GPointer):
     value_table: TypeValueTable = ...
 
 class TypeInstance(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeInstance()
+    """
+
     g_class: TypeClass = ...
     def get_private(self, private_type: Type) -> None: ...
 
 class TypeInterface(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeInterface()
+    """
+
     g_type: Type = ...
     g_instance_type: Type = ...
     @staticmethod
@@ -1947,6 +2473,14 @@ class TypeModule(TypePlugin):
     def use(self) -> bool: ...
 
 class TypeModuleClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeModuleClass()
+    """
+
     parent_class: ObjectClass = ...
     load: Callable[[TypeModule], bool] = ...
     unload: Callable[[TypeModule], None] = ...
@@ -1956,6 +2490,10 @@ class TypeModuleClass(GPointer):
     reserved4: Callable[[], None] = ...
 
 class TypePlugin(Object):
+    """
+    Interface GTypePlugin
+    """
+
     def complete_interface_info(
         self, instance_type: Type, interface_type: Type, info: InterfaceInfo
     ) -> None: ...
@@ -1966,6 +2504,14 @@ class TypePlugin(Object):
     def use(self) -> None: ...
 
 class TypePluginClass(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypePluginClass()
+    """
+
     base_iface: TypeInterface = ...
     use_plugin: Callable[[TypePlugin], None] = ...
     unuse_plugin: Callable[[TypePlugin], None] = ...
@@ -1977,12 +2523,28 @@ class TypePluginClass(GPointer):
     ] = ...
 
 class TypeQuery(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeQuery()
+    """
+
     type: Type = ...
     type_name: str = ...
     class_size: int = ...
     instance_size: int = ...
 
 class TypeValueTable(GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeValueTable()
+    """
+
     value_init: Callable[[Any], None] = ...
     value_free: Callable[[Any], None] = ...
     value_copy: Callable[[Any, Any], None] = ...
@@ -1993,13 +2555,21 @@ class TypeValueTable(GPointer):
     lcopy_value: Callable[[Any, int, TypeCValue, int], str] = ...
 
 class Value(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Value()
+    """
+
     g_type: Type = ...
     data: list[_Value__data__union] = ...
     _Value__g_type = ...  # FIXME Constant
 
     def copy(self, dest_value: Any) -> None: ...
-    def dup_object(self) -> Object: ...
-    def dup_string(self) -> str: ...
+    def dup_object(self) -> Optional[Object]: ...
+    def dup_string(self) -> Optional[str]: ...
     def dup_variant(self) -> Optional[GLib.Variant]: ...
     def fits_pointer(self) -> bool: ...
     def get_boolean(self) -> bool: ...
@@ -2013,11 +2583,11 @@ class Value(GBoxed):
     def get_int(self) -> int: ...
     def get_int64(self) -> int: ...
     def get_long(self) -> int: ...
-    def get_object(self) -> Object: ...
+    def get_object(self) -> Optional[Object]: ...
     def get_param(self) -> ParamSpec: ...
     def get_pointer(self) -> None: ...
     def get_schar(self) -> int: ...
-    def get_string(self) -> str: ...
+    def get_string(self) -> Optional[str]: ...
     def get_uchar(self) -> int: ...
     def get_uint(self) -> int: ...
     def get_uint64(self) -> int: ...
@@ -2067,6 +2637,15 @@ class Value(GBoxed):
     def unset(self) -> None: ...
 
 class ValueArray(GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        ValueArray()
+        new(n_prealloced:int) -> GObject.ValueArray
+    """
+
     n_values: int = ...
     values: Any = ...
     n_prealloced: int = ...
@@ -2081,6 +2660,8 @@ class ValueArray(GBoxed):
     def sort(self, compare_func: Callable[..., int], *user_data: Any) -> ValueArray: ...
 
 class Warning:
+    """ """
+
     args = ...  # FIXME Constant
 
     def add_note(self, *args, **kwargs): ...  # FIXME Function
@@ -2089,6 +2670,8 @@ class Warning:
 class WeakRef(GPointer): ...
 
 class _Value__data__union(GPointer):
+    """ """
+
     v_double = ...  # FIXME Constant
     v_float = ...  # FIXME Constant
     v_int = ...  # FIXME Constant
@@ -2100,6 +2683,62 @@ class _Value__data__union(GPointer):
     v_ulong = ...  # FIXME Constant
 
 class property:
+    """
+    Creates a new Property which when used in conjunction with
+        GObject subclass will create a Python property accessor for the
+        GObject ParamSpec.
+
+        :param callable getter:
+            getter to get the value of the property
+        :param callable setter:
+            setter to set the value of the property
+        :param type type:
+            type of property
+        :param default:
+            default value, must match the property type.
+        :param str nick:
+            short description
+        :param str blurb:
+            long description
+        :param GObject.ParamFlags flags:
+            parameter flags
+        :keyword minimum:
+            minimum allowed value (int, float, long only)
+        :keyword maximum:
+            maximum allowed value (int, float, long only)
+
+        .. code-block:: python
+
+             class MyObject(GObject.Object):
+                 prop = GObject.Property(type=str)
+
+             obj = MyObject()
+             obj.prop = 'value'
+
+             obj.prop  # now is 'value'
+
+        The API is similar to the builtin :py:func:`property`:
+
+        .. code-block:: python
+
+            class AnotherObject(GObject.Object):
+                value = 0
+
+                @GObject.Property
+                def prop(self):
+                    'Read only property.'
+                    return 1
+
+                @GObject.Property(type=int)
+                def propInt(self):
+                    'Read-write integer property.'
+                    return self.value
+
+                @propInt.setter
+                def propInt(self, value):
+                    self.value = value
+    """
+
     _default_lookup = ...  # FIXME Constant
     _max_value_lookup = ...  # FIXME Constant
     _min_value_lookup = ...  # FIXME Constant
@@ -2180,6 +2819,7 @@ class TypeDebugFlags(GFlags):
 
 class TypeFlags(GFlags):
     ABSTRACT = 16
+    DEPRECATED = 128
     FINAL = 64
     NONE = 0
     VALUE_ABSTRACT = 32
