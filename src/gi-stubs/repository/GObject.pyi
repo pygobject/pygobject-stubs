@@ -1190,7 +1190,10 @@ class GInterface(Protocol):
         source_property: str,
         target: Object,
         target_property: str,
-        flags: BindingFlags,
+        flags: BindingFlags = BindingFlags.DEFAULT,
+        transform_to: Optional[Callable[..., Any]] = None,
+        transform_from: Optional[Callable[..., Any]] = None,
+        user_data: Optional[Any] = None,
     ) -> Binding: ...
     def bind_property_full(self, *args, **kargs): ...  # FIXME Function
     def chain(self, *args, **kwargs): ...  # FIXME Function
@@ -1518,7 +1521,10 @@ class Object:
         source_property: str,
         target: Object,
         target_property: str,
-        flags: BindingFlags,
+        flags: BindingFlags = BindingFlags.DEFAULT,
+        transform_to: Optional[Callable[..., Any]] = None,
+        transform_from: Optional[Callable[..., Any]] = None,
+        user_data: Optional[Any] = None,
     ) -> Binding: ...
     def bind_property_full(self, *args, **kargs): ...  # FIXME Function
     def chain(self, *args, **kwargs): ...  # FIXME Function
