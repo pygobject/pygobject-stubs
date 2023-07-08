@@ -716,7 +716,7 @@ def _gi_build_stub(
             gdoc = getattr(obj, "__gdoc__", "") or ""
 
             txt = doc.strip() + "\n\n" + gdoc.strip()
-            if txt:
+            if not txt.isspace():
                 txt = '"""\n' + txt.strip() + '\n"""' + "\n"
                 txt = textwrap.indent(txt, "    ")
                 ret += txt
