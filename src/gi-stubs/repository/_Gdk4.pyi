@@ -2336,24 +2336,16 @@ def content_deserialize_async(
     type: Type,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[
-        Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-    ] = None,
+    callback: Optional[Callable[..., None]] = None,
     *user_data: Any,
 ) -> None: ...
 def content_deserialize_finish(result: Gio.AsyncResult) -> Tuple[bool, Any]: ...
 def content_formats_parse(string: str) -> Optional[ContentFormats]: ...
 def content_register_deserializer(
-    mime_type: str,
-    type: Type,
-    deserialize: Callable[[ContentDeserializer], None],
-    *data: Any,
+    mime_type: str, type: Type, deserialize: Callable[..., None], *data: Any
 ) -> None: ...
 def content_register_serializer(
-    type: Type,
-    mime_type: str,
-    serialize: Callable[[ContentSerializer], None],
-    *data: Any,
+    type: Type, mime_type: str, serialize: Callable[..., None], *data: Any
 ) -> None: ...
 def content_serialize_async(
     stream: Gio.OutputStream,
@@ -2361,9 +2353,7 @@ def content_serialize_async(
     value: Any,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[
-        Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-    ] = None,
+    callback: Optional[Callable[..., None]] = None,
     *user_data: Any,
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
@@ -2393,6 +2383,27 @@ def unicode_to_keyval(wc: int) -> int: ...
 def vulkan_error_quark() -> int: ...
 
 class AppLaunchContext(Gio.AppLaunchContext):
+    """
+    :Constructors:
+
+    ::
+
+        AppLaunchContext(**properties)
+
+    Object GdkAppLaunchContext
+
+    Properties from GdkAppLaunchContext:
+      display -> GdkDisplay: display
+
+    Signals from GAppLaunchContext:
+      launch-failed (gchararray)
+      launch-started (GAppInfo, GVariant)
+      launched (GAppInfo, GVariant)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
     props: Props = ...
@@ -2404,9 +2415,34 @@ class AppLaunchContext(Gio.AppLaunchContext):
     def set_timestamp(self, timestamp: int) -> None: ...
 
 class ButtonEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        ButtonEvent(**properties)
+    """
+
     def get_button(self) -> int: ...
 
 class CairoContext(DrawContext):
+    """
+    :Constructors:
+
+    ::
+
+        CairoContext(**properties)
+
+    Object GdkCairoContext
+
+    Properties from GdkDrawContext:
+      display -> GdkDisplay: display
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
@@ -2415,6 +2451,28 @@ class CairoContext(DrawContext):
     def cairo_create(self) -> Optional[cairo.Context]: ...
 
 class Clipboard(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Clipboard(**properties)
+
+    Object GdkClipboard
+
+    Signals from GdkClipboard:
+      changed ()
+
+    Properties from GdkClipboard:
+      display -> GdkDisplay: display
+      formats -> GdkContentFormats: formats
+      local -> gboolean: local
+      content -> GdkContentProvider: content
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         content: Optional[ContentProvider]
         display: Display
@@ -2431,9 +2489,7 @@ class Clipboard(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -2442,18 +2498,14 @@ class Clipboard(GObject.Object):
     def read_text_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_text_finish(self, result: Gio.AsyncResult) -> Optional[str]: ...
     def read_texture_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_texture_finish(self, result: Gio.AsyncResult) -> Optional[Texture]: ...
@@ -2462,9 +2514,7 @@ class Clipboard(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
@@ -2474,14 +2524,25 @@ class Clipboard(GObject.Object):
         self,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
 
 class ContentDeserializer(GObject.Object, Gio.AsyncResult):
+    """
+    :Constructors:
+
+    ::
+
+        ContentDeserializer(**properties)
+
+    Object GdkContentDeserializer
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_cancellable(self) -> Optional[Gio.Cancellable]: ...
     def get_gtype(self) -> Type: ...
     def get_input_stream(self) -> Gio.InputStream: ...
@@ -2495,6 +2556,15 @@ class ContentDeserializer(GObject.Object, Gio.AsyncResult):
     def set_task_data(self, data: None, notify: Callable[[None], None]) -> None: ...
 
 class ContentFormats(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(mime_types:list=None) -> Gdk.ContentFormats
+        new_for_gtype(type:GType) -> Gdk.ContentFormats
+    """
+
     def contain_gtype(self, type: Type) -> bool: ...
     def contain_mime_type(self, mime_type: str) -> bool: ...
     def get_gtypes(self) -> Optional[list[Type]]: ...
@@ -2519,6 +2589,14 @@ class ContentFormats(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class ContentFormatsBuilder(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gdk.ContentFormatsBuilder
+    """
+
     def add_formats(self, formats: ContentFormats) -> None: ...
     def add_gtype(self, type: Type) -> None: ...
     def add_mime_type(self, mime_type: str) -> None: ...
@@ -2529,6 +2607,29 @@ class ContentFormatsBuilder(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class ContentProvider(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ContentProvider(**properties)
+        new_for_bytes(mime_type:str, bytes:GLib.Bytes) -> Gdk.ContentProvider
+        new_for_value(value:GObject.Value) -> Gdk.ContentProvider
+        new_union(providers:list=None) -> Gdk.ContentProvider
+
+    Object GdkContentProvider
+
+    Signals from GdkContentProvider:
+      content-changed ()
+
+    Properties from GdkContentProvider:
+      formats -> GdkContentFormats: formats
+      storable-formats -> GdkContentFormats: storable-formats
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         formats: ContentFormats
         storable_formats: ContentFormats
@@ -2547,9 +2648,7 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def do_write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2570,14 +2669,20 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
 
 class ContentProviderClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ContentProviderClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     content_changed: Callable[[ContentProvider], None] = ...
     attach_clipboard: Callable[[ContentProvider, Clipboard], None] = ...
@@ -2590,6 +2695,19 @@ class ContentProviderClass(GObject.GPointer):
     padding: list[None] = ...
 
 class ContentSerializer(GObject.Object, Gio.AsyncResult):
+    """
+    :Constructors:
+
+    ::
+
+        ContentSerializer(**properties)
+
+    Object GdkContentSerializer
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_cancellable(self) -> Optional[Gio.Cancellable]: ...
     def get_gtype(self) -> Type: ...
     def get_mime_type(self) -> str: ...
@@ -2603,11 +2721,41 @@ class ContentSerializer(GObject.Object, Gio.AsyncResult):
     def set_task_data(self, data: None, notify: Callable[[None], None]) -> None: ...
 
 class CrossingEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        CrossingEvent(**properties)
+    """
+
     def get_detail(self) -> NotifyType: ...
     def get_focus(self) -> bool: ...
     def get_mode(self) -> CrossingMode: ...
 
 class Cursor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Cursor(**properties)
+        new_from_name(name:str, fallback:Gdk.Cursor=None) -> Gdk.Cursor or None
+        new_from_texture(texture:Gdk.Texture, hotspot_x:int, hotspot_y:int, fallback:Gdk.Cursor=None) -> Gdk.Cursor
+
+    Object GdkCursor
+
+    Properties from GdkCursor:
+      fallback -> GdkCursor: fallback
+      hotspot-x -> gint: hotspot-x
+      hotspot-y -> gint: hotspot-y
+      name -> gchararray: name
+      texture -> GdkTexture: texture
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         fallback: Optional[Cursor]
         hotspot_x: int
@@ -2642,11 +2790,54 @@ class Cursor(GObject.Object):
     ) -> Cursor: ...
 
 class DNDEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        DNDEvent(**properties)
+    """
+
     def get_drop(self) -> Optional[Drop]: ...
 
 class DeleteEvent(Event): ...
 
 class Device(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Device(**properties)
+
+    Object GdkDevice
+
+    Signals from GdkDevice:
+      changed ()
+      tool-changed (GdkDeviceTool)
+
+    Properties from GdkDevice:
+      display -> GdkDisplay: display
+      name -> gchararray: name
+      source -> GdkInputSource: source
+      has-cursor -> gboolean: has-cursor
+      n-axes -> guint: n-axes
+      vendor-id -> gchararray: vendor-id
+      product-id -> gchararray: product-id
+      seat -> GdkSeat: seat
+      num-touches -> guint: num-touches
+      tool -> GdkDeviceTool: tool
+      direction -> PangoDirection: direction
+      has-bidi-layouts -> gboolean: has-bidi-layouts
+      caps-lock-state -> gboolean: caps-lock-state
+      num-lock-state -> gboolean: num-lock-state
+      scroll-lock-state -> gboolean: scroll-lock-state
+      modifier-state -> GdkModifierType: modifier-state
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps_lock_state: bool
         direction: Pango.Direction
@@ -2695,6 +2886,13 @@ class Device(GObject.Object):
     def has_bidi_layouts(self) -> bool: ...
 
 class DevicePad(GObject.GInterface):
+    """
+    Interface GdkDevicePad
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_feature_group(self, feature: DevicePadFeature, feature_idx: int) -> int: ...
     def get_group_n_modes(self, group_idx: int) -> int: ...
     def get_n_features(self, feature: DevicePadFeature) -> int: ...
@@ -2703,6 +2901,25 @@ class DevicePad(GObject.GInterface):
 class DevicePadInterface(GObject.GPointer): ...
 
 class DeviceTool(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceTool(**properties)
+
+    Object GdkDeviceTool
+
+    Properties from GdkDeviceTool:
+      serial -> guint64: serial
+      tool-type -> GdkDeviceToolType: tool-type
+      axes -> GdkAxisFlags: axes
+      hardware-id -> guint64: hardware-id
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         axes: AxisFlags
         hardware_id: int
@@ -2722,6 +2939,31 @@ class DeviceTool(GObject.Object):
     def get_tool_type(self) -> DeviceToolType: ...
 
 class Display(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Display(**properties)
+
+    Object GdkDisplay
+
+    Signals from GdkDisplay:
+      opened ()
+      closed (gboolean)
+      seat-added (GdkSeat)
+      seat-removed (GdkSeat)
+      setting-changed (gchararray)
+
+    Properties from GdkDisplay:
+      composited -> gboolean: composited
+      rgba -> gboolean: rgba
+      input-shapes -> gboolean: input-shapes
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         composited: bool
         input_shapes: bool
@@ -2761,6 +3003,25 @@ class Display(GObject.Object):
     ) -> Tuple[bool, int, int, int, ModifierType]: ...
 
 class DisplayManager(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DisplayManager(**properties)
+
+    Object GdkDisplayManager
+
+    Signals from GdkDisplayManager:
+      display-opened (GdkDisplay)
+
+    Properties from GdkDisplayManager:
+      default-display -> GdkDisplay: default-display
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         default_display: Optional[Display]
     props: Props = ...
@@ -2773,6 +3034,33 @@ class DisplayManager(GObject.Object):
     def set_default_display(self, display: Display) -> None: ...
 
 class Drag(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Drag(**properties)
+
+    Object GdkDrag
+
+    Signals from GdkDrag:
+      cancel (GdkDragCancelReason)
+      drop-performed ()
+      dnd-finished ()
+
+    Properties from GdkDrag:
+      content -> GdkContentProvider: content
+      device -> GdkDevice: device
+      display -> GdkDisplay: display
+      formats -> GdkContentFormats: formats
+      selected-action -> GdkDragAction: selected-action
+      actions -> GdkDragAction: actions
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         actions: DragAction
         content: ContentProvider
@@ -2812,11 +3100,35 @@ class Drag(GObject.Object):
     def set_hotspot(self, hot_x: int, hot_y: int) -> None: ...
 
 class DragSurface(GObject.GInterface):
+    """
+    Interface GdkDragSurface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def present(self, width: int, height: int) -> bool: ...
 
 class DragSurfaceInterface(GObject.GPointer): ...
 
 class DrawContext(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DrawContext(**properties)
+
+    Object GdkDrawContext
+
+    Properties from GdkDrawContext:
+      display -> GdkDisplay: display
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
@@ -2830,6 +3142,27 @@ class DrawContext(GObject.Object):
     def is_in_frame(self) -> bool: ...
 
 class Drop(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Drop(**properties)
+
+    Object GdkDrop
+
+    Properties from GdkDrop:
+      actions -> GdkDragAction: actions
+      device -> GdkDevice: device
+      display -> GdkDisplay: display
+      drag -> GdkDrag: drag
+      formats -> GdkContentFormats: formats
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         actions: DragAction
         device: Device
@@ -2858,9 +3191,7 @@ class Drop(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -2871,15 +3202,21 @@ class Drop(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[
-            Callable[[Optional[GObject.Object], Gio.AsyncResult, None], None]
-        ] = None,
+        callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
     def status(self, actions: DragAction, preferred: DragAction) -> None: ...
 
 class Event:
+    """
+    :Constructors:
+
+    ::
+
+        Event(**properties)
+    """
+
     def get_axes(self) -> Tuple[bool, list[float]]: ...
     def get_axis(self, axis_use: AxisUse) -> Tuple[bool, float]: ...
     def get_device(self) -> Optional[Device]: ...
@@ -2901,6 +3238,15 @@ class Event:
 class EventSequence(GObject.GBoxed): ...
 
 class FileList(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_from_array(files:list) -> Gdk.FileList
+        new_from_list(files:list) -> Gdk.FileList
+    """
+
     def get_files(self) -> list[Gio.File]: ...
     @classmethod
     def new_from_array(cls, files: Sequence[Gio.File]) -> FileList: ...
@@ -2908,9 +3254,39 @@ class FileList(GObject.GBoxed):
     def new_from_list(cls, files: list[Gio.File]) -> FileList: ...
 
 class FocusEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        FocusEvent(**properties)
+    """
+
     def get_in(self) -> bool: ...
 
 class FrameClock(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        FrameClock(**properties)
+
+    Object GdkFrameClock
+
+    Signals from GdkFrameClock:
+      flush-events ()
+      before-paint ()
+      update ()
+      layout ()
+      paint ()
+      after-paint ()
+      resume-events ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def begin_updating(self) -> None: ...
     def end_updating(self) -> None: ...
     def get_current_timings(self) -> Optional[FrameTimings]: ...
@@ -2936,6 +3312,28 @@ class FrameTimings(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class GLContext(DrawContext):
+    """
+    :Constructors:
+
+    ::
+
+        GLContext(**properties)
+
+    Object GdkGLContext
+
+    Properties from GdkGLContext:
+      allowed-apis -> GdkGLAPI: allowed-apis
+      api -> GdkGLAPI: api
+      shared-context -> GdkGLContext: shared-context
+
+    Properties from GdkDrawContext:
+      display -> GdkDisplay: display
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         allowed_apis: GLAPI
         api: GLAPI
@@ -2975,6 +3373,32 @@ class GLContext(DrawContext):
     def set_use_es(self, use_es: int) -> None: ...
 
 class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
+    """
+    :Constructors:
+
+    ::
+
+        GLTexture(**properties)
+        new(context:Gdk.GLContext, id:int, width:int, height:int, destroy:GLib.DestroyNotify, data=None) -> Gdk.GLTexture
+
+    Object GdkGLTexture
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Properties from GdkTexture:
+      width -> gint: width
+      height -> gint: height
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         height: int
         width: int
@@ -2995,10 +3419,26 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
 class GLTextureClass(GObject.GPointer): ...
 
 class GrabBrokenEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        GrabBrokenEvent(**properties)
+    """
+
     def get_grab_surface(self) -> Surface: ...
     def get_implicit(self) -> bool: ...
 
 class KeyEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        KeyEvent(**properties)
+    """
+
     def get_consumed_modifiers(self) -> ModifierType: ...
     def get_keycode(self) -> int: ...
     def get_keyval(self) -> int: ...
@@ -3009,11 +3449,45 @@ class KeyEvent(Event):
     def matches(self, keyval: int, modifiers: ModifierType) -> KeyMatch: ...
 
 class KeymapKey(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        KeymapKey()
+    """
+
     keycode: int = ...
     group: int = ...
     level: int = ...
 
 class MemoryTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
+    """
+    :Constructors:
+
+    ::
+
+        MemoryTexture(**properties)
+        new(width:int, height:int, format:Gdk.MemoryFormat, bytes:GLib.Bytes, stride:int) -> Gdk.MemoryTexture
+
+    Object GdkMemoryTexture
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Properties from GdkTexture:
+      width -> gint: width
+      height -> gint: height
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         height: int
         width: int
@@ -3032,6 +3506,36 @@ class MemoryTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
 class MemoryTextureClass(GObject.GPointer): ...
 
 class Monitor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Monitor(**properties)
+
+    Object GdkMonitor
+
+    Signals from GdkMonitor:
+      invalidate ()
+
+    Properties from GdkMonitor:
+      description -> gchararray: description
+      display -> GdkDisplay: display
+      manufacturer -> gchararray: manufacturer
+      model -> gchararray: model
+      connector -> gchararray: connector
+      scale-factor -> gint: scale-factor
+      geometry -> GdkRectangle: geometry
+      width-mm -> gint: width-mm
+      height-mm -> gint: height-mm
+      refresh-rate -> gint: refresh-rate
+      subpixel-layout -> GdkSubpixelLayout: subpixel-layout
+      valid -> gboolean: valid
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         connector: Optional[str]
         description: Optional[str]
@@ -3064,11 +3568,26 @@ class MonitorClass(GObject.GPointer): ...
 class MotionEvent(Event): ...
 
 class PadEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        PadEvent(**properties)
+    """
+
     def get_axis_value(self) -> Tuple[int, float]: ...
     def get_button(self) -> int: ...
     def get_group_mode(self) -> Tuple[int, int]: ...
 
 class Paintable(GObject.GInterface):
+    """
+    Interface GdkPaintable
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def compute_concrete_size(
         self,
         specified_width: float,
@@ -3088,6 +3607,14 @@ class Paintable(GObject.GInterface):
     def snapshot(self, snapshot: Snapshot, width: float, height: float) -> None: ...
 
 class PaintableInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PaintableInterface()
+    """
+
     g_iface: GObject.TypeInterface = ...
     snapshot: Callable[[Paintable, Snapshot, float, float], None] = ...
     get_current_image: Callable[[Paintable], Paintable] = ...
@@ -3097,6 +3624,13 @@ class PaintableInterface(GObject.GPointer):
     get_intrinsic_aspect_ratio: Callable[[Paintable], float] = ...
 
 class Popup(GObject.GInterface):
+    """
+    Interface GdkPopup
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_autohide(self) -> bool: ...
     def get_parent(self) -> Optional[Surface]: ...
     def get_position_x(self) -> int: ...
@@ -3108,6 +3642,14 @@ class Popup(GObject.GInterface):
 class PopupInterface(GObject.GPointer): ...
 
 class PopupLayout(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(anchor_rect:Gdk.Rectangle, rect_anchor:Gdk.Gravity, surface_anchor:Gdk.Gravity) -> Gdk.PopupLayout
+    """
+
     def copy(self) -> PopupLayout: ...
     def equal(self, other: PopupLayout) -> bool: ...
     def get_anchor_hints(self) -> AnchorHints: ...
@@ -3134,6 +3676,14 @@ class PopupLayout(GObject.GBoxed):
 class ProximityEvent(Event): ...
 
 class RGBA(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        RGBA()
+    """
+
     red: float = ...
     green: float = ...
     blue: float = ...
@@ -3148,6 +3698,14 @@ class RGBA(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class Rectangle(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
     x: int = ...
     y: int = ...
     width: int = ...
@@ -3158,12 +3716,42 @@ class Rectangle(GObject.GBoxed):
     def union(self, src2: Rectangle) -> Rectangle: ...
 
 class ScrollEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        ScrollEvent(**properties)
+    """
+
     def get_deltas(self) -> Tuple[float, float]: ...
     def get_direction(self) -> ScrollDirection: ...
     def get_unit(self) -> ScrollUnit: ...
     def is_stop(self) -> bool: ...
 
 class Seat(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Seat(**properties)
+
+    Object GdkSeat
+
+    Signals from GdkSeat:
+      device-added (GdkDevice)
+      device-removed (GdkDevice)
+      tool-added (GdkDeviceTool)
+      tool-removed (GdkDeviceTool)
+
+    Properties from GdkSeat:
+      display -> GdkDisplay: display
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
     props: Props = ...
@@ -3180,6 +3768,37 @@ class Snapshot(GObject.Object): ...
 class SnapshotClass(GObject.GPointer): ...
 
 class Surface(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Surface(**properties)
+        new_popup(parent:Gdk.Surface, autohide:bool) -> Gdk.Surface
+        new_toplevel(display:Gdk.Display) -> Gdk.Surface
+
+    Object GdkSurface
+
+    Signals from GdkSurface:
+      layout (gint, gint)
+      render (CairoRegion) -> gboolean
+      event (gpointer) -> gboolean
+      enter-monitor (GdkMonitor)
+      leave-monitor (GdkMonitor)
+
+    Properties from GdkSurface:
+      cursor -> GdkCursor: cursor
+      display -> GdkDisplay: display
+      frame-clock -> GdkFrameClock: frame-clock
+      mapped -> gboolean: mapped
+      width -> gint: width
+      height -> gint: height
+      scale-factor -> gint: scale-factor
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         cursor: Optional[Cursor]
         display: Display
@@ -3191,7 +3810,7 @@ class Surface(GObject.Object):
     props: Props = ...
     def __init__(
         self,
-        cursor: Cursor = ...,
+        cursor: Optional[Cursor] = ...,
         display: Display = ...,
         frame_clock: FrameClock = ...,
     ): ...
@@ -3231,6 +3850,32 @@ class Surface(GObject.Object):
 class SurfaceClass(GObject.GPointer): ...
 
 class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
+    """
+    :Constructors:
+
+    ::
+
+        Texture(**properties)
+        new_for_pixbuf(pixbuf:GdkPixbuf.Pixbuf) -> Gdk.Texture
+        new_from_bytes(bytes:GLib.Bytes) -> Gdk.Texture
+        new_from_file(file:Gio.File) -> Gdk.Texture
+        new_from_filename(path:str) -> Gdk.Texture
+        new_from_resource(resource_path:str) -> Gdk.Texture
+
+    Object GdkTexture
+
+    Properties from GdkTexture:
+      width -> gint: width
+      height -> gint: height
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         height: int
         width: int
@@ -3258,6 +3903,14 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
 class TextureClass(GObject.GPointer): ...
 
 class TextureDownloader(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(texture:Gdk.Texture) -> Gdk.TextureDownloader
+    """
+
     def copy(self) -> TextureDownloader: ...
     def download_bytes(self) -> Tuple[GLib.Bytes, int]: ...
     def download_into(self, data: Sequence[int], stride: int) -> None: ...
@@ -3270,11 +3923,26 @@ class TextureDownloader(GObject.GBoxed):
     def set_texture(self, texture: Texture) -> None: ...
 
 class TimeCoord(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TimeCoord()
+    """
+
     time: int = ...
     flags: AxisFlags = ...
     axes: list[float] = ...
 
 class Toplevel(GObject.GInterface):
+    """
+    Interface GdkToplevel
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def begin_move(
         self, device: Device, button: int, x: float, y: float, timestamp: int
     ) -> None: ...
@@ -3308,6 +3976,14 @@ class Toplevel(GObject.GInterface):
 class ToplevelInterface(GObject.GPointer): ...
 
 class ToplevelLayout(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gdk.ToplevelLayout
+    """
+
     def copy(self) -> ToplevelLayout: ...
     def equal(self, other: ToplevelLayout) -> bool: ...
     def get_fullscreen(self) -> Tuple[bool, bool]: ...
@@ -3333,9 +4009,25 @@ class ToplevelSize(GObject.GPointer):
     def set_size(self, width: int, height: int) -> None: ...
 
 class TouchEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        TouchEvent(**properties)
+    """
+
     def get_emulating_pointer(self) -> bool: ...
 
 class TouchpadEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        TouchpadEvent(**properties)
+    """
+
     def get_deltas(self) -> Tuple[float, float]: ...
     def get_gesture_phase(self) -> TouchpadGesturePhase: ...
     def get_n_fingers(self) -> int: ...
@@ -3343,6 +4035,26 @@ class TouchpadEvent(Event):
     def get_pinch_scale(self) -> float: ...
 
 class VulkanContext(DrawContext, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        VulkanContext(**properties)
+
+    Object GdkVulkanContext
+
+    Signals from GdkVulkanContext:
+      images-updated ()
+
+    Properties from GdkDrawContext:
+      display -> GdkDisplay: display
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
