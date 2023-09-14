@@ -8,9 +8,9 @@ Usage:
 
 ```shellsession
 $ python tools/generate.py -h
-usage: generate.py [-h] module version
+usage: generate.py [-h] [-o OUTPUT] module version
 
-Generate module stubs Usage: generate.py Gdk 3.0 > Gdk.pyi
+Generate module stubs Usage: generate.py Gdk 3.0 > Gdk.py
 
 positional arguments:
   module      Gdk, Gtk, ...
@@ -18,13 +18,7 @@ positional arguments:
 
 options:
   -h, --help  show this help message and exit
-```
-
-To generate `Gdk` stubs based on PyGObject 3.0 and save to `Gdk.py`:
-
-```bash
-pip install PyGObject
-python tools/generate.py Gdk 3.0 > Gdk.py
+  -o OUTPUT   Output file
 ```
 
 ## Install development dependencies
