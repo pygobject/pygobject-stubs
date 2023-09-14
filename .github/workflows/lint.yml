@@ -11,7 +11,7 @@ jobs:
         with:
           options: "--check --verbose"
           src: "."
-          version: "~= 23.1"
+          version: "~= 23.9"
       - uses: isort/isort-action@master
       - uses: chartboost/ruff-action@v1
         with:
