@@ -1,3 +1,29 @@
+# 2.9.0 (14 Sep 2023)
+
+## Feature
+
+* Add AyatanaAppIndicator3
+* Add AppStream and OSTree ([#152](https://github.com/pygobject/pygobject-stubs/issues/152)) (#152)
+* Add Flatpak
+
+## Improvements
+
+* generator: Strip documentation strings
+
+## Typing
+
+* Improve type hints for
+    - AppIndicator3
+    - Cairo
+    - Gdk4
+    - GObject
+    - Gtk3
+    - PangoCairo
+
+## Bug Fixes
+
+* generator: Fix documentation if empty
+
 # 2.8.0 (24 May 2023)
 
 ## Improvements
