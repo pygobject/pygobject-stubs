@@ -23,8 +23,8 @@ options:
 To generate `Gdk` stubs based on PyGObject 3.0 and save to `Gdk.py`:
 
 ```bash
-pip install mypy PyGObject
-python generate.py Gdk 3.0 > Gdk.py
+pip install PyGObject
+python tools/generate.py Gdk 3.0 > Gdk.py
 ```
 
 ## Install development dependencies

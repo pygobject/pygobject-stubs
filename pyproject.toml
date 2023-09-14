@@ -26,7 +26,7 @@ dev = [
     "black",
     "codespell",
     "isort",
-    "mypy",
+    "ruff",
     "pre-commit",
     "PyGObject",
 ]
@@ -59,3 +59,29 @@ group_by_package = true
 known_typing = ["typing"]
 sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 skip_gitignore = true
+
+[tool.ruff]
+line-length = 88
+
+select = [
+    "PYI",   # flake8-pyi
+]
+
+ignore = [
+  "PYI001",  # Name of private `TypeVar` must start with `_`
+  "PYI011",  # Only simple default values allowed for typed arguments
+  "PYI019",  # Methods like `__or__` should return `typing.Self` instead of a custom `TypeVar`
+  "PYI021",  # Docstrings should not be included in stubs
+  "PYI026",  # Use `typing_extensions.TypeAlias`
+  "PYI052",  # Need type annotation
+  "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
+]
+
+exclude = [
+  ".eggs",
+  ".git",
+  ".ruff_cache",
+  ".venv",
+]
+
+target-version = "py37"

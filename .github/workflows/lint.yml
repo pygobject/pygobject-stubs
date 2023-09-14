@@ -13,3 +13,7 @@ jobs:
           src: "."
           version: "~= 23.1"
       - uses: isort/isort-action@master
+      - uses: chartboost/ruff-action@v1
+        with:
+          src: "."
+          version: 0.0.286
