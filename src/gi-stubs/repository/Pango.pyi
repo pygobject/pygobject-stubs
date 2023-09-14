@@ -1,6 +1,5 @@
 from typing import Any
 from typing import Callable
-from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
@@ -21,10 +20,11 @@ GLYPH_INVALID_INPUT: int = 4294967295
 GLYPH_UNKNOWN_FLAG: int = 268435456
 SCALE: int = 1024
 VERSION_MAJOR: int = 1
-VERSION_MICRO: int = 10
+VERSION_MICRO: int = 12
 VERSION_MINOR: int = 50
-VERSION_STRING: str = "1.50.10"
+VERSION_STRING: str = "1.50.12"
 _introspection_module = ...  # FIXME Constant
+_lock = ...  # FIXME Constant
 _namespace: str = "Pango"
 _overrides_module = ...  # FIXME Constant
 _version: str = "1.0"
@@ -124,7 +124,7 @@ def itemize_with_base_dir(
 ) -> list[Item]: ...
 def language_from_string(language: Optional[str] = None) -> Optional[Language]: ...
 def language_get_default() -> Language: ...
-def language_get_preferred() -> Optional[Language]: ...
+def language_get_preferred() -> Optional[list[Language]]: ...
 def layout_deserialize_error_quark() -> int: ...
 def log2vis_get_embedding_levels(
     text: str, length: int, pbase_dir: Direction
@@ -192,6 +192,14 @@ def version_check(
 def version_string() -> str: ...
 
 class Analysis(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Analysis()
+    """
+
     shape_engine: None = ...
     lang_engine: None = ...
     font: Font = ...
@@ -203,32 +211,80 @@ class Analysis(GObject.GPointer):
     extra_attrs: list[None] = ...
 
 class AttrClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrClass()
+    """
+
     type: AttrType = ...
     copy: Callable[[Attribute], Attribute] = ...
     destroy: Callable[[Attribute], None] = ...
     equal: Callable[[Attribute, Attribute], bool] = ...
 
 class AttrColor(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrColor()
+    """
+
     attr: Attribute = ...
     color: Color = ...
 
 class AttrFloat(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrFloat()
+    """
+
     attr: Attribute = ...
     value: float = ...
 
 class AttrFontDesc(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrFontDesc()
+    """
+
     attr: Attribute = ...
     desc: FontDescription = ...
     @staticmethod
     def new(desc: FontDescription) -> Attribute: ...
 
 class AttrFontFeatures(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrFontFeatures()
+    """
+
     attr: Attribute = ...
     features: str = ...
     @staticmethod
     def new(features: str) -> Attribute: ...
 
 class AttrInt(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrInt()
+    """
+
     attr: Attribute = ...
     value: int = ...
 
@@ -242,12 +298,28 @@ class AttrIterator(GObject.GBoxed):
     def range(self) -> Tuple[int, int]: ...
 
 class AttrLanguage(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrLanguage()
+    """
+
     attr: Attribute = ...
     value: Language = ...
     @staticmethod
     def new(language: Language) -> Attribute: ...
 
 class AttrList(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Pango.AttrList
+    """
+
     def change(self, attr: Attribute) -> None: ...
     def copy(self) -> Optional[AttrList]: ...
     def equal(self, other_list: AttrList) -> bool: ...
@@ -267,6 +339,14 @@ class AttrList(GObject.GBoxed):
     def update(self, pos: int, remove: int, add: int) -> None: ...
 
 class AttrShape(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrShape()
+    """
+
     attr: Attribute = ...
     ink_rect: Rectangle = ...
     logical_rect: Rectangle = ...
@@ -285,6 +365,14 @@ class AttrShape(GObject.GPointer):
     ) -> Attribute: ...
 
 class AttrSize(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrSize()
+    """
+
     attr: Attribute = ...
     size: int = ...
     absolute: int = ...
@@ -294,10 +382,26 @@ class AttrSize(GObject.GPointer):
     def new_absolute(size: int) -> Attribute: ...
 
 class AttrString(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AttrString()
+    """
+
     attr: Attribute = ...
     value: str = ...
 
 class Attribute(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Attribute()
+    """
+
     klass: AttrClass = ...
     start_index: int = ...
     end_index: int = ...
@@ -316,6 +420,14 @@ class Attribute(GObject.GBoxed):
     def init(self, klass: AttrClass) -> None: ...
 
 class Color(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Color()
+    """
+
     red: int = ...
     green: int = ...
     blue: int = ...
@@ -326,11 +438,25 @@ class Color(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class Context(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Context(**properties)
+        new() -> Pango.Context
+
+    Object PangoContext
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def changed(self) -> None: ...
     def get_base_dir(self) -> Direction: ...
     def get_base_gravity(self) -> Gravity: ...
-    def get_font_description(self) -> FontDescription: ...
-    def get_font_map(self) -> FontMap: ...
+    def get_font_description(self) -> Optional[FontDescription]: ...
+    def get_font_map(self) -> Optional[FontMap]: ...
     def get_gravity(self) -> Gravity: ...
     def get_gravity_hint(self) -> GravityHint: ...
     def get_language(self) -> Language: ...
@@ -351,16 +477,30 @@ class Context(GObject.Object):
     def new(cls) -> Context: ...
     def set_base_dir(self, direction: Direction) -> None: ...
     def set_base_gravity(self, gravity: Gravity) -> None: ...
-    def set_font_description(self, desc: FontDescription) -> None: ...
-    def set_font_map(self, font_map: FontMap) -> None: ...
+    def set_font_description(self, desc: Optional[FontDescription] = None) -> None: ...
+    def set_font_map(self, font_map: Optional[FontMap] = None) -> None: ...
     def set_gravity_hint(self, hint: GravityHint) -> None: ...
-    def set_language(self, language: Language) -> None: ...
+    def set_language(self, language: Optional[Language] = None) -> None: ...
     def set_matrix(self, matrix: Optional[Matrix] = None) -> None: ...
     def set_round_glyph_positions(self, round_positions: bool) -> None: ...
 
 class ContextClass(GObject.GPointer): ...
 
 class Coverage(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Coverage(**properties)
+        new() -> Pango.Coverage
+
+    Object PangoCoverage
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def copy(self) -> Coverage: ...
     @staticmethod
     def from_bytes(bytes: Sequence[int]) -> Optional[Coverage]: ...
@@ -374,6 +514,19 @@ class Coverage(GObject.Object):
     def unref(self) -> None: ...
 
 class Font(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Font(**properties)
+
+    Object PangoFont
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def describe(self) -> FontDescription: ...
     def describe_with_absolute_size(self) -> FontDescription: ...
@@ -402,6 +555,14 @@ class Font(GObject.Object):
     def serialize(self) -> GLib.Bytes: ...
 
 class FontClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FontClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     describe: Callable[[Font], FontDescription] = ...
     get_coverage: Callable[[Font, Language], Coverage] = ...
@@ -415,6 +576,14 @@ class FontClass(GObject.GPointer):
     create_hb_font: Callable[[Font], HarfBuzz.font_t] = ...
 
 class FontDescription(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Pango.FontDescription
+    """
+
     def better_match(
         self, old_match: Optional[FontDescription], new_match: FontDescription
     ) -> bool: ...
@@ -454,11 +623,24 @@ class FontDescription(GObject.GBoxed):
     def set_variations(self, variations: Optional[str] = None) -> None: ...
     def set_variations_static(self, variations: str) -> None: ...
     def set_weight(self, weight: Weight) -> None: ...
-    def to_filename(self) -> str: ...
+    def to_filename(self) -> Optional[str]: ...
     def to_string(self) -> str: ...
     def unset_fields(self, to_unset: FontMask) -> None: ...
 
 class FontFace(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        FontFace(**properties)
+
+    Object PangoFontFace
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def describe(self) -> FontDescription: ...
     def do_describe(self) -> FontDescription: ...
@@ -472,6 +654,14 @@ class FontFace(GObject.Object):
     def list_sizes(self) -> list[int]: ...
 
 class FontFaceClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FontFaceClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     get_face_name: Callable[[FontFace], str] = ...
     describe: Callable[[FontFace], FontDescription] = ...
@@ -482,6 +672,28 @@ class FontFaceClass(GObject.GPointer):
     _pango_reserved4: None = ...
 
 class FontFamily(GObject.Object, Gio.ListModel):
+    """
+    :Constructors:
+
+    ::
+
+        FontFamily(**properties)
+
+    Object PangoFontFamily
+
+    Properties from PangoFontFamily:
+      item-type -> GType:
+
+      n-items -> guint:
+
+
+    Signals from GListModel:
+      items-changed (guint, guint, guint)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         item_type: Type
         n_items: int
@@ -499,6 +711,14 @@ class FontFamily(GObject.Object, Gio.ListModel):
     def list_faces(self) -> list[FontFace]: ...
 
 class FontFamilyClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FontFamilyClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     list_faces: Callable[[FontFamily], list[FontFace]] = ...
     get_name: Callable[[FontFamily], str] = ...
@@ -508,6 +728,28 @@ class FontFamilyClass(GObject.GPointer):
     _pango_reserved2: None = ...
 
 class FontMap(GObject.Object, Gio.ListModel):
+    """
+    :Constructors:
+
+    ::
+
+        FontMap(**properties)
+
+    Object PangoFontMap
+
+    Properties from PangoFontMap:
+      item-type -> GType:
+
+      n-items -> guint:
+
+
+    Signals from GListModel:
+      items-changed (guint, guint, guint)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         item_type: Type
         n_items: int
@@ -534,6 +776,14 @@ class FontMap(GObject.Object, Gio.ListModel):
     ) -> Optional[Fontset]: ...
 
 class FontMapClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FontMapClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     load_font: Callable[[FontMap, Context, FontDescription], Optional[Font]] = ...
     list_families: Callable[[FontMap], list[FontFamily]] = ...
@@ -547,6 +797,14 @@ class FontMapClass(GObject.GPointer):
     get_face: None = ...
 
 class FontMetrics(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        FontMetrics()
+    """
+
     ref_count: int = ...
     ascent: int = ...
     descent: int = ...
@@ -570,6 +828,19 @@ class FontMetrics(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Fontset(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Fontset(**properties)
+
+    Object PangoFontset
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def do_foreach(self, func: Callable[..., bool], *data: Any) -> None: ...
     def do_get_font(self, wc: int) -> Font: ...
@@ -580,6 +851,14 @@ class Fontset(GObject.Object):
     def get_metrics(self) -> FontMetrics: ...
 
 class FontsetClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FontsetClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     get_font: Callable[[Fontset, int], Font] = ...
     get_metrics: Callable[[Fontset], FontMetrics] = ...
@@ -591,6 +870,20 @@ class FontsetClass(GObject.GPointer):
     _pango_reserved4: None = ...
 
 class FontsetSimple(Fontset):
+    """
+    :Constructors:
+
+    ::
+
+        FontsetSimple(**properties)
+        new(language:Pango.Language) -> Pango.FontsetSimple
+
+    Object PangoFontsetSimple
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def append(self, font: Font) -> None: ...
     @classmethod
     def new(cls, language: Language) -> FontsetSimple: ...
@@ -599,16 +892,40 @@ class FontsetSimple(Fontset):
 class FontsetSimpleClass(GObject.GPointer): ...
 
 class GlyphGeometry(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphGeometry()
+    """
+
     width: int = ...
     x_offset: int = ...
     y_offset: int = ...
 
 class GlyphInfo(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphInfo()
+    """
+
     glyph: int = ...
     geometry: GlyphGeometry = ...
     attr: GlyphVisAttr = ...
 
 class GlyphItem(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphItem()
+    """
+
     item: Item = ...
     glyphs: GlyphString = ...
     y_offset: int = ...
@@ -621,9 +938,17 @@ class GlyphItem(GObject.GBoxed):
     def letter_space(
         self, text: str, log_attrs: Sequence[LogAttr], letter_spacing: int
     ) -> None: ...
-    def split(self, text: str, split_index: int) -> GlyphItem: ...
+    def split(self, text: str, split_index: int) -> Optional[GlyphItem]: ...
 
 class GlyphItemIter(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphItemIter()
+    """
+
     glyph_item: GlyphItem = ...
     text: str = ...
     start_glyph: int = ...
@@ -640,6 +965,15 @@ class GlyphItemIter(GObject.GBoxed):
     def prev_cluster(self) -> bool: ...
 
 class GlyphString(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphString()
+        new() -> Pango.GlyphString
+    """
+
     num_glyphs: int = ...
     glyphs: list[GlyphInfo] = ...
     log_clusters: int = ...
@@ -678,10 +1012,27 @@ class GlyphString(GObject.GBoxed):
     ) -> Tuple[int, int]: ...
 
 class GlyphVisAttr(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        GlyphVisAttr()
+    """
+
     is_cluster_start: int = ...
     is_color: int = ...
 
 class Item(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Item()
+        new() -> Pango.Item
+    """
+
     offset: int = ...
     length: int = ...
     num_chars: int = ...
@@ -699,7 +1050,7 @@ class Language(GObject.GBoxed):
     @staticmethod
     def get_default() -> Language: ...
     @staticmethod
-    def get_preferred() -> Optional[Language]: ...
+    def get_preferred() -> Optional[list[Language]]: ...
     def get_sample_string(self) -> str: ...
     def get_scripts(self) -> Optional[list[Script]]: ...
     def includes_script(self, script: Script) -> bool: ...
@@ -707,6 +1058,20 @@ class Language(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class Layout(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Layout(**properties)
+        new(context:Pango.Context) -> Pango.Layout
+
+    Object PangoLayout
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def context_changed(self) -> None: ...
     def copy(self) -> Layout: ...
     @staticmethod
@@ -777,7 +1142,7 @@ class Layout(GObject.Object):
     def set_spacing(self, spacing: int) -> None: ...
     def set_tabs(self, tabs: Optional[TabArray] = None) -> None: ...
     # override
-    def set_text(self, text: str, length=-1) -> None: ...  # FIXME Function
+    def set_text(self, text: str, length=-1) -> None: ...
     def set_width(self, width: int) -> None: ...
     def set_wrap(self, wrap: WrapMode) -> None: ...
     def write_to_file(self, flags: LayoutSerializeFlags, filename: str) -> bool: ...
@@ -793,11 +1158,11 @@ class LayoutIter(GObject.GBoxed):
     def get_char_extents(self) -> Rectangle: ...
     def get_cluster_extents(self) -> Tuple[Rectangle, Rectangle]: ...
     def get_index(self) -> int: ...
-    def get_layout(self) -> Layout: ...
+    def get_layout(self) -> Optional[Layout]: ...
     def get_layout_extents(self) -> Tuple[Rectangle, Rectangle]: ...
-    def get_line(self) -> LayoutLine: ...
+    def get_line(self) -> Optional[LayoutLine]: ...
     def get_line_extents(self) -> Tuple[Rectangle, Rectangle]: ...
-    def get_line_readonly(self) -> LayoutLine: ...
+    def get_line_readonly(self) -> Optional[LayoutLine]: ...
     def get_line_yrange(self) -> Tuple[int, int]: ...
     def get_run(self) -> Optional[GlyphItem]: ...
     def get_run_baseline(self) -> int: ...
@@ -809,6 +1174,14 @@ class LayoutIter(GObject.GBoxed):
     def next_run(self) -> bool: ...
 
 class LayoutLine(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        LayoutLine()
+    """
+
     layout: Layout = ...
     start_index: int = ...
     length: int = ...
@@ -824,11 +1197,19 @@ class LayoutLine(GObject.GBoxed):
     def get_x_ranges(self, start_index: int, end_index: int) -> list[int]: ...
     def index_to_x(self, index_: int, trailing: bool) -> int: ...
     def is_paragraph_start(self) -> bool: ...
-    def ref(self) -> LayoutLine: ...
+    def ref(self) -> Optional[LayoutLine]: ...
     def unref(self) -> None: ...
     def x_to_index(self, x_pos: int) -> Tuple[bool, int, int]: ...
 
 class LogAttr(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LogAttr()
+    """
+
     is_line_break: int = ...
     is_mandatory_break: int = ...
     is_char_break: int = ...
@@ -847,6 +1228,14 @@ class LogAttr(GObject.GPointer):
     reserved: int = ...
 
 class Matrix(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Matrix()
+    """
+
     xx: float = ...
     xy: float = ...
     yx: float = ...
@@ -868,12 +1257,33 @@ class Matrix(GObject.GBoxed):
     def translate(self, tx: float, ty: float) -> None: ...
 
 class Rectangle(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
     x: int = ...
     y: int = ...
     width: int = ...
     height: int = ...
 
 class Renderer(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Renderer(**properties)
+
+    Object PangoRenderer
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     underline: Underline = ...
     strikethrough: bool = ...
@@ -942,6 +1352,14 @@ class Renderer(GObject.Object):
     def set_matrix(self, matrix: Optional[Matrix] = None) -> None: ...
 
 class RendererClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RendererClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     draw_glyphs: Callable[[Renderer, Font, GlyphString, int, int], None] = ...
     draw_rectangle: Callable[[Renderer, RenderPart, int, int, int, int], None] = ...
@@ -965,6 +1383,14 @@ class RendererClass(GObject.GPointer):
 class RendererPrivate(GObject.GPointer): ...
 
 class ScriptIter(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(text:str, length:int) -> Pango.ScriptIter
+    """
+
     def free(self) -> None: ...
     def get_range(self) -> Tuple[str, str, Script]: ...
     @classmethod
@@ -972,6 +1398,14 @@ class ScriptIter(GObject.GBoxed):
     def next(self) -> bool: ...
 
 class TabArray(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(initial_size:int, positions_in_pixels:bool) -> Pango.TabArray
+    """
+
     def copy(self) -> TabArray: ...
     def free(self) -> None: ...
     @staticmethod
