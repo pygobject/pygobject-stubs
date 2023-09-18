@@ -131,7 +131,7 @@ def css_parser_warning_quark() -> int: ...
 def dialog_error_quark() -> int: ...
 def disable_setlocale() -> None: ...
 def distribute_natural_allocation(
-    extra_space: int, n_requested_sizes: int, sizes: Sequence[RequestedSize]
+    extra_space: int, sizes: Sequence[RequestedSize]
 ) -> int: ...
 def editable_delegate_get_property(
     object: GObject.Object, prop_id: int, value: Any, pspec: GObject.ParamSpec
@@ -702,19 +702,13 @@ class Accessible(GObject.GInterface):
         self, new_sibling: Optional[Accessible] = None
     ) -> None: ...
     def update_property(
-        self,
-        n_properties: int,
-        properties: Sequence[AccessibleProperty],
-        values: Sequence[Any],
+        self, properties: Sequence[AccessibleProperty], values: Sequence[Any]
     ) -> None: ...
     def update_relation(
-        self,
-        n_relations: int,
-        relations: Sequence[AccessibleRelation],
-        values: Sequence[Any],
+        self, relations: Sequence[AccessibleRelation], values: Sequence[Any]
     ) -> None: ...
     def update_state(
-        self, n_states: int, states: Sequence[AccessibleState], values: Sequence[Any]
+        self, states: Sequence[AccessibleState], values: Sequence[Any]
     ) -> None: ...
 
 class AccessibleInterface(GObject.GPointer):
@@ -3277,19 +3271,14 @@ class Builder(GObject.Object):
         def get_data(self, *args, **kargs): ...  # FIXME Function
         def get_property(self, *args, **kwargs): ...  # FIXME Function
         def get_qdata(self, *args, **kargs): ...  # FIXME Function
-        def getv(
-            self, n_properties: int, names: Sequence[str], values: Sequence[Any]
-        ) -> None: ...
+        def getv(self, names: Sequence[str], values: Sequence[Any]) -> None: ...
         def interface_find_property(self, *args, **kargs): ...  # FIXME Function
         def interface_install_property(self, *args, **kargs): ...  # FIXME Function
         def interface_list_properties(self, *args, **kargs): ...  # FIXME Function
         def is_floating(self) -> bool: ...
         @classmethod
         def newv(
-            cls,
-            object_type: Type,
-            n_parameters: int,
-            parameters: Sequence[GObject.Parameter],
+            cls, object_type: Type, parameters: Sequence[GObject.Parameter]
         ) -> Object: ...
         def notify(self, property_name: str) -> None: ...
         def notify_by_pspec(self, *args, **kargs): ...  # FIXME Function
@@ -3618,11 +3607,9 @@ class CClosureExpression(Expression):
         value_type: Type,
         marshal: Optional[
             Callable[
-                [Callable[..., Any], Optional[Any], int, Sequence[Any], None, None],
-                None,
+                [Callable[..., Any], Optional[Any], Sequence[Any], None, None], None
             ]
         ],
-        n_params: int,
         params: Sequence[Expression],
         callback_func: Callable[..., None],
         *user_data: Any,
@@ -6463,7 +6450,6 @@ class ClosureExpression(Expression):
         cls,
         value_type: Type,
         closure: Callable[..., Any],
-        n_params: int,
         params: Optional[Sequence[Expression]] = None,
     ) -> ClosureExpression: ...
 
@@ -6647,7 +6633,6 @@ class ColorChooser(GObject.GInterface):
         self,
         orientation: Orientation,
         colors_per_line: int,
-        n_colors: int,
         colors: Optional[Sequence[Gdk.RGBA]] = None,
     ) -> None: ...
     def get_rgba(self) -> Gdk.RGBA: ...
@@ -6919,7 +6904,7 @@ class ColorChooserInterface(GObject.GPointer):
     get_rgba: Callable[[ColorChooser], Gdk.RGBA] = ...
     set_rgba: Callable[[ColorChooser, Gdk.RGBA], None] = ...
     add_palette: Callable[
-        [ColorChooser, Orientation, int, int, Optional[Sequence[Gdk.RGBA]]], None
+        [ColorChooser, Orientation, int, Optional[Sequence[Gdk.RGBA]]], None
     ] = ...
     color_activated: Callable[[ColorChooser, Gdk.RGBA], None] = ...
     padding: list[None] = ...
@@ -17924,12 +17909,12 @@ class ListStore(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
     @classmethod
-    def new(cls, n_columns: int, types: Sequence[Type]) -> ListStore: ...
+    def new(cls, types: Sequence[Type]) -> ListStore: ...
     def prepend(self, row=None): ...  # FIXME Function
     def remove(self, iter: TreeIter) -> bool: ...
     def reorder(self, new_order: Sequence[int]) -> None: ...
     def set(self, treeiter, *args): ...  # FIXME Function
-    def set_column_types(self, n_columns: int, types: Sequence[Type]) -> None: ...
+    def set_column_types(self, types: Sequence[Type]) -> None: ...
     def set_value(self, treeiter, column, value): ...  # FIXME Function
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
@@ -30227,11 +30212,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     def get_model(self) -> TreeModel: ...
     def refilter(self) -> None: ...
     def set_modify_func(
-        self,
-        n_columns: int,
-        types: Sequence[Type],
-        func: Callable[..., Any],
-        *data: Any,
+        self, types: Sequence[Type], func: Callable[..., Any], *data: Any
     ) -> None: ...
     def set_value(self, iter, column, value): ...  # FIXME Function
     def set_visible_column(self, column: int) -> None: ...
@@ -30561,11 +30542,11 @@ class TreeStore(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
     @classmethod
-    def new(cls, n_columns: int, types: Sequence[Type]) -> TreeStore: ...
+    def new(cls, types: Sequence[Type]) -> TreeStore: ...
     def prepend(self, parent, row=None): ...  # FIXME Function
     def remove(self, iter: TreeIter) -> bool: ...
     def set(self, treeiter, *args): ...  # FIXME Function
-    def set_column_types(self, n_columns: int, types: Sequence[Type]) -> None: ...
+    def set_column_types(self, types: Sequence[Type]) -> None: ...
     def set_value(self, treeiter, column, value): ...  # FIXME Function
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
