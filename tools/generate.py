@@ -98,10 +98,10 @@ def _callable_get_arguments(
     function_args = type.get_arguments()
     accept_optional_args = False
     optional_args_name = ""
-    names: list[str] = []
-    args: list[GI.ArgInfo] = []
+    dict_names: dict[int, str] = {}
+    dict_args: dict[int, GI.ArgInfo] = {}
     str_args: list[str] = []
-    return_args: list[str] = []
+    dict_return_args: dict[int, str] = {}
     skip: list[int] = []
 
     # Filter out array length arguments for return type
@@ -121,8 +121,13 @@ def _callable_get_arguments(
 
         # Filter out array length args
         arg_type = arg.get_type()
-        if arg_type.get_array_length() > 0:
-            skip.append(arg_type.get_array_length())
+        len_arg: int = arg_type.get_array_length()
+        if len_arg >= 0:
+            skip.append(len_arg)
+            if len_arg < i:
+                dict_names.pop(len_arg, None)
+                dict_args.pop(len_arg, None)
+                dict_return_args.pop(len_arg, None)
 
         # Need to check because user_data can be the first arg
         if arg.get_closure() != i and arg.get_destroy() != i:
@@ -132,12 +137,13 @@ def _callable_get_arguments(
                     arg.get_type(), current_namespace, needed_namespaces, True
                 )
 
-                return_args.append(t)
+                dict_return_args[i] = t
             elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
-                names.append(arg.get_name())
-                args.append(arg)
+                dict_names[i] = arg.get_name()
+                dict_args[i] = arg
 
     # Traverse args in reverse to check for optional args
+    args = list(dict_args.values())
     for a in reversed(args):
         t = _type_to_python(
             a.get_type(),
@@ -157,6 +163,7 @@ def _callable_get_arguments(
             str_args.append(t)
 
     str_args = list(reversed(str_args))
+    names = list(dict_names.values())
 
     if accept_optional_args:
         names.append(f"*{optional_args_name}")
@@ -168,6 +175,7 @@ def _callable_get_arguments(
     if type.may_return_null() and return_type != "None":
         return_type = f"Optional[{return_type}]"
 
+    return_args = list(dict_return_args.values())
     if return_type != "None" or len(return_args) == 0:
         return_args.insert(0, return_type)
 
