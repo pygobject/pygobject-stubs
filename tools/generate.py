@@ -268,7 +268,9 @@ def _type_to_python(
 
     if tag == tags.ARRAY:
         array_type = type.get_param_type(0)
-        t = _type_to_python(array_type, current_namespace, needed_namespaces)
+        t = _type_to_python(
+            array_type, current_namespace, needed_namespaces, cant_be_none=True
+        )
         if out_arg:
             # As output argument array of type uint8 are returned as bytes
             if array_type.get_tag() == GI.TypeTag.UINT8:
@@ -280,7 +282,9 @@ def _type_to_python(
 
     if tag in (tags.GLIST, tags.GSLIST):
         array_type = type.get_param_type(0)
-        t = _type_to_python(array_type, current_namespace, needed_namespaces)
+        t = _type_to_python(
+            array_type, current_namespace, needed_namespaces, cant_be_none=True
+        )
         return f"list[{t}]"
 
     if tag == tags.BOOLEAN:
@@ -299,8 +303,12 @@ def _type_to_python(
     if tag == tags.GHASH:
         key_type = type.get_param_type(0)
         value_type = type.get_param_type(1)
-        kt = _type_to_python(key_type, current_namespace, needed_namespaces)
-        vt = _type_to_python(value_type, current_namespace, needed_namespaces)
+        kt = _type_to_python(
+            key_type, current_namespace, needed_namespaces, cant_be_none=True
+        )
+        vt = _type_to_python(
+            value_type, current_namespace, needed_namespaces, cant_be_none=True
+        )
         return f"dict[{kt}, {vt}]"
 
     if tag in (tags.FILENAME, tags.UTF8, tags.UNICHAR):
@@ -362,6 +370,8 @@ def _type_to_python(
                 return f"{namespace}.{name}"
 
     if tag == tags.VOID:
+        if cant_be_none:
+            return "Any"
         return "None"
 
     raise ValueError("TODO")
@@ -850,7 +860,9 @@ def _gi_build_stub(
                     continue
                 names.append(n)
                 type = _build_type(GIRepository.property_info_get_type(p))
-                t = _type_to_python(type, current_namespace, needed_namespaces)
+                t = _type_to_python(
+                    type, current_namespace, needed_namespaces, cant_be_none=True
+                )
                 setter = GIRepository.property_info_get_setter(p)
                 if setter:
                     arg_info = GIRepository.callable_info_get_arg(setter, 0)
