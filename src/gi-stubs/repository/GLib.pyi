@@ -1372,18 +1372,44 @@ class Error(Exception):
     code: GObject.GEnum
     domain: int
     message: str
-    def copy(self, *args, **kwargs): ...  # FIXME Method
-    # override
-    def matches(self, domain: int, code: GObject.GEnum) -> bool: ...
-    def new_literal(self, *args, **kwargs): ...  # FIXME Method
+    def __init__(
+        self,
+        message: str = ...,
+        domain: Union[int, str] = ...,
+        code: Union[GObject.GEnum, int] = ...,
+    ) -> None: ...
+    def copy(self) -> Error: ...
+    def matches(
+        self, domain: Union[int, str], code: Union[GObject.GEnum, int]
+    ) -> bool: ...
+    @classmethod
+    def new_literal(
+        cls, domain: int, message: str, code: Union[GObject.GEnum, int]
+    ) -> Error: ...
 
 class FloatIEEE754(GObject.GPointer):
     v_float = ...  # FIXME Constant
 
+# override
 class GError:
-    def copy(self, *args, **kwargs): ...  # FIXME Method
-    def matches(self, *args, **kwargs): ...  # FIXME Method
-    def new_literal(self, *args, **kwargs): ...  # FIXME Method
+    args: Any
+    code: GObject.GEnum
+    domain: int
+    message: str
+    def __init__(
+        self,
+        message: str = ...,
+        domain: Union[int, str] = ...,
+        code: Union[GObject.GEnum, int] = ...,
+    ) -> None: ...
+    def copy(self) -> GError: ...
+    def matches(
+        self, domain: Union[int, str], code: Union[GObject.GEnum, int]
+    ) -> bool: ...
+    @classmethod
+    def new_literal(
+        cls, domain: int, message: str, code: Union[GObject.GEnum, int]
+    ) -> GError: ...
 
 class HashTable(GObject.GBoxed):
     @staticmethod
