@@ -25,6 +25,8 @@ from types import ModuleType
 import gi
 import gi._gi as GI
 import parse
+
+gi.require_version("GIRepository", "2.0")
 from gi.repository import GIRepository
 from gi.repository import GObject
 
