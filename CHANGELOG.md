@@ -1,3 +1,29 @@
+# 2.10.0 (16 Nov 2023)
+
+## Feature
+
+* Add Handy
+* Add GstWebRTC
+* Add GstSdp
+
+## Improvements
+
+* Generator: Require GIRepository 2.0
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Gio
+    - GLib
+    - GstPbutils
+    - Gtk4
+
+## Bug Fixes
+
+* Allow GObject.emit to return value
+* generator: Fix array length param for functions
+
 # 2.9.0 (14 Sep 2023)
 
 ## Feature
