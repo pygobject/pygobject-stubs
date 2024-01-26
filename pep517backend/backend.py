@@ -44,6 +44,7 @@ DEFAULT_STUB_CONFIG = [
     LibVersion("Gtk", "4"),
     LibVersion("GtkSource", "5"),
     LibVersion("Soup", "3"),
+    LibVersion("WebKit", "6"),
 ]
 
 
