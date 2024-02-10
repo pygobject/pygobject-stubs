@@ -13,7 +13,10 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
+from typing_extensions import Concatenate
+from typing_extensions import ParamSpec
 
+_VarArgs = ParamSpec("_VarArgs")
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 ACTION_ALL: int = 7
@@ -2336,16 +2339,24 @@ def content_deserialize_async(
     type: Type,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[Callable[..., None]] = None,
+    callback: Optional[
+        Callable[Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None]
+    ] = None,
     *user_data: Any,
 ) -> None: ...
 def content_deserialize_finish(result: Gio.AsyncResult) -> Tuple[bool, Any]: ...
 def content_formats_parse(string: str) -> Optional[ContentFormats]: ...
 def content_register_deserializer(
-    mime_type: str, type: Type, deserialize: Callable[..., None], *data: Any
+    mime_type: str,
+    type: Type,
+    deserialize: Callable[[ContentDeserializer], None],
+    *data: Any,
 ) -> None: ...
 def content_register_serializer(
-    type: Type, mime_type: str, serialize: Callable[..., None], *data: Any
+    type: Type,
+    mime_type: str,
+    serialize: Callable[[ContentSerializer], None],
+    *data: Any,
 ) -> None: ...
 def content_serialize_async(
     stream: Gio.OutputStream,
@@ -2353,7 +2364,9 @@ def content_serialize_async(
     value: Any,
     io_priority: int,
     cancellable: Optional[Gio.Cancellable] = None,
-    callback: Optional[Callable[..., None]] = None,
+    callback: Optional[
+        Callable[Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None]
+    ] = None,
     *user_data: Any,
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
@@ -2489,7 +2502,11 @@ class Clipboard(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -2498,14 +2515,22 @@ class Clipboard(GObject.Object):
     def read_text_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_text_finish(self, result: Gio.AsyncResult) -> Optional[str]: ...
     def read_texture_async(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_texture_finish(self, result: Gio.AsyncResult) -> Optional[Texture]: ...
@@ -2514,7 +2539,11 @@ class Clipboard(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
@@ -2524,7 +2553,11 @@ class Clipboard(GObject.Object):
         self,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2553,7 +2586,9 @@ class ContentDeserializer(GObject.Object, Gio.AsyncResult):
     def get_value(self) -> Any: ...
     def return_error(self, error: GLib.Error) -> None: ...
     def return_success(self) -> None: ...
-    def set_task_data(self, data: None, notify: Callable[[None], None]) -> None: ...
+    def set_task_data(
+        self, data: Optional[Any], notify: Callable[[Optional[Any]], None]
+    ) -> None: ...
 
 class ContentFormats(GObject.GBoxed):
     """
@@ -2648,7 +2683,11 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def do_write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2669,7 +2708,11 @@ class ContentProvider(GObject.Object):
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2689,10 +2732,26 @@ class ContentProviderClass(GObject.GPointer):
     detach_clipboard: Callable[[ContentProvider, Clipboard], None] = ...
     ref_formats: Callable[[ContentProvider], ContentFormats] = ...
     ref_storable_formats: Callable[[ContentProvider], ContentFormats] = ...
-    write_mime_type_async: Callable[..., None] = ...
+    write_mime_type_async: Callable[
+        Concatenate[
+            ContentProvider,
+            str,
+            Gio.OutputStream,
+            int,
+            Optional[Gio.Cancellable],
+            Optional[
+                Callable[
+                    Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs],
+                    None,
+                ]
+            ],
+            _VarArgs,
+        ],
+        None,
+    ] = ...
     write_mime_type_finish: Callable[[ContentProvider, Gio.AsyncResult], bool] = ...
     get_value: Callable[[ContentProvider], Tuple[bool, Any]] = ...
-    padding: list[None] = ...
+    padding: list[Any] = ...
 
 class ContentSerializer(GObject.Object, Gio.AsyncResult):
     """
@@ -2718,7 +2777,9 @@ class ContentSerializer(GObject.Object, Gio.AsyncResult):
     def get_value(self) -> Any: ...
     def return_error(self, error: GLib.Error) -> None: ...
     def return_success(self) -> None: ...
-    def set_task_data(self, data: None, notify: Callable[[None], None]) -> None: ...
+    def set_task_data(
+        self, data: Optional[Any], notify: Callable[[Optional[Any]], None]
+    ) -> None: ...
 
 class CrossingEvent(Event):
     """
@@ -3191,7 +3252,11 @@ class Drop(GObject.Object):
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_finish(
@@ -3202,7 +3267,11 @@ class Drop(GObject.Object):
         type: Type,
         io_priority: int,
         cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        callback: Optional[
+            Callable[
+                Concatenate[Optional[GObject.Object], Gio.AsyncResult, _VarArgs], None
+            ]
+        ] = None,
         *user_data: Any,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
@@ -3411,8 +3480,8 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
         id: int,
         width: int,
         height: int,
-        destroy: Callable[[None], None],
-        data: None,
+        destroy: Callable[[Optional[Any]], None],
+        data: Optional[Any] = None,
     ) -> GLTexture: ...
     def release(self) -> None: ...
 
