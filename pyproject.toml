@@ -62,11 +62,19 @@ skip_gitignore = true
 
 [tool.ruff]
 line-length = 88
+exclude = [
+  ".eggs",
+  ".git",
+  ".ruff_cache",
+  ".venv",
+]
 
+target-version = "py37"
+
+[tool.ruff.lint]
 select = [
     "PYI",   # flake8-pyi
 ]
-
 ignore = [
   "PYI001",  # Name of private `TypeVar` must start with `_`
   "PYI011",  # Only simple default values allowed for typed arguments
@@ -76,12 +84,3 @@ ignore = [
   "PYI052",  # Need type annotation
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
 ]
-
-exclude = [
-  ".eggs",
-  ".git",
-  ".ruff_cache",
-  ".venv",
-]
-
-target-version = "py37"
