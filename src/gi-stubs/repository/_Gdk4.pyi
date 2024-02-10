@@ -2406,6 +2406,7 @@ class AppLaunchContext(Gio.AppLaunchContext):
 
     class Props:
         display: Display
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_display(self) -> Display: ...
@@ -2446,6 +2447,7 @@ class CairoContext(DrawContext):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
+
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def cairo_create(self) -> Optional[cairo.Context]: ...
@@ -2478,6 +2480,7 @@ class Clipboard(GObject.Object):
         display: Display
         formats: ContentFormats
         local: bool
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_content(self) -> Optional[ContentProvider]: ...
@@ -2633,6 +2636,7 @@ class ContentProvider(GObject.Object):
     class Props:
         formats: ContentFormats
         storable_formats: ContentFormats
+
     props: Props = ...
     parent: GObject.Object = ...
     def content_changed(self) -> None: ...
@@ -2762,6 +2766,7 @@ class Cursor(GObject.Object):
         hotspot_y: int
         name: Optional[str]
         texture: Optional[Texture]
+
     props: Props = ...
     def __init__(
         self,
@@ -2855,6 +2860,7 @@ class Device(GObject.Object):
         source: InputSource
         tool: DeviceTool
         vendor_id: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -2925,6 +2931,7 @@ class DeviceTool(GObject.Object):
         hardware_id: int
         serial: int
         tool_type: DeviceToolType
+
     props: Props = ...
     def __init__(
         self,
@@ -2968,6 +2975,7 @@ class Display(GObject.Object):
         composited: bool
         input_shapes: bool
         rgba: bool
+
     props: Props = ...
     def beep(self) -> None: ...
     def close(self) -> None: ...
@@ -3024,6 +3032,7 @@ class DisplayManager(GObject.Object):
 
     class Props:
         default_display: Optional[Display]
+
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
@@ -3069,6 +3078,7 @@ class Drag(GObject.Object):
         formats: ContentFormats
         selected_action: DragAction
         surface: Surface
+
     props: Props = ...
     def __init__(
         self,
@@ -3132,6 +3142,7 @@ class DrawContext(GObject.Object):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
+
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def begin_frame(self, region: cairo.Region) -> None: ...
@@ -3170,6 +3181,7 @@ class Drop(GObject.Object):
         drag: Optional[Drag]
         formats: ContentFormats
         surface: Surface
+
     props: Props = ...
     def __init__(
         self,
@@ -3340,6 +3352,7 @@ class GLContext(DrawContext):
         shared_context: Optional[GLContext]
         display: Optional[Display]
         surface: Optional[Surface]
+
     props: Props = ...
     def __init__(
         self,
@@ -3402,6 +3415,7 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
+
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     @classmethod
@@ -3491,6 +3505,7 @@ class MemoryTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
+
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     @classmethod
@@ -3549,6 +3564,7 @@ class Monitor(GObject.Object):
         subpixel_layout: SubpixelLayout
         valid: bool
         width_mm: int
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_connector(self) -> Optional[str]: ...
@@ -3754,6 +3770,7 @@ class Seat(GObject.Object):
 
     class Props:
         display: Display
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, display: Display = ...): ...
@@ -3807,6 +3824,7 @@ class Surface(GObject.Object):
         mapped: bool
         scale_factor: int
         width: int
+
     props: Props = ...
     def __init__(
         self,
@@ -3879,6 +3897,7 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
+
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     def download(self, data: Sequence[int], stride: int) -> None: ...
@@ -4058,6 +4077,7 @@ class VulkanContext(DrawContext, Gio.Initable):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
+
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
 

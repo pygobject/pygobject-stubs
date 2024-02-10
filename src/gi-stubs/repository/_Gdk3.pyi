@@ -2537,6 +2537,7 @@ def utf8_to_string_target(str: str) -> Optional[str]: ...
 class AppLaunchContext(Gio.AppLaunchContext):
     class Props:
         display: Display
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     @classmethod
@@ -2579,6 +2580,7 @@ class Cursor(GObject.Object):
     class Props:
         cursor_type: CursorType
         display: Display
+
     props: Props = ...
     def __init__(self, cursor_type: CursorType = ..., display: Display = ...): ...
     def get_cursor_type(self) -> CursorType: ...
@@ -2621,6 +2623,7 @@ class Device(GObject.Object):
         tool: DeviceTool
         type: DeviceType
         vendor_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -2682,6 +2685,7 @@ class Device(GObject.Object):
 class DeviceManager(GObject.Object):
     class Props:
         display: Display
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_client_pointer(self) -> Device: ...
@@ -2702,6 +2706,7 @@ class DeviceTool(GObject.Object):
         hardware_id: int
         serial: int
         tool_type: DeviceToolType
+
     props: Props = ...
     def __init__(
         self,
@@ -2775,6 +2780,7 @@ class Display(GObject.Object):
 class DisplayManager(GObject.Object):
     class Props:
         default_display: Display
+
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
@@ -2803,6 +2809,7 @@ class DrawingContext(GObject.Object):
     class Props:
         clip: cairo.Region
         window: Window
+
     props: Props = ...
     def __init__(self, clip: cairo.Region = ..., window: Window = ...): ...
     # override
@@ -3183,6 +3190,7 @@ class GLContext(GObject.Object):
         display: Display
         shared_context: GLContext
         window: Window
+
     props: Props = ...
     def __init__(
         self,
@@ -3263,6 +3271,7 @@ class Monitor(GObject.Object):
         subpixel_layout: SubpixelLayout
         width_mm: int
         workarea: Rectangle
+
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_display(self) -> Display: ...
@@ -3321,6 +3330,7 @@ class Screen(GObject.Object):
     class Props:
         font_options: None
         resolution: float
+
     props: Props = ...
     def __init__(self, font_options: None = ..., resolution: float = ...): ...
     def get_active_window(self) -> Optional[Window]: ...
@@ -3367,6 +3377,7 @@ class Screen(GObject.Object):
 class Seat(GObject.Object):
     class Props:
         display: Display
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, display: Display = ...): ...
@@ -3419,6 +3430,7 @@ class Visual(GObject.Object):
 class Window(GObject.Object):
     class Props:
         cursor: Cursor
+
     props: Props = ...
     # override
     def __init__(

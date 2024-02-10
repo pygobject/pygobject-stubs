@@ -623,6 +623,7 @@ class Repo(GObject.Object):
         path: Gio.File
         remotes_config_dir: str
         sysroot_path: Gio.File
+
     props: Props = ...
     def __init__(
         self,
@@ -1511,9 +1512,9 @@ class RepoFinderInterface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
     resolve_async: Callable[..., None] = ...
-    resolve_finish: Callable[
-        [RepoFinder, Gio.AsyncResult], list[RepoFinderResult]
-    ] = ...
+    resolve_finish: Callable[[RepoFinder, Gio.AsyncResult], list[RepoFinderResult]] = (
+        ...
+    )
 
 class RepoFinderMount(GObject.Object, RepoFinder):
     """
@@ -1536,6 +1537,7 @@ class RepoFinderMount(GObject.Object, RepoFinder):
 
     class Props:
         monitor: Gio.VolumeMonitor
+
     props: Props = ...
     def __init__(self, monitor: Gio.VolumeMonitor = ...): ...
     @classmethod
@@ -1676,6 +1678,7 @@ class SePolicy(GObject.Object, Gio.Initable):
     class Props:
         path: Optional[Gio.File]
         rootfs_dfd: int
+
     props: Props = ...
     def __init__(self, path: Gio.File = ..., rootfs_dfd: int = ...): ...
     @staticmethod
@@ -1834,6 +1837,7 @@ class Sysroot(GObject.Object):
 
     class Props:
         path: Gio.File
+
     props: Props = ...
     def __init__(self, path: Gio.File = ...): ...
     def cleanup(self, cancellable: Optional[Gio.Cancellable] = None) -> bool: ...
@@ -2033,6 +2037,7 @@ class SysrootUpgrader(GObject.Object, Gio.Initable):
         flags: SysrootUpgraderFlags
         osname: str
         sysroot: Sysroot
+
     props: Props = ...
     def __init__(
         self,

@@ -46,6 +46,7 @@ class Buffer(Gtk.TextBuffer):
         has_selection: bool
         tag_table: Gtk.TextTagTable
         text: str
+
     props: Props = ...
     parent_instance: Gtk.TextBuffer = ...
     def __init__(
@@ -128,6 +129,7 @@ class Completion(GObject.Object):
         select_on_show: bool
         show_icons: bool
         view: View
+
     props: Props = ...
     def __init__(
         self,
@@ -198,6 +200,7 @@ class CompletionCell(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -258,6 +261,7 @@ class CompletionContext(GObject.Object, Gio.ListModel):
         busy: bool
         completion: Completion
         empty: bool
+
     props: Props = ...
     def __init__(self, completion: Completion = ...): ...
     def get_activation(self) -> CompletionActivation: ...
@@ -337,12 +341,12 @@ class CompletionProviderInterface(GObject.GPointer):
     ] = ...
     populate: None = ...
     populate_async: Callable[..., None] = ...
-    populate_finish: Callable[
-        [CompletionProvider, Gio.AsyncResult], Gio.ListModel
-    ] = ...
-    refilter: Callable[
-        [CompletionProvider, CompletionContext, Gio.ListModel], None
-    ] = ...
+    populate_finish: Callable[[CompletionProvider, Gio.AsyncResult], Gio.ListModel] = (
+        ...
+    )
+    refilter: Callable[[CompletionProvider, CompletionContext, Gio.ListModel], None] = (
+        ...
+    )
     display: Callable[
         [CompletionProvider, CompletionContext, CompletionProposal, CompletionCell],
         None,
@@ -359,6 +363,7 @@ class CompletionSnippets(GObject.Object, CompletionProvider):
     class Props:
         priority: int
         title: str
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, priority: int = ..., title: str = ...): ...
@@ -376,6 +381,7 @@ class CompletionWords(GObject.Object, CompletionProvider):
         proposals_batch_size: int
         scan_batch_size: int
         title: str
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -419,6 +425,7 @@ class File(GObject.Object):
         location: Gio.File
         newline_type: NewlineType
         read_only: bool
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, location: Gio.File = ...): ...
@@ -445,6 +452,7 @@ class FileLoader(GObject.Object):
         file: File
         input_stream: Gio.InputStream
         location: Gio.File
+
     props: Props = ...
     def __init__(
         self,
@@ -489,6 +497,7 @@ class FileSaver(GObject.Object):
         flags: FileSaverFlags
         location: Gio.File
         newline_type: NewlineType
+
     props: Props = ...
     def __init__(
         self,
@@ -569,6 +578,7 @@ class Gutter(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -680,6 +690,7 @@ class GutterRenderer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -766,15 +777,15 @@ class GutterRendererClass(GObject.GPointer):
     parent_class: Gtk.WidgetClass = ...
     query_data: Callable[[GutterRenderer, GutterLines, int], None] = ...
     begin: Callable[[GutterRenderer, GutterLines], None] = ...
-    snapshot_line: Callable[
-        [GutterRenderer, Gtk.Snapshot, GutterLines, int], None
-    ] = ...
+    snapshot_line: Callable[[GutterRenderer, Gtk.Snapshot, GutterLines, int], None] = (
+        ...
+    )
     end: Callable[[GutterRenderer], None] = ...
     change_view: Callable[[GutterRenderer, Optional[View]], None] = ...
     change_buffer: Callable[[GutterRenderer, Optional[Buffer]], None] = ...
-    query_activatable: Callable[
-        [GutterRenderer, Gtk.TextIter, Gdk.Rectangle], bool
-    ] = ...
+    query_activatable: Callable[[GutterRenderer, Gtk.TextIter, Gdk.Rectangle], bool] = (
+        ...
+    )
     activate: Callable[
         [GutterRenderer, Gtk.TextIter, Gdk.Rectangle, int, Gdk.ModifierType, int], None
     ] = ...
@@ -830,6 +841,7 @@ class GutterRendererPixbuf(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: GutterRenderer = ...
     def __init__(
@@ -938,6 +950,7 @@ class GutterRendererText(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: GutterRenderer = ...
     def __init__(
@@ -994,6 +1007,7 @@ class GutterRendererTextClass(GObject.GPointer):
 class Hover(GObject.Object):
     class Props:
         hover_delay: int
+
     props: Props = ...
     def __init__(self, hover_delay: int = ...): ...
     def add_provider(self, provider: HoverProvider) -> None: ...
@@ -1048,6 +1062,7 @@ class HoverDisplay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -1126,6 +1141,7 @@ class Language(GObject.Object):
         id: str
         name: str
         section: str
+
     props: Props = ...
     def get_globs(self) -> Optional[list[str]]: ...
     def get_hidden(self) -> bool: ...
@@ -1145,6 +1161,7 @@ class LanguageManager(GObject.Object):
     class Props:
         language_ids: list[str]
         search_path: list[str]
+
     props: Props = ...
     def __init__(self, search_path: Sequence[str] = ...): ...
     def append_search_path(self, path: str) -> None: ...
@@ -1245,6 +1262,7 @@ class Map(View, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Scrolla
         hscroll_policy: Gtk.ScrollablePolicy
         vadjustment: Gtk.Adjustment
         vscroll_policy: Gtk.ScrollablePolicy
+
     props: Props = ...
     parent_instance: View = ...
     def __init__(
@@ -1336,6 +1354,7 @@ class Mark(Gtk.TextMark):
         category: str
         left_gravity: bool
         name: str
+
     props: Props = ...
     parent_instance: Gtk.TextMark = ...
     def __init__(
@@ -1353,6 +1372,7 @@ class MarkAttributes(GObject.Object):
         gicon: Gio.Icon
         icon_name: str
         pixbuf: GdkPixbuf.Pixbuf
+
     props: Props = ...
     def __init__(
         self,
@@ -1396,6 +1416,7 @@ class PrintCompositor(GObject.Object):
         print_line_numbers: int
         tab_width: int
         wrap_mode: Gtk.WrapMode
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -1472,6 +1493,7 @@ class PrintCompositorClass(GObject.GPointer):
 class Region(GObject.Object):
     class Props:
         buffer: Gtk.TextBuffer
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, buffer: Gtk.TextBuffer = ...): ...
@@ -1513,6 +1535,7 @@ class SearchContext(GObject.Object):
         occurrences_count: int
         regex_error: GLib.Error
         settings: SearchSettings
+
     props: Props = ...
     def __init__(
         self,
@@ -1581,6 +1604,7 @@ class SearchSettings(GObject.Object):
         regex_enabled: bool
         search_text: str
         wrap_around: bool
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -1616,6 +1640,7 @@ class Snippet(GObject.Object):
         language_id: str
         name: str
         trigger: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1653,6 +1678,7 @@ class SnippetChunk(GObject.InitiallyUnowned):
         text: str
         text_set: bool
         tooltip_text: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1703,6 +1729,7 @@ class SnippetContextClass(GObject.GPointer):
 class SnippetManager(GObject.Object):
     class Props:
         search_path: list[str]
+
     props: Props = ...
     def __init__(self, search_path: Sequence[str] = ...): ...
     @staticmethod
@@ -1728,6 +1755,7 @@ class SpaceDrawer(GObject.Object):
     class Props:
         enable_matrix: bool
         matrix: GLib.Variant
+
     props: Props = ...
     def __init__(self, enable_matrix: bool = ..., matrix: GLib.Variant = ...): ...
     def bind_matrix_setting(
@@ -1771,6 +1799,7 @@ class Style(GObject.Object):
         underline_set: bool
         weight: Pango.Weight
         weight_set: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -1807,6 +1836,7 @@ class StyleScheme(GObject.Object):
         filename: str
         id: str
         name: str
+
     props: Props = ...
     def __init__(self, id: str = ...): ...
     def get_authors(self) -> Optional[list[str]]: ...
@@ -1873,6 +1903,7 @@ class StyleSchemeChooserButton(
         action_name: str
         action_target: GLib.Variant
         style_scheme: StyleScheme
+
     props: Props = ...
     parent_instance: Gtk.Button = ...
     def __init__(
@@ -1969,6 +2000,7 @@ class StyleSchemeChooserWidget(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         style_scheme: StyleScheme
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -2019,6 +2051,7 @@ class StyleSchemeManager(GObject.Object):
     class Props:
         scheme_ids: list[str]
         search_path: list[str]
+
     props: Props = ...
     def __init__(self, search_path: Sequence[str] = ...): ...
     def append_search_path(self, path: str) -> None: ...
@@ -2079,6 +2112,7 @@ class StyleSchemePreview(
         accessible_role: Gtk.AccessibleRole
         action_name: str
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -2219,6 +2253,7 @@ class Tag(Gtk.TextTag):
         word_set: bool
         wrap_mode: Gtk.WrapMode
         wrap_mode_set: bool
+
     props: Props = ...
     parent_instance: Gtk.TextTag = ...
     def __init__(
@@ -2403,6 +2438,7 @@ class View(
         hscroll_policy: Gtk.ScrollablePolicy
         vadjustment: Gtk.Adjustment
         vscroll_policy: Gtk.ScrollablePolicy
+
     props: Props = ...
     parent_instance: Gtk.TextView = ...
     def __init__(
@@ -2557,6 +2593,7 @@ class VimIMContext(Gtk.IMContext):
         command_text: str
         input_hints: Gtk.InputHints
         input_purpose: Gtk.InputPurpose
+
     props: Props = ...
     def __init__(
         self, input_hints: Gtk.InputHints = ..., input_purpose: Gtk.InputPurpose = ...

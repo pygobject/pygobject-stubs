@@ -188,6 +188,7 @@ class Application(Adw.Application, Gio.ActionGroup, Gio.ActionMap):
         is_remote: bool
         resource_base_path: Optional[str]
         action_group: Optional[Gio.ActionGroup]
+
     props: Props = ...
     parent_instance: Adw.Application = ...
     def __init__(
@@ -361,6 +362,7 @@ class Dock(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -664,6 +666,7 @@ class DocumentWorkspace(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Workspace = ...
     def __init__(
@@ -876,6 +879,7 @@ class Frame(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -1076,6 +1080,7 @@ class FrameHeaderBar(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         frame: Optional[Frame]
+
     props: Props = ...
     def __init__(
         self,
@@ -1255,6 +1260,7 @@ class FrameSwitcher(
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
         frame: Optional[Frame]
+
     props: Props = ...
     def __init__(
         self,
@@ -1421,6 +1427,7 @@ class FrameTabBar(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         frame: Optional[Frame]
+
     props: Props = ...
     def __init__(
         self,
@@ -1504,6 +1511,7 @@ class GSettingsActionGroup(GObject.Object, Gio.ActionGroup):
 
     class Props:
         settings: Gio.Settings
+
     props: Props = ...
     def __init__(self, settings: Gio.Settings = ...): ...
     @staticmethod
@@ -1625,6 +1633,7 @@ class Grid(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -1792,6 +1801,7 @@ class GridColumn(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -1899,6 +1909,7 @@ class LayeredSettings(GObject.Object):
     class Props:
         path: str
         schema_id: str
+
     props: Props = ...
     def __init__(self, path: str = ..., schema_id: str = ...): ...
     def append(self, settings: Gio.Settings) -> None: ...
@@ -2107,6 +2118,7 @@ class OmniBar(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -2278,6 +2290,7 @@ class Paned(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2369,6 +2382,7 @@ class Position(GObject.Object):
         depth_set: bool
         row: int
         row_set: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -2457,6 +2471,7 @@ class SaveDelegate(GObject.Object):
         progress: float
         subtitle: Optional[str]
         title: Optional[str]
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -2711,6 +2726,7 @@ class SaveDialog(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -2869,6 +2885,7 @@ class SessionItem(GObject.Object):
         position: Optional[Position]
         type_hint: Optional[str]
         workspace: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -2959,6 +2976,7 @@ class Settings(GObject.Object, Gio.ActionGroup):
         path_suffix: str
         schema_id: str
         schema_id_prefix: str
+
     props: Props = ...
     def __init__(
         self,
@@ -3133,6 +3151,7 @@ class Statusbar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -3291,6 +3310,7 @@ class ThemeSelector(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -3450,6 +3470,7 @@ class ToggleButton(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -3649,6 +3670,7 @@ class Widget(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -3787,6 +3809,7 @@ class Workbench(Gtk.WindowGroup):
 
     class Props:
         id: str
+
     props: Props = ...
     parent_instance: Gtk.WindowGroup = ...
     def __init__(self, id: str = ...): ...
@@ -4045,6 +4068,7 @@ class Workspace(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Adw.ApplicationWindow = ...
     def __init__(

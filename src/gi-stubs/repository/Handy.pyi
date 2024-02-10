@@ -291,6 +291,7 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -730,6 +731,7 @@ class ApplicationWindow(
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
@@ -1042,6 +1044,7 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
+
     props: Props = ...
     def __init__(
         self,
@@ -1397,6 +1400,7 @@ class Carousel(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -1699,6 +1703,7 @@ class CarouselIndicatorDots(
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -1971,6 +1976,7 @@ class CarouselIndicatorLines(
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2261,6 +2267,7 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -2599,6 +2606,7 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: ActionRow = ...
     def __init__(
@@ -2959,6 +2967,7 @@ class Deck(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -3354,6 +3363,7 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -3714,6 +3724,7 @@ class Flap(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -4074,6 +4085,7 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -4189,6 +4201,7 @@ class HeaderGroup(GObject.Object, Gtk.Buildable):
 
     class Props:
         decorate_all: bool
+
     props: Props = ...
     def __init__(self, decorate_all: bool = ...): ...
     def add_gtk_header_bar(self, header_bar: Gtk.HeaderBar) -> None: ...
@@ -4491,6 +4504,7 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -4844,6 +4858,7 @@ class Leaflet(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -5184,6 +5199,7 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -5483,6 +5499,7 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -5794,6 +5811,7 @@ class PreferencesRow(
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.ListBoxRow = ...
     def __init__(
@@ -6202,6 +6220,7 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -6529,6 +6548,7 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -6846,6 +6866,7 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -7160,6 +7181,7 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -7258,6 +7280,7 @@ class StyleManager(GObject.Object):
         display: Gdk.Display
         high_contrast: bool
         system_supports_color_schemes: bool
+
     props: Props = ...
     def __init__(self, color_scheme: ColorScheme = ..., display: Gdk.Display = ...): ...
     def get_color_scheme(self) -> ColorScheme: ...
@@ -7353,6 +7376,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
         reversed: bool
         swipeable: Swipeable
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -7422,9 +7446,9 @@ class SwipeableInterface(GObject.GPointer):
     get_snap_points: Callable[[Swipeable], list[float]] = ...
     get_progress: Callable[[Swipeable], float] = ...
     get_cancel_progress: Callable[[Swipeable], float] = ...
-    get_swipe_area: Callable[
-        [Swipeable, NavigationDirection, bool], Gdk.Rectangle
-    ] = ...
+    get_swipe_area: Callable[[Swipeable, NavigationDirection, bool], Gdk.Rectangle] = (
+        ...
+    )
     padding: list[None] = ...
 
 class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
@@ -7682,6 +7706,7 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -7814,6 +7839,7 @@ class TabPage(GObject.Object):
         selected: bool
         title: Optional[str]
         tooltip: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -8112,6 +8138,7 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -8441,6 +8468,7 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -8522,6 +8550,7 @@ class ValueObject(GObject.Object):
 
     class Props:
         value: Any
+
     props: Props = ...
     def __init__(self, value: Any = ...): ...
     def copy_value(self, dest: Any) -> None: ...
@@ -8776,6 +8805,7 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9065,6 +9095,7 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9385,6 +9416,7 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9789,6 +9821,7 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
+
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -10108,6 +10141,7 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,

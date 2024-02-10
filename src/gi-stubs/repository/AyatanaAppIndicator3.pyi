@@ -86,6 +86,7 @@ class Indicator(GObject.Object):
         ordering_index: int
         status: str
         title: str
+
     props: Props = ...
     parent: GObject.Object = ...
 

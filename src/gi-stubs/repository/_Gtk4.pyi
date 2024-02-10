@@ -345,6 +345,7 @@ class ATContext(GObject.Object):
         accessible: Accessible
         accessible_role: AccessibleRole
         display: Gdk.Display
+
     props: Props = ...
     def __init__(
         self,
@@ -562,6 +563,7 @@ class AboutDialog(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -848,6 +850,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -977,6 +980,7 @@ class Adjustment(GObject.InitiallyUnowned):
         step_increment: float
         upper: float
         value: float
+
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     def __init__(
@@ -1070,6 +1074,7 @@ class AlertDialog(GObject.Object):
         detail: str
         message: str
         modal: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -1135,6 +1140,7 @@ class AlternativeTrigger(ShortcutTrigger):
     class Props:
         first: ShortcutTrigger
         second: ShortcutTrigger
+
     props: Props = ...
     def __init__(self, first: ShortcutTrigger = ..., second: ShortcutTrigger = ...): ...
     def get_first(self) -> ShortcutTrigger: ...
@@ -1177,6 +1183,7 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
     class Props:
         item_type: Type
         n_items: int
+
     props: Props = ...
     @classmethod
     def new(cls) -> AnyFilter: ...
@@ -1313,6 +1320,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         width_request: int
         accessible_role: AccessibleRole
         content_type: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1550,6 +1558,7 @@ class AppChooserDialog(
         accessible_role: AccessibleRole
         content_type: str
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1744,6 +1753,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         width_request: int
         accessible_role: AccessibleRole
         content_type: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1878,6 +1888,7 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
         is_remote: bool
         resource_base_path: Optional[str]
         action_group: Optional[Gio.ActionGroup]
+
     props: Props = ...
     parent_instance: Gio.Application = ...
     def __init__(
@@ -2111,6 +2122,7 @@ class ApplicationWindow(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -2306,6 +2318,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -2534,6 +2547,7 @@ class Assistant(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -2645,6 +2659,7 @@ class AssistantPage(GObject.Object):
         complete: bool
         page_type: AssistantPageType
         title: str
+
     props: Props = ...
     def __init__(
         self,
@@ -2784,6 +2799,7 @@ class BookmarkList(GObject.Object, Gio.ListModel):
         item_type: Type
         loading: bool
         n_items: int
+
     props: Props = ...
     def __init__(
         self,
@@ -2838,6 +2854,7 @@ class BoolFilter(Filter):
     class Props:
         expression: Optional[Expression]
         invert: bool
+
     props: Props = ...
     def __init__(self, expression: Optional[Expression] = ..., invert: bool = ...): ...
     def get_expression(self) -> Optional[Expression]: ...
@@ -2988,6 +3005,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -3082,6 +3100,7 @@ class BoxLayout(LayoutManager, Orientable):
         homogeneous: bool
         spacing: int
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -3197,6 +3216,7 @@ class Builder(GObject.Object):
         current_object: Optional[GObject.Object]
         scope: BuilderScope
         translation_domain: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -3353,6 +3373,7 @@ class BuilderListItemFactory(ListItemFactory):
         bytes: GLib.Bytes
         resource: Optional[str]
         scope: Optional[BuilderScope]
+
     props: Props = ...
     def __init__(
         self, bytes: GLib.Bytes = ..., resource: str = ..., scope: BuilderScope = ...
@@ -3512,6 +3533,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -3738,6 +3760,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -3844,6 +3867,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         edit_widget: Optional[CellEditable]
         edited_cell: Optional[CellRenderer]
         focus_cell: Optional[CellRenderer]
+
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     def __init__(self, focus_cell: Optional[CellRenderer] = ...): ...
@@ -4092,6 +4116,7 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
         edited_cell: Optional[CellRenderer]
         focus_cell: Optional[CellRenderer]
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -4210,6 +4235,7 @@ class CellAreaContext(GObject.Object):
         minimum_width: int
         natural_height: int
         natural_width: int
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, area: CellArea = ...): ...
@@ -4374,6 +4400,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         yalign: float
         ypad: int
         cell_background: str
+
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: CellRendererPrivate = ...
@@ -4656,6 +4683,7 @@ class CellRendererAccel(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -4950,6 +4978,7 @@ class CellRendererCombo(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5088,6 +5117,7 @@ class CellRendererPixbuf(CellRenderer):
         ypad: int
         pixbuf: GdkPixbuf.Pixbuf
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5185,6 +5215,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         ypad: int
         orientation: Orientation
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5370,6 +5401,7 @@ class CellRendererSpin(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5500,6 +5532,7 @@ class CellRendererSpinner(CellRenderer):
         yalign: float
         ypad: int
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5673,6 +5706,7 @@ class CellRendererText(CellRenderer):
         foreground: str
         markup: str
         cell_background: str
+
     props: Props = ...
     parent: CellRenderer = ...
     def __init__(
@@ -5821,6 +5855,7 @@ class CellRendererToggle(CellRenderer):
         yalign: float
         ypad: int
         cell_background: str
+
     props: Props = ...
     def __init__(
         self,
@@ -5971,6 +6006,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -6143,6 +6179,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -6358,6 +6395,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         action_name: Optional[str]
         action_target: GLib.Variant
         group: Optional[CheckButton]
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -6573,6 +6611,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         accessible_role: AccessibleRole
         rgba: Gdk.RGBA
         use_alpha: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -6825,6 +6864,7 @@ class ColorChooserDialog(
         rgba: Gdk.RGBA
         use_alpha: bool
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -7020,6 +7060,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         accessible_role: AccessibleRole
         rgba: Gdk.RGBA
         use_alpha: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -7084,6 +7125,7 @@ class ColorDialog(GObject.Object):
         modal: bool
         title: str
         with_alpha: bool
+
     props: Props = ...
     def __init__(self, modal: bool = ..., title: str = ..., with_alpha: bool = ...): ...
     def choose_rgba(
@@ -7212,6 +7254,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -7404,6 +7447,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -7511,6 +7555,7 @@ class ColumnViewColumn(GObject.Object):
         sorter: Optional[Sorter]
         title: Optional[str]
         visible: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -7574,6 +7619,7 @@ class ColumnViewSorter(Sorter):
     class Props:
         primary_sort_column: Optional[ColumnViewColumn]
         primary_sort_order: SortType
+
     props: Props = ...
     def get_n_sort_columns(self) -> int: ...
     def get_nth_sort_column(
@@ -7737,6 +7783,7 @@ class ComboBox(
         width_request: int
         accessible_role: AccessibleRole
         editing_canceled: bool
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -7981,6 +8028,7 @@ class ComboBoxText(
         width_request: int
         accessible_role: AccessibleRole
         editing_canceled: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -8089,6 +8137,7 @@ class Constraint(GObject.Object):
         strength: int
         target: Optional[ConstraintTarget]
         target_attribute: ConstraintAttribute
+
     props: Props = ...
     def __init__(
         self,
@@ -8179,6 +8228,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
         nat_height: int
         nat_width: int
         strength: ConstraintStrength
+
     props: Props = ...
     def __init__(
         self,
@@ -8268,6 +8318,7 @@ class ConstraintLayoutChild(LayoutChild):
     class Props:
         child_widget: Widget
         layout_manager: LayoutManager
+
     props: Props = ...
     def __init__(
         self, child_widget: Widget = ..., layout_manager: LayoutManager = ...
@@ -8643,6 +8694,7 @@ class Dialog(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -8768,6 +8820,7 @@ class DirectoryList(GObject.Object, Gio.ListModel):
         loading: bool
         monitored: bool
         n_items: int
+
     props: Props = ...
     def __init__(
         self,
@@ -8907,6 +8960,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9021,6 +9075,7 @@ class DragSource(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9159,6 +9214,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     widget: Widget = ...
     def __init__(
@@ -9259,6 +9315,7 @@ class DropControllerMotion(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9398,6 +9455,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9520,6 +9578,7 @@ class DropTarget(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9583,6 +9642,7 @@ class DropTargetAsync(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9793,6 +9853,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     def __init__(
         self,
@@ -9980,6 +10041,7 @@ class EmojiChooser(
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -10233,6 +10295,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -10423,6 +10486,7 @@ class EntryBuffer(GObject.Object):
         length: int
         max_length: int
         text: str
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, max_length: int = ..., text: str = ...): ...
@@ -10526,6 +10590,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         popup_set_width: bool
         popup_single_match: bool
         text_column: int
+
     props: Props = ...
     def __init__(
         self,
@@ -10591,6 +10656,7 @@ class EventController(GObject.Object):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10650,6 +10716,7 @@ class EventControllerFocus(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10696,6 +10763,7 @@ class EventControllerKey(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10741,6 +10809,7 @@ class EventControllerLegacy(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10790,6 +10859,7 @@ class EventControllerMotion(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10840,6 +10910,7 @@ class EventControllerScroll(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -10887,6 +10958,7 @@ class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
     class Props:
         item_type: Type
         n_items: int
+
     props: Props = ...
     @classmethod
     def new(cls) -> EveryFilter: ...
@@ -11015,6 +11087,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -11329,6 +11402,7 @@ class FileChooserDialog(
         select_multiple: bool
         shortcut_folders: Gio.ListModel
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -11433,6 +11507,7 @@ class FileChooserNative(NativeDialog, FileChooser):
         filters: Gio.ListModel
         select_multiple: bool
         shortcut_folders: Gio.ListModel
+
     props: Props = ...
     def __init__(
         self,
@@ -11602,6 +11677,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         filters: Gio.ListModel
         select_multiple: bool
         shortcut_folders: Gio.ListModel
+
     props: Props = ...
     def __init__(
         self,
@@ -11678,6 +11754,7 @@ class FileDialog(GObject.Object):
         initial_name: Optional[str]
         modal: bool
         title: str
+
     props: Props = ...
     def __init__(
         self,
@@ -11794,6 +11871,7 @@ class FileFilter(Filter, Buildable):
         mime_types: list[str]
         patterns: list[str]
         suffixes: list[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -11835,6 +11913,7 @@ class FileLauncher(GObject.Object):
 
     class Props:
         file: Optional[Gio.File]
+
     props: Props = ...
     def __init__(self, file: Optional[Gio.File] = ...): ...
     def get_file(self) -> Optional[Gio.File]: ...
@@ -11947,6 +12026,7 @@ class FilterListModel(GObject.Object, Gio.ListModel):
         model: Optional[Gio.ListModel]
         n_items: int
         pending: int
+
     props: Props = ...
     def __init__(
         self,
@@ -12079,6 +12159,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -12180,6 +12261,7 @@ class FixedLayoutChild(LayoutChild):
         transform: Optional[Gsk.Transform]
         child_widget: Widget
         layout_manager: LayoutManager
+
     props: Props = ...
     def __init__(
         self,
@@ -12239,6 +12321,7 @@ class FlattenListModel(GObject.Object, Gio.ListModel):
         item_type: Type
         model: Optional[Gio.ListModel]
         n_items: int
+
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
@@ -12388,6 +12471,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -12585,6 +12669,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -12770,6 +12855,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -13043,6 +13129,7 @@ class FontChooserDialog(
         preview_text: str
         show_preview_entry: bool
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -13247,6 +13334,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -13318,6 +13406,7 @@ class FontDialog(GObject.Object):
         language: Optional[Pango.Language]
         modal: bool
         title: str
+
     props: Props = ...
     def __init__(
         self,
@@ -13502,6 +13591,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -13694,6 +13784,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -13877,6 +13968,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -13988,6 +14080,7 @@ class Gesture(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14075,6 +14168,7 @@ class GestureClick(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14141,6 +14235,7 @@ class GestureDrag(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14212,6 +14307,7 @@ class GestureLongPress(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14288,6 +14384,7 @@ class GesturePan(GestureDrag):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14347,6 +14444,7 @@ class GestureRotate(Gesture):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14405,6 +14503,7 @@ class GestureSingle(Gesture):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14482,6 +14581,7 @@ class GestureStylus(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14553,6 +14653,7 @@ class GestureSwipe(GestureSingle):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14610,6 +14711,7 @@ class GestureZoom(Gesture):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -14739,6 +14841,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -14854,6 +14957,7 @@ class GridLayout(LayoutManager):
         column_spacing: int
         row_homogeneous: bool
         row_spacing: int
+
     props: Props = ...
     def __init__(
         self,
@@ -14909,6 +15013,7 @@ class GridLayoutChild(LayoutChild):
         row_span: int
         child_widget: Widget
         layout_manager: LayoutManager
+
     props: Props = ...
     def __init__(
         self,
@@ -15079,6 +15184,7 @@ class GridView(
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -15255,6 +15361,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -15333,6 +15440,7 @@ class IMContext(GObject.Object):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -15413,9 +15521,9 @@ class IMContextClass(GObject.GPointer):
     set_use_preedit: Callable[[IMContext, bool], None] = ...
     set_surrounding: Callable[[IMContext, str, int, int], None] = ...
     get_surrounding: Callable[[IMContext], Tuple[bool, str, int]] = ...
-    set_surrounding_with_selection: Callable[
-        [IMContext, str, int, int, int], None
-    ] = ...
+    set_surrounding_with_selection: Callable[[IMContext, str, int, int, int], None] = (
+        ...
+    )
     get_surrounding_with_selection: Callable[
         [IMContext], Tuple[bool, str, int, int]
     ] = ...
@@ -15455,6 +15563,7 @@ class IMContextSimple(IMContext):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
+
     props: Props = ...
     object: IMContext = ...
     priv: IMContextSimplePrivate = ...
@@ -15508,6 +15617,7 @@ class IMMulticontext(IMContext):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
+
     props: Props = ...
     object: IMContext = ...
     priv: IMMulticontextPrivate = ...
@@ -15564,6 +15674,7 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
         file: Optional[Gio.File]
         icon_name: Optional[str]
         is_symbolic: bool
+
     props: Props = ...
     def __init__(
         self, file: Gio.File = ..., icon_name: str = ..., is_symbolic: bool = ...
@@ -15605,6 +15716,7 @@ class IconTheme(GObject.Object):
         resource_path: Optional[list[str]]
         search_path: Optional[list[str]]
         theme_name: str
+
     props: Props = ...
     def __init__(
         self,
@@ -15802,6 +15914,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -16077,6 +16190,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -16263,6 +16377,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -16443,6 +16558,7 @@ class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int
         accessible_role: AccessibleRole
         markup: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -16545,6 +16661,7 @@ class KeyvalTrigger(ShortcutTrigger):
     class Props:
         keyval: int
         modifiers: Gdk.ModifierType
+
     props: Props = ...
     def __init__(self, keyval: int = ..., modifiers: Gdk.ModifierType = ...): ...
     def get_keyval(self) -> int: ...
@@ -16705,6 +16822,7 @@ class Label(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -16833,6 +16951,7 @@ class LayoutChild(GObject.Object):
     class Props:
         child_widget: Widget
         layout_manager: LayoutManager
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -17032,6 +17151,7 @@ class LevelBar(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -17220,6 +17340,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -17381,6 +17502,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -17545,6 +17667,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -17743,6 +17866,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -17840,6 +17964,7 @@ class ListItem(GObject.Object):
         position: int
         selectable: bool
         selected: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -18059,6 +18184,7 @@ class ListView(
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -18256,6 +18382,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -18337,6 +18464,7 @@ class MapListModel(GObject.Object, Gio.ListModel):
         item_type: Type
         model: Optional[Gio.ListModel]
         n_items: int
+
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
@@ -18470,6 +18598,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -18583,6 +18712,7 @@ class MediaFile(MediaStream, Gdk.Paintable):
         seeking: bool
         timestamp: int
         volume: float
+
     props: Props = ...
     parent_instance: MediaStream = ...
     def __init__(
@@ -18679,6 +18809,7 @@ class MediaStream(GObject.Object, Gdk.Paintable):
         seeking: bool
         timestamp: int
         volume: float
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -18881,6 +19012,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -19140,6 +19272,7 @@ class MessageDialog(
         accessible_role: AccessibleRole
         buttons: ButtonsType
         startup_id: str
+
     props: Props = ...
     parent_instance: Dialog = ...
     def __init__(
@@ -19249,6 +19382,7 @@ class MnemonicTrigger(ShortcutTrigger):
 
     class Props:
         keyval: int
+
     props: Props = ...
     def __init__(self, keyval: int = ...): ...
     def get_keyval(self) -> int: ...
@@ -19318,6 +19452,7 @@ class MountOperation(Gio.MountOperation):
         password_save: Gio.PasswordSave
         pim: int
         username: Optional[str]
+
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
     priv: MountOperationPrivate = ...
@@ -19387,6 +19522,7 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
     class Props:
         item_type: Type
         n_items: int
+
     props: Props = ...
     def append(self, filter: Filter) -> None: ...
     def remove(self, position: int) -> None: ...
@@ -19423,6 +19559,7 @@ class MultiSelection(GObject.Object, Gio.ListModel, SelectionModel):
         item_type: Type
         model: Optional[Gio.ListModel]
         n_items: int
+
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
@@ -19469,6 +19606,7 @@ class MultiSorter(Sorter, Gio.ListModel, Buildable):
     class Props:
         item_type: Type
         n_items: int
+
     props: Props = ...
     def append(self, sorter: Sorter) -> None: ...
     @classmethod
@@ -19506,6 +19644,7 @@ class NamedAction(ShortcutAction):
 
     class Props:
         action_name: str
+
     props: Props = ...
     def __init__(self, action_name: str = ...): ...
     def get_action_name(self) -> str: ...
@@ -19558,6 +19697,7 @@ class NativeDialog(GObject.Object):
         title: Optional[str]
         transient_for: Optional[Window]
         visible: bool
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -19650,6 +19790,7 @@ class NoSelection(GObject.Object, Gio.ListModel, SelectionModel):
         item_type: Type
         model: Optional[Gio.ListModel]
         n_items: int
+
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
@@ -19800,6 +19941,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -19949,6 +20091,7 @@ class NotebookPage(GObject.Object):
         tab_expand: bool
         tab_fill: bool
         tab_label: str
+
     props: Props = ...
     def __init__(
         self,
@@ -20009,6 +20152,7 @@ class NumericSorter(Sorter):
     class Props:
         expression: Optional[Expression]
         sort_order: SortType
+
     props: Props = ...
     def __init__(
         self, expression: Optional[Expression] = ..., sort_order: SortType = ...
@@ -20176,6 +20320,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -20267,6 +20412,7 @@ class OverlayLayoutChild(LayoutChild):
         measure: bool
         child_widget: Widget
         layout_manager: LayoutManager
+
     props: Props = ...
     def __init__(
         self,
@@ -20349,6 +20495,7 @@ class PadController(EventController):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -20606,6 +20753,7 @@ class PageSetupUnixDialog(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -20812,6 +20960,7 @@ class Paned(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -21068,6 +21217,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     def __init__(
         self,
@@ -21147,6 +21297,7 @@ class PasswordEntryBuffer(EntryBuffer):
         length: int
         max_length: int
         text: str
+
     props: Props = ...
     def __init__(self, max_length: int = ..., text: str = ...): ...
     @classmethod
@@ -21286,6 +21437,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -21491,6 +21643,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent: Widget = ...
     def __init__(
@@ -21706,6 +21859,7 @@ class PopoverMenu(
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -21867,6 +22021,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -21972,6 +22127,7 @@ class PrintJob(GObject.Object):
         settings: PrintSettings
         title: str
         track_print_status: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -22091,6 +22247,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         track_print_status: bool
         unit: Unit
         use_full_page: bool
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: PrintOperationPrivate = ...
@@ -22218,9 +22375,9 @@ class PrintOperationPreviewIface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
     ready: Callable[[PrintOperationPreview, PrintContext], None] = ...
-    got_page_size: Callable[
-        [PrintOperationPreview, PrintContext, PageSetup], None
-    ] = ...
+    got_page_size: Callable[[PrintOperationPreview, PrintContext, PageSetup], None] = (
+        ...
+    )
     render_page: Callable[[PrintOperationPreview, int], None] = ...
     is_selected: Callable[[PrintOperationPreview, int], bool] = ...
     end_preview: Callable[[PrintOperationPreview], None] = ...
@@ -22527,6 +22684,7 @@ class PrintUnixDialog(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -22656,6 +22814,7 @@ class Printer(GObject.Object):
         name: str
         paused: bool
         state_message: str
+
     props: Props = ...
     def __init__(
         self,
@@ -22810,6 +22969,7 @@ class ProgressBar(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -23019,6 +23179,7 @@ class Range(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -23178,6 +23339,7 @@ class RecentManager(GObject.Object):
     class Props:
         filename: str
         size: int
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: RecentManagerPrivate = ...
@@ -23358,6 +23520,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -23558,6 +23721,7 @@ class Scale(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent_instance: Range = ...
     def __init__(
@@ -23751,6 +23915,7 @@ class ScaleButton(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -23968,6 +24133,7 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -24151,6 +24317,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -24348,6 +24515,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -24529,6 +24697,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     def __init__(
         self,
@@ -24608,6 +24777,7 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
         item_type: Type
         model: Optional[SelectionModel]
         n_items: int
+
     props: Props = ...
     def __init__(self, model: Optional[SelectionModel] = ...): ...
     def get_model(self) -> Optional[SelectionModel]: ...
@@ -24771,6 +24941,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -24929,6 +25100,7 @@ class Settings(GObject.Object, StyleProvider):
         gtk_xft_hinting: int
         gtk_xft_hintstyle: str
         gtk_xft_rgba: str
+
     props: Props = ...
     def __init__(
         self,
@@ -25013,6 +25185,7 @@ class Shortcut(GObject.Object):
         action: Optional[ShortcutAction]
         arguments: Optional[GLib.Variant]
         trigger: Optional[ShortcutTrigger]
+
     props: Props = ...
     def __init__(
         self,
@@ -25114,6 +25287,7 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
         propagation_phase: PropagationPhase
         widget: Widget
         model: Gio.ListModel
+
     props: Props = ...
     def __init__(
         self,
@@ -25245,6 +25419,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -25454,6 +25629,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
+
     props: Props = ...
     def __init__(
         self,
@@ -25622,6 +25798,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -25792,6 +25969,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
+
     props: Props = ...
     def __init__(
         self,
@@ -26010,6 +26188,7 @@ class ShortcutsWindow(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -26090,6 +26269,7 @@ class SignalAction(ShortcutAction):
 
     class Props:
         signal_name: str
+
     props: Props = ...
     def __init__(self, signal_name: str = ...): ...
     def get_signal_name(self) -> str: ...
@@ -26162,6 +26342,7 @@ class SingleSelection(GObject.Object, Gio.ListModel, SelectionModel):
         n_items: int
         selected: int
         selected_item: Optional[GObject.Object]
+
     props: Props = ...
     def __init__(
         self,
@@ -26213,6 +26394,7 @@ class SizeGroup(GObject.Object, Buildable):
 
     class Props:
         mode: SizeGroupMode
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, mode: SizeGroupMode = ...): ...
@@ -26255,6 +26437,7 @@ class SliceListModel(GObject.Object, Gio.ListModel):
         n_items: int
         offset: int
         size: int
+
     props: Props = ...
     def __init__(
         self, model: Optional[Gio.ListModel] = ..., offset: int = ..., size: int = ...
@@ -26462,6 +26645,7 @@ class SortListModel(GObject.Object, Gio.ListModel):
         n_items: int
         pending: int
         sorter: Optional[Sorter]
+
     props: Props = ...
     def __init__(
         self,
@@ -26699,6 +26883,7 @@ class SpinButton(
         width_chars: int
         xalign: float
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -26888,6 +27073,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -27052,6 +27238,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -27155,6 +27342,7 @@ class StackPage(GObject.Object, Accessible):
         use_underline: bool
         visible: bool
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -27287,6 +27475,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -27434,6 +27623,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -27581,6 +27771,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -27652,6 +27843,7 @@ class StringFilter(Filter):
         ignore_case: bool
         match_mode: StringFilterMatchMode
         search: Optional[str]
+
     props: Props = ...
     def __init__(
         self,
@@ -27705,6 +27897,7 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
 
     class Props:
         strings: list[str]
+
     props: Props = ...
     def __init__(self, strings: Sequence[str] = ...): ...
     def append(self, string: str) -> None: ...
@@ -27748,6 +27941,7 @@ class StringObject(GObject.Object):
 
     class Props:
         string: str
+
     props: Props = ...
     def get_string(self) -> str: ...
     @classmethod
@@ -27791,6 +27985,7 @@ class StringSorter(Sorter):
         collation: Collation
         expression: Optional[Expression]
         ignore_case: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -27837,6 +28032,7 @@ class StyleContext(GObject.Object):
 
     class Props:
         display: Gdk.Display
+
     props: Props = ...
     parent_object: GObject.Object = ...
     def __init__(self, display: Gdk.Display = ...): ...
@@ -28001,6 +28197,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -28262,6 +28459,7 @@ class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -28410,6 +28608,7 @@ class TextBuffer(GObject.Object):
         has_selection: bool
         tag_table: TextTagTable
         text: str
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextBufferPrivate = ...
@@ -28762,6 +28961,7 @@ class TextMark(GObject.Object):
     class Props:
         left_gravity: bool
         name: Optional[str]
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     segment: None = ...
@@ -28983,6 +29183,7 @@ class TextTag(GObject.Object):
         background: str
         foreground: str
         paragraph_background: str
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextTagPrivate = ...
@@ -29294,6 +29495,7 @@ class TextView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     parent_instance: Widget = ...
     priv: TextViewPrivate = ...
@@ -29633,6 +29835,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         action_name: Optional[str]
         action_target: GLib.Variant
         group: Optional[ToggleButton]
+
     props: Props = ...
     button: Button = ...
     def __init__(
@@ -29886,6 +30089,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -29997,6 +30201,7 @@ class TreeListModel(GObject.Object, Gio.ListModel):
         model: Gio.ListModel
         n_items: int
         passthrough: bool
+
     props: Props = ...
     def __init__(self, autoexpand: bool = ..., passthrough: bool = ...): ...
     def get_autoexpand(self) -> bool: ...
@@ -30053,6 +30258,7 @@ class TreeListRow(GObject.Object):
         expandable: bool
         expanded: bool
         item: Optional[GObject.Object]
+
     props: Props = ...
     def __init__(self, expanded: bool = ...): ...
     def get_child_row(self, position: int) -> Optional[TreeListRow]: ...
@@ -30099,6 +30305,7 @@ class TreeListRowSorter(Sorter):
 
     class Props:
         sorter: Optional[Sorter]
+
     props: Props = ...
     def __init__(self, sorter: Optional[Sorter] = ...): ...
     def get_sorter(self) -> Optional[Sorter]: ...
@@ -30190,6 +30397,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     class Props:
         child_model: TreeModel
         virtual_root: TreePath
+
     props: Props = ...
     parent: GObject.Object = ...
     priv: TreeModelFilterPrivate = ...
@@ -30257,9 +30465,9 @@ class TreeModelIface(GObject.GPointer):
     get_value: Callable[[TreeModel, TreeIter, int], Any] = ...
     iter_next: Callable[[TreeModel, TreeIter], bool] = ...
     iter_previous: Callable[[TreeModel, TreeIter], bool] = ...
-    iter_children: Callable[
-        [TreeModel, Optional[TreeIter]], Tuple[bool, TreeIter]
-    ] = ...
+    iter_children: Callable[[TreeModel, Optional[TreeIter]], Tuple[bool, TreeIter]] = (
+        ...
+    )
     iter_has_child: Callable[[TreeModel, TreeIter], bool] = ...
     iter_n_children: Callable[[TreeModel, Optional[TreeIter]], int] = ...
     iter_nth_child: Callable[
@@ -30312,6 +30520,7 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
 
     class Props:
         model: TreeModel
+
     props: Props = ...
     parent: GObject.Object = ...
     priv: TreeModelSortPrivate = ...
@@ -30432,6 +30641,7 @@ class TreeSelection(GObject.Object):
 
     class Props:
         mode: SelectionMode
+
     props: Props = ...
     def __init__(self, mode: SelectionMode = ...): ...
     def count_selected_rows(self) -> int: ...
@@ -30724,6 +30934,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -31044,6 +31255,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Optional[Widget]
         width: int
         x_offset: int
+
     props: Props = ...
     def __init__(
         self,
@@ -31152,6 +31364,7 @@ class UriLauncher(GObject.Object):
 
     class Props:
         uri: Optional[str]
+
     props: Props = ...
     def __init__(self, uri: Optional[str] = ...): ...
     def get_uri(self) -> Optional[str]: ...
@@ -31294,6 +31507,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -31476,6 +31690,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         hscroll_policy: ScrollablePolicy
         vadjustment: Optional[Adjustment]
         vscroll_policy: ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -31651,6 +31866,7 @@ class VolumeButton(
         width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
+
     props: Props = ...
     parent: ScaleButton = ...
     def __init__(
@@ -31795,6 +32011,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: WidgetPrivate = ...
@@ -32171,6 +32388,7 @@ class WidgetPaintable(GObject.Object, Gdk.Paintable):
 
     class Props:
         widget: Optional[Widget]
+
     props: Props = ...
     def __init__(self, widget: Optional[Widget] = ...): ...
     def get_widget(self) -> Optional[Widget]: ...
@@ -32352,6 +32570,7 @@ class Window(
         width_request: int
         accessible_role: AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -32611,6 +32830,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -32812,6 +33032,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
+
     props: Props = ...
     def __init__(
         self,

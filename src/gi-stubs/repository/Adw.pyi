@@ -260,6 +260,7 @@ class AboutWindow(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     def __init__(
         self,
@@ -554,6 +555,7 @@ class ActionRow(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -666,6 +668,7 @@ class Animation(GObject.Object):
         target: AnimationTarget
         value: float
         widget: Gtk.Widget
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -779,6 +782,7 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
         is_remote: bool
         resource_base_path: Optional[str]
         action_group: Optional[Gio.ActionGroup]
+
     props: Props = ...
     parent_instance: Gtk.Application = ...
     def __init__(
@@ -1002,6 +1006,7 @@ class ApplicationWindow(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
@@ -1195,6 +1200,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -1380,6 +1386,7 @@ class Banner(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -1548,6 +1555,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -1624,6 +1632,7 @@ class Breakpoint(GObject.Object, Gtk.Buildable):
 
     class Props:
         condition: Optional[BreakpointCondition]
+
     props: Props = ...
     def __init__(self, condition: Optional[BreakpointCondition] = ...): ...
     def add_setter(self, object: GObject.Object, property: str, value: Any) -> None: ...
@@ -1748,6 +1757,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -1960,6 +1970,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -2175,6 +2186,7 @@ class Carousel(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2363,6 +2375,7 @@ class CarouselIndicatorDots(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2524,6 +2537,7 @@ class CarouselIndicatorLines(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2691,6 +2705,7 @@ class Clamp(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2777,6 +2792,7 @@ class ClampLayout(Gtk.LayoutManager, Gtk.Orientable):
         tightening_threshold: int
         unit: LengthUnit
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -2929,6 +2945,7 @@ class ClampScrollable(
         hscroll_policy: Gtk.ScrollablePolicy
         vadjustment: Optional[Gtk.Adjustment]
         vscroll_policy: Gtk.ScrollablePolicy
+
     props: Props = ...
     def __init__(
         self,
@@ -3157,6 +3174,7 @@ class ComboRow(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: ActionRow = ...
     def __init__(
@@ -3409,6 +3427,7 @@ class EntryRow(
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -3518,6 +3537,7 @@ class EnumListItem(GObject.Object):
         name: str
         nick: str
         value: int
+
     props: Props = ...
     def get_name(self) -> str: ...
     def get_nick(self) -> str: ...
@@ -3557,6 +3577,7 @@ class EnumListModel(GObject.Object, Gio.ListModel):
 
     class Props:
         enum_type: Type
+
     props: Props = ...
     def __init__(self, enum_type: Type = ...): ...
     def find_position(self, value: int) -> int: ...
@@ -3718,6 +3739,7 @@ class ExpanderRow(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -3947,6 +3969,7 @@ class Flap(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -4158,6 +4181,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -4368,6 +4392,7 @@ class Leaflet(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -4488,6 +4513,7 @@ class LeafletPage(GObject.Object):
         child: Gtk.Widget
         name: Optional[str]
         navigatable: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -4700,6 +4726,7 @@ class MessageDialog(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -4938,6 +4965,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -5134,6 +5162,7 @@ class NavigationSplitView(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -5326,6 +5355,7 @@ class NavigationView(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -5523,6 +5553,7 @@ class OverlaySplitView(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -5775,6 +5806,7 @@ class PasswordEntryRow(
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     def __init__(
         self,
@@ -5954,6 +5986,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -6128,6 +6161,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     def __init__(
@@ -6322,6 +6356,7 @@ class PreferencesRow(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     parent_instance: Gtk.ListBoxRow = ...
     def __init__(
@@ -6574,6 +6609,7 @@ class PreferencesWindow(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -6690,6 +6726,7 @@ class PropertyAnimationTarget(AnimationTarget):
     class Props:
         object: GObject.Object
         pspec: GObject.ParamSpec
+
     props: Props = ...
     def __init__(
         self, object: GObject.Object = ..., pspec: GObject.ParamSpec = ...
@@ -6893,6 +6930,7 @@ class SpinRow(
         text: str
         width_chars: int
         xalign: float
+
     props: Props = ...
     def __init__(
         self,
@@ -7125,6 +7163,7 @@ class SplitButton(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -7253,6 +7292,7 @@ class SpringAnimation(Animation):
         target: AnimationTarget
         value: float
         widget: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -7448,6 +7488,7 @@ class Squeezer(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -7548,6 +7589,7 @@ class SqueezerPage(GObject.Object):
     class Props:
         child: Gtk.Widget
         enabled: bool
+
     props: Props = ...
     def __init__(self, child: Gtk.Widget = ..., enabled: bool = ...): ...
     def get_child(self) -> Gtk.Widget: ...
@@ -7679,6 +7721,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -7769,6 +7812,7 @@ class StyleManager(GObject.Object):
         display: Optional[Gdk.Display]
         high_contrast: bool
         system_supports_color_schemes: bool
+
     props: Props = ...
     def __init__(self, color_scheme: ColorScheme = ..., display: Gdk.Display = ...): ...
     def get_color_scheme(self) -> ColorScheme: ...
@@ -7832,6 +7876,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
         swipeable: Swipeable
         upper_overshoot: bool
         orientation: Gtk.Orientation
+
     props: Props = ...
     def __init__(
         self,
@@ -7902,9 +7947,9 @@ class SwipeableInterface(GObject.GPointer):
     get_snap_points: Callable[[Swipeable], list[float]] = ...
     get_progress: Callable[[Swipeable], float] = ...
     get_cancel_progress: Callable[[Swipeable], float] = ...
-    get_swipe_area: Callable[
-        [Swipeable, NavigationDirection, bool], Gdk.Rectangle
-    ] = ...
+    get_swipe_area: Callable[[Swipeable, NavigationDirection, bool], Gdk.Rectangle] = (
+        ...
+    )
     padding: list[None] = ...
 
 class SwitchRow(
@@ -8055,6 +8100,7 @@ class SwitchRow(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -8249,6 +8295,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -8438,6 +8485,7 @@ class TabButton(
         accessible_role: Gtk.AccessibleRole
         action_name: Optional[str]
         action_target: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -8624,6 +8672,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -8759,6 +8808,7 @@ class TabPage(GObject.Object, Gtk.Accessible):
         title: str
         tooltip: Optional[str]
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -8948,6 +8998,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9090,6 +9141,7 @@ class TimedAnimation(Animation):
         target: AnimationTarget
         value: float
         widget: Gtk.Widget
+
     props: Props = ...
     def __init__(
         self,
@@ -9168,6 +9220,7 @@ class Toast(GObject.Object):
         timeout: int
         title: Optional[str]
         use_markup: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -9322,6 +9375,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9496,6 +9550,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9684,6 +9739,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9792,6 +9848,7 @@ class ViewStackPage(GObject.Object, Gtk.Accessible):
         use_underline: bool
         visible: bool
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -9857,6 +9914,7 @@ class ViewStackPages(GObject.Object, Gio.ListModel, Gtk.SelectionModel):
 
     class Props:
         selected_page: Optional[ViewStackPage]
+
     props: Props = ...
     def __init__(self, selected_page: ViewStackPage = ...): ...
     def get_selected_page(self) -> Optional[ViewStackPage]: ...
@@ -9981,6 +10039,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -10132,6 +10191,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -10313,6 +10373,7 @@ class ViewSwitcherTitle(
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,
@@ -10549,6 +10610,7 @@ class Window(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         startup_id: str
+
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -10735,6 +10797,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     def __init__(
         self,

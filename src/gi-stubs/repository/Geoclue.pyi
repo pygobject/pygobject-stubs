@@ -83,6 +83,7 @@ class ClientProxy(
         location: str
         requested_accuracy_level: int
         time_threshold: int
+
     props: Props = ...
     def __init__(
         self,
@@ -194,6 +195,7 @@ class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
         location: str
         requested_accuracy_level: int
         time_threshold: int
+
     props: Props = ...
     def __init__(
         self,
@@ -255,6 +257,7 @@ class LocationProxy(
         longitude: float
         speed: float
         timestamp: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -336,6 +339,7 @@ class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
         longitude: float
         speed: float
         timestamp: GLib.Variant
+
     props: Props = ...
     def __init__(
         self,
@@ -441,6 +445,7 @@ class ManagerProxy(
         g_object_path: str
         available_accuracy_level: int
         in_use: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -510,6 +515,7 @@ class ManagerSkeleton(Gio.DBusInterfaceSkeleton, Manager, Gio.DBusInterface):
         g_flags: Gio.DBusInterfaceSkeletonFlags
         available_accuracy_level: int
         in_use: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -535,6 +541,7 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         distance_threshold: int
         location: LocationProxy
         time_threshold: int
+
     props: Props = ...
     def __init__(
         self,

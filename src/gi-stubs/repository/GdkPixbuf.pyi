@@ -33,6 +33,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         pixels: None
         rowstride: int
         width: int
+
     props: Props = ...
     def __init__(
         self,
@@ -446,6 +447,7 @@ class PixbufNonAnim(PixbufAnimation):
 class PixbufSimpleAnim(PixbufAnimation):
     class Props:
         loop: bool
+
     props: Props = ...
     def __init__(self, loop: bool = ...): ...
     def add_frame(self, pixbuf: Pixbuf) -> None: ...

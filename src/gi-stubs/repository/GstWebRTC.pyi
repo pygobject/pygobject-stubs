@@ -65,6 +65,7 @@ class WebRTCDTLSTransport(Gst.Object):
         transport: WebRTCICETransport
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(
         self,
@@ -138,6 +139,7 @@ class WebRTCDataChannel(GObject.Object):
         priority: WebRTCPriorityType
         protocol: str
         ready_state: WebRTCDataChannelState
+
     props: Props = ...
     def __init__(
         self,
@@ -198,6 +200,7 @@ class WebRTCICETransport(Gst.Object):
         state: WebRTCICEConnectionState
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(
         self,
@@ -239,6 +242,7 @@ class WebRTCRTPReceiver(Gst.Object):
         transport: WebRTCDTLSTransport
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(self, name: Optional[str] = ..., parent: Gst.Object = ...): ...
 
@@ -278,6 +282,7 @@ class WebRTCRTPSender(Gst.Object):
         transport: WebRTCDTLSTransport
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(
         self,
@@ -339,6 +344,7 @@ class WebRTCRTPTransceiver(Gst.Object):
         sender: WebRTCRTPSender
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(
         self,
@@ -393,6 +399,7 @@ class WebRTCSCTPTransport(Gst.Object):
         transport: WebRTCDTLSTransport
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     def __init__(self, name: Optional[str] = ..., parent: Gst.Object = ...): ...
 

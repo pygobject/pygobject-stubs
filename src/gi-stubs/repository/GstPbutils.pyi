@@ -182,6 +182,7 @@ class AudioVisualizer(Gst.Element):
         shader: AudioVisualizerShader
         name: Optional[str]
         parent: Optional[Gst.Object]
+
     props: Props = ...
     parent: Gst.Element = ...
     req_spf: int = ...
@@ -245,6 +246,7 @@ class Discoverer(GObject.Object):
     class Props:
         timeout: int
         use_cache: bool
+
     props: Props = ...
     parent: GObject.Object = ...
     priv: DiscovererPrivate = ...
@@ -445,6 +447,7 @@ class EncodingAudioProfile(EncodingProfile):
     class Props:
         element_properties: Optional[Gst.Structure]
         restriction_caps: Gst.Caps
+
     props: Props = ...
     def __init__(
         self, element_properties: Gst.Structure = ..., restriction_caps: Gst.Caps = ...
@@ -484,6 +487,7 @@ class EncodingContainerProfile(EncodingProfile):
     class Props:
         element_properties: Optional[Gst.Structure]
         restriction_caps: Gst.Caps
+
     props: Props = ...
     def __init__(
         self, element_properties: Gst.Structure = ..., restriction_caps: Gst.Caps = ...
@@ -525,6 +529,7 @@ class EncodingProfile(GObject.Object):
     class Props:
         element_properties: Optional[Gst.Structure]
         restriction_caps: Gst.Caps
+
     props: Props = ...
     def __init__(
         self, element_properties: Gst.Structure = ..., restriction_caps: Gst.Caps = ...
@@ -624,6 +629,7 @@ class EncodingVideoProfile(EncodingProfile):
     class Props:
         element_properties: Optional[Gst.Structure]
         restriction_caps: Gst.Caps
+
     props: Props = ...
     def __init__(
         self, element_properties: Gst.Structure = ..., restriction_caps: Gst.Caps = ...

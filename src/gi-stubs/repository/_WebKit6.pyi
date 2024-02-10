@@ -142,6 +142,7 @@ class AutomationSession(GObject.Object):
 
     class Props:
         id: str
+
     props: Props = ...
     def __init__(self, id: str = ...): ...
     def get_application_info(self) -> ApplicationInfo: ...
@@ -261,6 +262,7 @@ class ColorChooserRequest(GObject.Object):
 
     class Props:
         rgba: Gdk.RGBA
+
     props: Props = ...
     def __init__(self, rgba: Gdk.RGBA = ...): ...
     def cancel(self) -> None: ...
@@ -535,6 +537,7 @@ class Download(GObject.Object):
         destination: Optional[str]
         estimated_progress: float
         response: URIResponse
+
     props: Props = ...
     def __init__(self, allow_overwrite: bool = ...): ...
     def cancel(self) -> None: ...
@@ -579,6 +582,7 @@ class EditorState(GObject.Object):
 
     class Props:
         typing_attributes: int
+
     props: Props = ...
     def get_typing_attributes(self) -> int: ...
     def is_copy_available(self) -> bool: ...
@@ -678,6 +682,7 @@ class FileChooserRequest(GObject.Object):
         mime_types: list[str]
         select_multiple: bool
         selected_files: list[str]
+
     props: Props = ...
     def cancel(self) -> None: ...
     def get_mime_types(self) -> list[str]: ...
@@ -727,6 +732,7 @@ class FindController(GObject.Object):
         options: FindOptions
         text: str
         web_view: WebView
+
     props: Props = ...
     def __init__(self, web_view: WebView = ...): ...
     def count_matches(
@@ -805,6 +811,7 @@ class GeolocationManager(GObject.Object):
 
     class Props:
         enable_high_accuracy: bool
+
     props: Props = ...
     def failed(self, error_message: str) -> None: ...
     def get_enable_high_accuracy(self) -> bool: ...
@@ -884,6 +891,7 @@ class HitTestResult(GObject.Object):
         link_title: str
         link_uri: str
         media_uri: str
+
     props: Props = ...
     def __init__(
         self,
@@ -959,6 +967,7 @@ class InputMethodContext(GObject.Object):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
+
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: InputMethodContextPrivate = ...
@@ -1123,6 +1132,7 @@ class NavigationPolicyDecision(PolicyDecision):
 
     class Props:
         navigation_action: NavigationAction
+
     props: Props = ...
     def get_navigation_action(self) -> NavigationAction: ...
 
@@ -1184,6 +1194,7 @@ class NetworkSession(GObject.Object):
         is_ephemeral: bool
         cache_directory: str
         data_directory: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1270,6 +1281,7 @@ class Notification(GObject.Object):
         id: int
         tag: Optional[str]
         title: str
+
     props: Props = ...
     def clicked(self) -> None: ...
     def close(self) -> None: ...
@@ -1461,6 +1473,7 @@ class PrintOperation(GObject.Object):
         page_setup: Gtk.PageSetup
         print_settings: Gtk.PrintSettings
         web_view: WebView
+
     props: Props = ...
     def __init__(
         self,
@@ -1511,6 +1524,7 @@ class ResponsePolicyDecision(PolicyDecision):
     class Props:
         request: URIRequest
         response: URIResponse
+
     props: Props = ...
     def get_request(self) -> URIRequest: ...
     def get_response(self) -> URIResponse: ...
@@ -1786,6 +1800,7 @@ class Settings(GObject.Object):
         serif_font_family: str
         user_agent: str
         zoom_text_only: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -2010,6 +2025,7 @@ class URIRequest(GObject.Object):
 
     class Props:
         uri: str
+
     props: Props = ...
     def __init__(self, uri: str = ...): ...
     def get_http_headers(self) -> Soup.MessageHeaders: ...
@@ -2059,6 +2075,7 @@ class URIResponse(GObject.Object):
         status_code: int
         suggested_filename: str
         uri: str
+
     props: Props = ...
     def get_content_length(self) -> int: ...
     def get_http_headers(self) -> Soup.MessageHeaders: ...
@@ -2141,6 +2158,7 @@ class URISchemeResponse(GObject.Object):
     class Props:
         stream: Gio.InputStream
         stream_length: int
+
     props: Props = ...
     def __init__(self, stream: Gio.InputStream = ..., stream_length: int = ...): ...
     @classmethod
@@ -2189,6 +2207,7 @@ class UserContentFilterStore(GObject.Object):
 
     class Props:
         path: str
+
     props: Props = ...
     def __init__(self, path: str = ...): ...
     def fetch_identifiers(
@@ -2320,6 +2339,7 @@ class UserMediaPermissionRequest(GObject.Object, PermissionRequest):
     class Props:
         is_for_audio_device: bool
         is_for_video_device: bool
+
     props: Props = ...
 
 class UserMediaPermissionRequestClass(GObject.GPointer):
@@ -2358,6 +2378,7 @@ class UserMessage(GObject.InitiallyUnowned):
         fd_list: Optional[Gio.UnixFDList]
         name: str
         parameters: Optional[GLib.Variant]
+
     props: Props = ...
     def __init__(
         self,
@@ -2484,6 +2505,7 @@ class WebContext(GObject.Object):
     class Props:
         time_zone_override: str
         memory_pressure_settings: MemoryPressureSettings
+
     props: Props = ...
     def __init__(
         self,
@@ -2565,6 +2587,7 @@ class WebInspector(GObject.Object):
         attached_height: int
         can_attach: bool
         inspected_uri: str
+
     props: Props = ...
     def attach(self) -> None: ...
     def close(self) -> None: ...
@@ -2614,6 +2637,7 @@ class WebResource(GObject.Object):
     class Props:
         response: URIResponse
         uri: str
+
     props: Props = ...
     def get_data(
         self,
@@ -2817,6 +2841,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         accessible_role: Gtk.AccessibleRole
         related_view: WebView
         settings: Settings
+
     props: Props = ...
     parent_instance: WebViewBase = ...
     priv: WebViewPrivate = ...
@@ -3170,6 +3195,7 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
+
     props: Props = ...
     parent_instance: Gtk.Widget = ...
     priv: WebViewBasePrivate = ...
@@ -3375,6 +3401,7 @@ class WebsiteDataManager(GObject.Object):
         is_ephemeral: bool
         origin_storage_ratio: float
         total_storage_ratio: float
+
     props: Props = ...
     def __init__(
         self,
@@ -3457,6 +3484,7 @@ class WebsitePolicies(GObject.Object):
 
     class Props:
         autoplay: AutoplayPolicy
+
     props: Props = ...
     def __init__(self, autoplay: AutoplayPolicy = ...): ...
     def get_autoplay_policy(self) -> AutoplayPolicy: ...
@@ -3507,6 +3535,7 @@ class WindowProperties(GObject.Object):
         scrollbars_visible: bool
         statusbar_visible: bool
         toolbar_visible: bool
+
     props: Props = ...
     def __init__(
         self,

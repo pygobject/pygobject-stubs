@@ -368,7 +368,7 @@ def _generate_full_name(prefix: str, name: str) -> str:
 def _build_function_info(
     current_namespace: str,
     name: str,
-    function: (GI.FunctionInfo | GI.VFuncInfo),
+    function: GI.FunctionInfo | GI.VFuncInfo,
     in_class: Optional[Any],
     needed_namespaces: set[str],
     return_signature: Optional[str] = None,

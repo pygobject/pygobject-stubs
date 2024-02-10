@@ -23,7 +23,7 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "black",
+    "black>=24.1.1",
     "codespell",
     "isort",
     "ruff",

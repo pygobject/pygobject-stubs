@@ -109,6 +109,7 @@ class Auth(GObject.Object):
         is_for_proxy: bool
         realm: str
         scheme_name: str
+
     props: Props = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -146,6 +147,7 @@ class AuthBasic(Auth):
         is_for_proxy: bool
         realm: str
         scheme_name: str
+
     props: Props = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -172,6 +174,7 @@ class AuthDigest(Auth):
         is_for_proxy: bool
         realm: str
         scheme_name: str
+
     props: Props = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -185,6 +188,7 @@ class AuthDomain(GObject.Object):
         generic_auth_data: None
         proxy: bool
         realm: str
+
     props: Props = ...
     def __init__(
         self,
@@ -225,6 +229,7 @@ class AuthDomainBasic(AuthDomain):
         generic_auth_data: None
         proxy: bool
         realm: str
+
     props: Props = ...
     def __init__(
         self,
@@ -261,6 +266,7 @@ class AuthDomainDigest(AuthDomain):
         generic_auth_data: None
         proxy: bool
         realm: str
+
     props: Props = ...
     def __init__(
         self,
@@ -297,6 +303,7 @@ class AuthNTLM(Auth):
         is_for_proxy: bool
         realm: str
         scheme_name: str
+
     props: Props = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -310,6 +317,7 @@ class AuthNegotiate(Auth):
         is_for_proxy: bool
         realm: str
         scheme_name: str
+
     props: Props = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -321,6 +329,7 @@ class Cache(GObject.Object, SessionFeature):
     class Props:
         cache_dir: str
         cache_type: CacheType
+
     props: Props = ...
     def __init__(self, cache_dir: str = ..., cache_type: CacheType = ...): ...
     parent_instance: GObject.Object = ...
@@ -388,6 +397,7 @@ class CookieJar(GObject.Object, SessionFeature):
     class Props:
         accept_policy: CookieJarAcceptPolicy
         read_only: bool
+
     props: Props = ...
     def __init__(
         self, accept_policy: CookieJarAcceptPolicy = ..., read_only: bool = ...
@@ -441,6 +451,7 @@ class CookieJarDB(CookieJar, SessionFeature):
         filename: str
         accept_policy: CookieJarAcceptPolicy
         read_only: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -459,6 +470,7 @@ class CookieJarText(CookieJar, SessionFeature):
         filename: str
         accept_policy: CookieJarAcceptPolicy
         read_only: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -496,6 +508,7 @@ class HSTSEnforcerClass(GObject.GPointer):
 class HSTSEnforcerDB(HSTSEnforcer, SessionFeature):
     class Props:
         filename: str
+
     props: Props = ...
     def __init__(self, filename: str = ...): ...
     @classmethod
@@ -531,6 +544,7 @@ class Logger(GObject.Object, SessionFeature):
     class Props:
         level: LoggerLogLevel
         max_body_size: int
+
     props: Props = ...
     def __init__(self, level: LoggerLogLevel = ..., max_body_size: int = ...): ...
     def get_max_body_size(self) -> int: ...
@@ -568,6 +582,7 @@ class Message(GObject.Object):
         tls_peer_certificate_errors: Gio.TlsCertificateFlags
         tls_protocol_version: Gio.TlsProtocolVersion
         uri: GLib.Uri
+
     props: Props = ...
     def __init__(
         self,
@@ -749,6 +764,7 @@ class MultipartInputStream(Gio.FilterInputStream, Gio.PollableInputStream):
         message: Message
         base_stream: Gio.InputStream
         close_base_stream: bool
+
     props: Props = ...
     def __init__(
         self,
@@ -789,6 +805,7 @@ class Server(GObject.Object):
         tls_auth_mode: Gio.TlsAuthenticationMode
         tls_certificate: Gio.TlsCertificate
         tls_database: Gio.TlsDatabase
+
     props: Props = ...
     def __init__(
         self,
@@ -861,6 +878,7 @@ class ServerMessage(GObject.Object):
     class Props:
         tls_peer_certificate: Gio.TlsCertificate
         tls_peer_certificate_errors: Gio.TlsCertificateFlags
+
     props: Props = ...
     def get_http_version(self) -> HTTPVersion: ...
     def get_local_address(self) -> Optional[Gio.SocketAddress]: ...
@@ -910,6 +928,7 @@ class Session(GObject.Object):
         tls_database: Gio.TlsDatabase
         tls_interaction: Gio.TlsInteraction
         user_agent: str
+
     props: Props = ...
     def __init__(
         self,
@@ -1044,6 +1063,7 @@ class WebsocketConnection(GObject.Object):
         protocol: str
         state: WebsocketState
         uri: GLib.Uri
+
     props: Props = ...
     def __init__(
         self,
