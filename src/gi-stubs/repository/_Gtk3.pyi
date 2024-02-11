@@ -14991,8 +14991,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
     def do_format_entry_text(self, path: str) -> str: ...
     def get_active(self) -> int: ...
     def get_active_id(self) -> Optional[str]: ...
-    # override
-    def get_active_iter(self) -> Optional[TreeIter]: ...
+    def get_active_iter(self) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def get_add_tearoffs(self) -> bool: ...
     def get_button_sensitivity(self) -> SensitivityType: ...
     def get_column_span_column(self) -> int: ...
@@ -33970,6 +33969,30 @@ class ListBoxRowClass(GObject.GPointer):
 class ListStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ListStore(**properties)
+        new(types:list) -> Gtk.ListStore
+
+    Object GtkListStore
+
+    Signals from GtkTreeModel:
+      row-changed (GtkTreePath, GtkTreeIter)
+      row-inserted (GtkTreePath, GtkTreeIter)
+      row-has-child-toggled (GtkTreePath, GtkTreeIter)
+      row-deleted (GtkTreePath)
+      rows-reordered (GtkTreePath, GtkTreeIter, gpointer)
+
+    Signals from GtkTreeSortable:
+      sort-column-changed ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent: GObject.Object = ...
     priv: ListStorePrivate = ...
 
@@ -58166,7 +58189,18 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         width_request: int = ...,
     ): ...
     # override
-    def attach(self, *args, **kwargs): ...
+    def attach(
+        self,
+        child: Widget,
+        left_attach: int,
+        right_attach: int,
+        top_attach: int,
+        bottom_attach: int,
+        xoptions: AttachOptions,
+        yoptions: AttachOptions,
+        xpadding: int,
+        ypadding: int,
+    ): ...
     def attach_defaults(
         self,
         widget: Widget,
@@ -59152,10 +59186,9 @@ class TextIter(GObject.GBoxed):
     ) -> bool: ...
     def backward_line(self) -> bool: ...
     def backward_lines(self, count: int) -> bool: ...
-    # override
     def backward_search(
-        self, str: str, flags: TextSearchFlags, limit: Optional[TextIter]
-    ) -> Optional[tuple[TextIter, TextIter]]: ...
+        self, str: str, flags: TextSearchFlags, limit: Optional[TextIter] = None
+    ) -> Optional[Tuple[TextIter, TextIter]]: ...  # CHECK Wrapped function
     def backward_sentence_start(self) -> bool: ...
     def backward_sentence_starts(self, count: int) -> bool: ...
     def backward_to_tag_toggle(self, tag: Optional[TextTag] = None) -> bool: ...
@@ -59189,10 +59222,9 @@ class TextIter(GObject.GBoxed):
     ) -> bool: ...
     def forward_line(self) -> bool: ...
     def forward_lines(self, count: int) -> bool: ...
-    # override
     def forward_search(
-        self, str: str, flags: TextSearchFlags, limit: Optional[TextIter]
-    ) -> Optional[tuple[TextIter, TextIter]]: ...
+        self, str: str, flags: TextSearchFlags, limit: Optional[TextIter] = None
+    ) -> Optional[Tuple[TextIter, TextIter]]: ...  # CHECK Wrapped function
     def forward_sentence_end(self) -> bool: ...
     def forward_sentence_ends(self, count: int) -> bool: ...
     def forward_to_end(self) -> None: ...
@@ -63610,6 +63642,13 @@ class TreeIter(GObject.GBoxed):
 
 # override
 class TreeModel(GObject.GInterface):
+    """
+    Interface GtkTreeModel
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def filter_new(self, root: Optional[TreePath] = None) -> TreeModelFilter: ...
     def foreach(self, func: Callable[..., bool], *user_data: Any) -> None: ...
     def get(self, treeiter: TreeIter, *columns: list[str]) -> tuple[Any, ...]: ...
@@ -64109,6 +64148,241 @@ class TreeStorePrivate(GObject.GPointer): ...
 
 # override
 class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
+    """
+    :Constructors:
+
+    ::
+
+        TreeView(**properties)
+        new() -> Gtk.Widget
+        new_with_model(model:Gtk.TreeModel) -> Gtk.Widget
+
+    Object GtkTreeView
+
+    Signals from GtkTreeView:
+      move-cursor (GtkMovementStep, gint) -> gboolean
+      select-all () -> gboolean
+      unselect-all () -> gboolean
+      row-activated (GtkTreePath, GtkTreeViewColumn)
+      toggle-cursor-row () -> gboolean
+      test-expand-row (GtkTreeIter, GtkTreePath) -> gboolean
+      test-collapse-row (GtkTreeIter, GtkTreePath) -> gboolean
+      row-expanded (GtkTreeIter, GtkTreePath)
+      row-collapsed (GtkTreeIter, GtkTreePath)
+      columns-changed ()
+      cursor-changed ()
+      select-cursor-row (gboolean) -> gboolean
+      expand-collapse-cursor-row (gboolean, gboolean, gboolean) -> gboolean
+      select-cursor-parent () -> gboolean
+      start-interactive-search () -> gboolean
+
+    Properties from GtkTreeView:
+      model -> GtkTreeModel: TreeView Model
+        The model for the tree view
+      headers-visible -> gboolean: Headers Visible
+        Show the column header buttons
+      headers-clickable -> gboolean: Headers Clickable
+        Column headers respond to click events
+      expander-column -> GtkTreeViewColumn: Expander Column
+        Set the column for the expander column
+      reorderable -> gboolean: Reorderable
+        View is reorderable
+      rules-hint -> gboolean: Rules Hint
+        Set a hint to the theme engine to draw rows in alternating colors
+      enable-search -> gboolean: Enable Search
+        View allows user to search through columns interactively
+      search-column -> gint: Search Column
+        Model column to search through during interactive search
+      fixed-height-mode -> gboolean: Fixed Height Mode
+        Speeds up GtkTreeView by assuming that all rows have the same height
+      hover-selection -> gboolean: Hover Selection
+        Whether the selection should follow the pointer
+      hover-expand -> gboolean: Hover Expand
+        Whether rows should be expanded/collapsed when the pointer moves over them
+      show-expanders -> gboolean: Show Expanders
+        View has expanders
+      level-indentation -> gint: Level Indentation
+        Extra indentation for each level
+      rubber-banding -> gboolean: Rubber Banding
+        Whether to enable selection of multiple items by dragging the mouse pointer
+      enable-grid-lines -> GtkTreeViewGridLines: Enable Grid Lines
+        Whether grid lines should be drawn in the tree view
+      enable-tree-lines -> gboolean: Enable Tree Lines
+        Whether tree lines should be drawn in the tree view
+      tooltip-column -> gint: Tooltip Column
+        The column in the model containing the tooltip texts for the rows
+      activate-on-single-click -> gboolean: Activate on Single Click
+        Activate row on a single click
+
+    Signals from GtkContainer:
+      add (GtkWidget)
+      remove (GtkWidget)
+      check-resize ()
+      set-focus-child (GtkWidget)
+
+    Properties from GtkContainer:
+      border-width -> guint: Border width
+        The width of the empty border outside the containers children
+      resize-mode -> GtkResizeMode: Resize mode
+        Specify how resize events are handled
+      child -> GtkWidget: Child
+        Can be used to add a new child to the container
+
+    Signals from GtkWidget:
+      composited-changed ()
+      event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      size-allocate (GdkRectangle)
+      state-flags-changed (GtkStateFlags)
+      parent-set (GtkWidget)
+      hierarchy-changed (GtkWidget)
+      style-set (GtkStyle)
+      style-updated ()
+      grab-notify (gboolean)
+      child-notify (GParam)
+      draw (CairoContext) -> gboolean
+      mnemonic-activate (gboolean) -> gboolean
+      grab-focus ()
+      focus (GtkDirectionType) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      event-after (GdkEvent)
+      button-press-event (GdkEvent) -> gboolean
+      button-release-event (GdkEvent) -> gboolean
+      touch-event (GdkEvent) -> gboolean
+      scroll-event (GdkEvent) -> gboolean
+      motion-notify-event (GdkEvent) -> gboolean
+      delete-event (GdkEvent) -> gboolean
+      destroy-event (GdkEvent) -> gboolean
+      key-press-event (GdkEvent) -> gboolean
+      key-release-event (GdkEvent) -> gboolean
+      enter-notify-event (GdkEvent) -> gboolean
+      leave-notify-event (GdkEvent) -> gboolean
+      configure-event (GdkEvent) -> gboolean
+      focus-in-event (GdkEvent) -> gboolean
+      focus-out-event (GdkEvent) -> gboolean
+      map-event (GdkEvent) -> gboolean
+      unmap-event (GdkEvent) -> gboolean
+      property-notify-event (GdkEvent) -> gboolean
+      selection-clear-event (GdkEvent) -> gboolean
+      selection-request-event (GdkEvent) -> gboolean
+      selection-notify-event (GdkEvent) -> gboolean
+      selection-received (GtkSelectionData, guint)
+      selection-get (GtkSelectionData, guint, guint)
+      proximity-in-event (GdkEvent) -> gboolean
+      proximity-out-event (GdkEvent) -> gboolean
+      drag-leave (GdkDragContext, guint)
+      drag-begin (GdkDragContext)
+      drag-end (GdkDragContext)
+      drag-data-delete (GdkDragContext)
+      drag-failed (GdkDragContext, GtkDragResult) -> gboolean
+      drag-motion (GdkDragContext, gint, gint, guint) -> gboolean
+      drag-drop (GdkDragContext, gint, gint, guint) -> gboolean
+      drag-data-get (GdkDragContext, GtkSelectionData, guint, guint)
+      drag-data-received (GdkDragContext, gint, gint, GtkSelectionData, guint, guint)
+      visibility-notify-event (GdkEvent) -> gboolean
+      window-state-event (GdkEvent) -> gboolean
+      damage-event (GdkEvent) -> gboolean
+      grab-broken-event (GdkEvent) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+      popup-menu () -> gboolean
+      show-help (GtkWidgetHelpType) -> gboolean
+      accel-closures-changed ()
+      screen-changed (GdkScreen)
+      can-activate-accel (guint) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: Widget name
+        The name of the widget
+      parent -> GtkContainer: Parent widget
+        The parent widget of this widget. Must be a Container widget
+      width-request -> gint: Width request
+        Override for width request of the widget, or -1 if natural request should be used
+      height-request -> gint: Height request
+        Override for height request of the widget, or -1 if natural request should be used
+      visible -> gboolean: Visible
+        Whether the widget is visible
+      sensitive -> gboolean: Sensitive
+        Whether the widget responds to input
+      app-paintable -> gboolean: Application paintable
+        Whether the application will paint directly on the widget
+      can-focus -> gboolean: Can focus
+        Whether the widget can accept the input focus
+      has-focus -> gboolean: Has focus
+        Whether the widget has the input focus
+      is-focus -> gboolean: Is focus
+        Whether the widget is the focus widget within the toplevel
+      focus-on-click -> gboolean: Focus on click
+        Whether the widget should grab focus when it is clicked with the mouse
+      can-default -> gboolean: Can default
+        Whether the widget can be the default widget
+      has-default -> gboolean: Has default
+        Whether the widget is the default widget
+      receives-default -> gboolean: Receives default
+        If TRUE, the widget will receive the default action when it is focused
+      composite-child -> gboolean: Composite child
+        Whether the widget is part of a composite widget
+      style -> GtkStyle: Style
+        The style of the widget, which contains information about how it will look (colors etc)
+      events -> GdkEventMask: Events
+        The event mask that decides what kind of GdkEvents this widget gets
+      no-show-all -> gboolean: No show all
+        Whether gtk_widget_show_all() should not affect this widget
+      has-tooltip -> gboolean: Has tooltip
+        Whether this widget has a tooltip
+      tooltip-markup -> gchararray: Tooltip markup
+        The contents of the tooltip for this widget
+      tooltip-text -> gchararray: Tooltip Text
+        The contents of the tooltip for this widget
+      window -> GdkWindow: Window
+        The widget's window if it is realized
+      opacity -> gdouble: Opacity for Widget
+        The opacity of the widget, from 0 to 1
+      double-buffered -> gboolean: Double Buffered
+        Whether the widget is double buffered
+      halign -> GtkAlign: Horizontal Alignment
+        How to position in extra horizontal space
+      valign -> GtkAlign: Vertical Alignment
+        How to position in extra vertical space
+      margin-left -> gint: Margin on Left
+        Pixels of extra space on the left side
+      margin-right -> gint: Margin on Right
+        Pixels of extra space on the right side
+      margin-start -> gint: Margin on Start
+        Pixels of extra space on the start
+      margin-end -> gint: Margin on End
+        Pixels of extra space on the end
+      margin-top -> gint: Margin on Top
+        Pixels of extra space on the top side
+      margin-bottom -> gint: Margin on Bottom
+        Pixels of extra space on the bottom side
+      margin -> gint: All Margins
+        Pixels of extra space on all four sides
+      hexpand -> gboolean: Horizontal Expand
+        Whether widget wants more horizontal space
+      vexpand -> gboolean: Vertical Expand
+        Whether widget wants more vertical space
+      hexpand-set -> gboolean: Horizontal Expand Set
+        Whether to use the hexpand property
+      vexpand-set -> gboolean: Vertical Expand Set
+        Whether to use the vexpand property
+      expand -> gboolean: Expand Both
+        Whether widget wants to expand in both directions
+      scale-factor -> gint: Scale factor
+        The scaling factor of the window
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         activate_on_single_click: bool
         enable_grid_lines: TreeViewGridLines
@@ -64121,16 +64395,14 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         hover_expand: bool
         hover_selection: bool
         level_indentation: int
-        model: TreeModel
+        model: Optional[TreeModel]
         reorderable: bool
         rubber_banding: bool
         rules_hint: bool
         search_column: int
         show_expanders: bool
         tooltip_column: int
-        ubuntu_almost_fixed_height_mode: bool
         border_width: int
-        child: Widget
         resize_mode: ResizeMode
         app_paintable: bool
         can_default: bool
@@ -64158,23 +64430,24 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container
+        parent: Optional[Container]
         receives_default: bool
         scale_factor: int
         sensitive: bool
         style: Style
-        tooltip_markup: str
-        tooltip_text: str
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window
+        window: Optional[Gdk.Window]
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
+        child: Widget
 
     props: Props = ...
     parent: Container = ...
@@ -64186,21 +64459,20 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         enable_grid_lines: TreeViewGridLines = ...,
         enable_search: bool = ...,
         enable_tree_lines: bool = ...,
-        expander_column: TreeViewColumn = ...,
+        expander_column: Optional[TreeViewColumn] = ...,
         fixed_height_mode: bool = ...,
         headers_clickable: bool = ...,
         headers_visible: bool = ...,
         hover_expand: bool = ...,
         hover_selection: bool = ...,
         level_indentation: int = ...,
-        model: TreeModel = ...,
+        model: Optional[TreeModel] = ...,
         reorderable: bool = ...,
         rubber_banding: bool = ...,
         rules_hint: bool = ...,
         search_column: int = ...,
         show_expanders: bool = ...,
         tooltip_column: int = ...,
-        ubuntu_almost_fixed_height_mode: bool = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -64232,17 +64504,17 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         parent: Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Style = ...,
-        tooltip_markup: str = ...,
-        tooltip_text: str = ...,
+        style: Optional[Style] = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        hadjustment: Adjustment = ...,
+        hadjustment: Optional[Adjustment] = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment = ...,
+        vadjustment: Optional[Adjustment] = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
     def append_column(self, column: TreeViewColumn) -> int: ...
@@ -67937,8 +68209,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def get_screen(self) -> Gdk.Screen: ...
     def get_sensitive(self) -> bool: ...
     def get_settings(self) -> Settings: ...
-    # override
-    def get_size_request(self) -> Tuple[Optional[int], Optional[int]]: ...
+    def get_size_request(self) -> Tuple[int, int]: ...
     def get_state(self) -> StateType: ...
     def get_state_flags(self) -> StateFlags: ...
     def get_style(self) -> Style: ...
