@@ -1,6 +1,11 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
+from typing import Sequence
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GObject
@@ -51,12 +56,27 @@ ATTR_WINDOW_X11_MONITOR: str = "window.x11.monitor"
 ATTR_WINDOW_X11_SCREEN: str = "window.x11.screen"
 ATTR_WINDOW_X11_XID: str = "window.x11.xid"
 ATTR_WINDOW_Y: str = "window.y"
+_lock = ...  # FIXME Constant
 _namespace: str = "GSound"
 _version: str = "1.0"
 
 def error_quark() -> int: ...
 
 class Context(GObject.Object, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        Context(**properties)
+        new(cancellable:Gio.Cancellable=None) -> GSound.Context
+
+    Object GSoundContext
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def cache(self, attrs: dict[str, str]) -> bool: ...
     @classmethod
     def new(cls, cancellable: Optional[Gio.Cancellable] = None) -> Context: ...

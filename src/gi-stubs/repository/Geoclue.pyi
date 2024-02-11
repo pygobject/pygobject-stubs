@@ -1,12 +1,17 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
+from typing import Sequence
 from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
+_lock = ...  # FIXME Constant
 _namespace: str = "Geoclue"
 _version: str = "2.0"
 
@@ -23,7 +28,14 @@ def manager_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
 
-class Client(GObject.Object):
+class Client(GObject.GInterface):
+    """
+    Interface GClueClient
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def call_start(
         self,
         cancellable: Optional[Gio.Cancellable] = None,
@@ -53,6 +65,14 @@ class Client(GObject.Object):
     ) -> int: ...
 
 class ClientIface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClientIface()
+    """
+
     parent_iface: GObject.TypeInterface = ...
     handle_start: Callable[[Client, Gio.DBusMethodInvocation], bool] = ...
     handle_stop: Callable[[Client, Gio.DBusMethodInvocation], bool] = ...
@@ -67,8 +87,53 @@ class ClientIface(GObject.GPointer):
 class ClientProxy(
     Gio.DBusProxy, Client, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ClientProxy(**properties)
+        new_finish(res:Gio.AsyncResult) -> Geoclue.ClientProxy
+        new_for_bus_finish(res:Gio.AsyncResult) -> Geoclue.ClientProxy
+        new_for_bus_sync(bus_type:Gio.BusType, flags:Gio.DBusProxyFlags, name:str, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.ClientProxy
+        new_sync(connection:Gio.DBusConnection, flags:Gio.DBusProxyFlags, name:str=None, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.ClientProxy
+
+    Object GClueClientProxy
+
+    Signals from GClueClient:
+      handle-start (GDBusMethodInvocation) -> gboolean
+      handle-stop (GDBusMethodInvocation) -> gboolean
+      location-updated (gchararray, gchararray)
+
+    Signals from GDBusProxy:
+      g-properties-changed (GVariant, GStrv)
+      g-signal (gchararray, gchararray, GVariant)
+
+    Properties from GDBusProxy:
+      g-connection -> GDBusConnection: g-connection
+        The connection the proxy is for
+      g-bus-type -> GBusType: Bus Type
+        The bus to connect to, if any
+      g-name -> gchararray: g-name
+        The well-known or unique name that the proxy is for
+      g-name-owner -> gchararray: g-name-owner
+        The unique name for the owner
+      g-flags -> GDBusProxyFlags: g-flags
+        Flags for the proxy
+      g-object-path -> gchararray: g-object-path
+        The object path the proxy is for
+      g-interface-name -> gchararray: g-interface-name
+        The D-Bus interface name the proxy is for
+      g-default-timeout -> gint: Default Timeout
+        Timeout for remote method invocation
+      g-interface-info -> GDBusInterfaceInfo: Interface Information
+        Interface Information
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -83,8 +148,10 @@ class ClientProxy(
         location: str
         requested_accuracy_level: int
         time_threshold: int
-
+        g_bus_type: Gio.BusType
     props: Props = ...
+    parent_instance: Gio.DBusProxy = ...
+    priv: ClientProxyPrivate = ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -102,8 +169,6 @@ class ClientProxy(
         requested_accuracy_level: int = ...,
         time_threshold: int = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: ClientProxyPrivate = ...
     @staticmethod
     def create(
         desktop_id: str,
@@ -182,11 +247,45 @@ class ClientProxy(
     ) -> ClientProxy: ...
 
 class ClientProxyClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClientProxyClass()
+    """
+
     parent_class: Gio.DBusProxyClass = ...
 
 class ClientProxyPrivate(GObject.GPointer): ...
 
 class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
+    """
+    :Constructors:
+
+    ::
+
+        ClientSkeleton(**properties)
+        new() -> Geoclue.ClientSkeleton
+
+    Object GClueClientSkeleton
+
+    Signals from GClueClient:
+      handle-start (GDBusMethodInvocation) -> gboolean
+      handle-stop (GDBusMethodInvocation) -> gboolean
+      location-updated (gchararray, gchararray)
+
+    Signals from GDBusInterfaceSkeleton:
+      g-authorize-method (GDBusMethodInvocation) -> gboolean
+
+    Properties from GDBusInterfaceSkeleton:
+      g-flags -> GDBusInterfaceSkeletonFlags: g-flags
+        Flags for the interface skeleton
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         g_flags: Gio.DBusInterfaceSkeletonFlags
         active: bool
@@ -195,8 +294,9 @@ class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
         location: str
         requested_accuracy_level: int
         time_threshold: int
-
     props: Props = ...
+    parent_instance: Gio.DBusInterfaceSkeleton = ...
+    priv: ClientSkeletonPrivate = ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
@@ -207,17 +307,30 @@ class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
         requested_accuracy_level: int = ...,
         time_threshold: int = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: ClientSkeletonPrivate = ...
     @classmethod
     def new(cls) -> ClientSkeleton: ...
 
 class ClientSkeletonClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClientSkeletonClass()
+    """
+
     parent_class: Gio.DBusInterfaceSkeletonClass = ...
 
 class ClientSkeletonPrivate(GObject.GPointer): ...
 
-class Location(GObject.Object):
+class Location(GObject.GInterface):
+    """
+    Interface GClueLocation
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
     @staticmethod
@@ -226,6 +339,14 @@ class Location(GObject.Object):
     ) -> int: ...
 
 class LocationIface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LocationIface()
+    """
+
     parent_iface: GObject.TypeInterface = ...
     get_accuracy: Callable[[Location], float] = ...
     get_altitude: Callable[[Location], float] = ...
@@ -239,8 +360,48 @@ class LocationIface(GObject.GPointer):
 class LocationProxy(
     Gio.DBusProxy, Location, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        LocationProxy(**properties)
+        new_finish(res:Gio.AsyncResult) -> Geoclue.LocationProxy
+        new_for_bus_finish(res:Gio.AsyncResult) -> Geoclue.LocationProxy
+        new_for_bus_sync(bus_type:Gio.BusType, flags:Gio.DBusProxyFlags, name:str, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.LocationProxy
+        new_sync(connection:Gio.DBusConnection, flags:Gio.DBusProxyFlags, name:str=None, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.LocationProxy
+
+    Object GClueLocationProxy
+
+    Signals from GDBusProxy:
+      g-properties-changed (GVariant, GStrv)
+      g-signal (gchararray, gchararray, GVariant)
+
+    Properties from GDBusProxy:
+      g-connection -> GDBusConnection: g-connection
+        The connection the proxy is for
+      g-bus-type -> GBusType: Bus Type
+        The bus to connect to, if any
+      g-name -> gchararray: g-name
+        The well-known or unique name that the proxy is for
+      g-name-owner -> gchararray: g-name-owner
+        The unique name for the owner
+      g-flags -> GDBusProxyFlags: g-flags
+        Flags for the proxy
+      g-object-path -> gchararray: g-object-path
+        The object path the proxy is for
+      g-interface-name -> gchararray: g-interface-name
+        The D-Bus interface name the proxy is for
+      g-default-timeout -> gint: Default Timeout
+        Timeout for remote method invocation
+      g-interface-info -> GDBusInterfaceInfo: Interface Information
+        Interface Information
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -257,8 +418,10 @@ class LocationProxy(
         longitude: float
         speed: float
         timestamp: GLib.Variant
-
+        g_bus_type: Gio.BusType
     props: Props = ...
+    parent_instance: Gio.DBusProxy = ...
+    priv: LocationProxyPrivate = ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -278,8 +441,6 @@ class LocationProxy(
         speed: float = ...,
         timestamp: GLib.Variant = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: LocationProxyPrivate = ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -324,11 +485,40 @@ class LocationProxy(
     ) -> LocationProxy: ...
 
 class LocationProxyClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LocationProxyClass()
+    """
+
     parent_class: Gio.DBusProxyClass = ...
 
 class LocationProxyPrivate(GObject.GPointer): ...
 
 class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
+    """
+    :Constructors:
+
+    ::
+
+        LocationSkeleton(**properties)
+        new() -> Geoclue.LocationSkeleton
+
+    Object GClueLocationSkeleton
+
+    Signals from GDBusInterfaceSkeleton:
+      g-authorize-method (GDBusMethodInvocation) -> gboolean
+
+    Properties from GDBusInterfaceSkeleton:
+      g-flags -> GDBusInterfaceSkeletonFlags: g-flags
+        Flags for the interface skeleton
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         g_flags: Gio.DBusInterfaceSkeletonFlags
         accuracy: float
@@ -339,8 +529,9 @@ class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
         longitude: float
         speed: float
         timestamp: GLib.Variant
-
     props: Props = ...
+    parent_instance: Gio.DBusInterfaceSkeleton = ...
+    priv: LocationSkeletonPrivate = ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
@@ -353,17 +544,30 @@ class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
         speed: float = ...,
         timestamp: GLib.Variant = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: LocationSkeletonPrivate = ...
     @classmethod
     def new(cls) -> LocationSkeleton: ...
 
 class LocationSkeletonClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LocationSkeletonClass()
+    """
+
     parent_class: Gio.DBusInterfaceSkeletonClass = ...
 
 class LocationSkeletonPrivate(GObject.GPointer): ...
 
-class Manager(GObject.Object):
+class Manager(GObject.GInterface):
+    """
+    Interface GClueManager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def call_add_agent(
         self,
         arg_id: str,
@@ -422,6 +626,14 @@ class Manager(GObject.Object):
     ) -> int: ...
 
 class ManagerIface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ManagerIface()
+    """
+
     parent_iface: GObject.TypeInterface = ...
     handle_add_agent: Callable[[Manager, Gio.DBusMethodInvocation, str], bool] = ...
     handle_create_client: Callable[[Manager, Gio.DBusMethodInvocation], bool] = ...
@@ -433,8 +645,54 @@ class ManagerIface(GObject.GPointer):
 class ManagerProxy(
     Gio.DBusProxy, Manager, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
+    """
+    :Constructors:
+
+    ::
+
+        ManagerProxy(**properties)
+        new_finish(res:Gio.AsyncResult) -> Geoclue.ManagerProxy
+        new_for_bus_finish(res:Gio.AsyncResult) -> Geoclue.ManagerProxy
+        new_for_bus_sync(bus_type:Gio.BusType, flags:Gio.DBusProxyFlags, name:str, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.ManagerProxy
+        new_sync(connection:Gio.DBusConnection, flags:Gio.DBusProxyFlags, name:str=None, object_path:str, cancellable:Gio.Cancellable=None) -> Geoclue.ManagerProxy
+
+    Object GClueManagerProxy
+
+    Signals from GClueManager:
+      handle-get-client (GDBusMethodInvocation) -> gboolean
+      handle-create-client (GDBusMethodInvocation) -> gboolean
+      handle-delete-client (GDBusMethodInvocation, gchararray) -> gboolean
+      handle-add-agent (GDBusMethodInvocation, gchararray) -> gboolean
+
+    Signals from GDBusProxy:
+      g-properties-changed (GVariant, GStrv)
+      g-signal (gchararray, gchararray, GVariant)
+
+    Properties from GDBusProxy:
+      g-connection -> GDBusConnection: g-connection
+        The connection the proxy is for
+      g-bus-type -> GBusType: Bus Type
+        The bus to connect to, if any
+      g-name -> gchararray: g-name
+        The well-known or unique name that the proxy is for
+      g-name-owner -> gchararray: g-name-owner
+        The unique name for the owner
+      g-flags -> GDBusProxyFlags: g-flags
+        Flags for the proxy
+      g-object-path -> gchararray: g-object-path
+        The object path the proxy is for
+      g-interface-name -> gchararray: g-interface-name
+        The D-Bus interface name the proxy is for
+      g-default-timeout -> gint: Default Timeout
+        Timeout for remote method invocation
+      g-interface-info -> GDBusInterfaceInfo: Interface Information
+        Interface Information
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -445,8 +703,10 @@ class ManagerProxy(
         g_object_path: str
         available_accuracy_level: int
         in_use: bool
-
+        g_bus_type: Gio.BusType
     props: Props = ...
+    parent_instance: Gio.DBusProxy = ...
+    priv: ManagerProxyPrivate = ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -460,8 +720,6 @@ class ManagerProxy(
         available_accuracy_level: int = ...,
         in_use: bool = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: ManagerProxyPrivate = ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -506,43 +764,117 @@ class ManagerProxy(
     ) -> ManagerProxy: ...
 
 class ManagerProxyClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ManagerProxyClass()
+    """
+
     parent_class: Gio.DBusProxyClass = ...
 
 class ManagerProxyPrivate(GObject.GPointer): ...
 
 class ManagerSkeleton(Gio.DBusInterfaceSkeleton, Manager, Gio.DBusInterface):
+    """
+    :Constructors:
+
+    ::
+
+        ManagerSkeleton(**properties)
+        new() -> Geoclue.ManagerSkeleton
+
+    Object GClueManagerSkeleton
+
+    Signals from GClueManager:
+      handle-get-client (GDBusMethodInvocation) -> gboolean
+      handle-create-client (GDBusMethodInvocation) -> gboolean
+      handle-delete-client (GDBusMethodInvocation, gchararray) -> gboolean
+      handle-add-agent (GDBusMethodInvocation, gchararray) -> gboolean
+
+    Signals from GDBusInterfaceSkeleton:
+      g-authorize-method (GDBusMethodInvocation) -> gboolean
+
+    Properties from GDBusInterfaceSkeleton:
+      g-flags -> GDBusInterfaceSkeletonFlags: g-flags
+        Flags for the interface skeleton
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         g_flags: Gio.DBusInterfaceSkeletonFlags
         available_accuracy_level: int
         in_use: bool
-
     props: Props = ...
+    parent_instance: Gio.DBusInterfaceSkeleton = ...
+    priv: ManagerSkeletonPrivate = ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
         available_accuracy_level: int = ...,
         in_use: bool = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: ManagerSkeletonPrivate = ...
     @classmethod
     def new(cls) -> ManagerSkeleton: ...
 
 class ManagerSkeletonClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ManagerSkeletonClass()
+    """
+
     parent_class: Gio.DBusInterfaceSkeletonClass = ...
 
 class ManagerSkeletonPrivate(GObject.GPointer): ...
 
 class Simple(GObject.Object, Gio.AsyncInitable):
+    """
+    :Constructors:
+
+    ::
+
+        Simple(**properties)
+        new_finish(result:Gio.AsyncResult) -> Geoclue.Simple
+        new_sync(desktop_id:str, accuracy_level:Geoclue.AccuracyLevel, cancellable:Gio.Cancellable=None) -> Geoclue.Simple
+        new_with_thresholds_finish(result:Gio.AsyncResult) -> Geoclue.Simple
+        new_with_thresholds_sync(desktop_id:str, accuracy_level:Geoclue.AccuracyLevel, time_threshold:int, distance_threshold:int, cancellable:Gio.Cancellable=None) -> Geoclue.Simple
+
+    Object GClueSimple
+
+    Properties from GClueSimple:
+      desktop-id -> gchararray: DesktopID
+        Desktop ID
+      accuracy-level -> GClueAccuracyLevel: AccuracyLevel
+        Requested accuracy level
+      client -> GClueClientProxy: Client
+        Client proxy
+      location -> GClueLocationProxy: Location
+        Location proxy
+      distance-threshold -> guint: DistanceThreshold
+        DistanceThreshold
+      time-threshold -> guint: TimeThreshold
+        TimeThreshold
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        accuracy_level: AccuracyLevel
         client: ClientProxy
-        desktop_id: str
         distance_threshold: int
         location: LocationProxy
         time_threshold: int
-
+        accuracy_level: AccuracyLevel
+        desktop_id: str
     props: Props = ...
+    parent: GObject.Object = ...
+    priv: SimplePrivate = ...
     def __init__(
         self,
         accuracy_level: AccuracyLevel = ...,
@@ -550,8 +882,6 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         distance_threshold: int = ...,
         time_threshold: int = ...,
     ): ...
-    parent: GObject.Object = ...
-    priv: SimplePrivate = ...
     # override
     def get_client(self) -> Optional[ClientProxy]: ...
     def get_location(self) -> Location: ...
@@ -595,6 +925,14 @@ class Simple(GObject.Object, Gio.AsyncInitable):
     ) -> Simple: ...
 
 class SimpleClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SimpleClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class SimplePrivate(GObject.GPointer): ...

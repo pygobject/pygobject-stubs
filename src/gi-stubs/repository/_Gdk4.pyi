@@ -2358,6 +2358,7 @@ def content_serialize_async(
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
 def drag_action_is_unique(action: DragAction) -> bool: ...
+def drag_surface_size_get_type() -> Type: ...
 def events_get_angle(event1: Event, event2: Event) -> Tuple[bool, float]: ...
 def events_get_center(event1: Event, event2: Event) -> Tuple[bool, float, float]: ...
 def events_get_distance(event1: Event, event2: Event) -> Tuple[bool, float]: ...
@@ -2406,7 +2407,6 @@ class AppLaunchContext(Gio.AppLaunchContext):
 
     class Props:
         display: Display
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_display(self) -> Display: ...
@@ -2447,7 +2447,6 @@ class CairoContext(DrawContext):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
-
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def cairo_create(self) -> Optional[cairo.Context]: ...
@@ -2480,7 +2479,6 @@ class Clipboard(GObject.Object):
         display: Display
         formats: ContentFormats
         local: bool
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_content(self) -> Optional[ContentProvider]: ...
@@ -2636,7 +2634,6 @@ class ContentProvider(GObject.Object):
     class Props:
         formats: ContentFormats
         storable_formats: ContentFormats
-
     props: Props = ...
     parent: GObject.Object = ...
     def content_changed(self) -> None: ...
@@ -2766,7 +2763,6 @@ class Cursor(GObject.Object):
         hotspot_y: int
         name: Optional[str]
         texture: Optional[Texture]
-
     props: Props = ...
     def __init__(
         self,
@@ -2860,7 +2856,6 @@ class Device(GObject.Object):
         source: InputSource
         tool: DeviceTool
         vendor_id: Optional[str]
-
     props: Props = ...
     def __init__(
         self,
@@ -2931,7 +2926,6 @@ class DeviceTool(GObject.Object):
         hardware_id: int
         serial: int
         tool_type: DeviceToolType
-
     props: Props = ...
     def __init__(
         self,
@@ -2975,7 +2969,6 @@ class Display(GObject.Object):
         composited: bool
         input_shapes: bool
         rgba: bool
-
     props: Props = ...
     def beep(self) -> None: ...
     def close(self) -> None: ...
@@ -3032,14 +3025,13 @@ class DisplayManager(GObject.Object):
 
     class Props:
         default_display: Optional[Display]
-
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
     def get() -> DisplayManager: ...
     def get_default_display(self) -> Optional[Display]: ...
     def list_displays(self) -> list[Display]: ...
-    def open_display(self, name: str) -> Optional[Display]: ...
+    def open_display(self, name: Optional[str] = None) -> Optional[Display]: ...
     def set_default_display(self, display: Display) -> None: ...
 
 class Drag(GObject.Object):
@@ -3078,7 +3070,6 @@ class Drag(GObject.Object):
         formats: ContentFormats
         selected_action: DragAction
         surface: Surface
-
     props: Props = ...
     def __init__(
         self,
@@ -3121,6 +3112,9 @@ class DragSurface(GObject.GInterface):
 
 class DragSurfaceInterface(GObject.GPointer): ...
 
+class DragSurfaceSize(GObject.GPointer):
+    def set_size(self, width: int, height: int) -> None: ...
+
 class DrawContext(GObject.Object):
     """
     :Constructors:
@@ -3142,7 +3136,6 @@ class DrawContext(GObject.Object):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
-
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
     def begin_frame(self, region: cairo.Region) -> None: ...
@@ -3181,7 +3174,6 @@ class Drop(GObject.Object):
         drag: Optional[Drag]
         formats: ContentFormats
         surface: Surface
-
     props: Props = ...
     def __init__(
         self,
@@ -3352,7 +3344,6 @@ class GLContext(DrawContext):
         shared_context: Optional[GLContext]
         display: Optional[Display]
         surface: Optional[Surface]
-
     props: Props = ...
     def __init__(
         self,
@@ -3415,7 +3406,6 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
-
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     @classmethod
@@ -3430,6 +3420,80 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     ) -> GLTexture: ...
     def release(self) -> None: ...
 
+class GLTextureBuilder(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        GLTextureBuilder(**properties)
+        new() -> Gdk.GLTextureBuilder
+
+    Object GdkGLTextureBuilder
+
+    Properties from GdkGLTextureBuilder:
+      context -> GdkGLContext: context
+      format -> GdkMemoryFormat: format
+      has-mipmap -> gboolean: has-mipmap
+      height -> gint: height
+      id -> guint: id
+      sync -> gpointer: sync
+      update-region -> CairoRegion: update-region
+      update-texture -> GdkTexture: update-texture
+      width -> gint: width
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        context: Optional[GLContext]
+        format: MemoryFormat
+        has_mipmap: bool
+        height: int
+        id: int
+        sync: Optional[None]
+        update_region: Optional[cairo.Region]
+        update_texture: Optional[Texture]
+        width: int
+    props: Props = ...
+    def __init__(
+        self,
+        context: Optional[GLContext] = ...,
+        format: MemoryFormat = ...,
+        has_mipmap: bool = ...,
+        height: int = ...,
+        id: int = ...,
+        sync: Optional[None] = ...,
+        update_region: Optional[cairo.Region] = ...,
+        update_texture: Optional[Texture] = ...,
+        width: int = ...,
+    ): ...
+    def build(
+        self, destroy: Optional[Callable[[None], None]], data: None
+    ) -> Texture: ...
+    def get_context(self) -> Optional[GLContext]: ...
+    def get_format(self) -> MemoryFormat: ...
+    def get_has_mipmap(self) -> bool: ...
+    def get_height(self) -> int: ...
+    def get_id(self) -> int: ...
+    def get_sync(self) -> None: ...
+    def get_update_region(self) -> Optional[cairo.Region]: ...
+    def get_update_texture(self) -> Optional[Texture]: ...
+    def get_width(self) -> int: ...
+    @classmethod
+    def new(cls) -> GLTextureBuilder: ...
+    def set_context(self, context: Optional[GLContext] = None) -> None: ...
+    def set_format(self, format: MemoryFormat) -> None: ...
+    def set_has_mipmap(self, has_mipmap: bool) -> None: ...
+    def set_height(self, height: int) -> None: ...
+    def set_id(self, id: int) -> None: ...
+    def set_sync(self, sync: None) -> None: ...
+    def set_update_region(self, region: Optional[cairo.Region] = None) -> None: ...
+    def set_update_texture(self, texture: Optional[Texture] = None) -> None: ...
+    def set_width(self, width: int) -> None: ...
+
+class GLTextureBuilderClass(GObject.GPointer): ...
 class GLTextureClass(GObject.GPointer): ...
 
 class GrabBrokenEvent(Event):
@@ -3505,7 +3569,6 @@ class MemoryTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
-
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     @classmethod
@@ -3564,7 +3627,6 @@ class Monitor(GObject.Object):
         subpixel_layout: SubpixelLayout
         valid: bool
         width_mm: int
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_connector(self) -> Optional[str]: ...
@@ -3770,7 +3832,6 @@ class Seat(GObject.Object):
 
     class Props:
         display: Display
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, display: Display = ...): ...
@@ -3811,6 +3872,7 @@ class Surface(GObject.Object):
       width -> gint: width
       height -> gint: height
       scale-factor -> gint: scale-factor
+      scale -> gdouble: scale
 
     Signals from GObject:
       notify (GParam)
@@ -3822,9 +3884,9 @@ class Surface(GObject.Object):
         frame_clock: FrameClock
         height: int
         mapped: bool
+        scale: float
         scale_factor: int
         width: int
-
     props: Props = ...
     def __init__(
         self,
@@ -3849,6 +3911,7 @@ class Surface(GObject.Object):
     def get_frame_clock(self) -> FrameClock: ...
     def get_height(self) -> int: ...
     def get_mapped(self) -> bool: ...
+    def get_scale(self) -> float: ...
     def get_scale_factor(self) -> int: ...
     def get_width(self) -> int: ...
     def hide(self) -> None: ...
@@ -3897,7 +3960,6 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     class Props:
         height: int
         width: int
-
     props: Props = ...
     def __init__(self, height: int = ..., width: int = ...): ...
     def download(self, data: Sequence[int], stride: int) -> None: ...
@@ -4077,7 +4139,6 @@ class VulkanContext(DrawContext, Gio.Initable):
     class Props:
         display: Optional[Display]
         surface: Optional[Surface]
-
     props: Props = ...
     def __init__(self, display: Display = ..., surface: Surface = ...): ...
 
@@ -4146,7 +4207,7 @@ class PaintableFlags(GObject.GFlags):
     SIZE = 1
 
 class SeatCapabilities(GObject.GFlags):
-    ALL = 15
+    ALL = 31
     ALL_POINTING = 7
     KEYBOARD = 8
     NONE = 0
@@ -4169,6 +4230,7 @@ class ToplevelState(GObject.GFlags):
     RIGHT_RESIZABLE = 2048
     RIGHT_TILED = 1024
     STICKY = 4
+    SUSPENDED = 65536
     TILED = 128
     TOP_RESIZABLE = 512
     TOP_TILED = 256
@@ -4291,13 +4353,23 @@ class KeyMatch(GObject.GEnum):
     PARTIAL = 1
 
 class MemoryFormat(GObject.GEnum):
+    A16 = 25
+    A16_FLOAT = 26
+    A32_FLOAT = 27
+    A8 = 24
     A8B8G8R8 = 6
     A8R8G8B8 = 4
     A8R8G8B8_PREMULTIPLIED = 1
     B8G8R8 = 8
     B8G8R8A8 = 3
     B8G8R8A8_PREMULTIPLIED = 0
-    N_FORMATS = 18
+    G16 = 23
+    G16A16 = 22
+    G16A16_PREMULTIPLIED = 21
+    G8 = 20
+    G8A8 = 19
+    G8A8_PREMULTIPLIED = 18
+    N_FORMATS = 28
     R16G16B16 = 9
     R16G16B16A16 = 11
     R16G16B16A16_FLOAT = 14

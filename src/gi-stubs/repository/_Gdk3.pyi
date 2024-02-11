@@ -1,8 +1,10 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
+from typing import Type
 from typing import TypeVar
 
 import cairo
@@ -2300,7 +2302,7 @@ KEY_zerosuperior: int = 16785520
 KEY_zstroke: int = 16777654
 MAJOR_VERSION: int = 3
 MAX_TIMECOORD_AXES: int = 128
-MICRO_VERSION: int = 34
+MICRO_VERSION: int = 41
 MINOR_VERSION: int = 24
 PARENT_RELATIVE: int = 1
 PRIORITY_REDRAW: int = 120
@@ -2321,6 +2323,7 @@ TARGET_DRAWABLE: Atom = ...
 TARGET_PIXMAP: Atom = ...
 TARGET_STRING: Atom = ...
 _introspection_module = ...  # FIXME Constant
+_lock = ...  # FIXME Constant
 _namespace: str = "Gdk"
 _overrides_module = ...  # FIXME Constant
 _version: str = "3.0"
@@ -2368,7 +2371,7 @@ def cairo_set_source_window(
 def cairo_surface_create_from_pixbuf(
     pixbuf: GdkPixbuf.Pixbuf, scale: int, for_window: Optional[Window] = None
 ) -> cairo.ImageSurface: ...
-def color_parse(*args, **kwargs): ...  # FIXME Function
+def color_parse(spec: str) -> Optional[Color]: ...  # CHECK Wrapped function
 def disable_multidevice() -> None: ...
 def drag_abort(context: DragContext, time_: int) -> None: ...
 def drag_begin(window: Window, targets: list[Atom]) -> DragContext: ...
@@ -2416,8 +2419,8 @@ def get_display_arg_name() -> Optional[str]: ...
 def get_program_class() -> str: ...
 def get_show_events() -> bool: ...
 def gl_error_quark() -> int: ...
-def init() -> Tuple[int, list[str]]: ...
-def init_check() -> Tuple[bool, int, list[str]]: ...
+def init() -> list[str]: ...
+def init_check() -> Tuple[bool, list[str]]: ...
 def keyboard_grab(window: Window, owner_events: bool, time_: int) -> GrabStatus: ...
 def keyboard_ungrab(time_: int) -> None: ...
 def keyval_convert_case(symbol: int) -> Tuple[int, int]: ...
@@ -2437,7 +2440,7 @@ def offscreen_window_set_embedder(window: Window, embedder: Window) -> None: ...
 def pango_context_get() -> Pango.Context: ...
 def pango_context_get_for_display(display: Display) -> Pango.Context: ...
 def pango_context_get_for_screen(screen: Screen) -> Pango.Context: ...
-def parse_args() -> Tuple[int, list[str]]: ...
+def parse_args() -> list[str]: ...
 def pixbuf_get_from_surface(
     surface: cairo.Surface, src_x: int, src_y: int, width: int, height: int
 ) -> Optional[GdkPixbuf.Pixbuf]: ...
@@ -2458,7 +2461,7 @@ def pre_parse_libgtk_only() -> None: ...
 def property_delete(window: Window, property: Atom) -> None: ...
 def property_get(
     window: Window, property: Atom, type: Atom, offset: int, length: int, pdelete: int
-) -> Tuple[bool, Atom, int, int, bytes]: ...
+) -> Tuple[bool, Atom, int, bytes]: ...
 def query_depths() -> list[int]: ...
 def query_visual_types() -> list[VisualType]: ...
 def rectangle_intersect(self, src2: Rectangle) -> Tuple[bool, Rectangle]: ...
@@ -2535,9 +2538,31 @@ def unicode_to_keyval(wc: int) -> int: ...
 def utf8_to_string_target(str: str) -> Optional[str]: ...
 
 class AppLaunchContext(Gio.AppLaunchContext):
+    """
+    :Constructors:
+
+    ::
+
+        AppLaunchContext(**properties)
+        new() -> Gdk.AppLaunchContext
+
+    Object GdkAppLaunchContext
+
+    Properties from GdkAppLaunchContext:
+      display -> GdkDisplay: Display
+        Display
+
+    Signals from GAppLaunchContext:
+      launch-failed (gchararray)
+      launch-started (GAppInfo, GVariant)
+      launched (GAppInfo, GVariant)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     @classmethod
@@ -2557,6 +2582,14 @@ class Atom(GObject.GPointer):
     def name(self) -> str: ...
 
 class Color(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Color()
+    """
+
     pixel: int = ...
     red: int = ...
     green: int = ...
@@ -2569,18 +2602,41 @@ class Color(GObject.GBoxed):
     def copy(self) -> Color: ...
     def equal(self, colorb: Color) -> bool: ...
     def free(self) -> None: ...
-    def from_floats(self, *args, **kwargs): ...  # FIXME Method
+    def from_floats(red, green, blue): ...  # FIXME Function
     def hash(self) -> int: ...
     @staticmethod
     def parse(spec: str) -> Tuple[bool, Color]: ...
-    def to_floats(self, *args, **kwargs): ...  # FIXME Method
+    def to_floats(self): ...  # FIXME Function
     def to_string(self) -> str: ...
 
 class Cursor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Cursor(**properties)
+        new(cursor_type:Gdk.CursorType) -> Gdk.Cursor
+        new_for_display(display:Gdk.Display, cursor_type:Gdk.CursorType) -> Gdk.Cursor or None
+        new_from_name(display:Gdk.Display, name:str) -> Gdk.Cursor or None
+        new_from_pixbuf(display:Gdk.Display, pixbuf:GdkPixbuf.Pixbuf, x:int, y:int) -> Gdk.Cursor
+        new_from_surface(display:Gdk.Display, surface:cairo.Surface, x:float, y:float) -> Gdk.Cursor
+
+    Object GdkCursor
+
+    Properties from GdkCursor:
+      cursor-type -> GdkCursorType: Cursor type
+        Standard cursor type
+      display -> GdkDisplay: Display
+        Display of this cursor
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         cursor_type: CursorType
         display: Display
-
     props: Props = ...
     def __init__(self, cursor_type: CursorType = ..., display: Display = ...): ...
     def get_cursor_type(self) -> CursorType: ...
@@ -2607,8 +2663,57 @@ class Cursor(GObject.Object):
     def unref(self) -> None: ...
 
 class Device(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Device(**properties)
+
+    Object GdkDevice
+
+    Signals from GdkDevice:
+      changed ()
+      tool-changed (GdkDeviceTool)
+
+    Properties from GdkDevice:
+      display -> GdkDisplay: Device Display
+        Display which the device belongs to
+      device-manager -> GdkDeviceManager: Device manager
+        Device manager which the device belongs to
+      name -> gchararray: Device name
+        Device name
+      associated-device -> GdkDevice: Associated device
+        Associated pointer or keyboard with this device
+      type -> GdkDeviceType: Device type
+        Device role in the device manager
+      input-source -> GdkInputSource: Input source
+        Source type for the device
+      input-mode -> GdkInputMode: Input mode for the device
+        Input mode for the device
+      has-cursor -> gboolean: Whether the device has a cursor
+        Whether there is a visible cursor following device motion
+      n-axes -> guint: Number of axes in the device
+        Number of axes in the device
+      vendor-id -> gchararray: Vendor ID
+        Vendor ID
+      product-id -> gchararray: Product ID
+        Product ID
+      seat -> GdkSeat: Seat
+        Seat
+      num-touches -> guint: Number of concurrent touches
+        Number of concurrent touches
+      axes -> GdkAxisFlags: Axes
+        Axes
+      tool -> GdkDeviceTool: Tool
+        The tool that is currently used with this device
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        associated_device: Device
+        associated_device: Optional[Device]
         axes: AxisFlags
         device_manager: DeviceManager
         display: Display
@@ -2618,12 +2723,11 @@ class Device(GObject.Object):
         n_axes: int
         name: str
         num_touches: int
-        product_id: str
+        product_id: Optional[str]
         seat: Seat
         tool: DeviceTool
         type: DeviceType
-        vendor_id: str
-
+        vendor_id: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -2683,16 +2787,44 @@ class Device(GObject.Object):
     def warp(self, screen: Screen, x: int, y: int) -> None: ...
 
 class DeviceManager(GObject.Object):
-    class Props:
-        display: Display
+    """
+    :Constructors:
 
+    ::
+
+        DeviceManager(**properties)
+
+    Object GdkDeviceManager
+
+    Signals from GdkDeviceManager:
+      device-added (GdkDevice)
+      device-removed (GdkDevice)
+      device-changed (GdkDevice)
+
+    Properties from GdkDeviceManager:
+      display -> GdkDisplay: Display
+        Display for the device manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        display: Optional[Display]
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_client_pointer(self) -> Device: ...
     def get_display(self) -> Optional[Display]: ...
     def list_devices(self, type: DeviceType) -> list[Device]: ...
 
-class DevicePad(GObject.Object):
+class DevicePad(GObject.GInterface):
+    """
+    Interface GdkDevicePad
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_feature_group(self, feature: DevicePadFeature, feature_idx: int) -> int: ...
     def get_group_n_modes(self, group_idx: int) -> int: ...
     def get_n_features(self, feature: DevicePadFeature) -> int: ...
@@ -2701,12 +2833,34 @@ class DevicePad(GObject.Object):
 class DevicePadInterface(GObject.GPointer): ...
 
 class DeviceTool(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceTool(**properties)
+
+    Object GdkDeviceTool
+
+    Properties from GdkDeviceTool:
+      serial -> guint64: Serial
+        Serial number
+      tool-type -> GdkDeviceToolType: Tool type
+        Tool type
+      axes -> GdkAxisFlags: Axes
+        Tool axes
+      hardware-id -> guint64: Hardware ID
+        Hardware ID
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         axes: AxisFlags
         hardware_id: int
         serial: int
         tool_type: DeviceToolType
-
     props: Props = ...
     def __init__(
         self,
@@ -2720,6 +2874,27 @@ class DeviceTool(GObject.Object):
     def get_tool_type(self) -> DeviceToolType: ...
 
 class Display(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Display(**properties)
+
+    Object GdkDisplay
+
+    Signals from GdkDisplay:
+      opened ()
+      closed (gboolean)
+      seat-added (GdkSeat)
+      seat-removed (GdkSeat)
+      monitor-added (GdkMonitor)
+      monitor-removed (GdkMonitor)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def beep(self) -> None: ...
     def close(self) -> None: ...
     def device_is_grabbed(self, device: Device) -> bool: ...
@@ -2778,9 +2953,28 @@ class Display(GObject.Object):
     def warp_pointer(self, screen: Screen, x: int, y: int) -> None: ...
 
 class DisplayManager(GObject.Object):
-    class Props:
-        default_display: Display
+    """
+    :Constructors:
 
+    ::
+
+        DisplayManager(**properties)
+
+    Object GdkDisplayManager
+
+    Signals from GdkDisplayManager:
+      display-opened (GdkDisplay)
+
+    Properties from GdkDisplayManager:
+      default-display -> GdkDisplay: Default Display
+        The default display for GDK
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        default_display: Optional[Display]
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
@@ -2791,7 +2985,26 @@ class DisplayManager(GObject.Object):
     def set_default_display(self, display: Display) -> None: ...
 
 class DragContext(GObject.Object):
-    def finish(self, *args, **kwargs): ...  # FIXME Method
+    """
+    :Constructors:
+
+    ::
+
+        DragContext(**properties)
+
+    Object GdkDragContext
+
+    Signals from GdkDragContext:
+      cancel (GdkDragCancelReason)
+      drop-performed (gint)
+      dnd-finished ()
+      action-changed (GdkDragAction)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    def finish(self, success, del_, time): ...  # FIXME Function
     def get_actions(self) -> DragAction: ...
     def get_dest_window(self) -> Window: ...
     def get_device(self) -> Device: ...
@@ -2806,10 +3019,28 @@ class DragContext(GObject.Object):
     def set_hotspot(self, hot_x: int, hot_y: int) -> None: ...
 
 class DrawingContext(GObject.Object):
-    class Props:
-        clip: cairo.Region
-        window: Window
+    """
+    :Constructors:
 
+    ::
+
+        DrawingContext(**properties)
+
+    Object GdkDrawingContext
+
+    Properties from GdkDrawingContext:
+      window -> GdkWindow: Window
+        The window that created the context
+      clip -> CairoRegion: Clip
+        The clip region of the context
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        clip: Optional[cairo.Region]
+        window: Window
     props: Props = ...
     def __init__(self, clip: cairo.Region = ..., window: Window = ...): ...
     # override
@@ -3162,6 +3393,28 @@ class EventWindowState(Event):
     new_window_state: WindowState = ...
 
 class FrameClock(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        FrameClock(**properties)
+
+    Object GdkFrameClock
+
+    Signals from GdkFrameClock:
+      flush-events ()
+      before-paint ()
+      update ()
+      layout ()
+      paint ()
+      after-paint ()
+      resume-events ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def begin_updating(self) -> None: ...
     def end_updating(self) -> None: ...
     def get_current_timings(self) -> Optional[FrameTimings]: ...
@@ -3186,11 +3439,31 @@ class FrameTimings(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class GLContext(GObject.Object):
-    class Props:
-        display: Display
-        shared_context: GLContext
-        window: Window
+    """
+    :Constructors:
 
+    ::
+
+        GLContext(**properties)
+
+    Object GdkGLContext
+
+    Properties from GdkGLContext:
+      display -> GdkDisplay: Display
+        The GDK display used to create the GL context
+      window -> GdkWindow: Window
+        The GDK window bound to the GL context
+      shared-context -> GdkGLContext: Shared context
+        The GL context this context shares data with
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        display: Optional[Display]
+        shared_context: Optional[GLContext]
+        window: Optional[Window]
     props: Props = ...
     def __init__(
         self,
@@ -3219,6 +3492,14 @@ class GLContext(GObject.Object):
     def set_use_es(self, use_es: int) -> None: ...
 
 class Geometry(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Geometry()
+    """
+
     min_width: int = ...
     min_height: int = ...
     max_width: int = ...
@@ -3232,6 +3513,24 @@ class Geometry(GObject.GPointer):
     win_gravity: Gravity = ...
 
 class Keymap(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Keymap(**properties)
+
+    Object GdkKeymap
+
+    Signals from GdkKeymap:
+      direction-changed ()
+      keys-changed ()
+      state-changed ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def add_virtual_modifiers(self) -> ModifierType: ...
     def get_caps_lock_state(self) -> bool: ...
     @staticmethod
@@ -3255,23 +3554,68 @@ class Keymap(GObject.Object):
     ) -> Tuple[bool, int, int, int, ModifierType]: ...
 
 class KeymapKey(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        KeymapKey()
+    """
+
     keycode: int = ...
     group: int = ...
     level: int = ...
 
 class Monitor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Monitor(**properties)
+
+    Object GdkMonitor
+
+    Signals from GdkMonitor:
+      invalidate ()
+
+    Properties from GdkMonitor:
+      display -> GdkDisplay: Display
+        The display of the monitor
+      manufacturer -> gchararray: Manufacturer
+        The manufacturer name
+      model -> gchararray: Model
+        The model name
+      scale-factor -> gint: Scale factor
+        The scale factor
+      geometry -> GdkRectangle: Geometry
+        The geometry of the monitor
+      workarea -> GdkRectangle: Workarea
+        The workarea of the monitor
+      width-mm -> gint: Physical width
+        The width of the monitor, in millimeters
+      height-mm -> gint: Physical height
+        The height of the monitor, in millimeters
+      refresh-rate -> gint: Refresh rate
+        The refresh rate, in millihertz
+      subpixel-layout -> GdkSubpixelLayout: Subpixel layout
+        The subpixel layout
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
         geometry: Rectangle
         height_mm: int
-        manufacturer: str
-        model: str
+        manufacturer: Optional[str]
+        model: Optional[str]
         refresh_rate: int
         scale_factor: int
         subpixel_layout: SubpixelLayout
         width_mm: int
         workarea: Rectangle
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_display(self) -> Display: ...
@@ -3289,10 +3633,26 @@ class Monitor(GObject.Object):
 class MonitorClass(GObject.GPointer): ...
 
 class Point(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Point()
+    """
+
     x: int = ...
     y: int = ...
 
 class RGBA(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        RGBA()
+    """
+
     red: float = ...
     green: float = ...
     blue: float = ...
@@ -3318,6 +3678,14 @@ class RGBA(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class Rectangle(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
     x: int = ...
     y: int = ...
     width: int = ...
@@ -3327,12 +3695,35 @@ class Rectangle(GObject.GBoxed):
     def union(self, src2: Rectangle) -> Rectangle: ...
 
 class Screen(GObject.Object):
-    class Props:
-        font_options: None
-        resolution: float
+    """
+    :Constructors:
 
+    ::
+
+        Screen(**properties)
+
+    Object GdkScreen
+
+    Signals from GdkScreen:
+      size-changed ()
+      composited-changed ()
+      monitors-changed ()
+
+    Properties from GdkScreen:
+      font-options -> gpointer: Font options
+        The default font options for the screen
+      resolution -> gdouble: Font resolution
+        The resolution for fonts on the screen
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        font_options: Optional[None]
+        resolution: float
     props: Props = ...
-    def __init__(self, font_options: None = ..., resolution: float = ...): ...
+    def __init__(self, font_options: Optional[None] = ..., resolution: float = ...): ...
     def get_active_window(self) -> Optional[Window]: ...
     @staticmethod
     def get_default() -> Optional[Screen]: ...
@@ -3375,9 +3766,31 @@ class Screen(GObject.Object):
     def width_mm() -> int: ...
 
 class Seat(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Seat(**properties)
+
+    Object GdkSeat
+
+    Signals from GdkSeat:
+      device-added (GdkDevice)
+      device-removed (GdkDevice)
+      tool-added (GdkDeviceTool)
+      tool-removed (GdkDeviceTool)
+
+    Properties from GdkSeat:
+      display -> GdkDisplay: Display
+        Display
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, display: Display = ...): ...
@@ -3399,10 +3812,31 @@ class Seat(GObject.Object):
     def ungrab(self) -> None: ...
 
 class TimeCoord(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TimeCoord()
+    """
+
     time: int = ...
     axes: list[float] = ...
 
 class Visual(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Visual(**properties)
+
+    Object GdkVisual
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     @staticmethod
     def get_best() -> Visual: ...
     @staticmethod
@@ -3428,9 +3862,33 @@ class Visual(GObject.Object):
     def get_visual_type(self) -> VisualType: ...
 
 class Window(GObject.Object):
-    class Props:
-        cursor: Cursor
+    """
+    :Constructors:
 
+    ::
+
+        Window(**properties)
+        new(parent:Gdk.Window=None, attributes:Gdk.WindowAttr, attributes_mask:Gdk.WindowAttributesType) -> Gdk.Window
+
+    Object GdkWindow
+
+    Signals from GdkWindow:
+      pick-embedded-child (gdouble, gdouble) -> GdkWindow
+      to-embedder (gdouble, gdouble, gpointer, gpointer)
+      from-embedder (gdouble, gdouble, gpointer, gpointer)
+      create-surface (gint, gint) -> CairoSurface
+      moved-to-rect (gpointer, gpointer, gboolean, gboolean)
+
+    Properties from GdkWindow:
+      cursor -> GdkCursor: Cursor
+        Cursor
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        cursor: Optional[Cursor]
     props: Props = ...
     # override
     def __init__(
@@ -3463,7 +3921,7 @@ class Window(GObject.Object):
         root_y: int,
         timestamp: int,
     ) -> None: ...
-    def cairo_create(self, *args, **kwargs): ...  # FIXME Method
+    def cairo_create(self): ...  # FIXME Function
     def configure_finished(self) -> None: ...
     @staticmethod
     def constrain_size(
@@ -3679,6 +4137,14 @@ class Window(GObject.Object):
     def withdraw(self) -> None: ...
 
 class WindowAttr(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowAttr()
+    """
+
     title: str = ...
     event_mask: int = ...
     x: int = ...
@@ -3695,6 +4161,14 @@ class WindowAttr(GObject.GPointer):
     type_hint: WindowTypeHint = ...
 
 class WindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     pick_embedded_child: None = ...
     to_embedder: Callable[[Window, float, float, float, float], None] = ...

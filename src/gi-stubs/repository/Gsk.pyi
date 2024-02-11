@@ -28,6 +28,15 @@ def value_set_render_node(value: Any, node: RenderNode) -> None: ...
 def value_take_render_node(value: Any, node: Optional[RenderNode] = None) -> None: ...
 
 class BlendNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        BlendNode(**properties)
+        new(bottom:Gsk.RenderNode, top:Gsk.RenderNode, blend_mode:Gsk.BlendMode) -> Gsk.BlendNode
+    """
+
     def get_blend_mode(self) -> BlendMode: ...
     def get_bottom_child(self) -> RenderNode: ...
     def get_top_child(self) -> RenderNode: ...
@@ -37,12 +46,30 @@ class BlendNode(RenderNode):
     ) -> BlendNode: ...
 
 class BlurNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        BlurNode(**properties)
+        new(child:Gsk.RenderNode, radius:float) -> Gsk.BlurNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_radius(self) -> float: ...
     @classmethod
     def new(cls, child: RenderNode, radius: float) -> BlurNode: ...
 
 class BorderNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        BorderNode(**properties)
+        new(outline:Gsk.RoundedRect, border_width:list, border_color:list) -> Gsk.BorderNode
+    """
+
     def get_colors(self) -> Gdk.RGBA: ...
     def get_outline(self) -> RoundedRect: ...
     def get_widths(self) -> list[float]: ...
@@ -55,42 +82,101 @@ class BorderNode(RenderNode):
     ) -> BorderNode: ...
 
 class BroadwayRenderer(Renderer):
+    """
+    :Constructors:
+
+    ::
+
+        BroadwayRenderer(**properties)
+        new() -> Gsk.Renderer
+
+    Object GskBroadwayRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         realized: bool
         surface: Optional[Gdk.Surface]
-
     props: Props = ...
-
     @classmethod
     def new(cls) -> BroadwayRenderer: ...
 
 class BroadwayRendererClass(GObject.GPointer): ...
 
 class CairoNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        CairoNode(**properties)
+        new(bounds:Graphene.Rect) -> Gsk.CairoNode
+    """
+
     def get_draw_context(self) -> cairo.Context: ...
     def get_surface(self) -> cairo.Surface: ...
     @classmethod
     def new(cls, bounds: Graphene.Rect) -> CairoNode: ...
 
 class CairoRenderer(Renderer):
+    """
+    :Constructors:
+
+    ::
+
+        CairoRenderer(**properties)
+        new() -> Gsk.Renderer
+
+    Object GskCairoRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         realized: bool
         surface: Optional[Gdk.Surface]
-
     props: Props = ...
-
     @classmethod
     def new(cls) -> CairoRenderer: ...
 
 class CairoRendererClass(GObject.GPointer): ...
 
 class ClipNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ClipNode(**properties)
+        new(child:Gsk.RenderNode, clip:Graphene.Rect) -> Gsk.ClipNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_clip(self) -> Graphene.Rect: ...
     @classmethod
     def new(cls, child: RenderNode, clip: Graphene.Rect) -> ClipNode: ...
 
 class ColorMatrixNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ColorMatrixNode(**properties)
+        new(child:Gsk.RenderNode, color_matrix:Graphene.Matrix, color_offset:Graphene.Vec4) -> Gsk.ColorMatrixNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_color_matrix(self) -> Graphene.Matrix: ...
     def get_color_offset(self) -> Graphene.Vec4: ...
@@ -103,15 +189,41 @@ class ColorMatrixNode(RenderNode):
     ) -> ColorMatrixNode: ...
 
 class ColorNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ColorNode(**properties)
+        new(rgba:Gdk.RGBA, bounds:Graphene.Rect) -> Gsk.ColorNode
+    """
+
     def get_color(self) -> Gdk.RGBA: ...
     @classmethod
     def new(cls, rgba: Gdk.RGBA, bounds: Graphene.Rect) -> ColorNode: ...
 
 class ColorStop(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ColorStop()
+    """
+
     offset: float = ...
     color: Gdk.RGBA = ...
 
 class ConicGradientNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ConicGradientNode(**properties)
+        new(bounds:Graphene.Rect, center:Graphene.Point, rotation:float, color_stops:list) -> Gsk.ConicGradientNode
+    """
+
     def get_angle(self) -> float: ...
     def get_center(self) -> Graphene.Point: ...
     def get_color_stops(self) -> list[ColorStop]: ...
@@ -127,12 +239,30 @@ class ConicGradientNode(RenderNode):
     ) -> ConicGradientNode: ...
 
 class ContainerNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ContainerNode(**properties)
+        new(children:list) -> Gsk.ContainerNode
+    """
+
     def get_child(self, idx: int) -> RenderNode: ...
     def get_n_children(self) -> int: ...
     @classmethod
     def new(cls, children: Sequence[RenderNode]) -> ContainerNode: ...
 
 class CrossFadeNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        CrossFadeNode(**properties)
+        new(start:Gsk.RenderNode, end:Gsk.RenderNode, progress:float) -> Gsk.CrossFadeNode
+    """
+
     def get_end_child(self) -> RenderNode: ...
     def get_progress(self) -> float: ...
     def get_start_child(self) -> RenderNode: ...
@@ -142,30 +272,72 @@ class CrossFadeNode(RenderNode):
     ) -> CrossFadeNode: ...
 
 class DebugNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        DebugNode(**properties)
+        new(child:Gsk.RenderNode, message:str) -> Gsk.DebugNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_message(self) -> str: ...
     @classmethod
     def new(cls, child: RenderNode, message: str) -> DebugNode: ...
 
 class GLRenderer(Renderer):
+    """
+    :Constructors:
+
+    ::
+
+        GLRenderer(**properties)
+        new() -> Gsk.Renderer
+
+    Object GskGLRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         realized: bool
         surface: Optional[Gdk.Surface]
-
     props: Props = ...
-
     @classmethod
     def new(cls) -> GLRenderer: ...
 
 class GLRendererClass(GObject.GPointer): ...
 
 class GLShader(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        GLShader(**properties)
+        new_from_bytes(sourcecode:GLib.Bytes) -> Gsk.GLShader
+        new_from_resource(resource_path:str) -> Gsk.GLShader
+
+    Object GskGLShader
+
+    Properties from GskGLShader:
+      source -> GBytes: source
+      resource -> gchararray: resource
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         resource: Optional[str]
         source: GLib.Bytes
-
     props: Props = ...
-
     def __init__(self, resource: str = ..., source: GLib.Bytes = ...): ...
     def compile(self, renderer: Renderer) -> bool: ...
     def find_uniform_by_name(self, name: str) -> int: ...
@@ -196,9 +368,26 @@ class GLShader(GObject.Object):
     def new_from_resource(cls, resource_path: str) -> GLShader: ...
 
 class GLShaderClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        GLShaderClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class GLShaderNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        GLShaderNode(**properties)
+        new(shader:Gsk.GLShader, bounds:Graphene.Rect, args:GLib.Bytes, children:list=None) -> Gsk.GLShaderNode
+    """
+
     def get_args(self) -> GLib.Bytes: ...
     def get_child(self, idx: int) -> RenderNode: ...
     def get_n_children(self) -> int: ...
@@ -213,6 +402,15 @@ class GLShaderNode(RenderNode):
     ) -> GLShaderNode: ...
 
 class InsetShadowNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        InsetShadowNode(**properties)
+        new(outline:Gsk.RoundedRect, color:Gdk.RGBA, dx:float, dy:float, spread:float, blur_radius:float) -> Gsk.InsetShadowNode
+    """
+
     def get_blur_radius(self) -> float: ...
     def get_color(self) -> Gdk.RGBA: ...
     def get_dx(self) -> float: ...
@@ -231,6 +429,15 @@ class InsetShadowNode(RenderNode):
     ) -> InsetShadowNode: ...
 
 class LinearGradientNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        LinearGradientNode(**properties)
+        new(bounds:Graphene.Rect, start:Graphene.Point, end:Graphene.Point, color_stops:list) -> Gsk.LinearGradientNode
+    """
+
     def get_color_stops(self) -> list[ColorStop]: ...
     def get_end(self) -> Graphene.Point: ...
     def get_n_color_stops(self) -> int: ...
@@ -244,23 +451,75 @@ class LinearGradientNode(RenderNode):
         color_stops: Sequence[ColorStop],
     ) -> LinearGradientNode: ...
 
+class MaskNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        MaskNode(**properties)
+        new(source:Gsk.RenderNode, mask:Gsk.RenderNode, mask_mode:Gsk.MaskMode) -> Gsk.MaskNode
+    """
+
+    def get_mask(self) -> RenderNode: ...
+    def get_mask_mode(self) -> MaskMode: ...
+    def get_source(self) -> RenderNode: ...
+    @classmethod
+    def new(
+        cls, source: RenderNode, mask: RenderNode, mask_mode: MaskMode
+    ) -> MaskNode: ...
+
 class NglRenderer(Renderer):
+    """
+    :Constructors:
+
+    ::
+
+        NglRenderer(**properties)
+        new() -> Gsk.Renderer
+
+    Object GskNglRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         realized: bool
         surface: Optional[Gdk.Surface]
-
     props: Props = ...
-
     @classmethod
     def new(cls) -> NglRenderer: ...
 
 class OpacityNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        OpacityNode(**properties)
+        new(child:Gsk.RenderNode, opacity:float) -> Gsk.OpacityNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_opacity(self) -> float: ...
     @classmethod
     def new(cls, child: RenderNode, opacity: float) -> OpacityNode: ...
 
 class OutsetShadowNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        OutsetShadowNode(**properties)
+        new(outline:Gsk.RoundedRect, color:Gdk.RGBA, dx:float, dy:float, spread:float, blur_radius:float) -> Gsk.OutsetShadowNode
+    """
+
     def get_blur_radius(self) -> float: ...
     def get_color(self) -> Gdk.RGBA: ...
     def get_dx(self) -> float: ...
@@ -279,6 +538,14 @@ class OutsetShadowNode(RenderNode):
     ) -> OutsetShadowNode: ...
 
 class ParseLocation(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParseLocation()
+    """
+
     bytes: int = ...
     chars: int = ...
     lines: int = ...
@@ -286,6 +553,15 @@ class ParseLocation(GObject.GPointer):
     line_chars: int = ...
 
 class RadialGradientNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        RadialGradientNode(**properties)
+        new(bounds:Graphene.Rect, center:Graphene.Point, hradius:float, vradius:float, start:float, end:float, color_stops:list) -> Gsk.RadialGradientNode
+    """
+
     def get_center(self) -> Graphene.Point: ...
     def get_color_stops(self) -> list[ColorStop]: ...
     def get_end(self) -> float: ...
@@ -306,6 +582,14 @@ class RadialGradientNode(RenderNode):
     ) -> RadialGradientNode: ...
 
 class RenderNode:
+    """
+    :Constructors:
+
+    ::
+
+        RenderNode(**properties)
+    """
+
     @staticmethod
     def deserialize(
         bytes: GLib.Bytes,
@@ -321,12 +605,28 @@ class RenderNode:
     def write_to_file(self, filename: str) -> bool: ...
 
 class Renderer(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Renderer(**properties)
+        new_for_surface(surface:Gdk.Surface) -> Gsk.Renderer or None
+
+    Object GskRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         realized: bool
         surface: Optional[Gdk.Surface]
-
     props: Props = ...
-
     def get_surface(self) -> Optional[Gdk.Surface]: ...
     def is_realized(self) -> bool: ...
     @classmethod
@@ -343,6 +643,15 @@ class Renderer(GObject.Object):
 class RendererClass(GObject.GPointer): ...
 
 class RepeatNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        RepeatNode(**properties)
+        new(bounds:Graphene.Rect, child:Gsk.RenderNode, child_bounds:Graphene.Rect=None) -> Gsk.RepeatNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_child_bounds(self) -> Graphene.Rect: ...
     @classmethod
@@ -354,6 +663,15 @@ class RepeatNode(RenderNode):
     ) -> RepeatNode: ...
 
 class RepeatingLinearGradientNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        RepeatingLinearGradientNode(**properties)
+        new(bounds:Graphene.Rect, start:Graphene.Point, end:Graphene.Point, color_stops:list) -> Gsk.RepeatingLinearGradientNode
+    """
+
     @classmethod
     def new(
         cls,
@@ -364,6 +682,15 @@ class RepeatingLinearGradientNode(RenderNode):
     ) -> RepeatingLinearGradientNode: ...
 
 class RepeatingRadialGradientNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        RepeatingRadialGradientNode(**properties)
+        new(bounds:Graphene.Rect, center:Graphene.Point, hradius:float, vradius:float, start:float, end:float, color_stops:list) -> Gsk.RepeatingRadialGradientNode
+    """
+
     @classmethod
     def new(
         cls,
@@ -377,15 +704,31 @@ class RepeatingRadialGradientNode(RenderNode):
     ) -> RepeatingRadialGradientNode: ...
 
 class RoundedClipNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        RoundedClipNode(**properties)
+        new(child:Gsk.RenderNode, clip:Gsk.RoundedRect) -> Gsk.RoundedClipNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_clip(self) -> RoundedRect: ...
     @classmethod
     def new(cls, child: RenderNode, clip: RoundedRect) -> RoundedClipNode: ...
 
 class RoundedRect(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RoundedRect()
+    """
+
     bounds: Graphene.Rect = ...
     corner: list[Graphene.Size] = ...
-
     def contains_point(self, point: Graphene.Point) -> bool: ...
     def contains_rect(self, rect: Graphene.Rect) -> bool: ...
     def init(
@@ -407,6 +750,14 @@ class RoundedRect(GObject.GPointer):
     ) -> RoundedRect: ...
 
 class ShaderArgsBuilder(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(shader:Gsk.GLShader, initial_values:GLib.Bytes=None) -> Gsk.ShaderArgsBuilder
+    """
+
     @classmethod
     def new(
         cls, shader: GLShader, initial_values: Optional[GLib.Bytes] = None
@@ -423,12 +774,29 @@ class ShaderArgsBuilder(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Shadow(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Shadow()
+    """
+
     color: Gdk.RGBA = ...
     dx: float = ...
     dy: float = ...
     radius: float = ...
 
 class ShadowNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ShadowNode(**properties)
+        new(child:Gsk.RenderNode, shadows:list) -> Gsk.ShadowNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_n_shadows(self) -> int: ...
     def get_shadow(self, i: int) -> Shadow: ...
@@ -436,6 +804,15 @@ class ShadowNode(RenderNode):
     def new(cls, child: RenderNode, shadows: Sequence[Shadow]) -> ShadowNode: ...
 
 class TextNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        TextNode(**properties)
+        new(font:Pango.Font, glyphs:Pango.GlyphString, color:Gdk.RGBA, offset:Graphene.Point) -> Gsk.TextNode or None
+    """
+
     def get_color(self) -> Gdk.RGBA: ...
     def get_font(self) -> Pango.Font: ...
     def get_glyphs(self) -> list[Pango.GlyphInfo]: ...
@@ -452,11 +829,45 @@ class TextNode(RenderNode):
     ) -> Optional[TextNode]: ...
 
 class TextureNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        TextureNode(**properties)
+        new(texture:Gdk.Texture, bounds:Graphene.Rect) -> Gsk.TextureNode
+    """
+
     def get_texture(self) -> Gdk.Texture: ...
     @classmethod
     def new(cls, texture: Gdk.Texture, bounds: Graphene.Rect) -> TextureNode: ...
 
+class TextureScaleNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        TextureScaleNode(**properties)
+        new(texture:Gdk.Texture, bounds:Graphene.Rect, filter:Gsk.ScalingFilter) -> Gsk.TextureScaleNode
+    """
+
+    def get_filter(self) -> ScalingFilter: ...
+    def get_texture(self) -> Gdk.Texture: ...
+    @classmethod
+    def new(
+        cls, texture: Gdk.Texture, bounds: Graphene.Rect, filter: ScalingFilter
+    ) -> TextureScaleNode: ...
+
 class Transform(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gsk.Transform
+    """
+
     def equal(self, second: Optional[Transform] = None) -> bool: ...
     def get_category(self) -> TransformCategory: ...
     def invert(self) -> Optional[Transform]: ...
@@ -491,6 +902,15 @@ class Transform(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class TransformNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        TransformNode(**properties)
+        new(child:Gsk.RenderNode, transform:Gsk.Transform) -> Gsk.TransformNode
+    """
+
     def get_child(self) -> RenderNode: ...
     def get_transform(self) -> Transform: ...
     @classmethod
@@ -530,6 +950,12 @@ class GLUniformType(GObject.GEnum):
     VEC3 = 6
     VEC4 = 7
 
+class MaskMode(GObject.GEnum):
+    ALPHA = 0
+    INVERTED_ALPHA = 1
+    INVERTED_LUMINANCE = 3
+    LUMINANCE = 2
+
 class RenderNodeType(GObject.GEnum):
     BLEND_NODE = 20
     BLUR_NODE = 23
@@ -545,6 +971,7 @@ class RenderNodeType(GObject.GEnum):
     GL_SHADER_NODE = 25
     INSET_SHADOW_NODE = 11
     LINEAR_GRADIENT_NODE = 4
+    MASK_NODE = 27
     NOT_A_RENDER_NODE = 0
     OPACITY_NODE = 14
     OUTSET_SHADOW_NODE = 12
@@ -555,6 +982,7 @@ class RenderNodeType(GObject.GEnum):
     ROUNDED_CLIP_NODE = 18
     SHADOW_NODE = 19
     TEXTURE_NODE = 10
+    TEXTURE_SCALE_NODE = 26
     TEXT_NODE = 22
     TRANSFORM_NODE = 13
 
@@ -567,7 +995,6 @@ class SerializationError(GObject.GEnum):
     INVALID_DATA = 2
     UNSUPPORTED_FORMAT = 0
     UNSUPPORTED_VERSION = 1
-
     @staticmethod
     def quark() -> int: ...
 

@@ -22,14 +22,14 @@ COMMIT_META_KEY_VERSION: str = "version"
 DIRMETA_GVARIANT_STRING: str = "(uuua(ayay))"
 FILEMETA_GVARIANT_STRING: str = "(uuua(ayay))"
 GPG_KEY_GVARIANT_STRING: str = "(aa{sv}aa{sv}a{sv})"
-MAX_METADATA_SIZE: int = 134217728
+MAX_METADATA_SIZE: int = 10485760
 MAX_METADATA_WARN_SIZE: int = 7340032
 METADATA_KEY_BOOTABLE: str = "ostree.bootable"
 METADATA_KEY_LINUX: str = "ostree.linux"
 META_KEY_DEPLOY_COLLECTION_ID: str = "ostree.deploy-collection-id"
 ORIGIN_TRANSIENT_GROUP: str = "libostree-transient"
 PATH_BOOTED: str = "/run/ostree-booted"
-RELEASE_VERSION: int = 4
+RELEASE_VERSION: int = 2
 REPO_METADATA_REF: str = "ostree-metadata"
 SHA256_DIGEST_LEN: int = 32
 SHA256_STRING_LEN: int = 64
@@ -38,8 +38,8 @@ SUMMARY_GVARIANT_STRING: str = "(a(s(taya{sv}))a{sv})"
 SUMMARY_SIG_GVARIANT_STRING: str = "a{sv}"
 TIMESTAMP: int = 0
 TREE_GVARIANT_STRING: str = "(a(say)a(sayay))"
-VERSION: float = 2023.4
-VERSION_S: str = "2023.4"
+VERSION: float = 2023.2
+VERSION_S: str = "2023.2"
 YEAR_VERSION: int = 2023
 _lock = ...  # FIXME Constant
 _namespace: str = "OSTree"
@@ -623,7 +623,6 @@ class Repo(GObject.Object):
         path: Gio.File
         remotes_config_dir: str
         sysroot_path: Gio.File
-
     props: Props = ...
     def __init__(
         self,
@@ -662,13 +661,6 @@ class Repo(GObject.Object):
         destination: Gio.File,
         source: RepoFile,
         source_info: Gio.FileInfo,
-        cancellable: Optional[Gio.Cancellable] = None,
-    ) -> bool: ...
-    def commit_add_composefs_metadata(
-        self,
-        format_version: int,
-        dict: GLib.VariantDict,
-        repo_root: RepoFile,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> bool: ...
     def commit_transaction(
@@ -1512,9 +1504,9 @@ class RepoFinderInterface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
     resolve_async: Callable[..., None] = ...
-    resolve_finish: Callable[[RepoFinder, Gio.AsyncResult], list[RepoFinderResult]] = (
-        ...
-    )
+    resolve_finish: Callable[
+        [RepoFinder, Gio.AsyncResult], list[RepoFinderResult]
+    ] = ...
 
 class RepoFinderMount(GObject.Object, RepoFinder):
     """
@@ -1537,7 +1529,6 @@ class RepoFinderMount(GObject.Object, RepoFinder):
 
     class Props:
         monitor: Gio.VolumeMonitor
-
     props: Props = ...
     def __init__(self, monitor: Gio.VolumeMonitor = ...): ...
     @classmethod
@@ -1678,7 +1669,6 @@ class SePolicy(GObject.Object, Gio.Initable):
     class Props:
         path: Optional[Gio.File]
         rootfs_dfd: int
-
     props: Props = ...
     def __init__(self, path: Gio.File = ..., rootfs_dfd: int = ...): ...
     @staticmethod
@@ -1837,7 +1827,6 @@ class Sysroot(GObject.Object):
 
     class Props:
         path: Gio.File
-
     props: Props = ...
     def __init__(self, path: Gio.File = ...): ...
     def cleanup(self, cancellable: Optional[Gio.Cancellable] = None) -> bool: ...
@@ -2037,7 +2026,6 @@ class SysrootUpgrader(GObject.Object, Gio.Initable):
         flags: SysrootUpgraderFlags
         osname: str
         sysroot: Sysroot
-
     props: Props = ...
     def __init__(
         self,
@@ -2101,7 +2089,6 @@ class SysrootWriteDeploymentsOpts(GObject.GPointer):
     """
 
     do_postclean: bool = ...
-    disable_auto_early_prune: bool = ...
     unused_bools: list[bool] = ...
     unused_ints: list[int] = ...
     unused_ptrs: list[None] = ...

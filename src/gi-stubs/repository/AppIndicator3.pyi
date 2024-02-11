@@ -1,6 +1,11 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
+from typing import Sequence
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -86,11 +91,9 @@ class Indicator(GObject.Object):
         ordering_index: int
         status: str
         title: str
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: IndicatorPrivate = ...
-
     def __init__(
         self,
         attention_icon_desc: str = ...,
@@ -104,7 +107,7 @@ class Indicator(GObject.Object):
         label_guide: str = ...,
         ordering_index: int = ...,
         status: str = ...,
-        title: str = ...,
+        title: Optional[str] = ...,
     ): ...
     def build_menu_from_desktop(
         self, desktop_file: str, desktop_profile: str

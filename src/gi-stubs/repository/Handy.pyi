@@ -85,6 +85,8 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -93,13 +95,11 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -185,7 +185,7 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -197,7 +197,7 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -291,7 +291,6 @@ class ActionRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Builda
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -436,8 +435,8 @@ class ApplicationWindow(
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -463,7 +462,7 @@ class ApplicationWindow(
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -482,8 +481,8 @@ class ApplicationWindow(
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -502,6 +501,8 @@ class ApplicationWindow(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -510,13 +511,11 @@ class ApplicationWindow(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -602,7 +601,7 @@ class ApplicationWindow(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -614,7 +613,7 @@ class ApplicationWindow(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -731,7 +730,6 @@ class ApplicationWindow(
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
@@ -847,6 +845,8 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -855,13 +855,11 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -947,7 +945,7 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -959,7 +957,7 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1044,7 +1042,6 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     def __init__(
         self,
@@ -1193,6 +1190,8 @@ class Carousel(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1201,13 +1200,11 @@ class Carousel(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -1293,7 +1290,7 @@ class Carousel(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1305,7 +1302,7 @@ class Carousel(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1400,7 +1397,6 @@ class Carousel(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -1509,6 +1505,8 @@ class CarouselIndicatorDots(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1517,13 +1515,11 @@ class CarouselIndicatorDots(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -1609,7 +1605,7 @@ class CarouselIndicatorDots(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1621,7 +1617,7 @@ class CarouselIndicatorDots(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1703,7 +1699,6 @@ class CarouselIndicatorDots(
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
-
     props: Props = ...
     def __init__(
         self,
@@ -1782,6 +1777,8 @@ class CarouselIndicatorLines(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1790,13 +1787,11 @@ class CarouselIndicatorLines(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -1882,7 +1877,7 @@ class CarouselIndicatorLines(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1894,7 +1889,7 @@ class CarouselIndicatorLines(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1976,7 +1971,6 @@ class CarouselIndicatorLines(
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
-
     props: Props = ...
     def __init__(
         self,
@@ -2069,6 +2063,8 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2077,13 +2073,11 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2169,7 +2163,7 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2181,7 +2175,7 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2267,7 +2261,6 @@ class Clamp(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientable):
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -2398,6 +2391,8 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2406,13 +2401,11 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2498,7 +2491,7 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2510,7 +2503,7 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2606,7 +2599,6 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: ActionRow = ...
     def __init__(
@@ -2761,6 +2753,8 @@ class Deck(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2769,13 +2763,11 @@ class Deck(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2861,7 +2853,7 @@ class Deck(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2873,7 +2865,7 @@ class Deck(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2967,7 +2959,6 @@ class Deck(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -3157,6 +3148,8 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -3165,13 +3158,11 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -3257,7 +3248,7 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3269,7 +3260,7 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -3363,7 +3354,6 @@ class ExpanderRow(PreferencesRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buil
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
@@ -3513,6 +3503,8 @@ class Flap(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -3521,13 +3513,11 @@ class Flap(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -3613,7 +3603,7 @@ class Flap(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3625,7 +3615,7 @@ class Flap(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -3724,7 +3714,6 @@ class Flap(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -3878,6 +3867,8 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -3886,13 +3877,11 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -3978,7 +3967,7 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3990,7 +3979,7 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4085,7 +4074,6 @@ class HeaderBar(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -4201,7 +4189,6 @@ class HeaderGroup(GObject.Object, Gtk.Buildable):
 
     class Props:
         decorate_all: bool
-
     props: Props = ...
     def __init__(self, decorate_all: bool = ...): ...
     def add_gtk_header_bar(self, header_bar: Gtk.HeaderBar) -> None: ...
@@ -4302,6 +4289,8 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -4310,13 +4299,11 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -4402,7 +4389,7 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -4414,7 +4401,7 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4504,7 +4491,6 @@ class Keypad(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -4648,6 +4634,8 @@ class Leaflet(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -4656,13 +4644,11 @@ class Leaflet(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -4748,7 +4734,7 @@ class Leaflet(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -4760,7 +4746,7 @@ class Leaflet(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4858,7 +4844,6 @@ class Leaflet(
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Container = ...
     def __init__(
@@ -5001,6 +4986,8 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5009,13 +4996,11 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5101,7 +5086,7 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -5113,7 +5098,7 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -5199,7 +5184,6 @@ class PreferencesGroup(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -5302,6 +5286,8 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5310,13 +5296,11 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5402,7 +5386,7 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -5414,7 +5398,7 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -5499,7 +5483,6 @@ class PreferencesPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -5610,6 +5593,8 @@ class PreferencesRow(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5618,13 +5603,11 @@ class PreferencesRow(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5710,7 +5693,7 @@ class PreferencesRow(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -5722,7 +5705,7 @@ class PreferencesRow(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -5811,7 +5794,6 @@ class PreferencesRow(
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.ListBoxRow = ...
     def __init__(
@@ -5924,8 +5906,8 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -5951,7 +5933,7 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -5970,8 +5952,8 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -5990,6 +5972,8 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5998,13 +5982,11 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -6090,7 +6072,7 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6102,7 +6084,7 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -6220,7 +6202,6 @@ class PreferencesWindow(Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Window = ...
     def __init__(
@@ -6351,6 +6332,8 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -6359,13 +6342,11 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -6451,7 +6432,7 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6463,7 +6444,7 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -6548,7 +6529,6 @@ class SearchBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Bin = ...
     def __init__(
@@ -6662,6 +6642,8 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -6670,13 +6652,11 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -6762,7 +6742,7 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6774,7 +6754,7 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -6866,7 +6846,6 @@ class Squeezer(Gtk.Container, Atk.ImplementorIface, Gtk.Buildable, Gtk.Orientabl
         window: Optional[Gdk.Window]
         orientation: Gtk.Orientation
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -6983,6 +6962,8 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -6991,13 +6972,11 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -7083,7 +7062,7 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -7095,7 +7074,7 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -7181,7 +7160,6 @@ class StatusPage(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -7280,7 +7258,6 @@ class StyleManager(GObject.Object):
         display: Gdk.Display
         high_contrast: bool
         system_supports_color_schemes: bool
-
     props: Props = ...
     def __init__(self, color_scheme: ColorScheme = ..., display: Gdk.Display = ...): ...
     def get_color_scheme(self) -> ColorScheme: ...
@@ -7376,7 +7353,6 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
         reversed: bool
         swipeable: Swipeable
         orientation: Gtk.Orientation
-
     props: Props = ...
     def __init__(
         self,
@@ -7446,9 +7422,9 @@ class SwipeableInterface(GObject.GPointer):
     get_snap_points: Callable[[Swipeable], list[float]] = ...
     get_progress: Callable[[Swipeable], float] = ...
     get_cancel_progress: Callable[[Swipeable], float] = ...
-    get_swipe_area: Callable[[Swipeable, NavigationDirection, bool], Gdk.Rectangle] = (
-        ...
-    )
+    get_swipe_area: Callable[
+        [Swipeable, NavigationDirection, bool], Gdk.Rectangle
+    ] = ...
     padding: list[None] = ...
 
 class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
@@ -7502,6 +7478,8 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -7510,13 +7488,11 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -7602,7 +7578,7 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -7614,7 +7590,7 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -7706,7 +7682,6 @@ class TabBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -7839,7 +7814,6 @@ class TabPage(GObject.Object):
         selected: bool
         title: Optional[str]
         tooltip: Optional[str]
-
     props: Props = ...
     def __init__(
         self,
@@ -7936,6 +7910,8 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -7944,13 +7920,11 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -8036,7 +8010,7 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -8048,7 +8022,7 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -8138,7 +8112,6 @@ class TabView(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -8272,6 +8245,8 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -8280,13 +8255,11 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -8372,7 +8345,7 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -8384,7 +8357,7 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -8468,7 +8441,6 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -8550,7 +8522,6 @@ class ValueObject(GObject.Object):
 
     class Props:
         value: Any
-
     props: Props = ...
     def __init__(self, value: Any = ...): ...
     def copy_value(self, dest: Any) -> None: ...
@@ -8607,6 +8578,8 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -8615,13 +8588,11 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -8707,7 +8678,7 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -8719,7 +8690,7 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -8805,7 +8776,6 @@ class ViewSwitcher(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -8897,6 +8867,8 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -8905,13 +8877,11 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -8997,7 +8967,7 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -9009,7 +8979,7 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -9095,7 +9065,6 @@ class ViewSwitcherBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -9215,6 +9184,8 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -9223,13 +9194,11 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -9315,7 +9284,7 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -9327,7 +9296,7 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -9416,7 +9385,6 @@ class ViewSwitcherTitle(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -9527,8 +9495,8 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -9554,7 +9522,7 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -9573,8 +9541,8 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -9593,6 +9561,8 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -9601,13 +9571,11 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -9693,7 +9661,7 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -9705,7 +9673,7 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -9821,7 +9789,6 @@ class Window(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -9944,6 +9911,8 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -9952,13 +9921,11 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -10044,7 +10011,7 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -10056,7 +10023,7 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -10141,7 +10108,6 @@ class WindowHandle(Gtk.EventBox, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,

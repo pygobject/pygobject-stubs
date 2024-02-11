@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
@@ -12,11 +13,10 @@ from gi.repository import GObject
 
 BUILD_TYPE: str = "plain"
 MAJOR_VERSION: int = 1
-MINOR_VERSION: int = 1
-VERSION_S: str = "1.1.0"
-_introspection_module = ...  # FIXME Constant
+MINOR_VERSION: int = 2
+VERSION_S: str = "1.2.0"
+_lock = ...  # FIXME Constant
 _namespace: str = "Ggit"
-_overrides_module = ...  # FIXME Constant
 _version: str = "1.0"
 
 def error_quark() -> int: ...
@@ -25,6 +25,14 @@ def init() -> None: ...
 def message_prettify(message: str, strip_comments: bool, comment_char: int) -> str: ...
 
 class AnnotatedCommit(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_from_ref(repository:Ggit.Repository, ref:Ggit.Ref) -> Ggit.AnnotatedCommit
+    """
+
     def get_id(self) -> Optional[OId]: ...
     @classmethod
     def new_from_ref(cls, repository: Repository, ref: Ref) -> AnnotatedCommit: ...
@@ -32,9 +40,25 @@ class AnnotatedCommit(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Blame(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Blame(**properties)
+
+    Object GgitBlame
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     def __init__(self, native: None = ...): ...
     def from_buffer(self, buffer: Sequence[int]) -> Optional[Blame]: ...
@@ -47,6 +71,14 @@ class Blame(Native):
     def set_flags(blame_options: BlameOptions, flags: BlameFlags) -> None: ...
 
 class BlameClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BlameClass()
+    """
+
     parent_class: NativeClass = ...
 
 class BlameHunk(GObject.GBoxed):
@@ -63,6 +95,14 @@ class BlameHunk(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class BlameOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Ggit.BlameOptions
+    """
+
     def copy(self) -> Optional[BlameOptions]: ...
     def free(self) -> None: ...
     def get_maximum_line(self) -> int: ...
@@ -79,33 +119,97 @@ class BlameOptions(GObject.GBoxed):
     def set_oldest_commit(self, oid: Optional[OId] = None) -> None: ...
 
 class Blob(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Blob(**properties)
+
+    Object GgitBlob
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     def __init__(self, native: None = ...): ...
     def get_raw_content(self) -> Optional[bytes]: ...
     def is_binary(self) -> bool: ...
 
 class BlobClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BlobClass()
+    """
+
     parent_class: ObjectClass = ...
 
 class BlobOutputStream(Gio.OutputStream):
+    """
+    :Constructors:
+
+    ::
+
+        BlobOutputStream(**properties)
+
+    Object GgitBlobOutputStream
+
+    Properties from GgitBlobOutputStream:
+      repository -> GgitRepository: Repository
+        Repository
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         repository: Repository
-
     props: Props = ...
     parent_instance: Gio.OutputStream = ...
     def __init__(self, repository: Repository = ...): ...
     def get_id(self) -> Optional[OId]: ...
 
 class BlobOutputStreamClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BlobOutputStreamClass()
+    """
+
     parent_class: Gio.OutputStreamClass = ...
 
 class Branch(Ref):
+    """
+    :Constructors:
+
+    ::
+
+        Branch(**properties)
+
+    Object GgitBranch
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Ref = ...
     def __init__(self, native: None = ...): ...
@@ -117,6 +221,14 @@ class Branch(Ref):
     def set_upstream(self, upstream_branch_name: str) -> None: ...
 
 class BranchClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BranchClass()
+    """
+
     parent_class: RefClass = ...
 
 class BranchEnumerator(GObject.GBoxed):
@@ -127,34 +239,71 @@ class BranchEnumerator(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class CheckoutOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        CheckoutOptions(**properties)
+        new() -> Ggit.CheckoutOptions or None
+
+    Object GgitCheckoutOptions
+
+    Properties from GgitCheckoutOptions:
+      strategy -> GgitCheckoutStrategy: Strategy
+        Strategy
+      disable-filters -> gboolean: Disable Filters
+        Disable filters
+      dir-mode -> guint: Dir Mode
+        Dir mode
+      file-mode -> guint: File Mode
+        File mode
+      file-open-flags -> gint: File Open Flags
+        File open flags
+      notify-flags -> GgitCheckoutNotifyFlags: Notify Flags
+        Notify flags
+      baseline -> GgitTree: Baseline
+        Baseline
+      target-directory -> gchararray: Target Directory
+        Target directory
+      ancestor-label -> gchararray: Ancestor Label
+        Ancestor label
+      our-label -> gchararray: Our Label
+        Our label
+      their-label -> gchararray: Their Label
+        Their label
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        ancestor_label: str
-        baseline: Tree
+        ancestor_label: Optional[str]
+        baseline: Optional[Tree]
         dir_mode: int
         disable_filters: bool
         file_mode: int
         file_open_flags: int
         notify_flags: CheckoutNotifyFlags
-        our_label: str
+        our_label: Optional[str]
         strategy: CheckoutStrategy
-        target_directory: str
-        their_label: str
-
+        target_directory: Optional[str]
+        their_label: Optional[str]
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
         self,
-        ancestor_label: str = ...,
-        baseline: Tree = ...,
+        ancestor_label: Optional[str] = ...,
+        baseline: Optional[Tree] = ...,
         dir_mode: int = ...,
         disable_filters: bool = ...,
         file_mode: int = ...,
         file_open_flags: int = ...,
         notify_flags: CheckoutNotifyFlags = ...,
-        our_label: str = ...,
+        our_label: Optional[str] = ...,
         strategy: CheckoutStrategy = ...,
-        target_directory: str = ...,
-        their_label: str = ...,
+        target_directory: Optional[str] = ...,
+        their_label: Optional[str] = ...,
     ): ...
     def do_notify(
         self,
@@ -195,6 +344,14 @@ class CheckoutOptions(GObject.Object):
     def set_their_label(self, label: Optional[str] = None) -> None: ...
 
 class CheckoutOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CheckoutOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     notify: Callable[
         [CheckoutOptions, CheckoutNotifyFlags, str, DiffFile, DiffFile, DiffFile], int
@@ -202,18 +359,39 @@ class CheckoutOptionsClass(GObject.GPointer):
     progress: Callable[[CheckoutOptions, str, int, int], None] = ...
 
 class CherryPickOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        CherryPickOptions(**properties)
+        new() -> Ggit.CherryPickOptions
+
+    Object GgitCherryPickOptions
+
+    Properties from GgitCherryPickOptions:
+      mainline -> guint: Mainline
+        Mainline
+      checkout-options -> GgitCheckoutOptions: Checkout Options
+        Checkout options
+      merge-options -> GgitMergeOptions: Merge Options
+        Merge options
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         checkout_options: CheckoutOptions
         mainline: int
         merge_options: MergeOptions
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
         self,
-        checkout_options: CheckoutOptions = ...,
+        checkout_options: Optional[CheckoutOptions] = ...,
         mainline: int = ...,
-        merge_options: MergeOptions = ...,
+        merge_options: Optional[MergeOptions] = ...,
     ): ...
     def get_checkout_options(self) -> CheckoutOptions: ...
     def get_mainline(self) -> int: ...
@@ -229,9 +407,31 @@ class CherryPickOptions(GObject.Object):
     ) -> None: ...
 
 class CherryPickOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CherryPickOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class CloneOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        CloneOptions(**properties)
+        new() -> Ggit.CloneOptions
+
+    Object GgitCloneOptions
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def do_create_remote(
         self, repository: Repository, name: str, url: str
@@ -253,16 +453,40 @@ class CloneOptions(GObject.Object):
     def set_local(self, local: CloneLocal) -> None: ...
 
 class CloneOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CloneOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     create_repository: Callable[[CloneOptions, str, bool], Optional[Repository]] = ...
-    create_remote: Callable[[CloneOptions, Repository, str, str], Optional[Remote]] = (
-        ...
-    )
+    create_remote: Callable[
+        [CloneOptions, Repository, str, str], Optional[Remote]
+    ] = ...
 
 class Commit(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Commit(**properties)
+
+    Object GgitCommit
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Object = ...
     def __init__(self, native: None = ...): ...
@@ -286,13 +510,40 @@ class Commit(Object):
     def get_tree_id(self) -> Optional[OId]: ...
 
 class CommitClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CommitClass()
+    """
+
     parent_class: ObjectClass = ...
 
 class CommitParents(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        CommitParents(**properties)
+        new(commit:Ggit.Commit) -> Ggit.CommitParents
+
+    Object GgitCommitParents
+
+    Properties from GgitCommitParents:
+      commit -> GgitCommit: Commit
+        The commit for the parents collection
+      size -> guint: Size
+        The size of the parents collection
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         commit: Commit
         size: int
-
     props: Props = ...
     def __init__(self, commit: Commit = ...): ...
     def get(self, idx: int) -> Optional[Commit]: ...
@@ -302,12 +553,39 @@ class CommitParents(GObject.Object):
     def new(cls, commit: Commit) -> CommitParents: ...
 
 class CommitParentsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CommitParentsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class Config(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Config(**properties)
+        new() -> Ggit.Config
+        new_default() -> Ggit.Config
+        new_from_file(file:Gio.File) -> Ggit.Config
+
+    Object GgitConfig
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     def __init__(self, native: None = ...): ...
     def add_file(self, file: Gio.File, level: ConfigLevel, force: bool) -> None: ...
@@ -340,6 +618,14 @@ class Config(Native):
     def snapshot(self) -> Config: ...
 
 class ConfigClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ConfigClass()
+    """
+
     parent_class: NativeClass = ...
 
 class ConfigEntry(GObject.GBoxed):
@@ -350,22 +636,69 @@ class ConfigEntry(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Cred(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Cred(**properties)
+
+    Object GgitCred
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, native: None = ...): ...
 
 class CredClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CredClass()
+    """
+
     parent_class: NativeClass = ...
 
 class CredPlaintext(Cred, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        CredPlaintext(**properties)
+        new(username:str, password:str) -> Ggit.CredPlaintext
+
+    Object GgitCredPlaintext
+
+    Properties from GgitCredPlaintext:
+      username -> gchararray: user name
+        The user name
+      password -> gchararray: password
+        The password
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         password: str
         username: str
         native: None
-
     props: Props = ...
     parent_instance: Cred = ...
     def __init__(
@@ -377,13 +710,42 @@ class CredPlaintext(Cred, Gio.Initable):
     def new(cls, username: str, password: str) -> CredPlaintext: ...
 
 class CredPlaintextClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CredPlaintextClass()
+    """
+
     parent_class: CredClass = ...
 
 class CredSshInteractive(Cred, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        CredSshInteractive(**properties)
+        new(username:str) -> Ggit.CredSshInteractive
+
+    Object GgitCredSshInteractive
+
+    Properties from GgitCredSshInteractive:
+      username -> gchararray: user name
+        The user name
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         username: str
         native: None
-
     props: Props = ...
     parent_instance: Cred = ...
     def __init__(self, username: str = ..., native: None = ...): ...
@@ -393,12 +755,28 @@ class CredSshInteractive(Cred, Gio.Initable):
     def new(cls, username: str) -> CredSshInteractive: ...
 
 class CredSshInteractiveClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CredSshInteractiveClass()
+    """
+
     parent_class: CredClass = ...
-    prompt: Callable[[CredSshInteractive, Sequence[CredSshInteractivePrompt]], None] = (
-        ...
-    )
+    prompt: Callable[
+        [CredSshInteractive, Sequence[CredSshInteractivePrompt]], None
+    ] = ...
 
 class CredSshInteractivePrompt(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(name:str, instruction:str, text:str, is_masked:bool) -> Ggit.CredSshInteractivePrompt
+    """
+
     def get_instruction(self) -> str: ...
     def get_name(self) -> str: ...
     def get_response(self) -> str: ...
@@ -413,10 +791,31 @@ class CredSshInteractivePrompt(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class CredSshKeyFromAgent(Cred, Gio.Initable):
-    class Props:
-        username: str
-        native: None
+    """
+    :Constructors:
 
+    ::
+
+        CredSshKeyFromAgent(**properties)
+        new(username:str) -> Ggit.CredSshKeyFromAgent or None
+
+    Object GgitCredSshKeyFromAgent
+
+    Properties from GgitCredSshKeyFromAgent:
+      username -> gchararray: user name
+        The user name
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        username: Optional[str]
+        native: None
     props: Props = ...
     def __init__(self, username: str = ..., native: None = ...): ...
     def get_username(self) -> Optional[str]: ...
@@ -424,13 +823,46 @@ class CredSshKeyFromAgent(Cred, Gio.Initable):
     def new(cls, username: str) -> Optional[CredSshKeyFromAgent]: ...
 
 class CredSshKeyFromAgentClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CredSshKeyFromAgentClass()
+    """
+
     parent_class: CredClass = ...
 
 class Diff(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Diff(**properties)
+        new_buffers(buffer1:list=None, buffer1_as_path:str=None, buffer2:list=None, buffer2_as_path:str=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Diff or None
+        new_index_to_workdir(repository:Ggit.Repository, index:Ggit.Index=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Diff or None
+        new_tree_to_index(repository:Ggit.Repository, old_tree:Ggit.Tree=None, index:Ggit.Index=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Diff or None
+        new_tree_to_tree(repository:Ggit.Repository, old_tree:Ggit.Tree=None, new_tree:Ggit.Tree=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Diff or None
+        new_tree_to_workdir(repository:Ggit.Repository, old_tree:Ggit.Tree=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Diff or None
+
+    Object GgitDiff
+
+    Properties from GgitDiff:
+      repository -> GgitRepository: Repository
+        Repository
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         repository: Repository
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, repository: Repository = ..., native: None = ...): ...
@@ -530,6 +962,14 @@ class DiffBinaryFile(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class DiffClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DiffClass()
+    """
+
     parent_class: NativeClass = ...
 
 class DiffDelta(GObject.GBoxed):
@@ -551,14 +991,41 @@ class DiffFile(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class DiffFindOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DiffFindOptions(**properties)
+        new() -> Ggit.DiffFindOptions or None
+
+    Object GgitDiffFindOptions
+
+    Properties from GgitDiffFindOptions:
+      flags -> GgitDiffFindFlags: Flags
+        Flags
+      rename-threshold -> guint: Rename Threshold
+        Rename threshold
+      rename-from-rewrite-threshold -> guint: Rename From Rewrite Threshold
+        Rename from rewrite threshold
+      copy-threshold -> guint: Copy Threshold
+        Copy threshold
+      rename-limit -> guint: Rename Limit
+        Rename limit
+      metric -> GgitDiffSimilarityMetric: Metric
+        Metric
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         copy_threshold: int
         flags: DiffFindFlags
-        metric: DiffSimilarityMetric
+        metric: Optional[DiffSimilarityMetric]
         rename_from_rewrite_threshold: int
         rename_limit: int
         rename_threshold: int
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -586,28 +1053,65 @@ class DiffFindOptions(GObject.Object):
     def set_rename_threshold(self, threshold: int) -> None: ...
 
 class DiffFindOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DiffFindOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class DiffFormatEmailOptions(GObject.Object):
-    class Props:
-        author: Signature
-        body: str
-        flags: DiffFormatEmailFlags
-        id: OId
-        patch_number: int
-        summary: str
-        total_patches: int
+    """
+    :Constructors:
 
+    ::
+
+        DiffFormatEmailOptions(**properties)
+        new() -> Ggit.DiffFormatEmailOptions or None
+
+    Object GgitDiffFormatEmailOptions
+
+    Properties from GgitDiffFormatEmailOptions:
+      flags -> GgitDiffFormatEmailFlags: Flags
+        Flags
+      patch-number -> guint64: Patch Number
+        Patch number
+      total-patches -> guint64: Total Patches
+        Total patches
+      id -> GgitOId: Id
+        Id
+      summary -> gchararray: Summary
+        Summary
+      body -> gchararray: Body
+        Body
+      author -> GgitSignature: Author
+        Author
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        author: Optional[Signature]
+        body: Optional[str]
+        flags: DiffFormatEmailFlags
+        id: Optional[OId]
+        patch_number: int
+        summary: Optional[str]
+        total_patches: int
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
         self,
-        author: Signature = ...,
-        body: str = ...,
+        author: Optional[Signature] = ...,
+        body: Optional[str] = ...,
         flags: DiffFormatEmailFlags = ...,
-        id: OId = ...,
+        id: Optional[OId] = ...,
         patch_number: int = ...,
-        summary: str = ...,
+        summary: Optional[str] = ...,
         total_patches: int = ...,
     ): ...
     def get_author(self) -> Optional[Signature]: ...
@@ -628,6 +1132,14 @@ class DiffFormatEmailOptions(GObject.Object):
     def set_total_patches(self, patches: int) -> None: ...
 
 class DiffFormatEmailOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DiffFormatEmailOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class DiffHunk(GObject.GBoxed):
@@ -650,14 +1162,41 @@ class DiffLine(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class DiffOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DiffOptions(**properties)
+        new() -> Ggit.DiffOptions or None
+
+    Object GgitDiffOptions
+
+    Properties from GgitDiffOptions:
+      flags -> GgitDiffOption: Flags
+        Flags
+      n-context-lines -> gint: N Context Lines
+        N context lines
+      n-interhunk-lines -> gint: N Interhunk Lines
+        N interhunk lines
+      old-prefix -> gchararray: Old Prefix
+        Old prefix
+      new-prefix -> gchararray: New Prefix
+        New prefix
+      pathspec -> GStrv: Pathspec
+        Pathspec
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         flags: DiffOption
         n_context_lines: int
         n_interhunk_lines: int
-        new_prefix: str
-        old_prefix: str
-        pathspec: list[str]
-
+        new_prefix: Optional[str]
+        old_prefix: Optional[str]
+        pathspec: Optional[list[str]]
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -667,7 +1206,7 @@ class DiffOptions(GObject.Object):
         n_interhunk_lines: int = ...,
         new_prefix: str = ...,
         old_prefix: str = ...,
-        pathspec: Sequence[str] = ...,
+        pathspec: Optional[Sequence[str]] = ...,
     ): ...
     def get_flags(self) -> DiffOption: ...
     def get_n_context_lines(self) -> int: ...
@@ -685,9 +1224,25 @@ class DiffOptions(GObject.Object):
     def set_pathspec(self, pathspec: Optional[Sequence[str]] = None) -> None: ...
 
 class DiffOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DiffOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class DiffSimilarityMetric(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(file_signature:Ggit.DiffSimilarityMetricFileSignatureCallback, buffer_signature:Ggit.DiffSimilarityMetricBufferSignatureCallback, free_signature:Ggit.DiffSimilarityMetricFreeSignatureCallback, similarity:Ggit.DiffSimilarityMetricSimilarityCallback, user_data=None) -> Ggit.DiffSimilarityMetric
+    """
+
     def copy(self) -> Optional[DiffSimilarityMetric]: ...
     def free(self) -> None: ...
     @classmethod
@@ -701,6 +1256,14 @@ class DiffSimilarityMetric(GObject.GBoxed):
     ) -> DiffSimilarityMetric: ...
 
 class FetchOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Ggit.FetchOptions
+    """
+
     def copy(self) -> Optional[FetchOptions]: ...
     def free(self) -> None: ...
     def get_download_tags(self) -> RemoteDownloadTagsType: ...
@@ -713,10 +1276,30 @@ class FetchOptions(GObject.GBoxed):
     ) -> None: ...
 
 class Index(Native, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        Index(**properties)
+
+    Object GgitIndex
+
+    Properties from GgitIndex:
+      file -> GFile: File
+        File
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         file: Gio.File
         native: None
-
     props: Props = ...
     def __init__(self, file: Gio.File = ..., native: None = ...): ...
     def add(self, entry: IndexEntry) -> bool: ...
@@ -735,6 +1318,14 @@ class Index(Native, Gio.Initable):
     def write_tree_to(self, repository: Repository) -> Optional[OId]: ...
 
 class IndexClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        IndexClass()
+    """
+
     parent_class: NativeClass = ...
 
 class IndexEntries(GObject.GBoxed):
@@ -786,9 +1377,27 @@ class IndexEntryResolveUndo(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Mailmap(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Mailmap(**properties)
+        new() -> Ggit.Mailmap or None
+        new_from_repository(repository:Ggit.Repository) -> Ggit.Mailmap or None
+
+    Object GgitMailmap
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     def __init__(self, native: None = ...): ...
     def add_entry(
@@ -806,9 +1415,25 @@ class Mailmap(Native):
     def resolve_signature(self, signature: Signature) -> Optional[Signature]: ...
 
 class MailmapClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MailmapClass()
+    """
+
     parent_class: NativeClass = ...
 
 class MergeOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Ggit.MergeOptions
+    """
+
     def copy(self) -> Optional[MergeOptions]: ...
     def free(self) -> None: ...
     def get_file_favor(self) -> MergeFileFavor: ...
@@ -827,14 +1452,38 @@ class MergeOptions(GObject.GBoxed):
     def set_target_limit(self, target_limit: int) -> None: ...
 
 class Native(ObjectFactoryBase):
+    """
+    :Constructors:
+
+    ::
+
+        Native(**properties)
+
+    Object GgitNative
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: ObjectFactoryBase = ...
     def __init__(self, native: None = ...): ...
 
 class NativeClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        NativeClass()
+    """
+
     parent_class: ObjectFactoryBaseClass = ...
 
 class Note(GObject.GBoxed):
@@ -844,6 +1493,15 @@ class Note(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class OId(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_from_raw(raw:list) -> Ggit.OId or None
+        new_from_string(str:str) -> Ggit.OId or None
+    """
+
     def compare(self, b: OId) -> int: ...
     def copy(self) -> Optional[OId]: ...
     def equal(self, b: OId) -> bool: ...
@@ -857,12 +1515,26 @@ class OId(GObject.GBoxed):
     def new_from_string(cls, str: str) -> Optional[OId]: ...
     def to_string(self) -> Optional[str]: ...
 
-_O = TypeVar("O", bound=Object)
-
 class Object(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Object(**properties)
+
+    Object GgitObject
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, native: None = ...): ...
@@ -870,14 +1542,34 @@ class Object(Native):
     def get_owner(self) -> Optional[Repository]: ...
 
 class ObjectClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectClass()
+    """
+
     parent_class: NativeClass = ...
 
 class ObjectFactory(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactory(**properties)
+
+    Object GgitObjectFactory
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def construct(
         self,
         parent_class: GObject.ObjectClass,
         basetype: Type,
-        n_construct_properties: int,
         construct_properties: Sequence[GObject.ObjectConstructParam],
     ) -> Optional[GObject.Object]: ...
     @staticmethod
@@ -886,15 +1578,53 @@ class ObjectFactory(GObject.Object):
     def unregister(self, basetype: Type, subtype: Type) -> None: ...
 
 class ObjectFactoryBase(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactoryBase(**properties)
+
+    Object GgitObjectFactoryBase
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
 
 class ObjectFactoryBaseClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactoryBaseClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class ObjectFactoryClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactoryClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class Patch(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_from_blobs(old_blob:Ggit.Blob=None, old_as_path:str=None, new_blob:Ggit.Blob=None, new_as_path:str=None, diff_options:Ggit.DiffOptions=None) -> Ggit.Patch or None
+        new_from_diff(diff:Ggit.Diff, idx:int) -> Ggit.Patch or None
+    """
+
     def get_delta(self) -> Optional[DiffDelta]: ...
     def get_hunk(self, idx: int) -> Optional[DiffHunk]: ...
     def get_line_stats(self) -> Tuple[bool, int, int, int]: ...
@@ -917,18 +1647,59 @@ class Patch(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class ProxyOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ProxyOptions(**properties)
+        new() -> Ggit.ProxyOptions or None
+
+    Object GgitProxyOptions
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     @classmethod
     def new(cls) -> Optional[ProxyOptions]: ...
 
 class ProxyOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ProxyOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class PushOptions(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        PushOptions(**properties)
+        new() -> Ggit.PushOptions or None
+
+    Object GgitPushOptions
+
+    Properties from GgitPushOptions:
+      parallelism -> gint: Parallelism
+        Parallelism
+      callbacks -> GgitRemoteCallbacks: Callbacks
+        Callbacks
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         callbacks: RemoteCallbacks
         parallelism: int
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, callbacks: RemoteCallbacks = ..., parallelism: int = ...): ...
@@ -940,12 +1711,36 @@ class PushOptions(GObject.Object):
     def set_remote_callbacks(self, callbacks: RemoteCallbacks) -> None: ...
 
 class PushOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PushOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class Rebase(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Rebase(**properties)
+
+    Object GgitRebase
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     def __init__(self, native: None = ...): ...
     def abort(self) -> None: ...
@@ -962,6 +1757,14 @@ class Rebase(Native):
     def next(self) -> Optional[RebaseOperation]: ...
 
 class RebaseClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RebaseClass()
+    """
+
     parent_class: NativeClass = ...
 
 class RebaseOperation(GObject.GBoxed):
@@ -972,6 +1775,14 @@ class RebaseOperation(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class RebaseOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Ggit.RebaseOptions
+    """
+
     def copy(self) -> Optional[RebaseOptions]: ...
     def free(self) -> None: ...
     def get_checkout_options(self) -> Optional[CheckoutOptions]: ...
@@ -984,9 +1795,25 @@ class RebaseOptions(GObject.GBoxed):
     def set_rewrite_notes_ref(self, rewrite_notes_ref: str) -> None: ...
 
 class Ref(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Ref(**properties)
+
+    Object GgitRef
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, native: None = ...): ...
@@ -1009,11 +1836,23 @@ class Ref(Native):
     def lookup(self) -> Optional[Object]: ...
     def rename(self, new_name: str, force: bool, log_message: str) -> Optional[Ref]: ...
     def resolve(self) -> Optional[Ref]: ...
-    def set_symbolic_target(self, target: str, log_message: str) -> Optional[Ref]: ...
-    def set_target(self, oid: OId, log_message: str) -> Optional[Ref]: ...
+    def set_symbolic_target(
+        self, target: str, log_message: Optional[str] = None
+    ) -> Optional[Ref]: ...
+    def set_target(
+        self, oid: OId, log_message: Optional[str] = None
+    ) -> Optional[Ref]: ...
     def to_string(self) -> Optional[str]: ...
 
 class RefClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RefClass()
+    """
+
     parent_class: NativeClass = ...
 
 class RefSpec(GObject.GBoxed):
@@ -1041,9 +1880,27 @@ class ReflogEntry(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Remote(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Remote(**properties)
+        new(repository:Ggit.Repository, name:str, url:str) -> Ggit.Remote or None
+        new_anonymous(repository:Ggit.Repository, url:str) -> Ggit.Remote or None
+
+    Object GgitRemote
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, native: None = ...): ...
@@ -1085,6 +1942,25 @@ class Remote(Native):
     ) -> bool: ...
 
 class RemoteCallbacks(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        RemoteCallbacks(**properties)
+
+    Object GgitRemoteCallbacks
+
+    Signals from GgitRemoteCallbacks:
+      update-tips (gchararray, GgitOId, GgitOId)
+      progress (gchararray)
+      transfer-progress (GgitTransferProgress)
+      completion (GgitRemoteCompletionType)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def do_completion(self, type: RemoteCompletionType) -> None: ...
     def do_credentials(
@@ -1095,6 +1971,14 @@ class RemoteCallbacks(GObject.Object):
     def do_update_tips(self, refname: str, a: OId, b: OId) -> None: ...
 
 class RemoteCallbacksClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RemoteCallbacksClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     progress: Callable[[RemoteCallbacks, str], None] = ...
     transfer_progress: Callable[[RemoteCallbacks, TransferProgress], None] = ...
@@ -1105,6 +1989,14 @@ class RemoteCallbacksClass(GObject.GPointer):
     ] = ...
 
 class RemoteClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RemoteClass()
+    """
+
     parent_class: NativeClass = ...
 
 class RemoteHead(GObject.GBoxed):
@@ -1116,16 +2008,48 @@ class RemoteHead(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Repository(Native, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        Repository(**properties)
+
+    Object GgitRepository
+
+    Properties from GgitRepository:
+      url -> gchararray: URL for cloning a repository
+        The URL for cloning a repository
+      location -> GFile: Location of repository
+        The location of the repository
+      is-bare -> gboolean: Is bare
+        Is a bare repository
+      init -> gboolean: Init
+        Whether to initialize a repository
+      workdir -> GFile: Path to repository working directory
+        The path to the repository working directory
+      head -> GgitRef: Head
+        Head
+      clone-options -> GgitCloneOptions: Clone options
+        Clone options
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         clone_options: CloneOptions
-        head: Ref
+        head: Optional[Ref]
         init: bool
         is_bare: bool
-        location: Gio.File
+        location: Optional[Gio.File]
         url: str
-        workdir: Gio.File
+        workdir: Optional[Gio.File]
         native: None
-
     props: Props = ...
     parent: Native = ...
     def __init__(
@@ -1179,6 +2103,15 @@ class Repository(Native, Gio.Initable):
         tree: Tree,
         parents: Sequence[Commit],
     ) -> Optional[OId]: ...
+    def create_commit_buffer(
+        self,
+        author: Signature,
+        committer: Signature,
+        message_encoding: Optional[str],
+        message: str,
+        tree: Tree,
+        parents: Sequence[Commit],
+    ) -> Optional[str]: ...
     def create_commit_from_ids(
         self,
         update_ref: Optional[str],
@@ -1188,6 +2121,12 @@ class Repository(Native, Gio.Initable):
         message: str,
         tree: OId,
         parents: Sequence[OId],
+    ) -> Optional[OId]: ...
+    def create_commit_with_signature(
+        self,
+        commit_content: str,
+        signature: Optional[str] = None,
+        signature_field: Optional[str] = None,
     ) -> Optional[OId]: ...
     def create_index_entry_for_file(
         self, file: Optional[Gio.File] = None, id: Optional[OId] = None
@@ -1355,9 +2294,25 @@ class Repository(Native, Gio.Initable):
     def tag_foreach(self, callback: Callable[..., int], *user_data: Any) -> bool: ...
 
 class RepositoryClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RepositoryClass()
+    """
+
     parent_class: NativeClass = ...
 
 class RevertOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(mainline:int, merge_options:Ggit.MergeOptions=None, checkout_options:Ggit.CheckoutOptions=None) -> Ggit.RevertOptions or None
+    """
+
     def copy(self) -> Optional[RevertOptions]: ...
     def free(self) -> None: ...
     @classmethod
@@ -1369,10 +2324,31 @@ class RevertOptions(GObject.GBoxed):
     ) -> Optional[RevertOptions]: ...
 
 class RevisionWalker(Native, Gio.Initable):
-    class Props:
-        repository: Repository
-        native: None
+    """
+    :Constructors:
 
+    ::
+
+        RevisionWalker(**properties)
+        new(repository:Ggit.Repository) -> Ggit.RevisionWalker or None
+
+    Object GgitRevisionWalker
+
+    Properties from GgitRevisionWalker:
+      repository -> GgitRepository: Repository
+        The repository where to make the walking
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        repository: Optional[Repository]
+        native: None
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, repository: Repository = ..., native: None = ...): ...
@@ -1393,13 +2369,43 @@ class RevisionWalker(Native, Gio.Initable):
     def set_sort_mode(self, sort_mode: SortMode) -> None: ...
 
 class RevisionWalkerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RevisionWalkerClass()
+    """
+
     parent_class: NativeClass = ...
 
 class Signature(Native):
+    """
+    :Constructors:
+
+    ::
+
+        Signature(**properties)
+        new(name:str, email:str, signature_time:GLib.DateTime) -> Ggit.Signature or None
+        new_now(name:str, email:str) -> Ggit.Signature or None
+
+    Object GgitSignature
+
+    Properties from GgitSignature:
+      encoding -> gchararray: Encoding
+        Encoding
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         encoding: str
         native: None
-
     props: Props = ...
     def __init__(self, encoding: str = ..., native: None = ...): ...
     def copy(self) -> Optional[Signature]: ...
@@ -1415,9 +2421,25 @@ class Signature(Native):
     def new_now(cls, name: str, email: str) -> Optional[Signature]: ...
 
 class SignatureClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SignatureClass()
+    """
+
     parent_class: NativeClass = ...
 
 class StatusOptions(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(options:Ggit.StatusOption, show:Ggit.StatusShow, pathspec:list=None) -> Ggit.StatusOptions
+    """
+
     def copy(self) -> Optional[StatusOptions]: ...
     def free(self) -> None: ...
     @classmethod
@@ -1448,14 +2470,35 @@ class Submodule(GObject.GBoxed):
     def update(self, init: bool, options: SubmoduleUpdateOptions) -> None: ...
 
 class SubmoduleUpdateOptions(GObject.Object):
-    class Props:
-        checkout_options: CheckoutOptions
-        fetch_options: FetchOptions
+    """
+    :Constructors:
 
+    ::
+
+        SubmoduleUpdateOptions(**properties)
+        new() -> Ggit.SubmoduleUpdateOptions or None
+
+    Object GgitSubmoduleUpdateOptions
+
+    Properties from GgitSubmoduleUpdateOptions:
+      checkout-options -> GgitCheckoutOptions: Checkout Options
+        Checkout options
+      fetch-options -> GgitFetchOptions: Fetch options
+        Fetch options
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        checkout_options: Optional[CheckoutOptions]
+        fetch_options: FetchOptions
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
-        self, checkout_options: CheckoutOptions = ..., fetch_options: FetchOptions = ...
+        self,
+        checkout_options: Optional[CheckoutOptions] = ...,
+        fetch_options: Optional[FetchOptions] = ...,
     ): ...
     def get_checkout_options(self) -> Optional[CheckoutOptions]: ...
     def get_fetch_options(self) -> FetchOptions: ...
@@ -1469,12 +2512,36 @@ class SubmoduleUpdateOptions(GObject.Object):
     ) -> None: ...
 
 class SubmoduleUpdateOptionsClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SubmoduleUpdateOptionsClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
 
 class Tag(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Tag(**properties)
+
+    Object GgitTag
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Object = ...
     def __init__(self, native: None = ...): ...
@@ -1487,6 +2554,14 @@ class Tag(Object):
     def peel(self) -> Optional[Object]: ...
 
 class TagClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TagClass()
+    """
+
     parent_class: ObjectClass = ...
 
 class TransferProgress(GObject.GBoxed):
@@ -1498,9 +2573,25 @@ class TransferProgress(GObject.GBoxed):
     def get_total_objects(self) -> int: ...
 
 class Tree(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Tree(**properties)
+
+    Object GgitTree
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Object = ...
     def __init__(self, native: None = ...): ...
@@ -1514,9 +2605,25 @@ class Tree(Object):
     ) -> None: ...
 
 class TreeBuilder(Native):
+    """
+    :Constructors:
+
+    ::
+
+        TreeBuilder(**properties)
+
+    Object GgitTreeBuilder
+
+    Properties from GgitNative:
+      native -> gpointer: Native
+        Native
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         native: None
-
     props: Props = ...
     parent_instance: Native = ...
     def __init__(self, native: None = ...): ...
@@ -1529,9 +2636,25 @@ class TreeBuilder(Native):
     def write(self) -> Optional[OId]: ...
 
 class TreeBuilderClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TreeBuilderClass()
+    """
+
     parent_class: NativeClass = ...
 
 class TreeClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TreeClass()
+    """
+
     parent_class: ObjectClass = ...
 
 class TreeEntry(GObject.GBoxed):

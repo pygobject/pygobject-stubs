@@ -1,18 +1,20 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import GObject
 
 MAJOR_VERSION: int = 2
-MICRO_VERSION: int = 5
-MINOR_VERSION: int = 54
-VERSION: str = "2.54.5"
+MICRO_VERSION: int = 1
+MINOR_VERSION: int = 57
+VERSION: str = "2.57.1"
 _lock = ...  # FIXME Constant
 _namespace: str = "Rsvg"
 _version: str = "2.0"
@@ -38,25 +40,64 @@ def set_default_dpi_x_y(dpi_x: float, dpi_y: float) -> None: ...
 def term() -> None: ...
 
 class DimensionData(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DimensionData()
+    """
+
     width: int = ...
     height: int = ...
     em: float = ...
     ex: float = ...
 
 class Handle(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Handle(**properties)
+        new() -> Rsvg.Handle
+        new_from_data(data:list) -> Rsvg.Handle or None
+        new_from_file(filename:str) -> Rsvg.Handle or None
+        new_from_gfile_sync(file:Gio.File, flags:Rsvg.HandleFlags, cancellable:Gio.Cancellable=None) -> Rsvg.Handle or None
+        new_from_stream_sync(input_stream:Gio.InputStream, base_file:Gio.File=None, flags:Rsvg.HandleFlags, cancellable:Gio.Cancellable=None) -> Rsvg.Handle or None
+        new_with_flags(flags:Rsvg.HandleFlags) -> Rsvg.Handle
+
+    Object RsvgHandle
+
+    Properties from RsvgHandle:
+      flags -> RsvgHandleFlags: flags
+      dpi-x -> gdouble: dpi-x
+      dpi-y -> gdouble: dpi-y
+      base-uri -> gchararray: base-uri
+      width -> gint: width
+      height -> gint: height
+      em -> gdouble: em
+      ex -> gdouble: ex
+      title -> gchararray: title
+      desc -> gchararray: desc
+      metadata -> gchararray: metadata
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         base_uri: str
-        desc: str
+        desc: Optional[str]
         dpi_x: float
         dpi_y: float
         em: float
         ex: float
         flags: HandleFlags
         height: int
-        metadata: str
-        title: str
+        metadata: Optional[str]
+        title: Optional[str]
         width: int
-
     props: Props = ...
     parent: GObject.Object = ...
     _abi_padding: list[None] = ...
@@ -151,18 +192,50 @@ class Handle(GObject.Object):
     def write(self, buf: Sequence[int]) -> bool: ...
 
 class HandleClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        HandleClass()
+    """
+
     parent: GObject.ObjectClass = ...
     _abi_padding: list[None] = ...
 
 class Length(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Length()
+    """
+
     length: float = ...
     unit: Unit = ...
 
 class PositionData(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PositionData()
+    """
+
     x: int = ...
     y: int = ...
 
 class Rectangle(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
     x: float = ...
     y: float = ...
     width: float = ...

@@ -12,8 +12,8 @@ from gi.repository import GLib
 from gi.repository import GObject
 
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 4
-MINOR_VERSION: int = 15
+MICRO_VERSION: int = 5
+MINOR_VERSION: int = 14
 _lock = ...  # FIXME Constant
 _namespace: str = "Flatpak"
 _version: str = "1.0"
@@ -68,7 +68,6 @@ class BundleRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -474,7 +473,6 @@ class InstalledRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -607,7 +605,6 @@ class Ref(GObject.Object):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: GObject.Object = ...
     def __init__(
@@ -690,7 +687,6 @@ class RelatedRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -747,7 +743,6 @@ class Remote(GObject.Object):
     class Props:
         name: str
         type: RemoteType
-
     props: Props = ...
     parent: GObject.Object = ...
     def __init__(self, name: str = ..., type: RemoteType = ...): ...
@@ -857,7 +852,6 @@ class RemoteRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -932,7 +926,6 @@ class Transaction(GObject.Object, Gio.Initable):
     class Props:
         installation: Installation
         no_interaction: bool
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -1062,9 +1055,9 @@ class TransactionClass(GObject.GPointer):
         [Transaction, TransactionRemoteReason, str, str, str], bool
     ] = ...
     run: Callable[[Transaction, Optional[Gio.Cancellable]], bool] = ...
-    end_of_lifed_with_rebase: Callable[[Transaction, str, str, str, str, str], bool] = (
-        ...
-    )
+    end_of_lifed_with_rebase: Callable[
+        [Transaction, str, str, str, str, str], bool
+    ] = ...
     webflow_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...
     webflow_done: Callable[[Transaction, GLib.Variant, int], None] = ...
     basic_auth_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...

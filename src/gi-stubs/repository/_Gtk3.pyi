@@ -1,14 +1,11 @@
 from typing import Any
 from typing import Callable
-from typing import Iterator
 from typing import Literal
 from typing import Optional
-from typing import overload
 from typing import Sequence
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
-from typing import Union
 
 import cairo
 from gi.repository import Atk
@@ -20,18 +17,8 @@ from gi.repository import GObject
 from gi.repository import Pango
 
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
-CellRendererT = TypeVar(
-    "CellRendererT",
-    CellRendererCombo,
-    CellRendererPixbuf,
-    CellRendererProgress,
-    CellRendererSpin,
-    CellRendererSpinner,
-    CellRendererText,
-    CellRendererToggle,
-)
 
-BINARY_AGE: int = 2438
+BINARY_AGE: int = 2441
 INPUT_ERROR: int = -1
 INTERFACE_AGE: int = 32
 LEVEL_BAR_OFFSET_FULL: str = "full"
@@ -39,7 +26,7 @@ LEVEL_BAR_OFFSET_HIGH: str = "high"
 LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 3
 MAX_COMPOSE_LEN: int = 7
-MICRO_VERSION: int = 38
+MICRO_VERSION: int = 41
 MINOR_VERSION: int = 24
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
@@ -984,8 +971,8 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         The URL for the link to the website of the program
       website-label -> gchararray: Website label
         The label for the link to the website of the program
-      license -> gchararray: License
-        The license of the program
+      license -> gchararray: Licence
+        The licence of the program
       authors -> GStrv: Authors
         List of authors of the program
       documenters -> GStrv: Documenters
@@ -998,10 +985,10 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         A logo for the about box. If this is not set, it defaults to gtk_window_get_default_icon_list()
       logo-icon-name -> gchararray: Logo Icon Name
         A named icon to use as the logo for the about box.
-      wrap-license -> gboolean: Wrap license
-        Whether to wrap the license text.
-      license-type -> GtkLicense: License Type
-        The license type of the program
+      wrap-license -> gboolean: Wrap licence
+        Whether to wrap the licence text.
+      license-type -> GtkLicense: Licence Type
+        The licence type of the program
 
     Signals from GtkDialog:
       response (gint)
@@ -1037,8 +1024,8 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -1064,7 +1051,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -1083,8 +1070,8 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -1203,7 +1190,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1215,7 +1202,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1347,7 +1334,6 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: AboutDialogPrivate = ...
@@ -1521,7 +1507,6 @@ class AccelGroup(GObject.Object):
     class Props:
         is_locked: bool
         modifier_mask: Gdk.ModifierType
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: AccelGroupPrivate = ...
@@ -1638,7 +1623,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
       use-underline -> gboolean: Use underline
         If set, an underline in the text indicates the next character should be used for the mnemonic accelerator key
       justify -> GtkJustification: Justification
-        The alignment of the lines in the text of the label relative to each other. This does NOT affect the alignment of the label within its allocation. See GtkLabel:xalign for that
+        The alignment of the lines in the text of the label relative to each other. This does NOT affect the alignment of the label within its allocation. See GtkLabel::xalign for that
       pattern -> gchararray: Pattern
         A string with _ characters in positions correspond to characters in the text to underline
       wrap -> gboolean: Line wrap
@@ -1655,8 +1640,8 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         The current position of the insertion cursor in chars
       selection-bound -> gint: Selection Bound
         The position of the opposite end of the selection from the cursor in chars
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the label does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the label does not have enough room to display the entire string
       width-chars -> gint: Width In Characters
         The desired width of the label, in characters
       single-line-mode -> gboolean: Single Line Mode
@@ -1668,7 +1653,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
       track-visited-links -> gboolean: Track visited links
         Whether visited links should be tracked
       lines -> gint: Number of lines
-        The desired number of lines, when ellipsizing a wrapping label
+        The desired number of lines, when ellipsising a wrapping label
       xalign -> gfloat: X align
         The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL layouts.
       yalign -> gfloat: Y align
@@ -1787,7 +1772,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1799,7 +1784,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1905,7 +1890,6 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         pattern: str
-
     props: Props = ...
     label: Label = ...
     priv: AccelLabelPrivate = ...
@@ -2143,7 +2127,6 @@ class Accessible(Atk.Object):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: Atk.Object = ...
     priv: AccessiblePrivate = ...
@@ -2257,7 +2240,6 @@ class Action(GObject.Object, Buildable):
         visible_horizontal: bool
         visible_overflown: bool
         visible_vertical: bool
-
     props: Props = ...
     object: GObject.Object = ...
     private_data: ActionPrivate = ...
@@ -2464,7 +2446,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2476,7 +2458,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2559,7 +2541,6 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     def __init__(
@@ -2703,7 +2684,6 @@ class ActionGroup(GObject.Object, Buildable):
         name: str
         sensitive: bool
         visible: bool
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: ActionGroupPrivate = ...
@@ -2858,7 +2838,6 @@ class Adjustment(GObject.InitiallyUnowned):
         step_increment: float
         upper: float
         value: float
-
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: AdjustmentPrivate = ...
@@ -3074,7 +3053,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3086,7 +3065,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -3177,7 +3156,6 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: AlignmentPrivate = ...
@@ -3298,7 +3276,7 @@ class AppChooserButton(
       show-default-item -> gboolean: Show default item
         Whether the combobox should show the default application on top
       heading -> gchararray: Heading
-        The text to show at the top of the dialog
+        The text to show at the top of the dialogue
 
     Signals from GtkCellEditable:
       editing-done ()
@@ -3466,7 +3444,7 @@ class AppChooserButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3478,7 +3456,7 @@ class AppChooserButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -3582,7 +3560,6 @@ class AppChooserButton(
         content_type: str
         editing_canceled: bool
         child: Widget
-
     props: Props = ...
     parent: ComboBox = ...
     priv: AppChooserButtonPrivate = ...
@@ -3690,9 +3667,9 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
 
     Properties from GtkAppChooserDialog:
       gfile -> GFile: GFile
-        The GFile used by the app chooser dialog
+        The GFile used by the app chooser dialogue
       heading -> gchararray: Heading
-        The text to show at the top of the dialog
+        The text to show at the top of the dialogue
 
     Signals from GtkDialog:
       response (gint)
@@ -3728,8 +3705,8 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -3755,7 +3732,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -3774,8 +3751,8 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -3894,7 +3871,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -3906,7 +3883,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4026,7 +4003,6 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         content_type: str
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent: Dialog = ...
     priv: AppChooserDialogPrivate = ...
@@ -4286,7 +4262,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -4298,7 +4274,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4392,7 +4368,6 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         content_type: str
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent: Box = ...
     priv: AppChooserWidgetPrivate = ...
@@ -4569,7 +4544,6 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
         is_remote: bool
         resource_base_path: Optional[str]
         action_group: Optional[Gio.ActionGroup]
-
     props: Props = ...
     parent: Gio.Application = ...
     priv: ApplicationPrivate = ...
@@ -4690,8 +4664,8 @@ class ApplicationWindow(
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -4717,7 +4691,7 @@ class ApplicationWindow(
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -4736,8 +4710,8 @@ class ApplicationWindow(
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -4856,7 +4830,7 @@ class ApplicationWindow(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -4868,7 +4842,7 @@ class ApplicationWindow(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -4985,7 +4959,6 @@ class ApplicationWindow(
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Window = ...
     priv: ApplicationWindowPrivate = ...
@@ -5215,7 +5188,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -5227,7 +5200,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -5313,7 +5286,6 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     misc: Misc = ...
     priv: ArrowPrivate = ...
@@ -5449,7 +5421,6 @@ class ArrowAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: ArrowAccessiblePrivate = ...
@@ -5650,7 +5621,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -5662,7 +5633,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -5754,7 +5725,6 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     frame: Frame = ...
     priv: AspectFramePrivate = ...
@@ -5887,8 +5857,8 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -5914,7 +5884,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -5933,8 +5903,8 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -6053,7 +6023,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6065,7 +6035,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -6182,7 +6152,6 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent: Window = ...
     priv: AssistantPrivate = ...
@@ -6447,7 +6416,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6459,7 +6428,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -6542,7 +6511,6 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: BinPrivate = ...
@@ -6790,7 +6758,6 @@ class BooleanCellAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: RendererCellAccessible = ...
     priv: BooleanCellAccessiblePrivate = ...
@@ -6980,7 +6947,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -6992,7 +6959,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -7079,7 +7046,6 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: BoxPrivate = ...
@@ -7261,7 +7227,6 @@ class Builder(GObject.Object):
 
     class Props:
         translation_domain: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: BuilderPrivate = ...
@@ -7493,7 +7458,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -7505,7 +7470,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -7601,7 +7566,6 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: ButtonPrivate = ...
@@ -7787,7 +7751,6 @@ class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Image
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: ButtonAccessiblePrivate = ...
@@ -7961,7 +7924,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -7973,7 +7936,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -8061,7 +8024,6 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     box: Box = ...
     priv: ButtonBoxPrivate = ...
@@ -8308,7 +8270,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -8320,7 +8282,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -8410,7 +8372,6 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     widget: Widget = ...
     priv: CalendarPrivate = ...
@@ -8593,7 +8554,6 @@ class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: Accessible = ...
     priv: CellAccessiblePrivate = ...
@@ -8718,7 +8678,6 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         edit_widget: CellEditable
         edited_cell: CellRenderer
         focus_cell: CellRenderer
-
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: CellAreaPrivate = ...
@@ -8972,7 +8931,6 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
         edited_cell: CellRenderer
         focus_cell: CellRenderer
         orientation: Orientation
-
     props: Props = ...
     parent_instance: CellArea = ...
     priv: CellAreaBoxPrivate = ...
@@ -9122,7 +9080,6 @@ class CellAreaContext(GObject.Object):
         minimum_width: int
         natural_height: int
         natural_width: int
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: CellAreaContextPrivate = ...
@@ -9280,14 +9237,14 @@ class CellRenderer(GObject.InitiallyUnowned):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -9312,7 +9269,6 @@ class CellRenderer(GObject.InitiallyUnowned):
         yalign: float
         ypad: int
         cell_background: str
-
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: CellRendererPrivate = ...
@@ -9483,18 +9439,18 @@ class CellRendererAccel(CellRendererText):
         How to align the lines
       placeholder-text -> gchararray: Placeholder text
         Text rendered when an editable cell is empty
-      background -> gchararray: Background color name
-        Background color as a string
-      foreground -> gchararray: Foreground color name
-        Foreground color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      foreground-gdk -> GdkColor: Foreground color
-        Foreground color as a GdkColor
-      background-rgba -> GdkRGBA: Background color as RGBA
-        Background color as a GdkRGBA
-      foreground-rgba -> GdkRGBA: Foreground color as RGBA
-        Foreground color as a GdkRGBA
+      background -> gchararray: Background colour name
+        Background colour as a string
+      foreground -> gchararray: Foreground colour name
+        Foreground colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      foreground-gdk -> GdkColor: Foreground colour
+        Foreground colour as a GdkColor
+      background-rgba -> GdkRGBA: Background colour as RGBA
+        Background colour as a GdkRGBA
+      foreground-rgba -> GdkRGBA: Foreground colour as RGBA
+        Foreground colour as a GdkRGBA
       font -> gchararray: Font
         Font description as a string, e.g. "Sans Italic 12"
       font-desc -> PangoFontDescription: Font
@@ -9525,14 +9481,14 @@ class CellRendererAccel(CellRendererText):
         Offset of text above the baseline (below the baseline if rise is negative)
       language -> gchararray: Language
         The language this text is in, as an ISO code. Pango can use this as a hint when rendering the text. If you don't understand this parameter, you probably don't need it
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the cell renderer does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the cell renderer does not have enough room to display the entire string
       wrap-mode -> PangoWrapMode: Wrap mode
         How to break the string into multiple lines, if the cell renderer does not have enough room to display the entire string
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       foreground-set -> gboolean: Foreground set
-        Whether this tag affects the foreground color
+        Whether this tag affects the foreground colour
       family-set -> gboolean: Font family set
         Whether this tag affects the font family
       style-set -> gboolean: Font style set
@@ -9557,8 +9513,8 @@ class CellRendererAccel(CellRendererText):
         Whether this tag affects the rise
       language-set -> gboolean: Language set
         Whether this tag affects the language the text is rendered as
-      ellipsize-set -> gboolean: Ellipsize set
-        Whether this tag affects the ellipsize mode
+      ellipsize-set -> gboolean: Ellipsis placement set
+        Whether this tag affects the placement of the ellipsis
       align-set -> gboolean: Align set
         Whether this tag affects the alignment mode
 
@@ -9589,14 +9545,14 @@ class CellRendererAccel(CellRendererText):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -9673,7 +9629,6 @@ class CellRendererAccel(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
-
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererAccelPrivate = ...
@@ -9894,18 +9849,18 @@ class CellRendererCombo(CellRendererText):
         How to align the lines
       placeholder-text -> gchararray: Placeholder text
         Text rendered when an editable cell is empty
-      background -> gchararray: Background color name
-        Background color as a string
-      foreground -> gchararray: Foreground color name
-        Foreground color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      foreground-gdk -> GdkColor: Foreground color
-        Foreground color as a GdkColor
-      background-rgba -> GdkRGBA: Background color as RGBA
-        Background color as a GdkRGBA
-      foreground-rgba -> GdkRGBA: Foreground color as RGBA
-        Foreground color as a GdkRGBA
+      background -> gchararray: Background colour name
+        Background colour as a string
+      foreground -> gchararray: Foreground colour name
+        Foreground colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      foreground-gdk -> GdkColor: Foreground colour
+        Foreground colour as a GdkColor
+      background-rgba -> GdkRGBA: Background colour as RGBA
+        Background colour as a GdkRGBA
+      foreground-rgba -> GdkRGBA: Foreground colour as RGBA
+        Foreground colour as a GdkRGBA
       font -> gchararray: Font
         Font description as a string, e.g. "Sans Italic 12"
       font-desc -> PangoFontDescription: Font
@@ -9936,14 +9891,14 @@ class CellRendererCombo(CellRendererText):
         Offset of text above the baseline (below the baseline if rise is negative)
       language -> gchararray: Language
         The language this text is in, as an ISO code. Pango can use this as a hint when rendering the text. If you don't understand this parameter, you probably don't need it
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the cell renderer does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the cell renderer does not have enough room to display the entire string
       wrap-mode -> PangoWrapMode: Wrap mode
         How to break the string into multiple lines, if the cell renderer does not have enough room to display the entire string
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       foreground-set -> gboolean: Foreground set
-        Whether this tag affects the foreground color
+        Whether this tag affects the foreground colour
       family-set -> gboolean: Font family set
         Whether this tag affects the font family
       style-set -> gboolean: Font style set
@@ -9968,8 +9923,8 @@ class CellRendererCombo(CellRendererText):
         Whether this tag affects the rise
       language-set -> gboolean: Language set
         Whether this tag affects the language the text is rendered as
-      ellipsize-set -> gboolean: Ellipsize set
-        Whether this tag affects the ellipsize mode
+      ellipsize-set -> gboolean: Ellipsis placement set
+        Whether this tag affects the placement of the ellipsis
       align-set -> gboolean: Align set
         Whether this tag affects the alignment mode
 
@@ -10000,14 +9955,14 @@ class CellRendererCombo(CellRendererText):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -10083,7 +10038,6 @@ class CellRendererCombo(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
-
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererComboPrivate = ...
@@ -10203,7 +10157,7 @@ class CellRendererPixbuf(CellRenderer):
       stock-detail -> gchararray: Detail
         Render detail to pass to the theme engine
       follow-state -> gboolean: Follow State
-        Whether the rendered pixbuf should be colorized according to the state
+        Whether the rendered pixbuf should be coloured according to the state
       icon-name -> gchararray: Icon Name
         The name of the icon from the icon theme
       gicon -> GIcon: Icon
@@ -10236,14 +10190,14 @@ class CellRendererPixbuf(CellRenderer):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -10278,7 +10232,6 @@ class CellRendererPixbuf(CellRenderer):
         yalign: float
         ypad: int
         cell_background: str
-
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererPixbufPrivate = ...
@@ -10383,14 +10336,14 @@ class CellRendererProgress(CellRenderer, Orientable):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -10422,7 +10375,6 @@ class CellRendererProgress(CellRenderer, Orientable):
         ypad: int
         orientation: Orientation
         cell_background: str
-
     props: Props = ...
     parent_instance: CellRenderer = ...
     priv: CellRendererProgressPrivate = ...
@@ -10512,18 +10464,18 @@ class CellRendererSpin(CellRendererText):
         How to align the lines
       placeholder-text -> gchararray: Placeholder text
         Text rendered when an editable cell is empty
-      background -> gchararray: Background color name
-        Background color as a string
-      foreground -> gchararray: Foreground color name
-        Foreground color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      foreground-gdk -> GdkColor: Foreground color
-        Foreground color as a GdkColor
-      background-rgba -> GdkRGBA: Background color as RGBA
-        Background color as a GdkRGBA
-      foreground-rgba -> GdkRGBA: Foreground color as RGBA
-        Foreground color as a GdkRGBA
+      background -> gchararray: Background colour name
+        Background colour as a string
+      foreground -> gchararray: Foreground colour name
+        Foreground colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      foreground-gdk -> GdkColor: Foreground colour
+        Foreground colour as a GdkColor
+      background-rgba -> GdkRGBA: Background colour as RGBA
+        Background colour as a GdkRGBA
+      foreground-rgba -> GdkRGBA: Foreground colour as RGBA
+        Foreground colour as a GdkRGBA
       font -> gchararray: Font
         Font description as a string, e.g. "Sans Italic 12"
       font-desc -> PangoFontDescription: Font
@@ -10554,14 +10506,14 @@ class CellRendererSpin(CellRendererText):
         Offset of text above the baseline (below the baseline if rise is negative)
       language -> gchararray: Language
         The language this text is in, as an ISO code. Pango can use this as a hint when rendering the text. If you don't understand this parameter, you probably don't need it
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the cell renderer does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the cell renderer does not have enough room to display the entire string
       wrap-mode -> PangoWrapMode: Wrap mode
         How to break the string into multiple lines, if the cell renderer does not have enough room to display the entire string
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       foreground-set -> gboolean: Foreground set
-        Whether this tag affects the foreground color
+        Whether this tag affects the foreground colour
       family-set -> gboolean: Font family set
         Whether this tag affects the font family
       style-set -> gboolean: Font style set
@@ -10586,8 +10538,8 @@ class CellRendererSpin(CellRendererText):
         Whether this tag affects the rise
       language-set -> gboolean: Language set
         Whether this tag affects the language the text is rendered as
-      ellipsize-set -> gboolean: Ellipsize set
-        Whether this tag affects the ellipsize mode
+      ellipsize-set -> gboolean: Ellipsis placement set
+        Whether this tag affects the placement of the ellipsis
       align-set -> gboolean: Align set
         Whether this tag affects the alignment mode
 
@@ -10618,14 +10570,14 @@ class CellRendererSpin(CellRendererText):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -10701,7 +10653,6 @@ class CellRendererSpin(CellRendererText):
         foreground: str
         markup: str
         cell_background: str
-
     props: Props = ...
     parent: CellRendererText = ...
     priv: CellRendererSpinPrivate = ...
@@ -10840,14 +10791,14 @@ class CellRendererSpinner(CellRenderer):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -10875,7 +10826,6 @@ class CellRendererSpinner(CellRenderer):
         yalign: float
         ypad: int
         cell_background: str
-
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererSpinnerPrivate = ...
@@ -10953,18 +10903,18 @@ class CellRendererText(CellRenderer):
         How to align the lines
       placeholder-text -> gchararray: Placeholder text
         Text rendered when an editable cell is empty
-      background -> gchararray: Background color name
-        Background color as a string
-      foreground -> gchararray: Foreground color name
-        Foreground color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      foreground-gdk -> GdkColor: Foreground color
-        Foreground color as a GdkColor
-      background-rgba -> GdkRGBA: Background color as RGBA
-        Background color as a GdkRGBA
-      foreground-rgba -> GdkRGBA: Foreground color as RGBA
-        Foreground color as a GdkRGBA
+      background -> gchararray: Background colour name
+        Background colour as a string
+      foreground -> gchararray: Foreground colour name
+        Foreground colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      foreground-gdk -> GdkColor: Foreground colour
+        Foreground colour as a GdkColor
+      background-rgba -> GdkRGBA: Background colour as RGBA
+        Background colour as a GdkRGBA
+      foreground-rgba -> GdkRGBA: Foreground colour as RGBA
+        Foreground colour as a GdkRGBA
       font -> gchararray: Font
         Font description as a string, e.g. "Sans Italic 12"
       font-desc -> PangoFontDescription: Font
@@ -10995,14 +10945,14 @@ class CellRendererText(CellRenderer):
         Offset of text above the baseline (below the baseline if rise is negative)
       language -> gchararray: Language
         The language this text is in, as an ISO code. Pango can use this as a hint when rendering the text. If you don't understand this parameter, you probably don't need it
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the cell renderer does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the cell renderer does not have enough room to display the entire string
       wrap-mode -> PangoWrapMode: Wrap mode
         How to break the string into multiple lines, if the cell renderer does not have enough room to display the entire string
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       foreground-set -> gboolean: Foreground set
-        Whether this tag affects the foreground color
+        Whether this tag affects the foreground colour
       family-set -> gboolean: Font family set
         Whether this tag affects the font family
       style-set -> gboolean: Font style set
@@ -11027,8 +10977,8 @@ class CellRendererText(CellRenderer):
         Whether this tag affects the rise
       language-set -> gboolean: Language set
         Whether this tag affects the language the text is rendered as
-      ellipsize-set -> gboolean: Ellipsize set
-        Whether this tag affects the ellipsize mode
+      ellipsize-set -> gboolean: Ellipsis placement set
+        Whether this tag affects the placement of the ellipsis
       align-set -> gboolean: Align set
         Whether this tag affects the alignment mode
 
@@ -11059,14 +11009,14 @@ class CellRendererText(CellRenderer):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -11139,7 +11089,6 @@ class CellRendererText(CellRenderer):
         foreground: str
         markup: str
         cell_background: str
-
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererTextPrivate = ...
@@ -11256,7 +11205,7 @@ class CellRendererToggle(CellRenderer):
       inconsistent -> gboolean: Inconsistent state
         The inconsistent state of the button
       indicator-size -> gint: Indicator size
-        Size of check or radio indicator
+        Size of tick or radio indicator
 
     Signals from GtkCellRenderer:
       editing-canceled ()
@@ -11285,14 +11234,14 @@ class CellRendererToggle(CellRenderer):
         Row has children
       is-expanded -> gboolean: Is Expanded
         Row is an expander row, and is expanded
-      cell-background -> gchararray: Cell background color name
-        Cell background color as a string
-      cell-background-gdk -> GdkColor: Cell background color
-        Cell background color as a GdkColor
-      cell-background-rgba -> GdkRGBA: Cell background RGBA color
-        Cell background color as a GdkRGBA
+      cell-background -> gchararray: Cell background colour name
+        Cell background colour as a string
+      cell-background-gdk -> GdkColor: Cell background colour
+        Cell background colour as a GdkColor
+      cell-background-rgba -> GdkRGBA: Cell background RGBA colour
+        Cell background colour as a GdkRGBA
       cell-background-set -> gboolean: Cell background set
-        Whether the cell background color is set
+        Whether the cell background colour is set
       editing -> gboolean: Editing
         Whether the cell renderer is currently in editing mode
 
@@ -11322,7 +11271,6 @@ class CellRendererToggle(CellRenderer):
         yalign: float
         ypad: int
         cell_background: str
-
     props: Props = ...
     parent: CellRenderer = ...
     priv: CellRendererTogglePrivate = ...
@@ -11393,14 +11341,14 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
     Object GtkCellView
 
     Properties from GtkCellView:
-      background -> gchararray: Background color name
-        Background color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      background-rgba -> GdkRGBA: Background RGBA color
-        Background color as a GdkRGBA
+      background -> gchararray: Background colour name
+        Background colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      background-rgba -> GdkRGBA: Background RGBA colour
+        Background colour as a GdkRGBA
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       model -> GtkTreeModel: CellView model
         The model for cell view
       cell-area -> GtkCellArea: Cell Area
@@ -11515,7 +11463,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -11527,7 +11475,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -11617,7 +11565,6 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         background: str
-
     props: Props = ...
     parent_instance: Widget = ...
     priv: CellViewPrivate = ...
@@ -11880,7 +11827,7 @@ class CheckButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -11892,7 +11839,7 @@ class CheckButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -11991,7 +11938,6 @@ class CheckButton(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     toggle_button: ToggleButton = ...
     def __init__(
@@ -12094,7 +12040,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
 
     Properties from GtkCheckMenuItem:
       active -> gboolean: Active
-        Whether the menu item is checked
+        Whether the menu item is ticked
       inconsistent -> gboolean: Inconsistent
         Whether to display an "inconsistent" state
       draw-as-radio -> gboolean: Draw as radio menu item
@@ -12237,7 +12183,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -12249,7 +12195,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -12344,7 +12290,6 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     menu_item: MenuItem = ...
     priv: CheckMenuItemPrivate = ...
@@ -12515,7 +12460,6 @@ class CheckMenuItemAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: MenuItemAccessible = ...
     priv: CheckMenuItemAccessiblePrivate = ...
@@ -12647,17 +12591,17 @@ class ColorButton(
 
     Properties from GtkColorButton:
       use-alpha -> gboolean: Use alpha
-        Whether to give the color an alpha value
+        Whether to give the colour an alpha value
       title -> gchararray: Title
-        The title of the color selection dialog
-      color -> GdkColor: Current Color
-        The selected color
+        The title of the colour selection dialogue
+      color -> GdkColor: Current Colour
+        The selected colour
       alpha -> guint: Current Alpha
         The selected opacity value (0 fully transparent, 65535 fully opaque)
-      rgba -> GdkRGBA: Current RGBA Color
-        The selected RGBA color
+      rgba -> GdkRGBA: Current RGBA Colour
+        The selected RGBA colour
       show-editor -> gboolean: Show Editor
-        Whether to show the color editor right away
+        Whether to show the colour editor right away
 
     Signals from GtkColorChooser:
       color-activated (GdkRGBA)
@@ -12807,7 +12751,7 @@ class ColorButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -12819,7 +12763,7 @@ class ColorButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -12921,7 +12865,6 @@ class ColorButton(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     button: Button = ...
     priv: ColorButtonPrivate = ...
@@ -13091,8 +13034,8 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -13118,7 +13061,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -13137,8 +13080,8 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -13257,7 +13200,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -13269,7 +13212,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -13389,7 +13332,6 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         use_alpha: bool
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: ColorChooserDialogPrivate = ...
@@ -13653,7 +13595,7 @@ class ColorChooserWidget(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -13665,7 +13607,7 @@ class ColorChooserWidget(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -13755,7 +13697,6 @@ class ColorChooserWidget(
         use_alpha: bool
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_instance: Box = ...
     priv: ColorChooserWidgetPrivate = ...
@@ -13850,13 +13791,13 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       has-palette -> gboolean: Has palette
         Whether a palette should be used
       has-opacity-control -> gboolean: Has Opacity Control
-        Whether the color selector should allow setting opacity
-      current-color -> GdkColor: Current Color
-        The current color
+        Whether the colour selector should allow setting opacity
+      current-color -> GdkColor: Current Colour
+        The current colour
       current-alpha -> guint: Current Alpha
         The current opacity value (0 fully transparent, 65535 fully opaque)
       current-rgba -> GdkRGBA: Current RGBA
-        The current RGBA color
+        The current RGBA colour
 
     Properties from GtkBox:
       spacing -> gint: Spacing
@@ -13983,7 +13924,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -13995,7 +13936,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -14087,7 +14028,6 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_instance: Box = ...
     private_data: ColorSelectionPrivate = ...
@@ -14195,14 +14135,14 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
     Object GtkColorSelectionDialog
 
     Properties from GtkColorSelectionDialog:
-      color-selection -> GtkWidget: Color Selection
-        The color selection embedded in the dialog.
+      color-selection -> GtkWidget: Colour Selection
+        The colour selection embedded in the dialogue.
       ok-button -> GtkWidget: OK Button
-        The OK button of the dialog.
+        The OK button of the dialogue.
       cancel-button -> GtkWidget: Cancel Button
-        The cancel button of the dialog.
+        The cancel button of the dialogue.
       help-button -> GtkWidget: Help Button
-        The help button of the dialog.
+        The help button of the dialogue.
 
     Signals from GtkDialog:
       response (gint)
@@ -14238,8 +14178,8 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -14265,7 +14205,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -14284,8 +14224,8 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -14404,7 +14344,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -14416,7 +14356,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -14537,7 +14477,6 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: ColorSelectionDialogPrivate = ...
@@ -14813,7 +14752,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -14825,7 +14764,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -14925,7 +14864,6 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         window: Optional[Gdk.Window]
         editing_canceled: bool
         child: Widget
-
     props: Props = ...
     parent_instance: Bin = ...
     priv: ComboBoxPrivate = ...
@@ -15125,7 +15063,6 @@ class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: ComboBoxAccessiblePrivate = ...
@@ -15355,7 +15292,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -15367,7 +15304,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -15467,7 +15404,6 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         window: Optional[Gdk.Window]
         editing_canceled: bool
         child: Widget
-
     props: Props = ...
     parent_instance: ComboBox = ...
     priv: ComboBoxTextPrivate = ...
@@ -15687,7 +15623,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -15699,7 +15635,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -15782,7 +15718,6 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     widget: Widget = ...
     priv: ContainerPrivate = ...
@@ -15978,7 +15913,6 @@ class ContainerAccessible(WidgetAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: ContainerAccessiblePrivate = ...
@@ -16098,7 +16032,6 @@ class ContainerCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tab
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: CellAccessible = ...
     priv: ContainerCellAccessiblePrivate = ...
@@ -16292,8 +16225,8 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -16319,7 +16252,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -16338,8 +16271,8 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -16458,7 +16391,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -16470,7 +16403,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -16587,7 +16520,6 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     window: Window = ...
     priv: DialogPrivate = ...
@@ -16820,7 +16752,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -16832,7 +16764,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -16912,7 +16844,6 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     widget: Widget = ...
     dummy: None = ...
@@ -17063,7 +16994,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
       invisible-char -> guint: Invisible character
         The character to use when masking entry contents (in "password mode")
       activates-default -> gboolean: Activates default
-        Whether to activate the default widget (such as the default button in a dialog) when Enter is pressed
+        Whether to activate the default widget (such as the default button in a dialogue) when Enter is pressed
       width-chars -> gint: Width in chars
         Number of characters to leave space for in the entry
       max-width-chars -> gint: Maximum width in characters
@@ -17259,7 +17190,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -17271,7 +17202,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -17403,7 +17334,6 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         width_request: int
         window: Optional[Gdk.Window]
         editing_canceled: bool
-
     props: Props = ...
     parent_instance: Widget = ...
     priv: EntryPrivate = ...
@@ -17706,7 +17636,6 @@ class EntryAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: EntryAccessiblePrivate = ...
@@ -17771,7 +17700,6 @@ class EntryBuffer(GObject.Object):
         length: int
         max_length: int
         text: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: EntryBufferPrivate = ...
@@ -17905,7 +17833,6 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         popup_set_width: bool
         popup_single_match: bool
         text_column: int
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: EntryCompletionPrivate = ...
@@ -18052,7 +17979,6 @@ class EntryIconAccessible(Atk.Object, Atk.Action, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     def __init__(
         self,
@@ -18206,7 +18132,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -18218,7 +18144,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -18303,7 +18229,6 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: EventBoxPrivate = ...
@@ -18398,7 +18323,6 @@ class EventController(GObject.Object):
     class Props:
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
@@ -18443,7 +18367,6 @@ class EventControllerKey(EventController):
     class Props:
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
@@ -18486,7 +18409,6 @@ class EventControllerMotion(EventController):
     class Props:
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
@@ -18531,7 +18453,6 @@ class EventControllerScroll(EventController):
         flags: EventControllerScrollFlags
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -18698,7 +18619,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -18710,7 +18631,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -18801,7 +18722,6 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: ExpanderPrivate = ...
@@ -18963,7 +18883,6 @@ class ExpanderAccessible(ContainerAccessible, Atk.Action, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: ExpanderAccessiblePrivate = ...
@@ -19111,10 +19030,10 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       file-set ()
 
     Properties from GtkFileChooserButton:
-      dialog -> GtkFileChooser: Dialog
-        The file chooser dialog to use.
+      dialog -> GtkFileChooser: Dialogue
+        The file chooser dialogue to use.
       title -> gchararray: Title
-        The title of the file chooser dialog.
+        The title of the file chooser dialogue.
       width-chars -> gint: Width In Characters
         The desired width of the button widget, in characters.
 
@@ -19250,7 +19169,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -19262,7 +19181,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -19363,7 +19282,6 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         orientation: Orientation
         dialog: FileChooser
         child: Widget
-
     props: Props = ...
     parent: Box = ...
     priv: FileChooserButtonPrivate = ...
@@ -19508,8 +19426,8 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -19535,7 +19453,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -19554,8 +19472,8 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -19674,7 +19592,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -19686,7 +19604,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -19814,7 +19732,6 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         use_preview_label: bool
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FileChooserDialogPrivate = ...
@@ -19947,14 +19864,14 @@ class FileChooserNative(NativeDialog, FileChooser):
       response (gint)
 
     Properties from GtkNativeDialog:
-      title -> gchararray: Dialog Title
-        The title of the file chooser dialog
+      title -> gchararray: Dialogue Title
+        The title of the file chooser dialogue
       visible -> gboolean: Visible
-        Whether the dialog is currently visible
+        Whether the dialogue is currently visible
       modal -> gboolean: Modal
-        If TRUE, the dialog is modal (other windows are not usable while this one is up)
+        If TRUE, the dialogue is modal (other windows are not usable while this one is up)
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
 
     Signals from GObject:
       notify (GParam)
@@ -19978,7 +19895,6 @@ class FileChooserNative(NativeDialog, FileChooser):
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
-
     props: Props = ...
     def __init__(
         self,
@@ -20192,7 +20108,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -20204,7 +20120,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -20304,7 +20220,6 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         use_preview_label: bool
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_instance: Box = ...
     priv: FileChooserWidgetPrivate = ...
@@ -20455,7 +20370,6 @@ class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action, Atk.Component
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: FileChooserWidgetAccessiblePrivate = ...
@@ -20681,7 +20595,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -20693,7 +20607,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -20776,7 +20690,6 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: FixedPrivate = ...
@@ -21010,7 +20923,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -21022,7 +20935,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -21113,7 +21026,6 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     container: Container = ...
     def __init__(
@@ -21304,7 +21216,6 @@ class FlowBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: FlowBoxAccessiblePrivate = ...
@@ -21469,7 +21380,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -21481,7 +21392,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -21564,7 +21475,6 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -21702,7 +21612,6 @@ class FlowBoxChildAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     def __init__(
@@ -21790,7 +21699,7 @@ class FontButton(
 
     Properties from GtkFontButton:
       title -> gchararray: Title
-        The title of the font chooser dialog
+        The title of the font chooser dialogue
       font-name -> gchararray: Font name
         The name of the selected font
       use-font -> gboolean: Use font in label
@@ -21950,7 +21859,7 @@ class FontButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -21962,7 +21871,7 @@ class FontButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -22071,7 +21980,6 @@ class FontButton(
         preview_text: str
         show_preview_entry: bool
         child: Widget
-
     props: Props = ...
     button: Button = ...
     priv: FontButtonPrivate = ...
@@ -22256,8 +22164,8 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -22283,7 +22191,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -22302,8 +22210,8 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -22422,7 +22330,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -22434,7 +22342,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -22558,7 +22466,6 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         show_preview_entry: bool
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FontChooserDialogPrivate = ...
@@ -22824,7 +22731,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -22836,7 +22743,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -22931,7 +22838,6 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         show_preview_entry: bool
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_instance: Box = ...
     priv: FontChooserWidgetPrivate = ...
@@ -23153,7 +23059,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -23165,7 +23071,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -23254,7 +23160,6 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_instance: Box = ...
     priv: FontSelectionPrivate = ...
@@ -23381,8 +23286,8 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -23408,7 +23313,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -23427,8 +23332,8 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -23547,7 +23452,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -23559,7 +23464,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -23676,7 +23581,6 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: FontSelectionDialogPrivate = ...
@@ -23920,7 +23824,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -23932,7 +23836,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -24020,7 +23924,6 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: FramePrivate = ...
@@ -24169,7 +24072,6 @@ class FrameAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: FrameAccessiblePrivate = ...
@@ -24241,7 +24143,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
       context -> GdkGLContext: Context
         The GL context
       has-alpha -> gboolean: Has alpha
-        Whether the color buffer has an alpha component
+        Whether the colour buffer has an alpha component
       has-depth-buffer -> gboolean: Has depth buffer
         Whether a depth buffer is allocated
       has-stencil-buffer -> gboolean: Has stencil buffer
@@ -24354,7 +24256,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -24366,7 +24268,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -24452,7 +24354,6 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
@@ -24575,7 +24476,6 @@ class Gesture(EventController):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -24669,7 +24569,6 @@ class GestureDrag(GestureSingle):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -24747,7 +24646,6 @@ class GestureLongPress(GestureSingle):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -24820,7 +24718,6 @@ class GestureMultiPress(GestureSingle):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -24902,7 +24799,6 @@ class GesturePan(GestureDrag):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -24964,7 +24860,6 @@ class GestureRotate(Gesture):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -25028,7 +24923,6 @@ class GestureSingle(Gesture):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -25107,7 +25001,6 @@ class GestureStylus(GestureSingle):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -25180,7 +25073,6 @@ class GestureSwipe(GestureSingle):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -25240,7 +25132,6 @@ class GestureZoom(Gesture):
         window: Optional[Gdk.Window]
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -25418,7 +25309,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -25430,7 +25321,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -25519,7 +25410,6 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: GridPrivate = ...
@@ -25760,7 +25650,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -25772,7 +25662,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -25859,7 +25749,6 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     box: Box = ...
     def __init__(
@@ -26062,7 +25951,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -26074,7 +25963,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -26162,7 +26051,6 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     button_box: ButtonBox = ...
     def __init__(
@@ -26374,7 +26262,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -26386,7 +26274,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -26475,7 +26363,6 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     paned: Paned = ...
     def __init__(
@@ -26656,7 +26543,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -26668,7 +26555,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -26748,7 +26635,6 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     parent_instance: Widget = ...
     priv: HSVPrivate = ...
@@ -26974,7 +26860,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -26986,7 +26872,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -27079,7 +26965,6 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     scale: Scale = ...
     def __init__(
@@ -27288,7 +27173,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -27300,7 +27185,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -27389,7 +27274,6 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     scrollbar: Scrollbar = ...
     def __init__(
@@ -27568,7 +27452,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -27580,7 +27464,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -27661,7 +27545,6 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     separator: Separator = ...
     def __init__(
@@ -27862,7 +27745,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -27874,7 +27757,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -27962,7 +27845,6 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: HandleBoxPrivate = ...
@@ -28189,7 +28071,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -28201,7 +28083,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -28292,7 +28174,6 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     def __init__(
@@ -28448,7 +28329,6 @@ class HeaderBarAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     def __init__(
@@ -28529,7 +28409,6 @@ class IMContext(GObject.Object):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -28645,7 +28524,6 @@ class IMContextSimple(IMContext):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
-
     props: Props = ...
     object: IMContext = ...
     priv: IMContextSimplePrivate = ...
@@ -28701,7 +28579,6 @@ class IMMulticontext(IMContext):
     class Props:
         input_hints: InputHints
         input_purpose: InputPurpose
-
     props: Props = ...
     object: IMContext = ...
     priv: IMMulticontextPrivate = ...
@@ -29196,7 +29073,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -29208,7 +29085,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -29311,7 +29188,6 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     parent: Container = ...
     priv: IconViewPrivate = ...
@@ -29569,7 +29445,6 @@ class IconViewAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: IconViewAccessiblePrivate = ...
@@ -29789,7 +29664,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -29801,7 +29676,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -29898,7 +29773,6 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     misc: Misc = ...
     priv: ImagePrivate = ...
@@ -30080,7 +29954,6 @@ class ImageAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: ImageAccessiblePrivate = ...
@@ -30207,7 +30080,6 @@ class ImageCellAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: RendererCellAccessible = ...
     priv: ImageCellAccessiblePrivate = ...
@@ -30418,7 +30290,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -30430,7 +30302,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -30526,7 +30398,6 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         use_action_appearance: bool
         accel_group: AccelGroup
         child: Widget
-
     props: Props = ...
     menu_item: MenuItem = ...
     priv: ImageMenuItemPrivate = ...
@@ -30769,7 +30640,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -30781,7 +30652,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -30871,7 +30742,6 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent: Box = ...
     priv: InfoBarPrivate = ...
@@ -31080,7 +30950,7 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -31092,7 +30962,7 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -31173,7 +31043,6 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     widget: Widget = ...
     priv: InvisiblePrivate = ...
@@ -31270,7 +31139,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
       use-underline -> gboolean: Use underline
         If set, an underline in the text indicates the next character should be used for the mnemonic accelerator key
       justify -> GtkJustification: Justification
-        The alignment of the lines in the text of the label relative to each other. This does NOT affect the alignment of the label within its allocation. See GtkLabel:xalign for that
+        The alignment of the lines in the text of the label relative to each other. This does NOT affect the alignment of the label within its allocation. See GtkLabel::xalign for that
       pattern -> gchararray: Pattern
         A string with _ characters in positions correspond to characters in the text to underline
       wrap -> gboolean: Line wrap
@@ -31287,8 +31156,8 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         The current position of the insertion cursor in chars
       selection-bound -> gint: Selection Bound
         The position of the opposite end of the selection from the cursor in chars
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the label does not have enough room to display the entire string
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the label does not have enough room to display the entire string
       width-chars -> gint: Width In Characters
         The desired width of the label, in characters
       single-line-mode -> gboolean: Single Line Mode
@@ -31300,7 +31169,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
       track-visited-links -> gboolean: Track visited links
         Whether visited links should be tracked
       lines -> gint: Number of lines
-        The desired number of lines, when ellipsizing a wrapping label
+        The desired number of lines, when ellipsising a wrapping label
       xalign -> gfloat: X align
         The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL layouts.
       yalign -> gfloat: Y align
@@ -31419,7 +31288,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -31431,7 +31300,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -31535,7 +31404,6 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         pattern: str
-
     props: Props = ...
     misc: Misc = ...
     priv: LabelPrivate = ...
@@ -31752,7 +31620,6 @@ class LabelAccessible(WidgetAccessible, Atk.Component, Atk.Hypertext, Atk.Text):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: LabelAccessiblePrivate = ...
@@ -31946,7 +31813,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -31958,7 +31825,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -32047,7 +31914,6 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: LayoutPrivate = ...
@@ -32262,7 +32128,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -32274,7 +32140,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -32360,7 +32226,6 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     parent: Widget = ...
     priv: LevelBarPrivate = ...
@@ -32514,7 +32379,6 @@ class LevelBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: LevelBarAccessiblePrivate = ...
@@ -32729,7 +32593,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -32741,7 +32605,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -32839,7 +32703,6 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent_instance: Button = ...
     priv: LinkButtonPrivate = ...
@@ -33001,7 +32864,6 @@ class LinkButtonAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ButtonAccessible = ...
     priv: LinkButtonAccessiblePrivate = ...
@@ -33197,7 +33059,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -33209,7 +33071,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -33294,7 +33156,6 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Container = ...
     def __init__(
@@ -33480,7 +33341,6 @@ class ListBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: ListBoxAccessiblePrivate = ...
@@ -33673,7 +33533,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -33685,7 +33545,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -33772,7 +33632,6 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         action_name: Optional[str]
         action_target: GLib.Variant
         child: Widget
-
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -33920,7 +33779,6 @@ class ListBoxRowAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     def __init__(
@@ -34073,8 +33931,8 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         The tooltip to display when prompting the user to lock
       tooltip-unlock -> gchararray: Unlock Tooltip
         The tooltip to display when prompting the user to unlock
-      tooltip-not-authorized -> gchararray: Not Authorized Tooltip
-        The tooltip to display when prompting the user cannot obtain authorization
+      tooltip-not-authorized -> gchararray: Not Authorised Tooltip
+        The tooltip to display when prompting the user cannot obtain authorisation
 
     Signals from GtkButton:
       activate ()
@@ -34221,7 +34079,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -34233,7 +34091,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -34335,7 +34193,6 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: Button = ...
     priv: LockButtonPrivate = ...
@@ -34494,7 +34351,6 @@ class LockButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Imag
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ButtonAccessible = ...
     priv: LockButtonAccessiblePrivate = ...
@@ -34722,7 +34578,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -34734,7 +34590,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -34830,7 +34686,6 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     menu_shell: MenuShell = ...
     priv: MenuPrivate = ...
@@ -35061,7 +34916,6 @@ class MenuAccessible(MenuShellAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: MenuShellAccessible = ...
     priv: MenuAccessiblePrivate = ...
@@ -35244,7 +35098,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -35256,7 +35110,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -35342,7 +35196,6 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     menu_shell: MenuShell = ...
     priv: MenuBarPrivate = ...
@@ -35600,7 +35453,7 @@ class MenuButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -35612,7 +35465,7 @@ class MenuButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -35717,7 +35570,6 @@ class MenuButton(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: ToggleButton = ...
     priv: MenuButtonPrivate = ...
@@ -35894,7 +35746,6 @@ class MenuButtonAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ToggleButtonAccessible = ...
     priv: MenuButtonAccessiblePrivate = ...
@@ -36110,7 +35961,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -36122,7 +35973,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -36214,7 +36065,6 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: MenuItemPrivate = ...
@@ -36390,7 +36240,6 @@ class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: MenuItemAccessiblePrivate = ...
@@ -36592,7 +36441,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -36604,7 +36453,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -36688,7 +36537,6 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: MenuShellPrivate = ...
@@ -36853,7 +36701,6 @@ class MenuShellAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: MenuShellAccessiblePrivate = ...
@@ -37081,7 +36928,7 @@ class MenuToolButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -37093,7 +36940,7 @@ class MenuToolButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -37190,7 +37037,6 @@ class MenuToolButton(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: ToolButton = ...
     priv: MenuToolButtonPrivate = ...
@@ -37294,19 +37140,19 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
       message-type -> GtkMessageType: Message Type
         The type of message
       buttons -> GtkButtonsType: Message Buttons
-        The buttons shown in the message dialog
+        The buttons shown in the message dialogue
       text -> gchararray: Text
-        The primary text of the message dialog
+        The primary text of the message dialogue
       use-markup -> gboolean: Use Markup
         The primary text of the title includes Pango markup.
       secondary-text -> gchararray: Secondary Text
-        The secondary text of the message dialog
+        The secondary text of the message dialogue
       secondary-use-markup -> gboolean: Use Markup in secondary
         The secondary text includes Pango markup.
       image -> GtkWidget: Image
         The image
       message-area -> GtkWidget: Message area
-        GtkBox that holds the dialog's primary and secondary labels
+        GtkBox that holds the primary and secondary labels of the dialogue
 
     Signals from GtkDialog:
       response (gint)
@@ -37342,8 +37188,8 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -37369,7 +37215,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -37388,8 +37234,8 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -37508,7 +37354,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -37520,7 +37366,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -37645,7 +37491,6 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         buttons: ButtonsType
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: MessageDialogPrivate = ...
@@ -37877,7 +37722,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -37889,7 +37734,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -37973,7 +37818,6 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     widget: Widget = ...
     priv: MiscPrivate = ...
@@ -38068,8 +37912,8 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         The name of the menu to open
       inverted -> gboolean: Inverted
         Whether the menu is a parent
-      centered -> gboolean: Centered
-        Whether to center the contents
+      centered -> gboolean: Centred
+        Whether to centre the contents
       iconic -> gboolean: Iconic
         Whether to prefer the icon over text
 
@@ -38218,7 +38062,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -38230,7 +38074,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -38335,7 +38179,6 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -38419,7 +38262,7 @@ class MountOperation(Gio.MountOperation):
       parent -> GtkWindow: Parent
         The parent window
       is-showing -> gboolean: Is Showing
-        Are we showing a dialog
+        Are we showing a dialogue
       screen -> GdkScreen: Screen
         The screen where this window will be displayed.
 
@@ -38468,7 +38311,6 @@ class MountOperation(Gio.MountOperation):
         password_save: Gio.PasswordSave
         pim: int
         username: Optional[str]
-
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
     priv: MountOperationPrivate = ...
@@ -38525,14 +38367,14 @@ class NativeDialog(GObject.Object):
       response (gint)
 
     Properties from GtkNativeDialog:
-      title -> gchararray: Dialog Title
-        The title of the file chooser dialog
+      title -> gchararray: Dialogue Title
+        The title of the file chooser dialogue
       visible -> gboolean: Visible
-        Whether the dialog is currently visible
+        Whether the dialogue is currently visible
       modal -> gboolean: Modal
-        If TRUE, the dialog is modal (other windows are not usable while this one is up)
+        If TRUE, the dialogue is modal (other windows are not usable while this one is up)
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
 
     Signals from GObject:
       notify (GParam)
@@ -38543,7 +38385,6 @@ class NativeDialog(GObject.Object):
         title: Optional[str]
         transient_for: Optional[Window]
         visible: bool
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -38742,7 +38583,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -38754,7 +38595,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -38844,7 +38685,6 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: NotebookPrivate = ...
@@ -39069,7 +38909,6 @@ class NotebookAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: NotebookAccessiblePrivate = ...
@@ -39209,7 +39048,6 @@ class NotebookPageAccessible(Atk.Object, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: Atk.Object = ...
     priv: NotebookPageAccessiblePrivate = ...
@@ -39285,7 +39123,6 @@ class NumerableIcon(Gio.EmblemedIcon, Gio.Icon):
         label: Optional[str]
         style_context: Optional[StyleContext]
         gicon: Gio.Icon
-
     props: Props = ...
     parent: Gio.EmblemedIcon = ...
     priv: NumerableIconPrivate = ...
@@ -39366,8 +39203,8 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -39393,7 +39230,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -39412,8 +39249,8 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -39532,7 +39369,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -39544,7 +39381,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -39660,7 +39497,6 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     parent_object: Window = ...
     def __init__(
@@ -39907,7 +39743,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -39919,7 +39755,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -40002,7 +39838,6 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent: Bin = ...
     priv: OverlayPrivate = ...
@@ -40127,7 +39962,6 @@ class PadController(EventController):
         pad: Gdk.Device
         propagation_phase: PropagationPhase
         widget: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -40363,7 +40197,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -40375,7 +40209,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -40464,7 +40298,6 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: PanedPrivate = ...
@@ -40625,7 +40458,6 @@ class PanedAccessible(ContainerAccessible, Atk.Component, Atk.Value):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: PanedAccessiblePrivate = ...
@@ -40768,15 +40600,15 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
       open-flags -> GtkPlacesOpenFlags: Open Flags
         Modes in which the calling application can open locations selected in the sidebar
       show-recent -> gboolean: Show recent files
-        Whether the sidebar includes a builtin shortcut for recent files
+        Whether the sidebar includes a built-in shortcut for recent files
       show-desktop -> gboolean: Show 'Desktop'
         Whether the sidebar includes a builtin shortcut to the Desktop folder
       show-connect-to-server -> gboolean: Show 'Connect to Server'
-        Whether the sidebar includes a builtin shortcut to a 'Connect to server' dialog
+        Whether the sidebar includes a builtin shortcut to a 'Connect to server' dialogue
       show-enter-location -> gboolean: Show 'Enter Location'
         Whether the sidebar includes a builtin shortcut to manually enter a location
-      show-trash -> gboolean: Show 'Trash'
-        Whether the sidebar includes a builtin shortcut to the Trash location
+      show-trash -> gboolean: Show 'Wastebasket'
+        Whether the sidebar includes a built-in shortcut to the Wastebasket location
       show-starred-location -> gboolean: Show “Starred Location”
         Whether the sidebar includes an item to show starred files
       local-only -> gboolean: Local Only
@@ -40941,7 +40773,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -40953,7 +40785,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -41062,7 +40894,6 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -41211,8 +41042,8 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -41238,7 +41069,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -41257,8 +41088,8 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -41377,7 +41208,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -41389,7 +41220,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -41507,7 +41338,6 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     window: Window = ...
     priv: PlugPrivate = ...
@@ -41704,7 +41534,6 @@ class PlugAccessible(WindowAccessible, Atk.Component, Atk.Window):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WindowAccessible = ...
     priv: PlugAccessiblePrivate = ...
@@ -41782,7 +41611,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
       modal -> gboolean: Modal
         Whether the popover is modal
       transitions-enabled -> gboolean: Transitions enabled
-        Whether show/hide transitions are enabled or not
+        Whether show/hide transitions are enabled
       constrain-to -> GtkPopoverConstraint: Constraint
         Constraint for the popover position
 
@@ -41903,7 +41732,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -41915,7 +41744,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -42004,7 +41833,6 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Bin = ...
     priv: PopoverPrivate = ...
@@ -42171,7 +41999,6 @@ class PopoverAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     def __init__(
@@ -42243,7 +42070,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
       modal -> gboolean: Modal
         Whether the popover is modal
       transitions-enabled -> gboolean: Transitions enabled
-        Whether show/hide transitions are enabled or not
+        Whether show/hide transitions are enabled
       constrain-to -> GtkPopoverConstraint: Constraint
         Constraint for the popover position
 
@@ -42364,7 +42191,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -42376,7 +42203,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -42466,7 +42293,6 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -42591,7 +42417,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
       default-page-setup -> GtkPageSetup: Default Page Setup
         The GtkPageSetup used by default
       print-settings -> GtkPrintSettings: Print Settings
-        The GtkPrintSettings used for initializing the dialog
+        The GtkPrintSettings used for initialising the dialogue
       job-name -> gchararray: Job Name
         A string used for identifying the print job.
       n-pages -> gint: Number of Pages
@@ -42604,8 +42430,8 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         TRUE if the print operation will continue to report on the print job status after the print data has been sent to the printer or print server.
       unit -> GtkUnit: Unit
         The unit in which distances can be measured in the context
-      show-progress -> gboolean: Show Dialog
-        TRUE if a progress dialog is shown while printing.
+      show-progress -> gboolean: Show Dialogue
+        TRUE if a progress dialogue is shown while printing.
       allow-async -> gboolean: Allow Async
         TRUE if print process may run asynchronous.
       export-filename -> gchararray: Export filename
@@ -42652,7 +42478,6 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         track_print_status: bool
         unit: Unit
         use_full_page: bool
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: PrintOperationPrivate = ...
@@ -42787,9 +42612,9 @@ class PrintOperationPreviewIface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
     ready: Callable[[PrintOperationPreview, PrintContext], None] = ...
-    got_page_size: Callable[[PrintOperationPreview, PrintContext, PageSetup], None] = (
-        ...
-    )
+    got_page_size: Callable[
+        [PrintOperationPreview, PrintContext, PageSetup], None
+    ] = ...
     render_page: Callable[[PrintOperationPreview, int], None] = ...
     is_selected: Callable[[PrintOperationPreview, int], bool] = ...
     end_preview: Callable[[PrintOperationPreview], None] = ...
@@ -42931,8 +42756,8 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         Text to be displayed in the progress bar
       show-text -> gboolean: Show text
         Whether the progress is shown as text.
-      ellipsize -> PangoEllipsizeMode: Ellipsize
-        The preferred place to ellipsize the string, if the progress bar does not have enough room to display the entire string, if at all.
+      ellipsize -> PangoEllipsizeMode: Ellipsis location
+        The preferred place to place an ellipsis in the string, if the progress bar does not have enough room to display the entire string, if at all.
 
     Signals from GtkWidget:
       composited-changed ()
@@ -43037,7 +42862,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -43049,7 +42874,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -43136,7 +42961,6 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     parent: Widget = ...
     priv: ProgressBarPrivate = ...
@@ -43288,7 +43112,6 @@ class ProgressBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: ProgressBarAccessiblePrivate = ...
@@ -43439,7 +43262,6 @@ class RadioAction(ToggleAction, Buildable):
         visible_overflown: bool
         visible_vertical: bool
         group: Optional[RadioAction]
-
     props: Props = ...
     parent: ToggleAction = ...
     private_data: RadioActionPrivate = ...
@@ -43698,7 +43520,7 @@ class RadioButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -43710,7 +43532,7 @@ class RadioButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -43810,7 +43632,6 @@ class RadioButton(
         use_action_appearance: bool
         group: Optional[RadioButton]
         child: Widget
-
     props: Props = ...
     check_button: CheckButton = ...
     priv: RadioButtonPrivate = ...
@@ -43994,7 +43815,6 @@ class RadioButtonAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ToggleButtonAccessible = ...
     priv: RadioButtonAccessiblePrivate = ...
@@ -44076,7 +43896,7 @@ class RadioMenuItem(
 
     Properties from GtkCheckMenuItem:
       active -> gboolean: Active
-        Whether the menu item is checked
+        Whether the menu item is ticked
       inconsistent -> gboolean: Inconsistent
         Whether to display an "inconsistent" state
       draw-as-radio -> gboolean: Draw as radio menu item
@@ -44219,7 +44039,7 @@ class RadioMenuItem(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -44231,7 +44051,7 @@ class RadioMenuItem(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -44327,7 +44147,6 @@ class RadioMenuItem(
         use_action_appearance: bool
         group: Optional[RadioMenuItem]
         child: Widget
-
     props: Props = ...
     check_menu_item: CheckMenuItem = ...
     priv: RadioMenuItemPrivate = ...
@@ -44516,7 +44335,6 @@ class RadioMenuItemAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: CheckMenuItemAccessible = ...
     priv: RadioMenuItemAccessiblePrivate = ...
@@ -44741,7 +44559,7 @@ class RadioToolButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -44753,7 +44571,7 @@ class RadioToolButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -44851,7 +44669,6 @@ class RadioToolButton(
         use_action_appearance: bool
         group: Optional[RadioToolButton]
         child: Widget
-
     props: Props = ...
     parent: ToggleToolButton = ...
     def __init__(
@@ -45080,7 +44897,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -45092,7 +44909,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -45181,7 +44998,6 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     widget: Widget = ...
     priv: RangePrivate = ...
@@ -45356,7 +45172,6 @@ class RangeAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: RangeAccessiblePrivate = ...
@@ -45593,7 +45408,6 @@ class RecentAction(Action, Buildable, RecentChooser):
         show_tips: bool
         sort_type: RecentSortType
         recent_manager: RecentManager
-
     props: Props = ...
     parent_instance: Action = ...
     priv: RecentActionPrivate = ...
@@ -45752,8 +45566,8 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -45779,7 +45593,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -45798,8 +45612,8 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -45918,7 +45732,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -45930,7 +45744,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -46057,7 +45871,6 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         startup_id: str
         child: Widget
         recent_manager: RecentManager
-
     props: Props = ...
     parent_instance: Dialog = ...
     priv: RecentChooserDialogPrivate = ...
@@ -46369,7 +46182,7 @@ class RecentChooserMenu(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -46381,7 +46194,7 @@ class RecentChooserMenu(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -46490,7 +46303,6 @@ class RecentChooserMenu(
         sort_type: RecentSortType
         child: Widget
         recent_manager: RecentManager
-
     props: Props = ...
     parent_instance: Menu = ...
     priv: RecentChooserMenuPrivate = ...
@@ -46729,7 +46541,7 @@ class RecentChooserWidget(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -46741,7 +46553,7 @@ class RecentChooserWidget(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -46838,7 +46650,6 @@ class RecentChooserWidget(
         sort_type: RecentSortType
         child: Widget
         recent_manager: RecentManager
-
     props: Props = ...
     parent_instance: Box = ...
     priv: RecentChooserWidgetPrivate = ...
@@ -47043,7 +46854,6 @@ class RecentManager(GObject.Object):
     class Props:
         filename: str
         size: int
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: RecentManagerPrivate = ...
@@ -47169,7 +46979,6 @@ class RendererCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tabl
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: CellAccessible = ...
     priv: RendererCellAccessiblePrivate = ...
@@ -47374,7 +47183,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -47386,7 +47195,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -47473,7 +47282,6 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Bin = ...
     def __init__(
@@ -47694,7 +47502,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -47706,7 +47514,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -47799,7 +47607,6 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     range: Range = ...
     priv: ScalePrivate = ...
@@ -47973,7 +47780,6 @@ class ScaleAccessible(RangeAccessible, Atk.Component, Atk.Value):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: RangeAccessible = ...
     priv: ScaleAccessiblePrivate = ...
@@ -48180,7 +47986,7 @@ class ScaleButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -48192,7 +47998,7 @@ class ScaleButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -48293,7 +48099,6 @@ class ScaleButton(
         use_action_appearance: bool
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent: Button = ...
     priv: ScaleButtonPrivate = ...
@@ -48470,7 +48275,6 @@ class ScaleButtonAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ButtonAccessible = ...
     priv: ScaleButtonAccessiblePrivate = ...
@@ -48710,7 +48514,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -48722,7 +48526,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -48811,7 +48615,6 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     range: Range = ...
     def __init__(
@@ -49048,7 +48851,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -49060,7 +48863,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -49158,7 +48961,6 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Bin = ...
     priv: ScrolledWindowPrivate = ...
@@ -49348,7 +49150,6 @@ class ScrolledWindowAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: ScrolledWindowAccessiblePrivate = ...
@@ -49536,7 +49337,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -49548,7 +49349,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -49633,7 +49434,6 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent: Bin = ...
     def __init__(
@@ -49766,7 +49566,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
       invisible-char -> guint: Invisible character
         The character to use when masking entry contents (in "password mode")
       activates-default -> gboolean: Activates default
-        Whether to activate the default widget (such as the default button in a dialog) when Enter is pressed
+        Whether to activate the default widget (such as the default button in a dialogue) when Enter is pressed
       width-chars -> gint: Width in chars
         Number of characters to leave space for in the entry
       max-width-chars -> gint: Maximum width in characters
@@ -49962,7 +49762,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -49974,7 +49774,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -50106,7 +49906,6 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         width_request: int
         window: Optional[Gdk.Window]
         editing_canceled: bool
-
     props: Props = ...
     parent: Entry = ...
     def __init__(
@@ -50354,7 +50153,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -50366,7 +50165,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -50447,7 +50246,6 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     widget: Widget = ...
     priv: SeparatorPrivate = ...
@@ -50659,7 +50457,7 @@ class SeparatorMenuItem(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -50671,7 +50469,7 @@ class SeparatorMenuItem(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -50763,7 +50561,6 @@ class SeparatorMenuItem(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     menu_item: MenuItem = ...
     def __init__(
@@ -50981,7 +50778,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -50993,7 +50790,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -51082,7 +50879,6 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: ToolItem = ...
     priv: SeparatorToolItemPrivate = ...
@@ -51214,7 +51010,7 @@ class Settings(GObject.Object, StyleProvider):
       gtk-cursor-theme-size -> gint: Cursor theme size
         Size to use for cursors, or 0 to use the default size
       gtk-alternative-button-order -> gboolean: Alternative button order
-        Whether buttons in dialogs should use the alternative button order
+        Whether buttons in dialogues should use the alternative button order
       gtk-alternative-sort-arrows -> gboolean: Alternative sort indicator direction
         Whether the direction of the sort indicators in list and tree views is inverted compared to the default (where down means ascending)
       gtk-show-input-method-menu -> gboolean: Show the 'Input Methods' menu
@@ -51227,8 +51023,8 @@ class Settings(GObject.Object, StyleProvider):
         Repeat value for timeouts, when button is pressed
       gtk-timeout-expand -> gint: Expand timeout
         Expand value for timeouts, when a widget is expanding a new region
-      gtk-color-scheme -> gchararray: Color scheme
-        A palette of named colors for use in themes
+      gtk-color-scheme -> gchararray: Colour scheme
+        A palette of named colours for use in themes
       gtk-enable-animations -> gboolean: Enable Animations
         Whether to enable toolkit-wide animations.
       gtk-touchscreen-mode -> gboolean: Enable Touchscreen Mode
@@ -51245,8 +51041,8 @@ class Settings(GObject.Object, StyleProvider):
         Whether to wrap around when keyboard-navigating widgets
       gtk-error-bell -> gboolean: Error Bell
         When TRUE, keyboard navigation and other errors will cause a beep
-      color-hash -> GHashTable: Color Hash
-        A hash table representation of the color scheme.
+      color-hash -> GHashTable: Colour Hash
+        A hash table representation of the colour scheme.
       gtk-file-chooser-backend -> gchararray: Default file chooser backend
         Name of the GtkFileChooser backend to use by default
       gtk-print-backends -> gchararray: Default print backend
@@ -51306,7 +51102,7 @@ class Settings(GObject.Object, StyleProvider):
       gtk-label-select-on-focus -> gboolean: Select on focus
         Whether to select the contents of a selectable label when it is focused
       gtk-color-palette -> gchararray: Custom palette
-        Palette to use in the color selector
+        Palette to use in the colour selector
       gtk-im-preedit-style -> GtkIMPreeditStyle: IM Preedit style
         How to draw the input method preedit string
       gtk-im-status-style -> GtkIMStatusStyle: IM Status style
@@ -51325,8 +51121,8 @@ class Settings(GObject.Object, StyleProvider):
         The action to take on titlebar middle-click
       gtk-titlebar-right-click -> gchararray: Titlebar right-click action
         The action to take on titlebar right-click
-      gtk-dialogs-use-header -> gboolean: Dialogs use header bar
-        Whether builtin GTK+ dialogs should use a header bar instead of an action area.
+      gtk-dialogs-use-header -> gboolean: Dialogues use header bar
+        Whether builtin GTK+ dialogues should use a header bar instead of an action area.
       gtk-enable-primary-paste -> gboolean: Enable primary paste
         Whether a middle click on a mouse should paste the 'PRIMARY' clipboard content at the cursor location.
       gtk-recent-files-enabled -> gboolean: Recent Files Enabled
@@ -51431,7 +51227,6 @@ class Settings(GObject.Object, StyleProvider):
         gtk_xft_hinting: int
         gtk_xft_hintstyle: str
         gtk_xft_rgba: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: SettingsPrivate = ...
@@ -51710,7 +51505,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -51722,7 +51517,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -51811,7 +51606,6 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -52017,7 +51811,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -52029,7 +51823,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -52121,7 +51915,6 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -52324,7 +52117,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -52336,7 +52129,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -52427,7 +52220,6 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -52641,7 +52433,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -52653,7 +52445,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -52751,7 +52543,6 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
         child: Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -52859,8 +52650,8 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -52886,7 +52677,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -52905,8 +52696,8 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -53025,7 +52816,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -53037,7 +52828,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -53155,7 +52946,6 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     window: Window = ...
     def __init__(
@@ -53271,7 +53061,6 @@ class SizeGroup(GObject.Object, Buildable):
     class Props:
         ignore_hidden: bool
         mode: SizeGroupMode
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: SizeGroupPrivate = ...
@@ -53435,7 +53224,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -53447,7 +53236,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -53530,7 +53319,6 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: SocketPrivate = ...
@@ -53670,7 +53458,6 @@ class SocketAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: SocketAccessiblePrivate = ...
@@ -53808,7 +53595,7 @@ class SpinButton(
       invisible-char -> guint: Invisible character
         The character to use when masking entry contents (in "password mode")
       activates-default -> gboolean: Activates default
-        Whether to activate the default widget (such as the default button in a dialog) when Enter is pressed
+        Whether to activate the default widget (such as the default button in a dialogue) when Enter is pressed
       width-chars -> gint: Width in chars
         Number of characters to leave space for in the entry
       max-width-chars -> gint: Maximum width in characters
@@ -54004,7 +53791,7 @@ class SpinButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -54016,7 +53803,7 @@ class SpinButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -54157,7 +53944,6 @@ class SpinButton(
         window: Optional[Gdk.Window]
         editing_canceled: bool
         orientation: Orientation
-
     props: Props = ...
     entry: Entry = ...
     priv: SpinButtonPrivate = ...
@@ -54398,7 +54184,6 @@ class SpinButtonAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: EntryAccessible = ...
     priv: SpinButtonAccessiblePrivate = ...
@@ -54572,7 +54357,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -54584,7 +54369,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -54665,7 +54450,6 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     parent: Widget = ...
     priv: SpinnerPrivate = ...
@@ -54797,7 +54581,6 @@ class SpinnerAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: SpinnerAccessiblePrivate = ...
@@ -54996,7 +54779,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -55008,7 +54791,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -55100,7 +54883,6 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Container = ...
     def __init__(
@@ -55155,46 +54937,6 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
     ): ...
     def add_named(self, child: Widget, name: str) -> None: ...
     def add_titled(self, child: Widget, name: str, title: str) -> None: ...
-    # override
-    @overload
-    def child_get_property(
-        self,
-        widget: Widget,
-        property_name: Literal["icon-name"],
-        value: Optional[GObject.Value] = None,
-    ) -> Optional[str]: ...
-    # override
-    @overload
-    def child_get_property(
-        self,
-        widget: Widget,
-        property_name: Literal["name"],
-        value: Optional[GObject.Value] = None,
-    ) -> Optional[str]: ...
-    # override
-    @overload
-    def child_get_property(
-        self,
-        widget: Widget,
-        property_name: Literal["needs-attention"],
-        value: Optional[GObject.Value] = None,
-    ) -> bool: ...
-    # override
-    @overload
-    def child_get_property(
-        self,
-        widget: Widget,
-        property_name: Literal["position"],
-        value: Optional[GObject.Value] = None,
-    ) -> int: ...
-    # override
-    @overload
-    def child_get_property(
-        self,
-        widget: Widget,
-        property_name: Literal["title"],
-        value: Optional[GObject.Value] = None,
-    ) -> Optional[str]: ...
     def get_child_by_name(self, name: str) -> Optional[Widget]: ...
     def get_hhomogeneous(self) -> bool: ...
     def get_homogeneous(self) -> bool: ...
@@ -55305,7 +55047,6 @@ class StackAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     def __init__(
@@ -55479,7 +55220,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -55491,7 +55232,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -55575,7 +55316,6 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent: Bin = ...
     def __init__(
@@ -55785,7 +55525,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -55797,7 +55537,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -55886,7 +55626,6 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     widget: Box = ...
     def __init__(
@@ -56034,7 +55773,6 @@ class StatusIcon(GObject.Object):
         tooltip_text: Optional[str]
         visible: bool
         file: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: StatusIconPrivate = ...
@@ -56267,7 +56005,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -56279,7 +56017,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -56366,7 +56104,6 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent_widget: Box = ...
     priv: StatusbarPrivate = ...
@@ -56513,7 +56250,6 @@ class StatusbarAccessible(ContainerAccessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: StatusbarAccessiblePrivate = ...
@@ -56608,7 +56344,6 @@ class Style(GObject.Object):
 
     class Props:
         context: StyleContext
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     fg: list[Gdk.Color] = ...
@@ -57277,7 +57012,6 @@ class StyleContext(GObject.Object):
         paint_clock: Gdk.FrameClock
         parent: Optional[StyleContext]
         screen: Gdk.Screen
-
     props: Props = ...
     parent_object: GObject.Object = ...
     priv: StyleContextPrivate = ...
@@ -57569,7 +57303,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -57581,7 +57315,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -57667,7 +57401,6 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-
     props: Props = ...
     parent_instance: Widget = ...
     priv: SwitchPrivate = ...
@@ -57808,7 +57541,6 @@ class SwitchAccessible(WidgetAccessible, Atk.Action, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: WidgetAccessible = ...
     priv: SwitchAccessiblePrivate = ...
@@ -58037,7 +57769,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -58049,7 +57781,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -58137,7 +57869,6 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: TablePrivate = ...
@@ -58487,7 +58218,7 @@ class TearoffMenuItem(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -58499,7 +58230,7 @@ class TearoffMenuItem(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -58591,7 +58322,6 @@ class TearoffMenuItem(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     menu_item: MenuItem = ...
     priv: TearoffMenuItemPrivate = ...
@@ -58795,7 +58525,6 @@ class TextBuffer(GObject.Object):
         paste_target_list: TargetList
         tag_table: TextTagTable
         text: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextBufferPrivate = ...
@@ -59078,7 +58807,6 @@ class TextCellAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: RendererCellAccessible = ...
     priv: TextCellAccessiblePrivate = ...
@@ -59304,7 +59032,6 @@ class TextMark(GObject.Object):
     class Props:
         left_gravity: bool
         name: Optional[str]
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     segment: None = ...
@@ -59350,18 +59077,18 @@ class TextTag(GObject.Object):
     Properties from GtkTextTag:
       name -> gchararray: Tag name
         Name used to refer to the text tag. NULL for anonymous tags
-      background -> gchararray: Background color name
-        Background color as a string
-      foreground -> gchararray: Foreground color name
-        Foreground color as a string
-      background-gdk -> GdkColor: Background color
-        Background color as a GdkColor
-      foreground-gdk -> GdkColor: Foreground color
-        Foreground color as a GdkColor
+      background -> gchararray: Background colour name
+        Background colour as a string
+      foreground -> gchararray: Foreground colour name
+        Foreground colour as a string
+      background-gdk -> GdkColor: Background colour
+        Background colour as a GdkColor
+      foreground-gdk -> GdkColor: Foreground colour
+        Foreground colour as a GdkColor
       background-rgba -> GdkRGBA: Background RGBA
-        Background color as a GdkRGBA
+        Background colour as a GdkRGBA
       foreground-rgba -> GdkRGBA: Foreground RGBA
-        Foreground color as a GdkRGBA
+        Foreground colour as a GdkRGBA
       font -> gchararray: Font
         Font description as a string, e.g. "Sans Italic 12"
       font-desc -> PangoFontDescription: Font
@@ -59393,7 +59120,7 @@ class TextTag(GObject.Object):
       wrap-mode -> GtkWrapMode: Wrap mode
         Whether to wrap lines never, at word boundaries, or at character boundaries
       justification -> GtkJustification: Justification
-        Left, right, or center justification
+        Left, right, or centre justification
       direction -> GtkTextDirection: Text direction
         Text direction, e.g. right-to-left or left-to-right
       left-margin -> gint: Left margin
@@ -59403,27 +59130,27 @@ class TextTag(GObject.Object):
       strikethrough -> gboolean: Strikethrough
         Whether to strike through the text
       strikethrough-rgba -> GdkRGBA: Strikethrough RGBA
-        Color of strikethrough for this text
+        Colour of strikethrough for this text
       right-margin -> gint: Right margin
         Width of the right margin in pixels
       underline -> PangoUnderline: Underline
         Style of underline for this text
       underline-rgba -> GdkRGBA: Underline RGBA
-        Color of underline for this text
+        Colour of underline for this text
       rise -> gint: Rise
         Offset of text above the baseline (below the baseline if rise is negative) in Pango units
       background-full-height -> gboolean: Background full height
-        Whether the background color fills the entire line height or only the height of the tagged characters
+        Whether the background colour fills the entire line height or only the height of the tagged characters
       language -> gchararray: Language
         The language this text is in, as an ISO code. Pango can use this as a hint when rendering the text. If not set, an appropriate default will be used.
       tabs -> PangoTabArray: Tabs
         Custom tabs for this text
       invisible -> gboolean: Invisible
         Whether this text is hidden.
-      paragraph-background -> gchararray: Paragraph background color name
-        Paragraph background color as a string
-      paragraph-background-gdk -> GdkColor: Paragraph background color
-        Paragraph background color as a GdkColor
+      paragraph-background -> gchararray: Paragraph background colour name
+        Paragraph background colour as a string
+      paragraph-background-gdk -> GdkColor: Paragraph background colour
+        Paragraph background colour as a GdkColor
       paragraph-background-rgba -> GdkRGBA: Paragraph background RGBA
         Paragraph background RGBA as a GdkRGBA
       fallback -> gboolean: Fallback
@@ -59435,9 +59162,9 @@ class TextTag(GObject.Object):
       accumulative-margin -> gboolean: Margin Accumulates
         Whether left and right margins accumulate.
       background-set -> gboolean: Background set
-        Whether this tag affects the background color
+        Whether this tag affects the background colour
       foreground-set -> gboolean: Foreground set
-        Whether this tag affects the foreground color
+        Whether this tag affects the foreground colour
       family-set -> gboolean: Font family set
         Whether this tag affects the font family
       style-set -> gboolean: Font style set
@@ -59471,13 +59198,13 @@ class TextTag(GObject.Object):
       strikethrough-set -> gboolean: Strikethrough set
         Whether this tag affects strikethrough
       strikethrough-rgba-set -> gboolean: Strikethrough RGBA set
-        Whether this tag affects strikethrough color
+        Whether this tag affects strikethrough colour
       right-margin-set -> gboolean: Right margin set
         Whether this tag affects the right margin
       underline-set -> gboolean: Underline set
         Whether this tag affects underlining
       underline-rgba-set -> gboolean: Underline RGBA set
-        Whether this tag affects underlining color
+        Whether this tag affects underlining colour
       rise-set -> gboolean: Rise set
         Whether this tag affects the rise
       background-full-height-set -> gboolean: Background full height set
@@ -59489,7 +59216,7 @@ class TextTag(GObject.Object):
       invisible-set -> gboolean: Invisible set
         Whether this tag affects text visibility
       paragraph-background-set -> gboolean: Paragraph background set
-        Whether this tag affects the paragraph background color
+        Whether this tag affects the paragraph background colour
       fallback-set -> gboolean: Fallback set
         Whether this tag affects font fallback
       letter-spacing-set -> gboolean: Letter spacing set
@@ -59576,7 +59303,6 @@ class TextTag(GObject.Object):
         background: str
         foreground: str
         paragraph_background: str
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: TextTagPrivate = ...
@@ -59782,7 +59508,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
       wrap-mode -> GtkWrapMode: Wrap Mode
         Whether to wrap lines never, at word boundaries, or at character boundaries
       justification -> GtkJustification: Justification
-        Left, right, or center justification
+        Left, right, or centre justification
       left-margin -> gint: Left Margin
         Width of the left margin in pixels
       right-margin -> gint: Right Margin
@@ -59931,7 +59657,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -59943,7 +59669,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -60051,7 +59777,6 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     parent_instance: Container = ...
     priv: TextViewPrivate = ...
@@ -60343,7 +60068,6 @@ class TextViewAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: TextViewAccessiblePrivate = ...
@@ -60433,7 +60157,6 @@ class ThemingEngine(GObject.Object):
 
     class Props:
         name: str
-
     props: Props = ...
     parent_object: GObject.Object = ...
     priv: ThemingEnginePrivate = ...
@@ -60758,7 +60481,6 @@ class ToggleAction(Action, Buildable):
         visible_horizontal: bool
         visible_overflown: bool
         visible_vertical: bool
-
     props: Props = ...
     parent: Action = ...
     private_data: ToggleActionPrivate = ...
@@ -61002,7 +60724,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -61014,7 +60736,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -61113,7 +60835,6 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     button: Button = ...
     priv: ToggleButtonPrivate = ...
@@ -61279,7 +61000,6 @@ class ToggleButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Im
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ButtonAccessible = ...
     priv: ToggleButtonAccessiblePrivate = ...
@@ -61498,7 +61218,7 @@ class ToggleToolButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -61510,7 +61230,7 @@ class ToggleToolButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -61607,7 +61327,6 @@ class ToggleToolButton(
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: ToolButton = ...
     priv: ToggleToolButtonPrivate = ...
@@ -61851,7 +61570,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -61863,7 +61582,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -61959,7 +61678,6 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: ToolItem = ...
     priv: ToolButtonPrivate = ...
@@ -62197,7 +61915,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -62209,7 +61927,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -62297,7 +62015,6 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         related_action: Action
         use_action_appearance: bool
         child: Widget
-
     props: Props = ...
     parent: Bin = ...
     priv: ToolItemPrivate = ...
@@ -62417,8 +62134,8 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         A widget to display in place of the usual label
       collapsed -> gboolean: Collapsed
         Whether the group has been collapsed and items are hidden
-      ellipsize -> PangoEllipsizeMode: ellipsize
-        Ellipsize for item group headers
+      ellipsize -> PangoEllipsizeMode: ellipsise
+        Ellipsise for item group headers
       header-relief -> GtkReliefStyle: Header Relief
         Relief of the group header button
 
@@ -62539,7 +62256,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -62551,7 +62268,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -62639,7 +62356,6 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         width_request: int
         window: Optional[Gdk.Window]
         child: Widget
-
     props: Props = ...
     parent_instance: Container = ...
     priv: ToolItemGroupPrivate = ...
@@ -62863,7 +62579,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -62875,7 +62591,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -62966,7 +62682,6 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     parent_instance: Container = ...
     priv: ToolPalettePrivate = ...
@@ -63251,7 +62966,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -63263,7 +62978,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -63351,7 +63066,6 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     container: Container = ...
     priv: ToolbarPrivate = ...
@@ -63542,7 +63256,6 @@ class ToplevelAccessible(Atk.Object):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: Atk.Object = ...
     priv: ToplevelAccessiblePrivate = ...
@@ -63718,7 +63431,6 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     class Props:
         child_model: TreeModel
         virtual_root: TreePath
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: TreeModelFilterPrivate = ...
@@ -63794,9 +63506,9 @@ class TreeModelIface(GObject.GPointer):
     get_value: Callable[[TreeModel, TreeIter, int], Any] = ...
     iter_next: Callable[[TreeModel, TreeIter], bool] = ...
     iter_previous: Callable[[TreeModel, TreeIter], bool] = ...
-    iter_children: Callable[[TreeModel, Optional[TreeIter]], Tuple[bool, TreeIter]] = (
-        ...
-    )
+    iter_children: Callable[
+        [TreeModel, Optional[TreeIter]], Tuple[bool, TreeIter]
+    ] = ...
     iter_has_child: Callable[[TreeModel, TreeIter], bool] = ...
     iter_n_children: Callable[[TreeModel, Optional[TreeIter]], int] = ...
     iter_nth_child: Callable[
@@ -63858,7 +63570,6 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
 
     class Props:
         model: TreeModel
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: TreeModelSortPrivate = ...
@@ -63983,7 +63694,6 @@ class TreeSelection(GObject.Object):
 
     class Props:
         mode: SelectionMode
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: TreeSelectionPrivate = ...
@@ -64454,7 +64164,6 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     parent: Container = ...
     priv: TreeViewPrivate = ...
@@ -64815,7 +64524,6 @@ class TreeViewAccessible(
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: TreeViewAccessiblePrivate = ...
@@ -64962,7 +64670,6 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Optional[Widget]
         width: int
         x_offset: int
-
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: TreeViewColumnPrivate = ...
@@ -65098,7 +64805,6 @@ class UIManager(GObject.Object, Buildable):
     class Props:
         add_tearoffs: bool
         ui: str
-
     props: Props = ...
     parent: GObject.Object = ...
     private_data: UIManagerPrivate = ...
@@ -65300,7 +65006,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -65312,7 +65018,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -65399,7 +65105,6 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     box: Box = ...
     def __init__(
@@ -65602,7 +65307,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -65614,7 +65319,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -65702,7 +65407,6 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     button_box: ButtonBox = ...
     def __init__(
@@ -65914,7 +65618,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -65926,7 +65630,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -66015,7 +65719,6 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         window: Optional[Gdk.Window]
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     paned: Paned = ...
     def __init__(
@@ -66230,7 +65933,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -66242,7 +65945,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -66335,7 +66038,6 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     scale: Scale = ...
     def __init__(
@@ -66544,7 +66246,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -66556,7 +66258,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -66645,7 +66347,6 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     scrollbar: Scrollbar = ...
     def __init__(
@@ -66824,7 +66525,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -66836,7 +66537,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -66917,7 +66618,6 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int
         window: Optional[Gdk.Window]
         orientation: Orientation
-
     props: Props = ...
     separator: Separator = ...
     def __init__(
@@ -67106,7 +66806,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -67118,7 +66818,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -67206,7 +66906,6 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment
         vscroll_policy: ScrollablePolicy
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: ViewportPrivate = ...
@@ -67466,7 +67165,7 @@ class VolumeButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -67478,7 +67177,7 @@ class VolumeButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -67580,7 +67279,6 @@ class VolumeButton(
         use_action_appearance: bool
         orientation: Orientation
         child: Widget
-
     props: Props = ...
     parent: ScaleButton = ...
     def __init__(
@@ -67775,7 +67473,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -67787,7 +67485,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -67867,7 +67565,6 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         visible: bool
         width_request: int
         window: Optional[Gdk.Window]
-
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: WidgetPrivate = ...
@@ -68488,7 +68185,6 @@ class WidgetAccessible(Accessible, Atk.Component):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: Accessible = ...
     priv: WidgetAccessiblePrivate = ...
@@ -68738,8 +68434,8 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -68765,7 +68461,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -68784,8 +68480,8 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -68904,7 +68600,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -68916,7 +68612,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -69032,7 +68728,6 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Widget
-
     props: Props = ...
     bin: Bin = ...
     priv: WindowPrivate = ...
@@ -69353,7 +69048,6 @@ class WindowAccessible(ContainerAccessible, Atk.Component, Atk.Window):
         accessible_table_row_header: Atk.Object
         accessible_table_summary: Atk.Object
         accessible_value: float
-
     props: Props = ...
     parent: ContainerAccessible = ...
     priv: WindowAccessiblePrivate = ...
@@ -69806,7 +69500,6 @@ class ButtonsType(GObject.GEnum):
 
 class CellRendererAccelMode(GObject.GEnum):
     GTK = 0
-    MODIFIER_TAP = 2
     OTHER = 1
 
 class CellRendererMode(GObject.GEnum):
