@@ -1,6 +1,7 @@
 *.pyc
 .mypy_cache
 .ruff_cache
+.direnv
 MANIFEST
 build
 dist
