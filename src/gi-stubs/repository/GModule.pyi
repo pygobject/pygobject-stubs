@@ -7,18 +7,29 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import GObject
 
 _lock = ...  # FIXME Constant
 _namespace: str = "GModule"
 _version: str = "2.0"
 
+@deprecated(
+    "Use g_module_open() instead with @module_name as the basename of the file_name argument. See %G_MODULE_SUFFIX for why."
+)
 def module_build_path(directory: Optional[str], module_name: str) -> str: ...
 def module_error() -> str: ...
 def module_error_quark() -> int: ...
 def module_supported() -> bool: ...
 
 class Module(GObject.GPointer):
+    @deprecated(
+        "Use g_module_open() instead with @module_name as the basename of the file_name argument. See %G_MODULE_SUFFIX for why."
+    )
     @staticmethod
     def build_path(directory: Optional[str], module_name: str) -> str: ...
     def close(self) -> bool: ...

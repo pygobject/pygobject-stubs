@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -1579,6 +1584,7 @@ class Server(GObject.Object):
     def listen_socket(
         self, socket: Gio.Socket, options: ServerListenOptions
     ) -> bool: ...
+    @deprecated("Use soup_server_message_pause() instead.")
     def pause_message(self, msg: ServerMessage) -> None: ...
     def remove_auth_domain(self, auth_domain: AuthDomain) -> None: ...
     def remove_handler(self, path: str) -> None: ...
@@ -1586,6 +1592,7 @@ class Server(GObject.Object):
     def set_tls_auth_mode(self, mode: Gio.TlsAuthenticationMode) -> None: ...
     def set_tls_certificate(self, certificate: Gio.TlsCertificate) -> None: ...
     def set_tls_database(self, tls_database: Gio.TlsDatabase) -> None: ...
+    @deprecated("Use soup_server_message_unpause() instead.")
     def unpause_message(self, msg: ServerMessage) -> None: ...
 
 class ServerClass(GObject.GPointer):

@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -1107,6 +1112,7 @@ class Avatar(Gtk.DrawingArea, Atk.ImplementorIface, Gtk.Buildable):
     @classmethod
     def new(cls, size: int, text: Optional[str], show_initials: bool) -> Avatar: ...
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
+    @deprecated("use [method@Avatar.set_loadable_icon] instead.")
     def set_image_load_func(
         self,
         load_image: Optional[Callable[..., Optional[GdkPixbuf.Pixbuf]]] = None,
@@ -7282,6 +7288,7 @@ class StyleManagerClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
+@deprecated("This class is deprecated")
 class SwipeGroup(GObject.Object, Gtk.Buildable):
     """
     :Constructors:
@@ -7297,10 +7304,14 @@ class SwipeGroup(GObject.Object, Gtk.Buildable):
       notify (GParam)
     """
 
+    @deprecated("This method is deprecated")
     def add_swipeable(self, swipeable: Swipeable) -> None: ...
+    @deprecated("This method is deprecated")
     def get_swipeables(self) -> list[Swipeable]: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> SwipeGroup: ...
+    @deprecated("This method is deprecated")
     def remove_swipeable(self, swipeable: Swipeable) -> None: ...
 
 class SwipeGroupClass(GObject.GPointer):
@@ -8213,6 +8224,7 @@ class TabViewClass(GObject.GPointer):
 
     parent_class: Gtk.BinClass = ...
 
+@deprecated("This class is deprecated")
 class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     """
     :Constructors:
@@ -8485,9 +8497,12 @@ class TitleBar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def get_selection_mode(self) -> bool: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> TitleBar: ...
+    @deprecated("This method is deprecated")
     def set_selection_mode(self, selection_mode: bool) -> None: ...
 
 class TitleBarClass(GObject.GPointer):

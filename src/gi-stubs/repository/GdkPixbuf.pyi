@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GModule
@@ -233,6 +238,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def new_from_file_at_size(
         cls, filename: str, width: int, height: int
     ) -> Optional[Pixbuf]: ...
+    @deprecated("Use `GResource` instead.")
     @classmethod
     def new_from_inline(cls, data: Sequence[int], copy_pixels: bool) -> Pixbuf: ...
     @classmethod
@@ -649,6 +655,9 @@ class InterpType(GObject.GEnum):
     NEAREST = 0
     TILES = 1
 
+@deprecated(
+    "There is no user of GdkPixbufAlphaMode in GdkPixbuf, and the Xlib utility functions have been split out to their own library, gdk-pixbuf-xlib"
+)
 class PixbufAlphaMode(GObject.GEnum):
     BILEVEL = 0
     FULL = 1

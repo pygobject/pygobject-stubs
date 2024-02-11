@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -185,6 +190,7 @@ class Installation(GObject.Object):
         self, name: str, cancellable: Optional[Gio.Cancellable] = None
     ) -> Remote: ...
     def get_storage_type(self) -> StorageType: ...
+    @deprecated("Use flatpak_transaction_add_install() instead.")
     def install(
         self,
         remote_name: str,
@@ -196,6 +202,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install_bundle() instead.")
     def install_bundle(
         self,
         file: Gio.File,
@@ -203,6 +210,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install() instead.")
     def install_full(
         self,
         flags: InstallFlags,
@@ -216,6 +224,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install_flatpakref() instead.")
     def install_ref_file(
         self, ref_file_data: GLib.Bytes, cancellable: Optional[Gio.Cancellable] = None
     ) -> RemoteRef: ...
@@ -319,6 +328,7 @@ class Installation(GObject.Object):
         self, key: str, value: str, cancellable: Optional[Gio.Cancellable] = None
     ) -> bool: ...
     def set_no_interaction(self, no_interaction: bool) -> None: ...
+    @deprecated("Use flatpak_transaction_add_uninstall() instead.")
     def uninstall(
         self,
         kind: RefKind,
@@ -329,6 +339,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_uninstall() instead.")
     def uninstall_full(
         self,
         flags: UninstallFlags,
@@ -340,6 +351,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_update() instead.")
     def update(
         self,
         flags: UpdateFlags,
@@ -367,6 +379,7 @@ class Installation(GObject.Object):
         out_changed: Optional[bool] = None,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_update() instead.")
     def update_full(
         self,
         flags: UpdateFlags,

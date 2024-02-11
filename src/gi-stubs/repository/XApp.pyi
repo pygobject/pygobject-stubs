@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf

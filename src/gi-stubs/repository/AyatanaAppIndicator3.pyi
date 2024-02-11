@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -141,10 +146,12 @@ class Indicator(GObject.Object):
     def new_with_path(
         cls, id: str, icon_name: str, category: IndicatorCategory, icon_theme_path: str
     ) -> Indicator: ...
+    @deprecated("Use app_indicator_set_attention_icon_full() instead.")
     def set_attention_icon(self, icon_name: str) -> None: ...
     def set_attention_icon_full(
         self, icon_name: str, icon_desc: Optional[str] = None
     ) -> None: ...
+    @deprecated("Use app_indicator_set_icon_full()")
     def set_icon(self, icon_name: str) -> None: ...
     def set_icon_full(
         self, icon_name: str, icon_desc: Optional[str] = None

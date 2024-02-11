@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -38,7 +43,9 @@ def contacts_interface_info() -> Gio.DBusInterfaceInfo: ...
 def contacts_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def documents_interface_info() -> Gio.DBusInterfaceInfo: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def documents_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
@@ -59,7 +66,9 @@ def manager_interface_info() -> Gio.DBusInterfaceInfo: ...
 def manager_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def maps_interface_info() -> Gio.DBusInterfaceInfo: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def maps_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
@@ -91,7 +100,9 @@ def printers_interface_info() -> Gio.DBusInterfaceInfo: ...
 def printers_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def read_later_interface_info() -> Gio.DBusInterfaceInfo: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def read_later_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
@@ -99,7 +110,9 @@ def ticketing_interface_info() -> Gio.DBusInterfaceInfo: ...
 def ticketing_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def todo_interface_info() -> Gio.DBusInterfaceInfo: ...
+@deprecated("The D-Bus interface has been deprecated.")
 def todo_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
@@ -1109,6 +1122,7 @@ class ContactsSkeletonClass(GObject.GPointer):
 
 class ContactsSkeletonPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class Documents(GObject.GInterface):
     """
     Interface GoaDocuments
@@ -1117,13 +1131,16 @@ class Documents(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def override_properties(
         klass: GObject.ObjectClass, property_id_begin: int
     ) -> int: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class DocumentsIface(GObject.GPointer):
     """
     :Constructors:
@@ -1135,6 +1152,7 @@ class DocumentsIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class DocumentsProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Documents
 ):
@@ -1203,6 +1221,7 @@ class DocumentsProxy(
         g_name: str = ...,
         g_object_path: str = ...,
     ): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -1213,8 +1232,10 @@ class DocumentsProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_finish(cls, res: Gio.AsyncResult) -> DocumentsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new_for_bus(
         bus_type: Gio.BusType,
@@ -1225,8 +1246,10 @@ class DocumentsProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_finish(cls, res: Gio.AsyncResult) -> DocumentsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_sync(
         cls,
@@ -1236,6 +1259,7 @@ class DocumentsProxy(
         object_path: str,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> DocumentsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_sync(
         cls,
@@ -1246,6 +1270,7 @@ class DocumentsProxy(
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> DocumentsProxy: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class DocumentsProxyClass(GObject.GPointer):
     """
     :Constructors:
@@ -1259,6 +1284,7 @@ class DocumentsProxyClass(GObject.GPointer):
 
 class DocumentsProxyPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class DocumentsSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Documents):
     """
     :Constructors:
@@ -1287,9 +1313,11 @@ class DocumentsSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Documents)
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: DocumentsSkeletonPrivate = ...
     def __init__(self, g_flags: Gio.DBusInterfaceSkeletonFlags = ...): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new(cls) -> DocumentsSkeleton: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class DocumentsSkeletonClass(GObject.GPointer):
     """
     :Constructors:
@@ -2253,6 +2281,7 @@ class ManagerSkeletonClass(GObject.GPointer):
 
 class ManagerSkeletonPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class Maps(GObject.GInterface):
     """
     Interface GoaMaps
@@ -2261,13 +2290,16 @@ class Maps(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def override_properties(
         klass: GObject.ObjectClass, property_id_begin: int
     ) -> int: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class MapsIface(GObject.GPointer):
     """
     :Constructors:
@@ -2279,6 +2311,7 @@ class MapsIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class MapsProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Maps
 ):
@@ -2347,6 +2380,7 @@ class MapsProxy(
         g_name: str = ...,
         g_object_path: str = ...,
     ): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -2357,8 +2391,10 @@ class MapsProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_finish(cls, res: Gio.AsyncResult) -> MapsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new_for_bus(
         bus_type: Gio.BusType,
@@ -2369,8 +2405,10 @@ class MapsProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_finish(cls, res: Gio.AsyncResult) -> MapsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_sync(
         cls,
@@ -2380,6 +2418,7 @@ class MapsProxy(
         object_path: str,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> MapsProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_sync(
         cls,
@@ -2390,6 +2429,7 @@ class MapsProxy(
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> MapsProxy: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class MapsProxyClass(GObject.GPointer):
     """
     :Constructors:
@@ -2403,6 +2443,7 @@ class MapsProxyClass(GObject.GPointer):
 
 class MapsProxyPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class MapsSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Maps):
     """
     :Constructors:
@@ -2431,9 +2472,11 @@ class MapsSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Maps):
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: MapsSkeletonPrivate = ...
     def __init__(self, g_flags: Gio.DBusInterfaceSkeletonFlags = ...): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new(cls) -> MapsSkeleton: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class MapsSkeletonClass(GObject.GPointer):
     """
     :Constructors:
@@ -3326,11 +3369,13 @@ class Object(GObject.GInterface):
     def get_calendar(self) -> Optional[Calendar]: ...
     def get_chat(self) -> Optional[Chat]: ...
     def get_contacts(self) -> Optional[Contacts]: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def get_documents(self) -> Optional[Documents]: ...
     def get_exchange(self) -> Optional[Exchange]: ...
     def get_files(self) -> Optional[Files]: ...
     def get_mail(self) -> Optional[Mail]: ...
     def get_manager(self) -> Optional[Manager]: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def get_maps(self) -> Optional[Maps]: ...
     def get_media_server(self) -> Optional[MediaServer]: ...
     def get_music(self) -> Optional[Music]: ...
@@ -3339,8 +3384,10 @@ class Object(GObject.GInterface):
     def get_password_based(self) -> Optional[PasswordBased]: ...
     def get_photos(self) -> Optional[Photos]: ...
     def get_printers(self) -> Optional[Printers]: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def get_read_later(self) -> Optional[ReadLater]: ...
     def get_ticketing(self) -> Optional[Ticketing]: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def get_todo(self) -> Optional[Todo]: ...
 
 class ObjectIface(GObject.GPointer):
@@ -3678,11 +3725,13 @@ class ObjectSkeleton(Gio.DBusObjectSkeleton, Gio.DBusObject, Object):
     def set_calendar(self, interface_: Optional[Calendar] = None) -> None: ...
     def set_chat(self, interface_: Optional[Chat] = None) -> None: ...
     def set_contacts(self, interface_: Optional[Contacts] = None) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def set_documents(self, interface_: Optional[Documents] = None) -> None: ...
     def set_exchange(self, interface_: Optional[Exchange] = None) -> None: ...
     def set_files(self, interface_: Optional[Files] = None) -> None: ...
     def set_mail(self, interface_: Optional[Mail] = None) -> None: ...
     def set_manager(self, interface_: Optional[Manager] = None) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def set_maps(self, interface_: Optional[Maps] = None) -> None: ...
     def set_media_server(self, interface_: Optional[MediaServer] = None) -> None: ...
     def set_music(self, interface_: Optional[Music] = None) -> None: ...
@@ -3693,8 +3742,10 @@ class ObjectSkeleton(Gio.DBusObjectSkeleton, Gio.DBusObject, Object):
     ) -> None: ...
     def set_photos(self, interface_: Optional[Photos] = None) -> None: ...
     def set_printers(self, interface_: Optional[Printers] = None) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def set_read_later(self, interface_: Optional[ReadLater] = None) -> None: ...
     def set_ticketing(self, interface_: Optional[Ticketing] = None) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     def set_todo(self, interface_: Optional[Todo] = None) -> None: ...
 
 class ObjectSkeletonClass(GObject.GPointer):
@@ -4317,6 +4368,7 @@ class PrintersSkeletonClass(GObject.GPointer):
 
 class PrintersSkeletonPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLater(GObject.GInterface):
     """
     Interface GoaReadLater
@@ -4325,13 +4377,16 @@ class ReadLater(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def override_properties(
         klass: GObject.ObjectClass, property_id_begin: int
     ) -> int: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLaterIface(GObject.GPointer):
     """
     :Constructors:
@@ -4343,6 +4398,7 @@ class ReadLaterIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLaterProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, ReadLater
 ):
@@ -4411,6 +4467,7 @@ class ReadLaterProxy(
         g_name: str = ...,
         g_object_path: str = ...,
     ): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -4421,8 +4478,10 @@ class ReadLaterProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_finish(cls, res: Gio.AsyncResult) -> ReadLaterProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new_for_bus(
         bus_type: Gio.BusType,
@@ -4433,8 +4492,10 @@ class ReadLaterProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_finish(cls, res: Gio.AsyncResult) -> ReadLaterProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_sync(
         cls,
@@ -4444,6 +4505,7 @@ class ReadLaterProxy(
         object_path: str,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> ReadLaterProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_sync(
         cls,
@@ -4454,6 +4516,7 @@ class ReadLaterProxy(
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> ReadLaterProxy: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLaterProxyClass(GObject.GPointer):
     """
     :Constructors:
@@ -4467,6 +4530,7 @@ class ReadLaterProxyClass(GObject.GPointer):
 
 class ReadLaterProxyPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLaterSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, ReadLater):
     """
     :Constructors:
@@ -4495,9 +4559,11 @@ class ReadLaterSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, ReadLater)
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: ReadLaterSkeletonPrivate = ...
     def __init__(self, g_flags: Gio.DBusInterfaceSkeletonFlags = ...): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new(cls) -> ReadLaterSkeleton: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class ReadLaterSkeletonClass(GObject.GPointer):
     """
     :Constructors:
@@ -4729,6 +4795,7 @@ class TicketingSkeletonClass(GObject.GPointer):
 
 class TicketingSkeletonPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class Todo(GObject.GInterface):
     """
     Interface GoaTodo
@@ -4737,13 +4804,16 @@ class Todo(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def override_properties(
         klass: GObject.ObjectClass, property_id_begin: int
     ) -> int: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class TodoIface(GObject.GPointer):
     """
     :Constructors:
@@ -4755,6 +4825,7 @@ class TodoIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class TodoProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Todo
 ):
@@ -4823,6 +4894,7 @@ class TodoProxy(
         g_name: str = ...,
         g_object_path: str = ...,
     ): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -4833,8 +4905,10 @@ class TodoProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_finish(cls, res: Gio.AsyncResult) -> TodoProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @staticmethod
     def new_for_bus(
         bus_type: Gio.BusType,
@@ -4845,8 +4919,10 @@ class TodoProxy(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_finish(cls, res: Gio.AsyncResult) -> TodoProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_for_bus_sync(
         cls,
@@ -4856,6 +4932,7 @@ class TodoProxy(
         object_path: str,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> TodoProxy: ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new_sync(
         cls,
@@ -4866,6 +4943,7 @@ class TodoProxy(
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> TodoProxy: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class TodoProxyClass(GObject.GPointer):
     """
     :Constructors:
@@ -4879,6 +4957,7 @@ class TodoProxyClass(GObject.GPointer):
 
 class TodoProxyPrivate(GObject.GPointer): ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class TodoSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Todo):
     """
     :Constructors:
@@ -4907,9 +4986,11 @@ class TodoSkeleton(Gio.DBusInterfaceSkeleton, Gio.DBusInterface, Todo):
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: TodoSkeletonPrivate = ...
     def __init__(self, g_flags: Gio.DBusInterfaceSkeletonFlags = ...): ...
+    @deprecated("The D-Bus interface has been deprecated.")
     @classmethod
     def new(cls) -> TodoSkeleton: ...
 
+@deprecated("The D-Bus interface has been deprecated.")
 class TodoSkeletonClass(GObject.GPointer):
     """
     :Constructors:

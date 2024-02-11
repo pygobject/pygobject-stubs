@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 import cairo
 from gi.repository import Gdk
 from gi.repository import GLib
@@ -492,6 +497,7 @@ class NglRenderer(Renderer):
         realized: bool
         surface: Optional[Gdk.Surface]
     props: Props = ...
+    @deprecated("Use gsk_gl_renderer_new()")
     @classmethod
     def new(cls) -> NglRenderer: ...
 

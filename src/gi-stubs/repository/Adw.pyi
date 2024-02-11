@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import GLib
@@ -608,6 +613,7 @@ class ActionRow(
     def add_prefix(self, widget: Gtk.Widget) -> None: ...
     def add_suffix(self, widget: Gtk.Widget) -> None: ...
     def get_activatable_widget(self) -> Optional[Gtk.Widget]: ...
+    @deprecated("Use [method@ActionRow.add_prefix] to add an icon.")
     def get_icon_name(self) -> Optional[str]: ...
     def get_subtitle(self) -> Optional[str]: ...
     def get_subtitle_lines(self) -> int: ...
@@ -617,6 +623,7 @@ class ActionRow(
     def new(cls) -> ActionRow: ...
     def remove(self, widget: Gtk.Widget) -> None: ...
     def set_activatable_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
+    @deprecated("Use [method@ActionRow.add_prefix] to add an icon.")
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
@@ -3769,12 +3776,14 @@ class ExpanderRow(
         action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
+    @deprecated("Use [method@ExpanderRow.add_suffix] to add a suffix.")
     def add_action(self, widget: Gtk.Widget) -> None: ...
     def add_prefix(self, widget: Gtk.Widget) -> None: ...
     def add_row(self, child: Gtk.Widget) -> None: ...
     def add_suffix(self, widget: Gtk.Widget) -> None: ...
     def get_enable_expansion(self) -> bool: ...
     def get_expanded(self) -> bool: ...
+    @deprecated("Use [method@ExpanderRow.add_prefix] to add an icon.")
     def get_icon_name(self) -> Optional[str]: ...
     def get_show_enable_switch(self) -> bool: ...
     def get_subtitle(self) -> str: ...
@@ -3785,6 +3794,7 @@ class ExpanderRow(
     def remove(self, child: Gtk.Widget) -> None: ...
     def set_enable_expansion(self, enable_expansion: bool) -> None: ...
     def set_expanded(self, expanded: bool) -> None: ...
+    @deprecated("Use [method@ExpanderRow.add_prefix] to add an icon.")
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_show_enable_switch(self, show_enable_switch: bool) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
@@ -3803,6 +3813,7 @@ class ExpanderRowClass(GObject.GPointer):
     parent_class: PreferencesRowClass = ...
     padding: list[None] = ...
 
+@deprecated("See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)")
 class Flap(
     Gtk.Widget,
     Swipeable,
@@ -3996,37 +4007,130 @@ class Flap(
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
     ): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_content(self) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_flap(self) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_flap_position(self) -> Gtk.PackType: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_fold_duration(self) -> int: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_fold_policy(self) -> FlapFoldPolicy: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_fold_threshold_policy(self) -> FoldThresholdPolicy: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_folded(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_locked(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_modal(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_reveal_flap(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_reveal_params(self) -> SpringParams: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_reveal_progress(self) -> float: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_separator(self) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_swipe_to_close(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_swipe_to_open(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def get_transition_type(self) -> FlapTransitionType: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     @classmethod
     def new(cls) -> Flap: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_flap(self, flap: Optional[Gtk.Widget] = None) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_flap_position(self, position: Gtk.PackType) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_fold_duration(self, duration: int) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_fold_policy(self, policy: FlapFoldPolicy) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_fold_threshold_policy(self, policy: FoldThresholdPolicy) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_locked(self, locked: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_modal(self, modal: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_reveal_flap(self, reveal_flap: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_reveal_params(self, params: SpringParams) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_separator(self, separator: Optional[Gtk.Widget] = None) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_swipe_to_close(self, swipe_to_close: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_swipe_to_open(self, swipe_to_open: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)"
+    )
     def set_transition_type(self, transition_type: FlapTransitionType) -> None: ...
 
 class FlapClass(GObject.GPointer):
@@ -4230,6 +4334,9 @@ class HeaderBarClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+)
 class Leaflet(
     Gtk.Widget,
     Swipeable,
@@ -4413,45 +4520,144 @@ class Leaflet(
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
     ): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def append(self, child: Gtk.Widget) -> LeafletPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_adjacent_child(
         self, direction: NavigationDirection
     ) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_can_navigate_back(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_can_navigate_forward(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_can_unfold(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_child_by_name(self, name: str) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_child_transition_params(self) -> SpringParams: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_child_transition_running(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_fold_threshold_policy(self) -> FoldThresholdPolicy: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_folded(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_homogeneous(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_mode_transition_duration(self) -> int: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_page(self, child: Gtk.Widget) -> LeafletPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_pages(self) -> Gtk.SelectionModel: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_transition_type(self) -> LeafletTransitionType: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_visible_child(self) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_visible_child_name(self) -> Optional[str]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def insert_child_after(
         self, child: Gtk.Widget, sibling: Optional[Gtk.Widget] = None
     ) -> LeafletPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def navigate(self, direction: NavigationDirection) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     @classmethod
     def new(cls) -> Leaflet: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def prepend(self, child: Gtk.Widget) -> LeafletPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def remove(self, child: Gtk.Widget) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def reorder_child_after(
         self, child: Gtk.Widget, sibling: Optional[Gtk.Widget] = None
     ) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_can_navigate_back(self, can_navigate_back: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_can_navigate_forward(self, can_navigate_forward: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_can_unfold(self, can_unfold: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_child_transition_params(self, params: SpringParams) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_fold_threshold_policy(self, policy: FoldThresholdPolicy) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_homogeneous(self, homogeneous: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_mode_transition_duration(self, duration: int) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_transition_type(self, transition: LeafletTransitionType) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_visible_child(self, visible_child: Gtk.Widget) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_visible_child_name(self, name: str) -> None: ...
 
 class LeafletClass(GObject.GPointer):
@@ -4465,6 +4671,9 @@ class LeafletClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+)
 class LeafletPage(GObject.Object):
     """
     :Constructors:
@@ -4495,10 +4704,25 @@ class LeafletPage(GObject.Object):
         name: Optional[str] = ...,
         navigatable: bool = ...,
     ): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_child(self) -> Gtk.Widget: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_name(self) -> Optional[str]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def get_navigatable(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_name(self, name: Optional[str] = None) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+    )
     def set_navigatable(self, navigatable: bool) -> None: ...
 
 class LeafletPageClass(GObject.GPointer):
@@ -6639,7 +6863,9 @@ class PreferencesWindow(
     ): ...
     def add(self, page: PreferencesPage) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
+    @deprecated("Use [method@PreferencesWindow.pop_subpage] instead.")
     def close_subpage(self) -> None: ...
+    @deprecated("Use [method@NavigationPage.get_can_pop] instead.")
     def get_can_navigate_back(self) -> bool: ...
     def get_search_enabled(self) -> bool: ...
     def get_visible_page(self) -> Optional[PreferencesPage]: ...
@@ -6647,9 +6873,13 @@ class PreferencesWindow(
     @classmethod
     def new(cls) -> PreferencesWindow: ...
     def pop_subpage(self) -> bool: ...
+    @deprecated("Use [method@PreferencesWindow.push_subpage] instead.")
     def present_subpage(self, subpage: Gtk.Widget) -> None: ...
     def push_subpage(self, page: NavigationPage) -> None: ...
     def remove(self, page: PreferencesPage) -> None: ...
+    @deprecated(
+        "Use [method@NavigationPage.set_can_pop] instead. Has no effect for subpages added with [method@PreferencesWindow.push_subpage]."
+    )
     def set_can_navigate_back(self, can_navigate_back: bool) -> None: ...
     def set_search_enabled(self, search_enabled: bool) -> None: ...
     def set_visible_page(self, page: PreferencesPage) -> None: ...
@@ -7319,6 +7549,9 @@ class SpringParams(GObject.GBoxed):
     def ref(self) -> SpringParams: ...
     def unref(self) -> None: ...
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+)
 class Squeezer(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
 ):
@@ -7491,29 +7724,98 @@ class Squeezer(
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
     ): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def add(self, child: Gtk.Widget) -> SqueezerPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_allow_none(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_homogeneous(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_interpolate_size(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_page(self, child: Gtk.Widget) -> SqueezerPage: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_pages(self) -> Gtk.SelectionModel: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_switch_threshold_policy(self) -> FoldThresholdPolicy: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_transition_duration(self) -> int: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_transition_running(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_transition_type(self) -> SqueezerTransitionType: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_visible_child(self) -> Optional[Gtk.Widget]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_xalign(self) -> float: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_yalign(self) -> float: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     @classmethod
     def new(cls) -> Squeezer: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def remove(self, child: Gtk.Widget) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_allow_none(self, allow_none: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_homogeneous(self, homogeneous: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_interpolate_size(self, interpolate_size: bool) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_switch_threshold_policy(self, policy: FoldThresholdPolicy) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_transition_duration(self, duration: int) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_transition_type(self, transition: SqueezerTransitionType) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_xalign(self, xalign: float) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_yalign(self, yalign: float) -> None: ...
 
 class SqueezerClass(GObject.GPointer):
@@ -7527,6 +7829,9 @@ class SqueezerClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+)
 class SqueezerPage(GObject.Object):
     """
     :Constructors:
@@ -7550,8 +7855,17 @@ class SqueezerPage(GObject.Object):
         enabled: bool
     props: Props = ...
     def __init__(self, child: Gtk.Widget = ..., enabled: bool = ...): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_child(self) -> Gtk.Widget: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def get_enabled(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+    )
     def set_enabled(self, enabled: bool) -> None: ...
 
 class SqueezerPageClass(GObject.GPointer):
@@ -10197,6 +10511,9 @@ class ViewSwitcherClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+)
 class ViewSwitcherTitle(
     Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
 ):
@@ -10351,16 +10668,46 @@ class ViewSwitcherTitle(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
     ): ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def get_stack(self) -> Optional[ViewStack]: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def get_subtitle(self) -> str: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def get_title(self) -> str: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def get_title_visible(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def get_view_switcher_enabled(self) -> bool: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     @classmethod
     def new(cls) -> ViewSwitcherTitle: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def set_subtitle(self, subtitle: str) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def set_title(self, title: str) -> None: ...
+    @deprecated(
+        "See [the migration guide](migrating-to-breakpoints.html#replace-adwviewswitchertitle)"
+    )
     def set_view_switcher_enabled(self, enabled: bool) -> None: ...
 
 class ViewSwitcherTitleClass(GObject.GPointer):
@@ -10867,20 +11214,26 @@ class Easing(GObject.GEnum):
     @staticmethod
     def ease(self: Easing, value: float) -> float: ...
 
+@deprecated("See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)")
 class FlapFoldPolicy(GObject.GEnum):
     ALWAYS = 1
     AUTO = 2
     NEVER = 0
 
+@deprecated("See [the migration guide](migrating-to-breakpoints.html#replace-adwflap)")
 class FlapTransitionType(GObject.GEnum):
     OVER = 0
     SLIDE = 2
     UNDER = 1
 
+@deprecated("Stop using `AdwLeaflet` and `AdwFlap`")
 class FoldThresholdPolicy(GObject.GEnum):
     MINIMUM = 0
     NATURAL = 1
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwleaflet)"
+)
 class LeafletTransitionType(GObject.GEnum):
     OVER = 0
     SLIDE = 2
@@ -10908,6 +11261,9 @@ class ResponseAppearance(GObject.GEnum):
     DESTRUCTIVE = 2
     SUGGESTED = 1
 
+@deprecated(
+    "See [the migration guide](migrating-to-breakpoints.html#replace-adwsqueezer)"
+)
 class SqueezerTransitionType(GObject.GEnum):
     CROSSFADE = 1
     NONE = 0
