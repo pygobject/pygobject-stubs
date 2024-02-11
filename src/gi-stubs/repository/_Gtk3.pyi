@@ -64097,6 +64097,8 @@ class TreeStore(
     parent: GObject.Object = ...
     priv: TreeStorePrivate = ...
     # override
+    def __init__(self, *column_types: Any) -> None: ...
+    # override
     def append(
         self, parent: Optional[TreeIter], row: Optional[list[Any]] = None
     ) -> TreeIter: ...
@@ -64965,23 +64967,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         title: str = ...,
         cell_renderer: Optional[CellRenderer] = None,
-        *,
-        alignment: float = ...,
-        cell_area: CellArea = ...,
-        clickable: bool = ...,
-        expand: bool = ...,
-        fixed_width: int = ...,
-        max_width: int = ...,
-        min_width: int = ...,
-        reorderable: bool = ...,
-        resizable: bool = ...,
-        sizing: TreeViewColumnSizing = ...,
-        sort_column_id: int = ...,
-        sort_indicator: bool = ...,
-        sort_order: SortType = ...,
-        spacing: int = ...,
-        visible: bool = ...,
-        widget: Optional[Widget] = ...,
+        **attributes: Any,
     ): ...
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
