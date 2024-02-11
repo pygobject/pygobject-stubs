@@ -6,7 +6,7 @@ import re
 ParseResult = dict[str, str]
 
 OVERRIDE_PATTERN = r"^.*#\s*override.*$"
-CLASS_PATTERN = r"^\s*class\s*(?P<symbol>\w*)\s*(\(|:)"
+CLASS_PATTERN = r"^\s*class\s(?P<symbol>\w*)\s*(\(|:)"
 CONSTANT_INDEX = 2
 SYMBOLS_PATTERNS = [
     r"^\s*def\s+(?P<symbol>\w*)\s*\(",  # Functions
