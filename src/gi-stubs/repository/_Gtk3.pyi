@@ -64960,8 +64960,12 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     priv: TreeViewColumnPrivate = ...
+    # override
     def __init__(
         self,
+        title: str = ...,
+        cell_renderer: Optional[CellRenderer] = None,
+        *,
         alignment: float = ...,
         cell_area: CellArea = ...,
         clickable: bool = ...,
@@ -64976,7 +64980,6 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         sort_indicator: bool = ...,
         sort_order: SortType = ...,
         spacing: int = ...,
-        title: str = ...,
         visible: bool = ...,
         widget: Optional[Widget] = ...,
     ): ...
