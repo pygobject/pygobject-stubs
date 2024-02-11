@@ -35,6 +35,7 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 
 ObjectT = Union[ModuleType, Type[Any]]
 
+DOCS: dict[str, str] = {}
 DEPRECATION_DOCS: dict[str, str] = {}
 
 
@@ -99,13 +100,14 @@ def _callable_get_arguments(
     current_namespace: str,
     needed_namespaces: set[str],
     can_default: bool = False,
-) -> Tuple[list[str], list[str], list[str]]:
+) -> Tuple[list[str], list[str], list[str], list[str]]:
     function_args = type.get_arguments()
     accept_optional_args = False
     optional_args_name = ""
     dict_names: dict[int, str] = {}
     dict_args: dict[int, GI.ArgInfo] = {}
     str_args: list[str] = []
+    dict_return_names: dict[int, str] = {}
     dict_return_args: dict[int, str] = {}
     skip: list[int] = []
 
@@ -132,6 +134,7 @@ def _callable_get_arguments(
             if len_arg < i:
                 dict_names.pop(len_arg, None)
                 dict_args.pop(len_arg, None)
+                dict_return_names.pop(len_arg, None)
                 dict_return_args.pop(len_arg, None)
 
         # Need to check because user_data can be the first arg
@@ -142,6 +145,7 @@ def _callable_get_arguments(
                     arg.get_type(), current_namespace, needed_namespaces, True
                 )
 
+                dict_return_names[i] = arg.get_name()
                 dict_return_args[i] = t
             elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
                 dict_names[i] = arg.get_name()
@@ -184,7 +188,7 @@ def _callable_get_arguments(
     if return_type != "None" or len(return_args) == 0:
         return_args.insert(0, return_type)
 
-    return (names, str_args, return_args)
+    return (names, str_args, return_args, list(dict_return_names.values()))
 
 
 class TypeInfo:
@@ -295,7 +299,7 @@ def _type_to_python(
     if tag == tags.INTERFACE:
         interface = type.get_interface()
         if isinstance(interface, GI.CallbackInfo):
-            (names, args, return_args) = _callable_get_arguments(
+            (names, args, return_args, _) = _callable_get_arguments(
                 interface, current_namespace, needed_namespaces
             )
 
@@ -375,14 +379,69 @@ def _generate_full_name(prefix: str, name: str) -> str:
     return full_name
 
 
+def _normalize_string(s: str) -> str:
+    return re.sub(" +", " ", s)
+
+
+def _build_function_info_doc(
+    fullname: str,
+    args: list[str],
+    return_args: list[str],
+    return_names: list[str],
+    ignore_return_doc: bool = False,
+) -> str | None:
+    if not fullname in DOCS:
+        return None
+
+    args = [a.replace("*", "") for a in args]
+
+    doc = DOCS[fullname]
+    arg_doc: dict[str, str | None] = {}
+    for arg in args + return_names:
+        arg_doc[arg] = _normalize_string(DOCS.get(f"{fullname}.{arg}", ""))
+
+    return_doc = _normalize_string(DOCS.get(f"{fullname}.$return-value", ""))
+
+    # There are two conditions:
+    # 1: A return value and some / none out arguments,
+    #    in this case the length will be different and we should ignore the first return_args
+    # 2: No return value, in this case the length will be equal
+    add_one = len(return_args) != len(return_names)
+    if not ignore_return_doc:
+        return_doc = (
+            f"{return_args[0]}: {return_doc or 'Not documented'}\n    "
+            if add_one and not (len(return_args) == 1 and return_args[0] == "None")
+            else None
+        )
+    else:
+        return_doc = None
+
+    ret_args: dict[str, str] = {}
+    for i, arg in enumerate(return_names):
+        index = i + 1 if add_one else i
+        ret_args[arg] = return_args[index]
+
+    separator = "\n    "
+    return f"""{doc}
+
+Parameters:
+    {separator.join([f'{s}: {arg_doc[s]}' for s in args])}
+
+Returns:
+    {return_doc or ""}{separator.join([f'{ret_args[s]}: {arg_doc[s]}' for s in return_names])}
+"""
+
+
 def _build_function_info(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: GI.FunctionInfo | GI.VFuncInfo,
     in_class: Optional[Any],
     needed_namespaces: set[str],
     return_signature: Optional[str] = None,
     comment: Optional[str] = None,
+    ignore_return_doc: bool = False,
 ) -> str:
     constructor: bool = False
     method: bool = isinstance(function, GI.VFuncInfo)
@@ -400,7 +459,7 @@ def _build_function_info(
         static = True
 
     # Arguments
-    (names, args, return_args) = _callable_get_arguments(
+    (names, args, return_args, return_args_names) = _callable_get_arguments(
         function, current_namespace, needed_namespaces, True
     )
     args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
@@ -414,6 +473,10 @@ def _build_function_info(
         return_type = f"{return_args[0]}"
 
     # Generate string
+    doc = _build_function_info_doc(
+        fullname, names, return_args, return_args_names, ignore_return_doc
+    )
+    doc = f'    """\n{doc}    """\n    ...\n' if doc else ""
     prepend = ""
     if constructor:
         args_types.insert(0, "cls")
@@ -428,13 +491,14 @@ def _build_function_info(
         prepend = "@staticmethod\n"
 
     if comment:
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ... # {comment}\n"
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: {'...' if not doc else ''} # {comment}\n{doc}\n"
     else:
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: {'...' if not doc else ''} \n{doc}\n"
 
 
 def _wrapped_strip_boolean_result(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: Any,
     in_class: Optional[Any],
@@ -443,7 +507,7 @@ def _wrapped_strip_boolean_result(
     real_function = function.__wrapped__
     fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
 
-    (_, _, return_args) = _callable_get_arguments(
+    (_, _, return_args, _) = _callable_get_arguments(
         real_function, current_namespace, needed_namespaces
     )
     return_args = return_args[1:]  # Strip first return value
@@ -466,17 +530,20 @@ def _wrapped_strip_boolean_result(
 
     return _build_function_info(
         current_namespace,
+        fullname,
         name,
         real_function,
         in_class,
         needed_namespaces,
         return_signature,
         "CHECK Wrapped function",
+        True,
     )
 
 
 def _build_function(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: Any,
     in_class: Optional[Any],
@@ -488,12 +555,12 @@ def _build_function(
     if hasattr(function, "__wrapped__"):
         if "strip_boolean_result" in str(function):
             return _wrapped_strip_boolean_result(
-                current_namespace, name, function, in_class, needed_namespaces
+                current_namespace, fullname, name, function, in_class, needed_namespaces
             )
 
     if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
         return _build_function_info(
-            current_namespace, name, function, in_class, needed_namespaces
+            current_namespace, fullname, name, function, in_class, needed_namespaces
         )
 
     signature: Optional[str] = None
@@ -537,6 +604,13 @@ def _check_deprecation(obj: Any, full_name: str, default_message: str) -> str:
                 or default_message
             )
             ret += f'@deprecated("{message}")\n'
+    return ret
+
+
+def _build_doc(full_name: str) -> str:
+    ret = ""
+    if full_name in DOCS:
+        ret += f'"""\n{DOCS[full_name]}\n"""\n'
     return ret
 
 
@@ -605,6 +679,8 @@ def _gi_build_stub(
 
     # Constants
     for name in sorted(constants):
+        full_name = _generate_full_name(prefix_name, name)
+
         if name[0].isdigit():
             # GDK has some busted constant names like
             # Gdk.EventType.2BUTTON_PRESS
@@ -629,6 +705,8 @@ def _gi_build_stub(
         else:
             ret += f"{name} = ... # FIXME Constant\n"
 
+        ret += _build_doc(full_name)
+
     if ret and constants:
         ret += "\n"
 
@@ -646,7 +724,12 @@ def _gi_build_stub(
             continue
 
         ret += _build_function(
-            current_namespace, name, functions[name], in_class, needed_namespaces
+            current_namespace,
+            full_name,
+            name,
+            functions[name],
+            in_class,
+            needed_namespaces,
         )
 
     if ret and functions:
@@ -768,8 +851,9 @@ def _gi_build_stub(
             # extracting docs
             doc = getattr(obj, "__doc__", "") or ""
             gdoc = getattr(obj, "__gdoc__", "") or ""
+            girdoc = DOCS[full_name] if full_name in DOCS else ""
 
-            txt = doc.strip() + "\n\n" + gdoc.strip()
+            txt = girdoc.strip() + "\n\n" + doc.strip() + "\n\n" + gdoc.strip()
             if not txt.isspace():
                 txt = '"""\n' + txt.strip() + '\n"""' + "\n"
                 txt = textwrap.indent(txt, "    ")
@@ -870,6 +954,7 @@ def _gi_build_stub(
             base = "GObject.GFlags"
 
         ret += f"class {name}({base}):\n"
+        ret += textwrap.indent(_build_doc(full_name), "    ")
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
                 continue
@@ -883,13 +968,15 @@ def _gi_build_stub(
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
+                    current_namespace, full_name, key, o, obj, needed_namespaces
                 )
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
                 value = o.real
-                ret += f"    {key} = {value}\n"
+                ret += f"    {key} = {value}\n" + textwrap.indent(
+                    _build_doc(_generate_full_name(full_name, key.lower())), "    "
+                )
             else:
                 ret += f"    {key} = ... # FIXME Flags\n"
         ret += "\n"
@@ -918,6 +1005,7 @@ def _gi_build_stub(
             base = "GObject.GEnum"
 
         ret += f"class {name}({base}):\n"
+        ret += textwrap.indent(_build_doc(full_name), "    ")
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
                 continue
@@ -931,13 +1019,15 @@ def _gi_build_stub(
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
+                    current_namespace, full_name, key, o, obj, needed_namespaces
                 )
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
                 value = o.real
-                ret += f"    {key} = {value}\n"
+                ret += f"    {key} = {value}\n" + textwrap.indent(
+                    _build_doc(_generate_full_name(full_name, key.lower())), "    "
+                )
             else:
                 ret += f"    {key} = ... # FIXME Enum\n"
         ret += "\n"
@@ -994,7 +1084,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    DEPRECATION_DOCS = gir.load_gir(args.module, args.version)
+    DOCS, DEPRECATION_DOCS = gir.load_gir(args.module, args.version)
 
     if args.output:
         overrides: dict[str, str] = {}
