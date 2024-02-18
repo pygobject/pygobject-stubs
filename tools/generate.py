@@ -41,14 +41,23 @@ DEPRECATION_DOCS: dict[str, str] = {}
 
 def _object_get_props(
     obj: GI.ObjectInfo,
-) -> Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
+) -> Tuple[
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+]:
     parents: list[GI.ObjectInfo] = []
-    parent: Optional[GI.ObjectInfo] = obj.get_parent()
+    parent: Optional[GI.ObjectInfo] = (
+        obj.get_parent() if hasattr(obj, "get_parent") else None
+    )
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
 
-    interfaces: list[GI.InterfaceInfo] = list(obj.get_interfaces())
+    interfaces: list[GI.InterfaceInfo] = (
+        list(obj.get_interfaces()) if hasattr(obj, "get_interfaces") else []
+    )
 
     subclasses: list[GI.ObjectInfo | GI.InterfaceInfo] = parents + interfaces
 
@@ -56,9 +65,12 @@ def _object_get_props(
     for s in subclasses:
         props.extend(s.get_properties())
 
+    my_readable_props: list[GIRepository.BaseInfo] = []
+    my_writable_props: list[GIRepository.BaseInfo] = []
     readable_props: list[GIRepository.BaseInfo] = []
     writable_props: list[GIRepository.BaseInfo] = []
     for prop in props:
+        my_prop = prop in obj.get_properties()
         repo = GIRepository.Repository.get_default()
         namespace = prop.get_namespace()
         container = prop.get_container()
@@ -75,8 +87,12 @@ def _object_get_props(
                 if p.get_name() == prop.get_name():
                     flags = GIRepository.property_info_get_flags(p)
                     if flags & GObject.ParamFlags.READABLE:
+                        if my_prop:
+                            my_readable_props.append(p)
                         readable_props.append(p)
                     if flags & GObject.ParamFlags.WRITABLE:
+                        if my_prop:
+                            my_writable_props.append(p)
                         writable_props.append(p)
 
         if class_info.get_type() == GIRepository.InfoType.INTERFACE:
@@ -92,7 +108,7 @@ def _object_get_props(
                     if flags & GObject.ParamFlags.WRITABLE:
                         writable_props.append(p)
 
-    return (readable_props, writable_props)
+    return (readable_props, writable_props, my_readable_props, my_writable_props)
 
 
 def _callable_get_arguments(
@@ -759,6 +775,8 @@ def _gi_build_stub(
             full_name,
         )
 
+        my_readable_props: list[GIRepository.BaseInfo] = []
+        my_writable_props: list[GIRepository.BaseInfo] = []
         readable_props: list[GIRepository.BaseInfo] = []
         writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
@@ -809,9 +827,11 @@ def _gi_build_stub(
                             fields.append(f"{n}: {t}")
 
                 # Properties
-                (rp, wp) = _object_get_props(object_info)
+                (rp, wp, mrp, mwp) = _object_get_props(object_info)
                 readable_props.extend(rp)
                 writable_props.extend(wp)
+                my_readable_props.extend(mrp)
+                my_writable_props.extend(mwp)
 
             if isinstance(object_info, GI.InterfaceInfo):
                 if current_namespace == "GObject":
@@ -819,6 +839,13 @@ def _gi_build_stub(
                 else:
                     parents.append("GObject.GInterface")
                     needed_namespaces.add("GObject")
+
+                # Properties
+                (rp, wp, mrp, mwp) = _object_get_props(object_info)
+                readable_props.extend(rp)
+                writable_props.extend(wp)
+                my_readable_props.extend(mrp)
+                my_writable_props.extend(mwp)
 
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
@@ -838,36 +865,33 @@ def _gi_build_stub(
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
 
-        if (
-            not classret
-            and len(fields) == 0
-            and len(readable_props) == 0
-            and len(writable_props) == 0
-        ):
-            ret += f"class {name}{string_parents}: ...\n"
-        else:
-            ret += f"class {name}{string_parents}:\n"
+        ret += f"class {name}{string_parents}:\n"
 
-            # extracting docs
-            doc = getattr(obj, "__doc__", "") or ""
-            gdoc = getattr(obj, "__gdoc__", "") or ""
-            girdoc = DOCS[full_name] if full_name in DOCS else ""
+        # extracting docs
+        doc = getattr(obj, "__doc__", "") or ""
+        gdoc = getattr(obj, "__gdoc__", "") or ""
+        girdoc = DOCS[full_name] if full_name in DOCS else ""
 
-            txt = girdoc.strip() + "\n\n" + doc.strip() + "\n\n" + gdoc.strip()
-            if not txt.isspace():
-                txt = '"""\n' + txt.strip() + '\n"""' + "\n"
-                txt = textwrap.indent(txt, "    ")
-                ret += txt
+        txt = girdoc.strip() + "\n\n" + doc.strip() + "\n\n" + gdoc.strip()
+        if not txt.isspace():
+            txt = '"""\n' + txt.strip() + '\n"""' + "\n"
+            txt = textwrap.indent(txt, "    ")
+            ret += txt
 
+        prop_parents = [f"{p}.Props" for p in parents]
         props_override = _check_override(full_name, "Props", overrides)
         if props_override:
             for line in props_override.splitlines():
                 ret += "    " + line + "\n"
-        elif len(readable_props) > 0 or len(writable_props) > 0:
+        elif len(my_readable_props) > 0 or len(my_writable_props) > 0:
             names: list[str] = []
             s: list[str] = []
-            for p in itertools.chain(readable_props, writable_props):
-                n = p.get_name().replace("-", "_")
+            for p in itertools.chain(my_readable_props, my_writable_props):
+                n = p.get_name()
+                doc = _build_doc(_generate_full_name(full_name, f"$property.{n}"))
+                if doc:
+                    doc = doc[:-1]  # Strip last new line
+                n = n.replace("-", "_")
                 if n in names:
                     # Avoid duplicates
                     continue
@@ -880,19 +904,26 @@ def _gi_build_stub(
                 setter = GIRepository.property_info_get_setter(p)
                 if getter and GIRepository.callable_info_may_return_null(getter):
                     s.append(f"{n}: Optional[{t}]")
+                    s.append(doc)
                 elif setter and not getter:
                     # If is writable only prop check if setter can accept NULL
                     arg_info = GIRepository.callable_info_get_arg(setter, 0)
                     if GIRepository.arg_info_may_be_null(arg_info):
                         s.append(f"{n}: Optional[{t}]")
+                        s.append(doc)
                     else:
                         s.append(f"{n}: {t}")
+                        s.append(doc)
                 else:
                     s.append(f"{n}: {t}")
+                    s.append(doc)
 
-            separator = "\n        "
-            ret += f"    class Props:\n        {separator.join(s)}\n"
+            s = [textwrap.indent(l, "        ") for l in s if l]
+            separator = "\n"
+            ret += f"    class Props({", ".join(prop_parents)}):\n{separator.join(s)}\n"
             ret += f"    props: Props = ...\n"
+        else:
+            ret += f"    class Props({", ".join(prop_parents)}): ...\n"
 
         for field in fields:
             ret += f"    {field} = ...\n"
