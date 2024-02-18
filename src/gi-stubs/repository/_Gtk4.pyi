@@ -1793,10 +1793,22 @@ class ATContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accessible: Accessible
+        """
+        The `GtkAccessible` that created the `GtkATContext` instance.
+        """
         accessible_role: AccessibleRole
+        """
+        The accessible role used by the AT context.
+
+        Depending on the given role, different states and properties can be
+        set or retrieved.
+        """
         display: Gdk.Display
+        """
+        The `GdkDisplay` for the `GtkATContext`.
+        """
 
     props: Props = ...
     def __init__(
@@ -1856,7 +1868,8 @@ class ATContext(GObject.Object):
         """
         ...
 
-class ATContextClass(GObject.GPointer): ...
+class ATContextClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class AboutDialog(
     Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
@@ -2029,83 +2042,143 @@ class AboutDialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Window.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         artists: list[str]
+        """
+        The people who contributed artwork to the program, as a `NULL`-terminated
+        array of strings.
+
+        Each string may contain email addresses and URLs, which will be displayed
+        as links.
+        """
         authors: list[str]
+        """
+        The authors of the program, as a `NULL`-terminated array of strings.
+
+        Each string may contain email addresses and URLs, which will be displayed
+        as links, see the introduction for more details.
+        """
         comments: Optional[str]
+        """
+        Comments about the program.
+
+        This string is displayed in a label in the main dialog, thus it
+        should be a short explanation of the main purpose of the program,
+        not a detailed list of features.
+        """
         copyright: Optional[str]
+        """
+        Copyright information for the program.
+        """
         documenters: list[str]
+        """
+        The people documenting the program, as a `NULL`-terminated array of strings.
+
+        Each string may contain email addresses and URLs, which will be displayed
+        as links, see the introduction for more details.
+        """
         license: Optional[str]
+        """
+        The license of the program, as free-form text.
+
+        This string is displayed in a text view in a secondary dialog, therefore
+        it is fine to use a long multi-paragraph text. Note that the text is only
+        wrapped in the text view if the \"wrap-license\" property is set to `TRUE`;
+        otherwise the text itself must contain the intended linebreaks.
+
+        When setting this property to a non-`NULL` value, the
+        [property@Gtk.AboutDialog:license-type] property is set to
+        `GTK_LICENSE_CUSTOM` as a side effect.
+
+        The text may contain links in this format `<http://www.some.place/>`
+        and email references in the form `<mail-to@some.body>`, and these will
+        be converted into clickable links.
+        """
         license_type: License
+        """
+        The license of the program.
+
+        The `GtkAboutDialog` will automatically fill out a standard disclaimer
+        and link the user to the appropriate online resource for the license
+        text.
+
+        If `GTK_LICENSE_UNKNOWN` is used, the link used will be the same
+        specified in the [property@Gtk.AboutDialog:website] property.
+
+        If `GTK_LICENSE_CUSTOM` is used, the current contents of the
+        [property@Gtk.AboutDialog:license] property are used.
+
+        For any other [enum@Gtk.License] value, the contents of the
+        [property@Gtk.AboutDialog:license] property are also set by this property as
+        a side effect.
+        """
         logo: Optional[Gdk.Paintable]
+        """
+        A logo for the about box.
+
+        If it is `NULL`, the default window icon set with
+        [id@gtk_window_set_default_icon_name] will be used.
+        """
         logo_icon_name: Optional[str]
+        """
+        A named icon to use as the logo for the about box.
+
+        This property overrides the [property@Gtk.AboutDialog:logo] property.
+        """
         program_name: Optional[str]
+        """
+        The name of the program.
+
+        If this is not set, it defaults to the value returned by
+        `g_get_application_name()`.
+        """
         system_information: Optional[str]
+        """
+        Information about the system on which the program is running.
+
+        This information is displayed in a separate page, therefore it is fine
+        to use a long multi-paragraph text. Note that the text should contain
+        the intended linebreaks.
+
+        The text may contain links in this format `<http://www.some.place/>`
+        and email references in the form `<mail-to@some.body>`, and these will
+        be converted into clickable links.
+        """
         translator_credits: Optional[str]
+        """
+        Credits to the translators.
+
+        This string should be marked as translatable.
+
+        The string may contain email addresses and URLs, which will be displayed
+        as links, see the introduction for more details.
+        """
         version: Optional[str]
+        """
+        The version of the program.
+        """
         website: Optional[str]
+        """
+        The URL for the link to the website of the program.
+
+        This should be a string starting with `http://` or `https://`.
+        """
         website_label: Optional[str]
+        """
+        The label for the link to the website of the program.
+        """
         wrap_license: bool
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        Whether to wrap the text in the license dialog.
+        """
 
     props: Props = ...
     def __init__(
@@ -2701,6 +2774,9 @@ class Accessible(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(self, accessible_role: AccessibleRole = ...): ...
     def get_accessible_parent(self) -> Optional[Accessible]:
         """
         Retrieves the accessible parent for an accessible object.
@@ -2984,6 +3060,7 @@ class AccessibleInterface(GObject.GPointer):
         AccessibleInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     get_at_context: Callable[[Accessible], Optional[ATContext]] = ...
     get_platform_state: Callable[[Accessible, AccessiblePlatformState], bool] = ...
@@ -2992,7 +3069,39 @@ class AccessibleInterface(GObject.GPointer):
     get_next_accessible_sibling: Callable[[Accessible], Optional[Accessible]] = ...
     get_bounds: Callable[[Accessible], Tuple[bool, int, int, int, int]] = ...
 
-class AccessibleRange(GObject.GInterface): ...
+class AccessibleRange(GObject.GInterface):
+    """
+    This interface describes ranged controls, e.g. controls which have a single
+    value within an allowed range and that can optionally be changed by the user.
+
+    This interface is expected to be implemented by controls using the following
+    roles:
+
+    - `GTK_ACCESSIBLE_ROLE_METER`
+    - `GTK_ACCESSIBLE_ROLE_PROGRESS_BAR`
+    - `GTK_ACCESSIBLE_ROLE_SCROLLBAR`
+    - `GTK_ACCESSIBLE_ROLE_SLIDER`
+    - `GTK_ACCESSIBLE_ROLE_SPIN_BUTTON`
+
+    If that is not the case, a warning will be issued at run time.
+
+    In addition to this interface, its implementors are expected to provide the
+    correct values for the following properties:
+
+    - `GTK_ACCESSIBLE_PROPERTY_VALUE_MAX`
+    - `GTK_ACCESSIBLE_PROPERTY_VALUE_MIN`
+    - `GTK_ACCESSIBLE_PROPERTY_VALUE_NOW`
+    - `GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT`
+
+
+
+    Interface GtkAccessibleRange
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.GInterface.Props): ...
 
 class AccessibleRangeInterface(GObject.GPointer):
     """
@@ -3003,6 +3112,7 @@ class AccessibleRangeInterface(GObject.GPointer):
         AccessibleRangeInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     set_current_value: Callable[[AccessibleRange, float], bool] = ...
 
@@ -3114,43 +3224,13 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         revealed: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Controls whether the action bar shows its contents.
+        """
 
     props: Props = ...
     def __init__(
@@ -3318,6 +3398,11 @@ class Actionable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(
+        self, action_name: Optional[str] = ..., action_target: GLib.Variant = ...
+    ): ...
     def get_action_name(self) -> Optional[str]:
         """
         Gets the action name for @actionable.
@@ -3426,6 +3511,7 @@ class ActionableInterface(GObject.GPointer):
         ActionableInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     get_action_name: Callable[[Actionable], Optional[str]] = ...
     set_action_name: Callable[[Actionable, Optional[str]], None] = ...
@@ -3448,6 +3534,8 @@ class ActivateAction(ShortcutAction):
       notify (GParam)
     """
 
+    class Props(ShortcutAction.Props): ...
+
     @staticmethod
     def get() -> ActivateAction:
         """
@@ -3465,7 +3553,8 @@ class ActivateAction(ShortcutAction):
         """
         ...
 
-class ActivateActionClass(GObject.GPointer): ...
+class ActivateActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Adjustment(GObject.InitiallyUnowned):
     """
@@ -3506,13 +3595,38 @@ class Adjustment(GObject.InitiallyUnowned):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         lower: float
+        """
+        The minimum value of the adjustment.
+        """
         page_increment: float
+        """
+        The page increment of the adjustment.
+        """
         page_size: float
+        """
+        The page size of the adjustment.
+
+        Note that the page-size is irrelevant and should be set to zero
+        if the adjustment is used for a simple scalar value, e.g. in a
+        `GtkSpinButton`.
+        """
         step_increment: float
+        """
+        The step increment of the adjustment.
+        """
         upper: float
+        """
+        The maximum value of the adjustment.
+
+        Note that values will be restricted by `upper - page-size` if the page-size
+        property is nonzero.
+        """
         value: float
+        """
+        The value of the adjustment.
+        """
 
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
@@ -3817,6 +3931,7 @@ class AdjustmentClass(GObject.GPointer):
         AdjustmentClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.InitiallyUnownedClass = ...
     changed: Callable[[Adjustment], None] = ...
     value_changed: Callable[[Adjustment], None] = ...
@@ -3857,13 +3972,53 @@ class AlertDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         buttons: Optional[list[str]]
+        """
+        Labels for buttons to show in the alert.
+
+        The labels should be translated and may contain
+        a _ to indicate the mnemonic character.
+
+        If this property is not set, then a 'Close' button is
+        automatically created.
+        """
         cancel_button: int
+        """
+        This property determines what happens when the Escape key is
+        pressed while the alert is shown.
+
+        If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+        then pressing Escape is treated as if that button was pressed. If it is -1
+        or not a valid index for the `buttons` array, then an error is returned.
+
+        If `buttons` is `NULL`, then the automatically created 'Close' button
+        is treated as both cancel and default button, so 0 is returned.
+        """
         default_button: int
+        """
+        This property determines what happens when the Return key is
+        pressed while the alert is shown.
+
+        If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+        then pressing Return is treated as if that button was pressed. If it is -1
+        or not a valid index for the `buttons` array, then nothing happens.
+
+        If `buttons` is `NULL`, then the automatically created 'Close' button
+        is treated as both cancel and default button, so 0 is returned.
+        """
         detail: str
+        """
+        The detail text for the alert.
+        """
         message: str
+        """
+        The message for the alert.
+        """
         modal: bool
+        """
+        Whether the alert is modal.
+        """
 
     props: Props = ...
     def __init__(
@@ -4105,6 +4260,7 @@ class AlertDialogClass(GObject.GPointer):
         AlertDialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class AlternativeTrigger(ShortcutTrigger):
@@ -4132,9 +4288,15 @@ class AlternativeTrigger(ShortcutTrigger):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ShortcutTrigger.Props):
         first: ShortcutTrigger
+        """
+        The first `GtkShortcutTrigger` to check.
+        """
         second: ShortcutTrigger
+        """
+        The second `GtkShortcutTrigger` to check.
+        """
 
     props: Props = ...
     def __init__(self, first: ShortcutTrigger = ..., second: ShortcutTrigger = ...): ...
@@ -4191,7 +4353,8 @@ class AlternativeTrigger(ShortcutTrigger):
         """
         ...
 
-class AlternativeTriggerClass(GObject.GPointer): ...
+class AlternativeTriggerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
     """
@@ -4225,11 +4388,8 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
-        item_type: Type
-        n_items: int
+    class Props(MultiFilter.Props, Gio.ListModel.Props, Buildable.Props): ...
 
-    props: Props = ...
     @classmethod
     def new(cls) -> AnyFilter:
         """
@@ -4250,7 +4410,8 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
         """
         ...
 
-class AnyFilterClass(GObject.GPointer): ...
+class AnyFilterClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated(
     "The application selection widgets should be implemented according to the design of each platform and/or application requiring them."
@@ -4285,6 +4446,9 @@ class AppChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(self, content_type: str = ...): ...
     @deprecated("This widget will be removed in GTK 5")
     def get_app_info(self) -> Optional[Gio.AppInfo]:
         """
@@ -4436,47 +4600,34 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AppChooser.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         heading: Optional[str]
+        """
+        The text to show at the top of the dialog that can be
+        opened from the button.
+
+        The string may contain Pango markup.
+        """
         modal: bool
+        """
+        Whether the app chooser dialog should be modal.
+        """
         show_default_item: bool
+        """
+        Determines whether the dropdown menu shows the default application
+        on top for the provided content type.
+        """
         show_dialog_item: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        content_type: str
+        """
+        Determines whether the dropdown menu shows an item to open
+        a `GtkAppChooserDialog`.
+        """
 
     props: Props = ...
     def __init__(
@@ -4845,71 +4996,29 @@ class AppChooserDialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        AppChooser.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         gfile: Gio.File
+        """
+        The GFile used by the `GtkAppChooserDialog`.
+
+        The dialog's `GtkAppChooserWidget` content type will
+        be guessed from the file, if present.
+        """
         heading: Optional[str]
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        content_type: str
-        startup_id: str
+        """
+        The text to show at the top of the dialog.
+
+        The string may contain Pango markup.
+        """
 
     props: Props = ...
     def __init__(
@@ -5163,49 +5272,53 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AppChooser.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         default_text: Optional[str]
+        """
+        The text that appears in the widget when there are no applications
+        for the given content type.
+        """
         show_all: bool
+        """
+        If %TRUE, the app chooser presents all applications
+        in a single list, without subsections for default,
+        recommended or related applications.
+        """
         show_default: bool
+        """
+        Determines whether the app chooser should show the default
+        handler for the content type in a separate section.
+
+        If %FALSE, the default handler is listed among the recommended
+        applications.
+        """
         show_fallback: bool
+        """
+        Determines whether the app chooser should show a section
+        for fallback applications.
+
+        If %FALSE, the fallback applications are listed among the
+        other applications.
+        """
         show_other: bool
+        """
+        Determines whether the app chooser should show a section
+        for other applications.
+        """
         show_recommended: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        content_type: str
+        """
+        Determines whether the app chooser should show a section
+        for recommended applications.
+
+        If %FALSE, the recommended applications are listed
+        among the other applications.
+        """
 
     props: Props = ...
     def __init__(
@@ -5571,19 +5684,33 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.Application.Props, Gio.ActionGroup.Props, Gio.ActionMap.Props):
         active_window: Optional[Window]
+        """
+        The currently focused window of the application.
+        """
         menubar: Optional[Gio.MenuModel]
+        """
+        The `GMenuModel` to be used for the application's menu bar.
+        """
         register_session: bool
+        """
+        Set this property to `TRUE` to register with the session manager.
+
+        This will make GTK track the session state (such as the
+        [property@Gtk.Application:screensaver-active] property).
+        """
         screensaver_active: bool
-        application_id: Optional[str]
-        flags: Gio.ApplicationFlags
-        inactivity_timeout: int
-        is_busy: bool
-        is_registered: bool
-        is_remote: bool
-        resource_base_path: Optional[str]
-        action_group: Optional[Gio.ActionGroup]
+        """
+        This property is `TRUE` if GTK believes that the screensaver is
+        currently active.
+
+        GTK only tracks session state (including this) when
+        [property@Gtk.Application:register-session] is set to %TRUE.
+
+        Tracking the screensaver state is currently only supported on
+        Linux.
+        """
 
     props: Props = ...
     parent_instance: Gio.Application = ...
@@ -5952,6 +6079,7 @@ class ApplicationClass(GObject.GPointer):
         ApplicationClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: Gio.ApplicationClass = ...
     window_added: Callable[[Application, Window], None] = ...
     window_removed: Callable[[Application, Window], None] = ...
@@ -6148,68 +6276,27 @@ class ApplicationWindow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Window.Props,
+        Gio.ActionGroup.Props,
+        Gio.ActionMap.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         show_menubar: bool
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        If this property is %TRUE, the window will display a menubar
+        unless it is shown by the desktop shell.
+
+        See [method@Gtk.Application.set_menubar].
+
+        If %FALSE, the window will not display a menubar, regardless
+        of whether the desktop shell is showing it or not.
+        """
 
     props: Props = ...
     parent_instance: Window = ...
@@ -6369,6 +6456,7 @@ class ApplicationWindowClass(GObject.GPointer):
         ApplicationWindowClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WindowClass = ...
     padding: list[None] = ...
 
@@ -6460,47 +6548,32 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         obey_child: bool
+        """
+        Whether the `GtkAspectFrame` should use the aspect ratio of its child.
+        """
         ratio: float
+        """
+        The aspect ratio to be used by the `GtkAspectFrame`.
+
+        This property is only used if
+        [property@Gtk.AspectFrame:obey-child] is set to %FALSE.
+        """
         xalign: float
+        """
+        The horizontal alignment of the child.
+        """
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The vertical alignment of the child.
+        """
 
     props: Props = ...
     def __init__(
@@ -6847,69 +6920,27 @@ class Assistant(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Window.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         pages: Gio.ListModel
+        """
+        `GListModel` containing the pages.
+        """
         use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        %TRUE if the assistant uses a `GtkHeaderBar` for action buttons
+        instead of the action-area.
+
+        For technical reasons, this property is declared as an integer
+        property, but you should only set it to %TRUE or %FALSE.
+        """
 
     props: Props = ...
     def __init__(
@@ -7381,11 +7412,26 @@ class AssistantPage(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child: Widget
+        """
+        The child widget.
+        """
         complete: bool
+        """
+        Whether all required fields are filled in.
+
+        GTK uses this information to control the sensitivity
+        of the navigation buttons.
+        """
         page_type: AssistantPageType
+        """
+        The type of the assistant page.
+        """
         title: str
+        """
+        The title of the page.
+        """
 
     props: Props = ...
     def __init__(
@@ -7432,6 +7478,8 @@ class BinLayout(LayoutManager):
       notify (GParam)
     """
 
+    class Props(LayoutManager.Props): ...
+
     @classmethod
     def new(cls) -> BinLayout:
         """
@@ -7455,6 +7503,7 @@ class BinLayoutClass(GObject.GPointer):
         BinLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class Bitset(GObject.GBoxed):
@@ -7482,6 +7531,8 @@ class Bitset(GObject.GBoxed):
         new_empty() -> Gtk.Bitset
         new_range(start:int, n_items:int) -> Gtk.Bitset
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     def add(self, value: int) -> bool:
         """
@@ -7944,6 +7995,7 @@ class BitsetIter(GObject.GBoxed):
         BitsetIter()
     """
 
+    class Props(GObject.GBoxed.Props): ...
     private_data: list[None] = ...
     def get_value(self) -> int:
         """
@@ -8096,13 +8148,31 @@ class BookmarkList(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props):
         attributes: Optional[str]
+        """
+        The attributes to query.
+        """
         filename: str
+        """
+        The bookmark file to load.
+        """
         io_priority: int
+        """
+        Priority used when loading.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         loading: bool
+        """
+        %TRUE if files are being loaded.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(
@@ -8223,6 +8293,7 @@ class BookmarkListClass(GObject.GPointer):
         BookmarkListClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class BoolFilter(Filter):
@@ -8250,9 +8321,15 @@ class BoolFilter(Filter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Filter.Props):
         expression: Optional[Expression]
+        """
+        The boolean expression to evaluate on item.
+        """
         invert: bool
+        """
+        If the expression result should be inverted.
+        """
 
     props: Props = ...
     def __init__(self, expression: Optional[Expression] = ..., invert: bool = ...): ...
@@ -8333,6 +8410,7 @@ class BoolFilterClass(GObject.GPointer):
         BoolFilterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: FilterClass = ...
 
 class Border(GObject.GBoxed):
@@ -8349,6 +8427,7 @@ class Border(GObject.GBoxed):
         new() -> Gtk.Border
     """
 
+    class Props(GObject.GBoxed.Props): ...
     left: int = ...
     right: int = ...
     top: int = ...
@@ -8500,47 +8579,29 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         baseline_child: int
+        """
+        The child that determines the baseline, in vertical orientation.
+        """
         baseline_position: BaselinePosition
+        """
+        The position of the baseline aligned widgets if extra space is available.
+        """
         homogeneous: bool
+        """
+        Whether the children should all be the same size.
+        """
         spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The amount of space between children.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -8793,6 +8854,7 @@ class BoxClass(GObject.GPointer):
         BoxClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     padding: list[None] = ...
 
@@ -8832,12 +8894,33 @@ class BoxLayout(LayoutManager, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutManager.Props, Orientable.Props):
         baseline_child: int
+        """
+        The child that determines the baseline of the box
+        in vertical layout.
+
+        If the child does baseline positioning, then its baseline
+        is lined up with the baseline of the box. If it doesn't, then
+        the bottom edge of the child is used.
+        """
         baseline_position: BaselinePosition
+        """
+        The position of the allocated baseline within the extra space
+        allocated to each child.
+
+        This property is only relevant for horizontal layouts containing
+        at least one child with a baseline alignment.
+        """
         homogeneous: bool
+        """
+        Whether the box layout should distribute the available space
+        equally among the children.
+        """
         spacing: int
-        orientation: Orientation
+        """
+        The space to put between the children.
+        """
 
     props: Props = ...
     def __init__(
@@ -8980,6 +9063,7 @@ class BoxLayoutClass(GObject.GPointer):
         BoxLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class Buildable(GObject.GInterface):
@@ -9005,6 +9089,8 @@ class Buildable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     def get_buildable_id(self) -> Optional[str]:
         """
@@ -9035,6 +9121,7 @@ class BuildableIface(GObject.GPointer):
         BuildableIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     set_id: Callable[[Buildable, str], None] = ...
     get_id: Callable[[Buildable], str] = ...
@@ -9058,6 +9145,8 @@ class BuildableParseContext(GObject.GPointer):
     """
     An opaque context struct for `GtkBuildableParser`.
     """
+
+    class Props(GObject.GPointer.Props): ...
 
     def get_element(self) -> Optional[str]:
         """
@@ -9191,6 +9280,7 @@ class BuildableParser(GObject.GPointer):
         BuildableParser()
     """
 
+    class Props(GObject.GPointer.Props): ...
     start_element: Callable[..., None] = ...
     end_element: Callable[..., None] = ...
     text: Callable[..., None] = ...
@@ -9510,10 +9600,23 @@ class Builder(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         current_object: Optional[GObject.Object]
+        """
+        The object the builder is evaluating for.
+        """
         scope: BuilderScope
+        """
+        The scope the builder is operating in
+        """
         translation_domain: Optional[str]
+        """
+        The translation domain used when translating property values that
+        have been marked as translatable.
+
+        If the translation domain is %NULL, `GtkBuilder` uses gettext(),
+        otherwise g_dgettext().
+        """
 
     props: Props = ...
     def __init__(
@@ -9972,6 +10075,7 @@ class Builder(GObject.Object):
           notify (GParam)
         """
 
+        class Props: ...
         g_type_instance: GObject.TypeInstance = ...
         ref_count: int = ...
         qdata: GLib.Data = ...
@@ -10041,6 +10145,7 @@ class BuilderCScope(GObject.Object, BuilderScope):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props, BuilderScope.Props): ...
     parent_instance: GObject.Object = ...
     def add_callback_symbol(
         self, callback_name: str, callback_symbol: Callable[[], None]
@@ -10091,9 +10196,11 @@ class BuilderCScopeClass(GObject.GPointer):
         BuilderCScopeClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
-class BuilderClass(GObject.GPointer): ...
+class BuilderClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class BuilderListItemFactory(ListItemFactory):
     """
@@ -10140,10 +10247,19 @@ class BuilderListItemFactory(ListItemFactory):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ListItemFactory.Props):
         bytes: GLib.Bytes
+        """
+        `GBytes` containing the UI definition.
+        """
         resource: Optional[str]
+        """
+        Path of the resource containing the UI definition.
+        """
         scope: Optional[BuilderScope]
+        """
+        `GtkBuilderScope` to use when instantiating listitems
+        """
 
     props: Props = ...
     def __init__(
@@ -10225,8 +10341,39 @@ class BuilderListItemFactory(ListItemFactory):
         """
         ...
 
-class BuilderListItemFactoryClass(GObject.GPointer): ...
-class BuilderScope(GObject.GInterface): ...
+class BuilderListItemFactoryClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class BuilderScope(GObject.GInterface):
+    """
+    `GtkBuilderScope` is an interface to provide language binding support
+    to `GtkBuilder`.
+
+    The goal of `GtkBuilderScope` is to look up programming-language-specific
+    values for strings that are given in a `GtkBuilder` UI file.
+
+    The primary intended audience is bindings that want to provide deeper
+    integration of `GtkBuilder` into the language.
+
+    A `GtkBuilderScope` instance may be used with multiple `GtkBuilder` objects,
+    even at once.
+
+    By default, GTK will use its own implementation of `GtkBuilderScope`
+    for the C language which can be created via [ctor@Gtk.BuilderCScope.new].
+
+    If you implement `GtkBuilderScope` for a language binding, you
+    may want to (partially) derive from or fall back to a [class@Gtk.BuilderCScope],
+    as that class implements support for automatic lookups from C symbols.
+
+
+
+    Interface GtkBuilderScope
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.GInterface.Props): ...
 
 class BuilderScopeInterface(GObject.GPointer):
     """
@@ -10241,6 +10388,7 @@ class BuilderScopeInterface(GObject.GPointer):
         BuilderScopeInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     get_type_from_name: Callable[[BuilderScope, Builder, str], Type] = ...
     get_type_from_function: Callable[[BuilderScope, Builder, str], Type] = ...
@@ -10361,50 +10509,44 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         can_shrink: bool
+        """
+        Whether the size of the button can be made smaller than the natural
+        size of its contents.
+
+        For text buttons, setting this property will allow ellipsizing the label.
+
+        If the contents of a button are an icon or a custom widget, setting this
+        property has no effect.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         has_frame: bool
+        """
+        Whether the button has a frame.
+        """
         icon_name: Optional[str]
+        """
+        The name of the icon used to automatically populate the button.
+        """
         label: Optional[str]
+        """
+        Text of the label inside the button, if the button contains a label widget.
+        """
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        If set, an underline in the text indicates that the following character is
+        to be used as mnemonic.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -10713,12 +10855,14 @@ class ButtonClass(GObject.GPointer):
         ButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     clicked: Callable[[Button], None] = ...
     activate: Callable[[Button], None] = ...
     padding: list[None] = ...
 
-class ButtonPrivate(GObject.GPointer): ...
+class ButtonPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class CClosureExpression(Expression):
     """
@@ -10731,6 +10875,8 @@ class CClosureExpression(Expression):
         CClosureExpression(**properties)
         new(value_type:GType, marshal:GObject.ClosureMarshal=None, params:list, callback_func:GObject.Callback, user_data=None) -> Gtk.CClosureExpression
     """
+
+    class Props(Expression.Props): ...
 
     @classmethod
     def new(
@@ -10896,48 +11042,37 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         day: int
+        """
+        The selected day (as a number between 1 and 31).
+        """
         month: int
+        """
+        The selected month (as a number between 0 and 11).
+
+        This property gets initially set to the current month.
+        """
         show_day_names: bool
+        """
+        Determines whether day names are displayed.
+        """
         show_heading: bool
+        """
+        Determines whether a heading is displayed.
+        """
         show_week_numbers: bool
+        """
+        Determines whether week numbers are displayed.
+        """
         year: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The selected year.
+
+        This property gets initially set to the current year.
+        """
 
     props: Props = ...
     def __init__(
@@ -11176,6 +11311,8 @@ class CallbackAction(ShortcutAction):
       notify (GParam)
     """
 
+    class Props(ShortcutAction.Props): ...
+
     @classmethod
     def new(
         cls, callback: Optional[Callable[..., bool]] = None, *data: Any
@@ -11194,7 +11331,8 @@ class CallbackAction(ShortcutAction):
         """
         ...
 
-class CallbackActionClass(GObject.GPointer): ...
+class CallbackActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated("List views use widgets for displaying their contents")
 class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
@@ -11536,10 +11674,25 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props, Buildable.Props, CellLayout.Props):
         edit_widget: Optional[CellEditable]
+        """
+        The widget currently editing the edited cell
+
+        This property is read-only and only changes as
+        a result of a call gtk_cell_area_activate_cell().
+        """
         edited_cell: Optional[CellRenderer]
+        """
+        The cell in the area that is currently edited
+
+        This property is read-only and only changes as
+        a result of a call gtk_cell_area_activate_cell().
+        """
         focus_cell: Optional[CellRenderer]
+        """
+        The cell in the area that currently has focus
+        """
 
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
@@ -12760,12 +12913,11 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellArea.Props, Buildable.Props, CellLayout.Props, Orientable.Props):
         spacing: int
-        edit_widget: Optional[CellEditable]
-        edited_cell: Optional[CellRenderer]
-        focus_cell: Optional[CellRenderer]
-        orientation: Orientation
+        """
+        The amount of space to reserve between cells.
+        """
 
     props: Props = ...
     def __init__(
@@ -12869,6 +13021,7 @@ class CellAreaClass(GObject.GPointer):
         CellAreaClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.InitiallyUnownedClass = ...
     add: Callable[[CellArea, CellRenderer], None] = ...
     remove: Callable[[CellArea, CellRenderer], None] = ...
@@ -13006,12 +13159,35 @@ class CellAreaContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         area: CellArea
+        """
+        The `GtkCellArea` this context was created by
+        """
         minimum_height: int
+        """
+        The minimum height for the `GtkCellArea` in this context
+        for all `GtkTreeModel` rows that this context was requested
+        for using gtk_cell_area_get_preferred_height().
+        """
         minimum_width: int
+        """
+        The minimum width for the `GtkCellArea` in this context
+        for all `GtkTreeModel` rows that this context was requested
+        for using gtk_cell_area_get_preferred_width().
+        """
         natural_height: int
+        """
+        The natural height for the `GtkCellArea` in this context
+        for all `GtkTreeModel` rows that this context was requested
+        for using gtk_cell_area_get_preferred_height().
+        """
         natural_width: int
+        """
+        The natural width for the `GtkCellArea` in this context
+        for all `GtkTreeModel` rows that this context was requested
+        for using gtk_cell_area_get_preferred_width().
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -13328,6 +13504,7 @@ class CellAreaContextClass(GObject.GPointer):
         CellAreaContextClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     allocate: Callable[[CellAreaContext, int, int], None] = ...
     reset: Callable[[CellAreaContext], None] = ...
@@ -13339,7 +13516,8 @@ class CellAreaContextClass(GObject.GPointer):
     ] = ...
     padding: list[None] = ...
 
-class CellAreaContextPrivate(GObject.GPointer): ...
+class CellAreaContextPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated(
     "List views use widgets for displaying their contents. See [iface@Gtk.Editable] for editable text widgets"
@@ -13360,6 +13538,9 @@ class CellEditable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(self, editing_canceled: bool = ...): ...
     @deprecated("This method is deprecated")
     def editing_done(self) -> None:
         """
@@ -13417,6 +13598,7 @@ class CellEditableIface(GObject.GPointer):
         CellEditableIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     editing_done: Callable[[CellEditable], None] = ...
     remove_widget: Callable[[CellEditable], None] = ...
@@ -13543,6 +13725,8 @@ class CellLayout(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     @deprecated("This method is deprecated")
     def add_attribute(self, cell: CellRenderer, attribute: str, column: int) -> None:
@@ -13714,6 +13898,7 @@ class CellLayoutIface(GObject.GPointer):
         CellLayoutIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     pack_start: Callable[[CellLayout, CellRenderer, bool], None] = ...
     pack_end: Callable[[CellLayout, CellRenderer, bool], None] = ...
@@ -13799,8 +13984,11 @@ class CellRenderer(GObject.InitiallyUnowned):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         cell_background_rgba: Gdk.RGBA
+        """
+        Cell background as a `GdkRGBA`
+        """
         cell_background_set: bool
         editing: bool
         height: int
@@ -14572,72 +14760,28 @@ class CellRendererAccel(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         accel_key: int
+        """
+        The keyval of the accelerator.
+        """
         accel_mode: CellRendererAccelMode
+        """
+        Determines if the edited accelerators are GTK accelerators. If
+        they are, consumed modifiers are suppressed, only accelerators
+        accepted by GTK are allowed, and the accelerators are rendered
+        in the same way as they are in menus.
+        """
         accel_mods: Gdk.ModifierType
+        """
+        The modifier mask of the accelerator.
+        """
         keycode: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: Gdk.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: Gdk.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
+        """
+        The hardware keycode of the accelerator. Note that the hardware keycode is
+        only relevant if the key does not have a keyval. Normally, the keyboard
+        configuration should assign keyvals to all keys.
+        """
 
     props: Props = ...
     def __init__(
@@ -14731,6 +14875,7 @@ class CellRendererClass(GObject.GPointer):
         CellRendererClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.InitiallyUnownedClass = ...
     get_request_mode: Callable[[CellRenderer], SizeRequestMode] = ...
     get_preferred_width: Callable[[CellRenderer, Widget], Tuple[int, int]] = ...
@@ -14783,7 +14928,8 @@ class CellRendererClass(GObject.GPointer):
     editing_started: Callable[[CellRenderer, CellEditable, str], None] = ...
     padding: list[None] = ...
 
-class CellRendererClassPrivate(GObject.GPointer): ...
+class CellRendererClassPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated(
     "List views use widgets to display their contents. You should use [class@Gtk.DropDown] instead"
@@ -14896,71 +15042,29 @@ class CellRendererCombo(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         has_entry: bool
+        """
+        If %TRUE, the cell renderer will include an entry and allow to enter
+        values other than the ones in the popup list.
+        """
         model: TreeModel
+        """
+        Holds a tree model containing the possible values for the combo box.
+        Use the text_column property to specify the column holding the values.
+        """
         text_column: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: Gdk.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: Gdk.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
+        """
+        Specifies the model column which holds the possible values for the
+        combo box.
+
+        Note that this refers to the model specified in the model property,
+        not the model backing the tree view to which
+        this cell renderer is attached.
+
+        `GtkCellRendererCombo` automatically adds a text cell renderer for
+        this column to its combo box.
+        """
 
     props: Props = ...
     def __init__(
@@ -15113,29 +15217,26 @@ class CellRendererPixbuf(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         gicon: Gio.Icon
+        """
+        The GIcon representing the icon to display.
+        If the icon theme is changed, the image will be updated
+        automatically.
+        """
         icon_name: str
+        """
+        The name of the themed icon to display.
+        This property only has an effect if not overridden by the \"pixbuf\" property.
+        """
         icon_size: IconSize
+        """
+        The `GtkIconSize` value that specifies the size of the rendered icon.
+        """
         pixbuf_expander_closed: GdkPixbuf.Pixbuf
         pixbuf_expander_open: GdkPixbuf.Pixbuf
         texture: Gdk.Texture
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
         pixbuf: GdkPixbuf.Pixbuf
-        cell_background: str
 
     props: Props = ...
     def __init__(
@@ -15183,7 +15284,8 @@ class CellRendererPixbuf(CellRenderer):
         """
         ...
 
-class CellRendererPrivate(GObject.GPointer): ...
+class CellRendererPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated(
     "List views use widgets to display their contents. You should use [class@Gtk.ProgressBar] instead"
@@ -15237,29 +15339,45 @@ class CellRendererProgress(CellRenderer, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props, Orientable.Props):
         inverted: bool
         pulse: int
+        """
+        Setting this to a non-negative value causes the cell renderer to
+        enter \"activity mode\", where a block bounces back and forth to
+        indicate that some progress is made, without specifying exactly how
+        much.
+
+        Each increment of the property causes the block to move by a little
+        bit.
+
+        To indicate that the activity has not started yet, set the property
+        to zero. To indicate completion, set the property to %G_MAXINT.
+        """
         text: str
+        """
+        The \"text\" property determines the label which will be drawn
+        over the progress bar. Setting this property to %NULL causes the default
+        label to be displayed. Setting this property to an empty string causes
+        no label to be displayed.
+        """
         text_xalign: float
+        """
+        The \"text-xalign\" property controls the horizontal alignment of the
+        text in the progress bar. Valid values range from 0 (left) to 1
+        (right). Reserved for RTL layouts.
+        """
         text_yalign: float
+        """
+        The \"text-yalign\" property controls the vertical alignment of the
+        text in the progress bar. Valid values range from 0 (top) to 1
+        (bottom).
+        """
         value: int
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        orientation: Orientation
-        cell_background: str
+        """
+        The \"value\" property determines the percentage to which the
+        progress bar will be \"filled in\".
+        """
 
     props: Props = ...
     def __init__(
@@ -15410,71 +15528,20 @@ class CellRendererSpin(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         adjustment: Adjustment
+        """
+        The adjustment that holds the value of the spinbutton.
+        This must be non-%NULL for the cell renderer to be editable.
+        """
         climb_rate: float
+        """
+        The acceleration rate when you hold down a button.
+        """
         digits: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: Gdk.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: Gdk.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
+        """
+        The number of decimal places to display.
+        """
 
     props: Props = ...
     def __init__(
@@ -15615,25 +15682,20 @@ class CellRendererSpinner(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         active: bool
         pulse: int
+        """
+        Pulse of the spinner. Increment this value to draw the next frame of the
+        spinner animation. Usually, you would update this value in a timeout.
+
+        By default, the `GtkSpinner` widget draws one full cycle of the animation,
+        consisting of 12 frames, in 750 milliseconds.
+        """
         size: IconSize
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
+        """
+        The `GtkIconSize` value that specifies the size of the rendered spinner.
+        """
 
     props: Props = ...
     def __init__(
@@ -15771,26 +15833,59 @@ class CellRendererText(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         align_set: bool
         alignment: Pango.Alignment
+        """
+        Specifies how to align the lines of text with respect to each other.
+
+        Note that this property describes how to align the lines of text in
+        case there are several of them. The \"xalign\" property of `GtkCellRenderer`,
+        on the other hand, sets the horizontal alignment of the whole text.
+        """
         attributes: Pango.AttrList
         background_rgba: Gdk.RGBA
+        """
+        Background color as a `GdkRGBA`
+        """
         background_set: bool
         editable: bool
         editable_set: bool
         ellipsize: Pango.EllipsizeMode
+        """
+        Specifies the preferred place to ellipsize the string, if the cell renderer
+        does not have enough room to display the entire string. Setting it to
+        %PANGO_ELLIPSIZE_NONE turns off ellipsizing. See the wrap-width property
+        for another way of making the text fit into a given width.
+        """
         ellipsize_set: bool
         family: str
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
         foreground_rgba: Gdk.RGBA
+        """
+        Foreground color as a `GdkRGBA`
+        """
         foreground_set: bool
         language: str
         language_set: bool
         max_width_chars: int
+        """
+        The desired maximum width of the cell, in characters. If this property
+        is set to -1, the width will be calculated automatically.
+
+        For cell renderers that ellipsize or wrap text; this property
+        controls the maximum reported width of the cell. The
+        cell should not receive any greater allocation unless it is
+        set to expand in its `GtkCellLayout` and all of the cell's siblings
+        have received their natural width.
+        """
         placeholder_text: str
+        """
+        The text that will be displayed in the `GtkCellRenderer` if
+        `GtkCellRendererText:editable` is %TRUE and the cell is empty.
+        """
         rise: int
         rise_set: bool
         scale: float
@@ -15813,26 +15908,26 @@ class CellRendererText(CellRenderer):
         weight: int
         weight_set: bool
         width_chars: int
+        """
+        The desired width of the cell, in characters. If this property is set to
+        -1, the width will be calculated automatically, otherwise the cell will
+        request either 3 characters or the property value, whichever is greater.
+        """
         wrap_mode: Pango.WrapMode
+        """
+        Specifies how to break the string into multiple lines, if the cell
+        renderer does not have enough room to display the entire string.
+        This property has no effect unless the wrap-width property is set.
+        """
         wrap_width: int
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
+        """
+        Specifies the minimum width at which the text is wrapped. The wrap-mode property can
+        be used to influence at what character positions the line breaks can be placed.
+        Setting wrap-width to -1 turns wrapping off.
+        """
         background: str
         foreground: str
         markup: str
-        cell_background: str
 
     props: Props = ...
     parent: CellRenderer = ...
@@ -15949,6 +16044,7 @@ class CellRendererTextClass(GObject.GPointer):
         CellRendererTextClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: CellRendererClass = ...
     edited: Callable[[CellRendererText, str, str], None] = ...
     padding: list[None] = ...
@@ -16008,26 +16104,11 @@ class CellRendererToggle(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         activatable: bool
         active: bool
         inconsistent: bool
         radio: bool
-        cell_background_rgba: Gdk.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     props: Props = ...
     def __init__(
@@ -16261,48 +16342,61 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        CellLayout.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         cell_area: CellArea
+        """
+        The `GtkCellArea` rendering cells
+
+        If no area is specified when creating the cell view with gtk_cell_view_new_with_context()
+        a horizontally oriented `GtkCellArea`Box will be used.
+
+        since 3.0
+        """
         cell_area_context: CellAreaContext
+        """
+        The `GtkCellAreaContext` used to compute the geometry of the cell view.
+
+        A group of cell views can be assigned the same context in order to
+        ensure the sizes and cell alignments match across all the views with
+        the same context.
+
+        `GtkComboBox` menus uses this to assign the same context to all cell views
+        in the menu items for a single menu (each submenu creates its own
+        context since the size of each submenu does not depend on parent
+        or sibling menus).
+
+        since 3.0
+        """
         draw_sensitive: bool
+        """
+        Whether all cells should be draw as sensitive for this view regardless
+        of the actual cell properties (used to make menus with submenus appear
+        sensitive when the items in submenus might be insensitive).
+
+        since 3.0
+        """
         fit_model: bool
+        """
+        Whether the view should request enough space to always fit
+        the size of every row in the model (used by the combo box to
+        ensure the combo box size doesn't change when different items
+        are selected).
+
+        since 3.0
+        """
         model: Optional[TreeModel]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The model for cell view
+
+        since 2.10
+        """
 
     props: Props = ...
     def __init__(
@@ -16667,48 +16761,48 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         baseline_position: BaselinePosition
+        """
+        The position of the baseline aligned widget if extra space is available.
+        """
         center_widget: Optional[Widget]
+        """
+        The widget that is placed at the center position.
+        """
         end_widget: Optional[Widget]
+        """
+        The widget that is placed at the end position.
+
+        In vertical orientation, the end position is at the bottom.
+        In horizontal orientation, the end position is at the trailing
+        edge wrt. to the text direction.
+        """
         shrink_center_last: bool
+        """
+        Whether to shrink the center widget after other children.
+
+        By default, when there's no space to give all three children their
+        natural widths, the start and end widgets start shrinking and the
+        center child keeps natural width until they reach minimum width.
+
+        If set to `FALSE`, start and end widgets keep natural width and the
+        center widget starts shrinking instead.
+        """
         start_widget: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The widget that is placed at the start position.
+
+        In vertical orientation, the start position is at the top.
+        In horizontal orientation, the start position is at the leading
+        edge wrt. to the text direction.
+        """
 
     props: Props = ...
     def __init__(
@@ -16908,7 +17002,8 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         """
         ...
 
-class CenterBoxClass(GObject.GPointer): ...
+class CenterBoxClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class CenterLayout(LayoutManager):
     """
@@ -16936,8 +17031,18 @@ class CenterLayout(LayoutManager):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutManager.Props):
         shrink_center_last: bool
+        """
+        Whether to shrink the center widget after other children.
+
+        By default, when there's no space to give all three children their
+        natural widths, the start and end widgets start shrinking and the
+        center child keeps natural width until they reach minimum width.
+
+        If set to `FALSE`, start and end widgets keep natural width and the
+        center widget starts shrinking instead.
+        """
 
     props: Props = ...
     def __init__(self, shrink_center_last: bool = ...): ...
@@ -17127,6 +17232,7 @@ class CenterLayoutClass(GObject.GPointer):
         CenterLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
@@ -17267,50 +17373,44 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         active: bool
+        """
+        If the check button is active.
+
+        Setting `active` to %TRUE will add the `:checked:` state to both
+        the check button and the indicator CSS node.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         inconsistent: bool
+        """
+        If the check button is in an “in between” state.
+
+        The inconsistent state only affects visual appearance,
+        not the semantics of the button.
+        """
         label: Optional[str]
+        """
+        Text of the label inside the check button, if it contains a label widget.
+        """
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        If set, an underline in the text indicates that the following
+        character is to be used as mnemonic.
+        """
         group: Optional[CheckButton]
+        """
+        The check button whose group this widget belongs to.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -17582,6 +17682,7 @@ class CheckButtonClass(GObject.GPointer):
         CheckButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     toggled: Callable[[CheckButton], None] = ...
     activate: Callable[[CheckButton], None] = ...
@@ -17599,6 +17700,8 @@ class ClosureExpression(Expression):
         ClosureExpression(**properties)
         new(value_type:GType, closure:GObject.Closure, params:list=None) -> Gtk.ClosureExpression
     """
+
+    class Props(Expression.Props): ...
 
     @classmethod
     def new(
@@ -17723,47 +17826,29 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ColorChooser.Props,
+        ConstraintTarget.Props,
+    ):
         modal: bool
+        """
+        Whether the color chooser dialog should be modal.
+        """
         show_editor: bool
+        """
+        Whether the color chooser should open in editor mode.
+
+        This property should be used in cases where the palette
+        in the editor would be redundant, such as when the color
+        button is already part of a palette.
+        """
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        rgba: Gdk.RGBA
-        use_alpha: bool
+        """
+        The title of the color chooser dialog
+        """
 
     props: Props = ...
     def __init__(
@@ -17915,6 +18000,9 @@ class ColorChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(self, rgba: Gdk.RGBA = ..., use_alpha: bool = ...): ...
     @deprecated("Use [class@Gtk.ColorDialog] instead")
     def add_palette(
         self,
@@ -18149,71 +18237,17 @@ class ColorChooserDialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ColorChooser.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         show_editor: bool
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        rgba: Gdk.RGBA
-        use_alpha: bool
-        startup_id: str
 
     props: Props = ...
     def __init__(
@@ -18303,6 +18337,7 @@ class ColorChooserInterface(GObject.GPointer):
         ColorChooserInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     base_interface: GObject.TypeInterface = ...
     get_rgba: Callable[[ColorChooser], Gdk.RGBA] = ...
     set_rgba: Callable[[ColorChooser, Gdk.RGBA], None] = ...
@@ -18410,45 +18445,19 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ColorChooser.Props,
+        ConstraintTarget.Props,
+    ):
         show_editor: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        rgba: Gdk.RGBA
-        use_alpha: bool
+        """
+        %TRUE when the color chooser is showing the single-color editor.
+
+        It can be set to switch the color chooser into single-color editing mode.
+        """
 
     props: Props = ...
     def __init__(
@@ -18534,10 +18543,23 @@ class ColorDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         modal: bool
+        """
+        Whether the color chooser dialog is modal.
+        """
         title: str
+        """
+        A title that may be shown on the color chooser
+        dialog that is presented by [method@Gtk.ColorDialog.choose_rgba].
+        """
         with_alpha: bool
+        """
+        Whether colors may have alpha (translucency).
+
+        When with-alpha is %FALSE, the color that is selected
+        will be forced to have alpha == 1.
+        """
 
     props: Props = ...
     def __init__(self, modal: bool = ..., title: str = ..., with_alpha: bool = ...): ...
@@ -18771,44 +18793,25 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         dialog: Optional[ColorDialog]
+        """
+        The `GtkColorDialog` that contains parameters for
+        the color chooser dialog.
+        """
         rgba: Gdk.RGBA
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The selected color.
+
+        This property can be set to give the button its initial
+        color, and it will be updated to reflect the users choice
+        in the color chooser dialog.
+
+        Listen to `notify::rgba` to get informed about changes
+        to the buttons color.
+        """
 
     props: Props = ...
     def __init__(
@@ -18929,6 +18932,7 @@ class ColorDialogButtonClass(GObject.GPointer):
         ColorDialogButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class ColorDialogClass(GObject.GPointer):
@@ -18940,6 +18944,7 @@ class ColorDialogClass(GObject.GPointer):
         ColorDialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
@@ -19090,57 +19095,57 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Scrollable.Props,
+    ):
         columns: Gio.ListModel
+        """
+        The list of columns.
+        """
         enable_rubberband: bool
+        """
+        Allow rubberband selection.
+        """
         header_factory: Optional[ListItemFactory]
+        """
+        Factory for creating header widgets.
+        """
         model: Optional[SelectionModel]
+        """
+        Model for the items displayed.
+        """
         reorderable: bool
+        """
+        Whether columns are reorderable.
+        """
         row_factory: Optional[ListItemFactory]
+        """
+        The factory used for configuring rows.
+        """
         show_column_separators: bool
+        """
+        Show separators between columns.
+        """
         show_row_separators: bool
+        """
+        Show separators between rows.
+        """
         single_click_activate: bool
+        """
+        Activate rows on single click and select them on hover.
+        """
         sorter: Optional[Sorter]
+        """
+        Sorter with the sorting choices of the user.
+        """
         tab_behavior: ListTabBehavior
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
+        """
+        Behavior of the <kbd>Tab</kbd> key
+        """
 
     props: Props = ...
     def __init__(
@@ -19638,16 +19643,27 @@ class ColumnViewCell(ListItem):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ListItem.Props):
         child: Optional[Widget]
+        """
+        Widget used for display.
+        """
         focusable: bool
+        """
+        If the item can be focused with the keyboard.
+        """
         item: Optional[GObject.Object]
+        """
+        Displayed item.
+        """
         position: int
+        """
+        Position of the item.
+        """
         selected: bool
-        accessible_description: str
-        accessible_label: str
-        activatable: bool
-        selectable: bool
+        """
+        If the item is currently selected.
+        """
 
     props: Props = ...
     def __init__(
@@ -19769,8 +19785,11 @@ class ColumnViewCell(ListItem):
         """
         ...
 
-class ColumnViewCellClass(GObject.GPointer): ...
-class ColumnViewClass(GObject.GPointer): ...
+class ColumnViewCellClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class ColumnViewClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ColumnViewColumn(GObject.Object):
     """
@@ -19812,17 +19831,54 @@ class ColumnViewColumn(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         column_view: Optional[ColumnView]
+        """
+        The `GtkColumnView` this column is a part of.
+        """
         expand: bool
+        """
+        Column gets share of extra width allocated to the view.
+        """
         factory: Optional[ListItemFactory]
+        """
+        Factory for populating list items.
+        """
         fixed_width: int
+        """
+        If not -1, this is the width that the column is allocated,
+        regardless of the size of its content.
+        """
         header_menu: Optional[Gio.MenuModel]
+        """
+        Menu model used to create the context menu for the column header.
+        """
         id: Optional[str]
+        """
+        An ID for the column.
+
+        GTK is not currently using the ID for anything, but
+        it can be used by applications when saving column view
+        configurations.
+
+        It is up to applications to ensure uniqueness of IDs.
+        """
         resizable: bool
+        """
+        Whether this column is resizable.
+        """
         sorter: Optional[Sorter]
+        """
+        Sorter for sorting items according to this column.
+        """
         title: Optional[str]
+        """
+        Title displayed in the header.
+        """
         visible: bool
+        """
+        Whether this column is visible.
+        """
 
     props: Props = ...
     def __init__(
@@ -20133,7 +20189,8 @@ class ColumnViewColumn(GObject.Object):
         """
         ...
 
-class ColumnViewColumnClass(GObject.GPointer): ...
+class ColumnViewColumnClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ColumnViewRow(GObject.Object):
     """
@@ -20165,15 +20222,39 @@ class ColumnViewRow(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accessible_description: str
+        """
+        The accessible description to set on the row.
+        """
         accessible_label: str
+        """
+        The accessible label to set on the row.
+        """
         activatable: bool
+        """
+        If the row can be activated by the user.
+        """
         focusable: bool
+        """
+        If the row can be focused with the keyboard.
+        """
         item: Optional[GObject.Object]
+        """
+        The item for this row.
+        """
         position: int
+        """
+        Position of the row.
+        """
         selectable: bool
+        """
+        If the row can be selected by the user.
+        """
         selected: bool
+        """
+        If the item in the row is currently selected.
+        """
 
     props: Props = ...
     def __init__(
@@ -20387,7 +20468,8 @@ class ColumnViewRow(GObject.Object):
         """
         ...
 
-class ColumnViewRowClass(GObject.GPointer): ...
+class ColumnViewRowClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ColumnViewSorter(Sorter):
     """
@@ -20443,9 +20525,22 @@ class ColumnViewSorter(Sorter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Sorter.Props):
         primary_sort_column: Optional[ColumnViewColumn]
+        """
+        The primary sort column.
+
+        The primary sort column is the one that displays the triangle
+        in a column view header.
+        """
         primary_sort_order: SortType
+        """
+        The primary sort order.
+
+        The primary sort order determines whether the triangle displayed
+        in the column view header of the primary sort column points upwards
+        or downwards.
+        """
 
     props: Props = ...
     def get_n_sort_columns(self) -> int:
@@ -20532,6 +20627,7 @@ class ColumnViewSorterClass(GObject.GPointer):
         ColumnViewSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 @deprecated("Use [class@Gtk.DropDown] instead")
@@ -20692,54 +20788,72 @@ class ComboBox(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        CellEditable.Props,
+        CellLayout.Props,
+        ConstraintTarget.Props,
+    ):
         active: int
+        """
+        The item which is currently active.
+
+        If the model is a non-flat treemodel, and the active item is not an
+        immediate child of the root of the tree, this property has the value
+        `gtk_tree_path_get_indices (path)[0]`, where `path` is the
+        [struct@Gtk.TreePath] of the active item.
+        """
         active_id: Optional[str]
+        """
+        The value of the ID column of the active row.
+        """
         button_sensitivity: SensitivityType
+        """
+        Whether the dropdown button is sensitive when
+        the model is empty.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         entry_text_column: int
+        """
+        The model column to associate with strings from the entry.
+
+        This is property only relevant if the combo was created with
+        [property@Gtk.ComboBox:has-entry] is %TRUE.
+        """
         has_entry: bool
+        """
+        Whether the combo box has an entry.
+        """
         has_frame: bool
+        """
+        The `has-frame` property controls whether a frame is drawn around the entry.
+        """
         id_column: int
+        """
+        The model column that provides string IDs for the values
+        in the model, if != -1.
+        """
         model: Optional[TreeModel]
+        """
+        The model from which the combo box takes its values.
+        """
         popup_fixed_width: bool
+        """
+        Whether the popup's width should be a fixed width matching the
+        allocated width of the combo box.
+        """
         popup_shown: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        editing_canceled: bool
+        """
+        Whether the combo boxes dropdown is popped up.
+
+        Note that this property is mainly useful, because
+        it allows you to connect to notify::popup-shown.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -21260,6 +21374,7 @@ class ComboBoxClass(GObject.GPointer):
         ComboBoxClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     changed: Callable[[ComboBox], None] = ...
     format_entry_text: Callable[[ComboBox, str], str] = ...
@@ -21421,56 +21536,15 @@ class ComboBoxText(
       notify (GParam)
     """
 
-    class Props:
-        active: int
-        active_id: Optional[str]
-        button_sensitivity: SensitivityType
-        child: Optional[Widget]
-        entry_text_column: int
-        has_entry: bool
-        has_frame: bool
-        id_column: int
-        model: Optional[TreeModel]
-        popup_fixed_width: bool
-        popup_shown: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        editing_canceled: bool
+    class Props(
+        ComboBox.Props,
+        Accessible.Props,
+        Buildable.Props,
+        CellEditable.Props,
+        CellLayout.Props,
+        ConstraintTarget.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         active: int = ...,
@@ -21713,6 +21787,8 @@ class ConstantExpression(Expression):
         new_for_value(value:GObject.Value) -> Gtk.ConstantExpression
     """
 
+    class Props(Expression.Props): ...
+
     def get_value(self) -> Any:
         """
         Gets the value that a constant expression evaluates to.
@@ -21782,15 +21858,53 @@ class Constraint(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         constant: float
+        """
+        The constant value to be added to the [property@Gtk.Constraint:source-attribute].
+        """
         multiplier: float
+        """
+        The multiplication factor to be applied to
+        the [property@Gtk.Constraint:source-attribute].
+        """
         relation: ConstraintRelation
+        """
+        The order relation between the terms of the constraint.
+        """
         source: Optional[ConstraintTarget]
+        """
+        The source of the constraint.
+
+        The constraint will set the [property@Gtk.Constraint:target-attribute]
+        property of the target using the [property@Gtk.Constraint:source-attribute]
+        property of the source.
+        """
         source_attribute: ConstraintAttribute
+        """
+        The attribute of the [property@Gtk.Constraint:source] read by the
+        constraint.
+        """
         strength: int
+        """
+        The strength of the constraint.
+
+        The strength can be expressed either using one of the symbolic values
+        of the [enum@Gtk.ConstraintStrength] enumeration, or any positive integer
+        value.
+        """
         target: Optional[ConstraintTarget]
+        """
+        The target of the constraint.
+
+        The constraint will set the [property@Gtk.Constraint:target-attribute]
+        property of the target using the [property@Gtk.Constraint:source-attribute]
+        property of the source widget.
+        """
         target_attribute: ConstraintAttribute
+        """
+        The attribute of the [property@Gtk.Constraint:target] set by the constraint.
+        """
 
     props: Props = ...
     def __init__(
@@ -22026,6 +22140,7 @@ class ConstraintClass(GObject.GPointer):
         ConstraintClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class ConstraintGuide(GObject.Object, ConstraintTarget):
@@ -22066,15 +22181,40 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, ConstraintTarget.Props):
         max_height: int
+        """
+        The maximum height of the guide.
+        """
         max_width: int
+        """
+        The maximum width of the guide.
+        """
         min_height: int
+        """
+        The minimum height of the guide.
+        """
         min_width: int
+        """
+        The minimum width of the guide.
+        """
         name: Optional[str]
+        """
+        A name that identifies the `GtkConstraintGuide`, for debugging.
+        """
         nat_height: int
+        """
+        The preferred, or natural, height of the guide.
+        """
         nat_width: int
+        """
+        The preferred, or natural, width of the guide.
+        """
         strength: ConstraintStrength
+        """
+        The `GtkConstraintStrength` to be used for the constraint on
+        the natural size of the guide.
+        """
 
     props: Props = ...
     def __init__(
@@ -22251,6 +22391,7 @@ class ConstraintGuideClass(GObject.GPointer):
         ConstraintGuideClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class ConstraintLayout(LayoutManager, Buildable):
@@ -22431,6 +22572,8 @@ class ConstraintLayout(LayoutManager, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(LayoutManager.Props, Buildable.Props): ...
 
     def add_constraint(self, constraint: Constraint) -> None:
         """
@@ -22618,11 +22761,8 @@ class ConstraintLayoutChild(LayoutChild):
       notify (GParam)
     """
 
-    class Props:
-        child_widget: Widget
-        layout_manager: LayoutManager
+    class Props(LayoutChild.Props): ...
 
-    props: Props = ...
     def __init__(
         self, child_widget: Widget = ..., layout_manager: LayoutManager = ...
     ): ...
@@ -22636,6 +22776,7 @@ class ConstraintLayoutChildClass(GObject.GPointer):
         ConstraintLayoutChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutChildClass = ...
 
 class ConstraintLayoutClass(GObject.GPointer):
@@ -22647,10 +22788,28 @@ class ConstraintLayoutClass(GObject.GPointer):
         ConstraintLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
-class ConstraintTarget(GObject.GInterface): ...
-class ConstraintTargetInterface(GObject.GPointer): ...
+class ConstraintTarget(GObject.GInterface):
+    """
+    The `GtkConstraintTarget` interface is implemented by objects that
+    can be used as source or target in `GtkConstraint`s.
+
+    Besides `GtkWidget`, it is also implemented by `GtkConstraintGuide`.
+
+
+
+    Interface GtkConstraintTarget
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.GInterface.Props): ...
+
+class ConstraintTargetInterface(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class CssLocation(GObject.GPointer):
     """
@@ -22661,6 +22820,7 @@ class CssLocation(GObject.GPointer):
         CssLocation()
     """
 
+    class Props(GObject.GPointer.Props): ...
     bytes: int = ...
     chars: int = ...
     lines: int = ...
@@ -22718,6 +22878,7 @@ class CssProvider(GObject.Object, StyleProvider):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props, StyleProvider.Props): ...
     parent_instance: GObject.Object = ...
     def load_from_bytes(self, data: GLib.Bytes) -> None:
         """
@@ -22842,8 +23003,11 @@ class CssProvider(GObject.Object, StyleProvider):
         """
         ...
 
-class CssProviderClass(GObject.GPointer): ...
-class CssProviderPrivate(GObject.GPointer): ...
+class CssProviderClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class CssProviderPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class CssSection(GObject.GBoxed):
     """
@@ -22858,6 +23022,8 @@ class CssSection(GObject.GBoxed):
 
         new(file:Gio.File=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     def get_end_location(self) -> CssLocation:
         """
@@ -22985,7 +23151,8 @@ class CssSection(GObject.GBoxed):
         """
         ...
 
-class CssStyleChange(GObject.GPointer): ...
+class CssStyleChange(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class CustomFilter(Filter):
     """
@@ -23006,6 +23173,8 @@ class CustomFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(Filter.Props): ...
 
     @classmethod
     def new(
@@ -23062,6 +23231,7 @@ class CustomFilterClass(GObject.GPointer):
         CustomFilterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: FilterClass = ...
 
 class CustomLayout(LayoutManager):
@@ -23085,6 +23255,8 @@ class CustomLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(LayoutManager.Props): ...
 
     @classmethod
     def new(
@@ -23123,6 +23295,7 @@ class CustomLayoutClass(GObject.GPointer):
         CustomLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class CustomSorter(Sorter):
@@ -23146,6 +23319,8 @@ class CustomSorter(Sorter):
       notify (GParam)
     """
 
+    class Props(Sorter.Props): ...
+
     def new(sort_func, user_data=None): ...  # FIXME Function
     def set_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
 
@@ -23158,6 +23333,7 @@ class CustomSorterClass(GObject.GPointer):
         CustomSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 @deprecated("Use [class@Gtk.Window] instead")
@@ -23392,68 +23568,36 @@ class Dialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Window.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        %TRUE if the dialog uses a headerbar for action buttons
+        instead of the action-area.
+
+        For technical reasons, this property is declared as an integer
+        property, but you should only set it to %TRUE or %FALSE.
+
+        ## Creating a dialog with headerbar
+
+        Builtin `GtkDialog` subclasses such as [class@Gtk.ColorChooserDialog]
+        set this property according to platform conventions (using the
+        [property@Gtk.Settings:gtk-dialogs-use-header] setting).
+
+        Here is how you can achieve the same:
+
+        ```c
+        g_object_get (settings, \"gtk-dialogs-use-header\", &header, NULL);
+        dialog = g_object_new (GTK_TYPE_DIALOG, header, TRUE, NULL);
+        ```
+        """
 
     props: Props = ...
     parent_instance: Window = ...
@@ -23710,6 +23854,7 @@ class DialogClass(GObject.GPointer):
         DialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WindowClass = ...
     response: Callable[[Dialog, int], None] = ...
     close: Callable[[Dialog], None] = ...
@@ -23766,15 +23911,39 @@ class DirectoryList(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props):
         attributes: Optional[str]
+        """
+        The attributes to query.
+        """
         error: Optional[GLib.Error]
+        """
+        Error encountered while loading files.
+        """
         file: Optional[Gio.File]
+        """
+        File to query.
+        """
         io_priority: int
+        """
+        Priority used when loading.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         loading: bool
+        """
+        %TRUE if files are being loaded.
+        """
         monitored: bool
+        """
+        %TRUE if the directory is monitored for changed.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(
@@ -23976,6 +24145,7 @@ class DirectoryListClass(GObject.GPointer):
         DirectoryListClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
@@ -24058,43 +24228,18 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+    ):
         child: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The widget to display as drag icon.
+        """
 
     props: Props = ...
     def __init__(
@@ -24228,6 +24373,7 @@ class DragIconClass(GObject.GPointer):
         DragIconClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class DragSource(GestureSingle):
@@ -24353,17 +24499,18 @@ class DragSource(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         actions: Gdk.DragAction
+        """
+        The actions that are supported by drag operations from the source.
+
+        Note that you must handle the [signal@Gtk.DragSource::drag-end] signal
+        if the actions include %GDK_ACTION_MOVE.
+        """
         content: Optional[Gdk.ContentProvider]
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The data that is offered by drag operations from this source.
+        """
 
     props: Props = ...
     def __init__(
@@ -24510,7 +24657,8 @@ class DragSource(GestureSingle):
         """
         ...
 
-class DragSourceClass(GObject.GPointer): ...
+class DragSourceClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -24664,44 +24812,17 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         content_height: int
+        """
+        The content height.
+        """
         content_width: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The content width.
+        """
 
     props: Props = ...
     widget: Widget = ...
@@ -24857,6 +24978,7 @@ class DrawingAreaClass(GObject.GPointer):
         DrawingAreaClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     resize: Callable[[DrawingArea, int, int], None] = ...
     padding: list[None] = ...
@@ -24901,14 +25023,43 @@ class DropControllerMotion(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         contains_pointer: bool
+        """
+        Whether the pointer of a Drag-and-Drop operation is in
+        the controller's widget or a descendant.
+
+        See also [property@Gtk.DropControllerMotion:is-pointer].
+
+        When handling crossing events, this property is updated
+        before [signal@Gtk.DropControllerMotion::enter], but after
+        [signal@Gtk.DropControllerMotion::leave] is emitted.
+        """
         drop: Optional[Gdk.Drop]
+        """
+        The ongoing drop operation over the controller's widget or
+        its descendant.
+
+        If no drop operation is going on, this property returns %NULL.
+
+        The event controller should not modify the @drop, but it might
+        want to query its properties.
+
+        When handling crossing events, this property is updated
+        before [signal@Gtk.DropControllerMotion::enter], but after
+        [signal@Gtk.DropControllerMotion::leave] is emitted.
+        """
         is_pointer: bool
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        Whether the pointer is in the controllers widget itself,
+        as opposed to in a descendent widget.
+
+        See also [property@Gtk.DropControllerMotion:contains-pointer].
+
+        When handling crossing events, this property is updated
+        before [signal@Gtk.DropControllerMotion::enter], but after
+        [signal@Gtk.DropControllerMotion::leave] is emitted.
+        """
 
     props: Props = ...
     def __init__(
@@ -24976,7 +25127,8 @@ class DropControllerMotion(EventController):
         """
         ...
 
-class DropControllerMotionClass(GObject.GPointer): ...
+class DropControllerMotionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -25113,52 +25265,62 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         enable_search: bool
+        """
+        Whether to show a search entry in the popup.
+
+        Note that search requires [property@Gtk.DropDown:expression]
+        to be set.
+        """
         expression: Optional[Expression]
+        """
+        An expression to evaluate to obtain strings to match against the search
+        term.
+
+        See [property@Gtk.DropDown:enable-search] for how to enable search.
+        If [property@Gtk.DropDown:factory] is not set, the expression is also
+        used to bind strings to labels produced by a default factory.
+        """
         factory: Optional[ListItemFactory]
+        """
+        Factory for populating list items.
+        """
         header_factory: Optional[ListItemFactory]
+        """
+        The factory for creating header widgets for the popup.
+        """
         list_factory: Optional[ListItemFactory]
+        """
+        The factory for populating list items in the popup.
+
+        If this is not set, [property@Gtk.DropDown:factory] is used.
+        """
         model: Optional[Gio.ListModel]
+        """
+        Model for the displayed items.
+        """
         search_match_mode: StringFilterMatchMode
+        """
+        The match mode for the search filter.
+        """
         selected: int
+        """
+        The position of the selected item.
+
+        If no item is selected, the property has the value
+        %GTK_INVALID_LIST_POSITION.
+        """
         selected_item: Optional[GObject.Object]
+        """
+        The selected item.
+        """
         show_arrow: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether to show an arrow within the GtkDropDown widget.
+        """
 
     props: Props = ...
     def __init__(
@@ -25501,6 +25663,7 @@ class DropDownClass(GObject.GPointer):
         DropDownClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class DropTarget(EventController):
@@ -25611,16 +25774,52 @@ class DropTarget(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         actions: Gdk.DragAction
+        """
+        The `GdkDragActions` that this drop target supports.
+        """
         current_drop: Optional[Gdk.Drop]
+        """
+        The `GdkDrop` that is currently being performed.
+        """
         formats: Optional[Gdk.ContentFormats]
+        """
+        The `GdkContentFormats` that determine the supported data formats.
+        """
         preload: bool
+        """
+        Whether the drop data should be preloaded when the pointer is only
+        hovering over the widget but has not been released.
+
+        Setting this property allows finer grained reaction to an ongoing
+        drop at the cost of loading more data.
+
+        The default value for this property is %FALSE to avoid downloading
+        huge amounts of data by accident.
+
+        For example, if somebody drags a full document of gigabytes of text
+        from a text editor across a widget with a preloading drop target,
+        this data will be downloaded, even if the data is ultimately dropped
+        elsewhere.
+
+        For a lot of data formats, the amount of data is very small (like
+        %GDK_TYPE_RGBA), so enabling this property does not hurt at all.
+        And for local-only Drag-and-Drop operations, no data transfer is done,
+        so enabling it there is free.
+        """
         value: Optional[Any]
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The value for this drop operation.
+
+        This is %NULL if the data has not been loaded yet or no drop
+        operation is going on.
+
+        Data may be available before the [signal@Gtk.DropTarget::drop]
+        signal gets emitted - for example when the [property@Gtk.DropTarget:preload]
+        property is set. You can use the ::notify signal to be notified
+        of available data.
+        """
 
     props: Props = ...
     def __init__(
@@ -25876,13 +26075,15 @@ class DropTargetAsync(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         actions: Gdk.DragAction
+        """
+        The `GdkDragActions` that this drop target supports.
+        """
         formats: Optional[Gdk.ContentFormats]
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The `GdkContentFormats` that determines the supported data formats.
+        """
 
     props: Props = ...
     def __init__(
@@ -25978,8 +26179,11 @@ class DropTargetAsync(EventController):
         """
         ...
 
-class DropTargetAsyncClass(GObject.GPointer): ...
-class DropTargetClass(GObject.GPointer): ...
+class DropTargetAsyncClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class DropTargetClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Editable(GObject.GInterface):
     """
@@ -26120,6 +26324,17 @@ class Editable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(
+        self,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
+    ): ...
     def delegate_get_accessible_platform_state(
         self, state: AccessiblePlatformState
     ) -> bool:
@@ -26593,6 +26808,7 @@ class EditableInterface(GObject.GPointer):
         EditableInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     base_iface: GObject.TypeInterface = ...
     insert_text: Callable[[Editable, str, int], int] = ...
     delete_text: Callable[[Editable, int, int], None] = ...
@@ -26707,51 +26923,17 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+    ):
         editing: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
+        """
+        This property is %TRUE while the widget is in edit mode.
+        """
 
     props: Props = ...
     def __init__(
@@ -26859,6 +27041,7 @@ class EditableLabelClass(GObject.GPointer):
         EditableLabelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class EmojiChooser(
@@ -26975,52 +27158,15 @@ class EmojiChooser(
       notify (GParam)
     """
 
-    class Props:
-        autohide: bool
-        cascade_popdown: bool
-        child: Optional[Widget]
-        default_widget: Optional[Widget]
-        has_arrow: bool
-        mnemonics_visible: bool
-        pointing_to: Gdk.Rectangle
-        position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+    class Props(
+        Popover.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        ShortcutManager.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         autohide: bool = ...,
@@ -27076,7 +27222,8 @@ class EmojiChooser(
         """
         ...
 
-class EmojiChooserClass(GObject.GPointer): ...
+class EmojiChooserClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Editable):
     """
@@ -27288,90 +27435,226 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        CellEditable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+    ):
         activates_default: bool
+        """
+        Whether to activate the default widget when Enter is pressed.
+        """
         attributes: Optional[Pango.AttrList]
+        """
+        A list of Pango attributes to apply to the text of the entry.
+
+        This is mainly useful to change the size or weight of the text.
+
+        The `PangoAttribute`'s @start_index and @end_index must refer to the
+        [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
+        """
         buffer: EntryBuffer
+        """
+        The buffer object which actually stores the text.
+        """
         completion: Optional[EntryCompletion]
+        """
+        The auxiliary completion object to use with the entry.
+        """
         enable_emoji_completion: bool
+        """
+        Whether to suggest Emoji replacements for :-delimited names
+        like `:heart:`.
+        """
         extra_menu: Optional[Gio.MenuModel]
+        """
+        A menu model whose contents will be appended to the context menu.
+        """
         has_frame: bool
+        """
+        Whether the entry should draw a frame.
+        """
         im_module: str
+        """
+        Which IM (input method) module should be used for this entry.
+
+        See [class@Gtk.IMContext].
+
+        Setting this to a non-%NULL value overrides the system-wide IM
+        module setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module]
+        property.
+        """
         input_hints: InputHints
+        """
+        Additional hints that allow input methods to fine-tune their behavior.
+
+        Also see [property@Gtk.Entry:input-purpose]
+        """
         input_purpose: InputPurpose
+        """
+        The purpose of this text field.
+
+        This property can be used by on-screen keyboards and other input
+        methods to adjust their behaviour.
+
+        Note that setting the purpose to %GTK_INPUT_PURPOSE_PASSWORD or
+        %GTK_INPUT_PURPOSE_PIN is independent from setting
+        [property@Gtk.Entry:visibility].
+        """
         invisible_char: int
+        """
+        The character to use when masking entry contents (“password mode”).
+        """
         invisible_char_set: bool
+        """
+        Whether the invisible char has been set for the `GtkEntry`.
+        """
         max_length: int
+        """
+        Maximum number of characters for this entry.
+        """
         overwrite_mode: bool
+        """
+        If text is overwritten when typing in the `GtkEntry`.
+        """
         placeholder_text: Optional[str]
+        """
+        The text that will be displayed in the `GtkEntry` when it is empty
+        and unfocused.
+        """
         primary_icon_activatable: bool
+        """
+        Whether the primary icon is activatable.
+
+        GTK emits the [signal@Gtk.Entry::icon-press] and
+        [signal@Gtk.Entry::icon-release] signals only on sensitive,
+        activatable icons.
+
+        Sensitive, but non-activatable icons can be used for purely
+        informational purposes.
+        """
         primary_icon_gicon: Gio.Icon
+        """
+        The `GIcon` to use for the primary icon for the entry.
+        """
         primary_icon_name: str
+        """
+        The icon name to use for the primary icon for the entry.
+        """
         primary_icon_paintable: Gdk.Paintable
+        """
+        A `GdkPaintable` to use as the primary icon for the entry.
+        """
         primary_icon_sensitive: bool
+        """
+        Whether the primary icon is sensitive.
+
+        An insensitive icon appears grayed out. GTK does not emit the
+        [signal@Gtk.Entry::icon-press] and [signal@Gtk.Entry::icon-release]
+        signals and does not allow DND from insensitive icons.
+
+        An icon should be set insensitive if the action that would trigger
+        when clicked is currently not available.
+        """
         primary_icon_storage_type: ImageType
+        """
+        The representation which is used for the primary icon of the entry.
+        """
         primary_icon_tooltip_markup: str
+        """
+        The contents of the tooltip on the primary icon, with markup.
+
+        Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+        """
         primary_icon_tooltip_text: str
+        """
+        The contents of the tooltip on the primary icon.
+
+        Also see [method@Gtk.Entry.set_icon_tooltip_text].
+        """
         progress_fraction: float
+        """
+        The current fraction of the task that's been completed.
+        """
         progress_pulse_step: float
+        """
+        The fraction of total entry width to move the progress
+        bouncing block for each pulse.
+
+        See [method@Gtk.Entry.progress_pulse].
+        """
         scroll_offset: int
+        """
+        Number of pixels of the entry scrolled off the screen to the left.
+        """
         secondary_icon_activatable: bool
+        """
+        Whether the secondary icon is activatable.
+
+        GTK emits the [signal@Gtk.Entry::icon-press] and
+        [signal@Gtk.Entry::icon-release] signals only on sensitive,
+        activatable icons.
+
+        Sensitive, but non-activatable icons can be used for purely
+        informational purposes.
+        """
         secondary_icon_gicon: Gio.Icon
+        """
+        The `GIcon` to use for the secondary icon for the entry.
+        """
         secondary_icon_name: str
+        """
+        The icon name to use for the secondary icon for the entry.
+        """
         secondary_icon_paintable: Gdk.Paintable
+        """
+        A `GdkPaintable` to use as the secondary icon for the entry.
+        """
         secondary_icon_sensitive: bool
+        """
+        Whether the secondary icon is sensitive.
+
+        An insensitive icon appears grayed out. GTK does not emit the
+        [signal@Gtk.Entry::icon-press[ and [signal@Gtk.Entry::icon-release]
+        signals and does not allow DND from insensitive icons.
+
+        An icon should be set insensitive if the action that would trigger
+        when clicked is currently not available.
+        """
         secondary_icon_storage_type: ImageType
+        """
+        The representation which is used for the secondary icon of the entry.
+        """
         secondary_icon_tooltip_markup: str
+        """
+        The contents of the tooltip on the secondary icon, with markup.
+
+        Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+        """
         secondary_icon_tooltip_text: str
+        """
+        The contents of the tooltip on the secondary icon.
+
+        Also see [method@Gtk.Entry.set_icon_tooltip_text].
+        """
         show_emoji_icon: bool
         tabs: Optional[Pango.TabArray]
         text_length: int
+        """
+        The length of the text in the `GtkEntry`.
+        """
         truncate_multiline: bool
+        """
+        When %TRUE, pasted multi-line text is truncated to the first line.
+        """
         visibility: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        editing_canceled: bool
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
+        """
+        Whether the entry should show the “invisible char” instead of the
+        actual text (“password mode”).
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -28456,10 +28739,19 @@ class EntryBuffer(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         length: int
+        """
+        The length (in characters) of the text in buffer.
+        """
         max_length: int
+        """
+        The maximum length (in characters) of the text in the buffer.
+        """
         text: str
+        """
+        The contents of the buffer.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -28723,6 +29015,7 @@ class EntryBufferClass(GObject.GPointer):
         EntryBufferClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     inserted_text: Callable[[EntryBuffer, int, str, int], None] = ...
     deleted_text: Callable[[EntryBuffer, int, int], None] = ...
@@ -28754,6 +29047,7 @@ class EntryClass(GObject.GPointer):
         EntryClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     activate: Callable[[Entry], None] = ...
     padding: list[None] = ...
@@ -28831,16 +29125,54 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Buildable.Props, CellLayout.Props):
         cell_area: CellArea
+        """
+        The `GtkCellArea` used to layout cell renderers in the treeview column.
+
+        If no area is specified when creating the entry completion with
+        [ctor@Gtk.EntryCompletion.new_with_area], a horizontally oriented
+        [class@Gtk.CellAreaBox] will be used.
+        """
         inline_completion: bool
+        """
+        Determines whether the common prefix of the possible completions
+        should be inserted automatically in the entry.
+
+        Note that this requires text-column to be set, even if you are
+        using a custom match function.
+        """
         inline_selection: bool
+        """
+        Determines whether the possible completions on the popup
+        will appear in the entry as you navigate through them.
+        """
         minimum_key_length: int
         model: Optional[TreeModel]
         popup_completion: bool
+        """
+        Determines whether the possible completions should be
+        shown in a popup window.
+        """
         popup_set_width: bool
+        """
+        Determines whether the completions popup window will be
+        resized to the width of the entry.
+        """
         popup_single_match: bool
+        """
+        Determines whether the completions popup window will shown
+        for a single possible completion.
+
+        You probably want to set this to %FALSE if you are using
+        [property@Gtk.EntryCompletion:inline-completion].
+        """
         text_column: int
+        """
+        The column of the model containing the strings.
+
+        Note that the strings must be UTF-8.
+        """
 
     props: Props = ...
     def __init__(
@@ -29266,11 +29598,23 @@ class EventController(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         name: Optional[str]
+        """
+        The name for this controller, typically used for debugging purposes.
+        """
         propagation_limit: PropagationLimit
+        """
+        The limit for which events this controller will handle.
+        """
         propagation_phase: PropagationPhase
+        """
+        The propagation phase at which this controller will handle events.
+        """
         widget: Widget
+        """
+        The widget receiving the `GdkEvents` that the controller will handle.
+        """
 
     props: Props = ...
     def __init__(
@@ -29463,7 +29807,8 @@ class EventController(GObject.Object):
         """
         ...
 
-class EventControllerClass(GObject.GPointer): ...
+class EventControllerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EventControllerFocus(EventController):
     """
@@ -29504,13 +29849,29 @@ class EventControllerFocus(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         contains_focus: bool
+        """
+        %TRUE if focus is contained in the controllers widget.
+
+        See [property@Gtk.EventControllerFocus:is-focus] for whether
+        the focus is in the widget itself or inside a descendent.
+
+        When handling focus events, this property is updated
+        before [signal@Gtk.EventControllerFocus::enter] or
+        [signal@Gtk.EventControllerFocus::leave] are emitted.
+        """
         is_focus: bool
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        %TRUE if focus is in the controllers widget itself,
+        as opposed to in a descendent widget.
+
+        See also [property@Gtk.EventControllerFocus:contains-focus].
+
+        When handling focus events, this property is updated
+        before [signal@Gtk.EventControllerFocus::enter] or
+        [signal@Gtk.EventControllerFocus::leave] are emitted.
+        """
 
     props: Props = ...
     def __init__(
@@ -29559,7 +29920,8 @@ class EventControllerFocus(EventController):
         """
         ...
 
-class EventControllerFocusClass(GObject.GPointer): ...
+class EventControllerFocusClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EventControllerKey(EventController):
     """
@@ -29591,13 +29953,8 @@ class EventControllerKey(EventController):
       notify (GParam)
     """
 
-    class Props:
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(EventController.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         name: Optional[str] = ...,
@@ -29676,7 +30033,8 @@ class EventControllerKey(EventController):
         """
         ...
 
-class EventControllerKeyClass(GObject.GPointer): ...
+class EventControllerKeyClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EventControllerLegacy(EventController):
     """
@@ -29708,13 +30066,8 @@ class EventControllerLegacy(EventController):
       notify (GParam)
     """
 
-    class Props:
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(EventController.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         name: Optional[str] = ...,
@@ -29735,7 +30088,8 @@ class EventControllerLegacy(EventController):
         """
         ...
 
-class EventControllerLegacyClass(GObject.GPointer): ...
+class EventControllerLegacyClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EventControllerMotion(EventController):
     """
@@ -29777,13 +30131,28 @@ class EventControllerMotion(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         contains_pointer: bool
+        """
+        Whether the pointer is in the controllers widget or a descendant.
+
+        See also [property@Gtk.EventControllerMotion:is-pointer].
+
+        When handling crossing events, this property is updated
+        before [signal@Gtk.EventControllerMotion::enter], but after
+        [signal@Gtk.EventControllerMotion::leave] is emitted.
+        """
         is_pointer: bool
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        Whether the pointer is in the controllers widget itself,
+        as opposed to in a descendent widget.
+
+        See also [property@Gtk.EventControllerMotion:contains-pointer].
+
+        When handling crossing events, this property is updated
+        before [signal@Gtk.EventControllerMotion::enter], but after
+        [signal@Gtk.EventControllerMotion::leave] is emitted.
+        """
 
     props: Props = ...
     def __init__(
@@ -29832,7 +30201,8 @@ class EventControllerMotion(EventController):
         """
         ...
 
-class EventControllerMotionClass(GObject.GPointer): ...
+class EventControllerMotionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EventControllerScroll(EventController):
     """
@@ -29899,12 +30269,11 @@ class EventControllerScroll(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         flags: EventControllerScrollFlags
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The flags affecting event controller behavior.
+        """
 
     props: Props = ...
     def __init__(
@@ -29970,7 +30339,8 @@ class EventControllerScroll(EventController):
         """
         ...
 
-class EventControllerScrollClass(GObject.GPointer): ...
+class EventControllerScrollClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
     """
@@ -30004,11 +30374,8 @@ class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
-        item_type: Type
-        n_items: int
+    class Props(MultiFilter.Props, Gio.ListModel.Props, Buildable.Props): ...
 
-    props: Props = ...
     @classmethod
     def new(cls) -> EveryFilter:
         """
@@ -30029,7 +30396,8 @@ class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
         """
         ...
 
-class EveryFilterClass(GObject.GPointer): ...
+class EveryFilterClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Expander(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -30203,49 +30571,38 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         expanded: bool
+        """
+        Whether the expander has been opened to reveal the child.
+        """
         label: Optional[str]
+        """
+        The text of the expanders label.
+        """
         label_widget: Optional[Widget]
+        """
+        A widget to display instead of the usual expander label.
+        """
         resize_toplevel: bool
+        """
+        When this property is %TRUE, the expander will resize the toplevel
+        widget containing the expander upon expanding and collapsing.
+        """
         use_markup: bool
+        """
+        Whether the text in the label is Pango markup.
+        """
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether an underline in the text indicates a mnemonic.
+        """
 
     props: Props = ...
     def __init__(
@@ -30656,6 +31013,8 @@ class Expression:
         Expression(**properties)
     """
 
+    class Props: ...
+
     def bind(
         self,
         target: GObject.Object,
@@ -30814,6 +31173,8 @@ class ExpressionWatch(GObject.GBoxed):
     provided API.
     """
 
+    class Props(GObject.GBoxed.Props): ...
+
     def evaluate(self, value: Any) -> bool:
         """
         Evaluates the watched expression and on success stores the result
@@ -30926,6 +31287,15 @@ class FileChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(
+        self,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        filter: FileFilter = ...,
+        select_multiple: bool = ...,
+    ): ...
     @deprecated("Use [class@Gtk.FileDialog] instead")
     def add_choice(
         self,
@@ -31688,76 +32058,17 @@ class FileChooserDialog(
       notify (GParam)
     """
 
-    class Props:
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action: FileChooserAction
-        create_folders: bool
-        filter: Optional[FileFilter]
-        filters: Gio.ListModel
-        select_multiple: bool
-        shortcut_folders: Gio.ListModel
-        startup_id: str
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        FileChooser.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -31996,19 +32307,17 @@ class FileChooserNative(NativeDialog, FileChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(NativeDialog.Props, FileChooser.Props):
         accept_label: Optional[str]
+        """
+        The text used for the label on the accept button in the dialog, or
+        %NULL to use the default text.
+        """
         cancel_label: Optional[str]
-        modal: bool
-        title: Optional[str]
-        transient_for: Optional[Window]
-        visible: bool
-        action: FileChooserAction
-        create_folders: bool
-        filter: Optional[FileFilter]
-        filters: Gio.ListModel
-        select_multiple: bool
-        shortcut_folders: Gio.ListModel
+        """
+        The text used for the label on the cancel button in the dialog, or
+        %NULL to use the default text.
+        """
 
     props: Props = ...
     def __init__(
@@ -32127,6 +32436,7 @@ class FileChooserNativeClass(GObject.GPointer):
         FileChooserNativeClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: NativeDialogClass = ...
 
 @deprecated("Direct use of `GtkFileChooserWidget` is deprecated")
@@ -32225,51 +32535,19 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        FileChooser.Props,
+    ):
         search_mode: bool
         show_time: bool
+        """
+        Whether to show the time.
+        """
         subtitle: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action: FileChooserAction
-        create_folders: bool
-        filter: Optional[FileFilter]
-        filters: Gio.ListModel
-        select_multiple: bool
-        shortcut_folders: Gio.ListModel
 
     props: Props = ...
     def __init__(
@@ -32365,15 +32643,55 @@ class FileDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accept_label: Optional[str]
+        """
+        Label for the file chooser's accept button.
+        """
         default_filter: Optional[FileFilter]
+        """
+        The default filter, that is, the filter that is initially
+        active in the file chooser dialog.
+
+        If the default filter is %NULL, the first filter of [property@Gtk.FileDialog:filters]
+        is used as the default filter. If that property contains no filter, the dialog will
+        be unfiltered.
+
+        If [property@Gtk.FileDialog:filters] is not %NULL, the default filter should be part
+        of the list. If it is not, the dialog may choose to not make it available.
+        """
         filters: Optional[Gio.ListModel]
+        """
+        The list of filters.
+
+        See [property@Gtk.FileDialog:default-filter] about how those two properties interact.
+        """
         initial_file: Optional[Gio.File]
+        """
+        The initial file, that is, the file that is initially selected
+        in the file chooser dialog
+
+        This is a utility property that sets both [property@Gtk.FileDialog:initial-folder] and
+        [property@Gtk.FileDialog:initial-name].
+        """
         initial_folder: Optional[Gio.File]
+        """
+        The initial folder, that is, the directory that is initially
+        opened in the file chooser dialog
+        """
         initial_name: Optional[str]
+        """
+        The initial name, that is, the filename that is initially
+        selected in the file chooser dialog.
+        """
         modal: bool
+        """
+        Whether the file chooser dialog is modal.
+        """
         title: str
+        """
+        A title that may be shown on the file chooser dialog.
+        """
 
     props: Props = ...
     def __init__(
@@ -32848,6 +33166,7 @@ class FileDialogClass(GObject.GPointer):
         FileDialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class FileFilter(Filter, Buildable):
@@ -32922,11 +33241,26 @@ class FileFilter(Filter, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Filter.Props, Buildable.Props):
         name: Optional[str]
+        """
+        The human-readable name of the filter.
+
+        This is the string that will be displayed in the file chooser
+        user interface if there is a selectable list of filters.
+        """
         mime_types: list[str]
+        """
+        The MIME types that this filter matches.
+        """
         patterns: list[str]
+        """
+        The patterns that this filter matches.
+        """
         suffixes: list[str]
+        """
+        The suffixes that this filter matches.
+        """
 
     props: Props = ...
     def __init__(
@@ -33136,9 +33470,16 @@ class FileLauncher(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         always_ask: bool
+        """
+        Whether to ask the user to choose an app for opening the file. If `FALSE`,
+        the file might be opened with a default app or the previous choice.
+        """
         file: Optional[Gio.File]
+        """
+        The file to launch.
+        """
 
     props: Props = ...
     def __init__(self, always_ask: bool = ..., file: Optional[Gio.File] = ...): ...
@@ -33301,6 +33642,7 @@ class FileLauncherClass(GObject.GPointer):
         FileLauncherClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Filter(GObject.Object):
@@ -33339,6 +33681,7 @@ class Filter(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
     parent_instance: GObject.Object = ...
     def changed(self, change: FilterChange) -> None:
         """
@@ -33442,6 +33785,7 @@ class FilterClass(GObject.GPointer):
         FilterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     match: Callable[[Filter, Optional[GObject.Object]], bool] = ...
     get_strictness: Callable[[Filter], FilterMatch] = ...
@@ -33495,13 +33839,31 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, SectionModel.Props):
         filter: Optional[Filter]
+        """
+        The filter for this model.
+        """
         incremental: bool
+        """
+        If the model should filter items incrementally.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being filtered.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         pending: int
+        """
+        Number of items not yet filtered.
+        """
 
     props: Props = ...
     def __init__(
@@ -33662,6 +34024,7 @@ class FilterListModelClass(GObject.GPointer):
         FilterListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
@@ -33768,44 +34131,9 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-
-    props: Props = ...
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ): ...
     parent_instance: Widget = ...
     def __init__(
         self,
@@ -33954,6 +34282,7 @@ class FixedClass(GObject.GPointer):
         FixedClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     padding: list[None] = ...
 
@@ -34004,6 +34333,8 @@ class FixedLayout(LayoutManager):
       notify (GParam)
     """
 
+    class Props(LayoutManager.Props): ...
+
     @classmethod
     def new(cls) -> FixedLayout:
         """
@@ -34041,10 +34372,11 @@ class FixedLayoutChild(LayoutChild):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutChild.Props):
         transform: Optional[Gsk.Transform]
-        child_widget: Widget
-        layout_manager: LayoutManager
+        """
+        The transform of the child.
+        """
 
     props: Props = ...
     def __init__(
@@ -34087,6 +34419,7 @@ class FixedLayoutChildClass(GObject.GPointer):
         FixedLayoutChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutChildClass = ...
 
 class FixedLayoutClass(GObject.GPointer):
@@ -34098,6 +34431,7 @@ class FixedLayoutClass(GObject.GPointer):
         FixedLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
@@ -34131,10 +34465,19 @@ class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, SectionModel.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being flattened.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
@@ -34199,6 +34542,7 @@ class FlattenListModelClass(GObject.GPointer):
         FlattenListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
@@ -34333,51 +34677,50 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         accept_unpaired_release: bool
         activate_on_single_click: bool
+        """
+        Determines whether children can be activated with a single
+        click, or require a double-click.
+        """
         column_spacing: int
+        """
+        The amount of horizontal space between two children.
+        """
         homogeneous: bool
+        """
+        Determines whether all children should be allocated the
+        same size.
+        """
         max_children_per_line: int
+        """
+        The maximum amount of children to request space for consecutively
+        in the given orientation.
+        """
         min_children_per_line: int
+        """
+        The minimum number of children to allocate consecutively
+        in the given orientation.
+
+        Setting the minimum children per line ensures
+        that a reasonably small height will be requested
+        for the overall minimum width of the box.
+        """
         row_spacing: int
+        """
+        The amount of vertical space between two children.
+        """
         selection_mode: SelectionMode
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The selection mode used by the flow box.
+        """
 
     props: Props = ...
     def __init__(
@@ -35055,43 +35398,13 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The child widget.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -35238,6 +35551,7 @@ class FlowBoxChildClass(GObject.GPointer):
         FlowBoxChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     activate: Callable[[FlowBoxChild], None] = ...
     padding: list[None] = ...
@@ -35341,53 +35655,29 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        FontChooser.Props,
+    ):
         modal: bool
+        """
+        Whether the font chooser dialog should be modal.
+        """
         title: str
+        """
+        The title of the font chooser dialog.
+        """
         use_font: bool
+        """
+        Whether the buttons label will be drawn in the selected font.
+        """
         use_size: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        font: Optional[str]
-        font_desc: Optional[Pango.FontDescription]
-        font_features: str
-        language: str
-        level: FontChooserLevel
-        preview_text: str
-        show_preview_entry: bool
+        """
+        Whether the buttons label will use the selected font size.
+        """
 
     props: Props = ...
     def __init__(
@@ -35593,6 +35883,17 @@ class FontChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(
+        self,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
+    ): ...
     @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font(self) -> Optional[str]:
         """
@@ -36056,77 +36357,17 @@ class FontChooserDialog(
       notify (GParam)
     """
 
-    class Props:
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        font: Optional[str]
-        font_desc: Optional[Pango.FontDescription]
-        font_features: str
-        language: str
-        level: FontChooserLevel
-        preview_text: str
-        show_preview_entry: bool
-        startup_id: str
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        FontChooser.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -36217,6 +36458,7 @@ class FontChooserIface(GObject.GPointer):
         FontChooserIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     base_iface: GObject.TypeInterface = ...
     get_font_family: Callable[[FontChooser], Optional[Pango.FontFamily]] = ...
     get_font_face: Callable[[FontChooser], Optional[Pango.FontFace]] = ...
@@ -36318,50 +36560,22 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        FontChooser.Props,
+    ):
         tweak_action: Gio.Action
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        font: Optional[str]
-        font_desc: Optional[Pango.FontDescription]
-        font_features: str
-        language: str
-        level: FontChooserLevel
-        preview_text: str
-        show_preview_entry: bool
+        """
+        A toggle action that can be used to switch to the tweak page
+        of the font chooser widget, which lets the user tweak the
+        OpenType features and variation axes of the selected font.
+
+        The action will be enabled or disabled depending on whether
+        the selected font has any features or axes.
+        """
 
     props: Props = ...
     def __init__(
@@ -36453,12 +36667,32 @@ class FontDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         filter: Optional[Filter]
+        """
+        Sets a filter to restrict what fonts are shown
+        in the font chooser dialog.
+        """
         font_map: Optional[Pango.FontMap]
+        """
+        Sets a custom font map to select fonts from.
+
+        A custom font map can be used to present application-specific
+        fonts instead of or in addition to the normal system fonts.
+        """
         language: Optional[Pango.Language]
+        """
+        The language for which the font features are selected.
+        """
         modal: bool
+        """
+        Whether the font chooser dialog is modal.
+        """
         title: str
+        """
+        A title that may be shown on the font chooser
+        dialog that is presented by [method@Gtk.FontDialog.choose_font].
+        """
 
     props: Props = ...
     def __init__(
@@ -36907,49 +37141,57 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         dialog: Optional[FontDialog]
+        """
+        The `GtkFontDialog` that contains parameters for
+        the font chooser dialog.
+        """
         font_desc: Optional[Pango.FontDescription]
+        """
+        The selected font.
+
+        This property can be set to give the button its initial
+        font, and it will be updated to reflect the users choice
+        in the font chooser dialog.
+
+        Listen to `notify::font-desc` to get informed about changes
+        to the buttons font.
+        """
         font_features: Optional[str]
+        """
+        The selected font features.
+
+        This property will be updated to reflect the users choice
+        in the font chooser dialog.
+
+        Listen to `notify::font-features` to get informed about changes
+        to the buttons font features.
+        """
         language: Optional[Pango.Language]
+        """
+        The selected language for font features.
+
+        This property will be updated to reflect the users choice
+        in the font chooser dialog.
+
+        Listen to `notify::language` to get informed about changes
+        to the buttons language.
+        """
         level: FontLevel
+        """
+        The level of detail for the font chooser dialog.
+        """
         use_font: bool
+        """
+        Whether the buttons label will be drawn in the selected font.
+        """
         use_size: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether the buttons label will use the selected font size.
+        """
 
     props: Props = ...
     def __init__(
@@ -37214,6 +37456,7 @@ class FontDialogButtonClass(GObject.GPointer):
         FontDialogButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class FontDialogClass(GObject.GPointer):
@@ -37225,6 +37468,7 @@ class FontDialogClass(GObject.GPointer):
         FontDialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Frame(Widget, Accessible, Buildable, ConstraintTarget):
@@ -37346,46 +37590,25 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         label: Optional[str]
+        """
+        Text of the frame's label.
+        """
         label_widget: Optional[Widget]
+        """
+        Widget to display in place of the usual frame label.
+        """
         label_xalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The horizontal alignment of the label.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -37565,6 +37788,7 @@ class FrameClass(GObject.GPointer):
         FrameClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     compute_child_allocation: Callable[[Frame, Gdk.Rectangle], None] = ...
     padding: list[None] = ...
@@ -37756,49 +37980,57 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         allowed_apis: Gdk.GLAPI
+        """
+        The allowed APIs.
+        """
         api: Gdk.GLAPI
+        """
+        The API currently in use.
+        """
         auto_render: bool
+        """
+        If set to %TRUE the ::render signal will be emitted every time
+        the widget draws.
+
+        This is the default and is useful if drawing the widget is faster.
+
+        If set to %FALSE the data from previous rendering is kept around and will
+        be used for drawing the widget the next time, unless the window is resized.
+        In order to force a rendering [method@Gtk.GLArea.queue_render] must be called.
+        This mode is useful when the scene changes seldom, but takes a long time
+        to redraw.
+        """
         context: Optional[Gdk.GLContext]
+        """
+        The `GdkGLContext` used by the `GtkGLArea` widget.
+
+        The `GtkGLArea` widget is responsible for creating the `GdkGLContext`
+        instance. If you need to render with other kinds of buffers (stencil,
+        depth, etc), use render buffers.
+        """
         has_depth_buffer: bool
+        """
+        If set to %TRUE the widget will allocate and enable a depth buffer for the
+        target framebuffer.
+
+        Setting this property will enable GL's depth testing as a side effect. If
+        you don't need depth testing, you should call `glDisable(GL_DEPTH_TEST)`
+        in your `GtkGLArea::render` handler.
+        """
         has_stencil_buffer: bool
+        """
+        If set to %TRUE the widget will allocate and enable a stencil buffer for the
+        target framebuffer.
+        """
         use_es: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        If set to %TRUE the widget will try to create a `GdkGLContext` using
+        OpenGL ES instead of OpenGL.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -38170,6 +38402,7 @@ class GLAreaClass(GObject.GPointer):
         GLAreaClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     render: Callable[[GLArea, Gdk.GLContext], bool] = ...
     resize: Callable[[GLArea, int, int], None] = ...
@@ -38296,12 +38529,12 @@ class Gesture(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The number of touch points that trigger
+        recognition on this gesture.
+        """
 
     props: Props = ...
     def __init__(
@@ -38678,7 +38911,8 @@ class Gesture(EventController):
         """
         ...
 
-class GestureClass(GObject.GPointer): ...
+class GestureClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureClick(GestureSingle):
     """
@@ -38730,17 +38964,8 @@ class GestureClick(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(GestureSingle.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         button: int = ...,
@@ -38766,7 +38991,8 @@ class GestureClick(GestureSingle):
         """
         ...
 
-class GestureClickClass(GObject.GPointer): ...
+class GestureClickClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureDrag(GestureSingle):
     """
@@ -38819,17 +39045,8 @@ class GestureDrag(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(GestureSingle.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         button: int = ...,
@@ -38890,7 +39107,8 @@ class GestureDrag(GestureSingle):
         """
         ...
 
-class GestureDragClass(GObject.GPointer): ...
+class GestureDragClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureLongPress(GestureSingle):
     """
@@ -38951,16 +39169,11 @@ class GestureLongPress(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         delay_factor: float
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        Factor by which to modify the default timeout.
+        """
 
     props: Props = ...
     def __init__(
@@ -39016,7 +39229,8 @@ class GestureLongPress(GestureSingle):
         """
         ...
 
-class GestureLongPressClass(GObject.GPointer): ...
+class GestureLongPressClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GesturePan(GestureDrag):
     """
@@ -39080,16 +39294,11 @@ class GesturePan(GestureDrag):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureDrag.Props):
         orientation: Orientation
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        The expected orientation of pan gestures.
+        """
 
     props: Props = ...
     def __init__(
@@ -39142,7 +39351,8 @@ class GesturePan(GestureDrag):
         """
         ...
 
-class GesturePanClass(GObject.GPointer): ...
+class GesturePanClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureRotate(Gesture):
     """
@@ -39183,14 +39393,8 @@ class GestureRotate(Gesture):
       notify (GParam)
     """
 
-    class Props:
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(Gesture.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         n_points: int = ...,
@@ -39230,7 +39434,8 @@ class GestureRotate(Gesture):
         """
         ...
 
-class GestureRotateClass(GObject.GPointer): ...
+class GestureRotateClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureSingle(Gesture):
     """
@@ -39282,15 +39487,21 @@ class GestureSingle(Gesture):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gesture.Props):
         button: int
+        """
+        Mouse button number to listen to, or 0 to listen for any button.
+        """
         exclusive: bool
+        """
+        Whether the gesture is exclusive.
+
+        Exclusive gestures only listen to pointer and pointer emulated events.
+        """
         touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        Whether the gesture handles only touch events.
+        """
 
     props: Props = ...
     def __init__(
@@ -39424,7 +39635,8 @@ class GestureSingle(Gesture):
         """
         ...
 
-class GestureSingleClass(GObject.GPointer): ...
+class GestureSingleClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureStylus(GestureSingle):
     """
@@ -39476,16 +39688,11 @@ class GestureStylus(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         stylus_only: bool
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        If this gesture should exclusively react to stylus input devices.
+        """
 
     props: Props = ...
     def __init__(
@@ -39623,7 +39830,8 @@ class GestureStylus(GestureSingle):
         """
         ...
 
-class GestureStylusClass(GObject.GPointer): ...
+class GestureStylusClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureSwipe(GestureSingle):
     """
@@ -39677,17 +39885,8 @@ class GestureSwipe(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(GestureSingle.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         button: int = ...,
@@ -39730,7 +39929,8 @@ class GestureSwipe(GestureSingle):
         """
         ...
 
-class GestureSwipeClass(GObject.GPointer): ...
+class GestureSwipeClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class GestureZoom(Gesture):
     """
@@ -39772,14 +39972,8 @@ class GestureZoom(Gesture):
       notify (GParam)
     """
 
-    class Props:
-        n_points: int
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+    class Props(Gesture.Props): ...
 
-    props: Props = ...
     def __init__(
         self,
         n_points: int = ...,
@@ -39820,7 +40014,8 @@ class GestureZoom(Gesture):
         """
         ...
 
-class GestureZoomClass(GObject.GPointer): ...
+class GestureZoomClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     """
@@ -39980,48 +40175,33 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         baseline_row: int
+        """
+        The row to align to the baseline when valign is using baseline alignment.
+        """
         column_homogeneous: bool
+        """
+        If %TRUE, the columns are all the same width.
+        """
         column_spacing: int
+        """
+        The amount of space between two consecutive columns.
+        """
         row_homogeneous: bool
+        """
+        If %TRUE, the rows are all the same height.
+        """
         row_spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The amount of space between two consecutive rows.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -40431,6 +40611,7 @@ class GridClass(GObject.GPointer):
         GridClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     padding: list[None] = ...
 
@@ -40471,12 +40652,28 @@ class GridLayout(LayoutManager):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutManager.Props):
         baseline_row: int
+        """
+        The row to align to the baseline, when `GtkWidget:valign` is set
+        to %GTK_ALIGN_BASELINE.
+        """
         column_homogeneous: bool
+        """
+        Whether all the columns in the grid have the same width.
+        """
         column_spacing: int
+        """
+        The amount of space between to consecutive columns.
+        """
         row_homogeneous: bool
+        """
+        Whether all the rows in the grid have the same height.
+        """
         row_spacing: int
+        """
+        The amount of space between to consecutive rows.
+        """
 
     props: Props = ...
     def __init__(
@@ -40688,13 +40885,23 @@ class GridLayoutChild(LayoutChild):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutChild.Props):
         column: int
+        """
+        The column to place the child in.
+        """
         column_span: int
+        """
+        The number of columns the child spans to.
+        """
         row: int
+        """
+        The row to place the child in.
+        """
         row_span: int
-        child_widget: Widget
-        layout_manager: LayoutManager
+        """
+        The number of rows the child spans to.
+        """
 
     props: Props = ...
     def __init__(
@@ -40815,6 +41022,7 @@ class GridLayoutChildClass(GObject.GPointer):
         GridLayoutChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutChildClass = ...
 
 class GridLayoutClass(GObject.GPointer):
@@ -40826,6 +41034,7 @@ class GridLayoutClass(GObject.GPointer):
         GridLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class GridView(
@@ -40947,54 +41156,45 @@ class GridView(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        ListBase.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+        Scrollable.Props,
+    ):
         enable_rubberband: bool
+        """
+        Allow rubberband selection.
+        """
         factory: Optional[ListItemFactory]
+        """
+        Factory for populating list items.
+        """
         max_columns: int
+        """
+        Maximum number of columns per row.
+
+        If this number is smaller than [property@Gtk.GridView:min-columns],
+        that value is used instead.
+        """
         min_columns: int
+        """
+        Minimum number of columns per row.
+        """
         model: Optional[SelectionModel]
+        """
+        Model for the items displayed.
+        """
         single_click_activate: bool
+        """
+        Activate rows on single click and select them on hover.
+        """
         tab_behavior: ListTabBehavior
-        orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
+        """
+        Behavior of the <kbd>Tab</kbd> key
+        """
 
     props: Props = ...
     def __init__(
@@ -41279,7 +41479,8 @@ class GridView(
         """
         ...
 
-class GridViewClass(GObject.GPointer): ...
+class GridViewClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -41424,45 +41625,26 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         decoration_layout: Optional[str]
+        """
+        The decoration layout for buttons.
+
+        If this property is not set, the
+        [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+        """
         show_title_buttons: bool
+        """
+        Whether to show title buttons like close, minimize, maximize.
+
+        Which buttons are actually shown and where is determined
+        by the [property@Gtk.HeaderBar:decoration-layout] property,
+        and by the state of the window (e.g. a close button will not
+        be shown if the window can't be closed).
+        """
         title_widget: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
 
     props: Props = ...
     def __init__(
@@ -41719,9 +41901,19 @@ class IMContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         input_hints: InputHints
+        """
+        Additional hints that allow input methods to fine-tune
+        their behaviour.
+        """
         input_purpose: InputPurpose
+        """
+        The purpose of the text field that the `GtkIMContext is connected to.
+
+        This property can be used by on-screen keyboards and other input
+        methods to adjust their behaviour.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -42320,6 +42512,7 @@ class IMContextClass(GObject.GPointer):
         IMContextClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     preedit_start: Callable[[IMContext], None] = ...
     preedit_end: Callable[[IMContext], None] = ...
@@ -42415,11 +42608,7 @@ class IMContextSimple(IMContext):
       notify (GParam)
     """
 
-    class Props:
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    props: Props = ...
+    class Props(IMContext.Props): ...
     object: IMContext = ...
     priv: IMContextSimplePrivate = ...
     def __init__(
@@ -42460,9 +42649,11 @@ class IMContextSimpleClass(GObject.GPointer):
         IMContextSimpleClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: IMContextClass = ...
 
-class IMContextSimplePrivate(GObject.GPointer): ...
+class IMContextSimplePrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class IMMulticontext(IMContext):
     """
@@ -42498,11 +42689,7 @@ class IMMulticontext(IMContext):
       notify (GParam)
     """
 
-    class Props:
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    props: Props = ...
+    class Props(IMContext.Props): ...
     object: IMContext = ...
     priv: IMMulticontextPrivate = ...
     def __init__(
@@ -42563,13 +42750,15 @@ class IMMulticontextClass(GObject.GPointer):
         IMMulticontextClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: IMContextClass = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class IMMulticontextPrivate(GObject.GPointer): ...
+class IMMulticontextPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
     """
@@ -42599,10 +42788,19 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gdk.Paintable.Props, SymbolicPaintable.Props):
         file: Optional[Gio.File]
+        """
+        The file representing the icon, if any.
+        """
         icon_name: Optional[str]
+        """
+        The icon name that was chosen during lookup.
+        """
         is_symbolic: bool
+        """
+        Whether the icon is symbolic or not.
+        """
 
     props: Props = ...
     def __init__(
@@ -42741,12 +42939,44 @@ class IconTheme(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         display: Optional[Gdk.Display]
+        """
+        The display that this icon theme object is attached to.
+        """
         icon_names: list[str]
+        """
+        The icon names that are supported by the icon theme.
+        """
         resource_path: Optional[list[str]]
+        """
+        Resource paths that will be looked at when looking for icons,
+        similar to search paths.
+
+        The resources are considered as part of the hicolor icon theme
+        and must be located in subdirectories that are defined in the
+        hicolor icon theme, such as `@path/16x16/actions/run.png`.
+        Icons that are directly placed in the resource path instead
+        of a subdirectory are also considered as ultimate fallback.
+        """
         search_path: Optional[list[str]]
+        """
+        The search path for this icon theme.
+
+        When looking for icons, GTK will search for a subdirectory of
+        one or more of the directories in the search path with the same
+        name as the icon theme containing an index.theme file. (Themes
+        from multiple of the path elements are combined to allow themes
+        to be extended by adding icons in the user’s home directory.)
+        """
         theme_name: str
+        """
+        The name of the icon theme that is being used.
+
+        Unless set to a different value, this will be the value of
+        the `GtkSettings:gtk-icon-theme-name` property of the `GtkSettings`
+        object associated to the display of the icontheme object.
+        """
 
     props: Props = ...
     def __init__(
@@ -43215,63 +43445,103 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        CellLayout.Props,
+        ConstraintTarget.Props,
+        Scrollable.Props,
+    ):
         activate_on_single_click: bool
+        """
+        The activate-on-single-click property specifies whether the \"item-activated\" signal
+        will be emitted after a single click.
+        """
         cell_area: CellArea
+        """
+        The `GtkCellArea` used to layout cell renderers for this view.
+
+        If no area is specified when creating the icon view with gtk_icon_view_new_with_area()
+        a `GtkCellAreaBox` will be used.
+        """
         column_spacing: int
+        """
+        The column-spacing property specifies the space which is inserted between
+        the columns of the icon view.
+        """
         columns: int
+        """
+        The columns property contains the number of the columns in which the
+        items should be displayed. If it is -1, the number of columns will
+        be chosen automatically to fill the available area.
+        """
         item_orientation: Orientation
+        """
+        The item-orientation property specifies how the cells (i.e. the icon and
+        the text) of the item are positioned relative to each other.
+        """
         item_padding: int
+        """
+        The item-padding property specifies the padding around each
+        of the icon view's item.
+        """
         item_width: int
+        """
+        The item-width property specifies the width to use for each item.
+        If it is set to -1, the icon view will automatically determine a
+        suitable item size.
+        """
         margin: int
+        """
+        The margin property specifies the space which is inserted
+        at the edges of the icon view.
+        """
         markup_column: int
+        """
+        The ::markup-column property contains the number of the model column
+        containing markup information to be displayed. The markup column must be
+        of type `G_TYPE_STRING`. If this property and the :text-column property
+        are both set to column numbers, it overrides the text column.
+        If both are set to -1, no texts are displayed.
+        """
         model: Optional[TreeModel]
         pixbuf_column: int
+        """
+        The ::pixbuf-column property contains the number of the model column
+        containing the pixbufs which are displayed. The pixbuf column must be
+        of type `GDK_TYPE_PIXBUF`. Setting this property to -1 turns off the
+        display of pixbufs.
+        """
         reorderable: bool
+        """
+        The reorderable property specifies if the items can be reordered
+        by DND.
+        """
         row_spacing: int
+        """
+        The row-spacing property specifies the space which is inserted between
+        the rows of the icon view.
+        """
         selection_mode: SelectionMode
+        """
+        The ::selection-mode property specifies the selection mode of
+        icon view. If the mode is %GTK_SELECTION_MULTIPLE, rubberband selection
+        is enabled, for the other modes, only keyboard selection is possible.
+        """
         spacing: int
+        """
+        The spacing property specifies the space which is inserted between
+        the cells (i.e. the icon and the text) of an item.
+        """
         text_column: int
+        """
+        The ::text-column property contains the number of the model column
+        containing the texts which are displayed. The text column must be
+        of type `G_TYPE_STRING`. If this property and the :markup-column
+        property are both set to -1, no texts are displayed.
+        """
         tooltip_column: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     def __init__(
@@ -44474,51 +44744,58 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         file: str
+        """
+        The `GFile` to display.
+        """
         gicon: Optional[Gio.Icon]
+        """
+        The `GIcon` displayed in the GtkImage.
+
+        For themed icons, If the icon theme is changed, the image will be updated
+        automatically.
+        """
         icon_name: Optional[str]
+        """
+        The name of the icon in the icon theme.
+
+        If the icon theme is changed, the image will be updated automatically.
+        """
         icon_size: IconSize
+        """
+        The symbolic size to display icons at.
+        """
         paintable: Optional[Gdk.Paintable]
+        """
+        The `GdkPaintable` to display.
+        """
         pixel_size: int
+        """
+        The size in pixels to display icons at.
+
+        If set to a value != -1, this property overrides the
+        [property@Gtk.Image:icon-size] property for images of type
+        `GTK_IMAGE_ICON_NAME`.
+        """
         resource: str
+        """
+        A path to a resource file to display.
+        """
         storage_type: ImageType
+        """
+        The representation being used for image data.
+        """
         use_fallback: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether the icon displayed in the `GtkImage` will use
+        standard icon names fallback.
+
+        The value of this property is only relevant for images of type
+        %GTK_IMAGE_ICON_NAME and %GTK_IMAGE_GICON.
+        """
 
     props: Props = ...
     def __init__(
@@ -45090,45 +45367,23 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         message_type: MessageType
+        """
+        The type of the message.
+
+        The type may be used to determine the appearance of the info bar.
+        """
         revealed: bool
+        """
+        Whether the info bar shows its contents.
+        """
         show_close_button: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether to include a standard close button.
+        """
 
     props: Props = ...
     def __init__(
@@ -45498,53 +45753,100 @@ class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         attributes: Optional[Pango.AttrList]
+        """
+        A list of style attributes to apply to the text of the inscription.
+        """
         min_chars: int
+        """
+        The number of characters that should fit into the inscription at minimum.
+
+        This influences the requested width, not the width actually given to the widget,
+        which might turn out to be larger.
+
+        Note that this is an approximate character width, so some characters might be
+        wider and some might be thinner, so do not expect the number of characters to
+        exactly match.
+
+        If you set this property to 0, the inscription will not request any width at all
+        and its width will be determined entirely by its surroundings.
+        """
         min_lines: int
+        """
+        The number of lines that should fit into the inscription at minimum.
+
+        This influences the requested height, not the height actually given to the widget,
+        which might turn out to be larger.
+
+        Note that this is an approximate line height, so if the text uses things like fancy
+        Unicode or attribute that influence the height, the text might not fit.
+
+        If you set this property to 0, the inscription will not request any height at all
+        and its height will be determined entirely by its surroundings.
+        """
         nat_chars: int
+        """
+        The number of characters that should ideally fit into the inscription.
+
+        This influences the requested width, not the width actually given to the widget.
+        The widget might turn out larger as well as smaller.
+
+        If this property is set to a value smaller than [property@Gtk.Inscription:min-chars],
+        that value will be used. In particular, for the default value of 0, this will always
+        be the case.
+        """
         nat_lines: int
+        """
+        The number of lines that should ideally fit into the inscription.
+
+        This influences the requested height, not the height actually given to the widget.
+        The widget might turn out larger as well as smaller.
+
+        If this property is set to a value smaller than [property@Gtk.Inscription:min-lines],
+        that value will be used. In particular, for the default value of 0, this will always
+        be the case.
+        """
         text: Optional[str]
+        """
+        The displayed text.
+        """
         text_overflow: InscriptionOverflow
+        """
+        The overflow method to use for the text.
+        """
         wrap_mode: Pango.WrapMode
+        """
+        Controls how the line wrapping is done.
+
+        Note that unlike `GtkLabel`, the default here is %PANGO_WRAP_WORD_CHAR.
+        """
         xalign: float
+        """
+        The horizontal alignment of the text inside the allocated size.
+
+        Compare this to [property@Gtk.Widget:halign], which determines how the
+        inscription's size allocation is positioned in the available space.
+        """
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The vertical alignment of the text inside the allocated size.
+
+        Compare this to [property@Gtk.Widget:valign], which determines how the
+        inscription's size allocation is positioned in the available space.
+        """
         markup: Optional[str]
+        """
+        Utility property that sets both the [property@Gtk.Inscription:text] and
+        [property@Gtk.Inscription:attributes] properties, mainly intended for use in
+        GtkBuilder ui files to ease translation support and bindings.
+
+        This function uses [func@Pango.parse_markup] to parse the markup into text and
+        attributes. The markup must be valid. If you cannot ensure that, consider using
+        [func@Pango.parse_markup] and setting the two properties yourself.
+        """
 
     props: Props = ...
     def __init__(
@@ -45906,6 +46208,7 @@ class InscriptionClass(GObject.GPointer):
         InscriptionClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class KeyvalTrigger(ShortcutTrigger):
@@ -45929,9 +46232,15 @@ class KeyvalTrigger(ShortcutTrigger):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ShortcutTrigger.Props):
         keyval: int
+        """
+        The key value for the trigger.
+        """
         modifiers: Gdk.ModifierType
+        """
+        The key modifiers for the trigger.
+        """
 
     props: Props = ...
     def __init__(self, keyval: int = ..., modifiers: Gdk.ModifierType = ...): ...
@@ -45979,7 +46288,8 @@ class KeyvalTrigger(ShortcutTrigger):
         """
         ...
 
-class KeyvalTriggerClass(GObject.GPointer): ...
+class KeyvalTriggerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Label(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -46257,62 +46567,155 @@ class Label(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         attributes: Optional[Pango.AttrList]
+        """
+        A list of style attributes to apply to the text of the label.
+        """
         ellipsize: Pango.EllipsizeMode
+        """
+        The preferred place to ellipsize the string, if the label does
+        not have enough room to display the entire string.
+
+        Note that setting this property to a value other than
+        %PANGO_ELLIPSIZE_NONE has the side-effect that the label requests
+        only enough space to display the ellipsis \"...\". In particular, this
+        means that ellipsizing labels do not work well in notebook tabs, unless
+        the [property@Gtk.NotebookPage:tab-expand] child property is set to %TRUE.
+        Other ways to set a label's width are [method@Gtk.Widget.set_size_request]
+        and [method@Gtk.Label.set_width_chars].
+        """
         extra_menu: Optional[Gio.MenuModel]
+        """
+        A menu model whose contents will be appended to the context menu.
+        """
         justify: Justification
+        """
+        The alignment of the lines in the text of the label, relative to each other.
+
+        This does *not* affect the alignment of the label within its allocation.
+        See [property@Gtk.Label:xalign] for that.
+        """
         label: str
+        """
+        The contents of the label.
+
+        If the string contains Pango markup (see [func@Pango.parse_markup]),
+        you will have to set the [property@Gtk.Label:use-markup] property to
+        %TRUE in order for the label to display the markup attributes. See also
+        [method@Gtk.Label.set_markup] for a convenience function that sets both
+        this property and the [property@Gtk.Label:use-markup] property at the
+        same time.
+
+        If the string contains underlines acting as mnemonics, you will have to
+        set the [property@Gtk.Label:use-underline] property to %TRUE in order
+        for the label to display them.
+        """
         lines: int
+        """
+        The number of lines to which an ellipsized, wrapping label
+        should be limited.
+
+        This property has no effect if the label is not wrapping or ellipsized.
+        Set this property to -1 if you don't want to limit the number of lines.
+        """
         max_width_chars: int
+        """
+        The desired maximum width of the label, in characters.
+
+        If this property is set to -1, the width will be calculated automatically.
+
+        See the section on [text layout](class.Label.html#text-layout) for details of how
+        [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+        determine the width of ellipsized and wrapped labels.
+        """
         mnemonic_keyval: int
+        """
+        The mnemonic accelerator key for the label.
+        """
         mnemonic_widget: Optional[Widget]
+        """
+        The widget to be activated when the labels mnemonic key is pressed.
+        """
         natural_wrap_mode: NaturalWrapMode
+        """
+        Select the line wrapping for the natural size request.
+
+        This only affects the natural size requested. For the actual wrapping used,
+        see the [property@Gtk.Label:wrap-mode] property.
+
+        The default is %GTK_NATURAL_WRAP_INHERIT, which inherits the behavior of the
+        [property@Gtk.Label:wrap-mode] property.
+        """
         selectable: bool
+        """
+        Whether the label text can be selected with the mouse.
+        """
         single_line_mode: bool
+        """
+        Whether the label is in single line mode.
+
+        In single line mode, the height of the label does not depend on the
+        actual text, it is always set to ascent + descent of the font. This
+        can be an advantage in situations where resizing the label because
+        of text changes would be distracting, e.g. in a statusbar.
+        """
         tabs: Optional[Pango.TabArray]
+        """
+        Custom tabs for this label.
+        """
         use_markup: bool
+        """
+        %TRUE if the text of the label includes Pango markup.
+
+        See [func@Pango.parse_markup].
+        """
         use_underline: bool
+        """
+        %TRUE if the text of the label indicates a mnemonic with an _
+        before the mnemonic character.
+        """
         width_chars: int
+        """
+        The desired width of the label, in characters.
+
+        If this property is set to -1, the width will be calculated automatically.
+
+        See the section on [text layout](class.Label.html#text-layout) for details of how
+        [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+        determine the width of ellipsized and wrapped labels.
+        """
         wrap: bool
+        """
+        %TRUE if the label text will wrap if it gets too wide.
+        """
         wrap_mode: Pango.WrapMode
+        """
+        Controls how the line wrapping is done.
+
+        This only affects the formatting if line wrapping is on (see the
+        [property@Gtk.Label:wrap] property). The default is %PANGO_WRAP_WORD,
+        which means wrap on word boundaries.
+
+        For sizing behavior, also consider the [property@Gtk.Label:natural-wrap-mode]
+        property.
+        """
         xalign: float
+        """
+        The horizontal alignment of the label text inside its size allocation.
+
+        Compare this to [property@Gtk.Widget:halign], which determines how the
+        labels size allocation is positioned in the space available for the label.
+        """
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The vertical alignment of the label text inside its size allocation.
+
+        Compare this to [property@Gtk.Widget:valign], which determines how the
+        labels size allocation is positioned in the space available for the label.
+        """
 
     props: Props = ...
     def __init__(
@@ -47255,9 +47658,15 @@ class LayoutChild(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child_widget: Widget
+        """
+        The widget that is associated to the `GtkLayoutChild` instance.
+        """
         layout_manager: LayoutManager
+        """
+        The layout manager that created the `GtkLayoutChild` instance.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -47300,6 +47709,7 @@ class LayoutChildClass(GObject.GPointer):
         LayoutChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class LayoutManager(GObject.Object):
@@ -47365,6 +47775,7 @@ class LayoutManager(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
     parent_instance: GObject.Object = ...
     def allocate(self, widget: Widget, width: int, height: int, baseline: int) -> None:
         """
@@ -47557,6 +47968,7 @@ class LayoutManagerClass(GObject.GPointer):
         LayoutManagerClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     get_request_mode: Callable[[LayoutManager, Widget], SizeRequestMode] = ...
     measure: Callable[
@@ -47746,48 +48158,46 @@ class LevelBar(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         inverted: bool
+        """
+        Whether the `GtkLeveBar` is inverted.
+
+        Level bars normally grow from top to bottom or left to right.
+        Inverted level bars grow in the opposite direction.
+        """
         max_value: float
+        """
+        Determines the maximum value of the interval that can be displayed by the bar.
+        """
         min_value: float
+        """
+        Determines the minimum value of the interval that can be displayed by the bar.
+        """
         mode: LevelBarMode
+        """
+        Determines the way `GtkLevelBar` interprets the value properties to draw the
+        level fill area.
+
+        Specifically, when the value is %GTK_LEVEL_BAR_MODE_CONTINUOUS,
+        `GtkLevelBar` will draw a single block representing the current value in
+        that area; when the value is %GTK_LEVEL_BAR_MODE_DISCRETE,
+        the widget will draw a succession of separate blocks filling the
+        draw area, with the number of blocks being equal to the units separating
+        the integral roundings of [property@Gtk.LevelBar:min-value] and
+        [property@Gtk.LevelBar:max-value].
+        """
         value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        Determines the currently filled value of the level bar.
+        """
 
     props: Props = ...
     def __init__(
@@ -48153,52 +48563,23 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Button.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         uri: str
+        """
+        The URI bound to this button.
+        """
         visited: bool
-        can_shrink: bool
-        child: Optional[Widget]
-        has_frame: bool
-        icon_name: Optional[str]
-        label: Optional[str]
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        The 'visited' state of this button.
+
+        A visited link is drawn in a different color.
+        """
 
     props: Props = ...
     def __init__(
@@ -48403,47 +48784,19 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+        Scrollable.Props,
+    ):
         orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
+        """
+        The orientation of the list. See GtkOrientable:orientation
+        for details.
+        """
 
     props: Props = ...
     def __init__(
@@ -48485,7 +48838,8 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
 
-class ListBaseClass(GObject.GPointer): ...
+class ListBaseClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -48623,46 +48977,26 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         accept_unpaired_release: bool
+        """
+        Whether to accept unpaired release events.
+        """
         activate_on_single_click: bool
+        """
+        Determines whether children can be activated with a single
+        click, or require a double-click.
+        """
         selection_mode: SelectionMode
+        """
+        The selection mode used by the list box.
+        """
         show_separators: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether to show separators between rows.
+        """
 
     props: Props = ...
     def __init__(
@@ -49326,47 +49660,26 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         activatable: bool
+        """
+        Determines whether the ::row-activated
+        signal will be emitted for this row.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        Determines whether this row can be selected.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -49598,6 +49911,7 @@ class ListBoxRowClass(GObject.GPointer):
         ListBoxRowClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     activate: Callable[[ListBoxRow], None] = ...
     padding: list[None] = ...
@@ -49630,12 +49944,27 @@ class ListHeader(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child: Optional[Widget]
+        """
+        Widget used for display.
+        """
         end: int
+        """
+        The first position no longer part of this section.
+        """
         item: Optional[GObject.Object]
+        """
+        The item at the start of the section.
+        """
         n_items: int
+        """
+        Number of items in this section.
+        """
         start: int
+        """
+        First position of items in this section.
+        """
 
     props: Props = ...
     def __init__(self, child: Optional[Widget] = ...): ...
@@ -49733,7 +50062,8 @@ class ListHeader(GObject.Object):
         """
         ...
 
-class ListHeaderClass(GObject.GPointer): ...
+class ListHeaderClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ListItem(GObject.Object):
     """
@@ -49776,16 +50106,43 @@ class ListItem(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accessible_description: str
+        """
+        The accessible description to set on the list item.
+        """
         accessible_label: str
+        """
+        The accessible label to set on the list item.
+        """
         activatable: bool
+        """
+        If the item can be activated by the user.
+        """
         child: Optional[Widget]
+        """
+        Widget used for display.
+        """
         focusable: bool
+        """
+        If the item can be focused with the keyboard.
+        """
         item: Optional[GObject.Object]
+        """
+        Displayed item.
+        """
         position: int
+        """
+        Position of the item.
+        """
         selectable: bool
+        """
+        If the item can be selected by the user.
+        """
         selected: bool
+        """
+        If the item is currently selected.
+        """
 
     props: Props = ...
     def __init__(
@@ -50032,9 +50389,76 @@ class ListItem(GObject.Object):
         """
         ...
 
-class ListItemClass(GObject.GPointer): ...
-class ListItemFactory(GObject.Object): ...
-class ListItemFactoryClass(GObject.GPointer): ...
+class ListItemClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class ListItemFactory(GObject.Object):
+    """
+    A `GtkListItemFactory` creates widgets for the items taken from a `GListModel`.
+
+    This is one of the core concepts of handling list widgets such
+    as [class@Gtk.ListView] or [class@Gtk.GridView].
+
+    The `GtkListItemFactory` is tasked with creating widgets for items
+    taken from the model when the views need them and updating them as
+    the items displayed by the view change.
+
+    A view is usually only able to display anything after both a factory
+    and a model have been set on the view. So it is important that you do
+    not skip this step when setting up your first view.
+
+    Because views do not display the whole list at once but only a few
+    items, they only need to maintain a few widgets at a time. They will
+    instruct the `GtkListItemFactory` to create these widgets and bind them
+    to the items that are currently displayed.
+
+    As the list model changes or the user scrolls to the list, the items will
+    change and the view will instruct the factory to bind the widgets to those
+    new items.
+
+    The actual widgets used for displaying those widgets is provided by you.
+
+    When the factory needs widgets created, it will create a `GtkListItem`
+    and hand it to your code to set up a widget for. This list item will provide
+    various properties with information about what item to display and provide
+    you with some opportunities to configure its behavior. See the
+    [class@Gtk.ListItem] documentation for further details.
+
+    Various implementations of `GtkListItemFactory` exist to allow you different
+    ways to provide those widgets. The most common implementations are
+    [class@Gtk.BuilderListItemFactory] which takes a `GtkBuilder` .ui file
+    and then creates widgets and manages everything automatically from the
+    information in that file and [class@Gtk.SignalListItemFactory] which allows
+    you to connect to signals with your own code and retain full control over
+    how the widgets are setup and managed.
+
+    A `GtkListItemFactory` is supposed to be final - that means its behavior should
+    not change and the first widget created from it should behave the same way as
+    the last widget created from it.
+    If you intend to do changes to the behavior, it is recommended that you create
+    a new `GtkListItemFactory` which will allow the views to recreate its widgets.
+
+    Once you have chosen your factory and created it, you need to set it
+    on the view widget you want to use it with, such as via
+    [method@Gtk.ListView.set_factory]. Reusing factories across different
+    views is allowed, but very uncommon.
+
+    :Constructors:
+
+    ::
+
+        ListItemFactory(**properties)
+
+    Object GtkListItemFactory
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.Object.Props): ...
+
+class ListItemFactoryClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated("Use [class@Gio.ListStore] instead")
 class ListStore(
@@ -50208,6 +50632,14 @@ class ListStore(
       notify (GParam)
     """
 
+    class Props(
+        GObject.Object.Props,
+        Buildable.Props,
+        TreeDragDest.Props,
+        TreeDragSource.Props,
+        TreeModel.Props,
+        TreeSortable.Props,
+    ): ...
     parent: GObject.Object = ...
     priv: ListStorePrivate = ...
     def append(self, row=None): ...  # FIXME Function
@@ -50456,10 +50888,12 @@ class ListStoreClass(GObject.GPointer):
         ListStoreClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     padding: list[None] = ...
 
-class ListStorePrivate(GObject.GPointer): ...
+class ListStorePrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ListView(
     ListBase, Accessible, Buildable, ConstraintTarget, Orientable, Scrollable
@@ -50642,54 +51076,42 @@ class ListView(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        ListBase.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+        Scrollable.Props,
+    ):
         enable_rubberband: bool
+        """
+        Allow rubberband selection.
+        """
         factory: Optional[ListItemFactory]
+        """
+        Factory for populating list items.
+        """
         header_factory: Optional[ListItemFactory]
+        """
+        Factory for creating header widgets.
+        """
         model: Optional[SelectionModel]
+        """
+        Model for the items displayed.
+        """
         show_separators: bool
+        """
+        Show separators between rows.
+        """
         single_click_activate: bool
+        """
+        Activate rows on single click and select them on hover.
+        """
         tab_behavior: ListTabBehavior
-        orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
+        """
+        Behavior of the <kbd>Tab</kbd> key
+        """
 
     props: Props = ...
     def __init__(
@@ -50969,7 +51391,8 @@ class ListView(
         """
         ...
 
-class ListViewClass(GObject.GPointer): ...
+class ListViewClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated("This widget will be removed in GTK 5")
 class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
@@ -51096,56 +51519,37 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Button.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         permission: Optional[Gio.Permission]
+        """
+        The `GPermission object controlling this button.
+        """
         text_lock: str
+        """
+        The text to display when prompting the user to lock.
+        """
         text_unlock: str
+        """
+        The text to display when prompting the user to unlock.
+        """
         tooltip_lock: str
+        """
+        The tooltip to display when prompting the user to lock.
+        """
         tooltip_not_authorized: str
+        """
+        The tooltip to display when the user cannot obtain authorization.
+        """
         tooltip_unlock: str
-        can_shrink: bool
-        child: Optional[Widget]
-        has_frame: bool
-        icon_name: Optional[str]
-        label: Optional[str]
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        The tooltip to display when prompting the user to unlock.
+        """
 
     props: Props = ...
     def __init__(
@@ -51294,11 +51698,23 @@ class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, SectionModel.Props):
         has_map: bool
+        """
+        If a map is set for this model
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being mapped.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(self, model: Gio.ListModel = ...): ...
@@ -51399,6 +51815,7 @@ class MapListModelClass(GObject.GPointer):
         MapListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
@@ -51476,43 +51893,13 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         media_stream: Optional[MediaStream]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The media-stream managed by this object or %NULL if none.
+        """
 
     props: Props = ...
     def __init__(
@@ -51597,6 +51984,7 @@ class MediaControlsClass(GObject.GPointer):
         MediaControlsClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class MediaFile(MediaStream, Gdk.Paintable):
@@ -51654,22 +52042,17 @@ class MediaFile(MediaStream, Gdk.Paintable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MediaStream.Props, Gdk.Paintable.Props):
         file: Optional[Gio.File]
+        """
+        The file being played back or %NULL if not playing a file.
+        """
         input_stream: Optional[Gio.InputStream]
-        duration: int
-        ended: bool
-        error: Optional[GLib.Error]
-        has_audio: bool
-        has_video: bool
-        loop: bool
-        muted: bool
-        playing: bool
-        prepared: bool
-        seekable: bool
-        seeking: bool
-        timestamp: int
-        volume: float
+        """
+        The stream being played back or %NULL if not playing a stream.
+
+        This is %NULL when playing a file.
+        """
 
     props: Props = ...
     parent_instance: MediaStream = ...
@@ -51878,6 +52261,7 @@ class MediaFileClass(GObject.GPointer):
         MediaFileClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: MediaStreamClass = ...
     open: Callable[[MediaFile], None] = ...
     close: Callable[[MediaFile], None] = ...
@@ -51937,20 +52321,61 @@ class MediaStream(GObject.Object, Gdk.Paintable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gdk.Paintable.Props):
         duration: int
+        """
+        The stream's duration in microseconds or 0 if unknown.
+        """
         ended: bool
+        """
+        Set when playback has finished.
+        """
         error: Optional[GLib.Error]
+        """
+        %NULL for a properly working stream or the `GError`
+        that the stream is in.
+        """
         has_audio: bool
+        """
+        Whether the stream contains audio.
+        """
         has_video: bool
+        """
+        Whether the stream contains video.
+        """
         loop: bool
+        """
+        Try to restart the media from the beginning once it ended.
+        """
         muted: bool
+        """
+        Whether the audio stream should be muted.
+        """
         playing: bool
+        """
+        Whether the stream is currently playing.
+        """
         prepared: bool
+        """
+        Whether the stream has finished initializing and existence of
+        audio and video is known.
+        """
         seekable: bool
+        """
+        Set unless the stream is known to not support seeking.
+        """
         seeking: bool
+        """
+        Set while a seek is in progress.
+        """
         timestamp: int
+        """
+        The current presentation timestamp in microseconds.
+        """
         volume: float
+        """
+        Volume of the audio stream.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -52552,6 +52977,7 @@ class MediaStreamClass(GObject.GPointer):
         MediaStreamClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     play: Callable[[MediaStream], bool] = ...
     pause: Callable[[MediaStream], None] = ...
@@ -52714,54 +53140,64 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         active: bool
+        """
+        Whether the menu button is active.
+        """
         always_show_arrow: bool
+        """
+        Whether to show a dropdown arrow even when using an icon or a custom child.
+        """
         can_shrink: bool
+        """
+        Whether the size of the button can be made smaller than the natural
+        size of its contents.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         direction: ArrowType
+        """
+        The `GtkArrowType` representing the direction in which the
+        menu or popover will be popped out.
+        """
         has_frame: bool
+        """
+        Whether the button has a frame.
+        """
         icon_name: Optional[str]
+        """
+        The name of the icon used to automatically populate the button.
+        """
         label: Optional[str]
+        """
+        The label for the button.
+        """
         menu_model: Optional[Gio.MenuModel]
+        """
+        The `GMenuModel` from which the popup will be created.
+
+        See [method@Gtk.MenuButton.set_menu_model] for the interaction
+        with the [property@Gtk.MenuButton:popover] property.
+        """
         popover: Optional[Popover]
+        """
+        The `GtkPopover` that will be popped up when the button is clicked.
+        """
         primary: bool
+        """
+        Whether the menu button acts as a primary menu.
+
+        Primary menus can be opened using the <kbd>F10</kbd> key
+        """
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        If set an underscore in the text indicates a mnemonic.
+        """
 
     props: Props = ...
     def __init__(
@@ -53415,75 +53851,49 @@ class MessageDialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         message_area: Widget
+        """
+        The `GtkBox` that corresponds to the message area of this dialog.
+
+        See [method@Gtk.MessageDialog.get_message_area] for a detailed
+        description of this area.
+        """
         message_type: MessageType
+        """
+        The type of the message.
+        """
         secondary_text: str
+        """
+        The secondary text of the message dialog.
+        """
         secondary_use_markup: bool
+        """
+        %TRUE if the secondary text of the dialog includes Pango markup.
+
+        See [func@Pango.parse_markup].
+        """
         text: str
+        """
+        The primary text of the message dialog.
+
+        If the dialog has a secondary text, this will appear as the title.
+        """
         use_markup: bool
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        %TRUE if the primary text of the dialog includes Pango markup.
+
+        See [func@Pango.parse_markup].
+        """
         buttons: ButtonsType
-        startup_id: str
 
     props: Props = ...
     parent_instance: Dialog = ...
@@ -53583,7 +53993,8 @@ class MessageDialog(
         """
         ...
 
-class MessageDialogClass(GObject.GPointer): ...
+class MessageDialogClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class MnemonicAction(ShortcutAction):
     """
@@ -53600,6 +54011,8 @@ class MnemonicAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(ShortcutAction.Props): ...
 
     @staticmethod
     def get() -> MnemonicAction:
@@ -53618,7 +54031,8 @@ class MnemonicAction(ShortcutAction):
         """
         ...
 
-class MnemonicActionClass(GObject.GPointer): ...
+class MnemonicActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class MnemonicTrigger(ShortcutTrigger):
     """
@@ -53643,8 +54057,11 @@ class MnemonicTrigger(ShortcutTrigger):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ShortcutTrigger.Props):
         keyval: int
+        """
+        The key value for the trigger.
+        """
 
     props: Props = ...
     def __init__(self, keyval: int = ...): ...
@@ -53679,7 +54096,8 @@ class MnemonicTrigger(ShortcutTrigger):
         """
         ...
 
-class MnemonicTriggerClass(GObject.GPointer): ...
+class MnemonicTriggerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class MountOperation(Gio.MountOperation):
     """
@@ -53743,19 +54161,19 @@ class MountOperation(Gio.MountOperation):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.MountOperation.Props):
         display: Gdk.Display
+        """
+        The display where dialogs will be shown.
+        """
         is_showing: bool
+        """
+        Whether a dialog is currently shown.
+        """
         parent: Optional[Window]
-        anonymous: bool
-        choice: int
-        domain: Optional[str]
-        is_tcrypt_hidden_volume: bool
-        is_tcrypt_system_volume: bool
-        password: Optional[str]
-        password_save: Gio.PasswordSave
-        pim: int
-        username: Optional[str]
+        """
+        The parent window.
+        """
 
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
@@ -53863,13 +54281,15 @@ class MountOperationClass(GObject.GPointer):
         MountOperationClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: Gio.MountOperationClass = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class MountOperationPrivate(GObject.GPointer): ...
+class MountOperationPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class MultiFilter(Filter, Gio.ListModel, Buildable):
     """
@@ -53897,9 +54317,15 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Filter.Props, Gio.ListModel.Props, Buildable.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def append(self, filter: Filter) -> None:
@@ -53930,7 +54356,8 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
         """
         ...
 
-class MultiFilterClass(GObject.GPointer): ...
+class MultiFilterClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -53964,10 +54391,24 @@ class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        GObject.Object.Props,
+        Gio.ListModel.Props,
+        SectionModel.Props,
+        SelectionModel.Props,
+    ):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The list managed by this selection.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
@@ -54021,6 +54462,7 @@ class MultiSelectionClass(GObject.GPointer):
         MultiSelectionClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class MultiSorter(Sorter, Gio.ListModel, Buildable):
@@ -54054,9 +54496,15 @@ class MultiSorter(Sorter, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Sorter.Props, Gio.ListModel.Props, Buildable.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def append(self, sorter: Sorter) -> None:
@@ -54117,6 +54565,7 @@ class MultiSorterClass(GObject.GPointer):
         MultiSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 class NamedAction(ShortcutAction):
@@ -54139,8 +54588,11 @@ class NamedAction(ShortcutAction):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ShortcutAction.Props):
         action_name: str
+        """
+        The name of the action to activate.
+        """
 
     props: Props = ...
     def __init__(self, action_name: str = ...): ...
@@ -54177,7 +54629,8 @@ class NamedAction(ShortcutAction):
         """
         ...
 
-class NamedActionClass(GObject.GPointer): ...
+class NamedActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Native(GObject.GInterface):
     """
@@ -54204,6 +54657,8 @@ class Native(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     @staticmethod
     def get_for_surface(surface: Gdk.Surface) -> Optional[Native]:
@@ -54330,11 +54785,23 @@ class NativeDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         modal: bool
+        """
+        Whether the window should be modal with respect to its transient parent.
+        """
         title: Optional[str]
+        """
+        The title of the dialog window
+        """
         transient_for: Optional[Window]
+        """
+        The transient parent of the dialog, or %NULL for none.
+        """
         visible: bool
+        """
+        Whether the window is currently visible.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -54554,6 +55021,7 @@ class NativeDialogClass(GObject.GPointer):
         NativeDialogClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     response: Callable[[NativeDialog, int], None] = ...
     show: Callable[[NativeDialog], None] = ...
@@ -54563,7 +55031,8 @@ class NativeDialogClass(GObject.GPointer):
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class NativeInterface(GObject.GPointer): ...
+class NativeInterface(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class NeverTrigger(ShortcutTrigger):
     """
@@ -54580,6 +55049,8 @@ class NeverTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(ShortcutTrigger.Props): ...
 
     @staticmethod
     def get() -> NeverTrigger:
@@ -54599,7 +55070,8 @@ class NeverTrigger(ShortcutTrigger):
         """
         ...
 
-class NeverTriggerClass(GObject.GPointer): ...
+class NeverTriggerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -54638,10 +55110,24 @@ class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        GObject.Object.Props,
+        Gio.ListModel.Props,
+        SectionModel.Props,
+        SelectionModel.Props,
+    ):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being managed.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(self, model: Optional[Gio.ListModel] = ...): ...
@@ -54695,6 +55181,7 @@ class NoSelectionClass(GObject.GPointer):
         NoSelectionClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
@@ -54878,50 +55365,41 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         enable_popup: bool
+        """
+        If %TRUE, pressing the right mouse button on the notebook shows a page switching menu.
+        """
         group_name: Optional[str]
+        """
+        Group name for tab drag and drop.
+        """
         page: int
+        """
+        The index of the current page.
+        """
         pages: Gio.ListModel
+        """
+        A selection model with the pages.
+        """
         scrollable: bool
+        """
+        If %TRUE, scroll arrows are added if there are too many pages to fit.
+        """
         show_border: bool
+        """
+        Whether the border should be shown.
+        """
         show_tabs: bool
+        """
+        Whether tabs should be shown.
+        """
         tab_pos: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Which side of the notebook holds the tabs.
+        """
 
     props: Props = ...
     def __init__(
@@ -55744,17 +56222,47 @@ class NotebookPage(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child: Widget
+        """
+        The child for this page.
+        """
         detachable: bool
+        """
+        Whether the tab is detachable.
+        """
         menu: Widget
+        """
+        The label widget displayed in the child's menu entry.
+        """
         menu_label: str
+        """
+        The text of the menu widget.
+        """
         position: int
+        """
+        The index of the child in the parent.
+        """
         reorderable: bool
+        """
+        Whether the tab is reorderable by user action.
+        """
         tab: Widget
+        """
+        The tab widget for this page.
+        """
         tab_expand: bool
+        """
+        Whether to expand the child's tab.
+        """
         tab_fill: bool
+        """
+        Whether the child's tab should fill the allocated area.
+        """
         tab_label: str
+        """
+        The text of the tab widget.
+        """
 
     props: Props = ...
     def __init__(
@@ -55799,6 +56307,8 @@ class NothingAction(ShortcutAction):
       notify (GParam)
     """
 
+    class Props(ShortcutAction.Props): ...
+
     @staticmethod
     def get() -> NothingAction:
         """
@@ -55816,7 +56326,8 @@ class NothingAction(ShortcutAction):
         """
         ...
 
-class NothingActionClass(GObject.GPointer): ...
+class NothingActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class NumericSorter(Sorter):
     """
@@ -55845,9 +56356,15 @@ class NumericSorter(Sorter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Sorter.Props):
         expression: Optional[Expression]
+        """
+        The expression to evaluate on items to get a number to compare with.
+        """
         sort_order: SortType
+        """
+        Whether the sorter will sort smaller numbers first.
+        """
 
     props: Props = ...
     def __init__(
@@ -55935,6 +56452,7 @@ class NumericSorterClass(GObject.GPointer):
         NumericSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 class ObjectExpression(Expression):
@@ -55948,6 +56466,8 @@ class ObjectExpression(Expression):
         ObjectExpression(**properties)
         new(object:GObject.Object) -> Gtk.ObjectExpression
     """
+
+    class Props(Expression.Props): ...
 
     def get_object(self) -> Optional[GObject.Object]:
         """
@@ -56004,6 +56524,9 @@ class Orientable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(self, orientation: Orientation = ...): ...
     def get_orientation(self) -> Orientation:
         """
         Retrieves the orientation of the @orientable.
@@ -56038,6 +56561,7 @@ class OrientableIface(GObject.GPointer):
         OrientableIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     base_iface: GObject.TypeInterface = ...
 
 class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
@@ -56145,43 +56669,13 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The main child widget.
+        """
 
     props: Props = ...
     def __init__(
@@ -56368,6 +56862,8 @@ class OverlayLayout(LayoutManager):
       notify (GParam)
     """
 
+    class Props(LayoutManager.Props): ...
+
     @classmethod
     def new(cls) -> OverlayLayout:
         """
@@ -56406,11 +56902,16 @@ class OverlayLayoutChild(LayoutChild):
       notify (GParam)
     """
 
-    class Props:
+    class Props(LayoutChild.Props):
         clip_overlay: bool
+        """
+        Whether the child should be clipped to fit the parent's size.
+        """
         measure: bool
-        child_widget: Widget
-        layout_manager: LayoutManager
+        """
+        Whether the child size should contribute to the `GtkOverlayLayout`'s
+        measurement.
+        """
 
     props: Props = ...
     def __init__(
@@ -56479,6 +56980,7 @@ class OverlayLayoutChildClass(GObject.GPointer):
         OverlayLayoutChildClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutChildClass = ...
 
 class OverlayLayoutClass(GObject.GPointer):
@@ -56490,6 +56992,7 @@ class OverlayLayoutClass(GObject.GPointer):
         OverlayLayoutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: LayoutManagerClass = ...
 
 class PadActionEntry(GObject.GPointer):
@@ -56503,6 +57006,7 @@ class PadActionEntry(GObject.GPointer):
         PadActionEntry()
     """
 
+    class Props(GObject.GPointer.Props): ...
     type: PadActionType = ...
     index: int = ...
     mode: int = ...
@@ -56582,13 +57086,9 @@ class PadController(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         action_group: Gio.ActionGroup
         pad: Gdk.Device
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     props: Props = ...
     def __init__(
@@ -56671,7 +57171,8 @@ class PadController(EventController):
         """
         ...
 
-class PadControllerClass(GObject.GPointer): ...
+class PadControllerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class PageRange(GObject.GPointer):
     """
@@ -56686,6 +57187,7 @@ class PageRange(GObject.GPointer):
         PageRange()
     """
 
+    class Props(GObject.GPointer.Props): ...
     start: int = ...
     end: int = ...
 
@@ -56749,6 +57251,8 @@ class PageSetup(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props): ...
 
     def copy(self) -> PageSetup:
         """
@@ -57270,70 +57774,16 @@ class PageSetupUnixDialog(
       notify (GParam)
     """
 
-    class Props:
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -57619,54 +58069,73 @@ class Paned(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         end_child: Optional[Widget]
+        """
+        The second child.
+        """
         max_position: int
+        """
+        The largest possible value for the [property@Gtk.Paned:position]
+        property.
+
+        This property is derived from the size and shrinkability
+        of the widget's children.
+        """
         min_position: int
+        """
+        The smallest possible value for the [property@Gtk.Paned:position]
+        property.
+
+        This property is derived from the size and shrinkability
+        of the widget's children.
+        """
         position: int
+        """
+        Position of the separator in pixels, from the left/top.
+        """
         position_set: bool
+        """
+        Whether the [property@Gtk.Paned:position] property has been set.
+        """
         resize_end_child: bool
+        """
+        Determines whether the second child expands and shrinks
+        along with the paned widget.
+        """
         resize_start_child: bool
+        """
+        Determines whether the first child expands and shrinks
+        along with the paned widget.
+        """
         shrink_end_child: bool
+        """
+        Determines whether the second child can be made smaller
+        than its requisition.
+        """
         shrink_start_child: bool
+        """
+        Determines whether the first child can be made smaller
+        than its requisition.
+        """
         start_child: Optional[Widget]
+        """
+        The first child.
+        """
         wide_handle: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        Whether the `GtkPaned` should provide a stronger visual separation.
+
+        For example, this could be set when a paned contains two
+        [class@Gtk.Notebook]s, whose tab rows would otherwise merge visually.
+        """
 
     props: Props = ...
     def __init__(
@@ -57956,6 +58425,8 @@ class PaperSize(GObject.GBoxed):
         new_from_key_file(key_file:GLib.KeyFile, group_name:str=None) -> Gtk.PaperSize
         new_from_ppd(ppd_name:str, ppd_display_name:str, width:float, height:float) -> Gtk.PaperSize
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     def copy(self) -> PaperSize:
         """
@@ -58350,6 +58821,7 @@ class ParamSpecExpression(GObject.ParamSpec):
         ParamSpecExpression(**properties)
     """
 
+    class Props(GObject.ParamSpec.Props): ...
     parent_instance: GObject.ParamSpec = ...
 
 class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
@@ -58465,54 +58937,31 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+    ):
         activates_default: bool
+        """
+        Whether to activate the default widget when Enter is pressed.
+        """
         extra_menu: Optional[Gio.MenuModel]
+        """
+        A menu model whose contents will be appended to
+        the context menu.
+        """
         placeholder_text: str
+        """
+        The text that will be displayed in the `GtkPasswordEntry`
+        when it is empty and unfocused.
+        """
         show_peek_icon: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
+        """
+        Whether to show an icon for revealing the content.
+        """
 
     props: Props = ...
     def __init__(
@@ -58656,12 +59105,8 @@ class PasswordEntryBuffer(EntryBuffer):
       notify (GParam)
     """
 
-    class Props:
-        length: int
-        max_length: int
-        text: str
+    class Props(EntryBuffer.Props): ...
 
-    props: Props = ...
     def __init__(self, max_length: int = ..., text: str = ...): ...
     @classmethod
     def new(cls) -> PasswordEntryBuffer:
@@ -58686,9 +59131,11 @@ class PasswordEntryBufferClass(GObject.GPointer):
         PasswordEntryBufferClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: EntryBufferClass = ...
 
-class PasswordEntryClass(GObject.GPointer): ...
+class PasswordEntryClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -58816,48 +59263,34 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         alternative_text: Optional[str]
+        """
+        The alternative textual description for the picture.
+        """
         can_shrink: bool
+        """
+        If the `GtkPicture` can be made smaller than the natural size of its contents.
+        """
         content_fit: ContentFit
+        """
+        How the content should be resized to fit inside the `GtkPicture`.
+        """
         file: Optional[Gio.File]
+        """
+        The `GFile` that is displayed or %NULL if none.
+        """
         keep_aspect_ratio: bool
+        """
+        Whether the GtkPicture will render its contents trying to preserve the aspect
+        ratio.
+        """
         paintable: Optional[Gdk.Paintable]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The `GdkPaintable` to be displayed by this `GtkPicture`.
+        """
 
     props: Props = ...
     def __init__(
@@ -59255,6 +59688,7 @@ class PictureClass(GObject.GPointer):
         PictureClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutManager):
@@ -59415,50 +59849,48 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        ShortcutManager.Props,
+    ):
         autohide: bool
+        """
+        Whether to dismiss the popover on outside clicks.
+        """
         cascade_popdown: bool
+        """
+        Whether the popover pops down after a child popover.
+
+        This is used to implement the expected behavior of submenus.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         default_widget: Optional[Widget]
+        """
+        The default widget inside the popover.
+        """
         has_arrow: bool
+        """
+        Whether to draw an arrow.
+        """
         mnemonics_visible: bool
+        """
+        Whether mnemonics are currently visible in this popover.
+        """
         pointing_to: Gdk.Rectangle
+        """
+        Rectangle in the parent widget that the popover points to.
+        """
         position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        How to place the popover, relative to its parent.
+        """
 
     props: Props = ...
     parent: Widget = ...
@@ -59826,6 +60258,7 @@ class PopoverClass(GObject.GPointer):
         PopoverClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     closed: Callable[[Popover], None] = ...
     activate_default: Callable[[Popover], None] = ...
@@ -60028,52 +60461,22 @@ class PopoverMenu(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Popover.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        ShortcutManager.Props,
+    ):
         menu_model: Optional[Gio.MenuModel]
+        """
+        The model from which the menu is made.
+        """
         visible_submenu: str
-        autohide: bool
-        cascade_popdown: bool
-        child: Optional[Widget]
-        default_widget: Optional[Widget]
-        has_arrow: bool
-        mnemonics_visible: bool
-        pointing_to: Gdk.Rectangle
-        position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The name of the visible submenu.
+        """
 
     props: Props = ...
     def __init__(
@@ -60331,43 +60734,15 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         menu_model: Optional[Gio.MenuModel]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The `GMenuModel` from which the menu bar is created.
+
+        The model should only contain submenus as toplevel elements.
+        """
 
     props: Props = ...
     def __init__(
@@ -60475,7 +60850,8 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         """
         ...
 
-class PrintBackend(GObject.GPointer): ...
+class PrintBackend(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class PrintContext(GObject.Object):
     """
@@ -60560,6 +60936,8 @@ class PrintContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props): ...
 
     def create_pango_context(self) -> Pango.Context:
         """
@@ -60759,12 +61137,28 @@ class PrintJob(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         page_setup: PageSetup
+        """
+        Page setup.
+        """
         printer: Printer
+        """
+        The printer to send the job to.
+        """
         settings: PrintSettings
+        """
+        Printer settings.
+        """
         title: str
+        """
+        The title of the print job.
+        """
         track_print_status: bool
+        """
+        %TRUE if the print job will continue to emit status-changed
+        signals after the print data has been setn to the printer.
+        """
 
     props: Props = ...
     def __init__(
@@ -61322,25 +61716,165 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, PrintOperationPreview.Props):
         allow_async: bool
+        """
+        Determines whether the print operation may run asynchronously or not.
+
+        Some systems don't support asynchronous printing, but those that do
+        will return %GTK_PRINT_OPERATION_RESULT_IN_PROGRESS as the status, and
+        emit the [signal@Gtk.PrintOperation::done] signal when the operation
+        is actually done.
+
+        The Windows port does not support asynchronous operation at all (this
+        is unlikely to change). On other platforms, all actions except for
+        %GTK_PRINT_OPERATION_ACTION_EXPORT support asynchronous operation.
+        """
         current_page: int
+        """
+        The current page in the document.
+
+        If this is set before [method@Gtk.PrintOperation.run],
+        the user will be able to select to print only the current page.
+
+        Note that this only makes sense for pre-paginated documents.
+        """
         custom_tab_label: Optional[str]
+        """
+        Used as the label of the tab containing custom widgets.
+
+        Note that this property may be ignored on some platforms.
+
+        If this is %NULL, GTK uses a default label.
+        """
         default_page_setup: PageSetup
+        """
+        The `GtkPageSetup` used by default.
+
+        This page setup will be used by [method@Gtk.PrintOperation.run],
+        but it can be overridden on a per-page basis by connecting
+        to the [signal@Gtk.PrintOperation::request-page-setup] signal.
+        """
         embed_page_setup: bool
+        """
+        If %TRUE, page size combo box and orientation combo box
+        are embedded into page setup page.
+        """
         export_filename: str
+        """
+        The name of a file to generate instead of showing the print dialog.
+
+        Currently, PDF is the only supported format.
+
+        The intended use of this property is for implementing
+        “Export to PDF” actions.
+
+        “Print to PDF” support is independent of this and is done
+        by letting the user pick the “Print to PDF” item from the
+        list of printers in the print dialog.
+        """
         has_selection: bool
+        """
+        Determines whether there is a selection in your application.
+
+        This can allow your application to print the selection.
+        This is typically used to make a \"Selection\" button sensitive.
+        """
         job_name: str
+        """
+        A string used to identify the job (e.g. in monitoring
+        applications like eggcups).
+
+        If you don't set a job name, GTK picks a default one
+        by numbering successive print jobs.
+        """
         n_pages: int
+        """
+        The number of pages in the document.
+
+        This must be set to a positive number before the rendering
+        starts. It may be set in a [signal@Gtk.PrintOperation::begin-print]
+        signal handler.
+
+        Note that the page numbers passed to the
+        [signal@Gtk.PrintOperation::request-page-setup] and
+        [signal@Gtk.PrintOperation::draw-page] signals are 0-based, i.e.
+        if the user chooses to print all pages, the last ::draw-page signal
+        will be for page @n_pages - 1.
+        """
         n_pages_to_print: int
+        """
+        The number of pages that will be printed.
+
+        Note that this value is set during print preparation phase
+        (%GTK_PRINT_STATUS_PREPARING), so this value should never be
+        get before the data generation phase (%GTK_PRINT_STATUS_GENERATING_DATA).
+        You can connect to the [signal@Gtk.PrintOperation::status-changed] signal
+        and call [method@Gtk.PrintOperation.get_n_pages_to_print] when
+        print status is %GTK_PRINT_STATUS_GENERATING_DATA.
+
+        This is typically used to track the progress of print operation.
+        """
         print_settings: Optional[PrintSettings]
+        """
+        The `GtkPrintSettings` used for initializing the dialog.
+
+        Setting this property is typically used to re-establish
+        print settings from a previous print operation, see
+        [method@Gtk.PrintOperation.run].
+        """
         show_progress: bool
+        """
+        Determines whether to show a progress dialog during the
+        print operation.
+        """
         status: PrintStatus
+        """
+        The status of the print operation.
+        """
         status_string: str
+        """
+        A string representation of the status of the print operation.
+
+        The string is translated and suitable for displaying the print
+        status e.g. in a `GtkStatusbar`.
+
+        See the [property@Gtk.PrintOperation:status] property for a status
+        value that is suitable for programmatic use.
+        """
         support_selection: bool
+        """
+        If %TRUE, the print operation will support print of selection.
+
+        This allows the print dialog to show a \"Selection\" button.
+        """
         track_print_status: bool
+        """
+        If %TRUE, the print operation will try to continue report on
+        the status of the print job in the printer queues and printer.
+
+        This can allow your application to show things like “out of paper”
+        issues, and when the print job actually reaches the printer.
+        However, this is often implemented using polling, and should
+        not be enabled unless needed.
+        """
         unit: Unit
+        """
+        The transformation for the cairo context obtained from
+        `GtkPrintContext` is set up in such a way that distances
+        are measured in units of @unit.
+        """
         use_full_page: bool
+        """
+        If %TRUE, the transformation for the cairo context obtained
+        from `GtkPrintContext` puts the origin at the top left corner
+        of the page.
+
+        This may not be the top left corner of the sheet, depending on
+        page orientation and the number of pages per sheet. Otherwise,
+        the origin is at the top left corner of the imageable area (i.e.
+        inside the margins).
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -61945,6 +62479,7 @@ class PrintOperationClass(GObject.GPointer):
         PrintOperationClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     done: Callable[[PrintOperation, PrintOperationResult], None] = ...
     begin_print: Callable[[PrintOperation, PrintContext], None] = ...
@@ -61981,6 +62516,8 @@ class PrintOperationPreview(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     def end_preview(self) -> None:
         """
@@ -62041,6 +62578,7 @@ class PrintOperationPreviewIface(GObject.GPointer):
         PrintOperationPreviewIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     ready: Callable[[PrintOperationPreview, PrintContext], None] = ...
     got_page_size: Callable[[PrintOperationPreview, PrintContext, PageSetup], None] = (
@@ -62058,7 +62596,8 @@ class PrintOperationPreviewIface(GObject.GPointer):
     _gtk_reserved7: None = ...
     _gtk_reserved8: None = ...
 
-class PrintOperationPrivate(GObject.GPointer): ...
+class PrintOperationPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class PrintSettings(GObject.Object):
     """
@@ -62090,6 +62629,8 @@ class PrintSettings(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props): ...
 
     def copy(self) -> PrintSettings:
         """
@@ -63307,76 +63848,47 @@ class PrintUnixDialog(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Dialog.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         current_page: int
+        """
+        The current page in the document.
+        """
         embed_page_setup: bool
+        """
+        %TRUE if the page setup controls are embedded.
+        """
         has_selection: bool
+        """
+        Whether the application has a selection.
+        """
         manual_capabilities: PrintCapabilities
+        """
+        Capabilities the application can handle.
+        """
         page_setup: PageSetup
+        """
+        The `GtkPageSetup` object to use.
+        """
         print_settings: PrintSettings
+        """
+        The `GtkPrintSettings` object used for this dialog.
+        """
         selected_printer: Optional[Printer]
+        """
+        The `GtkPrinter` which is selected.
+        """
         support_selection: bool
-        use_header_bar: int
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        Whether the dialog supports selection.
+        """
 
     props: Props = ...
     def __init__(
@@ -63732,17 +64244,50 @@ class Printer(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accepting_jobs: bool
+        """
+        %TRUE if the printer is accepting jobs.
+        """
         accepts_pdf: bool
+        """
+        %TRUE if this printer can accept PDF.
+        """
         accepts_ps: bool
+        """
+        %TRUE if this printer can accept PostScript.
+        """
         icon_name: str
+        """
+        Icon name to use for the printer.
+        """
         is_virtual: bool
+        """
+        %FALSE if this represents a real hardware device.
+        """
         job_count: int
+        """
+        Number of jobs queued in the printer.
+        """
         location: str
+        """
+        Information about the location of the printer.
+        """
         name: str
+        """
+        The name of the printer.
+        """
         paused: bool
+        """
+        %TRUE if this printer is paused.
+
+        A paused printer still accepts jobs, but it does
+        not print them.
+        """
         state_message: str
+        """
+        String giving the current status of the printer.
+        """
 
     props: Props = ...
     def __init__(
@@ -64226,49 +64771,55 @@ class ProgressBar(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         ellipsize: Pango.EllipsizeMode
+        """
+        The preferred place to ellipsize the string.
+
+        The text will be ellipsized if the progress bar does not have enough room
+        to display the entire string, specified as a `PangoEllipsizeMode`.
+
+        Note that setting this property to a value other than
+        %PANGO_ELLIPSIZE_NONE has the side-effect that the progress bar requests
+        only enough space to display the ellipsis (\"...\"). Another means to set a
+        progress bar's width is [method@Gtk.Widget.set_size_request].
+        """
         fraction: float
+        """
+        The fraction of total work that has been completed.
+        """
         inverted: bool
+        """
+        Invert the direction in which the progress bar grows.
+        """
         pulse_step: float
+        """
+        The fraction of total progress to move the bounding block when pulsed.
+        """
         show_text: bool
+        """
+        Sets whether the progress bar will show a text in addition
+        to the bar itself.
+
+        The shown text is either the value of the [property@Gtk.ProgressBar:text]
+        property or, if that is %NULL, the [property@Gtk.ProgressBar:fraction]
+        value, as a percentage.
+
+        To make a progress bar that is styled and sized suitably for showing text
+        (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
+        to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
+        """
         text: Optional[str]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        Text to be displayed in the progress bar.
+        """
 
     props: Props = ...
     def __init__(
@@ -64545,6 +65096,8 @@ class PropertyExpression(Expression):
         new_for_pspec(expression:Gtk.Expression=None, pspec:GObject.ParamSpec) -> Gtk.PropertyExpression
     """
 
+    class Props(Expression.Props): ...
+
     def get_expression(self) -> Optional[Expression]:
         """
         Gets the expression specifying the object of
@@ -64629,6 +65182,7 @@ class PropertyExpression(Expression):
         ...
 
 class PyGTKDeprecationWarning:
+    class Props: ...
     args = ...  # FIXME Constant
 
     def add_note(self, *args, **kwargs): ...  # FIXME Function
@@ -64725,49 +65279,43 @@ class Range(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         adjustment: Adjustment
+        """
+        The adjustment that is controlled by the range.
+        """
         fill_level: float
+        """
+        The fill level (e.g. prebuffering of a network stream).
+        """
         inverted: bool
+        """
+        If %TRUE, the direction in which the slider moves is inverted.
+        """
         restrict_to_fill_level: bool
+        """
+        Controls whether slider movement is restricted to an
+        upper boundary set by the fill level.
+        """
         round_digits: int
+        """
+        The number of digits to round the value to when
+        it changes.
+
+        See [signal@Gtk.Range::change-value].
+        """
         show_fill_level: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        Controls whether fill level indicator graphics are displayed
+        on the trough.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -65174,6 +65722,7 @@ class RangeClass(GObject.GPointer):
         RangeClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     value_changed: Callable[[Range], None] = ...
     adjust_bounds: Callable[[Range, float], None] = ...
@@ -65194,6 +65743,7 @@ class RecentData(GObject.GPointer):
         RecentData()
     """
 
+    class Props(GObject.GPointer.Props): ...
     display_name: str = ...
     description: str = ...
     mime_type: str = ...
@@ -65207,6 +65757,8 @@ class RecentInfo(GObject.GBoxed):
     `GtkRecentInfo` contains the metadata associated with an item in the
     recently used files list.
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     def create_app_info(self, app_name: Optional[str] = None) -> Optional[Gio.AppInfo]:
         """
@@ -65658,9 +66210,16 @@ class RecentManager(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         filename: str
+        """
+        The full path to the file to be used to store and read the
+        recently used resources list
+        """
         size: int
+        """
+        The size of the recently used resources list.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -65867,6 +66426,7 @@ class RecentManagerClass(GObject.GPointer):
         RecentManagerClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     changed: Callable[[RecentManager], None] = ...
     _gtk_recent1: None = ...
@@ -65874,7 +66434,8 @@ class RecentManagerClass(GObject.GPointer):
     _gtk_recent3: None = ...
     _gtk_recent4: None = ...
 
-class RecentManagerPrivate(GObject.GPointer): ...
+class RecentManagerPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class RequestedSize(GObject.GPointer):
     """
@@ -65889,6 +66450,7 @@ class RequestedSize(GObject.GPointer):
         RequestedSize()
     """
 
+    class Props(GObject.GPointer.Props): ...
     data: None = ...
     minimum_size: int = ...
     natural_size: int = ...
@@ -65907,6 +66469,7 @@ class Requisition(GObject.GBoxed):
         new() -> Gtk.Requisition
     """
 
+    class Props(GObject.GBoxed.Props): ...
     width: int = ...
     height: int = ...
     def copy(self) -> Requisition:
@@ -66047,47 +66610,29 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         child_revealed: bool
+        """
+        Whether the child is revealed and the animation target reached.
+        """
         reveal_child: bool
+        """
+        Whether the revealer should reveal the child.
+        """
         transition_duration: int
+        """
+        The animation duration, in milliseconds.
+        """
         transition_type: RevealerTransitionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The type of animation used to transition.
+        """
 
     props: Props = ...
     def __init__(
@@ -66294,6 +66839,8 @@ class Root(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
     def get_display(self) -> Gdk.Display:
         """
         Returns the display that this `GtkRoot` is on.
@@ -66345,7 +66892,8 @@ class Root(GObject.GInterface):
         """
         ...
 
-class RootInterface(GObject.GPointer): ...
+class RootInterface(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Scale(
     Range, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
@@ -66517,53 +67065,30 @@ class Scale(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Range.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         digits: int
+        """
+        The number of decimal places that are displayed in the value.
+        """
         draw_value: bool
+        """
+        Whether the current value is displayed as a string next to the slider.
+        """
         has_origin: bool
+        """
+        Whether the scale has an origin.
+        """
         value_pos: PositionType
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The position in which the current value is displayed.
+        """
 
     props: Props = ...
     parent_instance: Range = ...
@@ -66992,47 +67517,45 @@ class ScaleButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         active: bool
+        """
+        If the scale button should be pressed in.
+        """
         adjustment: Adjustment
+        """
+        The `GtkAdjustment` that is used as the model.
+        """
         icons: list[str]
+        """
+        The names of the icons to be used by the scale button.
+
+        The first item in the array will be used in the button
+        when the current value is the lowest value, the second
+        item for the highest value. All the subsequent icons will
+        be used for all the other values, spread evenly over the
+        range of values.
+
+        If there's only one icon name in the @icons array, it will
+        be used for all the values. If only two icon names are in
+        the @icons array, the first one will be used for the bottom
+        50% of the scale, and the second one for the top 50%.
+
+        It is recommended to use at least 3 icons so that the
+        `GtkScaleButton` reflects the current value of the scale
+        better for the users.
+        """
         value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The value of the scale.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -67238,6 +67761,7 @@ class ScaleButtonClass(GObject.GPointer):
         ScaleButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     value_changed: Callable[[ScaleButton, float], None] = ...
     padding: list[None] = ...
@@ -67251,6 +67775,7 @@ class ScaleClass(GObject.GPointer):
         ScaleClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: RangeClass = ...
     get_layout_offsets: Callable[[Scale], Tuple[int, int]] = ...
     padding: list[None] = ...
@@ -67269,6 +67794,8 @@ class ScrollInfo(GObject.GBoxed):
 
         new() -> Gtk.ScrollInfo
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     def get_enable_horizontal(self) -> bool:
         """
@@ -67402,6 +67929,15 @@ class Scrollable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
+    def __init__(
+        self,
+        hadjustment: Optional[Adjustment] = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Optional[Adjustment] = ...,
+        vscroll_policy: ScrollablePolicy = ...,
+    ): ...
     def get_border(self) -> Tuple[bool, Border]:
         """
         Returns the size of a non-scrolling border around the
@@ -67535,6 +68071,7 @@ class ScrollableInterface(GObject.GPointer):
         ScrollableInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     base_iface: GObject.TypeInterface = ...
     get_border: Callable[[Scrollable], Tuple[bool, Border]] = ...
 
@@ -67650,44 +68187,17 @@ class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         adjustment: Adjustment
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The `GtkAdjustment` controlled by this scrollbar.
+        """
 
     props: Props = ...
     def __init__(
@@ -67926,57 +68436,90 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+
+        When setting this property, if the child widget does not implement
+        [iface@Gtk.Scrollable], the scrolled window will add the child to
+        a [class@Gtk.Viewport] and then set the viewport as the child.
+        """
         hadjustment: Adjustment
         has_frame: bool
+        """
+        Whether to draw a frame around the contents.
+        """
         hscrollbar_policy: PolicyType
+        """
+        When the horizontal scrollbar is displayed.
+
+        Use [method@Gtk.ScrolledWindow.set_policy] to set
+        this property.
+        """
         kinetic_scrolling: bool
+        """
+        Whether kinetic scrolling is enabled or not.
+
+        Kinetic scrolling only applies to devices with source %GDK_SOURCE_TOUCHSCREEN.
+        """
         max_content_height: int
+        """
+        The maximum content height of @scrolled_window.
+        """
         max_content_width: int
+        """
+        The maximum content width of @scrolled_window.
+        """
         min_content_height: int
+        """
+        The minimum content height of @scrolled_window.
+        """
         min_content_width: int
+        """
+        The minimum content width of @scrolled_window.
+        """
         overlay_scrolling: bool
+        """
+        Whether overlay scrolling is enabled or not.
+
+        If it is, the scrollbars are only added as traditional widgets
+        when a mouse is present. Otherwise, they are overlaid on top of
+        the content, as narrow indicators.
+
+        Note that overlay scrolling can also be globally disabled, with
+        the [property@Gtk.Settings:gtk-overlay-scrolling] setting.
+        """
         propagate_natural_height: bool
+        """
+        Whether the natural height of the child should be calculated and propagated
+        through the scrolled window’s requested natural height.
+
+        This is useful in cases where an attempt should be made to allocate exactly
+        enough space for the natural size of the child.
+        """
         propagate_natural_width: bool
+        """
+        Whether the natural width of the child should be calculated and propagated
+        through the scrolled window’s requested natural width.
+
+        This is useful in cases where an attempt should be made to allocate exactly
+        enough space for the natural size of the child.
+        """
         vadjustment: Adjustment
         vscrollbar_policy: PolicyType
+        """
+        When the vertical scrollbar is displayed.
+
+        Use [method@Gtk.ScrolledWindow.set_policy] to set
+        this property.
+        """
         window_placement: CornerType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Where the contents are located with respect to the scrollbars.
+        """
 
     props: Props = ...
     def __init__(
@@ -68618,46 +69161,25 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         key_capture_widget: Optional[Widget]
+        """
+        The key capture widget.
+        """
         search_mode_enabled: bool
+        """
+        Whether the search mode is on and the search bar shown.
+        """
         show_close_button: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether to show the close button in the search bar.
+        """
 
     props: Props = ...
     def __init__(
@@ -68975,53 +69497,27 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+    ):
         activates_default: bool
+        """
+        Whether to activate the default widget when Enter is pressed.
+        """
         placeholder_text: Optional[str]
+        """
+        The text that will be displayed in the `GtkSearchEntry`
+        when it is empty and unfocused.
+        """
         search_delay: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
+        """
+        The delay in milliseconds from last keypress to the search
+        changed signal.
+        """
 
     props: Props = ...
     def __init__(
@@ -69199,6 +69695,8 @@ class SectionModel(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
     def get_section(self, position: int) -> Tuple[int, int]:
         """
         Query the section that covers the given position. The number of
@@ -69232,6 +69730,7 @@ class SectionModelInterface(GObject.GPointer):
         SectionModelInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     get_section: Callable[[SectionModel, int], Tuple[int, int]] = ...
 
@@ -69261,10 +69760,19 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[SelectionModel]
+        """
+        The model being filtered.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
 
     props: Props = ...
     def __init__(self, model: Optional[SelectionModel] = ...): ...
@@ -69322,6 +69830,7 @@ class SelectionFilterModelClass(GObject.GPointer):
         SelectionFilterModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class SelectionModel(GObject.GInterface):
@@ -69371,6 +69880,8 @@ class SelectionModel(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     def get_selection(self) -> Bitset:
         """
@@ -69600,6 +70111,7 @@ class SelectionModelInterface(GObject.GPointer):
         SelectionModelInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     is_selected: Callable[[SelectionModel, int], bool] = ...
     get_selection_in_range: Callable[[SelectionModel, int, int], Bitset] = ...
@@ -69694,45 +70206,14 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         can_focus: bool = ...,
@@ -69877,57 +70358,375 @@ class Settings(GObject.Object, StyleProvider):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, StyleProvider.Props):
         gtk_alternative_button_order: bool
+        """
+        Whether buttons in dialogs should use the alternative button order.
+        """
         gtk_alternative_sort_arrows: bool
+        """
+        Controls the direction of the sort indicators in sorted list and tree
+        views.
+
+        By default an arrow pointing down means the column is sorted
+        in ascending order. When set to %TRUE, this order will be inverted.
+        """
         gtk_application_prefer_dark_theme: bool
+        """
+        Whether the application prefers to use a dark theme.
+
+        If a GTK theme includes a dark variant, it will be used
+        instead of the configured theme.
+
+        Some applications benefit from minimizing the amount of light
+        pollution that interferes with the content. Good candidates for
+        dark themes are photo and video editors that make the actual
+        content get all the attention and minimize the distraction of
+        the chrome.
+
+        Dark themes should not be used for documents, where large spaces
+        are white/light and the dark chrome creates too much contrast
+        (web browser, text editor...).
+        """
         gtk_cursor_aspect_ratio: float
+        """
+        The aspect ratio of the text caret.
+        """
         gtk_cursor_blink: bool
+        """
+        Whether the cursor should blink.
+
+        Also see the [property@Gtk.Settings:gtk-cursor-blink-timeout] setting,
+        which allows more flexible control over cursor blinking.
+        """
         gtk_cursor_blink_time: int
+        """
+        Length of the cursor blink cycle, in milliseconds.
+        """
         gtk_cursor_blink_timeout: int
+        """
+        Time after which the cursor stops blinking, in seconds.
+
+        The timer is reset after each user interaction.
+
+        Setting this to zero has the same effect as setting
+        [property@Gtk.Settings:gtk-cursor-blink] to %FALSE.
+        """
         gtk_cursor_theme_name: str
+        """
+        Name of the cursor theme to use.
+
+        Use %NULL to use the default theme.
+        """
         gtk_cursor_theme_size: int
+        """
+        The size to use for cursors.
+
+        0 means to use the default size.
+        """
         gtk_decoration_layout: str
+        """
+        Determines which buttons should be put in the
+        titlebar of client-side decorated windows, and whether they
+        should be placed on the left or right.
+
+        The format of the string is button names, separated by commas.
+        A colon separates the buttons that should appear on the left
+        from those on the right. Recognized button names are minimize,
+        maximize, close, icon (the window icon) and menu (a menu button
+        for the fallback app menu).
+
+        For example, \"menu:minimize,maximize,close\" specifies a menu
+        on the left, and minimize, maximize and close buttons on the right.
+
+        Note that buttons will only be shown when they are meaningful.
+        E.g. a menu button only appears when the desktop shell does not
+        show the app menu, and a close button only appears on a window
+        that can be closed.
+
+        Also note that the setting can be overridden with the
+        [property@Gtk.HeaderBar:decoration-layout] property.
+        """
         gtk_dialogs_use_header: bool
+        """
+        Whether builtin GTK dialogs such as the file chooser, the
+        color chooser or the font chooser will use a header bar at
+        the top to show action widgets, or an action area at the bottom.
+
+        This setting does not affect custom dialogs using `GtkDialog`
+        directly, or message dialogs.
+        """
         gtk_dnd_drag_threshold: int
+        """
+        The number of pixels the cursor can move before dragging.
+        """
         gtk_double_click_distance: int
+        """
+        The maximum distance allowed between two clicks for them to be considered
+        a double click, in pixels.
+        """
         gtk_double_click_time: int
+        """
+        The maximum time to allow between two clicks for them to be considered
+        a double click, in milliseconds.
+        """
         gtk_enable_accels: bool
+        """
+        Whether menu items should have visible accelerators which can be
+        activated.
+        """
         gtk_enable_animations: bool
+        """
+        Whether to enable toolkit-wide animations.
+        """
         gtk_enable_event_sounds: bool
+        """
+        Whether to play any event sounds at all.
+
+        See the [Sound Theme Specifications](http://www.freedesktop.org/wiki/Specifications/sound-theme-spec)
+        for more information on event sounds and sound themes.
+
+        GTK itself does not support event sounds, you have to use a loadable
+        module like the one that comes with libcanberra.
+        """
         gtk_enable_input_feedback_sounds: bool
+        """
+        Whether to play event sounds as feedback to user input.
+
+        See the [Sound Theme Specifications](http://www.freedesktop.org/wiki/Specifications/sound-theme-spec)
+        for more information on event sounds and sound themes.
+
+        GTK itself does not support event sounds, you have to use a loadable
+        module like the one that comes with libcanberra.
+        """
         gtk_enable_primary_paste: bool
+        """
+        Whether a middle click on a mouse should paste the
+        'PRIMARY' clipboard content at the cursor location.
+        """
         gtk_entry_password_hint_timeout: int
+        """
+        How long to show the last input character in hidden
+        entries.
+
+        This value is in milliseconds. 0 disables showing the
+        last char. 600 is a good value for enabling it.
+        """
         gtk_entry_select_on_focus: bool
+        """
+        Whether to select the contents of an entry when it is focused.
+        """
         gtk_error_bell: bool
+        """
+        When %TRUE, keyboard navigation and other input-related errors
+        will cause a beep.
+
+        Since the error bell is implemented using gdk_surface_beep(), the
+        windowing system may offer ways to configure the error bell in many
+        ways, such as flashing the window or similar visual effects.
+        """
         gtk_font_name: str
+        """
+        The default font to use.
+
+        GTK uses the family name and size from this string.
+        """
         gtk_fontconfig_timestamp: int
+        """
+        Timestamp of the current fontconfig configuration.
+        """
         gtk_hint_font_metrics: bool
+        """
+        Whether hinting should be applied to font metrics.
+
+        Note that this also turns off subpixel positioning of glyphs,
+        since it conflicts with metrics hinting.
+        """
         gtk_icon_theme_name: str
+        """
+        Name of the icon theme to use.
+
+        See [class@Gtk.IconTheme] for details about how
+        GTK handles icon themes.
+        """
         gtk_im_module: str
+        """
+        Which IM (input method) module should be used by default.
+
+        This is the input method that will be used if the user has not
+        explicitly chosen another input method from the IM context menu.
+        This also can be a colon-separated list of input methods, which GTK
+        will try in turn until it finds one available on the system.
+
+        See [class@Gtk.IMContext].
+        """
         gtk_keynav_use_caret: bool
+        """
+        Whether GTK should make sure that text can be navigated with
+        a caret, even if it is not editable.
+
+        This is useful when using a screen reader.
+        """
         gtk_label_select_on_focus: bool
+        """
+        Whether to select the contents of a selectable
+        label when it is focused.
+        """
         gtk_long_press_time: int
+        """
+        The time for a button or touch press to be considered a “long press”.
+
+        See [class@Gtk.GestureLongPress].
+        """
         gtk_overlay_scrolling: bool
+        """
+        Whether scrolled windows may use overlaid scrolling indicators.
+
+        If this is set to %FALSE, scrolled windows will have permanent
+        scrollbars.
+        """
         gtk_primary_button_warps_slider: bool
+        """
+        If the value of this setting is %TRUE, clicking the primary button in a
+        `GtkRange` trough will move the slider, and hence set the range’s value, to
+        the point that you clicked.
+
+        If it is %FALSE, a primary click will cause the slider/value to move
+        by the range’s page-size towards the point clicked.
+
+        Whichever action you choose for the primary button, the other action will
+        be available by holding Shift and primary-clicking, or clicking the middle
+        mouse button.
+        """
         gtk_print_backends: str
+        """
+        A comma-separated list of print backends to use in the print
+        dialog.
+
+        Available print backends depend on the GTK installation,
+        and may include \"file\", \"cups\", \"lpr\" or \"papi\".
+        """
         gtk_print_preview_command: str
+        """
+        A command to run for displaying the print preview.
+
+        The command should contain a `%f` placeholder, which will get
+        replaced by the path to the pdf file. The command may also
+        contain a `%s` placeholder, which will get replaced by the
+        path to a file containing the print settings in the format
+        produced by [method@Gtk.PrintSettings.to_file].
+
+        The preview application is responsible for removing the pdf
+        file and the print settings file when it is done.
+        """
         gtk_recent_files_enabled: bool
+        """
+        Whether GTK should keep track of items inside the recently used
+        resources list.
+
+        If set to %FALSE, the list will always be empty.
+        """
         gtk_recent_files_max_age: int
+        """
+        The maximum age, in days, of the items inside the recently used
+        resources list.
+
+        Items older than this setting will be excised from the list.
+        If set to 0, the list will always be empty; if set to -1, no
+        item will be removed.
+        """
         gtk_shell_shows_app_menu: bool
+        """
+        Set to %TRUE if the desktop environment is displaying
+        the app menu, %FALSE if the app should display it itself.
+        """
         gtk_shell_shows_desktop: bool
+        """
+        Set to %TRUE if the desktop environment is displaying
+        the desktop folder, %FALSE if not.
+        """
         gtk_shell_shows_menubar: bool
+        """
+        Set to %TRUE if the desktop environment is displaying
+        the menubar, %FALSE if the app should display it itself.
+        """
         gtk_sound_theme_name: str
+        """
+        The XDG sound theme to use for event sounds.
+
+        See the [Sound Theme Specifications](http://www.freedesktop.org/wiki/Specifications/sound-theme-spec)
+        for more information on event sounds and sound themes.
+
+        GTK itself does not support event sounds, you have to use
+        a loadable module like the one that comes with libcanberra.
+        """
         gtk_split_cursor: bool
+        """
+        Whether two cursors should be displayed for mixed left-to-right and
+        right-to-left text.
+        """
         gtk_theme_name: str
+        """
+        Name of the theme to load.
+
+        See [class@Gtk.CssProvider] for details about how
+        GTK finds the CSS stylesheet for a theme.
+        """
         gtk_titlebar_double_click: str
+        """
+        Determines the action to take when a double-click
+        occurs on the titlebar of client-side decorated windows.
+
+        Recognized actions are minimize, toggle-maximize, menu, lower
+        or none.
+        """
         gtk_titlebar_middle_click: str
+        """
+        Determines the action to take when a middle-click
+        occurs on the titlebar of client-side decorated windows.
+
+        Recognized actions are minimize, toggle-maximize, menu, lower
+        or none.
+        """
         gtk_titlebar_right_click: str
+        """
+        Determines the action to take when a right-click
+        occurs on the titlebar of client-side decorated windows.
+
+        Recognized actions are minimize, toggle-maximize, menu, lower
+        or none.
+        """
         gtk_xft_antialias: int
+        """
+        Whether to antialias fonts.
+
+        The values are 0 for no, 1 for yes, or -1 for the system default.
+        """
         gtk_xft_dpi: int
+        """
+        The font resolution, in 1024 * dots/inch.
+
+        -1 to use the default value.
+        """
         gtk_xft_hinting: int
+        """
+        Whether to enable font hinting.
+
+        The values are 0 for no, 1 for yes, or -1 for the system default.
+        """
         gtk_xft_hintstyle: str
+        """
+        What degree of font hinting to use.
+
+        The possible vaues are hintnone, hintslight,
+        hintmedium, hintfull.
+        """
         gtk_xft_rgba: str
+        """
+        The type of subpixel antialiasing to use.
+
+        The possible values are none, rgb, bgr, vrgb, vbgr.
+        """
 
     props: Props = ...
     def __init__(
@@ -70067,10 +70866,19 @@ class Shortcut(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         action: Optional[ShortcutAction]
+        """
+        The action that gets activated by this shortcut.
+        """
         arguments: Optional[GLib.Variant]
+        """
+        Arguments passed to activation.
+        """
         trigger: Optional[ShortcutTrigger]
+        """
+        The trigger that triggers this shortcut.
+        """
 
     props: Props = ...
     def __init__(
@@ -70220,6 +71028,8 @@ class ShortcutAction(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
+
     def activate(
         self,
         flags: ShortcutActionFlags,
@@ -70288,7 +71098,8 @@ class ShortcutAction(GObject.Object):
         """
         ...
 
-class ShortcutActionClass(GObject.GPointer): ...
+class ShortcutActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutClass(GObject.GPointer):
     """
@@ -70299,6 +71110,7 @@ class ShortcutClass(GObject.GPointer):
         ShortcutClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class ShortcutController(EventController, Gio.ListModel, Buildable):
@@ -70374,16 +71186,27 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props, Gio.ListModel.Props, Buildable.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         mnemonic_modifiers: Gdk.ModifierType
+        """
+        The modifiers that need to be pressed to allow mnemonics activation.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         scope: ShortcutScope
-        name: Optional[str]
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget
+        """
+        What scope the shortcuts will be handled in.
+        """
         model: Gio.ListModel
+        """
+        A list model to take shortcuts from.
+        """
 
     props: Props = ...
     def __init__(
@@ -70530,7 +71353,8 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
         """
         ...
 
-class ShortcutControllerClass(GObject.GPointer): ...
+class ShortcutControllerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -70606,44 +71430,20 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         accelerator: Optional[str]
+        """
+        The accelerator that @self displays.
+
+        See [property@Gtk.ShortcutsShortcut:accelerator]
+        for the accepted syntax.
+        """
         disabled_text: Optional[str]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The text that is displayed when no accelerator is set.
+        """
 
     props: Props = ...
     def __init__(
@@ -70746,8 +71546,33 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         """
         ...
 
-class ShortcutLabelClass(GObject.GPointer): ...
-class ShortcutManager(GObject.GInterface): ...
+class ShortcutLabelClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
+
+class ShortcutManager(GObject.GInterface):
+    """
+    The `GtkShortcutManager` interface is used to implement
+    shortcut scopes.
+
+    This is important for [iface@Gtk.Native] widgets that have their
+    own surface, since the event controllers that are used to implement
+    managed and global scopes are limited to the same native.
+
+    Examples for widgets implementing `GtkShortcutManager` are
+    [class@Gtk.Window] and [class@Gtk.Popover].
+
+    Every widget that implements `GtkShortcutManager` will be used as a
+    %GTK_SHORTCUT_SCOPE_MANAGED.
+
+
+
+    Interface GtkShortcutManager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.GInterface.Props): ...
 
 class ShortcutManagerInterface(GObject.GPointer):
     """
@@ -70764,6 +71589,7 @@ class ShortcutManagerInterface(GObject.GPointer):
         ShortcutManagerInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     add_controller: Callable[[ShortcutManager, ShortcutController], None] = ...
     remove_controller: Callable[[ShortcutManager, ShortcutController], None] = ...
@@ -70794,6 +71620,8 @@ class ShortcutTrigger(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props): ...
 
     def compare(self, trigger2: ShortcutTrigger) -> int:
         """
@@ -70962,7 +71790,8 @@ class ShortcutTrigger(GObject.Object):
         """
         ...
 
-class ShortcutTriggerClass(GObject.GPointer): ...
+class ShortcutTriggerClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     """
@@ -71051,52 +71880,44 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Box.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         height: int
+        """
+        A rough measure for the number of lines in this group.
+
+        This is used internally by GTK, and is not useful for applications.
+        """
         title: str
+        """
+        The title for this group of shortcuts.
+        """
         view: str
-        baseline_child: int
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        An optional view that the shortcuts in this group are relevant for.
+
+        The group will be hidden if the [property@Gtk.ShortcutsWindow:view-name]
+        property does not match the view of this group.
+
+        Set this to %NULL to make the group always visible.
+        """
         accel_size_group: SizeGroup
+        """
+        The size group for the accelerator portion of shortcuts in this group.
+
+        This is used internally by GTK, and must not be modified by applications.
+        """
         title_size_group: SizeGroup
+        """
+        The size group for the textual portion of shortcuts in this group.
+
+        This is used internally by GTK, and must not be modified by applications.
+        """
 
     props: Props = ...
     def __init__(
@@ -71142,7 +71963,8 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation = ...,
     ): ...
 
-class ShortcutsGroupClass(GObject.GPointer): ...
+class ShortcutsGroupClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     """
@@ -71238,51 +72060,47 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Box.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         max_height: int
+        """
+        The maximum number of lines to allow per column.
+
+        This property can be used to influence how the groups in this
+        section are distributed across pages and columns. The default
+        value of 15 should work in most cases.
+        """
         section_name: str
+        """
+        A unique name to identify this section among the sections
+        added to the `GtkShortcutsWindow`.
+
+        Setting the [property@Gtk.ShortcutsWindow:section-name] property
+        to this string will make this section shown in the `GtkShortcutsWindow`.
+        """
         title: str
+        """
+        The string to show in the section selector of the `GtkShortcutsWindow`
+        for this section.
+
+        If there is only one section, you don't need to set a title,
+        since the section selector will not be shown in this case.
+        """
         view_name: str
-        baseline_child: int
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        A view name to filter the groups in this section by.
+
+        See [property@Gtk.ShortcutsGroup:view].
+
+        Applications are expected to use the
+        [property@Gtk.ShortcutsWindow:view-name] property
+        for this purpose.
+        """
 
     props: Props = ...
     def __init__(
@@ -71328,7 +72146,8 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         orientation: Orientation = ...,
     ): ...
 
-class ShortcutsSectionClass(GObject.GPointer): ...
+class ShortcutsSectionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -71413,53 +72232,103 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         accelerator: str
+        """
+        The accelerator(s) represented by this object.
+
+        This property is used if [property@Gtk.ShortcutsShortcut:shortcut-type]
+        is set to %GTK_SHORTCUT_ACCELERATOR.
+
+        The syntax of this property is (an extension of) the syntax understood
+        by [func@Gtk.accelerator_parse]. Multiple accelerators can be specified
+        by separating them with a space, but keep in mind that the available width
+        is limited.
+
+        It is also possible to specify ranges of shortcuts, using `...` between
+        the keys. Sequences of keys can be specified using a `+` or `&` between
+        the keys.
+
+        Examples:
+
+        - A single shortcut: `<ctl><alt>delete`
+        - Two alternative shortcuts: `<shift>a Home`
+        - A range of shortcuts: `<alt>1...<alt>9`
+        - Several keys pressed together: `Control_L&Control_R`
+        - A sequence of shortcuts or keys: `<ctl>c+<ctl>x`
+
+        Use \"+\" instead of \"&\" when the keys may (or have to be) pressed
+        sequentially (e.g use \"t+t\" for 'press the t key twice').
+
+        Note that `<`, `>` and `&` need to be escaped as `&lt;`, `&gt`; and `&amp`; when used
+        in .ui files.
+        """
         action_name: str
+        """
+        A detailed action name.
+
+        If this is set for a shortcut of type %GTK_SHORTCUT_ACCELERATOR,
+        then GTK will use the accelerators that are associated with the
+        action via [method@Gtk.Application.set_accels_for_action], and
+        setting [property@Gtk.ShortcutsShortcut:accelerator] is not necessary.
+        """
         direction: TextDirection
+        """
+        The text direction for which this shortcut is active.
+
+        If the shortcut is used regardless of the text direction,
+        set this property to %GTK_TEXT_DIR_NONE.
+        """
         icon: Gio.Icon
+        """
+        An icon to represent the shortcut or gesture.
+
+        This property is used if [property@Gtk.ShortcutsShortcut:shortcut-type]
+        is set to %GTK_SHORTCUT_GESTURE.
+
+        For the other predefined gesture types, GTK provides an icon on its own.
+        """
         icon_set: bool
+        """
+        %TRUE if an icon has been set.
+        """
         shortcut_type: ShortcutType
+        """
+        The type of shortcut that is represented.
+        """
         subtitle: str
+        """
+        The subtitle for the shortcut or gesture.
+
+        This is typically used for gestures and should be a short, one-line
+        text that describes the gesture itself. For the predefined gesture
+        types, GTK provides a subtitle on its own.
+        """
         subtitle_set: bool
+        """
+        %TRUE if a subtitle has been set.
+        """
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The textual description for the shortcut or gesture represented by
+        this object.
+
+        This should be a short string that can fit in a single line.
+        """
         accel_size_group: SizeGroup
+        """
+        The size group for the accelerator portion of this shortcut.
+
+        This is used internally by GTK, and must not be modified by applications.
+        """
         title_size_group: SizeGroup
+        """
+        The size group for the textual portion of this shortcut.
+
+        This is used internally by GTK, and must not be modified by applications.
+        """
 
     props: Props = ...
     def __init__(
@@ -71507,7 +72376,8 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ): ...
 
-class ShortcutsShortcutClass(GObject.GPointer): ...
+class ShortcutsShortcutClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ShortcutsWindow(
     Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
@@ -71665,69 +72535,32 @@ class ShortcutsWindow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Window.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         section_name: str
+        """
+        The name of the section to show.
+
+        This should be the section-name of one of the `GtkShortcutsSection`
+        objects that are in this shortcuts window.
+        """
         view_name: str
-        application: Optional[Application]
-        child: Optional[Widget]
-        decorated: bool
-        default_height: int
-        default_widget: Optional[Widget]
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: Gdk.Display
-        focus_visible: bool
-        focus_widget: Widget
-        fullscreened: bool
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: Optional[str]
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Widget]
-        transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        startup_id: str
+        """
+        The view name by which to filter the contents.
+
+        This should correspond to the [property@Gtk.ShortcutsGroup:view]
+        property of some of the [class@Gtk.ShortcutsGroup] objects that
+        are inside this shortcuts window.
+
+        Set this to %NULL to show all groups.
+        """
 
     props: Props = ...
     def __init__(
@@ -71812,8 +72645,11 @@ class SignalAction(ShortcutAction):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ShortcutAction.Props):
         signal_name: str
+        """
+        The name of the signal to emit.
+        """
 
     props: Props = ...
     def __init__(self, signal_name: str = ...): ...
@@ -71847,7 +72683,8 @@ class SignalAction(ShortcutAction):
         """
         ...
 
-class SignalActionClass(GObject.GPointer): ...
+class SignalActionClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class SignalListItemFactory(ListItemFactory):
     """
@@ -71911,6 +72748,8 @@ class SignalListItemFactory(ListItemFactory):
       notify (GParam)
     """
 
+    class Props(ListItemFactory.Props): ...
+
     @classmethod
     def new(cls) -> SignalListItemFactory:
         """
@@ -71927,7 +72766,8 @@ class SignalListItemFactory(ListItemFactory):
         """
         ...
 
-class SignalListItemFactoryClass(GObject.GPointer): ...
+class SignalListItemFactoryClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -71970,14 +72810,40 @@ class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionMode
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        GObject.Object.Props,
+        Gio.ListModel.Props,
+        SectionModel.Props,
+        SelectionModel.Props,
+    ):
         autoselect: bool
+        """
+        If the selection will always select an item.
+        """
         can_unselect: bool
+        """
+        If unselecting the selected item is allowed.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being managed.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         selected: int
+        """
+        Position of the selected item.
+        """
         selected_item: Optional[GObject.Object]
+        """
+        The selected item.
+        """
 
     props: Props = ...
     def __init__(
@@ -72147,6 +73013,7 @@ class SingleSelectionClass(GObject.GPointer):
         SingleSelectionClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class SizeGroup(GObject.Object, Buildable):
@@ -72232,8 +73099,11 @@ class SizeGroup(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Buildable.Props):
         mode: SizeGroupMode
+        """
+        The direction in which the size group affects requested sizes.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -72367,12 +73237,27 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, SectionModel.Props):
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        Child model to take slice from.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         offset: int
+        """
+        Offset of slice.
+        """
         size: int
+        """
+        Maximum size of slice.
+        """
 
     props: Props = ...
     def __init__(
@@ -72492,6 +73377,7 @@ class SliceListModelClass(GObject.GPointer):
         SliceListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Snapshot(Gdk.Snapshot):
@@ -72521,6 +73407,8 @@ class Snapshot(Gdk.Snapshot):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(Gdk.Snapshot.Props): ...
 
     def append_border(
         self,
@@ -73381,7 +74269,8 @@ class Snapshot(Gdk.Snapshot):
         """
         ...
 
-class SnapshotClass(GObject.GPointer): ...
+class SnapshotClass(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
@@ -73440,14 +74329,35 @@ class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, SectionModel.Props):
         incremental: bool
+        """
+        If the model should sort items incrementally.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Optional[Gio.ListModel]
+        """
+        The model being sorted.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         pending: int
+        """
+        Estimate of unsorted items remaining.
+        """
         section_sorter: Optional[Sorter]
+        """
+        The section sorter for this model, if one is set.
+        """
         sorter: Optional[Sorter]
+        """
+        The sorter for this model.
+        """
 
     props: Props = ...
     def __init__(
@@ -73632,6 +74542,7 @@ class SortListModelClass(GObject.GPointer):
         SortListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Sorter(GObject.Object):
@@ -73672,6 +74583,7 @@ class Sorter(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
     parent_instance: GObject.Object = ...
     def changed(self, change: SorterChange) -> None:
         """
@@ -73801,6 +74713,7 @@ class SorterClass(GObject.GPointer):
         SorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     compare: Callable[
         [Sorter, Optional[GObject.Object], Optional[GObject.Object]], Ordering
@@ -74030,60 +74943,50 @@ class SpinButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        CellEditable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+        Orientable.Props,
+    ):
         adjustment: Adjustment
+        """
+        The adjustment that holds the value of the spin button.
+        """
         climb_rate: float
+        """
+        The acceleration rate when you hold down a button or key.
+        """
         digits: int
+        """
+        The number of decimal places to display.
+        """
         numeric: bool
+        """
+        Whether non-numeric characters should be ignored.
+        """
         snap_to_ticks: bool
+        """
+        Whether erroneous values are automatically changed to the spin buttons
+        nearest step increment.
+        """
         update_policy: SpinButtonUpdatePolicy
+        """
+        Whether the spin button should update always, or only when the value
+        is acceptable.
+        """
         value: float
+        """
+        The current value.
+        """
         wrap: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        editing_canceled: bool
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
-        orientation: Orientation
+        """
+        Whether a spin button should wrap upon reaching its limits.
+        """
 
     props: Props = ...
     def __init__(
@@ -74605,43 +75508,13 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         spinning: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether the spinner is spinning
+        """
 
     props: Props = ...
     def __init__(
@@ -74866,51 +75739,45 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         hhomogeneous: bool
+        """
+        %TRUE if the stack allocates the same width for all children.
+        """
         interpolate_size: bool
+        """
+        Whether or not the size should smoothly change during the transition.
+        """
         pages: SelectionModel
+        """
+        A selection model with the stack pages.
+        """
         transition_duration: int
+        """
+        The animation duration, in milliseconds.
+        """
         transition_running: bool
+        """
+        Whether or not the transition is currently running.
+        """
         transition_type: StackTransitionType
+        """
+        The type of animation used to transition.
+        """
         vhomogeneous: bool
+        """
+        %TRUE if the stack allocates the same height for all children.
+        """
         visible_child: Optional[Widget]
+        """
+        The widget currently visible in the stack.
+        """
         visible_child_name: Optional[str]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The name of the widget currently visible in the stack.
+        """
 
     props: Props = ...
     def __init__(
@@ -75352,15 +76219,39 @@ class StackPage(GObject.Object, Accessible):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Accessible.Props):
         child: Widget
+        """
+        The child that this page is for.
+        """
         icon_name: Optional[str]
+        """
+        The icon name of the child page.
+        """
         name: Optional[str]
+        """
+        The name of the child page.
+        """
         needs_attention: bool
+        """
+        Whether the page requires the user attention.
+
+        This is used by the [class@Gtk.StackSwitcher] to change the
+        appearance of the corresponding button when a page needs
+        attention and it is not the current one.
+        """
         title: Optional[str]
+        """
+        The title of the child page.
+        """
         use_underline: bool
+        """
+        If set, an underline in the title indicates a mnemonic.
+        """
         visible: bool
-        accessible_role: AccessibleRole
+        """
+        Whether this page is visible.
+        """
 
     props: Props = ...
     def __init__(
@@ -75626,43 +76517,13 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         stack: Optional[Stack]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The stack.
+        """
 
     props: Props = ...
     def __init__(
@@ -75845,44 +76706,17 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         stack: Optional[Stack]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        The stack.
+        """
 
     props: Props = ...
     def __init__(
@@ -76067,44 +76901,10 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ): ...
 
-    props: Props = ...
     def __init__(
         self,
         can_focus: bool = ...,
@@ -76273,11 +77073,23 @@ class StringFilter(Filter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Filter.Props):
         expression: Optional[Expression]
+        """
+        The expression to evaluate on item to get a string to compare with.
+        """
         ignore_case: bool
+        """
+        If matching is case sensitive.
+        """
         match_mode: StringFilterMatchMode
+        """
+        If exact matches are necessary or if substrings are allowed.
+        """
         search: Optional[str]
+        """
+        The search term.
+        """
 
     props: Props = ...
     def __init__(
@@ -76418,6 +77230,7 @@ class StringFilterClass(GObject.GPointer):
         StringFilterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: FilterClass = ...
 
 class StringList(GObject.Object, Gio.ListModel, Buildable):
@@ -76469,7 +77282,7 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props, Buildable.Props):
         strings: list[str]
 
     props: Props = ...
@@ -76592,6 +77405,7 @@ class StringListClass(GObject.GPointer):
         StringListClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class StringObject(GObject.Object):
@@ -76618,8 +77432,11 @@ class StringObject(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         string: str
+        """
+        The string.
+        """
 
     props: Props = ...
     def get_string(self) -> str:
@@ -76658,6 +77475,7 @@ class StringObjectClass(GObject.GPointer):
         StringObjectClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class StringSorter(Sorter):
@@ -76692,10 +77510,25 @@ class StringSorter(Sorter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Sorter.Props):
         collation: Collation
+        """
+        The collation method to use for sorting.
+
+        The `GTK_COLLATION_NONE` value is useful when the expression already
+        returns collation keys, or strings that need to be compared byte-by-byte.
+
+        The default value, `GTK_COLLATION_UNICODE`, compares strings according
+        to the [Unicode collation algorithm](https://www.unicode.org/reports/tr10/).
+        """
         expression: Optional[Expression]
+        """
+        The expression to evaluate on item to get a string to compare with.
+        """
         ignore_case: bool
+        """
+        If sorting is case sensitive.
+        """
 
     props: Props = ...
     def __init__(
@@ -76808,6 +77641,7 @@ class StringSorterClass(GObject.GPointer):
         StringSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 @deprecated(
@@ -76868,7 +77702,7 @@ class StyleContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         display: Gdk.Display
 
     props: Props = ...
@@ -77245,6 +78079,7 @@ class StyleContextClass(GObject.GPointer):
         StyleContextClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     changed: Callable[[StyleContext], None] = ...
     _gtk_reserved1: None = ...
@@ -77252,7 +78087,27 @@ class StyleContextClass(GObject.GPointer):
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class StyleProvider(GObject.GInterface): ...
+class StyleProvider(GObject.GInterface):
+    """
+    `GtkStyleProvider` is an interface for style information used by
+    `GtkStyleContext`.
+
+    See [method@Gtk.StyleContext.add_provider] and
+    [func@Gtk.StyleContext.add_provider_for_display] for
+    adding `GtkStyleProviders`.
+
+    GTK uses the `GtkStyleProvider` implementation for CSS in
+    [class@Gtk.CssProvider].
+
+
+
+    Interface GtkStyleProvider
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props(GObject.GInterface.Props): ...
 
 class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
@@ -77362,46 +78217,23 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         active: bool
+        """
+        Whether the `GtkSwitch` widget is in its on or off state.
+        """
         state: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        The backend state that is controlled by the switch.
+
+        See [signal@Gtk.Switch::state-set] for details.
+        """
 
     props: Props = ...
     def __init__(
@@ -77533,6 +78365,8 @@ class SymbolicPaintable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
     def snapshot_symbolic(
         self,
         snapshot: Gdk.Snapshot,
@@ -77569,6 +78403,7 @@ class SymbolicPaintableInterface(GObject.GPointer):
         SymbolicPaintableInterface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     snapshot_symbolic: Callable[
         [SymbolicPaintable, Gdk.Snapshot, float, float, Sequence[Gdk.RGBA]], None
@@ -77761,68 +78596,108 @@ class Text(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Editable.Props,
+    ):
         activates_default: bool
+        """
+        Whether to activate the default widget when Enter is pressed.
+        """
         attributes: Optional[Pango.AttrList]
+        """
+        A list of Pango attributes to apply to the text of the `GtkText`.
+
+        This is mainly useful to change the size or weight of the text.
+
+        The `PangoAttribute`'s @start_index and @end_index must refer to the
+        `GtkEntryBuffer` text, i.e. without the preedit string.
+        """
         buffer: EntryBuffer
+        """
+        The `GtkEntryBuffer` object which stores the text.
+        """
         enable_emoji_completion: bool
+        """
+        Whether to suggest Emoji replacements.
+        """
         extra_menu: Optional[Gio.MenuModel]
+        """
+        A menu model whose contents will be appended to
+        the context menu.
+        """
         im_module: str
+        """
+        Which IM (input method) module should be used for this self.
+
+        See [class@Gtk.IMMulticontext].
+
+        Setting this to a non-%NULL value overrides the system-wide
+        IM module setting. See the [property@Gtk.Settings:gtk-im-module]
+        property.
+        """
         input_hints: InputHints
+        """
+        Additional hints that allow input methods to fine-tune
+        their behaviour.
+        """
         input_purpose: InputPurpose
+        """
+        The purpose of this text field.
+
+        This property can be used by on-screen keyboards and other input
+        methods to adjust their behaviour.
+
+        Note that setting the purpose to %GTK_INPUT_PURPOSE_PASSWORD or
+        %GTK_INPUT_PURPOSE_PIN is independent from setting
+        [property@Gtk.Text:visibility].
+        """
         invisible_char: int
+        """
+        The character to used when masking contents (in “password mode”).
+        """
         invisible_char_set: bool
+        """
+        Whether the invisible char has been set for the `GtkText`.
+        """
         max_length: int
+        """
+        Maximum number of characters that are allowed.
+
+        Zero indicates no limit.
+        """
         overwrite_mode: bool
+        """
+        If text is overwritten when typing in the `GtkText`.
+        """
         placeholder_text: Optional[str]
+        """
+        The text that will be displayed in the `GtkText` when it is empty
+        and unfocused.
+        """
         propagate_text_width: bool
+        """
+        Whether the widget should grow and shrink with the content.
+        """
         scroll_offset: int
+        """
+        Number of pixels scrolled of the screen to the left.
+        """
         tabs: Optional[Pango.TabArray]
+        """
+        A list of tabstops to apply to the text of the `GtkText`.
+        """
         truncate_multiline: bool
+        """
+        When %TRUE, pasted multi-line text is truncated to the first line.
+        """
         visibility: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        cursor_position: int
-        editable: bool
-        enable_undo: bool
-        max_width_chars: int
-        selection_bound: int
-        text: str
-        width_chars: int
-        xalign: float
+        """
+        If %FALSE, the text is masked with the “invisible char”.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -78488,14 +79363,41 @@ class TextBuffer(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         can_redo: bool
+        """
+        Denotes that the buffer can reapply the last undone action.
+        """
         can_undo: bool
+        """
+        Denotes that the buffer can undo the last applied action.
+        """
         cursor_position: int
+        """
+        The position of the insert mark.
+
+        This is an offset from the beginning of the buffer.
+        It is useful for getting notified when the cursor moves.
+        """
         enable_undo: bool
+        """
+        Denotes if support for undoing and redoing changes to the buffer is allowed.
+        """
         has_selection: bool
+        """
+        Whether the buffer has some text currently selected.
+        """
         tag_table: TextTagTable
+        """
+        The GtkTextTagTable for the buffer.
+        """
         text: str
+        """
+        The text content of the buffer.
+
+        Without child widgets and images,
+        see [method@Gtk.TextBuffer.get_text] for more information.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -79877,6 +80779,7 @@ class TextBufferClass(GObject.GPointer):
         TextBufferClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     insert_text: Callable[[TextBuffer, TextIter, str, int], None] = ...
     insert_paintable: Callable[[TextBuffer, TextIter, Gdk.Paintable], None] = ...
@@ -79898,7 +80801,8 @@ class TextBufferClass(GObject.GPointer):
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class TextBufferPrivate(GObject.GPointer): ...
+class TextBufferPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class TextChildAnchor(GObject.Object):
     """
@@ -79921,6 +80825,7 @@ class TextChildAnchor(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
     parent_instance: GObject.Object = ...
     segment: None = ...
     def get_deleted(self) -> bool:
@@ -80004,6 +80909,7 @@ class TextChildAnchorClass(GObject.GPointer):
         TextChildAnchorClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
@@ -80026,6 +80932,7 @@ class TextIter(GObject.GBoxed):
         TextIter()
     """
 
+    class Props(GObject.GBoxed.Props): ...
     dummy1: None = ...
     dummy2: None = ...
     dummy3: int = ...
@@ -81712,9 +82619,19 @@ class TextMark(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         left_gravity: bool
+        """
+        Whether the mark has left gravity.
+
+        When text is inserted at the mark’s current location, if the mark
+        has left gravity it will be moved to the left of the newly-inserted
+        text, otherwise to the right.
+        """
         name: Optional[str]
+        """
+        The name of the mark or %NULL if the mark is anonymous.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -81830,6 +82747,7 @@ class TextMarkClass(GObject.GPointer):
         TextMarkClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     padding: list[None] = ...
 
@@ -81958,96 +82876,296 @@ class TextTag(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accumulative_margin: bool
+        """
+        Whether the margins accumulate or override each other.
+
+        When set to %TRUE the margins of this tag are added to the margins
+        of any other non-accumulative margins present. When set to %FALSE
+        the margins override one another (the default).
+        """
         allow_breaks: bool
+        """
+        Whether breaks are allowed.
+        """
         allow_breaks_set: bool
         background_full_height: bool
+        """
+        Whether the background color fills the entire line height
+        or only the height of the tagged characters.
+        """
         background_full_height_set: bool
         background_rgba: Gdk.RGBA
+        """
+        Background color as a `GdkRGBA`.
+        """
         background_set: bool
         direction: TextDirection
+        """
+        Text direction, e.g. right-to-left or left-to-right.
+        """
         editable: bool
+        """
+        Whether the text can be modified by the user.
+        """
         editable_set: bool
         fallback: bool
+        """
+        Whether font fallback is enabled.
+
+        When set to %TRUE, other fonts will be substituted
+        where the current font is missing glyphs.
+        """
         fallback_set: bool
         family: str
+        """
+        Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
+        """
         family_set: bool
         font: str
+        """
+        Font description as string, e.g. \\"Sans Italic 12\\".
+
+        Note that the initial value of this property depends on
+        the internals of `PangoFontDescription`.
+        """
         font_desc: Pango.FontDescription
+        """
+        Font description as a `PangoFontDescription`.
+        """
         font_features: str
+        """
+        OpenType font features, as a string.
+        """
         font_features_set: bool
         foreground_rgba: Gdk.RGBA
+        """
+        Foreground color as a `GdkRGBA`.
+        """
         foreground_set: bool
         indent: int
+        """
+        Amount to indent the paragraph, in pixels.
+
+        A negative value of indent will produce a hanging indentation.
+        That is, the first line will have the full width, and subsequent
+        lines will be indented by the absolute value of indent.
+        """
         indent_set: bool
         insert_hyphens: bool
+        """
+        Whether to insert hyphens at breaks.
+        """
         insert_hyphens_set: bool
         invisible: bool
+        """
+        Whether this text is hidden.
+
+        Note that there may still be problems with the support for invisible
+        text, in particular when navigating programmatically inside a buffer
+        containing invisible segments.
+        """
         invisible_set: bool
         justification: Justification
+        """
+        Left, right, or center justification.
+        """
         justification_set: bool
         language: str
+        """
+        The language this text is in, as an ISO code.
+
+        Pango can use this as a hint when rendering the text.
+        If not set, an appropriate default will be used.
+
+        Note that the initial value of this property depends
+        on the current locale, see also [func@Gtk.get_default_language].
+        """
         language_set: bool
         left_margin: int
+        """
+        Width of the left margin in pixels.
+        """
         left_margin_set: bool
         letter_spacing: int
+        """
+        Extra spacing between graphemes, in Pango units.
+        """
         letter_spacing_set: bool
         line_height: float
+        """
+        Factor to scale line height by.
+        """
         line_height_set: bool
         name: str
+        """
+        The name used to refer to the tag.
+
+        %NULL for anonymous tags.
+        """
         overline: Pango.Overline
+        """
+        Style of overline for this text.
+        """
         overline_rgba: Gdk.RGBA
+        """
+        This property modifies the color of overlines.
+
+        If not set, overlines will use the foreground color.
+        """
         overline_rgba_set: bool
         overline_set: bool
         paragraph_background_rgba: Gdk.RGBA
+        """
+        The paragraph background color as a `GdkRGBA`.
+        """
         paragraph_background_set: bool
         pixels_above_lines: int
+        """
+        Pixels of blank space above paragraphs.
+        """
         pixels_above_lines_set: bool
         pixels_below_lines: int
+        """
+        Pixels of blank space below paragraphs.
+        """
         pixels_below_lines_set: bool
         pixels_inside_wrap: int
+        """
+        Pixels of blank space between wrapped lines in a paragraph.
+        """
         pixels_inside_wrap_set: bool
         right_margin: int
+        """
+        Width of the right margin, in pixels.
+        """
         right_margin_set: bool
         rise: int
+        """
+        Offset of text above the baseline, in Pango units.
+
+        Negative values go below the baseline.
+        """
         rise_set: bool
         scale: float
+        """
+        Font size as a scale factor relative to the default font size.
+
+        This properly adapts to theme changes, etc. so is recommended.
+        Pango predefines some scales such as %PANGO_SCALE_X_LARGE.
+        """
         scale_set: bool
         sentence: bool
+        """
+        Whether this tag represents a single sentence.
+
+        This affects cursor movement.
+        """
         sentence_set: bool
         show_spaces: Pango.ShowFlags
+        """
+        How to render invisible characters.
+        """
         show_spaces_set: bool
         size: int
+        """
+        Font size in Pango units.
+        """
         size_points: float
+        """
+        Font size in points.
+        """
         size_set: bool
         stretch: Pango.Stretch
+        """
+        Font stretch as a `PangoStretch`, e.g. %PANGO_STRETCH_CONDENSED.
+        """
         stretch_set: bool
         strikethrough: bool
+        """
+        Whether to strike through the text.
+        """
         strikethrough_rgba: Gdk.RGBA
+        """
+        This property modifies the color of strikeouts.
+
+        If not set, strikeouts will use the foreground color.
+        """
         strikethrough_rgba_set: bool
+        """
+        If the `strikethrough-rgba` property has been set.
+        """
         strikethrough_set: bool
         style: Pango.Style
+        """
+        Font style as a `PangoStyle`, e.g. %PANGO_STYLE_ITALIC.
+        """
         style_set: bool
         tabs: Pango.TabArray
+        """
+        Custom tabs for this text.
+        """
         tabs_set: bool
         text_transform: Pango.TextTransform
+        """
+        How to transform the text for display.
+        """
         text_transform_set: bool
         underline: Pango.Underline
+        """
+        Style of underline for this text.
+        """
         underline_rgba: Gdk.RGBA
+        """
+        This property modifies the color of underlines.
+
+        If not set, underlines will use the foreground color.
+
+        If [property@Gtk.TextTag:underline] is set to %PANGO_UNDERLINE_ERROR,
+        an alternate color may be applied instead of the foreground. Setting
+        this property will always override those defaults.
+        """
         underline_rgba_set: bool
+        """
+        If the `underline-rgba` property has been set.
+        """
         underline_set: bool
         variant: Pango.Variant
+        """
+        Font variant as a `PangoVariant`, e.g. %PANGO_VARIANT_SMALL_CAPS.
+        """
         variant_set: bool
         weight: int
+        """
+        Font weight as an integer.
+        """
         weight_set: bool
         word: bool
+        """
+        Whether this tag represents a single word.
+
+        This affects line breaks and cursor movement.
+        """
         word_set: bool
         wrap_mode: WrapMode
+        """
+        Whether to wrap lines never, at word boundaries, or
+        at character boundaries.
+        """
         wrap_mode_set: bool
         background: str
+        """
+        Background color as a string.
+        """
         foreground: str
+        """
+        Foreground color as a string.
+        """
         paragraph_background: str
+        """
+        The paragraph background color as a string.
+        """
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -82221,10 +83339,12 @@ class TextTagClass(GObject.GPointer):
         TextTagClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     padding: list[None] = ...
 
-class TextTagPrivate(GObject.GPointer): ...
+class TextTagPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class TextTagTable(GObject.Object, Buildable):
     """
@@ -82267,6 +83387,8 @@ class TextTagTable(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props, Buildable.Props): ...
 
     def add(self, tag: TextTag) -> bool:
         """
@@ -82503,67 +83625,116 @@ class TextView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Scrollable.Props,
+    ):
         accepts_tab: bool
+        """
+        Whether Tab will result in a tab character being entered.
+        """
         bottom_margin: int
+        """
+        The bottom margin for text in the text view.
+
+        Note that this property is confusingly named. In CSS terms,
+        the value set here is padding, and it is applied in addition
+        to the padding from the theme.
+
+        Don't confuse this property with [property@Gtk.Widget:margin-bottom].
+        """
         buffer: TextBuffer
+        """
+        The buffer which is displayed.
+        """
         cursor_visible: bool
+        """
+        If the insertion cursor is shown.
+        """
         editable: bool
         extra_menu: Gio.MenuModel
+        """
+        A menu model whose contents will be appended to the context menu.
+        """
         im_module: str
+        """
+        Which IM (input method) module should be used for this text_view.
+
+        See [class@Gtk.IMMulticontext].
+
+        Setting this to a non-%NULL value overrides the system-wide IM module
+        setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module] property.
+        """
         indent: int
+        """
+        Amount to indent the paragraph, in pixels.
+
+        A negative value of indent will produce a hanging indentation.
+        That is, the first line will have the full width, and subsequent
+        lines will be indented by the absolute value of indent.
+        """
         input_hints: InputHints
+        """
+        Additional hints (beyond [property@Gtk.TextView:input-purpose])
+        that allow input methods to fine-tune their behaviour.
+        """
         input_purpose: InputPurpose
+        """
+        The purpose of this text field.
+
+        This property can be used by on-screen keyboards and other input
+        methods to adjust their behaviour.
+        """
         justification: Justification
         left_margin: int
+        """
+        The default left margin for text in the text view.
+
+        Tags in the buffer may override the default.
+
+        Note that this property is confusingly named. In CSS terms,
+        the value set here is padding, and it is applied in addition
+        to the padding from the theme.
+        """
         monospace: bool
+        """
+        Whether text should be displayed in a monospace font.
+
+        If %TRUE, set the .monospace style class on the
+        text view to indicate that a monospace font is desired.
+        """
         overwrite: bool
+        """
+        Whether entered text overwrites existing contents.
+        """
         pixels_above_lines: int
         pixels_below_lines: int
         pixels_inside_wrap: int
         right_margin: int
+        """
+        The default right margin for text in the text view.
+
+        Tags in the buffer may override the default.
+
+        Note that this property is confusingly named. In CSS terms,
+        the value set here is padding, and it is applied in addition
+        to the padding from the theme.
+        """
         tabs: Optional[Pango.TabArray]
         top_margin: int
+        """
+        The top margin for text in the text view.
+
+        Note that this property is confusingly named. In CSS terms,
+        the value set here is padding, and it is applied in addition
+        to the padding from the theme.
+
+        Don't confuse this property with [property@Gtk.Widget:margin-top].
+        """
         wrap_mode: WrapMode
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -83913,6 +85084,7 @@ class TextViewClass(GObject.GPointer):
         TextViewClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     move_cursor: Callable[[TextView, MovementStep, int, bool], None] = ...
     set_anchor: Callable[[TextView], None] = ...
@@ -83931,7 +85103,8 @@ class TextViewClass(GObject.GPointer):
     insert_emoji: Callable[[TextView], None] = ...
     padding: list[None] = ...
 
-class TextViewPrivate(GObject.GPointer): ...
+class TextViewPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     """
@@ -84096,52 +85269,21 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Button.Props,
+        Accessible.Props,
+        Actionable.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         active: bool
-        can_shrink: bool
-        child: Optional[Widget]
-        has_frame: bool
-        icon_name: Optional[str]
-        label: Optional[str]
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        action_name: Optional[str]
-        action_target: GLib.Variant
+        """
+        If the toggle button should be pressed in.
+        """
         group: Optional[ToggleButton]
+        """
+        The toggle button whose group this widget belongs to.
+        """
 
     props: Props = ...
     button: Button = ...
@@ -84329,6 +85471,7 @@ class ToggleButtonClass(GObject.GPointer):
         ToggleButtonClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: ButtonClass = ...
     toggled: Callable[[ToggleButton], None] = ...
     padding: list[None] = ...
@@ -84374,6 +85517,8 @@ class Tooltip(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.Object.Props): ...
 
     def set_custom(self, custom_widget: Optional[Widget] = None) -> None:
         """
@@ -84494,6 +85639,8 @@ class TreeDragDest(GObject.GInterface):
     Interface GtkTreeDragDest
     """
 
+    class Props(GObject.GInterface.Props): ...
+
     @deprecated("Use list models instead")
     def drag_data_received(self, dest: TreePath, value: Any) -> bool:
         """
@@ -84542,6 +85689,7 @@ class TreeDragDestIface(GObject.GPointer):
         TreeDragDestIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     drag_data_received: Callable[[TreeDragDest, TreePath, Any], bool] = ...
     row_drop_possible: Callable[[TreeDragDest, TreePath, Any], bool] = ...
@@ -84557,6 +85705,8 @@ class TreeDragSource(GObject.GInterface):
 
     Interface GtkTreeDragSource
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     @deprecated("Use list models instead")
     def drag_data_delete(self, path: TreePath) -> bool:
@@ -84618,6 +85768,7 @@ class TreeDragSourceIface(GObject.GPointer):
         TreeDragSourceIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     row_draggable: Callable[[TreeDragSource, TreePath], bool] = ...
     drag_data_get: Callable[
@@ -84754,48 +85905,38 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
+        """
+        The child widget with the actual contents.
+        """
         hide_expander: bool
+        """
+        Whether the expander icon should be hidden in a GtkTreeListRow.
+        Note that this property simply hides the icon. The actions and keybinding
+        (i.e. collapse and expand) are not affected by this property.
+
+        A common use for this property would be to bind to the number of children in a
+        GtkTreeListRow's model in order to hide the expander when a row has no children.
+        """
         indent_for_depth: bool
+        """
+        TreeExpander indents the child according to its depth.
+        """
         indent_for_icon: bool
+        """
+        TreeExpander indents the child by the width of an expander-icon if it is not expandable.
+        """
         item: Optional[GObject.Object]
+        """
+        The item held by this expander's row.
+        """
         list_row: Optional[TreeListRow]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The list row to track for expander state.
+        """
 
     props: Props = ...
     def __init__(
@@ -85003,6 +86144,7 @@ class TreeExpanderClass(GObject.GPointer):
         TreeExpanderClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class TreeIter(GObject.GBoxed):
@@ -85020,6 +86162,7 @@ class TreeIter(GObject.GBoxed):
         TreeIter()
     """
 
+    class Props(GObject.GBoxed.Props): ...
     stamp: int = ...
     user_data: None = ...
     user_data2: None = ...
@@ -85085,12 +86228,31 @@ class TreeListModel(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gio.ListModel.Props):
         autoexpand: bool
+        """
+        If all rows should be expanded by default.
+        """
         item_type: Type
+        """
+        The type of items. See [method@Gio.ListModel.get_item_type].
+        """
         model: Gio.ListModel
+        """
+        The root model displayed.
+        """
         n_items: int
+        """
+        The number of items. See [method@Gio.ListModel.get_n_items].
+        """
         passthrough: bool
+        """
+        Gets whether the model is in passthrough mode.
+
+        If %FALSE, the `GListModel` functions for this object return custom
+        [class@Gtk.TreeListRow] objects. If %TRUE, the values of the child
+        models are pass through unmodified.
+        """
 
     props: Props = ...
     def __init__(self, autoexpand: bool = ..., passthrough: bool = ...): ...
@@ -85246,6 +86408,7 @@ class TreeListModelClass(GObject.GPointer):
         TreeListModelClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class TreeListRow(GObject.Object):
@@ -85281,12 +86444,27 @@ class TreeListRow(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         children: Optional[Gio.ListModel]
+        """
+        The model holding the row's children.
+        """
         depth: int
+        """
+        The depth in the tree of this row.
+        """
         expandable: bool
+        """
+        If this row can ever be expanded.
+        """
         expanded: bool
+        """
+        If this row is currently expanded.
+        """
         item: Optional[GObject.Object]
+        """
+        The item held in this row.
+        """
 
     props: Props = ...
     def __init__(self, expanded: bool = ...): ...
@@ -85454,6 +86632,7 @@ class TreeListRowClass(GObject.GPointer):
         TreeListRowClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class TreeListRowSorter(Sorter):
@@ -85491,8 +86670,11 @@ class TreeListRowSorter(Sorter):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Sorter.Props):
         sorter: Optional[Sorter]
+        """
+        The underlying sorter
+        """
 
     props: Props = ...
     def __init__(self, sorter: Optional[Sorter] = ...): ...
@@ -85551,6 +86733,7 @@ class TreeListRowSorterClass(GObject.GPointer):
         TreeListRowSorterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: SorterClass = ...
 
 @deprecated("Use [iface@Gio.ListModel] instead")
@@ -85760,6 +86943,8 @@ class TreeModel(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
+
+    class Props(GObject.GInterface.Props): ...
 
     @deprecated("This method is deprecated")
     def filter_new(self, root: Optional[TreePath] = None) -> TreeModel:
@@ -86171,7 +87356,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, TreeDragSource.Props, TreeModel.Props):
         child_model: TreeModel
         virtual_root: TreePath
 
@@ -86352,12 +87537,14 @@ class TreeModelFilterClass(GObject.GPointer):
         TreeModelFilterClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     visible: Callable[[TreeModelFilter, TreeModel, TreeIter], bool] = ...
     modify: Callable[[TreeModelFilter, TreeModel, TreeIter, Any, int], None] = ...
     padding: list[None] = ...
 
-class TreeModelFilterPrivate(GObject.GPointer): ...
+class TreeModelFilterPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class TreeModelIface(GObject.GPointer):
     """
@@ -86368,6 +87555,7 @@ class TreeModelIface(GObject.GPointer):
         TreeModelIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     row_changed: Callable[[TreeModel, TreePath, TreeIter], None] = ...
     row_inserted: Callable[[TreeModel, TreePath, TreeIter], None] = ...
@@ -86395,6 +87583,7 @@ class TreeModelIface(GObject.GPointer):
     unref_node: Callable[[TreeModel, TreeIter], None] = ...
 
 class TreeModelRow:
+    class Props: ...
     next = ...  # FIXME Constant
     parent = ...  # FIXME Constant
     path = ...  # FIXME Constant
@@ -86405,7 +87594,8 @@ class TreeModelRow:
     def get_previous(self): ...  # FIXME Function
     def iterchildren(self): ...  # FIXME Function
 
-class TreeModelRowIter: ...
+class TreeModelRowIter:
+    class Props: ...
 
 @deprecated("Use [class@Gtk.SortListModel] instead")
 class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
@@ -86533,7 +87723,9 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        GObject.Object.Props, TreeDragSource.Props, TreeModel.Props, TreeSortable.Props
+    ):
         model: TreeModel
 
     props: Props = ...
@@ -86692,10 +87884,12 @@ class TreeModelSortClass(GObject.GPointer):
         TreeModelSortClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     padding: list[None] = ...
 
-class TreeModelSortPrivate(GObject.GPointer): ...
+class TreeModelSortPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class TreePath(GObject.GBoxed):
     """
@@ -86710,6 +87904,8 @@ class TreePath(GObject.GBoxed):
         new_from_indices(indices:list) -> Gtk.TreePath
         new_from_string(path:str) -> Gtk.TreePath or None
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     @deprecated("This method is deprecated")
     def append_index(self, index_: int) -> None:
@@ -86991,7 +88187,8 @@ class TreePath(GObject.GBoxed):
         """
         ...
 
-class TreeRowData(GObject.GBoxed): ...
+class TreeRowData(GObject.GBoxed):
+    class Props(GObject.GBoxed.Props): ...
 
 class TreeRowReference(GObject.GBoxed):
     """
@@ -87006,6 +88203,8 @@ class TreeRowReference(GObject.GBoxed):
         new(model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
         new_proxy(proxy:GObject.Object, model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
     """
+
+    class Props(GObject.GBoxed.Props): ...
 
     @deprecated("This method is deprecated")
     def copy(self) -> TreeRowReference:
@@ -87222,8 +88421,12 @@ class TreeSelection(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         mode: SelectionMode
+        """
+        Selection mode.
+        See gtk_tree_selection_set_mode() for more information on this property.
+        """
 
     props: Props = ...
     def __init__(self, mode: SelectionMode = ...): ...
@@ -87469,6 +88672,8 @@ class TreeSortable(GObject.GInterface):
       notify (GParam)
     """
 
+    class Props(GObject.GInterface.Props): ...
+
     def get_sort_column_id(
         self,
     ) -> Tuple[int, SortType] | Tuple[None, None]:  # CHECK Wrapped function
@@ -87551,6 +88756,7 @@ class TreeSortableIface(GObject.GPointer):
         TreeSortableIface()
     """
 
+    class Props(GObject.GPointer.Props): ...
     g_iface: GObject.TypeInterface = ...
     sort_column_changed: Callable[[TreeSortable], None] = ...
     get_sort_column_id: Callable[[TreeSortable], Tuple[bool, int, SortType]] = ...
@@ -87619,6 +88825,14 @@ class TreeStore(
       notify (GParam)
     """
 
+    class Props(
+        GObject.Object.Props,
+        Buildable.Props,
+        TreeDragDest.Props,
+        TreeDragSource.Props,
+        TreeModel.Props,
+        TreeSortable.Props,
+    ): ...
     parent: GObject.Object = ...
     priv: TreeStorePrivate = ...
     def append(self, parent, row=None): ...  # FIXME Function
@@ -87870,10 +89084,12 @@ class TreeStoreClass(GObject.GPointer):
         TreeStoreClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     padding: list[None] = ...
 
-class TreeStorePrivate(GObject.GPointer): ...
+class TreeStorePrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 @deprecated(
     "Use [class@Gtk.ListView] for lists, and [class@Gtk.ColumnView] for tabular lists"
@@ -88068,63 +89284,64 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Scrollable.Props,
+    ):
         activate_on_single_click: bool
+        """
+        The activate-on-single-click property specifies whether the \"row-activated\" signal
+        will be emitted after a single click.
+        """
         enable_grid_lines: TreeViewGridLines
         enable_search: bool
         enable_tree_lines: bool
         expander_column: Optional[TreeViewColumn]
         fixed_height_mode: bool
+        """
+        Setting the ::fixed-height-mode property to %TRUE speeds up
+        `GtkTreeView` by assuming that all rows have the same height.
+        Only enable this option if all rows are the same height.
+        Please see gtk_tree_view_set_fixed_height_mode() for more
+        information on this option.
+        """
         headers_clickable: bool
         headers_visible: bool
         hover_expand: bool
+        """
+        Enables or disables the hover expansion mode of @tree_view.
+        Hover expansion makes rows expand or collapse if the pointer moves
+        over them.
+
+        This mode is primarily intended for treeviews in popups, e.g.
+        in `GtkComboBox` or `GtkEntryCompletion`.
+        """
         hover_selection: bool
+        """
+        Enables or disables the hover selection mode of @tree_view.
+        Hover selection makes the selected row follow the pointer.
+        Currently, this works only for the selection modes
+        %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
+
+        This mode is primarily intended for treeviews in popups, e.g.
+        in `GtkComboBox` or `GtkEntryCompletion`.
+        """
         level_indentation: int
+        """
+        Extra indentation for each level.
+        """
         model: Optional[TreeModel]
         reorderable: bool
         rubber_banding: bool
         search_column: int
         show_expanders: bool
+        """
+        %TRUE if the view has expanders.
+        """
         tooltip_column: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -89712,6 +90929,7 @@ class TreeViewClass(GObject.GPointer):
         TreeViewClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     row_activated: Callable[[TreeView, TreePath, Optional[TreeViewColumn]], None] = ...
     test_expand_row: Callable[[TreeView, TreeIter, TreePath], bool] = ...
@@ -89784,9 +91002,15 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props, Buildable.Props, CellLayout.Props):
         alignment: float
         cell_area: CellArea
+        """
+        The `GtkCellArea` used to layout cell renderers for this column.
+
+        If no area is specified when creating the tree view column with gtk_tree_view_column_new_with_area()
+        a horizontally oriented `GtkCellAreaBox` will be used.
+        """
         clickable: bool
         expand: bool
         fixed_width: int
@@ -89796,6 +91020,10 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         resizable: bool
         sizing: TreeViewColumnSizing
         sort_column_id: int
+        """
+        Logical sort column ID this column sorts on when selected for sorting. Setting the sort column ID makes the column header
+        clickable. Set to -1 to make the column unsortable.
+        """
         sort_indicator: bool
         sort_order: SortType
         spacing: int
@@ -90642,8 +91870,11 @@ class UriLauncher(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         uri: Optional[str]
+        """
+        The uri to launch.
+        """
 
     props: Props = ...
     def __init__(self, uri: Optional[str] = ...): ...
@@ -90737,6 +91968,7 @@ class UriLauncherClass(GObject.GPointer):
         UriLauncherClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
 class Video(Widget, Accessible, Buildable, ConstraintTarget):
@@ -90830,46 +92062,25 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         autoplay: bool
+        """
+        If the video should automatically begin playing.
+        """
         file: Optional[Gio.File]
+        """
+        The file played by this video if the video is playing a file.
+        """
         loop: bool
+        """
+        If new media files should be set to loop.
+        """
         media_stream: Optional[MediaStream]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The media-stream played
+        """
 
     props: Props = ...
     def __init__(
@@ -91131,6 +92342,7 @@ class VideoClass(GObject.GPointer):
         VideoClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
@@ -91222,48 +92434,25 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Scrollable.Props,
+    ):
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         scroll_to_focus: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        hadjustment: Optional[Adjustment]
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Optional[Adjustment]
-        vscroll_policy: ScrollablePolicy
+        """
+        Whether to scroll when the focus changes.
+
+        Before 4.6.2, this property was mistakenly defaulting to FALSE, so if your
+        code needs to work with older versions, consider setting it explicitly to
+        TRUE.
+        """
 
     props: Props = ...
     def __init__(
@@ -91486,48 +92675,21 @@ class VolumeButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        ScaleButton.Props,
+        Accessible.Props,
+        AccessibleRange.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Orientable.Props,
+    ):
         use_symbolic: bool
-        active: bool
-        adjustment: Adjustment
-        icons: list[str]
-        value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        orientation: Orientation
+        """
+        Whether to use symbolic icons as the icons.
+
+        Note that if the symbolic icons are not available in your installed
+        theme, then the normal (potentially colorful) icons will be used.
+        """
 
     props: Props = ...
     parent: ScaleButton = ...
@@ -92041,42 +93203,219 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        GObject.InitiallyUnowned.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+    ):
         can_focus: bool
+        """
+        Whether the widget or any of its descendents can accept
+        the input focus.
+
+        This property is meant to be set by widget implementations,
+        typically in their instance init function.
+        """
         can_target: bool
+        """
+        Whether the widget can receive pointer events.
+        """
         css_classes: list[str]
+        """
+        A list of css classes applied to this widget.
+        """
         css_name: str
+        """
+        The name of this widget in the CSS tree.
+
+        This property is meant to be set by widget implementations,
+        typically in their instance init function.
+        """
         cursor: Optional[Gdk.Cursor]
+        """
+        The cursor used by @widget.
+        """
         focus_on_click: bool
+        """
+        Whether the widget should grab focus when it is clicked with the mouse.
+
+        This property is only relevant for widgets that can take focus.
+        """
         focusable: bool
+        """
+        Whether this widget itself will accept the input focus.
+        """
         halign: Align
+        """
+        How to distribute horizontal space if widget gets extra space.
+        """
         has_default: bool
+        """
+        Whether the widget is the default widget.
+        """
         has_focus: bool
+        """
+        Whether the widget has the input focus.
+        """
         has_tooltip: bool
+        """
+        Enables or disables the emission of the ::query-tooltip signal on @widget.
+
+        A value of %TRUE indicates that @widget can have a tooltip, in this case
+        the widget will be queried using [signal@Gtk.Widget::query-tooltip] to
+        determine whether it will provide a tooltip or not.
+        """
         height_request: int
+        """
+        Override for height request of the widget.
+
+        If this is -1, the natural request will be used.
+        """
         hexpand: bool
+        """
+        Whether to expand horizontally.
+        """
         hexpand_set: bool
+        """
+        Whether to use the `hexpand` property.
+        """
         layout_manager: Optional[LayoutManager]
+        """
+        The `GtkLayoutManager` instance to use to compute the preferred size
+        of the widget, and allocate its children.
+
+        This property is meant to be set by widget implementations,
+        typically in their instance init function.
+        """
         margin_bottom: int
+        """
+        Margin on bottom side of widget.
+
+        This property adds margin outside of the widget's normal size
+        request, the margin will be added in addition to the size from
+        [method@Gtk.Widget.set_size_request] for example.
+        """
         margin_end: int
+        """
+        Margin on end of widget, horizontally.
+
+        This property supports left-to-right and right-to-left text
+        directions.
+
+        This property adds margin outside of the widget's normal size
+        request, the margin will be added in addition to the size from
+        [method@Gtk.Widget.set_size_request] for example.
+        """
         margin_start: int
+        """
+        Margin on start of widget, horizontally.
+
+        This property supports left-to-right and right-to-left text
+        directions.
+
+        This property adds margin outside of the widget's normal size
+        request, the margin will be added in addition to the size from
+        [method@Gtk.Widget.set_size_request] for example.
+        """
         margin_top: int
+        """
+        Margin on top side of widget.
+
+        This property adds margin outside of the widget's normal size
+        request, the margin will be added in addition to the size from
+        [method@Gtk.Widget.set_size_request] for example.
+        """
         name: str
+        """
+        The name of the widget.
+        """
         opacity: float
+        """
+        The requested opacity of the widget.
+        """
         overflow: Overflow
+        """
+        How content outside the widget's content area is treated.
+
+        This property is meant to be set by widget implementations,
+        typically in their instance init function.
+        """
         parent: Optional[Widget]
+        """
+        The parent widget of this widget.
+        """
         receives_default: bool
+        """
+        Whether the widget will receive the default action when it is focused.
+        """
         root: Optional[Root]
+        """
+        The `GtkRoot` widget of the widget tree containing this widget.
+
+        This will be %NULL if the widget is not contained in a root widget.
+        """
         scale_factor: int
+        """
+        The scale factor of the widget.
+        """
         sensitive: bool
+        """
+        Whether the widget responds to input.
+        """
         tooltip_markup: Optional[str]
+        """
+        Sets the text of tooltip to be the given string, which is marked up
+        with Pango markup.
+
+        Also see [method@Gtk.Tooltip.set_markup].
+
+        This is a convenience property which will take care of getting the
+        tooltip shown if the given string is not %NULL:
+        [property@Gtk.Widget:has-tooltip] will automatically be set to %TRUE
+        and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+        the default signal handler.
+
+        Note that if both [property@Gtk.Widget:tooltip-text] and
+        [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+        """
         tooltip_text: Optional[str]
+        """
+        Sets the text of tooltip to be the given string.
+
+        Also see [method@Gtk.Tooltip.set_text].
+
+        This is a convenience property which will take care of getting the
+        tooltip shown if the given string is not %NULL:
+        [property@Gtk.Widget:has-tooltip] will automatically be set to %TRUE
+        and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+        the default signal handler.
+
+        Note that if both [property@Gtk.Widget:tooltip-text] and
+        [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+        """
         valign: Align
+        """
+        How to distribute vertical space if widget gets extra space.
+        """
         vexpand: bool
+        """
+        Whether to expand vertically.
+        """
         vexpand_set: bool
+        """
+        Whether to use the `vexpand` property.
+        """
         visible: bool
+        """
+        Whether the widget is visible.
+        """
         width_request: int
-        accessible_role: AccessibleRole
+        """
+        Override for width request of the widget.
+
+        If this is -1, the natural request will be used.
+        """
 
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
@@ -95560,6 +96899,7 @@ class WidgetClass(GObject.GPointer):
         WidgetClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.InitiallyUnownedClass = ...
     show: Callable[[Widget], None] = ...
     hide: Callable[[Widget], None] = ...
@@ -95962,7 +97302,8 @@ class WidgetClass(GObject.GPointer):
         """
         ...
 
-class WidgetClassPrivate(GObject.GPointer): ...
+class WidgetClassPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class WidgetPaintable(GObject.Object, Gdk.Paintable):
     """
@@ -96007,8 +97348,11 @@ class WidgetPaintable(GObject.Object, Gdk.Paintable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props, Gdk.Paintable.Props):
         widget: Optional[Widget]
+        """
+        The observed widget or %NULL if none.
+        """
 
     props: Props = ...
     def __init__(self, widget: Optional[Widget] = ...): ...
@@ -96060,9 +97404,11 @@ class WidgetPaintableClass(GObject.GPointer):
         WidgetPaintableClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
 
-class WidgetPrivate(GObject.GPointer): ...
+class WidgetPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class Window(
     Widget, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
@@ -96224,67 +97570,146 @@ class Window(
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props,
+        Accessible.Props,
+        Buildable.Props,
+        ConstraintTarget.Props,
+        Native.Props,
+        Root.Props,
+        ShortcutManager.Props,
+    ):
         application: Optional[Application]
+        """
+        The `GtkApplication` associated with the window.
+
+        The application will be kept alive for at least as long as it
+        has any windows associated with it (see g_application_hold()
+        for a way to keep it alive without windows).
+
+        Normally, the connection between the application and the window
+        will remain until the window is destroyed, but you can explicitly
+        remove it by setting the :application property to %NULL.
+        """
         child: Optional[Widget]
+        """
+        The child widget.
+        """
         decorated: bool
+        """
+        Whether the window should have a frame (also known as *decorations*).
+        """
         default_height: int
+        """
+        The default height of the window.
+        """
         default_widget: Optional[Widget]
+        """
+        The default widget.
+        """
         default_width: int
+        """
+        The default width of the window.
+        """
         deletable: bool
+        """
+        Whether the window frame should have a close button.
+        """
         destroy_with_parent: bool
+        """
+        If this window should be destroyed when the parent is destroyed.
+        """
         display: Gdk.Display
+        """
+        The display that will display this window.
+        """
         focus_visible: bool
+        """
+        Whether 'focus rectangles' are currently visible in this window.
+
+        This property is maintained by GTK based on user input
+        and should not be set by applications.
+        """
         focus_widget: Widget
+        """
+        The focus widget.
+        """
         fullscreened: bool
+        """
+        Whether the window is fullscreen.
+
+        Setting this property is the equivalent of calling
+        [method@Gtk.Window.fullscreen] or [method@Gtk.Window.unfullscreen];
+        either operation is asynchronous, which means you will need to
+        connect to the ::notify signal in order to know whether the
+        operation was successful.
+        """
         handle_menubar_accel: bool
+        """
+        Whether the window frame should handle F10 for activating
+        menubars.
+        """
         hide_on_close: bool
+        """
+        If this window should be hidden when the users clicks the close button.
+        """
         icon_name: Optional[str]
+        """
+        Specifies the name of the themed icon to use as the window icon.
+
+        See [class@Gtk.IconTheme] for more details.
+        """
         is_active: bool
+        """
+        Whether the toplevel is the currently active window.
+        """
         maximized: bool
+        """
+        Whether the window is maximized.
+
+        Setting this property is the equivalent of calling
+        [method@Gtk.Window.maximize] or [method@Gtk.Window.unmaximize];
+        either operation is asynchronous, which means you will need to
+        connect to the ::notify signal in order to know whether the
+        operation was successful.
+        """
         mnemonics_visible: bool
+        """
+        Whether mnemonics are currently visible in this window.
+
+        This property is maintained by GTK based on user input,
+        and should not be set by applications.
+        """
         modal: bool
+        """
+        If %TRUE, the window is modal.
+        """
         resizable: bool
+        """
+        If %TRUE, users can resize the window.
+        """
         suspended: bool
+        """
+        Whether the window is suspended.
+
+        See [method@Gtk.Window.is_suspended] for details about what suspended means.
+        """
         title: Optional[str]
+        """
+        The title of the window.
+        """
         titlebar: Optional[Widget]
+        """
+        The titlebar widget.
+        """
         transient_for: Optional[Window]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The transient parent of the window.
+        """
         startup_id: str
+        """
+        A write-only property for setting window's startup notification identifier.
+        """
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -97469,6 +98894,7 @@ class WindowClass(GObject.GPointer):
         WindowClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
     activate_focus: Callable[[Window], None] = ...
     activate_default: Callable[[Window], None] = ...
@@ -97599,45 +99025,26 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         decoration_layout: Optional[str]
+        """
+        The decoration layout for window buttons.
+
+        If this property is not set, the
+        [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+        """
         empty: bool
+        """
+        Whether the widget has any window buttons.
+        """
         side: PackType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        Whether the widget shows start or end side of the decoration layout.
+
+        See [property@Gtk.WindowControls:decoration_layout].
+        """
 
     props: Props = ...
     def __init__(
@@ -97777,6 +99184,7 @@ class WindowControlsClass(GObject.GPointer):
         WindowControlsClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class WindowGroup(GObject.Object):
@@ -97811,6 +99219,7 @@ class WindowGroup(GObject.Object):
       notify (GParam)
     """
 
+    class Props(GObject.Object.Props): ...
     parent_instance: GObject.Object = ...
     priv: WindowGroupPrivate = ...
     def add_window(self, window: Window) -> None:
@@ -97877,13 +99286,15 @@ class WindowGroupClass(GObject.GPointer):
         WindowGroupClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: GObject.ObjectClass = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
 
-class WindowGroupPrivate(GObject.GPointer): ...
+class WindowGroupPrivate(GObject.GPointer):
+    class Props(GObject.GPointer.Props): ...
 
 class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -97969,43 +99380,13 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
 
-    class Props:
+    class Props(
+        Widget.Props, Accessible.Props, Buildable.Props, ConstraintTarget.Props
+    ):
         child: Optional[Widget]
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: Optional[Gdk.Cursor]
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: Optional[LayoutManager]
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Optional[Widget]
-        receives_default: bool
-        root: Optional[Root]
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
+        """
+        The child widget.
+        """
 
     props: Props = ...
     def __init__(
@@ -98090,6 +99471,7 @@ class WindowHandleClass(GObject.GPointer):
         WindowHandleClass()
     """
 
+    class Props(GObject.GPointer.Props): ...
     parent_class: WidgetClass = ...
 
 class ApplicationInhibitFlags(GObject.GFlags):
