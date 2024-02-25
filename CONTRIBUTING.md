@@ -21,6 +21,9 @@ options:
   -o OUTPUT   Output file
 ```
 
+To re-generate all known stubs, run `tools/update_all.py`.
+You can comment out the libraries you are not interested in.
+
 ## Install development dependencies
 
     $ pip install .[dev]
