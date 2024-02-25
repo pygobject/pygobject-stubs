@@ -1,7 +1,16 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
+from typing import Sequence
+from typing import Tuple
+from typing import Type
 from typing import TypeVar
+
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
 
 import cairo
 from gi.repository import GObject

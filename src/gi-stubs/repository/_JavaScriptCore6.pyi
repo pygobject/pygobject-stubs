@@ -7,11 +7,16 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import GLib
 from gi.repository import GObject
 
 MAJOR_VERSION: int = 2
-MICRO_VERSION: int = 3
+MICRO_VERSION: int = 5
 MINOR_VERSION: int = 42
 OPTIONS_USE_DFG: str = "useDFGJIT"
 OPTIONS_USE_FTL: str = "useFTLJIT"
@@ -64,7 +69,6 @@ class Class(GObject.Object):
         name: str
         parent: Class
         context: Context
-
     props: Props = ...
     def __init__(
         self, context: Context = ..., name: str = ..., parent: Class = ...
@@ -165,7 +169,6 @@ class Context(GObject.Object):
 
     class Props:
         virtual_machine: VirtualMachine
-
     props: Props = ...
     def __init__(self, virtual_machine: VirtualMachine = ...): ...
     def check_syntax(
@@ -295,7 +298,6 @@ class Value(GObject.Object):
 
     class Props:
         context: Context
-
     props: Props = ...
     def __init__(self, context: Context = ...): ...
     def array_buffer_get_data(self, size: Optional[int] = None) -> None: ...
@@ -479,7 +481,6 @@ class WeakValue(GObject.Object):
 
     class Props:
         value: Value
-
     props: Props = ...
     def __init__(self, value: Value = ...): ...
     def get_value(self) -> Value: ...

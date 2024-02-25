@@ -1,9 +1,16 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
+from typing import Type
 from typing import TypeVar
+
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
 
 import cairo
 from gi.repository import GdkPixbuf
@@ -2300,7 +2307,7 @@ KEY_zerosuperior: int = 16785520
 KEY_zstroke: int = 16777654
 MAJOR_VERSION: int = 3
 MAX_TIMECOORD_AXES: int = 128
-MICRO_VERSION: int = 34
+MICRO_VERSION: int = 41
 MINOR_VERSION: int = 24
 PARENT_RELATIVE: int = 1
 PRIORITY_REDRAW: int = 120
@@ -2321,15 +2328,19 @@ TARGET_DRAWABLE: Atom = ...
 TARGET_PIXMAP: Atom = ...
 TARGET_STRING: Atom = ...
 _introspection_module = ...  # FIXME Constant
+_lock = ...  # FIXME Constant
 _namespace: str = "Gdk"
 _overrides_module = ...  # FIXME Constant
 _version: str = "3.0"
 
+@deprecated("This symbol was never meant to be used outside of GTK+")
 def add_option_entries_libgtk_only(group: GLib.OptionGroup) -> None: ...
 def atom_intern(atom_name: str, only_if_exists: bool) -> Atom: ...
 def atom_intern_static_string(atom_name: str) -> Atom: ...
 def beep() -> None: ...
-
+@deprecated(
+    "Use gdk_window_begin_draw_frame() and gdk_drawing_context_get_cairo_context() instead"
+)
 # override
 def cairo_create(window: Window) -> cairo.Context[cairo.ImageSurface]: ...
 def cairo_draw_from_gl(
@@ -2352,6 +2363,7 @@ def cairo_get_drawing_context(
 def cairo_rectangle(cr: cairo.Context[_SomeSurface], rectangle: Rectangle) -> None: ...
 def cairo_region(cr: cairo.Context[_SomeSurface], region: cairo.Region) -> None: ...
 def cairo_region_create_from_surface(surface: cairo.Surface) -> cairo.Region: ...
+@deprecated("Use gdk_cairo_set_source_rgba() instead")
 def cairo_set_source_color(cr: cairo.Context[_SomeSurface], color: Color) -> None: ...
 def cairo_set_source_pixbuf(
     cr: cairo.Context[_SomeSurface],
@@ -2368,7 +2380,7 @@ def cairo_set_source_window(
 def cairo_surface_create_from_pixbuf(
     pixbuf: GdkPixbuf.Pixbuf, scale: int, for_window: Optional[Window] = None
 ) -> cairo.ImageSurface: ...
-def color_parse(*args, **kwargs): ...  # FIXME Function
+def color_parse(spec: str) -> Optional[Color]: ...  # CHECK Wrapped function
 def disable_multidevice() -> None: ...
 def drag_abort(context: DragContext, time_: int) -> None: ...
 def drag_begin(window: Window, targets: list[Atom]) -> DragContext: ...
@@ -2411,14 +2423,17 @@ def events_get_distance(event1: Event, event2: Event) -> Tuple[bool, float]: ...
 def events_pending() -> bool: ...
 def flush() -> None: ...
 def get_default_root_window() -> Window: ...
+@deprecated("Call gdk_display_get_name (gdk_display_get_default ())) instead.")
 def get_display() -> str: ...
 def get_display_arg_name() -> Optional[str]: ...
 def get_program_class() -> str: ...
 def get_show_events() -> bool: ...
 def gl_error_quark() -> int: ...
-def init() -> Tuple[int, list[str]]: ...
-def init_check() -> Tuple[bool, int, list[str]]: ...
+def init() -> list[str]: ...
+def init_check() -> Tuple[bool, list[str]]: ...
+@deprecated("Use gdk_device_grab() instead.")
 def keyboard_grab(window: Window, owner_events: bool, time_: int) -> GrabStatus: ...
+@deprecated("Use gdk_device_ungrab(), together with gdk_device_grab() instead.")
 def keyboard_ungrab(time_: int) -> None: ...
 def keyval_convert_case(symbol: int) -> Tuple[int, int]: ...
 def keyval_from_name(keyval_name: str) -> int: ...
@@ -2428,6 +2443,7 @@ def keyval_name(keyval: int) -> Optional[str]: ...
 def keyval_to_lower(keyval: int) -> int: ...
 def keyval_to_unicode(keyval: int) -> int: ...
 def keyval_to_upper(keyval: int) -> int: ...
+@deprecated("Use gdk_screen_list_visuals (gdk_screen_get_default ()).")
 def list_visuals() -> list[Visual]: ...
 def notify_startup_complete() -> None: ...
 def notify_startup_complete_with_id(startup_id: str) -> None: ...
@@ -2437,13 +2453,14 @@ def offscreen_window_set_embedder(window: Window, embedder: Window) -> None: ...
 def pango_context_get() -> Pango.Context: ...
 def pango_context_get_for_display(display: Display) -> Pango.Context: ...
 def pango_context_get_for_screen(screen: Screen) -> Pango.Context: ...
-def parse_args() -> Tuple[int, list[str]]: ...
+def parse_args() -> list[str]: ...
 def pixbuf_get_from_surface(
     surface: cairo.Surface, src_x: int, src_y: int, width: int, height: int
 ) -> Optional[GdkPixbuf.Pixbuf]: ...
 def pixbuf_get_from_window(
     window: Window, src_x: int, src_y: int, width: int, height: int
 ) -> Optional[GdkPixbuf.Pixbuf]: ...
+@deprecated("Use gdk_device_grab() instead.")
 def pointer_grab(
     window: Window,
     owner_events: bool,
@@ -2452,14 +2469,23 @@ def pointer_grab(
     cursor: Optional[Cursor],
     time_: int,
 ) -> GrabStatus: ...
+@deprecated("Use gdk_display_device_is_grabbed() instead.")
 def pointer_is_grabbed() -> bool: ...
+@deprecated("Use gdk_device_ungrab(), together with gdk_device_grab() instead.")
 def pointer_ungrab(time_: int) -> None: ...
+@deprecated("This symbol was never meant to be used outside of GTK+")
 def pre_parse_libgtk_only() -> None: ...
 def property_delete(window: Window, property: Atom) -> None: ...
 def property_get(
     window: Window, property: Atom, type: Atom, offset: int, length: int, pdelete: int
-) -> Tuple[bool, Atom, int, int, bytes]: ...
+) -> Tuple[bool, Atom, int, bytes]: ...
+@deprecated(
+    "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+)
 def query_depths() -> list[int]: ...
+@deprecated(
+    "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+)
 def query_visual_types() -> list[VisualType]: ...
 def rectangle_intersect(self, src2: Rectangle) -> Tuple[bool, Rectangle]: ...
 def rectangle_union(self, src2: Rectangle) -> Rectangle: ...
@@ -2528,21 +2554,48 @@ def threads_add_timeout(
 def threads_add_timeout_seconds(
     priority: int, interval: int, function: Callable[..., bool], *data: Any
 ) -> int: ...
+@deprecated("All GDK and GTK+ calls should be made from the main thread")
 def threads_enter() -> None: ...
+@deprecated("All GDK and GTK+ calls should be made from the main thread")
 def threads_init() -> None: ...
+@deprecated("All GDK and GTK+ calls should be made from the main thread")
 def threads_leave() -> None: ...
 def unicode_to_keyval(wc: int) -> int: ...
 def utf8_to_string_target(str: str) -> Optional[str]: ...
 
 class AppLaunchContext(Gio.AppLaunchContext):
+    """
+    :Constructors:
+
+    ::
+
+        AppLaunchContext(**properties)
+        new() -> Gdk.AppLaunchContext
+
+    Object GdkAppLaunchContext
+
+    Properties from GdkAppLaunchContext:
+      display -> GdkDisplay: Display
+        Display
+
+    Signals from GAppLaunchContext:
+      launch-failed (gchararray)
+      launch-started (GAppInfo, GVariant)
+      launched (GAppInfo, GVariant)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
+    @deprecated("Use gdk_display_get_app_launch_context() instead")
     @classmethod
     def new(cls) -> AppLaunchContext: ...
     def set_desktop(self, desktop: int) -> None: ...
+    @deprecated("Use gdk_display_get_app_launch_context() instead")
     def set_display(self, display: Display) -> None: ...
     def set_icon(self, icon: Optional[Gio.Icon] = None) -> None: ...
     def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
@@ -2556,7 +2609,16 @@ class Atom(GObject.GPointer):
     def intern_static_string(atom_name: str) -> Atom: ...
     def name(self) -> str: ...
 
+@deprecated("Use #GdkRGBA")
 class Color(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Color()
+    """
+
     pixel: int = ...
     red: int = ...
     green: int = ...
@@ -2566,27 +2628,57 @@ class Color(GObject.GBoxed):
     green_float = ...  # FIXME Constant
     red_float = ...  # FIXME Constant
 
+    @deprecated("Use #GdkRGBA")
     def copy(self) -> Color: ...
+    @deprecated("Use #GdkRGBA")
     def equal(self, colorb: Color) -> bool: ...
+    @deprecated("Use #GdkRGBA")
     def free(self) -> None: ...
-    def from_floats(self, *args, **kwargs): ...  # FIXME Method
+    def from_floats(red, green, blue): ...  # FIXME Function
+    @deprecated("Use #GdkRGBA")
     def hash(self) -> int: ...
+    @deprecated("Use #GdkRGBA")
     @staticmethod
     def parse(spec: str) -> Tuple[bool, Color]: ...
-    def to_floats(self, *args, **kwargs): ...  # FIXME Method
+    def to_floats(self): ...  # FIXME Function
+    @deprecated("Use #GdkRGBA")
     def to_string(self) -> str: ...
 
 class Cursor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Cursor(**properties)
+        new(cursor_type:Gdk.CursorType) -> Gdk.Cursor
+        new_for_display(display:Gdk.Display, cursor_type:Gdk.CursorType) -> Gdk.Cursor or None
+        new_from_name(display:Gdk.Display, name:str) -> Gdk.Cursor or None
+        new_from_pixbuf(display:Gdk.Display, pixbuf:GdkPixbuf.Pixbuf, x:int, y:int) -> Gdk.Cursor
+        new_from_surface(display:Gdk.Display, surface:cairo.Surface, x:float, y:float) -> Gdk.Cursor
+
+    Object GdkCursor
+
+    Properties from GdkCursor:
+      cursor-type -> GdkCursorType: Cursor type
+        Standard cursor type
+      display -> GdkDisplay: Display
+        Display of this cursor
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         cursor_type: CursorType
         display: Display
-
     props: Props = ...
     def __init__(self, cursor_type: CursorType = ..., display: Display = ...): ...
     def get_cursor_type(self) -> CursorType: ...
     def get_display(self) -> Display: ...
     def get_image(self) -> Optional[GdkPixbuf.Pixbuf]: ...
     def get_surface(self) -> Tuple[Optional[cairo.Surface], float, float]: ...
+    @deprecated("Use gdk_cursor_new_for_display() instead.")
     @classmethod
     def new(cls, cursor_type: CursorType) -> Cursor: ...
     @classmethod
@@ -2603,12 +2695,63 @@ class Cursor(GObject.Object):
     def new_from_surface(
         cls, display: Display, surface: cairo.Surface, x: float, y: float
     ) -> Cursor: ...
+    @deprecated("Use g_object_ref() instead")
     def ref(self) -> Cursor: ...
+    @deprecated("Use g_object_unref() instead")
     def unref(self) -> None: ...
 
 class Device(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Device(**properties)
+
+    Object GdkDevice
+
+    Signals from GdkDevice:
+      changed ()
+      tool-changed (GdkDeviceTool)
+
+    Properties from GdkDevice:
+      display -> GdkDisplay: Device Display
+        Display which the device belongs to
+      device-manager -> GdkDeviceManager: Device manager
+        Device manager which the device belongs to
+      name -> gchararray: Device name
+        Device name
+      associated-device -> GdkDevice: Associated device
+        Associated pointer or keyboard with this device
+      type -> GdkDeviceType: Device type
+        Device role in the device manager
+      input-source -> GdkInputSource: Input source
+        Source type for the device
+      input-mode -> GdkInputMode: Input mode for the device
+        Input mode for the device
+      has-cursor -> gboolean: Whether the device has a cursor
+        Whether there is a visible cursor following device motion
+      n-axes -> guint: Number of axes in the device
+        Number of axes in the device
+      vendor-id -> gchararray: Vendor ID
+        Vendor ID
+      product-id -> gchararray: Product ID
+        Product ID
+      seat -> GdkSeat: Seat
+        Seat
+      num-touches -> guint: Number of concurrent touches
+        Number of concurrent touches
+      axes -> GdkAxisFlags: Axes
+        Axes
+      tool -> GdkDeviceTool: Tool
+        The tool that is currently used with this device
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
-        associated_device: Device
+        associated_device: Optional[Device]
         axes: AxisFlags
         device_manager: DeviceManager
         display: Display
@@ -2618,12 +2761,11 @@ class Device(GObject.Object):
         n_axes: int
         name: str
         num_touches: int
-        product_id: str
+        product_id: Optional[str]
         seat: Seat
         tool: DeviceTool
         type: DeviceType
-        vendor_id: str
-
+        vendor_id: Optional[str]
     props: Props = ...
     def __init__(
         self,
@@ -2661,6 +2803,7 @@ class Device(GObject.Object):
     def get_window_at_position_double(
         self,
     ) -> Tuple[Optional[Window], float, float]: ...
+    @deprecated("Use gdk_seat_grab() instead.")
     def grab(
         self,
         window: Window,
@@ -2670,6 +2813,7 @@ class Device(GObject.Object):
         cursor: Optional[Cursor],
         time_: int,
     ) -> GrabStatus: ...
+    @deprecated("The symbol was never meant to be used outside of GTK+")
     @staticmethod
     def grab_info_libgtk_only(
         display: Display, device: Device
@@ -2679,20 +2823,53 @@ class Device(GObject.Object):
     def set_axis_use(self, index_: int, use: AxisUse) -> None: ...
     def set_key(self, index_: int, keyval: int, modifiers: ModifierType) -> None: ...
     def set_mode(self, mode: InputMode) -> bool: ...
+    @deprecated("Use gdk_seat_ungrab() instead.")
     def ungrab(self, time_: int) -> None: ...
     def warp(self, screen: Screen, x: int, y: int) -> None: ...
 
 class DeviceManager(GObject.Object):
-    class Props:
-        display: Display
+    """
+    :Constructors:
 
+    ::
+
+        DeviceManager(**properties)
+
+    Object GdkDeviceManager
+
+    Signals from GdkDeviceManager:
+      device-added (GdkDevice)
+      device-removed (GdkDevice)
+      device-changed (GdkDevice)
+
+    Properties from GdkDeviceManager:
+      display -> GdkDisplay: Display
+        Display for the device manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        display: Optional[Display]
     props: Props = ...
     def __init__(self, display: Display = ...): ...
+    @deprecated("Use gdk_seat_get_pointer() instead.")
     def get_client_pointer(self) -> Device: ...
     def get_display(self) -> Optional[Display]: ...
+    @deprecated(
+        ", use gdk_seat_get_pointer(), gdk_seat_get_keyboard() and gdk_seat_get_slaves() instead."
+    )
     def list_devices(self, type: DeviceType) -> list[Device]: ...
 
-class DevicePad(GObject.Object):
+class DevicePad(GObject.GInterface):
+    """
+    Interface GdkDevicePad
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_feature_group(self, feature: DevicePadFeature, feature_idx: int) -> int: ...
     def get_group_n_modes(self, group_idx: int) -> int: ...
     def get_n_features(self, feature: DevicePadFeature) -> int: ...
@@ -2701,12 +2878,34 @@ class DevicePad(GObject.Object):
 class DevicePadInterface(GObject.GPointer): ...
 
 class DeviceTool(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceTool(**properties)
+
+    Object GdkDeviceTool
+
+    Properties from GdkDeviceTool:
+      serial -> guint64: Serial
+        Serial number
+      tool-type -> GdkDeviceToolType: Tool type
+        Tool type
+      axes -> GdkAxisFlags: Axes
+        Tool axes
+      hardware-id -> guint64: Hardware ID
+        Hardware ID
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         axes: AxisFlags
         hardware_id: int
         serial: int
         tool_type: DeviceToolType
-
     props: Props = ...
     def __init__(
         self,
@@ -2720,6 +2919,27 @@ class DeviceTool(GObject.Object):
     def get_tool_type(self) -> DeviceToolType: ...
 
 class Display(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Display(**properties)
+
+    Object GdkDisplay
+
+    Signals from GdkDisplay:
+      opened ()
+      closed (gboolean)
+      seat-added (GdkSeat)
+      seat-removed (GdkSeat)
+      monitor-added (GdkMonitor)
+      monitor-removed (GdkMonitor)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def beep(self) -> None: ...
     def close(self) -> None: ...
     def device_is_grabbed(self, device: Device) -> bool: ...
@@ -2731,6 +2951,7 @@ class Display(GObject.Object):
     def get_default_group(self) -> Window: ...
     def get_default_screen(self) -> Screen: ...
     def get_default_seat(self) -> Seat: ...
+    @deprecated("Use gdk_display_get_default_seat() and #GdkSeat operations.")
     def get_device_manager(self) -> Optional[DeviceManager]: ...
     def get_event(self) -> Optional[Event]: ...
     def get_maximal_cursor_size(self) -> Tuple[int, int]: ...
@@ -2738,24 +2959,35 @@ class Display(GObject.Object):
     def get_monitor_at_point(self, x: int, y: int) -> Monitor: ...
     def get_monitor_at_window(self, window: Window) -> Monitor: ...
     def get_n_monitors(self) -> int: ...
+    @deprecated("The number of screens is always 1.")
     def get_n_screens(self) -> int: ...
     def get_name(self) -> str: ...
+    @deprecated("Use gdk_device_get_position() instead.")
     def get_pointer(self) -> Tuple[Screen, int, int, ModifierType]: ...
     def get_primary_monitor(self) -> Optional[Monitor]: ...
+    @deprecated(
+        "There is only one screen; use gdk_display_get_default_screen() to get it."
+    )
     def get_screen(self, screen_num: int) -> Screen: ...
+    @deprecated("Use gdk_device_get_window_at_position() instead.")
     def get_window_at_pointer(self) -> Tuple[Optional[Window], int, int]: ...
     def has_pending(self) -> bool: ...
     def is_closed(self) -> bool: ...
+    @deprecated("Use gdk_device_ungrab(), together with gdk_device_grab() instead.")
     def keyboard_ungrab(self, time_: int) -> None: ...
+    @deprecated("Use gdk_device_manager_list_devices() instead.")
     def list_devices(self) -> list[Device]: ...
     def list_seats(self) -> list[Seat]: ...
     def notify_startup_complete(self, startup_id: str) -> None: ...
     @staticmethod
     def open(display_name: str) -> Optional[Display]: ...
+    @deprecated("This symbol was never meant to be used outside of GTK+")
     @staticmethod
     def open_default_libgtk_only() -> Optional[Display]: ...
     def peek_event(self) -> Optional[Event]: ...
+    @deprecated("Use gdk_display_device_is_grabbed() instead.")
     def pointer_is_grabbed(self) -> bool: ...
+    @deprecated("Use gdk_device_ungrab(), together with gdk_device_grab() instead.")
     def pointer_ungrab(self, time_: int) -> None: ...
     def put_event(self, event: Event) -> None: ...
     def request_selection_notification(self, selection: Atom) -> bool: ...
@@ -2768,6 +3000,7 @@ class Display(GObject.Object):
         targets: Optional[Sequence[Atom]] = None,
     ) -> None: ...
     def supports_clipboard_persistence(self) -> bool: ...
+    @deprecated("Compositing is an outdated technology that only ever worked on X11.")
     def supports_composite(self) -> bool: ...
     def supports_cursor_alpha(self) -> bool: ...
     def supports_cursor_color(self) -> bool: ...
@@ -2775,12 +3008,32 @@ class Display(GObject.Object):
     def supports_selection_notification(self) -> bool: ...
     def supports_shapes(self) -> bool: ...
     def sync(self) -> None: ...
+    @deprecated("Use gdk_device_warp() instead.")
     def warp_pointer(self, screen: Screen, x: int, y: int) -> None: ...
 
 class DisplayManager(GObject.Object):
-    class Props:
-        default_display: Display
+    """
+    :Constructors:
 
+    ::
+
+        DisplayManager(**properties)
+
+    Object GdkDisplayManager
+
+    Signals from GdkDisplayManager:
+      display-opened (GdkDisplay)
+
+    Properties from GdkDisplayManager:
+      default-display -> GdkDisplay: Default Display
+        The default display for GDK
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        default_display: Optional[Display]
     props: Props = ...
     def __init__(self, default_display: Display = ...): ...
     @staticmethod
@@ -2791,7 +3044,26 @@ class DisplayManager(GObject.Object):
     def set_default_display(self, display: Display) -> None: ...
 
 class DragContext(GObject.Object):
-    def finish(self, *args, **kwargs): ...  # FIXME Method
+    """
+    :Constructors:
+
+    ::
+
+        DragContext(**properties)
+
+    Object GdkDragContext
+
+    Signals from GdkDragContext:
+      cancel (GdkDragCancelReason)
+      drop-performed (gint)
+      dnd-finished ()
+      action-changed (GdkDragAction)
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    def finish(self, success, del_, time): ...  # FIXME Function
     def get_actions(self) -> DragAction: ...
     def get_dest_window(self) -> Window: ...
     def get_device(self) -> Device: ...
@@ -2806,10 +3078,28 @@ class DragContext(GObject.Object):
     def set_hotspot(self, hot_x: int, hot_y: int) -> None: ...
 
 class DrawingContext(GObject.Object):
-    class Props:
-        clip: cairo.Region
-        window: Window
+    """
+    :Constructors:
 
+    ::
+
+        DrawingContext(**properties)
+
+    Object GdkDrawingContext
+
+    Properties from GdkDrawingContext:
+      window -> GdkWindow: Window
+        The window that created the context
+      clip -> CairoRegion: Clip
+        The clip region of the context
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        clip: Optional[cairo.Region]
+        window: Window
     props: Props = ...
     def __init__(self, clip: cairo.Region = ..., window: Window = ...): ...
     # override
@@ -3146,6 +3436,9 @@ class EventTouchpadSwipe(Event):
     y_root: float = ...
     state: ModifierType = ...
 
+@deprecated(
+    "Modern composited windowing systems with pervasive transparency make it impossible to track the visibility of a window reliably, so this event can not be guaranteed to provide useful information."
+)
 # override
 class EventVisibility(Event):
     type: EventType = ...
@@ -3162,6 +3455,28 @@ class EventWindowState(Event):
     new_window_state: WindowState = ...
 
 class FrameClock(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        FrameClock(**properties)
+
+    Object GdkFrameClock
+
+    Signals from GdkFrameClock:
+      flush-events ()
+      before-paint ()
+      update ()
+      layout ()
+      paint ()
+      after-paint ()
+      resume-events ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def begin_updating(self) -> None: ...
     def end_updating(self) -> None: ...
     def get_current_timings(self) -> Optional[FrameTimings]: ...
@@ -3186,11 +3501,31 @@ class FrameTimings(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class GLContext(GObject.Object):
-    class Props:
-        display: Display
-        shared_context: GLContext
-        window: Window
+    """
+    :Constructors:
 
+    ::
+
+        GLContext(**properties)
+
+    Object GdkGLContext
+
+    Properties from GdkGLContext:
+      display -> GdkDisplay: Display
+        The GDK display used to create the GL context
+      window -> GdkWindow: Window
+        The GDK window bound to the GL context
+      shared-context -> GdkGLContext: Shared context
+        The GL context this context shares data with
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        display: Optional[Display]
+        shared_context: Optional[GLContext]
+        window: Optional[Window]
     props: Props = ...
     def __init__(
         self,
@@ -3219,6 +3554,14 @@ class GLContext(GObject.Object):
     def set_use_es(self, use_es: int) -> None: ...
 
 class Geometry(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Geometry()
+    """
+
     min_width: int = ...
     min_height: int = ...
     max_width: int = ...
@@ -3232,8 +3575,27 @@ class Geometry(GObject.GPointer):
     win_gravity: Gravity = ...
 
 class Keymap(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Keymap(**properties)
+
+    Object GdkKeymap
+
+    Signals from GdkKeymap:
+      direction-changed ()
+      keys-changed ()
+      state-changed ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def add_virtual_modifiers(self) -> ModifierType: ...
     def get_caps_lock_state(self) -> bool: ...
+    @deprecated("Use gdk_keymap_get_for_display() instead")
     @staticmethod
     def get_default() -> Keymap: ...
     def get_direction(self) -> Pango.Direction: ...
@@ -3255,23 +3617,68 @@ class Keymap(GObject.Object):
     ) -> Tuple[bool, int, int, int, ModifierType]: ...
 
 class KeymapKey(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        KeymapKey()
+    """
+
     keycode: int = ...
     group: int = ...
     level: int = ...
 
 class Monitor(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Monitor(**properties)
+
+    Object GdkMonitor
+
+    Signals from GdkMonitor:
+      invalidate ()
+
+    Properties from GdkMonitor:
+      display -> GdkDisplay: Display
+        The display of the monitor
+      manufacturer -> gchararray: Manufacturer
+        The manufacturer name
+      model -> gchararray: Model
+        The model name
+      scale-factor -> gint: Scale factor
+        The scale factor
+      geometry -> GdkRectangle: Geometry
+        The geometry of the monitor
+      workarea -> GdkRectangle: Workarea
+        The workarea of the monitor
+      width-mm -> gint: Physical width
+        The width of the monitor, in millimeters
+      height-mm -> gint: Physical height
+        The height of the monitor, in millimeters
+      refresh-rate -> gint: Refresh rate
+        The refresh rate, in millihertz
+      subpixel-layout -> GdkSubpixelLayout: Subpixel layout
+        The subpixel layout
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
         geometry: Rectangle
         height_mm: int
-        manufacturer: str
-        model: str
+        manufacturer: Optional[str]
+        model: Optional[str]
         refresh_rate: int
         scale_factor: int
         subpixel_layout: SubpixelLayout
         width_mm: int
         workarea: Rectangle
-
     props: Props = ...
     def __init__(self, display: Display = ...): ...
     def get_display(self) -> Display: ...
@@ -3289,10 +3696,26 @@ class Monitor(GObject.Object):
 class MonitorClass(GObject.GPointer): ...
 
 class Point(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Point()
+    """
+
     x: int = ...
     y: int = ...
 
 class RGBA(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        RGBA()
+    """
+
     red: float = ...
     green: float = ...
     blue: float = ...
@@ -3318,6 +3741,14 @@ class RGBA(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class Rectangle(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
     x: int = ...
     y: int = ...
     width: int = ...
@@ -3327,29 +3758,66 @@ class Rectangle(GObject.GBoxed):
     def union(self, src2: Rectangle) -> Rectangle: ...
 
 class Screen(GObject.Object):
-    class Props:
-        font_options: None
-        resolution: float
+    """
+    :Constructors:
 
+    ::
+
+        Screen(**properties)
+
+    Object GdkScreen
+
+    Signals from GdkScreen:
+      size-changed ()
+      composited-changed ()
+      monitors-changed ()
+
+    Properties from GdkScreen:
+      font-options -> gpointer: Font options
+        The default font options for the screen
+      resolution -> gdouble: Font resolution
+        The resolution for fonts on the screen
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        font_options: Optional[None]
+        resolution: float
     props: Props = ...
-    def __init__(self, font_options: None = ..., resolution: float = ...): ...
+    def __init__(self, font_options: Optional[None] = ..., resolution: float = ...): ...
+    @deprecated("This method is deprecated")
     def get_active_window(self) -> Optional[Window]: ...
     @staticmethod
     def get_default() -> Optional[Screen]: ...
     def get_display(self) -> Display: ...
     def get_font_options(self) -> Optional[cairo.FontOptions]: ...
+    @deprecated("Use per-monitor information instead")
     def get_height(self) -> int: ...
+    @deprecated("Use per-monitor information instead")
     def get_height_mm(self) -> int: ...
+    @deprecated("Use gdk_display_get_monitor_at_point() instead")
     def get_monitor_at_point(self, x: int, y: int) -> int: ...
+    @deprecated("Use gdk_display_get_monitor_at_window() instead")
     def get_monitor_at_window(self, window: Window) -> int: ...
+    @deprecated("Use gdk_monitor_get_geometry() instead")
     def get_monitor_geometry(self, monitor_num: int) -> Rectangle: ...
+    @deprecated("Use gdk_monitor_get_height_mm() instead")
     def get_monitor_height_mm(self, monitor_num: int) -> int: ...
+    @deprecated("Use gdk_monitor_get_model() instead")
     def get_monitor_plug_name(self, monitor_num: int) -> Optional[str]: ...
+    @deprecated("Use gdk_monitor_get_scale_factor() instead")
     def get_monitor_scale_factor(self, monitor_num: int) -> int: ...
+    @deprecated("Use gdk_monitor_get_width_mm() instead")
     def get_monitor_width_mm(self, monitor_num: int) -> int: ...
+    @deprecated("Use gdk_monitor_get_workarea() instead")
     def get_monitor_workarea(self, monitor_num: int) -> Rectangle: ...
+    @deprecated("Use gdk_display_get_n_monitors() instead")
     def get_n_monitors(self) -> int: ...
+    @deprecated("This method is deprecated")
     def get_number(self) -> int: ...
+    @deprecated("Use gdk_display_get_primary_monitor() instead")
     def get_primary_monitor(self) -> int: ...
     def get_resolution(self) -> float: ...
     def get_rgba_visual(self) -> Optional[Visual]: ...
@@ -3357,27 +3825,56 @@ class Screen(GObject.Object):
     def get_setting(self, name: str, value: Any) -> bool: ...
     def get_system_visual(self) -> Visual: ...
     def get_toplevel_windows(self) -> list[Window]: ...
+    @deprecated("Use per-monitor information instead")
     def get_width(self) -> int: ...
+    @deprecated("Use per-monitor information instead")
     def get_width_mm(self) -> int: ...
     def get_window_stack(self) -> Optional[list[Window]]: ...
+    @deprecated("Use per-monitor information")
     @staticmethod
     def height() -> int: ...
+    @deprecated("Use per-monitor information")
     @staticmethod
     def height_mm() -> int: ...
     def is_composited(self) -> bool: ...
     def list_visuals(self) -> list[Visual]: ...
+    @deprecated("This method is deprecated")
     def make_display_name(self) -> str: ...
     def set_font_options(self, options: Optional[cairo.FontOptions] = None) -> None: ...
     def set_resolution(self, dpi: float) -> None: ...
+    @deprecated("Use per-monitor information")
     @staticmethod
     def width() -> int: ...
+    @deprecated("Use per-monitor information")
     @staticmethod
     def width_mm() -> int: ...
 
 class Seat(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Seat(**properties)
+
+    Object GdkSeat
+
+    Signals from GdkSeat:
+      device-added (GdkDevice)
+      device-removed (GdkDevice)
+      tool-added (GdkDeviceTool)
+      tool-removed (GdkDeviceTool)
+
+    Properties from GdkSeat:
+      display -> GdkDisplay: Display
+        Display
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         display: Display
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, display: Display = ...): ...
@@ -3399,38 +3896,109 @@ class Seat(GObject.Object):
     def ungrab(self) -> None: ...
 
 class TimeCoord(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TimeCoord()
+    """
+
     time: int = ...
     axes: list[float] = ...
 
 class Visual(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Visual(**properties)
+
+    Object GdkVisual
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best() -> Visual: ...
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best_depth() -> int: ...
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best_type() -> VisualType: ...
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best_with_both(depth: int, visual_type: VisualType) -> Optional[Visual]: ...
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best_with_depth(depth: int) -> Visual: ...
+    @deprecated(
+        "Visual selection should be done using gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()"
+    )
     @staticmethod
     def get_best_with_type(visual_type: VisualType) -> Visual: ...
+    @deprecated(
+        "Use gdk_visual_get_red_pixel_details() and its variants to learn about the pixel layout of TrueColor and DirectColor visuals"
+    )
     def get_bits_per_rgb(self) -> int: ...
     def get_blue_pixel_details(self) -> Tuple[int, int, int]: ...
+    @deprecated("This information is not useful")
     def get_byte_order(self) -> ByteOrder: ...
+    @deprecated(
+        "This information is not useful, since GDK does not provide APIs to operate on colormaps."
+    )
     def get_colormap_size(self) -> int: ...
     def get_depth(self) -> int: ...
     def get_green_pixel_details(self) -> Tuple[int, int, int]: ...
     def get_red_pixel_details(self) -> Tuple[int, int, int]: ...
     def get_screen(self) -> Screen: ...
+    @deprecated("Use gdk_screen_get_system_visual (gdk_screen_get_default ()).")
     @staticmethod
     def get_system() -> Visual: ...
     def get_visual_type(self) -> VisualType: ...
 
 class Window(GObject.Object):
-    class Props:
-        cursor: Cursor
+    """
+    :Constructors:
 
+    ::
+
+        Window(**properties)
+        new(parent:Gdk.Window=None, attributes:Gdk.WindowAttr, attributes_mask:Gdk.WindowAttributesType) -> Gdk.Window
+
+    Object GdkWindow
+
+    Signals from GdkWindow:
+      pick-embedded-child (gdouble, gdouble) -> GdkWindow
+      to-embedder (gdouble, gdouble, gpointer, gpointer)
+      from-embedder (gdouble, gdouble, gpointer, gpointer)
+      create-surface (gint, gint) -> CairoSurface
+      moved-to-rect (gpointer, gpointer, gboolean, gboolean)
+
+    Properties from GdkWindow:
+      cursor -> GdkCursor: Cursor
+        Cursor
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        cursor: Optional[Cursor]
     props: Props = ...
     # override
     def __init__(
@@ -3439,6 +4007,7 @@ class Window(GObject.Object):
         attributes: WindowAttr,
         attributes_mask: WindowAttributesType,
     ): ...
+    @deprecated("Use gdk_device_get_window_at_position() instead.")
     @staticmethod
     def at_pointer() -> Tuple[Window, int, int]: ...
     def beep(self) -> None: ...
@@ -3449,7 +4018,9 @@ class Window(GObject.Object):
     def begin_move_drag_for_device(
         self, device: Device, button: int, root_x: int, root_y: int, timestamp: int
     ) -> None: ...
+    @deprecated("Use gdk_window_begin_draw_frame() instead")
     def begin_paint_rect(self, rectangle: Rectangle) -> None: ...
+    @deprecated("Use gdk_window_begin_draw_frame() instead")
     def begin_paint_region(self, region: cairo.Region) -> None: ...
     def begin_resize_drag(
         self, edge: WindowEdge, button: int, root_x: int, root_y: int, timestamp: int
@@ -3463,7 +4034,8 @@ class Window(GObject.Object):
         root_y: int,
         timestamp: int,
     ) -> None: ...
-    def cairo_create(self, *args, **kwargs): ...  # FIXME Method
+    def cairo_create(self): ...  # FIXME Function
+    @deprecated("this function is no longer needed")
     def configure_finished(self) -> None: ...
     @staticmethod
     def constrain_size(
@@ -3498,22 +4070,27 @@ class Window(GObject.Object):
         embedder_x: float,
         embedder_y: float,
     ) -> None: ...
+    @deprecated("this function is no longer needed")
     def enable_synchronized_configure(self) -> None: ...
     def end_draw_frame(self, context: DrawingContext) -> None: ...
     def end_paint(self) -> None: ...
     def ensure_native(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def flush(self) -> None: ...
     def focus(self, timestamp: int) -> None: ...
+    @deprecated("This symbol was never meant to be used outside of GTK+")
     def freeze_toplevel_updates_libgtk_only(self) -> None: ...
     def freeze_updates(self) -> None: ...
     def fullscreen(self) -> None: ...
     def fullscreen_on_monitor(self, monitor: int) -> None: ...
     def geometry_changed(self) -> None: ...
     def get_accept_focus(self) -> bool: ...
+    @deprecated("Don't use this function")
     def get_background_pattern(self) -> Optional[cairo.Pattern]: ...
     def get_children(self) -> list[Window]: ...
     def get_children_with_user_data(self, user_data: None) -> list[Window]: ...
     def get_clip_region(self) -> cairo.Region: ...
+    @deprecated("Compositing is an outdated technology that only ever worked on X11.")
     def get_composited(self) -> bool: ...
     def get_cursor(self) -> Optional[Cursor]: ...
     def get_decorations(self) -> Tuple[bool, WMDecoration]: ...
@@ -3542,6 +4119,7 @@ class Window(GObject.Object):
     def get_origin(self) -> Tuple[int, int, int]: ...
     def get_parent(self) -> Window: ...
     def get_pass_through(self) -> bool: ...
+    @deprecated("Use gdk_window_get_device_position() instead.")
     def get_pointer(self) -> Tuple[Optional[Window], int, int, ModifierType]: ...
     def get_position(self) -> Tuple[int, int]: ...
     def get_root_coords(self, x: int, y: int) -> Tuple[int, int]: ...
@@ -3607,8 +4185,10 @@ class Window(GObject.Object):
         attributes_mask: WindowAttributesType,
     ) -> Window: ...
     def peek_children(self) -> list[Window]: ...
+    @deprecated("This method is deprecated")
     @staticmethod
     def process_all_updates() -> None: ...
+    @deprecated("This method is deprecated")
     def process_updates(self, update_children: bool) -> None: ...
     def raise_(self) -> None: ...
     def register_dnd(self) -> None: ...
@@ -3617,15 +4197,20 @@ class Window(GObject.Object):
     def restack(self, sibling: Optional[Window], above: bool) -> None: ...
     def scroll(self, dx: int, dy: int) -> None: ...
     def set_accept_focus(self, accept_focus: bool) -> None: ...
+    @deprecated("Don't use this function")
     def set_background(self, color: Color) -> None: ...
+    @deprecated("Don't use this function")
     def set_background_pattern(
         self, pattern: Optional[cairo.Pattern] = None
     ) -> None: ...
+    @deprecated("Don't use this function")
     def set_background_rgba(self, rgba: RGBA) -> None: ...
     def set_child_input_shapes(self) -> None: ...
     def set_child_shapes(self) -> None: ...
+    @deprecated("Compositing is an outdated technology that only ever worked on X11.")
     def set_composited(self, composited: bool) -> None: ...
     def set_cursor(self, cursor: Optional[Cursor] = None) -> None: ...
+    @deprecated("This method is deprecated")
     @staticmethod
     def set_debug_updates(setting: bool) -> None: ...
     def set_decorations(self, decorations: WMDecoration) -> None: ...
@@ -3657,6 +4242,7 @@ class Window(GObject.Object):
     def set_skip_taskbar_hint(self, skips_taskbar: bool) -> None: ...
     def set_source_events(self, source: InputSource, event_mask: EventMask) -> None: ...
     def set_startup_id(self, startup_id: str) -> None: ...
+    @deprecated("static gravities haven't worked on anything but X11 for a long time.")
     def set_static_gravities(self, use_static: bool) -> bool: ...
     def set_support_multidevice(self, support_multidevice: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
@@ -3671,6 +4257,7 @@ class Window(GObject.Object):
     def show_unraised(self) -> None: ...
     def show_window_menu(self, event: Event) -> bool: ...
     def stick(self) -> None: ...
+    @deprecated("This symbol was never meant to be used outside of GTK+")
     def thaw_toplevel_updates_libgtk_only(self) -> None: ...
     def thaw_updates(self) -> None: ...
     def unfullscreen(self) -> None: ...
@@ -3679,6 +4266,14 @@ class Window(GObject.Object):
     def withdraw(self) -> None: ...
 
 class WindowAttr(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowAttr()
+    """
+
     title: str = ...
     event_mask: int = ...
     x: int = ...
@@ -3695,6 +4290,14 @@ class WindowAttr(GObject.GPointer):
     type_hint: WindowTypeHint = ...
 
 class WindowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WindowClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     pick_embedded_child: None = ...
     to_embedder: Callable[[Window, float, float, float, float], None] = ...

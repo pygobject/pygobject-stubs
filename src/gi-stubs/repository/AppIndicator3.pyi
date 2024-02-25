@@ -1,6 +1,16 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
+from typing import Sequence
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
+
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
 
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -86,11 +96,9 @@ class Indicator(GObject.Object):
         ordering_index: int
         status: str
         title: str
-
     props: Props = ...
     parent: GObject.Object = ...
     priv: IndicatorPrivate = ...
-
     def __init__(
         self,
         attention_icon_desc: str = ...,
@@ -104,7 +112,7 @@ class Indicator(GObject.Object):
         label_guide: str = ...,
         ordering_index: int = ...,
         status: str = ...,
-        title: str = ...,
+        title: Optional[str] = ...,
     ): ...
     def build_menu_from_desktop(
         self, desktop_file: str, desktop_profile: str
@@ -139,8 +147,10 @@ class Indicator(GObject.Object):
     def new_with_path(
         cls, id: str, icon_name: str, category: IndicatorCategory, icon_theme_path: str
     ) -> Indicator: ...
+    @deprecated("Use app_indicator_set_attention_icon_full() instead.")
     def set_attention_icon(self, icon_name: str) -> None: ...
     def set_attention_icon_full(self, icon_name: str, icon_desc: str) -> None: ...
+    @deprecated("Use app_indicator_set_icon_full()")
     def set_icon(self, icon_name: str) -> None: ...
     def set_icon_full(self, icon_name: str, icon_desc: str) -> None: ...
     def set_icon_theme_path(self, icon_theme_path: str) -> None: ...

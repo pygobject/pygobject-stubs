@@ -24,6 +24,7 @@ from types import ModuleType
 
 import gi
 import gi._gi as GI
+import gir
 import parse
 
 gi.require_version("GIRepository", "2.0")
@@ -33,6 +34,8 @@ from gi.repository import GObject
 _identifier_re = r"^[A-Za-z_]\w*$"
 
 ObjectT = Union[ModuleType, Type[Any]]
+
+DEPRECATION_DOCS: dict[str, str] = {}
 
 
 def _object_get_props(
@@ -339,9 +342,16 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     typings = "from typing import Any, Callable, Literal, Optional, Tuple, Type, TypeVar, Sequence"
 
     typevars: list[str] = []
-    imports: list[str] = []
+    imports: list[str] = [
+        """
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+"""
+    ]
     if "cairo" in ns:
-        imports = ["import cairo"]
+        imports += ["import cairo"]
         typevars.append('_SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)')
         ns.remove("cairo")
 
@@ -507,6 +517,29 @@ def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Option
     return None
 
 
+def _check_deprecation(obj: Any, full_name: str, default_message: str) -> str:
+    ret = ""
+    if hasattr(obj, "is_deprecated"):
+        if obj.is_deprecated():
+            message = (
+                # Currently not implemented:
+                # https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/80
+                (
+                    obj.get_attribute("deprecated")
+                    if hasattr(obj, "get_attribute")
+                    else None
+                )
+                or (
+                    DEPRECATION_DOCS[full_name]
+                    if full_name in DEPRECATION_DOCS
+                    else None
+                )
+                or default_message
+            )
+            ret += f'@deprecated("{message}")\n'
+    return ret
+
+
 def _gi_build_stub(
     parent: ObjectT,
     current_namespace: str,
@@ -601,6 +634,12 @@ def _gi_build_stub(
 
     # Functions
     for name in sorted(functions):
+        full_name = _generate_full_name(prefix_name, name)
+        ret += _check_deprecation(
+            functions[name],
+            full_name,
+            f"This {'method' if in_class else 'function'} is deprecated",
+        )
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n"
@@ -615,12 +654,17 @@ def _gi_build_stub(
 
     # Classes
     for name, obj in sorted(classes.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         classret = _gi_build_stub(
             obj,
@@ -804,12 +848,17 @@ def _gi_build_stub(
 
     # Flags
     for name, obj in sorted(flags.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         if current_namespace == "GObject":
             if name != "GFlags":
@@ -847,12 +896,17 @@ def _gi_build_stub(
 
     # Enums
     for name, obj in sorted(enums.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         if current_namespace == "GObject":
             if name != "GEnum":
@@ -939,6 +993,8 @@ if __name__ == "__main__":
     parser.add_argument("-o", dest="output", type=str, help="Output file")
 
     args = parser.parse_args()
+
+    DEPRECATION_DOCS = gir.load_gir(args.module, args.version)
 
     if args.output:
         overrides: dict[str, str] = {}

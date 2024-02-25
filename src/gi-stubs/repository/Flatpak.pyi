@@ -7,13 +7,18 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 4
-MINOR_VERSION: int = 15
+MICRO_VERSION: int = 5
+MINOR_VERSION: int = 14
 _lock = ...  # FIXME Constant
 _namespace: str = "Flatpak"
 _version: str = "1.0"
@@ -68,7 +73,6 @@ class BundleRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -186,6 +190,7 @@ class Installation(GObject.Object):
         self, name: str, cancellable: Optional[Gio.Cancellable] = None
     ) -> Remote: ...
     def get_storage_type(self) -> StorageType: ...
+    @deprecated("Use flatpak_transaction_add_install() instead.")
     def install(
         self,
         remote_name: str,
@@ -197,6 +202,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install_bundle() instead.")
     def install_bundle(
         self,
         file: Gio.File,
@@ -204,6 +210,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install() instead.")
     def install_full(
         self,
         flags: InstallFlags,
@@ -217,6 +224,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> InstalledRef: ...
+    @deprecated("Use flatpak_transaction_add_install_flatpakref() instead.")
     def install_ref_file(
         self, ref_file_data: GLib.Bytes, cancellable: Optional[Gio.Cancellable] = None
     ) -> RemoteRef: ...
@@ -320,6 +328,7 @@ class Installation(GObject.Object):
         self, key: str, value: str, cancellable: Optional[Gio.Cancellable] = None
     ) -> bool: ...
     def set_no_interaction(self, no_interaction: bool) -> None: ...
+    @deprecated("Use flatpak_transaction_add_uninstall() instead.")
     def uninstall(
         self,
         kind: RefKind,
@@ -330,6 +339,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_uninstall() instead.")
     def uninstall_full(
         self,
         flags: UninstallFlags,
@@ -341,6 +351,7 @@ class Installation(GObject.Object):
         cancellable: Optional[Gio.Cancellable] = None,
         *progress_data: Any,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_update() instead.")
     def update(
         self,
         flags: UpdateFlags,
@@ -368,6 +379,7 @@ class Installation(GObject.Object):
         out_changed: Optional[bool] = None,
         cancellable: Optional[Gio.Cancellable] = None,
     ) -> bool: ...
+    @deprecated("Use flatpak_transaction_add_update() instead.")
     def update_full(
         self,
         flags: UpdateFlags,
@@ -474,7 +486,6 @@ class InstalledRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -607,7 +618,6 @@ class Ref(GObject.Object):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: GObject.Object = ...
     def __init__(
@@ -690,7 +700,6 @@ class RelatedRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -747,7 +756,6 @@ class Remote(GObject.Object):
     class Props:
         name: str
         type: RemoteType
-
     props: Props = ...
     parent: GObject.Object = ...
     def __init__(self, name: str = ..., type: RemoteType = ...): ...
@@ -857,7 +865,6 @@ class RemoteRef(Ref):
         commit: str
         kind: RefKind
         name: str
-
     props: Props = ...
     parent: Ref = ...
     def __init__(
@@ -932,7 +939,6 @@ class Transaction(GObject.Object, Gio.Initable):
     class Props:
         installation: Installation
         no_interaction: bool
-
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(
@@ -1062,9 +1068,9 @@ class TransactionClass(GObject.GPointer):
         [Transaction, TransactionRemoteReason, str, str, str], bool
     ] = ...
     run: Callable[[Transaction, Optional[Gio.Cancellable]], bool] = ...
-    end_of_lifed_with_rebase: Callable[[Transaction, str, str, str, str, str], bool] = (
-        ...
-    )
+    end_of_lifed_with_rebase: Callable[
+        [Transaction, str, str, str, str, str], bool
+    ] = ...
     webflow_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...
     webflow_done: Callable[[Transaction, GLib.Variant, int], None] = ...
     basic_auth_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...

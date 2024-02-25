@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -224,8 +229,8 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -251,7 +256,7 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -270,8 +275,8 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -290,6 +295,8 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -298,13 +305,11 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -390,7 +395,7 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -402,7 +407,7 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -518,7 +523,6 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -634,10 +638,10 @@ class IconChooserButton(
         The default category.
 
     Signals from GtkButton:
-      clicked ()
       activate ()
       pressed ()
       released ()
+      clicked ()
       enter ()
       leave ()
 
@@ -678,6 +682,8 @@ class IconChooserButton(
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -686,13 +692,11 @@ class IconChooserButton(
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -778,7 +782,7 @@ class IconChooserButton(
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -790,7 +794,7 @@ class IconChooserButton(
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -889,7 +893,6 @@ class IconChooserButton(
         related_action: Gtk.Action
         use_action_appearance: bool
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -982,8 +985,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
     Object XAppIconChooserDialog
 
     Signals from XAppIconChooserDialog:
-      close ()
       select ()
+      close ()
 
     Properties from XAppIconChooserDialog:
       icon-size -> XAppIconSize: Icon size
@@ -1019,8 +1022,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -1046,7 +1049,7 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -1065,8 +1068,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -1085,6 +1088,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1093,13 +1098,11 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -1185,7 +1188,7 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -1197,7 +1200,7 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -1316,7 +1319,6 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -1441,7 +1443,6 @@ class KbdLayoutController(GObject.Object):
 
     class Props:
         enabled: bool
-
     props: Props = ...
     parent_object: GObject.Object = ...
     priv: KbdLayoutControllerPrivate = ...
@@ -1604,7 +1605,6 @@ class ObjectManagerClient(
         name_owner: Optional[str]
         object_path: str
         bus_type: Gio.BusType
-
     props: Props = ...
     parent_instance: Gio.DBusObjectManagerClient = ...
     priv: ObjectManagerClientPrivate = ...
@@ -1715,7 +1715,6 @@ class ObjectProxy(Gio.DBusObjectProxy, Gio.DBusObject, Object):
         g_connection: Gio.DBusConnection
         g_object_path: str
         status_icon_interface: Optional[StatusIconInterface]
-
     props: Props = ...
     parent_instance: Gio.DBusObjectProxy = ...
     priv: ObjectProxyPrivate = ...
@@ -1774,7 +1773,6 @@ class ObjectSkeleton(Gio.DBusObjectSkeleton, Gio.DBusObject, Object):
     class Props:
         g_object_path: str
         status_icon_interface: Optional[StatusIconInterface]
-
     props: Props = ...
     parent_instance: Gio.DBusObjectSkeleton = ...
     priv: ObjectSkeletonPrivate = ...
@@ -1840,8 +1838,8 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         The default height of the window, used when initially showing the window
       destroy-with-parent -> gboolean: Destroy with Parent
         If this window should be destroyed when the parent is destroyed
-      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximization
-        If this window's titlebar should be hidden when the window is maximized
+      hide-titlebar-when-maximized -> gboolean: Hide the titlebar during maximisation
+        If this window's titlebar should be hidden when the window is maximised
       icon -> GdkPixbuf: Icon
         Icon for this window
       icon-name -> gchararray: Icon Name
@@ -1867,7 +1865,7 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       gravity -> GdkGravity: Gravity
         The window gravity of the window
       transient-for -> GtkWindow: Transient for Window
-        The transient parent of the dialog
+        The transient parent of the dialogue
       attached-to -> GtkWidget: Attached to Widget
         The widget where the window is attached
       has-resize-grip -> gboolean: Resize grip
@@ -1886,8 +1884,8 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         Whether mnemonics are currently visible in this window
       focus-visible -> gboolean: Focus Visible
         Whether focus rectangles are currently visible in this window
-      is-maximized -> gboolean: Is maximized
-        Whether the window is maximized
+      is-maximized -> gboolean: Is maximised
+        Whether the window is maximised
 
     Signals from GtkContainer:
       add (GtkWidget)
@@ -1906,6 +1904,8 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1914,13 +1914,11 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2006,7 +2004,7 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2018,7 +2016,7 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2134,7 +2132,6 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         window: Optional[Gdk.Window]
         startup_id: str
         child: Gtk.Widget
-
     props: Props = ...
     parent_instance: Gtk.Window = ...
     def __init__(
@@ -2258,6 +2255,8 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2266,13 +2265,11 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2358,7 +2355,7 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       composite-child -> gboolean: Composite child
         Whether the widget is part of a composite widget
       style -> GtkStyle: Style
-        The style of the widget, which contains information about how it will look (colors etc)
+        The style of the widget, which contains information about how it will look (colours etc)
       events -> GdkEventMask: Events
         The event mask that decides what kind of GdkEvents this widget gets
       no-show-all -> gboolean: No show all
@@ -2370,7 +2367,7 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
       tooltip-text -> gchararray: Tooltip Text
         The contents of the tooltip for this widget
       window -> GdkWindow: Window
-        The widget's window if it is realized
+        The widget's window if it is realised
       opacity -> gdouble: Opacity for Widget
         The opacity of the widget, from 0 to 1
       double-buffered -> gboolean: Double Buffered
@@ -2454,7 +2451,6 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         width_request: int
         window: Optional[Gdk.Window]
         child: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -2552,7 +2548,6 @@ class StatusIcon(GObject.Object):
         name: str
         primary_menu: Gtk.Widget
         secondary_menu: Gtk.Widget
-
     props: Props = ...
     def __init__(
         self,
@@ -2779,7 +2774,6 @@ class StatusIconInterfaceProxy(
         tooltip_text: str
         visible: bool
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent_instance: Gio.DBusProxy = ...
     priv: StatusIconInterfaceProxyPrivate = ...
@@ -2899,7 +2893,6 @@ class StatusIconInterfaceSkeleton(
         secondary_menu_is_open: bool
         tooltip_text: str
         visible: bool
-
     props: Props = ...
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: StatusIconInterfaceSkeletonPrivate = ...
@@ -2987,7 +2980,6 @@ class StyleManager(GObject.Object):
 
     class Props:
         widget: Gtk.Widget
-
     props: Props = ...
     def __init__(self, widget: Gtk.Widget = ...): ...
     def get_widget(self) -> Gtk.Widget: ...
@@ -3095,7 +3087,6 @@ class SwitcherooControlProxy(
         has_dual_gpu: bool
         num_gpus: int
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent_instance: Gio.DBusProxy = ...
     priv: SwitcherooControlProxyPrivate = ...
@@ -3198,7 +3189,6 @@ class SwitcherooControlSkeleton(
         gpus: GLib.Variant
         has_dual_gpu: bool
         num_gpus: int
-
     props: Props = ...
     parent_instance: Gio.DBusInterfaceSkeleton = ...
     priv: SwitcherooControlSkeletonPrivate = ...

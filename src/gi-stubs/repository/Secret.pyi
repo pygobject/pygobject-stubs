@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -15,7 +20,7 @@ BACKEND_EXTENSION_POINT_NAME: str = "secret-backend"
 COLLECTION_DEFAULT: str = "default"
 COLLECTION_SESSION: str = "session"
 MAJOR_VERSION: int = 0
-MICRO_VERSION: int = 2
+MICRO_VERSION: int = 3
 MINOR_VERSION: int = 21
 _lock = ...  # FIXME Constant
 _namespace: str = "Secret"
@@ -220,7 +225,6 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         g_name_owner: str
         g_object_path: str
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent: Gio.DBusProxy = ...
     pv: CollectionPrivate = ...
@@ -412,7 +416,6 @@ class Item(
         label: str
         modified: int
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent_instance: Gio.DBusProxy = ...
     pv: ItemPrivate = ...
@@ -598,7 +601,6 @@ class Prompt(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         g_name_owner: str
         g_object_path: str
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent_instance: Gio.DBusProxy = ...
     pv: PromptPrivate = ...
@@ -785,7 +787,6 @@ class Service(
         g_object_path: str
         flags: ServiceFlags
         g_bus_type: Gio.BusType
-
     props: Props = ...
     parent: Gio.DBusProxy = ...
     pv: ServicePrivate = ...
