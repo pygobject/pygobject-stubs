@@ -24,6 +24,7 @@ from types import ModuleType
 
 import gi
 import gi._gi as GI
+import gir
 import parse
 
 gi.require_version("GIRepository", "2.0")
@@ -34,17 +35,29 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 
 ObjectT = Union[ModuleType, Type[Any]]
 
+DOCS: dict[str, str] = {}
+DEPRECATION_DOCS: dict[str, str] = {}
+
 
 def _object_get_props(
     obj: GI.ObjectInfo,
-) -> Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
+) -> Tuple[
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+    list[GIRepository.BaseInfo],
+]:
     parents: list[GI.ObjectInfo] = []
-    parent: Optional[GI.ObjectInfo] = obj.get_parent()
+    parent: Optional[GI.ObjectInfo] = (
+        obj.get_parent() if hasattr(obj, "get_parent") else None
+    )
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
 
-    interfaces: list[GI.InterfaceInfo] = list(obj.get_interfaces())
+    interfaces: list[GI.InterfaceInfo] = (
+        list(obj.get_interfaces()) if hasattr(obj, "get_interfaces") else []
+    )
 
     subclasses: list[GI.ObjectInfo | GI.InterfaceInfo] = parents + interfaces
 
@@ -52,9 +65,12 @@ def _object_get_props(
     for s in subclasses:
         props.extend(s.get_properties())
 
+    my_readable_props: list[GIRepository.BaseInfo] = []
+    my_writable_props: list[GIRepository.BaseInfo] = []
     readable_props: list[GIRepository.BaseInfo] = []
     writable_props: list[GIRepository.BaseInfo] = []
     for prop in props:
+        my_prop = prop in obj.get_properties()
         repo = GIRepository.Repository.get_default()
         namespace = prop.get_namespace()
         container = prop.get_container()
@@ -71,8 +87,12 @@ def _object_get_props(
                 if p.get_name() == prop.get_name():
                     flags = GIRepository.property_info_get_flags(p)
                     if flags & GObject.ParamFlags.READABLE:
+                        if my_prop:
+                            my_readable_props.append(p)
                         readable_props.append(p)
                     if flags & GObject.ParamFlags.WRITABLE:
+                        if my_prop:
+                            my_writable_props.append(p)
                         writable_props.append(p)
 
         if class_info.get_type() == GIRepository.InfoType.INTERFACE:
@@ -88,7 +108,7 @@ def _object_get_props(
                     if flags & GObject.ParamFlags.WRITABLE:
                         writable_props.append(p)
 
-    return (readable_props, writable_props)
+    return (readable_props, writable_props, my_readable_props, my_writable_props)
 
 
 def _callable_get_arguments(
@@ -96,13 +116,14 @@ def _callable_get_arguments(
     current_namespace: str,
     needed_namespaces: set[str],
     can_default: bool = False,
-) -> Tuple[list[str], list[str], list[str]]:
+) -> Tuple[list[str], list[str], list[str], list[str]]:
     function_args = type.get_arguments()
     accept_optional_args = False
     optional_args_name = ""
     dict_names: dict[int, str] = {}
     dict_args: dict[int, GI.ArgInfo] = {}
     str_args: list[str] = []
+    dict_return_names: dict[int, str] = {}
     dict_return_args: dict[int, str] = {}
     skip: list[int] = []
 
@@ -129,6 +150,7 @@ def _callable_get_arguments(
             if len_arg < i:
                 dict_names.pop(len_arg, None)
                 dict_args.pop(len_arg, None)
+                dict_return_names.pop(len_arg, None)
                 dict_return_args.pop(len_arg, None)
 
         # Need to check because user_data can be the first arg
@@ -139,6 +161,7 @@ def _callable_get_arguments(
                     arg.get_type(), current_namespace, needed_namespaces, True
                 )
 
+                dict_return_names[i] = arg.get_name()
                 dict_return_args[i] = t
             elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
                 dict_names[i] = arg.get_name()
@@ -181,7 +204,7 @@ def _callable_get_arguments(
     if return_type != "None" or len(return_args) == 0:
         return_args.insert(0, return_type)
 
-    return (names, str_args, return_args)
+    return (names, str_args, return_args, list(dict_return_names.values()))
 
 
 class TypeInfo:
@@ -292,7 +315,7 @@ def _type_to_python(
     if tag == tags.INTERFACE:
         interface = type.get_interface()
         if isinstance(interface, GI.CallbackInfo):
-            (names, args, return_args) = _callable_get_arguments(
+            (names, args, return_args, _) = _callable_get_arguments(
                 interface, current_namespace, needed_namespaces
             )
 
@@ -339,9 +362,16 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     typings = "from typing import Any, Callable, Literal, Optional, Tuple, Type, TypeVar, Sequence"
 
     typevars: list[str] = []
-    imports: list[str] = []
+    imports: list[str] = [
+        """
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+"""
+    ]
     if "cairo" in ns:
-        imports = ["import cairo"]
+        imports += ["import cairo"]
         typevars.append('_SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)')
         ns.remove("cairo")
 
@@ -365,14 +395,69 @@ def _generate_full_name(prefix: str, name: str) -> str:
     return full_name
 
 
+def _normalize_string(s: str) -> str:
+    return re.sub(" +", " ", s)
+
+
+def _build_function_info_doc(
+    fullname: str,
+    args: list[str],
+    return_args: list[str],
+    return_names: list[str],
+    ignore_return_doc: bool = False,
+) -> str | None:
+    if not fullname in DOCS:
+        return None
+
+    args = [a.replace("*", "") for a in args]
+
+    doc = DOCS[fullname]
+    arg_doc: dict[str, str | None] = {}
+    for arg in args + return_names:
+        arg_doc[arg] = _normalize_string(DOCS.get(f"{fullname}.{arg}", ""))
+
+    return_doc = _normalize_string(DOCS.get(f"{fullname}.$return-value", ""))
+
+    # There are two conditions:
+    # 1: A return value and some / none out arguments,
+    #    in this case the length will be different and we should ignore the first return_args
+    # 2: No return value, in this case the length will be equal
+    add_one = len(return_args) != len(return_names)
+    if not ignore_return_doc:
+        return_doc = (
+            f"{return_args[0]}: {return_doc or 'Not documented'}\n    "
+            if add_one and not (len(return_args) == 1 and return_args[0] == "None")
+            else None
+        )
+    else:
+        return_doc = None
+
+    ret_args: dict[str, str] = {}
+    for i, arg in enumerate(return_names):
+        index = i + 1 if add_one else i
+        ret_args[arg] = return_args[index]
+
+    separator = "\n    "
+    return f"""{doc}
+
+Parameters:
+    {separator.join([f'{s}: {arg_doc[s]}' for s in args])}
+
+Returns:
+    {return_doc or ""}{separator.join([f'{ret_args[s]}: {arg_doc[s]}' for s in return_names])}
+"""
+
+
 def _build_function_info(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: GI.FunctionInfo | GI.VFuncInfo,
     in_class: Optional[Any],
     needed_namespaces: set[str],
     return_signature: Optional[str] = None,
     comment: Optional[str] = None,
+    ignore_return_doc: bool = False,
 ) -> str:
     constructor: bool = False
     method: bool = isinstance(function, GI.VFuncInfo)
@@ -390,7 +475,7 @@ def _build_function_info(
         static = True
 
     # Arguments
-    (names, args, return_args) = _callable_get_arguments(
+    (names, args, return_args, return_args_names) = _callable_get_arguments(
         function, current_namespace, needed_namespaces, True
     )
     args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
@@ -404,6 +489,10 @@ def _build_function_info(
         return_type = f"{return_args[0]}"
 
     # Generate string
+    doc = _build_function_info_doc(
+        fullname, names, return_args, return_args_names, ignore_return_doc
+    )
+    doc = f'    """\n{doc}    """\n    ...\n' if doc else ""
     prepend = ""
     if constructor:
         args_types.insert(0, "cls")
@@ -418,13 +507,14 @@ def _build_function_info(
         prepend = "@staticmethod\n"
 
     if comment:
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ... # {comment}\n"
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: {'...' if not doc else ''} # {comment}\n{doc}\n"
     else:
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ...\n"
+        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: {'...' if not doc else ''} \n{doc}\n"
 
 
 def _wrapped_strip_boolean_result(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: Any,
     in_class: Optional[Any],
@@ -433,7 +523,7 @@ def _wrapped_strip_boolean_result(
     real_function = function.__wrapped__
     fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
 
-    (_, _, return_args) = _callable_get_arguments(
+    (_, _, return_args, _) = _callable_get_arguments(
         real_function, current_namespace, needed_namespaces
     )
     return_args = return_args[1:]  # Strip first return value
@@ -456,17 +546,20 @@ def _wrapped_strip_boolean_result(
 
     return _build_function_info(
         current_namespace,
+        fullname,
         name,
         real_function,
         in_class,
         needed_namespaces,
         return_signature,
         "CHECK Wrapped function",
+        True,
     )
 
 
 def _build_function(
     current_namespace: str,
+    fullname: str,
     name: str,
     function: Any,
     in_class: Optional[Any],
@@ -478,12 +571,12 @@ def _build_function(
     if hasattr(function, "__wrapped__"):
         if "strip_boolean_result" in str(function):
             return _wrapped_strip_boolean_result(
-                current_namespace, name, function, in_class, needed_namespaces
+                current_namespace, fullname, name, function, in_class, needed_namespaces
             )
 
     if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
         return _build_function_info(
-            current_namespace, name, function, in_class, needed_namespaces
+            current_namespace, fullname, name, function, in_class, needed_namespaces
         )
 
     signature: Optional[str] = None
@@ -505,6 +598,36 @@ def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Option
     if full_name in overrides:
         return "# override\n" + overrides[full_name]
     return None
+
+
+def _check_deprecation(obj: Any, full_name: str, default_message: str) -> str:
+    ret = ""
+    if hasattr(obj, "is_deprecated"):
+        if obj.is_deprecated():
+            message = (
+                # Currently not implemented:
+                # https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/80
+                (
+                    obj.get_attribute("deprecated")
+                    if hasattr(obj, "get_attribute")
+                    else None
+                )
+                or (
+                    DEPRECATION_DOCS[full_name]
+                    if full_name in DEPRECATION_DOCS
+                    else None
+                )
+                or default_message
+            )
+            ret += f'@deprecated("{message}")\n'
+    return ret
+
+
+def _build_doc(full_name: str) -> str:
+    ret = ""
+    if full_name in DOCS:
+        ret += f'"""\n{DOCS[full_name]}\n"""\n'
+    return ret
 
 
 def _gi_build_stub(
@@ -572,6 +695,8 @@ def _gi_build_stub(
 
     # Constants
     for name in sorted(constants):
+        full_name = _generate_full_name(prefix_name, name)
+
         if name[0].isdigit():
             # GDK has some busted constant names like
             # Gdk.EventType.2BUTTON_PRESS
@@ -596,18 +721,31 @@ def _gi_build_stub(
         else:
             ret += f"{name} = ... # FIXME Constant\n"
 
+        ret += _build_doc(full_name)
+
     if ret and constants:
         ret += "\n"
 
     # Functions
     for name in sorted(functions):
+        full_name = _generate_full_name(prefix_name, name)
+        ret += _check_deprecation(
+            functions[name],
+            full_name,
+            f"This {'method' if in_class else 'function'} is deprecated",
+        )
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n"
             continue
 
         ret += _build_function(
-            current_namespace, name, functions[name], in_class, needed_namespaces
+            current_namespace,
+            full_name,
+            name,
+            functions[name],
+            in_class,
+            needed_namespaces,
         )
 
     if ret and functions:
@@ -615,12 +753,17 @@ def _gi_build_stub(
 
     # Classes
     for name, obj in sorted(classes.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         classret = _gi_build_stub(
             obj,
@@ -632,6 +775,8 @@ def _gi_build_stub(
             full_name,
         )
 
+        my_readable_props: list[GIRepository.BaseInfo] = []
+        my_writable_props: list[GIRepository.BaseInfo] = []
         readable_props: list[GIRepository.BaseInfo] = []
         writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
@@ -682,9 +827,11 @@ def _gi_build_stub(
                             fields.append(f"{n}: {t}")
 
                 # Properties
-                (rp, wp) = _object_get_props(object_info)
+                (rp, wp, mrp, mwp) = _object_get_props(object_info)
                 readable_props.extend(rp)
                 writable_props.extend(wp)
+                my_readable_props.extend(mrp)
+                my_writable_props.extend(mwp)
 
             if isinstance(object_info, GI.InterfaceInfo):
                 if current_namespace == "GObject":
@@ -692,6 +839,13 @@ def _gi_build_stub(
                 else:
                     parents.append("GObject.GInterface")
                     needed_namespaces.add("GObject")
+
+                # Properties
+                (rp, wp, mrp, mwp) = _object_get_props(object_info)
+                readable_props.extend(rp)
+                writable_props.extend(wp)
+                my_readable_props.extend(mrp)
+                my_writable_props.extend(mwp)
 
             if issubclass(obj, GObject.GBoxed):
                 if current_namespace == "GObject":
@@ -711,35 +865,33 @@ def _gi_build_stub(
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
 
-        if (
-            not classret
-            and len(fields) == 0
-            and len(readable_props) == 0
-            and len(writable_props) == 0
-        ):
-            ret += f"class {name}{string_parents}: ...\n"
-        else:
-            ret += f"class {name}{string_parents}:\n"
+        ret += f"class {name}{string_parents}:\n"
 
-            # extracting docs
-            doc = getattr(obj, "__doc__", "") or ""
-            gdoc = getattr(obj, "__gdoc__", "") or ""
+        # extracting docs
+        doc = getattr(obj, "__doc__", "") or ""
+        gdoc = getattr(obj, "__gdoc__", "") or ""
+        girdoc = DOCS[full_name] if full_name in DOCS else ""
 
-            txt = doc.strip() + "\n\n" + gdoc.strip()
-            if not txt.isspace():
-                txt = '"""\n' + txt.strip() + '\n"""' + "\n"
-                txt = textwrap.indent(txt, "    ")
-                ret += txt
+        txt = girdoc.strip() + "\n\n" + doc.strip() + "\n\n" + gdoc.strip()
+        if not txt.isspace():
+            txt = '"""\n' + txt.strip() + '\n"""' + "\n"
+            txt = textwrap.indent(txt, "    ")
+            ret += txt
 
+        prop_parents = [f"{p}.Props" for p in parents]
         props_override = _check_override(full_name, "Props", overrides)
         if props_override:
             for line in props_override.splitlines():
                 ret += "    " + line + "\n"
-        elif len(readable_props) > 0 or len(writable_props) > 0:
+        elif len(my_readable_props) > 0 or len(my_writable_props) > 0:
             names: list[str] = []
             s: list[str] = []
-            for p in itertools.chain(readable_props, writable_props):
-                n = p.get_name().replace("-", "_")
+            for p in itertools.chain(my_readable_props, my_writable_props):
+                n = p.get_name()
+                doc = _build_doc(_generate_full_name(full_name, f"$property.{n}"))
+                if doc:
+                    doc = doc[:-1]  # Strip last new line
+                n = n.replace("-", "_")
                 if n in names:
                     # Avoid duplicates
                     continue
@@ -752,19 +904,26 @@ def _gi_build_stub(
                 setter = GIRepository.property_info_get_setter(p)
                 if getter and GIRepository.callable_info_may_return_null(getter):
                     s.append(f"{n}: Optional[{t}]")
+                    s.append(doc)
                 elif setter and not getter:
                     # If is writable only prop check if setter can accept NULL
                     arg_info = GIRepository.callable_info_get_arg(setter, 0)
                     if GIRepository.arg_info_may_be_null(arg_info):
                         s.append(f"{n}: Optional[{t}]")
+                        s.append(doc)
                     else:
                         s.append(f"{n}: {t}")
+                        s.append(doc)
                 else:
                     s.append(f"{n}: {t}")
+                    s.append(doc)
 
-            separator = "\n        "
-            ret += f"    class Props:\n        {separator.join(s)}\n"
+            s = [textwrap.indent(l, "        ") for l in s if l]
+            separator = "\n"
+            ret += f"    class Props({", ".join(prop_parents)}):\n{separator.join(s)}\n"
             ret += f"    props: Props = ...\n"
+        else:
+            ret += f"    class Props({", ".join(prop_parents)}): ...\n"
 
         for field in fields:
             ret += f"    {field} = ...\n"
@@ -804,12 +963,17 @@ def _gi_build_stub(
 
     # Flags
     for name, obj in sorted(flags.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         if current_namespace == "GObject":
             if name != "GFlags":
@@ -821,6 +985,7 @@ def _gi_build_stub(
             base = "GObject.GFlags"
 
         ret += f"class {name}({base}):\n"
+        ret += textwrap.indent(_build_doc(full_name), "    ")
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
                 continue
@@ -834,25 +999,32 @@ def _gi_build_stub(
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
+                    current_namespace, full_name, key, o, obj, needed_namespaces
                 )
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
                 value = o.real
-                ret += f"    {key} = {value}\n"
+                ret += f"    {key} = {value}\n" + textwrap.indent(
+                    _build_doc(_generate_full_name(full_name, key.lower())), "    "
+                )
             else:
                 ret += f"    {key} = ... # FIXME Flags\n"
         ret += "\n"
 
     # Enums
     for name, obj in sorted(enums.items()):
+        full_name = _generate_full_name(prefix_name, name)
+
+        if hasattr(obj, "__info__"):
+            ret += _check_deprecation(
+                obj.__info__, full_name, "This class is deprecated"
+            )
+
         override = _check_override(prefix_name, name, overrides)
         if override:
             ret += override + "\n\n"
             continue
-
-        full_name = _generate_full_name(prefix_name, name)
 
         if current_namespace == "GObject":
             if name != "GEnum":
@@ -864,6 +1036,7 @@ def _gi_build_stub(
             base = "GObject.GEnum"
 
         ret += f"class {name}({base}):\n"
+        ret += textwrap.indent(_build_doc(full_name), "    ")
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
                 continue
@@ -877,13 +1050,15 @@ def _gi_build_stub(
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
                 function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
+                    current_namespace, full_name, key, o, obj, needed_namespaces
                 )
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
                 value = o.real
-                ret += f"    {key} = {value}\n"
+                ret += f"    {key} = {value}\n" + textwrap.indent(
+                    _build_doc(_generate_full_name(full_name, key.lower())), "    "
+                )
             else:
                 ret += f"    {key} = ... # FIXME Enum\n"
         ret += "\n"
@@ -939,6 +1114,8 @@ if __name__ == "__main__":
     parser.add_argument("-o", dest="output", type=str, help="Output file")
 
     args = parser.parse_args()
+
+    DOCS, DEPRECATION_DOCS = gir.load_gir(args.module, args.version)
 
     if args.output:
         overrides: dict[str, str] = {}
