@@ -7,6 +7,11 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+try:
+    from warnings import deprecated
+except ImportError:
+    from typing_extensions import deprecated
+
 import cairo
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -20,10 +25,10 @@ from gi.repository import Pango
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 ACCESSIBLE_VALUE_UNDEFINED: int = -1
-BINARY_AGE: int = 1005
+BINARY_AGE: int = 1204
 IM_MODULE_EXTENSION_POINT_NAME: str = "gtk-im-module"
 INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 5
+INTERFACE_AGE: int = 4
 INVALID_LIST_POSITION: int = 4294967295
 LEVEL_BAR_OFFSET_FULL: str = "full"
 LEVEL_BAR_OFFSET_HIGH: str = "high"
@@ -31,8 +36,8 @@ LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 4
 MAX_COMPOSE_LEN: int = 7
 MEDIA_FILE_EXTENSION_POINT_NAME: str = "gtk-media-file"
-MICRO_VERSION: int = 5
-MINOR_VERSION: int = 10
+MICRO_VERSION: int = 4
+MINOR_VERSION: int = 12
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
 PAPER_NAME_A5: str = "iso_a5"
@@ -176,6 +181,7 @@ def print_run_page_setup_dialog_async(
     *data: Any,
 ) -> None: ...
 def recent_manager_error_quark() -> int: ...
+@deprecated("This function is deprecated")
 def render_activity(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -184,6 +190,7 @@ def render_activity(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_arrow(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -192,6 +199,7 @@ def render_arrow(
     y: float,
     size: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_background(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -200,6 +208,7 @@ def render_background(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_check(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -208,6 +217,7 @@ def render_check(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_expander(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -216,6 +226,7 @@ def render_expander(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_focus(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -224,6 +235,7 @@ def render_focus(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_frame(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -232,6 +244,7 @@ def render_frame(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_handle(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -240,6 +253,7 @@ def render_handle(
     width: float,
     height: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_icon(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -247,6 +261,7 @@ def render_icon(
     x: float,
     y: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_layout(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -254,6 +269,7 @@ def render_layout(
     y: float,
     layout: Pango.Layout,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_line(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -262,6 +278,7 @@ def render_line(
     x1: float,
     y1: float,
 ) -> None: ...
+@deprecated("This function is deprecated")
 def render_option(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -272,7 +289,13 @@ def render_option(
 ) -> None: ...
 def rgb_to_hsv(r: float, g: float, b: float) -> Tuple[float, float, float]: ...
 def set_debug_flags(flags: DebugFlags) -> None: ...
+@deprecated(
+    "Use [method@Gtk.FileLauncher.launch] or [method@Gtk.UriLauncher.launch] instead"
+)
 def show_uri(parent: Optional[Window], uri: str, timestamp: int) -> None: ...
+@deprecated(
+    "Use [method@Gtk.FileLauncher.launch] or [method@Gtk.UriLauncher.launch] instead"
+)
 def show_uri_full(
     parent: Optional[Window],
     uri: str,
@@ -281,6 +304,9 @@ def show_uri_full(
     callback: Optional[Callable[..., None]] = None,
     *user_data: Any,
 ) -> None: ...
+@deprecated(
+    "Use [method@Gtk.FileLauncher.launch_finish] or [method@Gtk.UriLauncher.launch_finish] instead"
+)
 def show_uri_full_finish(parent: Window, result: Gio.AsyncResult) -> bool: ...
 def test_accessible_assertion_message_role(
     domain: str,
@@ -305,11 +331,15 @@ def test_accessible_has_state(
 def test_list_all_types() -> list[Type]: ...
 def test_register_all_types() -> None: ...
 def test_widget_wait_for_draw(widget: Widget) -> None: ...
+@deprecated("Use list models instead")
 def tree_create_row_drag_content(
     tree_model: TreeModel, path: TreePath
 ) -> Gdk.ContentProvider: ...
+@deprecated("Use list models instead")
 def tree_get_row_drag_data(value: Any) -> Tuple[bool, TreeModel, TreePath]: ...
+@deprecated("This function is deprecated")
 def tree_row_reference_deleted(proxy: GObject.Object, path: TreePath) -> None: ...
+@deprecated("This function is deprecated")
 def tree_row_reference_inserted(proxy: GObject.Object, path: TreePath) -> None: ...
 def value_dup_expression(value: Any) -> Optional[Expression]: ...
 def value_get_expression(value: Any) -> Optional[Expression]: ...
@@ -426,6 +456,7 @@ class AboutDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -524,6 +555,7 @@ class AboutDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -1190,6 +1222,9 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
 
 class AnyFilterClass(GObject.GPointer): ...
 
+@deprecated(
+    "The application selection widgets should be implemented according to the design of each platform and/or application requiring them."
+)
 class AppChooser(GObject.GInterface):
     """
     Interface GtkAppChooser
@@ -1198,10 +1233,16 @@ class AppChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("This widget will be removed in GTK 5")
     def get_app_info(self) -> Optional[Gio.AppInfo]: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_content_type(self) -> str: ...
+    @deprecated("This widget will be removed in GTK 5")
     def refresh(self) -> None: ...
 
+@deprecated(
+    "The application selection widgets should be implemented according to the design of each platform and/or application requiring them."
+)
 class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
     """
     :Constructors:
@@ -1360,20 +1401,35 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         accessible_role: AccessibleRole = ...,
         content_type: str = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def append_custom_item(self, name: str, label: str, icon: Gio.Icon) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def append_separator(self) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_heading(self) -> Optional[str]: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_modal(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_default_item(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_dialog_item(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls, content_type: str) -> AppChooserButton: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_active_custom_item(self, name: str) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_heading(self, heading: str) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_modal(self, modal: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_default_item(self, setting: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_dialog_item(self, setting: bool) -> None: ...
 
+@deprecated(
+    "The application selection widgets should be implemented according to the design of each platform and/or application requiring them."
+)
 class AppChooserDialog(
     Dialog,
     Accessible,
@@ -1433,6 +1489,7 @@ class AppChooserDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -1518,6 +1575,7 @@ class AppChooserDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -1620,18 +1678,26 @@ class AppChooserDialog(
         accessible_role: AccessibleRole = ...,
         content_type: str = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_heading(self) -> Optional[str]: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_widget(self) -> Widget: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(
         cls, parent: Optional[Window], flags: DialogFlags, file: Gio.File
     ) -> AppChooserDialog: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new_for_content_type(
         cls, parent: Optional[Window], flags: DialogFlags, content_type: str
     ) -> AppChooserDialog: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_heading(self, heading: str) -> None: ...
 
+@deprecated(
+    "The application selection widgets should be implemented according to the design of each platform and/or application requiring them."
+)
 class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
     """
     :Constructors:
@@ -1795,19 +1861,32 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         accessible_role: AccessibleRole = ...,
         content_type: str = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_default_text(self) -> Optional[str]: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_all(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_default(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_fallback(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_other(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_show_recommended(self) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls, content_type: str) -> AppChooserWidget: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_default_text(self, text: str) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_all(self, setting: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_default(self, setting: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_fallback(self, setting: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_other(self, setting: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_show_recommended(self, setting: bool) -> None: ...
 
 class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
@@ -2000,6 +2079,7 @@ class ApplicationWindow(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -2083,6 +2163,7 @@ class ApplicationWindow(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -2373,6 +2454,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     def set_xalign(self, xalign: float) -> None: ...
     def set_yalign(self, yalign: float) -> None: ...
 
+@deprecated("This widget will be removed in GTK 5")
 class Assistant(
     Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
 ):
@@ -2424,6 +2506,7 @@ class Assistant(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -2508,6 +2591,7 @@ class Assistant(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -2606,34 +2690,59 @@ class Assistant(
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def add_action_widget(self, child: Widget) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def append_page(self, page: Widget) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     def commit(self) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_current_page(self) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_n_pages(self) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_nth_page(self, page_num: int) -> Optional[Widget]: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_page(self, child: Widget) -> AssistantPage: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_page_complete(self, page: Widget) -> bool: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_page_title(self, page: Widget) -> str: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_page_type(self, page: Widget) -> AssistantPageType: ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_pages(self) -> Gio.ListModel: ...
+    @deprecated("This widget will be removed in GTK 5")
     def insert_page(self, page: Widget, position: int) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls) -> Assistant: ...
+    @deprecated("This widget will be removed in GTK 5")
     def next_page(self) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def prepend_page(self, page: Widget) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     def previous_page(self) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def remove_action_widget(self, child: Widget) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def remove_page(self, page_num: int) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_current_page(self, page_num: int) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_forward_page_func(
         self, page_func: Optional[Callable[..., int]] = None, *data: Any
     ) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_page_complete(self, page: Widget, complete: bool) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_page_title(self, page: Widget, title: str) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_page_type(self, page: Widget, type: AssistantPageType) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def update_buttons_state(self) -> None: ...
 
+@deprecated("This object will be removed in GTK 5")
 class AssistantPage(GObject.Object):
     """
     :Constructors:
@@ -2668,6 +2777,7 @@ class AssistantPage(GObject.Object):
         page_type: AssistantPageType = ...,
         title: str = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_child(self) -> Widget: ...
 
 class BinLayout(LayoutManager):
@@ -2908,6 +3018,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Properties from GtkBox:
       spacing -> gint: spacing
       homogeneous -> gboolean: homogeneous
+      baseline-child -> gint: baseline-child
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
@@ -2966,6 +3077,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     """
 
     class Props:
+        baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -3010,6 +3122,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     parent_instance: Widget = ...
     def __init__(
         self,
+        baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -3046,6 +3159,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation = ...,
     ): ...
     def append(self, child: Widget) -> None: ...
+    def get_baseline_child(self) -> int: ...
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_homogeneous(self) -> bool: ...
     def get_spacing(self) -> int: ...
@@ -3059,6 +3173,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def reorder_child_after(
         self, child: Widget, sibling: Optional[Widget] = None
     ) -> None: ...
+    def set_baseline_child(self, child: int) -> None: ...
     def set_baseline_position(self, position: BaselinePosition) -> None: ...
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
@@ -3089,6 +3204,7 @@ class BoxLayout(LayoutManager, Orientable):
     Properties from GtkBoxLayout:
       homogeneous -> gboolean: homogeneous
       spacing -> gint: spacing
+      baseline-child -> gint: baseline-child
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GObject:
@@ -3096,6 +3212,7 @@ class BoxLayout(LayoutManager, Orientable):
     """
 
     class Props:
+        baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -3104,16 +3221,19 @@ class BoxLayout(LayoutManager, Orientable):
     props: Props = ...
     def __init__(
         self,
+        baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         orientation: Orientation = ...,
     ): ...
+    def get_baseline_child(self) -> int: ...
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_homogeneous(self) -> bool: ...
     def get_spacing(self) -> int: ...
     @classmethod
     def new(cls, orientation: Orientation) -> BoxLayout: ...
+    def set_baseline_child(self, child: int) -> None: ...
     def set_baseline_position(self, position: BaselinePosition) -> None: ...
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
@@ -3296,6 +3416,7 @@ class Builder(GObject.Object):
         def interface_install_property(self, *args, **kargs): ...  # FIXME Function
         def interface_list_properties(self, *args, **kargs): ...  # FIXME Function
         def is_floating(self) -> bool: ...
+        @deprecated("This method is deprecated")
         @classmethod
         def newv(
             cls, object_type: Type, parameters: Sequence[GObject.Parameter]
@@ -3434,6 +3555,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       use-underline -> gboolean: use-underline
       icon-name -> gchararray: icon-name
       child -> GtkWidget: child
+      can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -3491,6 +3613,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
 
     class Props:
+        can_shrink: bool
         child: Optional[Widget]
         has_frame: bool
         icon_name: Optional[str]
@@ -3538,6 +3661,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     parent_instance: Widget = ...
     def __init__(
         self,
+        can_shrink: bool = ...,
         child: Optional[Widget] = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
@@ -3578,6 +3702,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     ): ...
     def do_activate(self) -> None: ...
     def do_clicked(self) -> None: ...
+    def get_can_shrink(self) -> bool: ...
     def get_child(self) -> Optional[Widget]: ...
     def get_has_frame(self) -> bool: ...
     def get_icon_name(self) -> Optional[str]: ...
@@ -3591,6 +3716,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def new_with_label(cls, label: str) -> Button: ...
     @classmethod
     def new_with_mnemonic(cls, label: str) -> Button: ...
+    def set_can_shrink(self, can_shrink: bool) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_has_frame(self, has_frame: bool) -> None: ...
     def set_icon_name(self, icon_name: str) -> None: ...
@@ -3838,6 +3964,7 @@ class CallbackAction(ShortcutAction):
 
 class CallbackActionClass(GObject.GPointer): ...
 
+@deprecated("List views use widgets for displaying their contents")
 class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     """
     :Constructors:
@@ -3871,6 +3998,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
     def __init__(self, focus_cell: Optional[CellRenderer] = ...): ...
+    @deprecated("This method is deprecated")
     def activate(
         self,
         context: CellAreaContext,
@@ -3879,6 +4007,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         flags: CellRendererState,
         edit_only: bool,
     ) -> bool: ...
+    @deprecated("This method is deprecated")
     def activate_cell(
         self,
         widget: Widget,
@@ -3887,10 +4016,13 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
     ) -> bool: ...
+    @deprecated("This method is deprecated")
     def add(self, renderer: CellRenderer) -> None: ...
+    @deprecated("This method is deprecated")
     def add_focus_sibling(
         self, renderer: CellRenderer, sibling: CellRenderer
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def apply_attributes(
         self,
         tree_model: TreeModel,
@@ -3898,18 +4030,25 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         is_expander: bool,
         is_expanded: bool,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def attribute_connect(
         self, renderer: CellRenderer, attribute: str, column: int
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def attribute_disconnect(self, renderer: CellRenderer, attribute: str) -> None: ...
+    @deprecated("This method is deprecated")
     def attribute_get_column(self, renderer: CellRenderer, attribute: str) -> int: ...
+    @deprecated("This method is deprecated")
     def cell_get_property(
         self, renderer: CellRenderer, property_name: str, value: Any
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def cell_set_property(
         self, renderer: CellRenderer, property_name: str, value: Any
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def copy_context(self, context: CellAreaContext) -> CellAreaContext: ...
+    @deprecated("This method is deprecated")
     def create_context(self) -> CellAreaContext: ...
     def do_activate(
         self,
@@ -3989,6 +4128,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         flags: CellRendererState,
         paint_focus: bool,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def event(
         self,
         context: CellAreaContext,
@@ -3997,8 +4137,11 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
     ) -> int: ...
+    @deprecated("This method is deprecated")
     def find_cell_property(self, property_name: str) -> GObject.ParamSpec: ...
+    @deprecated("This method is deprecated")
     def focus(self, direction: DirectionType) -> bool: ...
+    @deprecated("This method is deprecated")
     def foreach(self, callback: Callable[..., bool], *callback_data: Any) -> None: ...
     def foreach_alloc(
         self,
@@ -4009,6 +4152,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         callback: Callable[..., bool],
         *callback_data: Any,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def get_cell_allocation(
         self,
         context: CellAreaContext,
@@ -4016,6 +4160,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         renderer: CellRenderer,
         cell_area: Gdk.Rectangle,
     ) -> Gdk.Rectangle: ...
+    @deprecated("This method is deprecated")
     def get_cell_at_position(
         self,
         context: CellAreaContext,
@@ -4025,42 +4170,60 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         y: int,
     ) -> Tuple[CellRenderer, Gdk.Rectangle]: ...
     def get_current_path_string(self) -> str: ...
+    @deprecated("This method is deprecated")
     def get_edit_widget(self) -> Optional[CellEditable]: ...
+    @deprecated("This method is deprecated")
     def get_edited_cell(self) -> Optional[CellRenderer]: ...
+    @deprecated("This method is deprecated")
     def get_focus_cell(self) -> Optional[CellRenderer]: ...
+    @deprecated("This method is deprecated")
     def get_focus_from_sibling(
         self, renderer: CellRenderer
     ) -> Optional[CellRenderer]: ...
+    @deprecated("This method is deprecated")
     def get_focus_siblings(self, renderer: CellRenderer) -> list[CellRenderer]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_height(
         self, context: CellAreaContext, widget: Widget
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_height_for_width(
         self, context: CellAreaContext, widget: Widget, width: int
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_width(
         self, context: CellAreaContext, widget: Widget
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_width_for_height(
         self, context: CellAreaContext, widget: Widget, height: int
     ) -> Tuple[int, int]: ...
     def get_request_mode(self) -> SizeRequestMode: ...
+    @deprecated("This method is deprecated")
     def has_renderer(self, renderer: CellRenderer) -> bool: ...
+    @deprecated("This method is deprecated")
     def inner_cell_area(
         self, widget: Widget, cell_area: Gdk.Rectangle
     ) -> Gdk.Rectangle: ...
+    @deprecated("This method is deprecated")
     def install_cell_property(
         self, property_id: int, pspec: GObject.ParamSpec
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def is_activatable(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def is_focus_sibling(
         self, renderer: CellRenderer, sibling: CellRenderer
     ) -> bool: ...
+    @deprecated("This method is deprecated")
     def list_cell_properties(self) -> list[GObject.ParamSpec]: ...
+    @deprecated("This method is deprecated")
     def remove(self, renderer: CellRenderer) -> None: ...
+    @deprecated("This method is deprecated")
     def remove_focus_sibling(
         self, renderer: CellRenderer, sibling: CellRenderer
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def request_renderer(
         self,
         renderer: CellRenderer,
@@ -4068,7 +4231,9 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Widget,
         for_size: int,
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def set_focus_cell(self, renderer: Optional[CellRenderer] = None) -> None: ...
+    @deprecated("This method is deprecated")
     def snapshot(
         self,
         context: CellAreaContext,
@@ -4079,8 +4244,10 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         flags: CellRendererState,
         paint_focus: bool,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def stop_editing(self, canceled: bool) -> None: ...
 
+@deprecated("List views use widgets for displaying their contents")
 class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
     """
     :Constructors:
@@ -4124,15 +4291,20 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
         focus_cell: Optional[CellRenderer] = ...,
         orientation: Orientation = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def get_spacing(self) -> int: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellAreaBox: ...
+    @deprecated("This method is deprecated")
     def pack_end(
         self, renderer: CellRenderer, expand: bool, align: bool, fixed: bool
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def pack_start(
         self, renderer: CellRenderer, expand: bool, align: bool, fixed: bool
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def set_spacing(self, spacing: int) -> None: ...
 
 class CellAreaClass(GObject.GPointer):
@@ -4202,12 +4374,16 @@ class CellAreaClass(GObject.GPointer):
         bool,
     ] = ...
     padding: list[None] = ...
+    @deprecated("This method is deprecated")
     def find_cell_property(self, property_name: str) -> GObject.ParamSpec: ...
+    @deprecated("This method is deprecated")
     def install_cell_property(
         self, property_id: int, pspec: GObject.ParamSpec
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def list_cell_properties(self) -> list[GObject.ParamSpec]: ...
 
+@deprecated("This object will be removed in GTK 5")
 class CellAreaContext(GObject.Object):
     """
     :Constructors:
@@ -4239,21 +4415,31 @@ class CellAreaContext(GObject.Object):
     props: Props = ...
     parent_instance: GObject.Object = ...
     def __init__(self, area: CellArea = ...): ...
+    @deprecated("This object will be removed in GTK 5")
     def allocate(self, width: int, height: int) -> None: ...
     def do_allocate(self, width: int, height: int) -> None: ...
     def do_get_preferred_height_for_width(self, width: int) -> Tuple[int, int]: ...
     def do_get_preferred_width_for_height(self, height: int) -> Tuple[int, int]: ...
     def do_reset(self) -> None: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_allocation(self) -> Tuple[int, int]: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_area(self) -> CellArea: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_preferred_height(self) -> Tuple[int, int]: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_preferred_height_for_width(self, width: int) -> Tuple[int, int]: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_preferred_width(self) -> Tuple[int, int]: ...
+    @deprecated("This object will be removed in GTK 5")
     def get_preferred_width_for_height(self, height: int) -> Tuple[int, int]: ...
+    @deprecated("This object will be removed in GTK 5")
     def push_preferred_height(
         self, minimum_height: int, natural_height: int
     ) -> None: ...
+    @deprecated("This object will be removed in GTK 5")
     def push_preferred_width(self, minimum_width: int, natural_width: int) -> None: ...
+    @deprecated("This object will be removed in GTK 5")
     def reset(self) -> None: ...
 
 class CellAreaContextClass(GObject.GPointer):
@@ -4278,6 +4464,9 @@ class CellAreaContextClass(GObject.GPointer):
 
 class CellAreaContextPrivate(GObject.GPointer): ...
 
+@deprecated(
+    "List views use widgets for displaying their contents. See [iface@Gtk.Editable] for editable text widgets"
+)
 class CellEditable(GObject.GInterface):
     """
     Interface GtkCellEditable
@@ -4286,7 +4475,9 @@ class CellEditable(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("This method is deprecated")
     def editing_done(self) -> None: ...
+    @deprecated("This method is deprecated")
     def remove_widget(self) -> None: ...
     def start_editing(self, event: Optional[Gdk.Event] = None) -> None: ...
 
@@ -4304,6 +4495,9 @@ class CellEditableIface(GObject.GPointer):
     remove_widget: Callable[[CellEditable], None] = ...
     start_editing: Callable[[CellEditable, Optional[Gdk.Event]], None] = ...
 
+@deprecated(
+    "List views use widgets to display their contents. See [class@Gtk.LayoutManager] for layout manager delegate objects"
+)
 class CellLayout(GObject.GInterface):
     """
     Interface GtkCellLayout
@@ -4312,16 +4506,25 @@ class CellLayout(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("This method is deprecated")
     def add_attribute(
         self, cell: CellRenderer, attribute: str, column: int
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def clear(self) -> None: ...
+    @deprecated("This method is deprecated")
     def clear_attributes(self, cell: CellRenderer) -> None: ...
+    @deprecated("This method is deprecated")
     def get_area(self) -> Optional[CellArea]: ...
+    @deprecated("This method is deprecated")
     def get_cells(self) -> list[CellRenderer]: ...
+    @deprecated("This method is deprecated")
     def pack_end(self, cell: CellRenderer, expand: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def pack_start(self, cell: CellRenderer, expand: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def reorder(self, cell: CellRenderer, position: int) -> None: ...
+    @deprecated("This method is deprecated")
     def set_cell_data_func(
         self,
         cell: CellRenderer,
@@ -4349,6 +4552,7 @@ class CellLayoutIface(GObject.GPointer):
     get_cells: Callable[[CellLayout], list[CellRenderer]] = ...
     get_area: Callable[[CellLayout], Optional[CellArea]] = ...
 
+@deprecated("List views use widgets for displaying their contents")
 class CellRenderer(GObject.InitiallyUnowned):
     """
     :Constructors:
@@ -4421,6 +4625,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def activate(
         self,
         event: Gdk.Event,
@@ -4470,37 +4675,61 @@ class CellRenderer(GObject.InitiallyUnowned):
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
     ) -> Optional[CellEditable]: ...
+    @deprecated("This method is deprecated")
     def get_aligned_area(
         self, widget: Widget, flags: CellRendererState, cell_area: Gdk.Rectangle
     ) -> Gdk.Rectangle: ...
+    @deprecated("This method is deprecated")
     def get_alignment(self) -> Tuple[float, float]: ...
+    @deprecated("This method is deprecated")
     def get_fixed_size(self) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_is_expanded(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_is_expander(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_padding(self) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_height(self, widget: Widget) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_height_for_width(
         self, widget: Widget, width: int
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_size(self, widget: Widget) -> Tuple[Requisition, Requisition]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_width(self, widget: Widget) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_preferred_width_for_height(
         self, widget: Widget, height: int
     ) -> Tuple[int, int]: ...
+    @deprecated("This method is deprecated")
     def get_request_mode(self) -> SizeRequestMode: ...
+    @deprecated("This method is deprecated")
     def get_sensitive(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_state(
         self, widget: Optional[Widget], cell_state: CellRendererState
     ) -> StateFlags: ...
+    @deprecated("This method is deprecated")
     def get_visible(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def is_activatable(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def set_alignment(self, xalign: float, yalign: float) -> None: ...
+    @deprecated("This method is deprecated")
     def set_fixed_size(self, width: int, height: int) -> None: ...
+    @deprecated("This method is deprecated")
     def set_is_expanded(self, is_expanded: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_is_expander(self, is_expander: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_padding(self, xpad: int, ypad: int) -> None: ...
+    @deprecated("This method is deprecated")
     def set_sensitive(self, sensitive: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_visible(self, visible: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def snapshot(
         self,
         snapshot: Snapshot,
@@ -4509,6 +4738,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def start_editing(
         self,
         event: Optional[Gdk.Event],
@@ -4518,8 +4748,12 @@ class CellRenderer(GObject.InitiallyUnowned):
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
     ) -> Optional[CellEditable]: ...
+    @deprecated("This method is deprecated")
     def stop_editing(self, canceled: bool) -> None: ...
 
+@deprecated(
+    "Applications editing keyboard accelerators should provide their own implementation according to platform design guidelines"
+)
 class CellRendererAccel(CellRendererText):
     """
     :Constructors:
@@ -4752,6 +4986,7 @@ class CellRendererAccel(CellRendererText):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererAccel: ...
 
@@ -4818,6 +5053,9 @@ class CellRendererClass(GObject.GPointer):
 
 class CellRendererClassPrivate(GObject.GPointer): ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.DropDown] instead"
+)
 class CellRendererCombo(CellRendererText):
     """
     :Constructors:
@@ -5046,9 +5284,13 @@ class CellRendererCombo(CellRendererText):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererCombo: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.Image] for icons, and [class@Gtk.Picture] for images"
+)
 class CellRendererPixbuf(CellRenderer):
     """
     :Constructors:
@@ -5143,11 +5385,15 @@ class CellRendererPixbuf(CellRenderer):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererPixbuf: ...
 
 class CellRendererPrivate(GObject.GPointer): ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.ProgressBar] instead"
+)
 class CellRendererProgress(CellRenderer, Orientable):
     """
     :Constructors:
@@ -5241,9 +5487,13 @@ class CellRendererProgress(CellRenderer, Orientable):
         ypad: int = ...,
         orientation: Orientation = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererProgress: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.SpinButton] instead"
+)
 class CellRendererSpin(CellRendererText):
     """
     :Constructors:
@@ -5469,9 +5719,13 @@ class CellRendererSpin(CellRendererText):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererSpin: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.Spinner] instead"
+)
 class CellRendererSpinner(CellRenderer):
     """
     :Constructors:
@@ -5554,9 +5808,13 @@ class CellRendererSpinner(CellRenderer):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererSpinner: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.Inscription] or [class@Gtk.Label] instead"
+)
 class CellRendererText(CellRenderer):
     """
     :Constructors:
@@ -5773,8 +6031,10 @@ class CellRendererText(CellRenderer):
         ypad: int = ...,
     ): ...
     def do_edited(self, path: str, new_text: str) -> None: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererText: ...
+    @deprecated("This method is deprecated")
     def set_fixed_height_from_font(self, number_of_rows: int) -> None: ...
 
 class CellRendererTextClass(GObject.GPointer):
@@ -5790,6 +6050,9 @@ class CellRendererTextClass(GObject.GPointer):
     edited: Callable[[CellRendererText, str, str], None] = ...
     padding: list[None] = ...
 
+@deprecated(
+    "List views use widgets to display their contents. You should use [class@Gtk.ToggleButton] instead"
+)
 class CellRendererToggle(CellRenderer):
     """
     :Constructors:
@@ -5878,15 +6141,25 @@ class CellRendererToggle(CellRenderer):
         yalign: float = ...,
         ypad: int = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def get_activatable(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_active(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_radio(self) -> bool: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellRendererToggle: ...
+    @deprecated("This method is deprecated")
     def set_activatable(self, setting: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_active(self, setting: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_radio(self, radio: bool) -> None: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You can use [class@Gtk.Box] instead"
+)
 class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orientable):
     """
     :Constructors:
@@ -6047,23 +6320,36 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def get_displayed_row(self) -> Optional[TreePath]: ...
+    @deprecated("This method is deprecated")
     def get_draw_sensitive(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_fit_model(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_model(self) -> Optional[TreeModel]: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> CellView: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_with_context(cls, area: CellArea, context: CellAreaContext) -> CellView: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_with_markup(cls, markup: str) -> CellView: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_with_text(cls, text: str) -> CellView: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_with_texture(cls, texture: Gdk.Texture) -> CellView: ...
+    @deprecated("This method is deprecated")
     def set_displayed_row(self, path: Optional[TreePath] = None) -> None: ...
+    @deprecated("This method is deprecated")
     def set_draw_sensitive(self, draw_sensitive: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_fit_model(self, fit_model: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_model(self, model: Optional[TreeModel] = None) -> None: ...
 
 class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
@@ -6082,6 +6368,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       center-widget -> GtkWidget: center-widget
       end-widget -> GtkWidget: end-widget
       baseline-position -> GtkBaselinePosition: baseline-position
+      shrink-center-last -> gboolean: shrink-center-last
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -6142,6 +6429,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         baseline_position: BaselinePosition
         center_widget: Optional[Widget]
         end_widget: Optional[Widget]
+        shrink_center_last: bool
         start_widget: Optional[Widget]
         can_focus: bool
         can_target: bool
@@ -6186,6 +6474,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         baseline_position: BaselinePosition = ...,
         center_widget: Optional[Widget] = ...,
         end_widget: Optional[Widget] = ...,
+        shrink_center_last: bool = ...,
         start_widget: Optional[Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -6222,12 +6511,14 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_center_widget(self) -> Optional[Widget]: ...
     def get_end_widget(self) -> Optional[Widget]: ...
+    def get_shrink_center_last(self) -> bool: ...
     def get_start_widget(self) -> Optional[Widget]: ...
     @classmethod
     def new(cls) -> CenterBox: ...
     def set_baseline_position(self, position: BaselinePosition) -> None: ...
     def set_center_widget(self, child: Optional[Widget] = None) -> None: ...
     def set_end_widget(self, child: Optional[Widget] = None) -> None: ...
+    def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
     def set_start_widget(self, child: Optional[Widget] = None) -> None: ...
 
 class CenterBoxClass(GObject.GPointer): ...
@@ -6243,14 +6534,23 @@ class CenterLayout(LayoutManager):
 
     Object GtkCenterLayout
 
+    Properties from GtkCenterLayout:
+      shrink-center-last -> gboolean: shrink-center-last
+
     Signals from GObject:
       notify (GParam)
     """
 
+    class Props:
+        shrink_center_last: bool
+
+    props: Props = ...
+    def __init__(self, shrink_center_last: bool = ...): ...
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_center_widget(self) -> Optional[Widget]: ...
     def get_end_widget(self) -> Optional[Widget]: ...
     def get_orientation(self) -> Orientation: ...
+    def get_shrink_center_last(self) -> bool: ...
     def get_start_widget(self) -> Optional[Widget]: ...
     @classmethod
     def new(cls) -> CenterLayout: ...
@@ -6258,6 +6558,7 @@ class CenterLayout(LayoutManager):
     def set_center_widget(self, widget: Optional[Widget] = None) -> None: ...
     def set_end_widget(self, widget: Optional[Widget] = None) -> None: ...
     def set_orientation(self, orientation: Orientation) -> None: ...
+    def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
     def set_start_widget(self, widget: Optional[Widget] = None) -> None: ...
 
 class CenterLayoutClass(GObject.GPointer):
@@ -6491,6 +6792,7 @@ class ClosureExpression(Expression):
         params: Optional[Sequence[Expression]] = None,
     ) -> ClosureExpression: ...
 
+@deprecated("Use [class@Gtk.ColorDialogButton] instead")
 class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget):
     """
     :Constructors:
@@ -6651,15 +6953,23 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         rgba: Gdk.RGBA = ...,
         use_alpha: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.ColorDialogButton] instead")
     def get_modal(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ColorDialogButton] instead")
     def get_title(self) -> str: ...
+    @deprecated("Use [class@Gtk.ColorDialogButton] instead")
     @classmethod
     def new(cls) -> ColorButton: ...
     @classmethod
     def new_with_rgba(cls, rgba: Gdk.RGBA) -> ColorButton: ...
+    @deprecated("Use [class@Gtk.ColorDialogButton] instead")
     def set_modal(self, modal: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ColorDialogButton] instead")
     def set_title(self, title: str) -> None: ...
 
+@deprecated(
+    "Use [class@Gtk.ColorDialog] and [class@Gtk.ColorDialogButton] instead of widgets implementing `GtkColorChooser`"
+)
 class ColorChooser(GObject.GInterface):
     """
     Interface GtkColorChooser
@@ -6668,17 +6978,23 @@ class ColorChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     def add_palette(
         self,
         orientation: Orientation,
         colors_per_line: int,
         colors: Optional[Sequence[Gdk.RGBA]] = None,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     def get_rgba(self) -> Gdk.RGBA: ...
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     def get_use_alpha(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     def set_rgba(self, color: Gdk.RGBA) -> None: ...
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     def set_use_alpha(self, use_alpha: bool) -> None: ...
 
+@deprecated("Use [class@Gtk.ColorDialog] instead")
 class ColorChooserDialog(
     Dialog,
     Accessible,
@@ -6739,6 +7055,7 @@ class ColorChooserDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -6823,6 +7140,7 @@ class ColorChooserDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -6926,6 +7244,7 @@ class ColorChooserDialog(
         rgba: Gdk.RGBA = ...,
         use_alpha: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.ColorDialog] instead")
     @classmethod
     def new(
         cls, title: Optional[str] = None, parent: Optional[Window] = None
@@ -6949,6 +7268,7 @@ class ColorChooserInterface(GObject.GPointer):
     color_activated: Callable[[ColorChooser, Gdk.RGBA], None] = ...
     padding: list[None] = ...
 
+@deprecated("Direct use of `GtkColorChooserWidget` is deprecated.")
 class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget):
     """
     :Constructors:
@@ -7157,6 +7477,9 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
 
     Object GtkColorDialogButton
 
+    Signals from GtkColorDialogButton:
+      activate ()
+
     Properties from GtkColorDialogButton:
       dialog -> GtkColorDialog: dialog
       rgba -> GdkRGBA: rgba
@@ -7336,13 +7659,16 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
 
     Properties from GtkColumnView:
       columns -> GListModel: columns
+      enable-rubberband -> gboolean: enable-rubberband
+      header-factory -> GtkListItemFactory: header-factory
       model -> GtkSelectionModel: model
+      reorderable -> gboolean: reorderable
+      row-factory -> GtkListItemFactory: row-factory
       show-row-separators -> gboolean: show-row-separators
       show-column-separators -> gboolean: show-column-separators
-      sorter -> GtkSorter: sorter
       single-click-activate -> gboolean: single-click-activate
-      reorderable -> gboolean: reorderable
-      enable-rubberband -> gboolean: enable-rubberband
+      sorter -> GtkSorter: sorter
+      tab-behavior -> GtkListTabBehavior: tab-behavior
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -7402,12 +7728,15 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     class Props:
         columns: Gio.ListModel
         enable_rubberband: bool
+        header_factory: Optional[ListItemFactory]
         model: Optional[SelectionModel]
         reorderable: bool
+        row_factory: Optional[ListItemFactory]
         show_column_separators: bool
         show_row_separators: bool
         single_click_activate: bool
         sorter: Optional[Sorter]
+        tab_behavior: ListTabBehavior
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -7452,11 +7781,14 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def __init__(
         self,
         enable_rubberband: bool = ...,
+        header_factory: Optional[ListItemFactory] = ...,
         model: Optional[SelectionModel] = ...,
         reorderable: bool = ...,
+        row_factory: Optional[ListItemFactory] = ...,
         show_column_separators: bool = ...,
         show_row_separators: bool = ...,
         single_click_activate: bool = ...,
+        tab_behavior: ListTabBehavior = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7495,26 +7827,101 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def append_column(self, column: ColumnViewColumn) -> None: ...
     def get_columns(self) -> Gio.ListModel: ...
     def get_enable_rubberband(self) -> bool: ...
+    def get_header_factory(self) -> Optional[ListItemFactory]: ...
     def get_model(self) -> Optional[SelectionModel]: ...
     def get_reorderable(self) -> bool: ...
+    def get_row_factory(self) -> Optional[ListItemFactory]: ...
     def get_show_column_separators(self) -> bool: ...
     def get_show_row_separators(self) -> bool: ...
     def get_single_click_activate(self) -> bool: ...
     def get_sorter(self) -> Optional[Sorter]: ...
+    def get_tab_behavior(self) -> ListTabBehavior: ...
     def insert_column(self, position: int, column: ColumnViewColumn) -> None: ...
     @classmethod
     def new(cls, model: Optional[SelectionModel] = None) -> ColumnView: ...
     def remove_column(self, column: ColumnViewColumn) -> None: ...
+    def scroll_to(
+        self,
+        pos: int,
+        column: Optional[ColumnViewColumn],
+        flags: ListScrollFlags,
+        scroll: Optional[ScrollInfo] = None,
+    ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
+    def set_header_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_model(self, model: Optional[SelectionModel] = None) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
+    def set_row_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_show_column_separators(self, show_column_separators: bool) -> None: ...
     def set_show_row_separators(self, show_row_separators: bool) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
+    def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
     def sort_by_column(
         self, column: Optional[ColumnViewColumn], direction: SortType
     ) -> None: ...
 
+class ColumnViewCell(ListItem):
+    """
+    :Constructors:
+
+    ::
+
+        ColumnViewCell(**properties)
+
+    Object GtkColumnViewCell
+
+    Properties from GtkColumnViewCell:
+      child -> GtkWidget: child
+      focusable -> gboolean: focusable
+      item -> GObject: item
+      position -> guint: position
+      selected -> gboolean: selected
+
+    Properties from GtkListItem:
+      accessible-description -> gchararray: accessible-description
+      accessible-label -> gchararray: accessible-label
+      activatable -> gboolean: activatable
+      child -> GtkWidget: child
+      focusable -> gboolean: focusable
+      item -> GObject: item
+      position -> guint: position
+      selectable -> gboolean: selectable
+      selected -> gboolean: selected
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        child: Optional[Widget]
+        focusable: bool
+        item: Optional[GObject.Object]
+        position: int
+        selected: bool
+        accessible_description: str
+        accessible_label: str
+        activatable: bool
+        selectable: bool
+
+    props: Props = ...
+    def __init__(
+        self,
+        child: Optional[Widget] = ...,
+        focusable: bool = ...,
+        accessible_description: str = ...,
+        accessible_label: str = ...,
+        activatable: bool = ...,
+        selectable: bool = ...,
+    ): ...
+    def get_child(self) -> Optional[Widget]: ...
+    def get_focusable(self) -> bool: ...
+    def get_item(self) -> Optional[GObject.Object]: ...
+    def get_position(self) -> int: ...
+    def get_selected(self) -> bool: ...
+    def set_child(self, child: Optional[Widget] = None) -> None: ...
+    def set_focusable(self, focusable: bool) -> None: ...
+
+class ColumnViewCellClass(GObject.GPointer): ...
 class ColumnViewClass(GObject.GPointer): ...
 
 class ColumnViewColumn(GObject.Object):
@@ -7595,6 +8002,65 @@ class ColumnViewColumn(GObject.Object):
 
 class ColumnViewColumnClass(GObject.GPointer): ...
 
+class ColumnViewRow(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ColumnViewRow(**properties)
+
+    Object GtkColumnViewRow
+
+    Properties from GtkColumnViewRow:
+      accessible-description -> gchararray: accessible-description
+      accessible-label -> gchararray: accessible-label
+      activatable -> gboolean: activatable
+      focusable -> gboolean: focusable
+      item -> GObject: item
+      position -> guint: position
+      selectable -> gboolean: selectable
+      selected -> gboolean: selected
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        accessible_description: str
+        accessible_label: str
+        activatable: bool
+        focusable: bool
+        item: Optional[GObject.Object]
+        position: int
+        selectable: bool
+        selected: bool
+
+    props: Props = ...
+    def __init__(
+        self,
+        accessible_description: str = ...,
+        accessible_label: str = ...,
+        activatable: bool = ...,
+        focusable: bool = ...,
+        selectable: bool = ...,
+    ): ...
+    def get_accessible_description(self) -> str: ...
+    def get_accessible_label(self) -> str: ...
+    def get_activatable(self) -> bool: ...
+    def get_focusable(self) -> bool: ...
+    def get_item(self) -> Optional[GObject.Object]: ...
+    def get_position(self) -> int: ...
+    def get_selectable(self) -> bool: ...
+    def get_selected(self) -> bool: ...
+    def set_accessible_description(self, description: str) -> None: ...
+    def set_accessible_label(self, label: str) -> None: ...
+    def set_activatable(self, activatable: bool) -> None: ...
+    def set_focusable(self, focusable: bool) -> None: ...
+    def set_selectable(self, selectable: bool) -> None: ...
+
+class ColumnViewRowClass(GObject.GPointer): ...
+
 class ColumnViewSorter(Sorter):
     """
     :Constructors:
@@ -7639,6 +8105,7 @@ class ColumnViewSorterClass(GObject.GPointer):
 
     parent_class: SorterClass = ...
 
+@deprecated("Use [class@Gtk.DropDown] instead")
 class ComboBox(
     Widget, Accessible, Buildable, CellEditable, CellLayout, ConstraintTarget
 ):
@@ -7833,36 +8300,62 @@ class ComboBox(
     def do_activate(self) -> None: ...
     def do_changed(self) -> None: ...
     def do_format_entry_text(self, path: str) -> str: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_active(self) -> int: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_active_id(self) -> Optional[str]: ...
     def get_active_iter(self) -> Optional[TreeIter]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_button_sensitivity(self) -> SensitivityType: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_child(self) -> Optional[Widget]: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_entry_text_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_has_entry(self) -> bool: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_id_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_model(self) -> Optional[TreeModel]: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_popup_fixed_width(self) -> bool: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new(cls) -> ComboBox: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new_with_entry(cls) -> ComboBox: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new_with_model(cls, model: TreeModel) -> ComboBox: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new_with_model_and_entry(cls, model: TreeModel) -> ComboBox: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def popdown(self) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def popup(self) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def popup_for_device(self, device: Gdk.Device) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_active(self, index_: int) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_active_id(self, active_id: Optional[str] = None) -> bool: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_active_iter(self, iter: Optional[TreeIter] = None) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_button_sensitivity(self, sensitivity: SensitivityType) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_child(self, child: Optional[Widget] = None) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_entry_text_column(self, text_column: int) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_id_column(self, id_column: int) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_model(self, model: Optional[TreeModel] = None) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_popup_fixed_width(self, fixed: bool) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def set_row_separator_func(
         self, func: Optional[Callable[..., bool]] = None, *data: Any
     ) -> None: ...
@@ -7882,6 +8375,7 @@ class ComboBoxClass(GObject.GPointer):
     activate: Callable[[ComboBox], None] = ...
     padding: list[None] = ...
 
+@deprecated("Use [class@Gtk.DropDown] with a [class@Gtk.StringList] instead")
 class ComboBoxText(
     ComboBox, Accessible, Buildable, CellEditable, CellLayout, ConstraintTarget
 ):
@@ -8074,18 +8568,29 @@ class ComboBoxText(
         accessible_role: AccessibleRole = ...,
         editing_canceled: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def append(self, id: Optional[str], text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def append_text(self, text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def get_active_text(self) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def insert(self, position: int, id: Optional[str], text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def insert_text(self, position: int, text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new(cls) -> ComboBoxText: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     @classmethod
     def new_with_entry(cls) -> ComboBoxText: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def prepend(self, id: Optional[str], text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def prepend_text(self, text: str) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def remove(self, position: int) -> None: ...
+    @deprecated("Use [class@Gtk.DropDown]")
     def remove_all(self) -> None: ...
 
 class ConstantExpression(Expression):
@@ -8386,10 +8891,12 @@ class CssProvider(GObject.Object, StyleProvider):
     """
 
     parent_instance: GObject.Object = ...
-    def load_from_data(self, data: str, length: int) -> None: ...
+    def load_from_bytes(self, data: GLib.Bytes) -> None: ...
+    def load_from_data(self, text, length=-1): ...  # FIXME Function
     def load_from_file(self, file: Gio.File) -> None: ...
     def load_from_path(self, path: str) -> None: ...
     def load_from_resource(self, resource_path: str) -> None: ...
+    def load_from_string(self, string: str) -> None: ...
     def load_named(self, name: str, variant: Optional[str] = None) -> None: ...
     @classmethod
     def new(cls) -> CssProvider: ...
@@ -8525,6 +9032,7 @@ class CustomSorterClass(GObject.GPointer):
 
     parent_class: SorterClass = ...
 
+@deprecated("Use [class@Gtk.Window] instead")
 class Dialog(
     Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
 ):
@@ -8572,6 +9080,7 @@ class Dialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -8655,6 +9164,7 @@ class Dialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -8754,19 +9264,29 @@ class Dialog(
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def add_button(self, button_text: str, response_id: int) -> Widget: ...
     def add_buttons(self, *args): ...  # FIXME Function
     def do_close(self) -> None: ...
     def do_response(self, response_id: int) -> None: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def get_content_area(self) -> Box: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def get_header_bar(self) -> HeaderBar: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def get_response_for_widget(self, widget: Widget) -> int: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def get_widget_for_response(self, response_id: int) -> Optional[Widget]: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     @classmethod
     def new(cls) -> Dialog: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def response(self, response_id: int) -> None: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def set_default_response(self, response_id: int) -> None: ...
+    @deprecated("Use [class@Gtk.Window] instead")
     def set_response_sensitive(self, response_id: int, setting: bool) -> None: ...
 
 class DialogClass(GObject.GPointer):
@@ -9348,6 +9868,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
 
     Properties from GtkDropDown:
       factory -> GtkListItemFactory: factory
+      header-factory -> GtkListItemFactory: header-factory
       list-factory -> GtkListItemFactory: list-factory
       model -> GListModel: model
       selected -> guint: selected
@@ -9355,6 +9876,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
       enable-search -> gboolean: enable-search
       expression -> GtkExpression: expression
       show-arrow -> gboolean: show-arrow
+      search-match-mode -> GtkStringFilterMatchMode: search-match-mode
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -9415,8 +9937,10 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         enable_search: bool
         expression: Optional[Expression]
         factory: Optional[ListItemFactory]
+        header_factory: Optional[ListItemFactory]
         list_factory: Optional[ListItemFactory]
         model: Optional[Gio.ListModel]
+        search_match_mode: StringFilterMatchMode
         selected: int
         selected_item: Optional[GObject.Object]
         show_arrow: bool
@@ -9462,8 +9986,10 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         enable_search: bool = ...,
         expression: Optional[Expression] = ...,
         factory: Optional[ListItemFactory] = ...,
+        header_factory: Optional[ListItemFactory] = ...,
         list_factory: Optional[ListItemFactory] = ...,
         model: Optional[Gio.ListModel] = ...,
+        search_match_mode: StringFilterMatchMode = ...,
         selected: int = ...,
         show_arrow: bool = ...,
         can_focus: bool = ...,
@@ -9500,8 +10026,10 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def get_enable_search(self) -> bool: ...
     def get_expression(self) -> Optional[Expression]: ...
     def get_factory(self) -> Optional[ListItemFactory]: ...
+    def get_header_factory(self) -> Optional[ListItemFactory]: ...
     def get_list_factory(self) -> Optional[ListItemFactory]: ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
+    def get_search_match_mode(self) -> StringFilterMatchMode: ...
     def get_selected(self) -> int: ...
     def get_selected_item(self) -> Optional[GObject.Object]: ...
     def get_show_arrow(self) -> bool: ...
@@ -9516,8 +10044,12 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def set_enable_search(self, enable_search: bool) -> None: ...
     def set_expression(self, expression: Optional[Expression] = None) -> None: ...
     def set_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
+    def set_header_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_list_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_model(self, model: Optional[Gio.ListModel] = None) -> None: ...
+    def set_search_match_mode(
+        self, search_match_mode: StringFilterMatchMode
+    ) -> None: ...
     def set_selected(self, position: int) -> None: ...
     def set_show_arrow(self, show_arrow: bool) -> None: ...
 
@@ -9591,6 +10123,7 @@ class DropTarget(EventController):
     ): ...
     def get_actions(self) -> Gdk.DragAction: ...
     def get_current_drop(self) -> Optional[Gdk.Drop]: ...
+    @deprecated("Use [method@Gtk.DropTarget.get_current_drop] instead")
     def get_drop(self) -> Optional[Gdk.Drop]: ...
     def get_formats(self) -> Optional[Gdk.ContentFormats]: ...
     def get_gtypes(self) -> Optional[list[Type]]: ...
@@ -10378,6 +10911,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     def get_alignment(self) -> float: ...
     def get_attributes(self) -> Optional[Pango.AttrList]: ...
     def get_buffer(self) -> EntryBuffer: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_completion(self) -> Optional[EntryCompletion]: ...
     def get_current_icon_drag_source(self) -> int: ...
     def get_extra_menu(self) -> Optional[Gio.MenuModel]: ...
@@ -10416,6 +10950,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     def set_alignment(self, xalign: float) -> None: ...
     def set_attributes(self, attrs: Pango.AttrList) -> None: ...
     def set_buffer(self, buffer: EntryBuffer) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_completion(self, completion: Optional[EntryCompletion] = None) -> None: ...
     def set_extra_menu(self, model: Optional[Gio.MenuModel] = None) -> None: ...
     def set_has_frame(self, setting: bool) -> None: ...
@@ -10547,6 +11082,7 @@ class EntryClass(GObject.GPointer):
     activate: Callable[[Entry], None] = ...
     padding: list[None] = ...
 
+@deprecated("This class is deprecated")
 class EntryCompletion(GObject.Object, Buildable, CellLayout):
     """
     :Constructors:
@@ -10604,31 +11140,55 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         popup_single_match: bool = ...,
         text_column: int = ...,
     ): ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def complete(self) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def compute_prefix(self, key: str) -> Optional[str]: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_completion_prefix(self) -> Optional[str]: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_entry(self) -> Widget: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_inline_completion(self) -> bool: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_inline_selection(self) -> bool: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_minimum_key_length(self) -> int: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_model(self) -> Optional[TreeModel]: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_popup_completion(self) -> bool: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_popup_set_width(self) -> bool: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_popup_single_match(self) -> bool: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def get_text_column(self) -> int: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def insert_prefix(self) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     @classmethod
     def new(cls) -> EntryCompletion: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     @classmethod
     def new_with_area(cls, area: CellArea) -> EntryCompletion: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_inline_completion(self, inline_completion: bool) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_inline_selection(self, inline_selection: bool) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_match_func(self, func: Callable[..., bool], *func_data: Any) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_minimum_key_length(self, length: int) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_model(self, model: Optional[TreeModel] = None) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_popup_completion(self, popup_completion: bool) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_popup_set_width(self, popup_set_width: bool) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_popup_single_match(self, popup_single_match: bool) -> None: ...
+    @deprecated("GtkEntryCompletion will be removed in GTK 5.")
     def set_text_column(self, column: int) -> None: ...
 
 class EventController(GObject.Object):
@@ -11181,6 +11741,7 @@ class ExpressionWatch(GObject.GBoxed):
     def unref(self) -> None: ...
     def unwatch(self) -> None: ...
 
+@deprecated("Use [class@Gtk.FileDialog] instead")
 class FileChooser(GObject.GInterface):
     """
     Interface GtkFileChooser
@@ -11189,6 +11750,7 @@ class FileChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def add_choice(
         self,
         id: str,
@@ -11196,31 +11758,56 @@ class FileChooser(GObject.GInterface):
         options: Optional[Sequence[str]] = None,
         option_labels: Optional[Sequence[str]] = None,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def add_filter(self, filter: FileFilter) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def add_shortcut_folder(self, folder: Gio.File) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_action(self) -> FileChooserAction: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_choice(self, id: str) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_create_folders(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_current_folder(self) -> Optional[Gio.File]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_current_name(self) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_file(self) -> Optional[Gio.File]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_files(self) -> Gio.ListModel: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_filter(self) -> Optional[FileFilter]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_filters(self) -> Gio.ListModel: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_select_multiple(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_shortcut_folders(self) -> Gio.ListModel: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def remove_choice(self, id: str) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def remove_filter(self, filter: FileFilter) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def remove_shortcut_folder(self, folder: Gio.File) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_action(self, action: FileChooserAction) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_choice(self, id: str, option: str) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_create_folders(self, create_folders: bool) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_current_folder(self, file: Optional[Gio.File] = None) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_current_name(self, name: str) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_file(self, file: Gio.File) -> bool: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_filter(self, filter: FileFilter) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_select_multiple(self, select_multiple: bool) -> None: ...
 
+@deprecated("Use [class@Gtk.FileDialog] instead")
 class FileChooserDialog(
     Dialog,
     Accessible,
@@ -11274,6 +11861,7 @@ class FileChooserDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -11357,6 +11945,7 @@ class FileChooserDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -11466,6 +12055,7 @@ class FileChooserDialog(
         select_multiple: bool = ...,
     ): ...
 
+@deprecated("Use [class@Gtk.FileDialog] instead")
 class FileChooserNative(NativeDialog, FileChooser):
     """
     :Constructors:
@@ -11522,8 +12112,11 @@ class FileChooserNative(NativeDialog, FileChooser):
         filter: FileFilter = ...,
         select_multiple: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_accept_label(self) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def get_cancel_label(self) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     @classmethod
     def new(
         cls,
@@ -11533,7 +12126,9 @@ class FileChooserNative(NativeDialog, FileChooser):
         accept_label: Optional[str] = None,
         cancel_label: Optional[str] = None,
     ) -> FileChooserNative: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_accept_label(self, accept_label: Optional[str] = None) -> None: ...
+    @deprecated("Use [class@Gtk.FileDialog] instead")
     def set_cancel_label(self, cancel_label: Optional[str] = None) -> None: ...
 
 class FileChooserNativeClass(GObject.GPointer):
@@ -11547,6 +12142,7 @@ class FileChooserNativeClass(GObject.GPointer):
 
     parent_class: NativeDialogClass = ...
 
+@deprecated("Direct use of `GtkFileChooserWidget` is deprecated")
 class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileChooser):
     """
     :Constructors:
@@ -11717,6 +12313,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         filter: FileFilter = ...,
         select_multiple: bool = ...,
     ): ...
+    @deprecated("Direct use of `GtkFileChooserWidget` is deprecated")
     @classmethod
     def new(cls, action: FileChooserAction) -> FileChooserWidget: ...
 
@@ -11760,7 +12357,7 @@ class FileDialog(GObject.Object):
         self,
         accept_label: Optional[str] = ...,
         default_filter: Optional[FileFilter] = ...,
-        filters: Gio.ListModel = ...,
+        filters: Optional[Gio.ListModel] = ...,
         initial_file: Optional[Gio.File] = ...,
         initial_folder: Optional[Gio.File] = ...,
         initial_name: Optional[str] = ...,
@@ -11823,7 +12420,7 @@ class FileDialog(GObject.Object):
     ) -> Optional[Gio.ListModel]: ...
     def set_accept_label(self, accept_label: Optional[str] = None) -> None: ...
     def set_default_filter(self, filter: Optional[FileFilter] = None) -> None: ...
-    def set_filters(self, filters: Gio.ListModel) -> None: ...
+    def set_filters(self, filters: Optional[Gio.ListModel] = None) -> None: ...
     def set_initial_file(self, file: Optional[Gio.File] = None) -> None: ...
     def set_initial_folder(self, folder: Optional[Gio.File] = None) -> None: ...
     def set_initial_name(self, name: Optional[str] = None) -> None: ...
@@ -11906,16 +12503,19 @@ class FileLauncher(GObject.Object):
 
     Properties from GtkFileLauncher:
       file -> GFile: file
+      always-ask -> gboolean: always-ask
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        always_ask: bool
         file: Optional[Gio.File]
 
     props: Props = ...
-    def __init__(self, file: Optional[Gio.File] = ...): ...
+    def __init__(self, always_ask: bool = ..., file: Optional[Gio.File] = ...): ...
+    def get_always_ask(self) -> bool: ...
     def get_file(self) -> Optional[Gio.File]: ...
     def launch(
         self,
@@ -11935,6 +12535,7 @@ class FileLauncher(GObject.Object):
         *user_data: Any,
     ) -> None: ...
     def open_containing_folder_finish(self, result: Gio.AsyncResult) -> bool: ...
+    def set_always_ask(self, always_ask: bool) -> None: ...
     def set_file(self, file: Optional[Gio.File] = None) -> None: ...
 
 class FileLauncherClass(GObject.GPointer):
@@ -11993,7 +12594,7 @@ class FilterClass(GObject.GPointer):
     _gtk_reserved7: None = ...
     _gtk_reserved8: None = ...
 
-class FilterListModel(GObject.Object, Gio.ListModel):
+class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -12014,6 +12615,9 @@ class FilterListModel(GObject.Object, Gio.ListModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GObject:
       notify (GParam)
@@ -12294,7 +12898,7 @@ class FixedLayoutClass(GObject.GPointer):
 
     parent_class: LayoutManagerClass = ...
 
-class FlattenListModel(GObject.Object, Gio.ListModel):
+class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -12312,6 +12916,9 @@ class FlattenListModel(GObject.Object, Gio.ListModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GObject:
       notify (GParam)
@@ -12539,6 +13146,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def new(cls) -> FlowBox: ...
     def prepend(self, child: Widget) -> None: ...
     def remove(self, widget: Widget) -> None: ...
+    def remove_all(self) -> None: ...
     def select_all(self) -> None: ...
     def select_child(self, child: FlowBoxChild) -> None: ...
     def selected_foreach(self, func: Callable[..., None], *data: Any) -> None: ...
@@ -12728,6 +13336,7 @@ class FlowBoxChildClass(GObject.GPointer):
     activate: Callable[[FlowBoxChild], None] = ...
     padding: list[None] = ...
 
+@deprecated("Use [class@Gtk.FontDialogButton] instead")
 class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
     """
     :Constructors:
@@ -12900,19 +13509,30 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         preview_text: str = ...,
         show_preview_entry: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def get_modal(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def get_title(self) -> str: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def get_use_font(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def get_use_size(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     @classmethod
     def new(cls) -> FontButton: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     @classmethod
     def new_with_font(cls, fontname: str) -> FontButton: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def set_modal(self, modal: bool) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def set_title(self, title: str) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def set_use_font(self, use_font: bool) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialogButton] instead")
     def set_use_size(self, use_size: bool) -> None: ...
 
+@deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
 class FontChooser(GObject.GInterface):
     """
     Interface GtkFontChooser
@@ -12921,28 +13541,48 @@ class FontChooser(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font(self) -> Optional[str]: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_desc(self) -> Optional[Pango.FontDescription]: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_face(self) -> Optional[Pango.FontFace]: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_family(self) -> Optional[Pango.FontFamily]: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_features(self) -> str: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_map(self) -> Optional[Pango.FontMap]: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_font_size(self) -> int: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_language(self) -> str: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_level(self) -> FontChooserLevel: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_preview_text(self) -> str: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def get_show_preview_entry(self) -> bool: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_filter_func(
         self, filter: Optional[Callable[..., bool]] = None, *user_data: Any
     ) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_font(self, fontname: str) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_font_desc(self, font_desc: Pango.FontDescription) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_font_map(self, fontmap: Optional[Pango.FontMap] = None) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_language(self, language: str) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_level(self, level: FontChooserLevel) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_preview_text(self, text: str) -> None: ...
+    @deprecated("Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead")
     def set_show_preview_entry(self, show_preview_entry: bool) -> None: ...
 
+@deprecated("Use [class@Gtk.FontDialog] instead")
 class FontChooserDialog(
     Dialog,
     Accessible,
@@ -13000,6 +13640,7 @@ class FontChooserDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -13083,6 +13724,7 @@ class FontChooserDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -13194,6 +13836,7 @@ class FontChooserDialog(
         preview_text: str = ...,
         show_preview_entry: bool = ...,
     ): ...
+    @deprecated("Use [class@Gtk.FontDialog] instead")
     @classmethod
     def new(
         cls, title: Optional[str] = None, parent: Optional[Window] = None
@@ -13218,6 +13861,7 @@ class FontChooserIface(GObject.GPointer):
     get_font_map: Callable[[FontChooser], Optional[Pango.FontMap]] = ...
     padding: list[None] = ...
 
+@deprecated("Direct use of `GtkFontChooserWidget` is deprecated.")
 class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
     """
     :Constructors:
@@ -13375,6 +14019,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         preview_text: str = ...,
         show_preview_entry: bool = ...,
     ): ...
+    @deprecated("Direct use of `GtkFontChooserWidget` is deprecated.")
     @classmethod
     def new(cls) -> FontChooserWidget: ...
 
@@ -13483,6 +14128,9 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         new(dialog:Gtk.FontDialog=None) -> Gtk.Widget
 
     Object GtkFontDialogButton
+
+    Signals from GtkFontDialogButton:
+      activate ()
 
     Properties from GtkFontDialogButton:
       dialog -> GtkFontDialog: dialog
@@ -13870,6 +14518,8 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
       has-depth-buffer -> gboolean: has-depth-buffer
       has-stencil-buffer -> gboolean: has-stencil-buffer
       use-es -> gboolean: use-es
+      allowed-apis -> GdkGLAPI: allowed-apis
+      api -> GdkGLAPI: api
       auto-render -> gboolean: auto-render
 
     Signals from GtkWidget:
@@ -13928,6 +14578,8 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     """
 
     class Props:
+        allowed_apis: Gdk.GLAPI
+        api: Gdk.GLAPI
         auto_render: bool
         context: Optional[Gdk.GLContext]
         has_depth_buffer: bool
@@ -13973,6 +14625,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     parent_instance: Widget = ...
     def __init__(
         self,
+        allowed_apis: Gdk.GLAPI = ...,
         auto_render: bool = ...,
         has_depth_buffer: bool = ...,
         has_stencil_buffer: bool = ...,
@@ -14011,22 +14664,27 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     def attach_buffers(self) -> None: ...
     def do_render(self, context: Gdk.GLContext) -> bool: ...
     def do_resize(self, width: int, height: int) -> None: ...
+    def get_allowed_apis(self) -> Gdk.GLAPI: ...
+    def get_api(self) -> Gdk.GLAPI: ...
     def get_auto_render(self) -> bool: ...
     def get_context(self) -> Optional[Gdk.GLContext]: ...
     def get_error(self) -> Optional[GLib.Error]: ...
     def get_has_depth_buffer(self) -> bool: ...
     def get_has_stencil_buffer(self) -> bool: ...
     def get_required_version(self) -> Tuple[int, int]: ...
+    @deprecated("Use [method@Gtk.GLArea.get_api]")
     def get_use_es(self) -> bool: ...
     def make_current(self) -> None: ...
     @classmethod
     def new(cls) -> GLArea: ...
     def queue_render(self) -> None: ...
+    def set_allowed_apis(self, apis: Gdk.GLAPI) -> None: ...
     def set_auto_render(self, auto_render: bool) -> None: ...
     def set_error(self, error: Optional[GLib.Error] = None) -> None: ...
     def set_has_depth_buffer(self, has_depth_buffer: bool) -> None: ...
     def set_has_stencil_buffer(self, has_stencil_buffer: bool) -> None: ...
     def set_required_version(self, major: int, minor: int) -> None: ...
+    @deprecated("Use [method@Gtk.GLArea.set_allowed_apis]")
     def set_use_es(self, use_es: bool) -> None: ...
 
 class GLAreaClass(GObject.GPointer):
@@ -14109,6 +14767,7 @@ class Gesture(EventController):
     def is_active(self) -> bool: ...
     def is_grouped_with(self, other: Gesture) -> bool: ...
     def is_recognized(self) -> bool: ...
+    @deprecated("Use [method@Gtk.Gesture.set_state]")
     def set_sequence_state(
         self, sequence: Gdk.EventSequence, state: EventSequenceState
     ) -> bool: ...
@@ -15072,12 +15731,13 @@ class GridView(
       activate (guint)
 
     Properties from GtkGridView:
+      enable-rubberband -> gboolean: enable-rubberband
       factory -> GtkListItemFactory: factory
       max-columns -> guint: max-columns
       min-columns -> guint: min-columns
       model -> GtkSelectionModel: model
       single-click-activate -> gboolean: single-click-activate
-      enable-rubberband -> gboolean: enable-rubberband
+      tab-behavior -> GtkListTabBehavior: tab-behavior
 
     Properties from GtkListBase:
       orientation -> GtkOrientation: orientation
@@ -15144,6 +15804,7 @@ class GridView(
         min_columns: int
         model: Optional[SelectionModel]
         single_click_activate: bool
+        tab_behavior: ListTabBehavior
         orientation: Orientation
         can_focus: bool
         can_target: bool
@@ -15194,6 +15855,7 @@ class GridView(
         min_columns: int = ...,
         model: Optional[SelectionModel] = ...,
         single_click_activate: bool = ...,
+        tab_behavior: ListTabBehavior = ...,
         orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -15236,18 +15898,23 @@ class GridView(
     def get_min_columns(self) -> int: ...
     def get_model(self) -> Optional[SelectionModel]: ...
     def get_single_click_activate(self) -> bool: ...
+    def get_tab_behavior(self) -> ListTabBehavior: ...
     @classmethod
     def new(
         cls,
         model: Optional[SelectionModel] = None,
         factory: Optional[ListItemFactory] = None,
     ) -> GridView: ...
+    def scroll_to(
+        self, pos: int, flags: ListScrollFlags, scroll: Optional[ScrollInfo] = None
+    ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
     def set_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_max_columns(self, max_columns: int) -> None: ...
     def set_min_columns(self, min_columns: int) -> None: ...
     def set_model(self, model: Optional[SelectionModel] = None) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
+    def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
 
 class GridViewClass(GObject.GPointer): ...
 
@@ -15489,6 +16156,7 @@ class IMContext(GObject.Object):
     def reset(self) -> None: ...
     def set_client_widget(self, widget: Optional[Widget] = None) -> None: ...
     def set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
+    @deprecated("Use [method@Gtk.IMContext.set_surrounding_with_selection] instead")
     def set_surrounding(self, text: str, len: int, cursor_index: int) -> None: ...
     def set_surrounding_with_selection(
         self, text: str, len: int, cursor_index: int, anchor_index: int
@@ -15760,6 +16428,7 @@ class IconTheme(GObject.Object):
     def set_search_path(self, path: Optional[Sequence[str]] = None) -> None: ...
     def set_theme_name(self, theme_name: Optional[str] = None) -> None: ...
 
+@deprecated("Use [class@Gtk.GridView] instead")
 class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scrollable):
     """
     :Constructors:
@@ -15970,96 +16639,156 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         vadjustment: Optional[Adjustment] = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def create_drag_icon(self, path: TreePath) -> Optional[Gdk.Paintable]: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def enable_model_drag_dest(
         self, formats: Gdk.ContentFormats, actions: Gdk.DragAction
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def enable_model_drag_source(
         self,
         start_button_mask: Gdk.ModifierType,
         formats: Gdk.ContentFormats,
         actions: Gdk.DragAction,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_activate_on_single_click(self) -> bool: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_cell_rect(
         self, path: TreePath, cell: Optional[CellRenderer] = None
     ) -> Tuple[bool, Gdk.Rectangle]: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_column_spacing(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_columns(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_cursor(self) -> Tuple[bool, TreePath, CellRenderer]: ...
     def get_dest_item_at_pos(
         self, drag_x: int, drag_y: int
     ) -> Optional[Tuple[TreePath, IconViewDropPosition]]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_drag_dest_item(self) -> Tuple[TreePath, IconViewDropPosition]: ...
     def get_item_at_pos(
         self, x: int, y: int
     ) -> Optional[Tuple[TreePath, CellRenderer]]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_item_column(self, path: TreePath) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_item_orientation(self) -> Orientation: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_item_padding(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_item_row(self, path: TreePath) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_item_width(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_margin(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_markup_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_model(self) -> Optional[TreeModel]: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_path_at_pos(self, x: int, y: int) -> Optional[TreePath]: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_pixbuf_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_reorderable(self) -> bool: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_row_spacing(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_selected_items(self) -> list[TreePath]: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_selection_mode(self) -> SelectionMode: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_spacing(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_text_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_tooltip_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def get_tooltip_context(
         self, x: int, y: int, keyboard_tip: bool
     ) -> Tuple[bool, TreeModel, TreePath, TreeIter]: ...
     def get_visible_range(
         self,
     ) -> Optional[Tuple[TreePath, TreePath]]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.GridView] instead")
     def item_activated(self, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     @classmethod
     def new(cls) -> IconView: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     @classmethod
     def new_with_area(cls, area: CellArea) -> IconView: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     @classmethod
     def new_with_model(cls, model: TreeModel) -> IconView: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def path_is_selected(self, path: TreePath) -> bool: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def scroll_to_path(
         self, path: TreePath, use_align: bool, row_align: float, col_align: float
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def select_all(self) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def select_path(self, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def selected_foreach(self, func: Callable[..., None], *data: Any) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_activate_on_single_click(self, single: bool) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_column_spacing(self, column_spacing: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_columns(self, columns: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_cursor(
         self, path: TreePath, cell: Optional[CellRenderer], start_editing: bool
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_drag_dest_item(
         self, path: Optional[TreePath], pos: IconViewDropPosition
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_item_orientation(self, orientation: Orientation) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_item_padding(self, item_padding: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_item_width(self, item_width: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_margin(self, margin: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_markup_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_model(self, model: Optional[TreeModel] = None) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_pixbuf_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_reorderable(self, reorderable: bool) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_row_spacing(self, row_spacing: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_selection_mode(self, mode: SelectionMode) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_spacing(self, spacing: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_text_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_tooltip_cell(
         self, tooltip: Tooltip, path: TreePath, cell: Optional[CellRenderer] = None
     ) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_tooltip_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def set_tooltip_item(self, tooltip: Tooltip, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def unselect_all(self) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def unselect_path(self, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def unset_model_drag_dest(self) -> None: ...
+    @deprecated("Use [class@Gtk.GridView] instead")
     def unset_model_drag_source(self) -> None: ...
 
 class Image(Widget, Accessible, Buildable, ConstraintTarget):
@@ -16250,6 +16979,9 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     def new_from_icon_name(cls, icon_name: Optional[str] = None) -> Image: ...
     @classmethod
     def new_from_paintable(cls, paintable: Optional[Gdk.Paintable] = None) -> Image: ...
+    @deprecated(
+        "Use [ctor@Gtk.Image.new_from_paintable] and [ctor@Gdk.Texture.new_for_pixbuf] instead"
+    )
     @classmethod
     def new_from_pixbuf(cls, pixbuf: Optional[GdkPixbuf.Pixbuf] = None) -> Image: ...
     @classmethod
@@ -16258,11 +16990,15 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     def set_from_gicon(self, icon: Gio.Icon) -> None: ...
     def set_from_icon_name(self, icon_name: Optional[str] = None) -> None: ...
     def set_from_paintable(self, paintable: Optional[Gdk.Paintable] = None) -> None: ...
+    @deprecated("Use [method@Gtk.Image.set_from_paintable] instead")
     def set_from_pixbuf(self, pixbuf: Optional[GdkPixbuf.Pixbuf] = None) -> None: ...
     def set_from_resource(self, resource_path: Optional[str] = None) -> None: ...
     def set_icon_size(self, icon_size: IconSize) -> None: ...
     def set_pixel_size(self, pixel_size: int) -> None: ...
 
+@deprecated(
+    'There is no replacement in GTK for an "info bar" widget; you can use [class@Gtk.Revealer] with a [class@Gtk.Box] containing a [class@Gtk.Label] and an optional [class@Gtk.Button], according to your application\'s design.'
+)
 class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
     """
     :Constructors:
@@ -16415,21 +17151,36 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    @deprecated("This method is deprecated")
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
+    @deprecated("This method is deprecated")
     def add_button(self, button_text: str, response_id: int) -> Button: ...
+    @deprecated("This method is deprecated")
     def add_child(self, widget: Widget) -> None: ...
+    @deprecated("This method is deprecated")
     def get_message_type(self) -> MessageType: ...
+    @deprecated("This method is deprecated")
     def get_revealed(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_show_close_button(self) -> bool: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> InfoBar: ...
+    @deprecated("This method is deprecated")
     def remove_action_widget(self, widget: Widget) -> None: ...
+    @deprecated("This method is deprecated")
     def remove_child(self, widget: Widget) -> None: ...
+    @deprecated("This method is deprecated")
     def response(self, response_id: int) -> None: ...
+    @deprecated("This method is deprecated")
     def set_default_response(self, response_id: int) -> None: ...
+    @deprecated("This method is deprecated")
     def set_message_type(self, message_type: MessageType) -> None: ...
+    @deprecated("This method is deprecated")
     def set_response_sensitive(self, response_id: int, setting: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_revealed(self, revealed: bool) -> None: ...
+    @deprecated("This method is deprecated")
     def set_show_close_button(self, setting: bool) -> None: ...
 
 class Inscription(Widget, Accessible, Buildable, ConstraintTarget):
@@ -17239,6 +17990,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       use-underline -> gboolean: use-underline
       icon-name -> gchararray: icon-name
       child -> GtkWidget: child
+      can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -17298,6 +18050,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props:
         uri: str
         visited: bool
+        can_shrink: bool
         child: Optional[Widget]
         has_frame: bool
         icon_name: Optional[str]
@@ -17346,6 +18099,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         self,
         uri: str = ...,
         visited: bool = ...,
+        can_shrink: bool = ...,
         child: Optional[Widget] = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
@@ -17731,6 +18485,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls) -> ListBox: ...
     def prepend(self, child: Widget) -> None: ...
     def remove(self, child: Widget) -> None: ...
+    def remove_all(self) -> None: ...
     def select_all(self) -> None: ...
     def select_row(self, row: Optional[ListBoxRow] = None) -> None: ...
     def selected_foreach(self, func: Callable[..., None], *data: Any) -> None: ...
@@ -17935,6 +18690,45 @@ class ListBoxRowClass(GObject.GPointer):
     activate: Callable[[ListBoxRow], None] = ...
     padding: list[None] = ...
 
+class ListHeader(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ListHeader(**properties)
+
+    Object GtkListHeader
+
+    Properties from GtkListHeader:
+      child -> GtkWidget: child
+      end -> guint: end
+      item -> GObject: item
+      n-items -> guint: n-items
+      start -> guint: start
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        child: Optional[Widget]
+        end: int
+        item: Optional[GObject.Object]
+        n_items: int
+        start: int
+
+    props: Props = ...
+    def __init__(self, child: Optional[Widget] = ...): ...
+    def get_child(self) -> Optional[Widget]: ...
+    def get_end(self) -> int: ...
+    def get_item(self) -> Optional[GObject.Object]: ...
+    def get_n_items(self) -> int: ...
+    def get_start(self) -> int: ...
+    def set_child(self, child: Optional[Widget] = None) -> None: ...
+
+class ListHeaderClass(GObject.GPointer): ...
+
 class ListItem(GObject.Object):
     """
     :Constructors:
@@ -17946,8 +18740,11 @@ class ListItem(GObject.Object):
     Object GtkListItem
 
     Properties from GtkListItem:
+      accessible-description -> gchararray: accessible-description
+      accessible-label -> gchararray: accessible-label
       activatable -> gboolean: activatable
       child -> GtkWidget: child
+      focusable -> gboolean: focusable
       item -> GObject: item
       position -> guint: position
       selectable -> gboolean: selectable
@@ -17958,8 +18755,11 @@ class ListItem(GObject.Object):
     """
 
     class Props:
+        accessible_description: str
+        accessible_label: str
         activatable: bool
         child: Optional[Widget]
+        focusable: bool
         item: Optional[GObject.Object]
         position: int
         selectable: bool
@@ -17968,24 +18768,34 @@ class ListItem(GObject.Object):
     props: Props = ...
     def __init__(
         self,
+        accessible_description: str = ...,
+        accessible_label: str = ...,
         activatable: bool = ...,
         child: Optional[Widget] = ...,
+        focusable: bool = ...,
         selectable: bool = ...,
     ): ...
+    def get_accessible_description(self) -> str: ...
+    def get_accessible_label(self) -> str: ...
     def get_activatable(self) -> bool: ...
     def get_child(self) -> Optional[Widget]: ...
+    def get_focusable(self) -> bool: ...
     def get_item(self) -> Optional[GObject.Object]: ...
     def get_position(self) -> int: ...
     def get_selectable(self) -> bool: ...
     def get_selected(self) -> bool: ...
+    def set_accessible_description(self, description: str) -> None: ...
+    def set_accessible_label(self, label: str) -> None: ...
     def set_activatable(self, activatable: bool) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
+    def set_focusable(self, focusable: bool) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
 class ListItemClass(GObject.GPointer): ...
 class ListItemFactory(GObject.Object): ...
 class ListItemFactoryClass(GObject.GPointer): ...
 
+@deprecated("Use [class@Gio.ListStore] instead")
 class ListStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -18016,31 +18826,42 @@ class ListStore(
     parent: GObject.Object = ...
     priv: ListStorePrivate = ...
     def append(self, row=None): ...  # FIXME Function
+    @deprecated("Use list models")
     def clear(self) -> None: ...
     def insert(self, position, row=None): ...  # FIXME Function
     def insert_after(self, sibling, row=None): ...  # FIXME Function
     def insert_before(self, sibling, row=None): ...  # FIXME Function
+    @deprecated("Use list models")
     def insert_with_values(
         self, position: int, columns: Sequence[int], values: Sequence[Any]
     ) -> TreeIter: ...
+    @deprecated("Use list models")
     def insert_with_valuesv(
         self, position: int, columns: Sequence[int], values: Sequence[Any]
     ) -> TreeIter: ...
+    @deprecated("Use list models")
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
+    @deprecated("Use list models")
     def move_after(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
+    @deprecated("Use list models")
     def move_before(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
+    @deprecated("Use [class@Gio.ListStore] instead")
     @classmethod
     def new(cls, types: Sequence[Type]) -> ListStore: ...
     def prepend(self, row=None): ...  # FIXME Function
+    @deprecated("Use list models")
     def remove(self, iter: TreeIter) -> bool: ...
+    @deprecated("Use list models")
     def reorder(self, new_order: Sequence[int]) -> None: ...
     def set(self, treeiter, *args): ...  # FIXME Function
+    @deprecated("Use list models")
     def set_column_types(self, types: Sequence[Type]) -> None: ...
     def set_value(self, treeiter, column, value): ...  # FIXME Function
+    @deprecated("Use list models")
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
 class ListStoreClass(GObject.GPointer):
@@ -18074,11 +18895,13 @@ class ListView(
       activate (guint)
 
     Properties from GtkListView:
+      enable-rubberband -> gboolean: enable-rubberband
       factory -> GtkListItemFactory: factory
+      header-factory -> GtkListItemFactory: header-factory
       model -> GtkSelectionModel: model
       show-separators -> gboolean: show-separators
       single-click-activate -> gboolean: single-click-activate
-      enable-rubberband -> gboolean: enable-rubberband
+      tab-behavior -> GtkListTabBehavior: tab-behavior
 
     Properties from GtkListBase:
       orientation -> GtkOrientation: orientation
@@ -18141,9 +18964,11 @@ class ListView(
     class Props:
         enable_rubberband: bool
         factory: Optional[ListItemFactory]
+        header_factory: Optional[ListItemFactory]
         model: Optional[SelectionModel]
         show_separators: bool
         single_click_activate: bool
+        tab_behavior: ListTabBehavior
         orientation: Orientation
         can_focus: bool
         can_target: bool
@@ -18190,9 +19015,11 @@ class ListView(
         self,
         enable_rubberband: bool = ...,
         factory: Optional[ListItemFactory] = ...,
+        header_factory: Optional[ListItemFactory] = ...,
         model: Optional[SelectionModel] = ...,
         show_separators: bool = ...,
         single_click_activate: bool = ...,
+        tab_behavior: ListTabBehavior = ...,
         orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -18231,23 +19058,31 @@ class ListView(
     ): ...
     def get_enable_rubberband(self) -> bool: ...
     def get_factory(self) -> Optional[ListItemFactory]: ...
+    def get_header_factory(self) -> Optional[ListItemFactory]: ...
     def get_model(self) -> Optional[SelectionModel]: ...
     def get_show_separators(self) -> bool: ...
     def get_single_click_activate(self) -> bool: ...
+    def get_tab_behavior(self) -> ListTabBehavior: ...
     @classmethod
     def new(
         cls,
         model: Optional[SelectionModel] = None,
         factory: Optional[ListItemFactory] = None,
     ) -> ListView: ...
+    def scroll_to(
+        self, pos: int, flags: ListScrollFlags, scroll: Optional[ScrollInfo] = None
+    ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
     def set_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
+    def set_header_factory(self, factory: Optional[ListItemFactory] = None) -> None: ...
     def set_model(self, model: Optional[SelectionModel] = None) -> None: ...
     def set_show_separators(self, show_separators: bool) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
+    def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
 
 class ListViewClass(GObject.GPointer): ...
 
+@deprecated("This widget will be removed in GTK 5")
 class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     """
     :Constructors:
@@ -18277,6 +19112,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       use-underline -> gboolean: use-underline
       icon-name -> gchararray: icon-name
       child -> GtkWidget: child
+      can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -18340,6 +19176,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         tooltip_lock: str
         tooltip_not_authorized: str
         tooltip_unlock: str
+        can_shrink: bool
         child: Optional[Widget]
         has_frame: bool
         icon_name: Optional[str]
@@ -18392,6 +19229,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         tooltip_lock: str = ...,
         tooltip_not_authorized: str = ...,
         tooltip_unlock: str = ...,
+        can_shrink: bool = ...,
         child: Optional[Widget] = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
@@ -18430,12 +19268,15 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         action_name: Optional[str] = ...,
         action_target: GLib.Variant = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_permission(self) -> Optional[Gio.Permission]: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls, permission: Optional[Gio.Permission] = None) -> LockButton: ...
+    @deprecated("This widget will be removed in GTK 5")
     def set_permission(self, permission: Optional[Gio.Permission] = None) -> None: ...
 
-class MapListModel(GObject.Object, Gio.ListModel):
+class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -18454,6 +19295,9 @@ class MapListModel(GObject.Object, Gio.ListModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GObject:
       notify (GParam)
@@ -18909,6 +19753,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
       primary -> gboolean: primary
       child -> GtkWidget: child
       active -> gboolean: active
+      can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -18968,6 +19813,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     class Props:
         active: bool
         always_show_arrow: bool
+        can_shrink: bool
         child: Optional[Widget]
         direction: ArrowType
         has_frame: bool
@@ -19018,6 +19864,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         self,
         active: bool = ...,
         always_show_arrow: bool = ...,
+        can_shrink: bool = ...,
         child: Optional[Widget] = ...,
         direction: ArrowType = ...,
         has_frame: bool = ...,
@@ -19060,6 +19907,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     ): ...
     def get_active(self) -> bool: ...
     def get_always_show_arrow(self) -> bool: ...
+    def get_can_shrink(self) -> bool: ...
     def get_child(self) -> Optional[Widget]: ...
     def get_direction(self) -> ArrowType: ...
     def get_has_frame(self) -> bool: ...
@@ -19075,6 +19923,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def popup(self) -> None: ...
     def set_active(self, active: bool) -> None: ...
     def set_always_show_arrow(self, always_show_arrow: bool) -> None: ...
+    def set_can_shrink(self, can_shrink: bool) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_create_popup_func(
         self, func: Optional[Callable[..., None]] = None, *user_data: Any
@@ -19088,6 +19937,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def set_primary(self, primary: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
+@deprecated("Use [class@Gtk.AlertDialog] instead")
 class MessageDialog(
     Dialog, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
 ):
@@ -19143,6 +19993,7 @@ class MessageDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -19232,6 +20083,7 @@ class MessageDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -19338,7 +20190,9 @@ class MessageDialog(
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    @deprecated("Use [class@Gtk.AlertDialog] instead")
     def get_message_area(self) -> Widget: ...
+    @deprecated("Use [class@Gtk.AlertDialog] instead")
     def set_markup(self, str: str) -> None: ...
 
 class MessageDialogClass(GObject.GPointer): ...
@@ -19529,7 +20383,7 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
 
 class MultiFilterClass(GObject.GPointer): ...
 
-class MultiSelection(GObject.Object, Gio.ListModel, SelectionModel):
+class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -19547,6 +20401,9 @@ class MultiSelection(GObject.Object, Gio.ListModel, SelectionModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GtkSelectionModel:
       selection-changed (guint, guint)
@@ -19760,7 +20617,7 @@ class NeverTrigger(ShortcutTrigger):
 
 class NeverTriggerClass(GObject.GPointer): ...
 
-class NoSelection(GObject.Object, Gio.ListModel, SelectionModel):
+class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -19778,6 +20635,9 @@ class NoSelection(GObject.Object, Gio.ListModel, SelectionModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GtkSelectionModel:
       selection-changed (guint, guint)
@@ -20631,6 +21491,7 @@ class PageSetupUnixDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -20714,6 +21575,7 @@ class PageSetupUnixDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -21482,6 +22344,9 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     def get_can_shrink(self) -> bool: ...
     def get_content_fit(self) -> ContentFit: ...
     def get_file(self) -> Optional[Gio.File]: ...
+    @deprecated(
+        "Use [method@Gtk.Picture.get_content_fit] instead. This will now return `FALSE` only if [property@Gtk.Picture:content-fit] is `GTK_CONTENT_FIT_FILL`. Returns `TRUE` otherwise."
+    )
     def get_keep_aspect_ratio(self) -> bool: ...
     def get_paintable(self) -> Optional[Gdk.Paintable]: ...
     @classmethod
@@ -21494,6 +22359,9 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     def new_for_paintable(
         cls, paintable: Optional[Gdk.Paintable] = None
     ) -> Picture: ...
+    @deprecated(
+        "Use [ctor@Gtk.Picture.new_for_paintable] and [ctor@Gdk.Texture.new_for_pixbuf] instead"
+    )
     @classmethod
     def new_for_pixbuf(cls, pixbuf: Optional[GdkPixbuf.Pixbuf] = None) -> Picture: ...
     @classmethod
@@ -21503,8 +22371,12 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     def set_content_fit(self, content_fit: ContentFit) -> None: ...
     def set_file(self, file: Optional[Gio.File] = None) -> None: ...
     def set_filename(self, filename: Optional[str] = None) -> None: ...
+    @deprecated(
+        "Use [method@Gtk.Picture.set_content_fit] instead. If still used, this method will always set the [property@Gtk.Picture:content-fit] property to `GTK_CONTENT_FIT_CONTAIN` if @keep_aspect_ratio is true, otherwise it will set it to `GTK_CONTENT_FIT_FILL`."
+    )
     def set_keep_aspect_ratio(self, keep_aspect_ratio: bool) -> None: ...
     def set_paintable(self, paintable: Optional[Gdk.Paintable] = None) -> None: ...
+    @deprecated("Use [method@Gtk.Picture.set_paintable] instead")
     def set_pixbuf(self, pixbuf: Optional[GdkPixbuf.Pixbuf] = None) -> None: ...
     def set_resource(self, resource_path: Optional[str] = None) -> None: ...
 
@@ -22554,6 +23426,7 @@ class PrintUnixDialog(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -22645,6 +23518,7 @@ class PrintUnixDialog(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -23996,6 +24870,24 @@ class ScaleClass(GObject.GPointer):
     get_layout_offsets: Callable[[Scale], Tuple[int, int]] = ...
     padding: list[None] = ...
 
+class ScrollInfo(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gtk.ScrollInfo
+    """
+
+    def get_enable_horizontal(self) -> bool: ...
+    def get_enable_vertical(self) -> bool: ...
+    @classmethod
+    def new(cls) -> ScrollInfo: ...
+    def ref(self) -> ScrollInfo: ...
+    def set_enable_horizontal(self, horizontal: bool) -> None: ...
+    def set_enable_vertical(self, vertical: bool) -> None: ...
+    def unref(self) -> None: ...
+
 class Scrollable(GObject.GInterface):
     """
     Interface GtkScrollable
@@ -24749,6 +25641,29 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     def set_key_capture_widget(self, widget: Optional[Widget] = None) -> None: ...
     def set_placeholder_text(self, text: Optional[str] = None) -> None: ...
     def set_search_delay(self, delay: int) -> None: ...
+
+class SectionModel(GObject.GInterface):
+    """
+    Interface GtkSectionModel
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    def get_section(self, position: int) -> Tuple[int, int]: ...
+    def sections_changed(self, position: int, n_items: int) -> None: ...
+
+class SectionModelInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SectionModelInterface()
+    """
+
+    g_iface: GObject.TypeInterface = ...
+    get_section: Callable[[SectionModel, int], Tuple[int, int]] = ...
 
 class SelectionFilterModel(GObject.Object, Gio.ListModel):
     """
@@ -25527,6 +26442,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     Properties from GtkBox:
       spacing -> gint: spacing
       homogeneous -> gboolean: homogeneous
+      baseline-child -> gint: baseline-child
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
@@ -25588,6 +26504,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         height: int
         title: str
         view: str
+        baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -25637,6 +26554,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         title: str = ...,
         title_size_group: SizeGroup = ...,
         view: str = ...,
+        baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -25697,6 +26615,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
     Properties from GtkBox:
       spacing -> gint: spacing
       homogeneous -> gboolean: homogeneous
+      baseline-child -> gint: baseline-child
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
@@ -25759,6 +26678,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         section_name: str
         title: str
         view_name: str
+        baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -25806,6 +26726,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         section_name: str = ...,
         title: str = ...,
         view_name: str = ...,
+        baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -26065,6 +26986,7 @@ class ShortcutsWindow(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -26149,6 +27071,7 @@ class ShortcutsWindow(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -26304,7 +27227,7 @@ class SignalListItemFactory(ListItemFactory):
 
 class SignalListItemFactoryClass(GObject.GPointer): ...
 
-class SingleSelection(GObject.Object, Gio.ListModel, SelectionModel):
+class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -26326,6 +27249,9 @@ class SingleSelection(GObject.Object, Gio.ListModel, SelectionModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GtkSelectionModel:
       selection-changed (guint, guint)
@@ -26406,7 +27332,7 @@ class SizeGroup(GObject.Object, Buildable):
     def remove_widget(self, widget: Widget) -> None: ...
     def set_mode(self, mode: SizeGroupMode) -> None: ...
 
-class SliceListModel(GObject.Object, Gio.ListModel):
+class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -26426,6 +27352,9 @@ class SliceListModel(GObject.Object, Gio.ListModel):
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GObject:
       notify (GParam)
@@ -26574,15 +27503,19 @@ class Snapshot(Gdk.Snapshot):
     ) -> None: ...
     def push_rounded_clip(self, bounds: Gsk.RoundedRect) -> None: ...
     def push_shadow(self, shadow: Sequence[Gsk.Shadow]) -> None: ...
+    @deprecated("This method is deprecated")
     def render_background(
         self, context: StyleContext, x: float, y: float, width: float, height: float
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def render_focus(
         self, context: StyleContext, x: float, y: float, width: float, height: float
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def render_frame(
         self, context: StyleContext, x: float, y: float, width: float, height: float
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def render_insertion_cursor(
         self,
         context: StyleContext,
@@ -26592,6 +27525,7 @@ class Snapshot(Gdk.Snapshot):
         index: int,
         direction: Pango.Direction,
     ) -> None: ...
+    @deprecated("This method is deprecated")
     def render_layout(
         self, context: StyleContext, x: float, y: float, layout: Pango.Layout
     ) -> None: ...
@@ -26612,7 +27546,7 @@ class Snapshot(Gdk.Snapshot):
 
 class SnapshotClass(GObject.GPointer): ...
 
-class SortListModel(GObject.Object, Gio.ListModel):
+class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -26629,10 +27563,14 @@ class SortListModel(GObject.Object, Gio.ListModel):
       model -> GListModel: model
       n-items -> guint: n-items
       pending -> guint: pending
+      section-sorter -> GtkSorter: section-sorter
       sorter -> GtkSorter: sorter
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GObject:
       notify (GParam)
@@ -26644,6 +27582,7 @@ class SortListModel(GObject.Object, Gio.ListModel):
         model: Optional[Gio.ListModel]
         n_items: int
         pending: int
+        section_sorter: Optional[Sorter]
         sorter: Optional[Sorter]
 
     props: Props = ...
@@ -26651,11 +27590,13 @@ class SortListModel(GObject.Object, Gio.ListModel):
         self,
         incremental: bool = ...,
         model: Optional[Gio.ListModel] = ...,
+        section_sorter: Optional[Sorter] = ...,
         sorter: Optional[Sorter] = ...,
     ): ...
     def get_incremental(self) -> bool: ...
     def get_model(self) -> Optional[Gio.ListModel]: ...
     def get_pending(self) -> int: ...
+    def get_section_sorter(self) -> Optional[Sorter]: ...
     def get_sorter(self) -> Optional[Sorter]: ...
     @classmethod
     def new(
@@ -26663,6 +27604,7 @@ class SortListModel(GObject.Object, Gio.ListModel):
     ) -> SortListModel: ...
     def set_incremental(self, incremental: bool) -> None: ...
     def set_model(self, model: Optional[Gio.ListModel] = None) -> None: ...
+    def set_section_sorter(self, sorter: Optional[Sorter] = None) -> None: ...
     def set_sorter(self, sorter: Optional[Sorter] = None) -> None: ...
 
 class SortListModelClass(GObject.GPointer):
@@ -27665,6 +28607,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
     def new(cls) -> StackSwitcher: ...
     def set_stack(self, stack: Optional[Stack] = None) -> None: ...
 
+@deprecated("This widget will be removed in GTK 5")
 class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
     """
     :Constructors:
@@ -27806,12 +28749,18 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     def get_context_id(self, context_description: str) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls) -> Statusbar: ...
+    @deprecated("This widget will be removed in GTK 5")
     def pop(self, context_id: int) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def push(self, context_id: int, text: str) -> int: ...
+    @deprecated("This widget will be removed in GTK 5")
     def remove(self, context_id: int, message_id: int) -> None: ...
+    @deprecated("This widget will be removed in GTK 5")
     def remove_all(self, context_id: int) -> None: ...
 
 class StringFilter(Filter):
@@ -28013,6 +28962,9 @@ class StringSorterClass(GObject.GPointer):
 
     parent_class: SorterClass = ...
 
+@deprecated(
+    "The relevant API has been moved to [class@Gtk.Widget] where applicable; otherwise, there is no replacement for querying the style machinery. Stylable UI elements should use widgets."
+)
 class StyleContext(GObject.Object):
     """
     :Constructors:
@@ -28036,33 +28988,51 @@ class StyleContext(GObject.Object):
     props: Props = ...
     parent_object: GObject.Object = ...
     def __init__(self, display: Gdk.Display = ...): ...
+    @deprecated("Use [method@Gtk.Widget.add_css_class] instead")
     def add_class(self, class_name: str) -> None: ...
+    @deprecated("Use style classes instead")
     def add_provider(self, provider: StyleProvider, priority: int) -> None: ...
     @staticmethod
     def add_provider_for_display(
         display: Gdk.Display, provider: StyleProvider, priority: int
     ) -> None: ...
     def do_changed(self) -> None: ...
+    @deprecated("This api will be removed in GTK 5")
     def get_border(self) -> Border: ...
+    @deprecated("Use [method@Gtk.Widget.get_color] instead")
     def get_color(self) -> Gdk.RGBA: ...
+    @deprecated("Use [method@Gtk.Widget.get_display] instead")
     def get_display(self) -> Gdk.Display: ...
+    @deprecated("This api will be removed in GTK 5")
     def get_margin(self) -> Border: ...
+    @deprecated("This api will be removed in GTK 5")
     def get_padding(self) -> Border: ...
     def get_scale(self) -> int: ...
+    @deprecated("Use [method@Gtk.Widget.get_state_flags] instead")
     def get_state(self) -> StateFlags: ...
+    @deprecated("Use [method@Gtk.Widget.has_css_class] instead")
     def has_class(self, class_name: str) -> bool: ...
+    @deprecated("This api will be removed in GTK 5")
     def lookup_color(self, color_name: str) -> Tuple[bool, Gdk.RGBA]: ...
+    @deprecated("Use [method@Gtk.Widget.remove_css_class] instead")
     def remove_class(self, class_name: str) -> None: ...
+    @deprecated("This method is deprecated")
     def remove_provider(self, provider: StyleProvider) -> None: ...
     @staticmethod
     def remove_provider_for_display(
         display: Gdk.Display, provider: StyleProvider
     ) -> None: ...
+    @deprecated("This API will be removed in GTK 5")
     def restore(self) -> None: ...
+    @deprecated("This API will be removed in GTK 5")
     def save(self) -> None: ...
+    @deprecated("You should not use this api")
     def set_display(self, display: Gdk.Display) -> None: ...
+    @deprecated("You should not use this api")
     def set_scale(self, scale: int) -> None: ...
+    @deprecated("You should not use this api")
     def set_state(self, flags: StateFlags) -> None: ...
+    @deprecated("This api will be removed in GTK 5")
     def to_string(self, flags: StyleContextPrintFlags) -> str: ...
 
 class StyleContextClass(GObject.GPointer):
@@ -29734,6 +30704,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       use-underline -> gboolean: use-underline
       icon-name -> gchararray: icon-name
       child -> GtkWidget: child
+      can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -29792,6 +30763,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
 
     class Props:
         active: bool
+        can_shrink: bool
         child: Optional[Widget]
         has_frame: bool
         icon_name: Optional[str]
@@ -29842,6 +30814,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         self,
         active: bool = ...,
         group: Optional[ToggleButton] = ...,
+        can_shrink: bool = ...,
         child: Optional[Widget] = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
@@ -29890,6 +30863,9 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     def new_with_mnemonic(cls, label: str) -> ToggleButton: ...
     def set_active(self, is_active: bool) -> None: ...
     def set_group(self, group: Optional[ToggleButton] = None) -> None: ...
+    @deprecated(
+        "There is no good reason for an application ever to call this function."
+    )
     def toggled(self) -> None: ...
 
 class ToggleButtonClass(GObject.GPointer):
@@ -29927,12 +30903,17 @@ class Tooltip(GObject.Object):
     def set_text(self, text: Optional[str] = None) -> None: ...
     def set_tip_area(self, rect: Gdk.Rectangle) -> None: ...
 
+@deprecated(
+    "List views use widgets to display their contents. You can use [class@Gtk.DropTarget] to implement a drop destination"
+)
 class TreeDragDest(GObject.GInterface):
     """
     Interface GtkTreeDragDest
     """
 
+    @deprecated("Use list models instead")
     def drag_data_received(self, dest: TreePath, value: Any) -> bool: ...
+    @deprecated("Use list models instead")
     def row_drop_possible(self, dest_path: TreePath, value: Any) -> bool: ...
 
 class TreeDragDestIface(GObject.GPointer):
@@ -29948,13 +30929,19 @@ class TreeDragDestIface(GObject.GPointer):
     drag_data_received: Callable[[TreeDragDest, TreePath, Any], bool] = ...
     row_drop_possible: Callable[[TreeDragDest, TreePath, Any], bool] = ...
 
+@deprecated(
+    "List views use widgets to display their contents. You can use [class@Gtk.DragSource] to implement a drag source"
+)
 class TreeDragSource(GObject.GInterface):
     """
     Interface GtkTreeDragSource
     """
 
+    @deprecated("Use list models instead")
     def drag_data_delete(self, path: TreePath) -> bool: ...
+    @deprecated("Use list models instead")
     def drag_data_get(self, path: TreePath) -> Optional[Gdk.ContentProvider]: ...
+    @deprecated("Use list models instead")
     def row_draggable(self, path: TreePath) -> bool: ...
 
 class TreeDragSourceIface(GObject.GPointer):
@@ -30167,7 +31154,9 @@ class TreeIter(GObject.GBoxed):
     user_data: None = ...
     user_data2: None = ...
     user_data3: None = ...
+    @deprecated("This method is deprecated")
     def copy(self) -> TreeIter: ...
+    @deprecated("This method is deprecated")
     def free(self) -> None: ...
 
 class TreeListModel(GObject.Object, Gio.ListModel):
@@ -30324,6 +31313,7 @@ class TreeListRowSorterClass(GObject.GPointer):
 
     parent_class: SorterClass = ...
 
+@deprecated("Use [iface@Gio.ListModel] instead")
 class TreeModel(GObject.GInterface):
     """
     Interface GtkTreeModel
@@ -30332,24 +31322,34 @@ class TreeModel(GObject.GInterface):
       notify (GParam)
     """
 
+    @deprecated("This method is deprecated")
     def filter_new(self, root: Optional[TreePath] = None) -> TreeModel: ...
+    @deprecated("This method is deprecated")
     def foreach(self, func: Callable[..., bool], *user_data: Any) -> None: ...
     def get(self, treeiter, *columns): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def get_column_type(self, index_: int) -> Type: ...
+    @deprecated("This method is deprecated")
     def get_flags(self) -> TreeModelFlags: ...
     def get_iter(self, path): ...  # FIXME Function
     def get_iter_first(self) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def get_iter_from_string(
         self, path_string: str
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
+    @deprecated("This method is deprecated")
     def get_n_columns(self) -> int: ...
+    @deprecated("This method is deprecated")
     def get_path(self, iter: TreeIter) -> TreePath: ...
+    @deprecated("This method is deprecated")
     def get_string_from_iter(self, iter: TreeIter) -> Optional[str]: ...
+    @deprecated("This method is deprecated")
     def get_value(self, iter: TreeIter, column: int) -> Any: ...
     def iter_children(
         self, parent: Optional[TreeIter] = None
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
+    @deprecated("This method is deprecated")
     def iter_has_child(self, iter: TreeIter) -> bool: ...
+    @deprecated("This method is deprecated")
     def iter_n_children(self, iter: Optional[TreeIter] = None) -> int: ...
     def iter_next(self, aiter): ...  # FIXME Function
     def iter_nth_child(
@@ -30359,6 +31359,7 @@ class TreeModel(GObject.GInterface):
         self, child: TreeIter
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def iter_previous(self, aiter): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def ref_node(self, iter: TreeIter) -> None: ...
     def row_changed(self, path, iter): ...  # FIXME Function
     def row_deleted(self, path): ...  # FIXME Function
@@ -30367,8 +31368,10 @@ class TreeModel(GObject.GInterface):
     def rows_reordered(self, path, iter, new_order): ...  # FIXME Function
     def set_row(self, treeiter, row): ...  # FIXME Function
     def sort_new_with_model(self): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def unref_node(self, iter: TreeIter) -> None: ...
 
+@deprecated("Use [class@Gtk.FilterListModel] instead.")
 class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     """
     :Constructors:
@@ -30402,14 +31405,19 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     parent: GObject.Object = ...
     priv: TreeModelFilterPrivate = ...
     def __init__(self, child_model: TreeModel = ..., virtual_root: TreePath = ...): ...
+    @deprecated("This method is deprecated")
     def clear_cache(self) -> None: ...
+    @deprecated("This method is deprecated")
     def convert_child_iter_to_iter(
         self, child_iter: TreeIter
     ) -> Tuple[bool, TreeIter]: ...
+    @deprecated("This method is deprecated")
     def convert_child_path_to_path(
         self, child_path: TreePath
     ) -> Optional[TreePath]: ...
+    @deprecated("This method is deprecated")
     def convert_iter_to_child_iter(self, filter_iter: TreeIter) -> TreeIter: ...
+    @deprecated("This method is deprecated")
     def convert_path_to_child_path(
         self, filter_path: TreePath
     ) -> Optional[TreePath]: ...
@@ -30417,12 +31425,16 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
         self, child_model: TreeModel, iter: TreeIter, value: Any, column: int
     ) -> None: ...
     def do_visible(self, child_model: TreeModel, iter: TreeIter) -> bool: ...
+    @deprecated("This method is deprecated")
     def get_model(self) -> TreeModel: ...
+    @deprecated("This method is deprecated")
     def refilter(self) -> None: ...
+    @deprecated("This method is deprecated")
     def set_modify_func(
         self, types: Sequence[Type], func: Callable[..., Any], *data: Any
     ) -> None: ...
     def set_value(self, iter, column, value): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def set_visible_column(self, column: int) -> None: ...
     def set_visible_func(self, func, data=None): ...  # FIXME Function
 
@@ -30490,6 +31502,7 @@ class TreeModelRow:
 
 class TreeModelRowIter: ...
 
+@deprecated("Use [class@Gtk.SortListModel] instead")
 class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     """
     :Constructors:
@@ -30525,21 +31538,28 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     parent: GObject.Object = ...
     priv: TreeModelSortPrivate = ...
     def __init__(self, model: TreeModel = ...): ...
+    @deprecated("This method is deprecated")
     def clear_cache(self) -> None: ...
+    @deprecated("This method is deprecated")
     def convert_child_iter_to_iter(
         self, child_iter: TreeIter
     ) -> Tuple[bool, TreeIter]: ...
+    @deprecated("This method is deprecated")
     def convert_child_path_to_path(
         self, child_path: TreePath
     ) -> Optional[TreePath]: ...
+    @deprecated("This method is deprecated")
     def convert_iter_to_child_iter(self, sorted_iter: TreeIter) -> TreeIter: ...
+    @deprecated("This method is deprecated")
     def convert_path_to_child_path(
         self, sorted_path: TreePath
     ) -> Optional[TreePath]: ...
     def get_model(self) -> TreeModel: ...
+    @deprecated("This method is deprecated")
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
     @classmethod
     def new_with_model(cls, child_model: TreeModel) -> TreeModelSort: ...
+    @deprecated("This method is deprecated")
     def reset_default_sort_func(self) -> None: ...
 
 class TreeModelSortClass(GObject.GPointer):
@@ -30568,27 +31588,45 @@ class TreePath(GObject.GBoxed):
         new_from_string(path:str) -> Gtk.TreePath or None
     """
 
+    @deprecated("This method is deprecated")
     def append_index(self, index_: int) -> None: ...
+    @deprecated("This method is deprecated")
     def compare(self, b: TreePath) -> int: ...
+    @deprecated("This method is deprecated")
     def copy(self) -> TreePath: ...
+    @deprecated("This method is deprecated")
     def down(self) -> None: ...
+    @deprecated("This method is deprecated")
     def free(self) -> None: ...
+    @deprecated("This method is deprecated")
     def get_depth(self) -> int: ...
+    @deprecated("This method is deprecated")
     def get_indices(self) -> Optional[list[int]]: ...
+    @deprecated("This method is deprecated")
     def is_ancestor(self, descendant: TreePath) -> bool: ...
+    @deprecated("This method is deprecated")
     def is_descendant(self, ancestor: TreePath) -> bool: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls) -> TreePath: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_first(cls) -> TreePath: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_from_indices(cls, indices: Sequence[int]) -> TreePath: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_from_string(cls, path: str) -> Optional[TreePath]: ...
+    @deprecated("This method is deprecated")
     def next(self) -> None: ...
+    @deprecated("This method is deprecated")
     def prepend_index(self, index_: int) -> None: ...
+    @deprecated("This method is deprecated")
     def prev(self) -> bool: ...
+    @deprecated("This method is deprecated")
     def to_string(self) -> Optional[str]: ...
+    @deprecated("This method is deprecated")
     def up(self) -> bool: ...
 
 class TreeRowData(GObject.GBoxed): ...
@@ -30603,22 +31641,32 @@ class TreeRowReference(GObject.GBoxed):
         new_proxy(proxy:GObject.Object, model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
     """
 
+    @deprecated("This method is deprecated")
     def copy(self) -> TreeRowReference: ...
+    @deprecated("This method is deprecated")
     @staticmethod
     def deleted(proxy: GObject.Object, path: TreePath) -> None: ...
+    @deprecated("This method is deprecated")
     def free(self) -> None: ...
+    @deprecated("This method is deprecated")
     def get_model(self) -> TreeModel: ...
+    @deprecated("This method is deprecated")
     def get_path(self) -> Optional[TreePath]: ...
+    @deprecated("This method is deprecated")
     @staticmethod
     def inserted(proxy: GObject.Object, path: TreePath) -> None: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new(cls, model: TreeModel, path: TreePath) -> Optional[TreeRowReference]: ...
+    @deprecated("This method is deprecated")
     @classmethod
     def new_proxy(
         cls, proxy: GObject.Object, model: TreeModel, path: TreePath
     ) -> Optional[TreeRowReference]: ...
+    @deprecated("This method is deprecated")
     def valid(self) -> bool: ...
 
+@deprecated("Use [iface@Gtk.SelectionModel] instead")
 class TreeSelection(GObject.Object):
     """
     :Constructors:
@@ -30644,27 +31692,45 @@ class TreeSelection(GObject.Object):
 
     props: Props = ...
     def __init__(self, mode: SelectionMode = ...): ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def count_selected_rows(self) -> int: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def get_mode(self) -> SelectionMode: ...
     def get_selected(self): ...  # FIXME Function
     def get_selected_rows(self): ...  # FIXME Function
+    @deprecated("Use GtkListView or GtkColumnView")
     def get_tree_view(self) -> TreeView: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def iter_is_selected(self, iter: TreeIter) -> bool: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def path_is_selected(self, path: TreePath) -> bool: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def select_all(self) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def select_iter(self, iter: TreeIter) -> None: ...
     def select_path(self, path): ...  # FIXME Function
+    @deprecated("Use GtkListView or GtkColumnView")
     def select_range(self, start_path: TreePath, end_path: TreePath) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def selected_foreach(self, func: Callable[..., None], *data: Any) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def set_mode(self, type: SelectionMode) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def set_select_function(
         self, func: Optional[Callable[..., bool]] = None, *data: Any
     ) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def unselect_all(self) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def unselect_iter(self, iter: TreeIter) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def unselect_path(self, path: TreePath) -> None: ...
+    @deprecated("Use GtkListView or GtkColumnView")
     def unselect_range(self, start_path: TreePath, end_path: TreePath) -> None: ...
 
+@deprecated(
+    "There is no replacement for this interface. You should use [class@Gtk.SortListModel] to wrap your list model instead"
+)
 class TreeSortable(GObject.GInterface):
     """
     Interface GtkTreeSortable
@@ -30676,12 +31742,15 @@ class TreeSortable(GObject.GInterface):
     def get_sort_column_id(
         self,
     ) -> Tuple[int, SortType] | Tuple[None, None]: ...  # CHECK Wrapped function
+    @deprecated("This method is deprecated")
     def has_default_sort_func(self) -> bool: ...
     def set_default_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def set_sort_column_id(self, sort_column_id: int, order: SortType) -> None: ...
     def set_sort_func(
         self, sort_column_id, sort_func, user_data=None
     ): ...  # FIXME Function
+    @deprecated("This method is deprecated")
     def sort_column_changed(self) -> None: ...
 
 class TreeSortableIface(GObject.GPointer):
@@ -30701,6 +31770,7 @@ class TreeSortableIface(GObject.GPointer):
     set_default_sort_func: Callable[..., None] = ...
     has_default_sort_func: Callable[[TreeSortable], bool] = ...
 
+@deprecated("Use [class@Gtk.TreeListModel] instead")
 class TreeStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -30731,10 +31801,12 @@ class TreeStore(
     parent: GObject.Object = ...
     priv: TreeStorePrivate = ...
     def append(self, parent, row=None): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def clear(self) -> None: ...
     def insert(self, parent, position, row=None): ...  # FIXME Function
     def insert_after(self, parent, sibling, row=None): ...  # FIXME Function
     def insert_before(self, parent, sibling, row=None): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def insert_with_values(
         self,
         parent: Optional[TreeIter],
@@ -30742,22 +31814,31 @@ class TreeStore(
         columns: Sequence[int],
         values: Sequence[Any],
     ) -> TreeIter: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def is_ancestor(self, iter: TreeIter, descendant: TreeIter) -> bool: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def iter_depth(self, iter: TreeIter) -> int: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def move_after(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def move_before(
         self, iter: TreeIter, position: Optional[TreeIter] = None
     ) -> None: ...
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     @classmethod
     def new(cls, types: Sequence[Type]) -> TreeStore: ...
     def prepend(self, parent, row=None): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def remove(self, iter: TreeIter) -> bool: ...
     def set(self, treeiter, *args): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def set_column_types(self, types: Sequence[Type]) -> None: ...
     def set_value(self, treeiter, column, value): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.TreeListModel] instead")
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
 class TreeStoreClass(GObject.GPointer):
@@ -30774,6 +31855,9 @@ class TreeStoreClass(GObject.GPointer):
 
 class TreeStorePrivate(GObject.GPointer): ...
 
+@deprecated(
+    "Use [class@Gtk.ListView] for lists, and [class@Gtk.ColumnView] for tabular lists"
+)
 class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     """
     :Constructors:
@@ -30991,24 +32075,35 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         vadjustment: Optional[Adjustment] = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def append_column(self, column: TreeViewColumn) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def collapse_all(self) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def collapse_row(self, path: TreePath) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def columns_autosize(self) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_bin_window_to_tree_coords(
         self, bx: int, by: int
     ) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_bin_window_to_widget_coords(
         self, bx: int, by: int
     ) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_tree_to_bin_window_coords(
         self, tx: int, ty: int
     ) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_tree_to_widget_coords(self, tx: int, ty: int) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_widget_to_bin_window_coords(
         self, wx: int, wy: int
     ) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def convert_widget_to_tree_coords(self, wx: int, wy: int) -> Tuple[int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def create_row_drag_icon(self, path: TreePath) -> Optional[Gdk.Paintable]: ...
     def do_columns_changed(self) -> None: ...
     def do_cursor_changed(self) -> None: ...
@@ -31031,65 +32126,99 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def do_test_expand_row(self, iter: TreeIter, path: TreePath) -> bool: ...
     def do_toggle_cursor_row(self) -> bool: ...
     def do_unselect_all(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def enable_model_drag_dest(
         self, formats: Gdk.ContentFormats, actions: Gdk.DragAction
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def enable_model_drag_source(
         self,
         start_button_mask: Gdk.ModifierType,
         formats: Gdk.ContentFormats,
         actions: Gdk.DragAction,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def expand_all(self) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def expand_row(self, path: TreePath, open_all: bool) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def expand_to_path(self, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_activate_on_single_click(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_background_area(
         self, path: Optional[TreePath] = None, column: Optional[TreeViewColumn] = None
     ) -> Gdk.Rectangle: ...
     def get_cell_area(self, path, column=None): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_column(self, n: int) -> Optional[TreeViewColumn]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_columns(self) -> list[TreeViewColumn]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_cursor(self) -> Tuple[TreePath, TreeViewColumn]: ...
     def get_dest_row_at_pos(
         self, drag_x: int, drag_y: int
     ) -> Optional[Tuple[TreePath, TreeViewDropPosition]]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_drag_dest_row(self) -> Tuple[TreePath, TreeViewDropPosition]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_enable_search(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_enable_tree_lines(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_expander_column(self) -> Optional[TreeViewColumn]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_fixed_height_mode(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_grid_lines(self) -> TreeViewGridLines: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_headers_clickable(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_headers_visible(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_hover_expand(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_hover_selection(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_level_indentation(self) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_model(self) -> Optional[TreeModel]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_n_columns(self) -> int: ...
     def get_path_at_pos(
         self, x: int, y: int
     ) -> Optional[
         Tuple[TreePath, TreeViewColumn, int, int]
     ]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_reorderable(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_rubber_banding(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_search_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_search_entry(self) -> Optional[Editable]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_selection(self) -> TreeSelection: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_show_expanders(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_tooltip_column(self) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_tooltip_context(
         self, x: int, y: int, keyboard_tip: bool
     ) -> Tuple[bool, TreeModel, TreePath, TreeIter]: ...
     def get_visible_range(
         self,
     ) -> Optional[Tuple[TreePath, TreePath]]: ...  # CHECK Wrapped function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def get_visible_rect(self) -> Gdk.Rectangle: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def insert_column(self, column: TreeViewColumn, position: int) -> int: ...
     def insert_column_with_attributes(
         self, position, title, cell, **kwargs
     ): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def insert_column_with_data_func(
         self,
         position: int,
@@ -31098,32 +32227,45 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         func: Callable[..., None],
         *data: Any,
     ) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def is_blank_at_pos(
         self, x: int, y: int
     ) -> Tuple[bool, TreePath, TreeViewColumn, int, int]: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def is_rubber_banding_active(self) -> bool: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def map_expanded_rows(self, func: Callable[..., None], *data: Any) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def move_column_after(
         self, column: TreeViewColumn, base_column: Optional[TreeViewColumn] = None
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     @classmethod
     def new(cls) -> TreeView: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     @classmethod
     def new_with_model(cls, model: TreeModel) -> TreeView: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def remove_column(self, column: TreeViewColumn) -> int: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def row_activated(
         self, path: TreePath, column: Optional[TreeViewColumn] = None
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def row_expanded(self, path: TreePath) -> bool: ...
     def scroll_to_cell(
         self, path, column=None, use_align=False, row_align=0.0, col_align=0.0
     ): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def scroll_to_point(self, tree_x: int, tree_y: int) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_activate_on_single_click(self, single: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_column_drag_function(
         self, func: Optional[Callable[..., bool]] = None, *user_data: Any
     ) -> None: ...
     def set_cursor(self, path, column=None, start_editing=False): ...  # FIXME Function
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_cursor_on_cell(
         self,
         path: TreePath,
@@ -31131,31 +32273,51 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         focus_cell: Optional[CellRenderer],
         start_editing: bool,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_drag_dest_row(
         self, path: Optional[TreePath], pos: TreeViewDropPosition
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_enable_search(self, enable_search: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_enable_tree_lines(self, enabled: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_expander_column(self, column: Optional[TreeViewColumn] = None) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_fixed_height_mode(self, enable: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_grid_lines(self, grid_lines: TreeViewGridLines) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_headers_clickable(self, setting: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_headers_visible(self, headers_visible: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_hover_expand(self, expand: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_hover_selection(self, hover: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_level_indentation(self, indentation: int) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_model(self, model: Optional[TreeModel] = None) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_reorderable(self, reorderable: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_row_separator_func(
         self, func: Optional[Callable[..., bool]] = None, *data: Any
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_rubber_banding(self, enable: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_search_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_search_entry(self, entry: Optional[Editable] = None) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_search_equal_func(
         self, search_equal_func: Callable[..., bool], *search_user_data: Any
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_show_expanders(self, enabled: bool) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_tooltip_cell(
         self,
         tooltip: Tooltip,
@@ -31163,9 +32325,13 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         column: Optional[TreeViewColumn] = None,
         cell: Optional[CellRenderer] = None,
     ) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_tooltip_column(self, column: int) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def set_tooltip_row(self, tooltip: Tooltip, path: TreePath) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def unset_rows_drag_dest(self) -> None: ...
+    @deprecated("Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead")
     def unset_rows_drag_source(self) -> None: ...
 
 class TreeViewClass(GObject.GPointer):
@@ -31195,6 +32361,9 @@ class TreeViewClass(GObject.GPointer):
     start_interactive_search: Callable[[TreeView], bool] = ...
     _reserved: list[None] = ...
 
+@deprecated(
+    "Use [class@Gtk.ColumnView] and [class@Gtk.ColumnViewColumn] instead of [class@Gtk.TreeView] to show a tabular list"
+)
 class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     """
     :Constructors:
@@ -31277,14 +32446,18 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         visible: bool = ...,
         widget: Optional[Widget] = ...,
     ): ...
+    @deprecated("Use GtkColumnView instead")
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
     ) -> None: ...
     def cell_get_position(
         self, cell_renderer: CellRenderer
     ) -> Optional[Tuple[int, int]]: ...  # CHECK Wrapped function
+    @deprecated("Use GtkColumnView instead")
     def cell_get_size(self) -> Tuple[int, int, int, int]: ...
+    @deprecated("Use GtkColumnView instead")
     def cell_is_visible(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def cell_set_cell_data(
         self,
         tree_model: TreeModel,
@@ -31292,56 +32465,101 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         is_expander: bool,
         is_expanded: bool,
     ) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def clear(self) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def clear_attributes(self, cell_renderer: CellRenderer) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def clicked(self) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def focus_cell(self, cell: CellRenderer) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def get_alignment(self) -> float: ...
+    @deprecated("Use GtkColumnView instead")
     def get_button(self) -> Widget: ...
+    @deprecated("Use GtkColumnView instead")
     def get_clickable(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_expand(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_fixed_width(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_max_width(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_min_width(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_reorderable(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_resizable(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_sizing(self) -> TreeViewColumnSizing: ...
+    @deprecated("Use GtkColumnView instead")
     def get_sort_column_id(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_sort_indicator(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_sort_order(self) -> SortType: ...
+    @deprecated("Use GtkColumnView instead")
     def get_spacing(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_title(self) -> str: ...
+    @deprecated("Use GtkColumnView instead")
     def get_tree_view(self) -> Optional[Widget]: ...
+    @deprecated("Use GtkColumnView instead")
     def get_visible(self) -> bool: ...
+    @deprecated("Use GtkColumnView instead")
     def get_widget(self) -> Optional[Widget]: ...
+    @deprecated("Use GtkColumnView instead")
     def get_width(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     def get_x_offset(self) -> int: ...
+    @deprecated("Use GtkColumnView instead")
     @classmethod
     def new(cls) -> TreeViewColumn: ...
+    @deprecated("Use GtkColumnView instead")
     @classmethod
     def new_with_area(cls, area: CellArea) -> TreeViewColumn: ...
+    @deprecated("Use GtkColumnView instead")
     def pack_end(self, cell: CellRenderer, expand: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def pack_start(self, cell: CellRenderer, expand: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def queue_resize(self) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_alignment(self, xalign: float) -> None: ...
     def set_attributes(self, cell_renderer, **attributes): ...  # FIXME Function
     def set_cell_data_func(
         self, cell_renderer, func, func_data=None
     ): ...  # FIXME Function
+    @deprecated("Use GtkColumnView instead")
     def set_clickable(self, clickable: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_expand(self, expand: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_fixed_width(self, fixed_width: int) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_max_width(self, max_width: int) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_min_width(self, min_width: int) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_reorderable(self, reorderable: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_resizable(self, resizable: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_sizing(self, type: TreeViewColumnSizing) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_sort_column_id(self, sort_column_id: int) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_sort_indicator(self, setting: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_sort_order(self, order: SortType) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_spacing(self, spacing: int) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_title(self, title: str) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_visible(self, visible: bool) -> None: ...
+    @deprecated("Use GtkColumnView instead")
     def set_widget(self, widget: Optional[Widget] = None) -> None: ...
 
 class UriLauncher(GObject.Object):
@@ -31739,9 +32957,13 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         hadjustment: Optional[Adjustment] = None,
         vadjustment: Optional[Adjustment] = None,
     ) -> Viewport: ...
+    def scroll_to(
+        self, descendant: Widget, scroll: Optional[ScrollInfo] = None
+    ) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_scroll_to_focus(self, scroll_to_focus: bool) -> None: ...
 
+@deprecated("This widget will be removed in GTK 5")
 class VolumeButton(
     ScaleButton, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
 ):
@@ -31907,6 +33129,7 @@ class VolumeButton(
         accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
     ): ...
+    @deprecated("This widget will be removed in GTK 5")
     @classmethod
     def new(cls) -> VolumeButton: ...
 
@@ -32119,11 +33342,18 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     ) -> bool: ...
     def error_bell(self) -> None: ...
     def get_activate_signal(self) -> int: ...
+    @deprecated("Use [method@Gtk.Widget.get_baseline] instead")
     def get_allocated_baseline(self) -> int: ...
+    @deprecated("Use [method@Gtk.Widget.get_height] instead")
     def get_allocated_height(self) -> int: ...
+    @deprecated("Use [method@Gtk.Widget.get_width] instead")
     def get_allocated_width(self) -> int: ...
+    @deprecated(
+        "Use [method@Gtk.Widget.compute_bounds], [method@Gtk.Widget.get_width] or [method@Gtk.Widget.get_height] instead."
+    )
     def get_allocation(self) -> Gdk.Rectangle: ...
     def get_ancestor(self, widget_type: Type) -> Optional[Widget]: ...
+    def get_baseline(self) -> int: ...
     def get_can_focus(self) -> bool: ...
     def get_can_target(self) -> bool: ...
     def get_child_visible(self) -> bool: ...
@@ -32176,6 +33406,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def get_size(self, orientation: Orientation) -> int: ...
     def get_size_request(self) -> Tuple[int, int]: ...
     def get_state_flags(self) -> StateFlags: ...
+    @deprecated("Style contexts will be removed in GTK 5")
     def get_style_context(self) -> StyleContext: ...
     def get_template_child(self, widget_type: Type, name: str) -> GObject.Object: ...
     def get_tooltip_markup(self) -> Optional[str]: ...
@@ -32190,6 +33421,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def has_default(self) -> bool: ...
     def has_focus(self) -> bool: ...
     def has_visible_focus(self) -> bool: ...
+    @deprecated("Use [method@Gtk.Widget.set_visible] instead")
     def hide(self) -> None: ...
     def in_destruction(self) -> bool: ...
     def init_template(self) -> None: ...
@@ -32283,6 +33515,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def set_vexpand_set(self, set: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
     def should_layout(self) -> bool: ...
+    @deprecated("Use [method@Gtk.Widget.set_visible] instead")
     def show(self) -> None: ...
     def size_allocate(self, allocation: Gdk.Rectangle, baseline: int) -> None: ...
     def snapshot_child(self, child: Widget, snapshot: Snapshot) -> None: ...
@@ -32449,6 +33682,7 @@ class Window(
       titlebar -> GtkWidget: titlebar
       handle-menubar-accel -> gboolean: handle-menubar-accel
       is-active -> gboolean: is-active
+      suspended -> gboolean: suspended
       startup-id -> gchararray: startup-id
       mnemonics-visible -> gboolean: mnemonics-visible
       focus-visible -> gboolean: focus-visible
@@ -32531,6 +33765,7 @@ class Window(
         mnemonics_visible: bool
         modal: bool
         resizable: bool
+        suspended: bool
         title: Optional[str]
         titlebar: Optional[Widget]
         transient_for: Optional[Window]
@@ -32665,6 +33900,7 @@ class Window(
     def is_active(self) -> bool: ...
     def is_fullscreen(self) -> bool: ...
     def is_maximized(self) -> bool: ...
+    def is_suspended(self) -> bool: ...
     @staticmethod
     def list_toplevels() -> list[Widget]: ...
     def maximize(self) -> None: ...
@@ -33121,7 +34357,6 @@ class DebugFlags(GObject.GFlags):
     SIZE_REQUEST = 256
     SNAPSHOT = 16384
     TEXT = 1
-    TOUCHSCREEN = 2048
     TREE = 2
 
 class DialogFlags(GObject.GFlags):
@@ -33163,6 +34398,11 @@ class InputHints(GObject.GFlags):
     UPPERCASE_WORDS = 32
     VERTICAL_WRITING = 256
     WORD_COMPLETION = 4
+
+class ListScrollFlags(GObject.GFlags):
+    FOCUS = 1
+    NONE = 0
+    SELECT = 2
 
 class PickFlags(GObject.GFlags):
     DEFAULT = 0
@@ -33285,6 +34525,7 @@ class AccessibleRelation(GObject.GEnum):
 class AccessibleRole(GObject.GEnum):
     ALERT = 0
     ALERT_DIALOG = 1
+    APPLICATION = 79
     BANNER = 2
     BUTTON = 3
     CAPTION = 4
@@ -33378,6 +34619,7 @@ class AccessibleState(GObject.GEnum):
     INVALID = 5
     PRESSED = 6
     SELECTED = 7
+    VISITED = 8
     @staticmethod
     def init_value(state: AccessibleState, value: Any) -> None: ...
 
@@ -33388,6 +34630,8 @@ class AccessibleTristate(GObject.GEnum):
 
 class Align(GObject.GEnum):
     BASELINE = 4
+    BASELINE_CENTER = 5
+    BASELINE_FILL = 4
     CENTER = 3
     END = 2
     FILL = 0
@@ -33672,6 +34916,11 @@ class License(GObject.GEnum):
     MIT_X11 = 7
     MPL_2_0 = 17
     UNKNOWN = 0
+
+class ListTabBehavior(GObject.GEnum):
+    ALL = 0
+    CELL = 2
+    ITEM = 1
 
 class MessageType(GObject.GEnum):
     ERROR = 3
