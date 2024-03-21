@@ -56,6 +56,7 @@ libraries = [
     Lib("Panel", "1"),
     Lib("Pango", "1.0"),
     Lib("PangoCairo", "1.0"),
+    Lib("Poppler", "0.18"),
     Lib("Rsvg", "2.0"),
     Lib("Secret", "1"),
     Lib("Soup", "2.4", output="_Soup2"),
