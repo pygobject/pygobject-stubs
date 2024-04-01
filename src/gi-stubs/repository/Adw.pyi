@@ -17,8 +17,8 @@ from gi.repository import Pango
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
 MICRO_VERSION: int = 0
-MINOR_VERSION: int = 4
-VERSION_S: str = "1.4.0"
+MINOR_VERSION: int = 5
+VERSION_S: str = "1.5.0"
 _lock = ...  # FIXME Constant
 _namespace: str = "Adw"
 _version: str = "1"
@@ -38,6 +38,316 @@ def length_unit_to_px(
     unit: LengthUnit, value: float, settings: Optional[Gtk.Settings] = None
 ) -> float: ...
 def lerp(a: float, b: float, t: float) -> float: ...
+
+class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        AboutDialog(**properties)
+        new() -> Adw.Dialog
+        new_from_appdata(resource_path:str, release_notes_version:str=None) -> Adw.Dialog
+
+    Object AdwAboutDialog
+
+    Signals from AdwAboutDialog:
+      activate-link (gchararray) -> gboolean
+
+    Properties from AdwAboutDialog:
+      application-icon -> gchararray: application-icon
+      application-name -> gchararray: application-name
+      developer-name -> gchararray: developer-name
+      version -> gchararray: version
+      release-notes-version -> gchararray: release-notes-version
+      release-notes -> gchararray: release-notes
+      comments -> gchararray: comments
+      website -> gchararray: website
+      support-url -> gchararray: support-url
+      issue-url -> gchararray: issue-url
+      debug-info -> gchararray: debug-info
+      debug-info-filename -> gchararray: debug-info-filename
+      developers -> GStrv: developers
+      designers -> GStrv: designers
+      artists -> GStrv: artists
+      documenters -> GStrv: documenters
+      translator-credits -> gchararray: translator-credits
+      copyright -> gchararray: copyright
+      license-type -> GtkLicense: license-type
+      license -> gchararray: license
+
+    Signals from AdwDialog:
+      closed ()
+      close-attempt ()
+
+    Properties from AdwDialog:
+      child -> GtkWidget: child
+      title -> gchararray: title
+      can-close -> gboolean: can-close
+      content-width -> gint: content-width
+      content-height -> gint: content-height
+      follows-content-size -> gboolean: follows-content-size
+      presentation-mode -> AdwDialogPresentationMode: presentation-mode
+      focus-widget -> GtkWidget: focus-widget
+      default-widget -> GtkWidget: default-widget
+      current-breakpoint -> AdwBreakpoint: current-breakpoint
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        application_icon: str
+        application_name: str
+        artists: Optional[list[str]]
+        comments: str
+        copyright: str
+        debug_info: str
+        debug_info_filename: str
+        designers: Optional[list[str]]
+        developer_name: str
+        developers: Optional[list[str]]
+        documenters: Optional[list[str]]
+        issue_url: str
+        license: str
+        license_type: Gtk.License
+        release_notes: str
+        release_notes_version: str
+        support_url: str
+        translator_credits: str
+        version: str
+        website: str
+        can_close: bool
+        child: Optional[Gtk.Widget]
+        content_height: int
+        content_width: int
+        current_breakpoint: Optional[Breakpoint]
+        default_widget: Optional[Gtk.Widget]
+        focus_widget: Gtk.Widget
+        follows_content_size: bool
+        presentation_mode: DialogPresentationMode
+        title: str
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    def __init__(
+        self,
+        application_icon: str = ...,
+        application_name: str = ...,
+        artists: Optional[Sequence[str]] = ...,
+        comments: str = ...,
+        copyright: str = ...,
+        debug_info: str = ...,
+        debug_info_filename: str = ...,
+        designers: Optional[Sequence[str]] = ...,
+        developer_name: str = ...,
+        developers: Optional[Sequence[str]] = ...,
+        documenters: Optional[Sequence[str]] = ...,
+        issue_url: str = ...,
+        license: str = ...,
+        license_type: Gtk.License = ...,
+        release_notes: str = ...,
+        release_notes_version: str = ...,
+        support_url: str = ...,
+        translator_credits: str = ...,
+        version: str = ...,
+        website: str = ...,
+        can_close: bool = ...,
+        child: Optional[Gtk.Widget] = ...,
+        content_height: int = ...,
+        content_width: int = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
+        focus_widget: Gtk.Widget = ...,
+        follows_content_size: bool = ...,
+        presentation_mode: DialogPresentationMode = ...,
+        title: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ): ...
+    def add_acknowledgement_section(
+        self, name: Optional[str], people: Sequence[str]
+    ) -> None: ...
+    def add_credit_section(
+        self, name: Optional[str], people: Sequence[str]
+    ) -> None: ...
+    def add_legal_section(
+        self,
+        title: str,
+        copyright: Optional[str],
+        license_type: Gtk.License,
+        license: Optional[str] = None,
+    ) -> None: ...
+    def add_link(self, title: str, url: str) -> None: ...
+    def get_application_icon(self) -> str: ...
+    def get_application_name(self) -> str: ...
+    def get_artists(self) -> Optional[list[str]]: ...
+    def get_comments(self) -> str: ...
+    def get_copyright(self) -> str: ...
+    def get_debug_info(self) -> str: ...
+    def get_debug_info_filename(self) -> str: ...
+    def get_designers(self) -> Optional[list[str]]: ...
+    def get_developer_name(self) -> str: ...
+    def get_developers(self) -> Optional[list[str]]: ...
+    def get_documenters(self) -> Optional[list[str]]: ...
+    def get_issue_url(self) -> str: ...
+    def get_license(self) -> str: ...
+    def get_license_type(self) -> Gtk.License: ...
+    def get_release_notes(self) -> str: ...
+    def get_release_notes_version(self) -> str: ...
+    def get_support_url(self) -> str: ...
+    def get_translator_credits(self) -> str: ...
+    def get_version(self) -> str: ...
+    def get_website(self) -> str: ...
+    @classmethod
+    def new(cls) -> AboutDialog: ...
+    @classmethod
+    def new_from_appdata(
+        cls, resource_path: str, release_notes_version: Optional[str] = None
+    ) -> AboutDialog: ...
+    def set_application_icon(self, application_icon: str) -> None: ...
+    def set_application_name(self, application_name: str) -> None: ...
+    def set_artists(self, artists: Optional[Sequence[str]] = None) -> None: ...
+    def set_comments(self, comments: str) -> None: ...
+    def set_copyright(self, copyright: str) -> None: ...
+    def set_debug_info(self, debug_info: str) -> None: ...
+    def set_debug_info_filename(self, filename: str) -> None: ...
+    def set_designers(self, designers: Optional[Sequence[str]] = None) -> None: ...
+    def set_developer_name(self, developer_name: str) -> None: ...
+    def set_developers(self, developers: Optional[Sequence[str]] = None) -> None: ...
+    def set_documenters(self, documenters: Optional[Sequence[str]] = None) -> None: ...
+    def set_issue_url(self, issue_url: str) -> None: ...
+    def set_license(self, license: str) -> None: ...
+    def set_license_type(self, license_type: Gtk.License) -> None: ...
+    def set_release_notes(self, release_notes: str) -> None: ...
+    def set_release_notes_version(self, version: str) -> None: ...
+    def set_support_url(self, support_url: str) -> None: ...
+    def set_translator_credits(self, translator_credits: str) -> None: ...
+    def set_version(self, version: str) -> None: ...
+    def set_website(self, website: str) -> None: ...
+
+class AboutDialogClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AboutDialogClass()
+    """
+
+    parent_class: DialogClass = ...
 
 class AboutWindow(
     Window,
@@ -87,6 +397,8 @@ class AboutWindow(
     Properties from AdwWindow:
       content -> GtkWidget: content
       current-breakpoint -> AdwBreakpoint: current-breakpoint
+      dialogs -> GListModel: dialogs
+      visible-dialog -> AdwDialog: visible-dialog
 
     Signals from GtkWindow:
       keys-changed ()
@@ -200,6 +512,8 @@ class AboutWindow(
         website: str
         content: Optional[Gtk.Widget]
         current_breakpoint: Optional[Breakpoint]
+        dialogs: Gio.ListModel
+        visible_dialog: Optional[Dialog]
         application: Optional[Gtk.Application]
         child: Optional[Gtk.Widget]
         decorated: bool
@@ -638,6 +952,257 @@ class ActionRowClass(GObject.GPointer):
     activate: Callable[[ActionRow], None] = ...
     padding: list[None] = ...
 
+class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        AlertDialog(**properties)
+        new(heading:str=None, body:str=None) -> Adw.Dialog
+
+    Object AdwAlertDialog
+
+    Signals from AdwAlertDialog:
+      response (gchararray)
+
+    Properties from AdwAlertDialog:
+      heading -> gchararray: heading
+      heading-use-markup -> gboolean: heading-use-markup
+      body -> gchararray: body
+      body-use-markup -> gboolean: body-use-markup
+      extra-child -> GtkWidget: extra-child
+      default-response -> gchararray: default-response
+      close-response -> gchararray: close-response
+
+    Signals from AdwDialog:
+      closed ()
+      close-attempt ()
+
+    Properties from AdwDialog:
+      child -> GtkWidget: child
+      title -> gchararray: title
+      can-close -> gboolean: can-close
+      content-width -> gint: content-width
+      content-height -> gint: content-height
+      follows-content-size -> gboolean: follows-content-size
+      presentation-mode -> AdwDialogPresentationMode: presentation-mode
+      focus-widget -> GtkWidget: focus-widget
+      default-widget -> GtkWidget: default-widget
+      current-breakpoint -> AdwBreakpoint: current-breakpoint
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        body: str
+        body_use_markup: bool
+        close_response: str
+        default_response: Optional[str]
+        extra_child: Optional[Gtk.Widget]
+        heading: Optional[str]
+        heading_use_markup: bool
+        can_close: bool
+        child: Optional[Gtk.Widget]
+        content_height: int
+        content_width: int
+        current_breakpoint: Optional[Breakpoint]
+        default_widget: Optional[Gtk.Widget]
+        focus_widget: Gtk.Widget
+        follows_content_size: bool
+        presentation_mode: DialogPresentationMode
+        title: str
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    parent_instance: Dialog = ...
+    def __init__(
+        self,
+        body: str = ...,
+        body_use_markup: bool = ...,
+        close_response: str = ...,
+        default_response: Optional[str] = ...,
+        extra_child: Optional[Gtk.Widget] = ...,
+        heading: Optional[str] = ...,
+        heading_use_markup: bool = ...,
+        can_close: bool = ...,
+        child: Optional[Gtk.Widget] = ...,
+        content_height: int = ...,
+        content_width: int = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
+        focus_widget: Gtk.Widget = ...,
+        follows_content_size: bool = ...,
+        presentation_mode: DialogPresentationMode = ...,
+        title: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ): ...
+    def add_response(self, id: str, label: str) -> None: ...
+    def choose(
+        self,
+        parent: Optional[Gtk.Widget] = None,
+        cancellable: Optional[Gio.Cancellable] = None,
+        callback: Optional[Callable[..., None]] = None,
+        *user_data: Any,
+    ) -> None: ...
+    def choose_finish(self, result: Gio.AsyncResult) -> str: ...
+    def do_response(self, response: str) -> None: ...
+    def get_body(self) -> str: ...
+    def get_body_use_markup(self) -> bool: ...
+    def get_close_response(self) -> str: ...
+    def get_default_response(self) -> Optional[str]: ...
+    def get_extra_child(self) -> Optional[Gtk.Widget]: ...
+    def get_heading(self) -> Optional[str]: ...
+    def get_heading_use_markup(self) -> bool: ...
+    def get_response_appearance(self, response: str) -> ResponseAppearance: ...
+    def get_response_enabled(self, response: str) -> bool: ...
+    def get_response_label(self, response: str) -> str: ...
+    def has_response(self, response: str) -> bool: ...
+    @classmethod
+    def new(
+        cls, heading: Optional[str] = None, body: Optional[str] = None
+    ) -> AlertDialog: ...
+    def remove_response(self, id: str) -> None: ...
+    def set_body(self, body: str) -> None: ...
+    def set_body_use_markup(self, use_markup: bool) -> None: ...
+    def set_close_response(self, response: str) -> None: ...
+    def set_default_response(self, response: Optional[str] = None) -> None: ...
+    def set_extra_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_heading(self, heading: Optional[str] = None) -> None: ...
+    def set_heading_use_markup(self, use_markup: bool) -> None: ...
+    def set_response_appearance(
+        self, response: str, appearance: ResponseAppearance
+    ) -> None: ...
+    def set_response_enabled(self, response: str, enabled: bool) -> None: ...
+    def set_response_label(self, response: str, label: str) -> None: ...
+
+class AlertDialogClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AlertDialogClass()
+    """
+
+    parent_class: DialogClass = ...
+    response: Callable[[AlertDialog, str], None] = ...
+    padding: list[None] = ...
+
 class Animation(GObject.Object):
     """
     :Constructors:
@@ -741,22 +1306,15 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
       name-lost () -> gboolean
 
     Properties from GApplication:
-      application-id -> gchararray: Application identifier
-        The unique identifier for the application
-      flags -> GApplicationFlags: Application flags
-        Flags specifying the behaviour of the application
-      resource-base-path -> gchararray: Resource base path
-        The base resource path for the application
-      is-registered -> gboolean: Is registered
-        If g_application_register() has been called
-      is-remote -> gboolean: Is remote
-        If this application instance is remote
-      inactivity-timeout -> guint: Inactivity timeout
-        Time (ms) to stay alive after becoming idle
-      action-group -> GActionGroup: Action group
-        The group of actions that the application exports
-      is-busy -> gboolean: Is busy
-        If this application is currently marked busy
+      application-id -> gchararray: application-id
+      version -> gchararray: version
+      flags -> GApplicationFlags: flags
+      resource-base-path -> gchararray: resource-base-path
+      is-registered -> gboolean: is-registered
+      is-remote -> gboolean: is-remote
+      inactivity-timeout -> guint: inactivity-timeout
+      action-group -> GActionGroup: action-group
+      is-busy -> gboolean: is-busy
 
     Signals from GActionGroup:
       action-added (gchararray)
@@ -781,6 +1339,7 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
         is_registered: bool
         is_remote: bool
         resource_base_path: Optional[str]
+        version: Optional[str]
         action_group: Optional[Gio.ActionGroup]
 
     props: Props = ...
@@ -794,6 +1353,7 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
         flags: Gio.ApplicationFlags = ...,
         inactivity_timeout: int = ...,
         resource_base_path: Optional[str] = ...,
+        version: str = ...,
     ): ...
     def get_style_manager(self) -> StyleManager: ...
     @classmethod
@@ -837,6 +1397,8 @@ class ApplicationWindow(
     Properties from AdwApplicationWindow:
       content -> GtkWidget: content
       current-breakpoint -> AdwBreakpoint: current-breakpoint
+      dialogs -> GListModel: dialogs
+      visible-dialog -> AdwDialog: visible-dialog
 
     Signals from GActionGroup:
       action-added (gchararray)
@@ -945,6 +1507,8 @@ class ApplicationWindow(
     class Props:
         content: Optional[Gtk.Widget]
         current_breakpoint: Optional[Breakpoint]
+        dialogs: Gio.ListModel
+        visible_dialog: Optional[Dialog]
         show_menubar: bool
         application: Optional[Gtk.Application]
         child: Optional[Gtk.Widget]
@@ -1070,6 +1634,8 @@ class ApplicationWindow(
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def get_content(self) -> Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_dialogs(self) -> Gio.ListModel: ...
+    def get_visible_dialog(self) -> Optional[Dialog]: ...
     @classmethod
     def new(cls, app: Gtk.Application) -> ApplicationWindow: ...
     def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
@@ -1799,6 +2365,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
     @classmethod
     def new(cls) -> BreakpointBin: ...
+    def remove_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
 
 class BreakpointBinClass(GObject.GPointer):
@@ -3264,6 +3831,225 @@ class ComboRowClass(GObject.GPointer):
     parent_class: ActionRowClass = ...
     padding: list[None] = ...
 
+class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        Dialog(**properties)
+        new() -> Adw.Dialog
+
+    Object AdwDialog
+
+    Signals from AdwDialog:
+      closed ()
+      close-attempt ()
+
+    Properties from AdwDialog:
+      child -> GtkWidget: child
+      title -> gchararray: title
+      can-close -> gboolean: can-close
+      content-width -> gint: content-width
+      content-height -> gint: content-height
+      follows-content-size -> gboolean: follows-content-size
+      presentation-mode -> AdwDialogPresentationMode: presentation-mode
+      focus-widget -> GtkWidget: focus-widget
+      default-widget -> GtkWidget: default-widget
+      current-breakpoint -> AdwBreakpoint: current-breakpoint
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        can_close: bool
+        child: Optional[Gtk.Widget]
+        content_height: int
+        content_width: int
+        current_breakpoint: Optional[Breakpoint]
+        default_widget: Optional[Gtk.Widget]
+        focus_widget: Gtk.Widget
+        follows_content_size: bool
+        presentation_mode: DialogPresentationMode
+        title: str
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    parent_instance: Gtk.Widget = ...
+    def __init__(
+        self,
+        can_close: bool = ...,
+        child: Optional[Gtk.Widget] = ...,
+        content_height: int = ...,
+        content_width: int = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
+        focus_widget: Gtk.Widget = ...,
+        follows_content_size: bool = ...,
+        presentation_mode: DialogPresentationMode = ...,
+        title: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ): ...
+    def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
+    def close(self) -> bool: ...
+    def do_close_attempt(self) -> None: ...
+    def do_closed(self) -> None: ...
+    def force_close(self) -> None: ...
+    def get_can_close(self) -> bool: ...
+    def get_child(self) -> Optional[Gtk.Widget]: ...
+    def get_content_height(self) -> int: ...
+    def get_content_width(self) -> int: ...
+    def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_default_widget(self) -> Optional[Gtk.Widget]: ...
+    def get_focus(self) -> Optional[Gtk.Widget]: ...
+    def get_follows_content_size(self) -> bool: ...
+    def get_presentation_mode(self) -> DialogPresentationMode: ...
+    def get_title(self) -> str: ...
+    @classmethod
+    def new(cls) -> Dialog: ...
+    def present(self, parent: Optional[Gtk.Widget] = None) -> None: ...
+    def set_can_close(self, can_close: bool) -> None: ...
+    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content_height(self, content_height: int) -> None: ...
+    def set_content_width(self, content_width: int) -> None: ...
+    def set_default_widget(
+        self, default_widget: Optional[Gtk.Widget] = None
+    ) -> None: ...
+    def set_focus(self, focus: Optional[Gtk.Widget] = None) -> None: ...
+    def set_follows_content_size(self, follows_content_size: bool) -> None: ...
+    def set_presentation_mode(
+        self, presentation_mode: DialogPresentationMode
+    ) -> None: ...
+    def set_title(self, title: str) -> None: ...
+
+class DialogClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DialogClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+    close_attempt: Callable[[Dialog], None] = ...
+    closed: Callable[[Dialog], None] = ...
+    padding: list[None] = ...
+
 class EntryRow(
     PreferencesRow,
     Gtk.Accessible,
@@ -3293,6 +4079,7 @@ class EntryRow(
       attributes -> PangoAttrList: attributes
       enable-emoji-completion -> gboolean: enable-emoji-completion
       activates-default -> gboolean: activates-default
+      text-length -> guint: text-length
 
     Signals from GtkEditable:
       changed ()
@@ -3375,6 +4162,7 @@ class EntryRow(
         input_hints: Gtk.InputHints
         input_purpose: Gtk.InputPurpose
         show_apply_button: bool
+        text_length: int
         title: str
         title_selectable: bool
         use_markup: bool
@@ -3492,6 +4280,7 @@ class EntryRow(
     def get_input_hints(self) -> Gtk.InputHints: ...
     def get_input_purpose(self) -> Gtk.InputPurpose: ...
     def get_show_apply_button(self) -> bool: ...
+    def get_text_length(self) -> int: ...
     def grab_focus_without_selecting(self) -> bool: ...
     @classmethod
     def new(cls) -> EntryRow: ...
@@ -4819,6 +5608,7 @@ class MessageDialog(
         heading: Optional[str] = None,
         body: Optional[str] = None,
     ) -> MessageDialog: ...
+    def remove_response(self, id: str) -> None: ...
     def response(self, response: str) -> None: ...
     def set_body(self, body: str) -> None: ...
     def set_body_use_markup(self, use_markup: bool) -> None: ...
@@ -5672,6 +6462,7 @@ class PasswordEntryRow(
       attributes -> PangoAttrList: attributes
       enable-emoji-completion -> gboolean: enable-emoji-completion
       activates-default -> gboolean: activates-default
+      text-length -> guint: text-length
 
     Signals from GtkEditable:
       changed ()
@@ -5754,6 +6545,7 @@ class PasswordEntryRow(
         input_hints: Gtk.InputHints
         input_purpose: Gtk.InputPurpose
         show_apply_button: bool
+        text_length: int
         title: str
         title_selectable: bool
         use_markup: bool
@@ -5875,6 +6667,216 @@ class PasswordEntryRowClass(GObject.GPointer):
     """
 
     parent_class: EntryRowClass = ...
+
+class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesDialog(**properties)
+        new() -> Adw.Dialog
+
+    Object AdwPreferencesDialog
+
+    Properties from AdwPreferencesDialog:
+      visible-page -> GtkWidget: visible-page
+      visible-page-name -> gchararray: visible-page-name
+      search-enabled -> gboolean: search-enabled
+
+    Signals from AdwDialog:
+      closed ()
+      close-attempt ()
+
+    Properties from AdwDialog:
+      child -> GtkWidget: child
+      title -> gchararray: title
+      can-close -> gboolean: can-close
+      content-width -> gint: content-width
+      content-height -> gint: content-height
+      follows-content-size -> gboolean: follows-content-size
+      presentation-mode -> AdwDialogPresentationMode: presentation-mode
+      focus-widget -> GtkWidget: focus-widget
+      default-widget -> GtkWidget: default-widget
+      current-breakpoint -> AdwBreakpoint: current-breakpoint
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        search_enabled: bool
+        visible_page: Optional[Gtk.Widget]
+        visible_page_name: Optional[str]
+        can_close: bool
+        child: Optional[Gtk.Widget]
+        content_height: int
+        content_width: int
+        current_breakpoint: Optional[Breakpoint]
+        default_widget: Optional[Gtk.Widget]
+        focus_widget: Gtk.Widget
+        follows_content_size: bool
+        presentation_mode: DialogPresentationMode
+        title: str
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: Optional[Gtk.Widget]
+        receives_default: bool
+        root: Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: Optional[str]
+        tooltip_text: Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    parent_instance: Dialog = ...
+    def __init__(
+        self,
+        search_enabled: bool = ...,
+        visible_page: Gtk.Widget = ...,
+        visible_page_name: str = ...,
+        can_close: bool = ...,
+        child: Optional[Gtk.Widget] = ...,
+        content_height: int = ...,
+        content_width: int = ...,
+        default_widget: Optional[Gtk.Widget] = ...,
+        focus_widget: Gtk.Widget = ...,
+        follows_content_size: bool = ...,
+        presentation_mode: DialogPresentationMode = ...,
+        title: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: Optional[str] = ...,
+        tooltip_text: Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ): ...
+    def add(self, page: PreferencesPage) -> None: ...
+    def add_toast(self, toast: Toast) -> None: ...
+    def get_search_enabled(self) -> bool: ...
+    def get_visible_page(self) -> Optional[PreferencesPage]: ...
+    def get_visible_page_name(self) -> Optional[str]: ...
+    @classmethod
+    def new(cls) -> PreferencesDialog: ...
+    def pop_subpage(self) -> bool: ...
+    def push_subpage(self, page: NavigationPage) -> None: ...
+    def remove(self, page: PreferencesPage) -> None: ...
+    def set_search_enabled(self, search_enabled: bool) -> None: ...
+    def set_visible_page(self, page: PreferencesPage) -> None: ...
+    def set_visible_page_name(self, name: str) -> None: ...
+
+class PreferencesDialogClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PreferencesDialogClass()
+    """
+
+    parent_class: DialogClass = ...
+    padding: list[None] = ...
 
 class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
@@ -6452,6 +7454,8 @@ class PreferencesWindow(
     Properties from AdwWindow:
       content -> GtkWidget: content
       current-breakpoint -> AdwBreakpoint: current-breakpoint
+      dialogs -> GListModel: dialogs
+      visible-dialog -> AdwDialog: visible-dialog
 
     Signals from GtkWindow:
       keys-changed ()
@@ -6549,6 +7553,8 @@ class PreferencesWindow(
         visible_page_name: Optional[str]
         content: Optional[Gtk.Widget]
         current_breakpoint: Optional[Breakpoint]
+        dialogs: Gio.ListModel
+        visible_dialog: Optional[Dialog]
         application: Optional[Gtk.Application]
         child: Optional[Gtk.Widget]
         decorated: bool
@@ -7862,6 +8868,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
       allow-long-swipes -> gboolean: allow-long-swipes
       lower-overshoot -> gboolean: lower-overshoot
       upper-overshoot -> gboolean: upper-overshoot
+      allow-window-handle -> gboolean: allow-window-handle
 
     Signals from GObject:
       notify (GParam)
@@ -7870,6 +8877,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
     class Props:
         allow_long_swipes: bool
         allow_mouse_drag: bool
+        allow_window_handle: bool
         enabled: bool
         lower_overshoot: bool
         reversed: bool
@@ -7882,6 +8890,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
         self,
         allow_long_swipes: bool = ...,
         allow_mouse_drag: bool = ...,
+        allow_window_handle: bool = ...,
         enabled: bool = ...,
         lower_overshoot: bool = ...,
         reversed: bool = ...,
@@ -7891,6 +8900,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
     ): ...
     def get_allow_long_swipes(self) -> bool: ...
     def get_allow_mouse_drag(self) -> bool: ...
+    def get_allow_window_handle(self) -> bool: ...
     def get_enabled(self) -> bool: ...
     def get_lower_overshoot(self) -> bool: ...
     def get_reversed(self) -> bool: ...
@@ -7900,6 +8910,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
     def new(cls, swipeable: Swipeable) -> SwipeTracker: ...
     def set_allow_long_swipes(self, allow_long_swipes: bool) -> None: ...
     def set_allow_mouse_drag(self, allow_mouse_drag: bool) -> None: ...
+    def set_allow_window_handle(self, allow_window_handle: bool) -> None: ...
     def set_enabled(self, enabled: bool) -> None: ...
     def set_lower_overshoot(self, overshoot: bool) -> None: ...
     def set_reversed(self, reversed: bool) -> None: ...
@@ -10457,6 +11468,8 @@ class Window(
     Properties from AdwWindow:
       content -> GtkWidget: content
       current-breakpoint -> AdwBreakpoint: current-breakpoint
+      dialogs -> GListModel: dialogs
+      visible-dialog -> AdwDialog: visible-dialog
 
     Signals from GtkWindow:
       keys-changed ()
@@ -10550,6 +11563,8 @@ class Window(
     class Props:
         content: Optional[Gtk.Widget]
         current_breakpoint: Optional[Breakpoint]
+        dialogs: Gio.ListModel
+        visible_dialog: Optional[Dialog]
         application: Optional[Gtk.Application]
         child: Optional[Gtk.Widget]
         decorated: bool
@@ -10673,6 +11688,8 @@ class Window(
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def get_content(self) -> Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_dialogs(self) -> Gio.ListModel: ...
+    def get_visible_dialog(self) -> Optional[Dialog]: ...
     @classmethod
     def new(cls) -> Window: ...
     def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
@@ -10894,6 +11911,11 @@ class ColorScheme(GObject.GEnum):
     FORCE_LIGHT = 1
     PREFER_DARK = 3
     PREFER_LIGHT = 2
+
+class DialogPresentationMode(GObject.GEnum):
+    AUTO = 0
+    BOTTOM_SHEET = 2
+    FLOATING = 1
 
 class Easing(GObject.GEnum):
     EASE_IN_BACK = 25
