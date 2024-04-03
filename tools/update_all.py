@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
         print(f"Generating {output_path}", file=sys.stderr)
         gen_process = subprocess.run(
-            ["tools/generate.py", lib.name, lib.version, "-o", output_path],
+            ["tools/generate.py", lib.name, lib.version, "-u", output_path],
         )
 
         if gen_process.returncode == 0:

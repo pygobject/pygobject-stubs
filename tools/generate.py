@@ -931,26 +931,26 @@ def start(module: str, version: str, overrides: dict[str, str]) -> str:
 
 
 if __name__ == "__main__":
-    description = "Generate module stubs\n\nUsage: generate.py Gdk 3.0 > Gdk.py"
-
-    parser = argparse.ArgumentParser(description=description)
+    parser = argparse.ArgumentParser(description="Generate module stubs")
     parser.add_argument("module", type=str, help="Gdk, Gtk, ...")
     parser.add_argument("version", type=str, help="3.0, 4.0, ...")
-    parser.add_argument("-o", dest="output", type=str, help="Output file")
+    parser.add_argument(
+        "-u", dest="update", type=str, help="Stub file to update e.g. -u Gdk.pyi"
+    )
 
     args = parser.parse_args()
 
-    if args.output:
+    if args.update:
         overrides: dict[str, str] = {}
         try:
-            with open(args.output, "r") as file:
+            with open(args.update, "r") as file:
                 overrides = parse.parse(file.read())
         except FileNotFoundError:
             pass
         output = start(args.module, args.version, overrides)
         print("Running with this overrides:")
         pprint.pprint(overrides)
-        with open(args.output, "w+") as file:
+        with open(args.update, "w+") as file:
             file.write(output)
     else:
         print(start(args.module, args.version, {}))

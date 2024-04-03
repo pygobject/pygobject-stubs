@@ -8,9 +8,9 @@ Usage:
 
 ```shellsession
 $ python tools/generate.py -h
-usage: generate.py [-h] [-o OUTPUT] module version
+usage: generate.py [-h] [-u UPDATE] module version
 
-Generate module stubs Usage: generate.py Gdk 3.0 > Gdk.py
+Generate module stubs
 
 positional arguments:
   module      Gdk, Gtk, ...
@@ -18,7 +18,7 @@ positional arguments:
 
 options:
   -h, --help  show this help message and exit
-  -o OUTPUT   Output file
+  -u UPDATE   Stub file to update e.g. -u Gdk.pyi
 ```
 
 To re-generate all known stubs, run `tools/update_all.py`.
