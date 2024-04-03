@@ -1,3 +1,33 @@
+# 2.11.0 (03 Apr 2024)
+
+## Feature
+
+* Add Goa ([#163](https://github.com/pygobject/pygobject-stubs/issues/163)) (#163)
+* Add JavaSciptCore 6.0 for WebKit
+* Add Notify 0.7 ([#175](https://github.com/pygobject/pygobject-stubs/issues/175)) (#175)
+* Add Panel
+* Add Poppler ([#180](https://github.com/pygobject/pygobject-stubs/issues/180)) (#180)
+* Add Secret ([#163](https://github.com/pygobject/pygobject-stubs/issues/163)) (#163)
+* Add XApp
+* Add Xdp ([#178](https://github.com/pygobject/pygobject-stubs/issues/178)) (#178)
+* Add WebKit-6.0
+
+## Improvements
+
+* Generator: Rename optional argument
+
+## Typing
+
+* Improve type hints for
+    - Adw: Upgrade stubs to 1.5 ([#181](https://github.com/pygobject/pygobject-stubs/issues/181)) (#181)
+    - Gtk3
+    - Gtk4: Upgrade stubs to 4.14 ([#182](https://github.com/pygobject/pygobject-stubs/issues/182)) (#182)
+
+## Bug Fixes
+
+* Gsk: Use pyi extension
+* Generator: Fix regex class pattern (#168)
+
 # 2.10.0 (16 Nov 2023)
 
 ## Feature
