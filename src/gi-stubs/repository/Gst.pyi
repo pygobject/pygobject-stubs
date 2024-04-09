@@ -190,7 +190,7 @@ VALUE_LESS_THAN: int = -1
 VALUE_UNORDERED: int = 2
 VERSION_MAJOR: int = 1
 VERSION_MICRO: int = 5
-VERSION_MINOR: int = 20
+VERSION_MINOR: int = 22
 VERSION_NANO: int = 0
 _lock = ...  # FIXME Constant
 _namespace: str = "Gst"
@@ -239,6 +239,15 @@ def debug_log_get_line(
     object: Optional[GObject.Object],
     message: DebugMessage,
 ) -> str: ...
+def debug_log_id_literal(
+    category: DebugCategory,
+    level: DebugLevel,
+    file: str,
+    function: str,
+    line: int,
+    id: Optional[str],
+    message_string: str,
+) -> None: ...
 def debug_log_literal(
     category: DebugCategory,
     level: DebugLevel,
@@ -267,7 +276,8 @@ def error_get_message(domain: int, code: int) -> str: ...
 def event_type_get_flags(type: EventType) -> EventTypeFlags: ...
 def event_type_get_name(type: EventType) -> str: ...
 def event_type_to_quark(type: EventType) -> int: ...
-def filename_to_uri(filename: str) -> str: ...
+def event_type_to_sticky_ordering(type: EventType) -> int: ...
+def filename_to_uri(filename: str) -> Optional[str]: ...
 def flow_get_name(ret: FlowReturn) -> str: ...
 def flow_to_quark(ret: FlowReturn) -> int: ...
 def format_get_by_nick(nick: str) -> Format: ...
@@ -375,9 +385,9 @@ def stream_error_quark() -> int: ...
 def stream_type_get_name(stype: StreamType) -> str: ...
 def structure_take(newstr: Optional[Structure] = None) -> Tuple[bool, Structure]: ...
 def tag_exists(tag: str) -> bool: ...
-def tag_get_description(tag: str) -> Optional[str]: ...
+def tag_get_description(tag: str) -> str: ...
 def tag_get_flag(tag: str) -> TagFlag: ...
-def tag_get_nick(tag: str) -> Optional[str]: ...
+def tag_get_nick(tag: str) -> str: ...
 def tag_get_type(tag: str) -> Type: ...
 def tag_is_fixed(tag: str) -> bool: ...
 def tag_list_copy_value(list: TagList, tag: str) -> Tuple[bool, Any]: ...
@@ -409,7 +419,7 @@ def uri_get_location(uri: str) -> Optional[str]: ...
 def uri_get_protocol(uri: str) -> Optional[str]: ...
 def uri_has_protocol(uri: str, protocol: str) -> bool: ...
 def uri_is_valid(uri: str) -> bool: ...
-def uri_join_strings(base_uri: str, ref_uri: str) -> str: ...
+def uri_join_strings(base_uri: str, ref_uri: str) -> Optional[str]: ...
 def uri_protocol_is_supported(type: URIType, protocol: str) -> bool: ...
 def uri_protocol_is_valid(protocol: str) -> bool: ...
 def util_array_binary_search(
@@ -515,6 +525,15 @@ def version() -> Tuple[int, int, int, int]: ...
 def version_string() -> str: ...
 
 class AllocationParams(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        AllocationParams()
+        new() -> Gst.AllocationParams
+    """
+
     flags: MemoryFlags = ...
     align: int = ...
     prefix: int = ...
@@ -527,6 +546,28 @@ class AllocationParams(GObject.GBoxed):
     def new(cls) -> AllocationParams: ...
 
 class Allocator(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Allocator(**properties)
+
+    Object GstAllocator
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -543,7 +584,7 @@ class Allocator(Object):
     mem_unmap_full: Callable[[Memory, MapInfo], None] = ...
     _gst_reserved: list[None] = ...
     priv: AllocatorPrivate = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def alloc(
         self, size: int, params: Optional[AllocationParams] = None
     ) -> Optional[Memory]: ...
@@ -559,6 +600,14 @@ class Allocator(Object):
     def set_default(self) -> None: ...
 
 class AllocatorClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        AllocatorClass()
+    """
+
     object_class: ObjectClass = ...
     alloc: Callable[
         [Optional[Allocator], int, Optional[AllocationParams]], Optional[Memory]
@@ -569,6 +618,14 @@ class AllocatorClass(GObject.GPointer):
 class AllocatorPrivate(GObject.GPointer): ...
 
 class AtomicQueue(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(initial_size:int) -> Gst.AtomicQueue
+    """
+
     def length(self) -> int: ...
     @classmethod
     def new(cls, initial_size: int) -> AtomicQueue: ...
@@ -579,6 +636,51 @@ class AtomicQueue(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class Bin(Element, ChildProxy):
+    """
+    :Constructors:
+
+    ::
+
+        Bin(**properties)
+        new(name:str=None) -> Gst.Element
+
+    Object GstBin
+
+    Signals from GstBin:
+      element-added (GstElement)
+      element-removed (GstElement)
+      deep-element-added (GstBin, GstElement)
+      deep-element-removed (GstBin, GstElement)
+      do-latency () -> gboolean
+
+    Properties from GstBin:
+      async-handling -> gboolean: Async Handling
+        The bin will handle Asynchronous state changes
+      message-forward -> gboolean: Message Forward
+        Forwards all children messages
+
+    Signals from GstChildProxy:
+      child-added (GObject, gchararray)
+      child-removed (GObject, gchararray)
+
+    Signals from GstElement:
+      pad-added (GstPad)
+      pad-removed (GstPad)
+      no-more-pads ()
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         async_handling: bool
         message_forward: bool
@@ -603,7 +705,7 @@ class Bin(Element, ChildProxy):
         self,
         async_handling: bool = ...,
         message_forward: bool = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def add(self, element: Element) -> bool: ...
@@ -637,6 +739,14 @@ class Bin(Element, ChildProxy):
     def sync_children_states(self) -> bool: ...
 
 class BinClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BinClass()
+    """
+
     parent_class: ElementClass = ...
     pool: GLib.ThreadPool = ...
     element_added: Callable[[Bin, Element], None] = ...
@@ -653,6 +763,20 @@ class BinPrivate(GObject.GPointer): ...
 class Bitmask: ...
 
 class Buffer(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Buffer()
+        new() -> Gst.Buffer
+        new_allocate(allocator:Gst.Allocator=None, size:int, params:Gst.AllocationParams=None) -> Gst.Buffer or None
+        new_memdup(data:list) -> Gst.Buffer
+        new_wrapped(data:list) -> Gst.Buffer
+        new_wrapped_bytes(bytes:GLib.Bytes) -> Gst.Buffer
+        new_wrapped_full(flags:Gst.MemoryFlags, data:list, maxsize:int, offset:int, user_data=None, notify:GLib.DestroyNotify=None) -> Gst.Buffer
+    """
+
     mini_object: MiniObject = ...
     pool: BufferPool = ...
     pts: int = ...
@@ -670,11 +794,13 @@ class Buffer(GObject.GBoxed):
     def append(self, buf2: Buffer) -> Buffer: ...
     def append_memory(self, mem: Memory) -> None: ...
     def append_region(self, buf2: Buffer, offset: int, size: int) -> Buffer: ...
-    def copy_deep(self) -> Buffer: ...
+    def copy_deep(self) -> Optional[Buffer]: ...
     def copy_into(
         self, src: Buffer, flags: BufferCopyFlags, offset: int, size: int
     ) -> bool: ...
-    def copy_region(self, flags: BufferCopyFlags, offset: int, size: int) -> Buffer: ...
+    def copy_region(
+        self, flags: BufferCopyFlags, offset: int, size: int
+    ) -> Optional[Buffer]: ...
     def extract(self, offset: int) -> Tuple[int, bytes]: ...
     def extract_dup(self, offset: int, size: int) -> bytes: ...
     def fill(self, offset: int, src: Sequence[int]) -> int: ...
@@ -752,6 +878,15 @@ class Buffer(GObject.GBoxed):
     def unset_flags(self, flags: BufferFlags) -> bool: ...
 
 class BufferList(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gst.BufferList
+        new_sized(size:int) -> Gst.BufferList
+    """
+
     def calculate_size(self) -> int: ...
     def copy_deep(self) -> BufferList: ...
     def foreach(
@@ -768,6 +903,29 @@ class BufferList(GObject.GBoxed):
     def remove(self, idx: int, length: int) -> None: ...
 
 class BufferPool(Object):
+    """
+    :Constructors:
+
+    ::
+
+        BufferPool(**properties)
+        new() -> Gst.BufferPool
+
+    Object GstBufferPool
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -777,7 +935,7 @@ class BufferPool(Object):
     flushing: int = ...
     priv: BufferPoolPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def acquire_buffer(
         self, params: Optional[BufferPoolAcquireParams] = None
     ) -> Tuple[FlowReturn, Buffer]: ...
@@ -844,6 +1002,14 @@ class BufferPool(Object):
     def set_flushing(self, flushing: bool) -> None: ...
 
 class BufferPoolAcquireParams(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BufferPoolAcquireParams()
+    """
+
     format: Format = ...
     start: int = ...
     stop: int = ...
@@ -851,6 +1017,14 @@ class BufferPoolAcquireParams(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class BufferPoolClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BufferPoolClass()
+    """
+
     object_class: ObjectClass = ...
     get_options: Callable[[BufferPool], list[str]] = ...
     set_config: Callable[[BufferPool, Structure], bool] = ...
@@ -872,6 +1046,33 @@ class BufferPoolClass(GObject.GPointer):
 class BufferPoolPrivate(GObject.GPointer): ...
 
 class Bus(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Bus(**properties)
+        new() -> Gst.Bus
+
+    Object GstBus
+
+    Properties from GstBus:
+      enable-async -> gboolean: Enable Async
+        Enable async message delivery for bus watches and gst_bus_pop()
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -882,7 +1083,7 @@ class Bus(Object):
     priv: BusPrivate = ...
     _gst_reserved: list[None] = ...
     def __init__(
-        self, enable_async: bool = ..., name: str = ..., parent: Object = ...
+        self, enable_async: bool = ..., name: Optional[str] = ..., parent: Object = ...
     ): ...
     def add_signal_watch(self) -> None: ...
     def add_signal_watch_full(self, priority: int) -> None: ...
@@ -917,6 +1118,14 @@ class Bus(Object):
     ) -> Optional[Message]: ...
 
 class BusClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BusClass()
+    """
+
     parent_class: ObjectClass = ...
     message: Callable[[Bus, Message], None] = ...
     sync_message: Callable[[Bus, Message], None] = ...
@@ -925,6 +1134,17 @@ class BusClass(GObject.GPointer):
 class BusPrivate(GObject.GPointer): ...
 
 class Caps(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Caps()
+        new_any() -> Gst.Caps
+        new_empty() -> Gst.Caps
+        new_empty_simple(media_type:str) -> Gst.Caps
+    """
+
     mini_object: MiniObject = ...
     def append(self, caps2: Caps) -> None: ...
     def append_structure(self, structure: Structure) -> None: ...
@@ -985,6 +1205,16 @@ class Caps(GObject.GBoxed):
     def truncate(self) -> Caps: ...
 
 class CapsFeatures(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_any() -> Gst.CapsFeatures
+        new_empty() -> Gst.CapsFeatures
+        new_single(feature:str) -> Gst.CapsFeatures
+    """
+
     def add(self, feature: str) -> None: ...
     def add_id(self, feature: int) -> None: ...
     def contains(self, feature: str) -> bool: ...
@@ -1010,16 +1240,32 @@ class CapsFeatures(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class ChildProxy(GObject.GInterface):
+    """
+    Interface GstChildProxy
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def child_added(self, child: GObject.Object, name: str) -> None: ...
     def child_removed(self, child: GObject.Object, name: str) -> None: ...
     def get_child_by_index(self, index: int) -> Optional[GObject.Object]: ...
     def get_child_by_name(self, name: str) -> Optional[GObject.Object]: ...
+    def get_child_by_name_recurse(self, name: str) -> Optional[GObject.Object]: ...
     def get_children_count(self) -> int: ...
     def get_property(self, name: str) -> Any: ...
     def lookup(self, name: str) -> Tuple[bool, GObject.Object, GObject.ParamSpec]: ...
     def set_property(self, name: str, value: Any) -> None: ...
 
 class ChildProxyInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ChildProxyInterface()
+    """
+
     parent: GObject.TypeInterface = ...
     get_child_by_name: Callable[[ChildProxy, str], Optional[GObject.Object]] = ...
     get_child_by_index: Callable[[ChildProxy, int], Optional[GObject.Object]] = ...
@@ -1029,6 +1275,39 @@ class ChildProxyInterface(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class Clock(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Clock(**properties)
+
+    Object GstClock
+
+    Signals from GstClock:
+      synced (gboolean)
+
+    Properties from GstClock:
+      window-size -> gint: Window size
+        The size of the window used to calculate rate and offset
+      window-threshold -> gint: Window threshold
+        The threshold to start calculating rate and offset
+      timeout -> guint64: Timeout
+        The amount of time, in nanoseconds, to sample master and slave clocks
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         timeout: int
         window_size: int
@@ -1045,7 +1324,7 @@ class Clock(Object):
         timeout: int = ...,
         window_size: int = ...,
         window_threshold: int = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def add_observation(self, slave: int, master: int) -> Tuple[bool, float]: ...
@@ -1117,6 +1396,14 @@ class Clock(Object):
     def wait_for_sync(self, timeout: int) -> bool: ...
 
 class ClockClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClockClass()
+    """
+
     parent_class: ObjectClass = ...
     change_resolution: Callable[[Clock, int, int], int] = ...
     get_resolution: Callable[[Clock], int] = ...
@@ -1127,6 +1414,14 @@ class ClockClass(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class ClockEntry(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ClockEntry()
+    """
+
     refcount: int = ...
     clock: Clock = ...
     type: ClockEntryType = ...
@@ -1143,6 +1438,14 @@ class ClockEntry(GObject.GPointer):
 class ClockPrivate(GObject.GPointer): ...
 
 class Context(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(context_type:str, persistent:bool) -> Gst.Context
+    """
+
     def get_context_type(self) -> str: ...
     def get_structure(self) -> Structure: ...
     def has_context_type(self, context_type: str) -> bool: ...
@@ -1152,6 +1455,34 @@ class Context(GObject.GBoxed):
     def writable_structure(self) -> Structure: ...
 
 class ControlBinding(Object):
+    """
+    :Constructors:
+
+    ::
+
+        ControlBinding(**properties)
+
+    Object GstControlBinding
+
+    Properties from GstControlBinding:
+      object -> GstObject: Object
+        The object of the property
+      name -> gchararray: Name
+        The name of the property
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: str
         object: Object
@@ -1165,14 +1496,14 @@ class ControlBinding(Object):
     disabled: bool = ...
     def __init__(self, name: str = ..., object: Object = ..., parent: Object = ...): ...
     def do_get_g_value_array(
-        self, timestamp: int, interval: int, n_values: int, values: Sequence[Any]
+        self, timestamp: int, interval: int, values: Sequence[Any]
     ) -> bool: ...
     def do_get_value(self, timestamp: int) -> Optional[Any]: ...
     def do_sync_values(
         self, object: Object, timestamp: int, last_sync: int
     ) -> bool: ...
     def get_g_value_array(
-        self, timestamp: int, interval: int, n_values: int, values: Sequence[Any]
+        self, timestamp: int, interval: int, values: Sequence[Any]
     ) -> bool: ...
     def get_value(self, timestamp: int) -> Optional[Any]: ...
     def is_disabled(self) -> bool: ...
@@ -1180,18 +1511,46 @@ class ControlBinding(Object):
     def sync_values(self, object: Object, timestamp: int, last_sync: int) -> bool: ...
 
 class ControlBindingClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ControlBindingClass()
+    """
+
     parent_class: ObjectClass = ...
     sync_values: Callable[[ControlBinding, Object, int, int], bool] = ...
     get_value: Callable[[ControlBinding, int], Optional[Any]] = ...
     get_value_array: None = ...
-    get_g_value_array: Callable[
-        [ControlBinding, int, int, int, Sequence[Any]], bool
-    ] = ...
+    get_g_value_array: Callable[[ControlBinding, int, int, Sequence[Any]], bool] = ...
     _gst_reserved: list[None] = ...
 
 class ControlBindingPrivate(GObject.GPointer): ...
 
 class ControlSource(Object):
+    """
+    :Constructors:
+
+    ::
+
+        ControlSource(**properties)
+
+    Object GstControlSource
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -1201,22 +1560,58 @@ class ControlSource(Object):
     get_value: Callable[[ControlSource, int, float], bool] = ...
     get_value_array: Callable[[ControlSource, int, int, int, float], bool] = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def control_source_get_value(self, timestamp: int) -> Tuple[bool, float]: ...
     def control_source_get_value_array(
-        self, timestamp: int, interval: int, n_values: int, values: Sequence[float]
+        self, timestamp: int, interval: int, values: Sequence[float]
     ) -> bool: ...
 
 class ControlSourceClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ControlSourceClass()
+    """
+
     parent_class: ObjectClass = ...
     _gst_reserved: list[None] = ...
 
 class CustomMeta(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        CustomMeta()
+    """
+
     meta: Meta = ...
     def get_structure(self) -> Structure: ...
     def has_name(self, name: str) -> bool: ...
 
 class DateTime(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(tzoffset:float, year:int, month:int, day:int, hour:int, minute:int, seconds:float) -> Gst.DateTime or None
+        new_from_g_date_time(dt:GLib.DateTime=None) -> Gst.DateTime or None
+        new_from_iso8601_string(string:str) -> Gst.DateTime or None
+        new_from_unix_epoch_local_time(secs:int) -> Gst.DateTime or None
+        new_from_unix_epoch_local_time_usecs(usecs:int) -> Gst.DateTime or None
+        new_from_unix_epoch_utc(secs:int) -> Gst.DateTime or None
+        new_from_unix_epoch_utc_usecs(usecs:int) -> Gst.DateTime or None
+        new_local_time(year:int, month:int, day:int, hour:int, minute:int, seconds:float) -> Gst.DateTime or None
+        new_now_local_time() -> Gst.DateTime or None
+        new_now_utc() -> Gst.DateTime or None
+        new_y(year:int) -> Gst.DateTime or None
+        new_ym(year:int, month:int) -> Gst.DateTime or None
+        new_ymd(year:int, month:int, day:int) -> Gst.DateTime or None
+    """
+
     def get_day(self) -> int: ...
     def get_hour(self) -> int: ...
     def get_microsecond(self) -> int: ...
@@ -1275,6 +1670,14 @@ class DateTime(GObject.GBoxed):
     def unref(self) -> None: ...
 
 class DebugCategory(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DebugCategory()
+    """
+
     threshold: int = ...
     color: int = ...
     name: str = ...
@@ -1289,8 +1692,40 @@ class DebugCategory(GObject.GPointer):
 
 class DebugMessage(GObject.GPointer):
     def get(self) -> Optional[str]: ...
+    def get_id(self) -> Optional[str]: ...
 
 class Device(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Device(**properties)
+
+    Object GstDevice
+
+    Signals from GstDevice:
+      removed ()
+
+    Properties from GstDevice:
+      display-name -> gchararray: Display Name
+        The user-friendly name of the device
+      device-class -> gchararray: Device Class
+        The Class of the device
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Optional[Caps]
         device_class: str
@@ -1309,7 +1744,7 @@ class Device(Object):
         device_class: str = ...,
         display_name: str = ...,
         properties: Structure = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def create_element(self, name: Optional[str] = None) -> Optional[Element]: ...
@@ -1324,12 +1759,47 @@ class Device(Object):
     def reconfigure_element(self, element: Element) -> bool: ...
 
 class DeviceClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceClass()
+    """
+
     parent_class: ObjectClass = ...
     create_element: Callable[[Device, Optional[str]], Optional[Element]] = ...
     reconfigure_element: Callable[[Device, Element], bool] = ...
     _gst_reserved: list[None] = ...
 
 class DeviceMonitor(Object):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceMonitor(**properties)
+        new() -> Gst.DeviceMonitor
+
+    Object GstDeviceMonitor
+
+    Properties from GstDeviceMonitor:
+      show-all -> gboolean: Show All
+        Show all devices, even those from hidden providers
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         show_all: bool
         name: Optional[str]
@@ -1339,7 +1809,9 @@ class DeviceMonitor(Object):
     parent: Object = ...
     priv: DeviceMonitorPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, show_all: bool = ..., name: str = ..., parent: Object = ...): ...
+    def __init__(
+        self, show_all: bool = ..., name: Optional[str] = ..., parent: Object = ...
+    ): ...
     def add_filter(
         self, classes: Optional[str] = None, caps: Optional[Caps] = None
     ) -> int: ...
@@ -1355,6 +1827,14 @@ class DeviceMonitor(Object):
     def stop(self) -> None: ...
 
 class DeviceMonitorClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceMonitorClass()
+    """
+
     parent_class: ObjectClass = ...
     _gst_reserved: list[None] = ...
 
@@ -1362,6 +1842,32 @@ class DeviceMonitorPrivate(GObject.GPointer): ...
 class DevicePrivate(GObject.GPointer): ...
 
 class DeviceProvider(Object):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceProvider(**properties)
+
+    Object GstDeviceProvider
+
+    Signals from GstDeviceProvider:
+      provider-hidden (gchararray)
+      provider-unhidden (gchararray)
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -1371,7 +1877,7 @@ class DeviceProvider(Object):
     devices: list[None] = ...
     priv: DeviceProviderPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def add_metadata(self, key: str, value: str) -> None: ...
     def add_static_metadata(self, key: str, value: str) -> None: ...
     def can_monitor(self) -> bool: ...
@@ -1402,6 +1908,14 @@ class DeviceProvider(Object):
     def unhide_provider(self, name: str) -> None: ...
 
 class DeviceProviderClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceProviderClass()
+    """
+
     parent_class: ObjectClass = ...
     factory: DeviceProviderFactory = ...
     probe: None = ...
@@ -1420,12 +1934,34 @@ class DeviceProviderClass(GObject.GPointer):
     ) -> None: ...
 
 class DeviceProviderFactory(PluginFeature):
+    """
+    :Constructors:
+
+    ::
+
+        DeviceProviderFactory(**properties)
+
+    Object GstDeviceProviderFactory
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     @staticmethod
     def find(name: str) -> Optional[DeviceProviderFactory]: ...
     def get(self) -> Optional[DeviceProvider]: ...
@@ -1444,18 +1980,67 @@ class DeviceProviderPrivate(GObject.GPointer): ...
 class DoubleRange: ...
 
 class DynamicTypeFactory(PluginFeature):
+    """
+    :Constructors:
+
+    ::
+
+        DynamicTypeFactory(**properties)
+
+    Object GstDynamicTypeFactory
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     @staticmethod
     def load(factoryname: str) -> Type: ...
 
 class DynamicTypeFactoryClass(GObject.GPointer): ...
 
 class Element(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Element(**properties)
+
+    Object GstElement
+
+    Signals from GstElement:
+      pad-added (GstPad)
+      pad-removed (GstPad)
+      no-more-pads ()
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -1483,7 +2068,7 @@ class Element(Object):
     pads_cookie: int = ...
     contexts: list[Context] = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def abort_state(self) -> None: ...
     def add_metadata(self, key: str, value: str) -> None: ...
     def add_pad(self, pad: Pad) -> bool: ...
@@ -1666,6 +2251,14 @@ class Element(Object):
     def unlink_pads(self, srcpadname: str, dest: Element, destpadname: str) -> None: ...
 
 class ElementClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ElementClass()
+    """
+
     parent_class: ObjectClass = ...
     metadata: None = ...
     elementfactory: ElementFactory = ...
@@ -1709,12 +2302,34 @@ class ElementClass(GObject.GPointer):
     ) -> None: ...
 
 class ElementFactory(PluginFeature):
+    """
+    :Constructors:
+
+    ::
+
+        ElementFactory(**properties)
+
+    Object GstElementFactory
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def can_sink_all_caps(self, caps: Caps) -> bool: ...
     def can_sink_any_caps(self, caps: Caps) -> bool: ...
     def can_src_all_caps(self, caps: Caps) -> bool: ...
@@ -1722,7 +2337,6 @@ class ElementFactory(PluginFeature):
     def create(self, name: Optional[str] = None) -> Optional[Element]: ...
     def create_with_properties(
         self,
-        n: int,
         names: Optional[Sequence[str]] = None,
         values: Optional[Sequence[Any]] = None,
     ) -> Optional[Element]: ...
@@ -1752,7 +2366,6 @@ class ElementFactory(PluginFeature):
     @staticmethod
     def make_with_properties(
         factoryname: str,
-        n: int,
         names: Optional[Sequence[str]] = None,
         values: Optional[Sequence[Any]] = None,
     ) -> Optional[Element]: ...
@@ -1760,6 +2373,40 @@ class ElementFactory(PluginFeature):
 class ElementFactoryClass(GObject.GPointer): ...
 
 class Event(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Event()
+        new_buffer_size(format:Gst.Format, minsize:int, maxsize:int, async:bool) -> Gst.Event
+        new_caps(caps:Gst.Caps) -> Gst.Event
+        new_custom(type:Gst.EventType, structure:Gst.Structure) -> Gst.Event
+        new_eos() -> Gst.Event
+        new_flush_start() -> Gst.Event
+        new_flush_stop(reset_time:bool) -> Gst.Event
+        new_gap(timestamp:int, duration:int) -> Gst.Event
+        new_instant_rate_change(rate_multiplier:float, new_flags:Gst.SegmentFlags) -> Gst.Event
+        new_instant_rate_sync_time(rate_multiplier:float, running_time:int, upstream_running_time:int) -> Gst.Event
+        new_latency(latency:int) -> Gst.Event
+        new_navigation(structure:Gst.Structure) -> Gst.Event
+        new_protection(system_id:str, data:Gst.Buffer, origin:str) -> Gst.Event
+        new_qos(type:Gst.QOSType, proportion:float, diff:int, timestamp:int) -> Gst.Event
+        new_reconfigure() -> Gst.Event
+        new_seek(rate:float, format:Gst.Format, flags:Gst.SeekFlags, start_type:Gst.SeekType, start:int, stop_type:Gst.SeekType, stop:int) -> Gst.Event
+        new_segment(segment:Gst.Segment) -> Gst.Event
+        new_segment_done(format:Gst.Format, position:int) -> Gst.Event
+        new_select_streams(streams:list) -> Gst.Event
+        new_sink_message(name:str, msg:Gst.Message) -> Gst.Event
+        new_step(format:Gst.Format, amount:int, rate:float, flush:bool, intermediate:bool) -> Gst.Event
+        new_stream_collection(collection:Gst.StreamCollection) -> Gst.Event
+        new_stream_group_done(group_id:int) -> Gst.Event
+        new_stream_start(stream_id:str) -> Gst.Event
+        new_tag(taglist:Gst.TagList) -> Gst.Event
+        new_toc(toc:Gst.Toc, updated:bool) -> Gst.Event
+        new_toc_select(uid:str) -> Gst.Event
+    """
+
     mini_object: MiniObject = ...
     type: EventType = ...
     timestamp: int = ...
@@ -1776,9 +2423,9 @@ class Event(GObject.GBoxed):
         cls, format: Format, minsize: int, maxsize: int, _async: bool
     ) -> Event: ...
     @classmethod
-    def new_caps(cls, caps: Caps) -> Optional[Event]: ...
+    def new_caps(cls, caps: Caps) -> Event: ...
     @classmethod
-    def new_custom(cls, type: EventType, structure: Structure) -> Optional[Event]: ...
+    def new_custom(cls, type: EventType, structure: Structure) -> Event: ...
     @classmethod
     def new_eos(cls) -> Event: ...
     @classmethod
@@ -1804,7 +2451,7 @@ class Event(GObject.GBoxed):
     @classmethod
     def new_qos(
         cls, type: QOSType, proportion: float, diff: int, timestamp: int
-    ) -> Optional[Event]: ...
+    ) -> Event: ...
     @classmethod
     def new_reconfigure(cls) -> Event: ...
     @classmethod
@@ -1817,9 +2464,9 @@ class Event(GObject.GBoxed):
         start: int,
         stop_type: SeekType,
         stop: int,
-    ) -> Optional[Event]: ...
+    ) -> Event: ...
     @classmethod
-    def new_segment(cls, segment: Segment) -> Optional[Event]: ...
+    def new_segment(cls, segment: Segment) -> Event: ...
     @classmethod
     def new_segment_done(cls, format: Format, position: int) -> Event: ...
     @classmethod
@@ -1829,7 +2476,7 @@ class Event(GObject.GBoxed):
     @classmethod
     def new_step(
         cls, format: Format, amount: int, rate: float, flush: bool, intermediate: bool
-    ) -> Optional[Event]: ...
+    ) -> Event: ...
     @classmethod
     def new_stream_collection(cls, collection: StreamCollection) -> Event: ...
     @classmethod
@@ -1880,10 +2527,26 @@ class Event(GObject.GBoxed):
     def writable_structure(self) -> Structure: ...
 
 class FlagSet:
+    """
+    :Constructors:
+
+    ::
+
+        FlagSet(**properties)
+    """
+
     @staticmethod
     def register(flags_type: Type) -> Type: ...
 
 class FormatDefinition(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FormatDefinition()
+    """
+
     value: Format = ...
     nick: str = ...
     description: str = ...
@@ -1893,6 +2556,44 @@ class Fraction: ...
 class FractionRange: ...
 
 class GhostPad(ProxyPad):
+    """
+    :Constructors:
+
+    ::
+
+        GhostPad(**properties)
+        new(name:str=None, target:Gst.Pad) -> Gst.Pad or None
+        new_from_template(name:str=None, target:Gst.Pad, templ:Gst.PadTemplate) -> Gst.Pad or None
+        new_no_target(name:str=None, dir:Gst.PadDirection) -> Gst.Pad or None
+        new_no_target_from_template(name:str=None, templ:Gst.PadTemplate) -> Gst.Pad or None
+
+    Object GstGhostPad
+
+    Signals from GstPad:
+      linked (GstPad)
+      unlinked (GstPad)
+
+    Properties from GstPad:
+      direction -> GstPadDirection: Direction
+        The direction of the pad
+      template -> GstPadTemplate: Template
+        The GstPadTemplate of this pad
+      offset -> gint64: Offset
+        The running time offset of the pad
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Caps
         direction: PadDirection
@@ -1909,7 +2610,7 @@ class GhostPad(ProxyPad):
         direction: PadDirection = ...,
         offset: int = ...,
         template: PadTemplate = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     @staticmethod
@@ -1937,6 +2638,14 @@ class GhostPad(ProxyPad):
     def set_target(self, newtarget: Optional[Pad] = None) -> bool: ...
 
 class GhostPadClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        GhostPadClass()
+    """
+
     parent_class: ProxyPadClass = ...
     _gst_reserved: list[None] = ...
 
@@ -1954,6 +2663,7 @@ class Iterator(GObject.GBoxed):
     master_cookie: int = ...
     size: int = ...
     _gst_reserved: list[None] = ...
+
     def copy(self) -> Iterator: ...
     def filter(self, func: Callable[[None, None], int], user_data: Any) -> Iterator: ...
     def find_custom(
@@ -1971,6 +2681,14 @@ class Iterator(GObject.GBoxed):
     def resync(self) -> None: ...
 
 class MapInfo(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MapInfo()
+    """
+
     memory: Memory = ...
     flags: MapFlags = ...
     data: bytes = ...
@@ -1980,6 +2698,15 @@ class MapInfo(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class Memory(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Memory()
+        new_wrapped(flags:Gst.MemoryFlags, data:list, maxsize:int, offset:int, user_data=None, notify:GLib.DestroyNotify=None) -> Gst.Memory or None
+    """
+
     mini_object: MiniObject = ...
     allocator: Allocator = ...
     parent: Memory = ...
@@ -1987,7 +2714,7 @@ class Memory(GObject.GBoxed):
     align: int = ...
     offset: int = ...
     size: int = ...
-    def copy(self, offset: int, size: int) -> Memory: ...
+    def copy(self, offset: int, size: int) -> Optional[Memory]: ...
     def get_sizes(self) -> Tuple[int, int, int]: ...
     def is_span(self, mem2: Memory) -> Tuple[bool, int]: ...
     def is_type(self, mem_type: str) -> bool: ...
@@ -2010,6 +2737,57 @@ class Memory(GObject.GBoxed):
     def unmap(self, info: MapInfo) -> None: ...
 
 class Message(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Message()
+        new_application(src:Gst.Object=None, structure:Gst.Structure) -> Gst.Message
+        new_async_done(src:Gst.Object=None, running_time:int) -> Gst.Message
+        new_async_start(src:Gst.Object=None) -> Gst.Message
+        new_buffering(src:Gst.Object=None, percent:int) -> Gst.Message
+        new_clock_lost(src:Gst.Object=None, clock:Gst.Clock) -> Gst.Message
+        new_clock_provide(src:Gst.Object=None, clock:Gst.Clock, ready:bool) -> Gst.Message
+        new_custom(type:Gst.MessageType, src:Gst.Object=None, structure:Gst.Structure=None) -> Gst.Message
+        new_device_added(src:Gst.Object=None, device:Gst.Device) -> Gst.Message
+        new_device_changed(src:Gst.Object=None, device:Gst.Device, changed_device:Gst.Device) -> Gst.Message
+        new_device_removed(src:Gst.Object=None, device:Gst.Device) -> Gst.Message
+        new_duration_changed(src:Gst.Object=None) -> Gst.Message
+        new_element(src:Gst.Object=None, structure:Gst.Structure) -> Gst.Message
+        new_eos(src:Gst.Object=None) -> Gst.Message
+        new_error(src:Gst.Object=None, error:error, debug:str) -> Gst.Message
+        new_error_with_details(src:Gst.Object=None, error:error, debug:str, details:Gst.Structure=None) -> Gst.Message
+        new_have_context(src:Gst.Object=None, context:Gst.Context) -> Gst.Message
+        new_info(src:Gst.Object=None, error:error, debug:str) -> Gst.Message
+        new_info_with_details(src:Gst.Object=None, error:error, debug:str, details:Gst.Structure=None) -> Gst.Message
+        new_instant_rate_request(src:Gst.Object=None, rate_multiplier:float) -> Gst.Message
+        new_latency(src:Gst.Object=None) -> Gst.Message
+        new_need_context(src:Gst.Object=None, context_type:str) -> Gst.Message
+        new_new_clock(src:Gst.Object=None, clock:Gst.Clock) -> Gst.Message
+        new_progress(src:Gst.Object=None, type:Gst.ProgressType, code:str, text:str) -> Gst.Message
+        new_property_notify(src:Gst.Object, property_name:str, val:GObject.Value=None) -> Gst.Message
+        new_qos(src:Gst.Object=None, live:bool, running_time:int, stream_time:int, timestamp:int, duration:int) -> Gst.Message
+        new_redirect(src:Gst.Object=None, location:str, tag_list:Gst.TagList=None, entry_struct:Gst.Structure=None) -> Gst.Message
+        new_request_state(src:Gst.Object=None, state:Gst.State) -> Gst.Message
+        new_reset_time(src:Gst.Object=None, running_time:int) -> Gst.Message
+        new_segment_done(src:Gst.Object=None, format:Gst.Format, position:int) -> Gst.Message
+        new_segment_start(src:Gst.Object=None, format:Gst.Format, position:int) -> Gst.Message
+        new_state_changed(src:Gst.Object=None, oldstate:Gst.State, newstate:Gst.State, pending:Gst.State) -> Gst.Message
+        new_state_dirty(src:Gst.Object=None) -> Gst.Message
+        new_step_done(src:Gst.Object=None, format:Gst.Format, amount:int, rate:float, flush:bool, intermediate:bool, duration:int, eos:bool) -> Gst.Message
+        new_step_start(src:Gst.Object=None, active:bool, format:Gst.Format, amount:int, rate:float, flush:bool, intermediate:bool) -> Gst.Message
+        new_stream_collection(src:Gst.Object=None, collection:Gst.StreamCollection) -> Gst.Message
+        new_stream_start(src:Gst.Object=None) -> Gst.Message
+        new_stream_status(src:Gst.Object=None, type:Gst.StreamStatusType, owner:Gst.Element) -> Gst.Message
+        new_streams_selected(src:Gst.Object=None, collection:Gst.StreamCollection) -> Gst.Message
+        new_structure_change(src:Gst.Object=None, type:Gst.StructureChangeType, owner:Gst.Element, busy:bool) -> Gst.Message
+        new_tag(src:Gst.Object=None, tag_list:Gst.TagList) -> Gst.Message
+        new_toc(src:Gst.Object=None, toc:Gst.Toc, updated:bool) -> Gst.Message
+        new_warning(src:Gst.Object=None, error:error, debug:str) -> Gst.Message
+        new_warning_with_details(src:Gst.Object=None, error:error, debug:str, details:Gst.Structure=None) -> Gst.Message
+    """
+
     mini_object: MiniObject = ...
     type: MessageType = ...
     timestamp: int = ...
@@ -2031,15 +2809,13 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_application(
         cls, src: Optional[Object], structure: Structure
-    ) -> Optional[Message]: ...
+    ) -> Message: ...
     @classmethod
     def new_async_done(cls, src: Optional[Object], running_time: int) -> Message: ...
     @classmethod
     def new_async_start(cls, src: Optional[Object] = None) -> Message: ...
     @classmethod
-    def new_buffering(
-        cls, src: Optional[Object], percent: int
-    ) -> Optional[Message]: ...
+    def new_buffering(cls, src: Optional[Object], percent: int) -> Message: ...
     @classmethod
     def new_clock_lost(cls, src: Optional[Object], clock: Clock) -> Message: ...
     @classmethod
@@ -2052,21 +2828,19 @@ class Message(GObject.GBoxed):
         type: MessageType,
         src: Optional[Object] = None,
         structure: Optional[Structure] = None,
-    ) -> Optional[Message]: ...
-    @classmethod
-    def new_device_added(cls, src: Object, device: Device) -> Message: ...
-    @classmethod
-    def new_device_changed(
-        cls, src: Object, device: Device, changed_device: Device
     ) -> Message: ...
     @classmethod
-    def new_device_removed(cls, src: Object, device: Device) -> Message: ...
+    def new_device_added(cls, src: Optional[Object], device: Device) -> Message: ...
+    @classmethod
+    def new_device_changed(
+        cls, src: Optional[Object], device: Device, changed_device: Device
+    ) -> Message: ...
+    @classmethod
+    def new_device_removed(cls, src: Optional[Object], device: Device) -> Message: ...
     @classmethod
     def new_duration_changed(cls, src: Optional[Object] = None) -> Message: ...
     @classmethod
-    def new_element(
-        cls, src: Optional[Object], structure: Structure
-    ) -> Optional[Message]: ...
+    def new_element(cls, src: Optional[Object], structure: Structure) -> Message: ...
     @classmethod
     def new_eos(cls, src: Optional[Object] = None) -> Message: ...
     @classmethod
@@ -2080,7 +2854,7 @@ class Message(GObject.GBoxed):
         error: GLib.Error,
         debug: str,
         details: Optional[Structure] = None,
-    ) -> Optional[Message]: ...
+    ) -> Message: ...
     @classmethod
     def new_have_context(cls, src: Optional[Object], context: Context) -> Message: ...
     @classmethod
@@ -2094,10 +2868,10 @@ class Message(GObject.GBoxed):
         error: GLib.Error,
         debug: str,
         details: Optional[Structure] = None,
-    ) -> Optional[Message]: ...
+    ) -> Message: ...
     @classmethod
     def new_instant_rate_request(
-        cls, src: Object, rate_multiplier: float
+        cls, src: Optional[Object], rate_multiplier: float
     ) -> Message: ...
     @classmethod
     def new_latency(cls, src: Optional[Object] = None) -> Message: ...
@@ -2107,8 +2881,8 @@ class Message(GObject.GBoxed):
     def new_new_clock(cls, src: Optional[Object], clock: Clock) -> Message: ...
     @classmethod
     def new_progress(
-        cls, src: Object, type: ProgressType, code: str, text: str
-    ) -> Optional[Message]: ...
+        cls, src: Optional[Object], type: ProgressType, code: str, text: str
+    ) -> Message: ...
     @classmethod
     def new_property_notify(
         cls, src: Object, property_name: str, val: Optional[Any] = None
@@ -2116,7 +2890,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_qos(
         cls,
-        src: Object,
+        src: Optional[Object],
         live: bool,
         running_time: int,
         stream_time: int,
@@ -2126,7 +2900,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_redirect(
         cls,
-        src: Object,
+        src: Optional[Object],
         location: str,
         tag_list: Optional[TagList] = None,
         entry_struct: Optional[Structure] = None,
@@ -2152,7 +2926,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_step_done(
         cls,
-        src: Object,
+        src: Optional[Object],
         format: Format,
         amount: int,
         rate: float,
@@ -2164,7 +2938,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_step_start(
         cls,
-        src: Object,
+        src: Optional[Object],
         active: bool,
         format: Format,
         amount: int,
@@ -2174,17 +2948,17 @@ class Message(GObject.GBoxed):
     ) -> Message: ...
     @classmethod
     def new_stream_collection(
-        cls, src: Object, collection: StreamCollection
+        cls, src: Optional[Object], collection: StreamCollection
     ) -> Message: ...
     @classmethod
     def new_stream_start(cls, src: Optional[Object] = None) -> Message: ...
     @classmethod
     def new_stream_status(
-        cls, src: Object, type: StreamStatusType, owner: Element
+        cls, src: Optional[Object], type: StreamStatusType, owner: Element
     ) -> Message: ...
     @classmethod
     def new_streams_selected(
-        cls, src: Object, collection: StreamCollection
+        cls, src: Optional[Object], collection: StreamCollection
     ) -> Message: ...
     @classmethod
     def new_structure_change(
@@ -2197,7 +2971,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_tag(cls, src: Optional[Object], tag_list: TagList) -> Message: ...
     @classmethod
-    def new_toc(cls, src: Object, toc: Toc, updated: bool) -> Message: ...
+    def new_toc(cls, src: Optional[Object], toc: Toc, updated: bool) -> Message: ...
     @classmethod
     def new_warning(
         cls, src: Optional[Object], error: GLib.Error, debug: str
@@ -2209,7 +2983,7 @@ class Message(GObject.GBoxed):
         error: GLib.Error,
         debug: str,
         details: Optional[Structure] = None,
-    ) -> Optional[Message]: ...
+    ) -> Message: ...
     def parse_async_done(self) -> int: ...
     def parse_buffering(self) -> int: ...
     def parse_buffering_stats(self) -> Tuple[BufferingMode, int, int, int]: ...
@@ -2264,6 +3038,14 @@ class Message(GObject.GBoxed):
     def writable_structure(self) -> Structure: ...
 
 class Meta(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Meta()
+    """
+
     flags: MetaFlags = ...
     info: MetaInfo = ...
     @staticmethod
@@ -2294,6 +3076,14 @@ class Meta(GObject.GPointer):
     ) -> MetaInfo: ...
 
 class MetaInfo(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MetaInfo()
+    """
+
     api: Type = ...
     type: Type = ...
     size: int = ...
@@ -2303,11 +3093,27 @@ class MetaInfo(GObject.GPointer):
     def is_custom(self) -> bool: ...
 
 class MetaTransformCopy(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MetaTransformCopy()
+    """
+
     region: bool = ...
     offset: int = ...
     size: int = ...
 
 class MiniObject(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        MiniObject()
+    """
+
     type: Type = ...
     refcount: int = ...
     lockstate: int = ...
@@ -2333,6 +3139,28 @@ class MiniObject(GObject.GBoxed):
     def unlock(self, flags: LockFlags) -> None: ...
 
 class Object(GObject.InitiallyUnowned):
+    """
+    :Constructors:
+
+    ::
+
+        Object(**properties)
+
+    Object GstObject
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -2347,7 +3175,7 @@ class Object(GObject.InitiallyUnowned):
     control_rate: int = ...
     last_sync: int = ...
     _gst_reserved: None = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def add_control_binding(self, binding: ControlBinding) -> bool: ...
     @staticmethod
     def check_uniqueness(list: list[Object], name: str) -> bool: ...
@@ -2363,12 +3191,7 @@ class Object(GObject.InitiallyUnowned):
     def get_control_binding(self, property_name: str) -> Optional[ControlBinding]: ...
     def get_control_rate(self) -> int: ...
     def get_g_value_array(
-        self,
-        property_name: str,
-        timestamp: int,
-        interval: int,
-        n_values: int,
-        values: Sequence[Any],
+        self, property_name: str, timestamp: int, interval: int, values: Sequence[Any]
     ) -> bool: ...
     def get_name(self) -> Optional[str]: ...
     def get_parent(self) -> Optional[Object]: ...
@@ -2395,12 +3218,57 @@ class Object(GObject.InitiallyUnowned):
     def unref(self) -> None: ...
 
 class ObjectClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectClass()
+    """
+
     parent_class: GObject.InitiallyUnownedClass = ...
     path_string_separator: str = ...
     deep_notify: Callable[[Object, Object, GObject.ParamSpec], None] = ...
     _gst_reserved: list[None] = ...
 
 class Pad(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Pad(**properties)
+        new(name:str=None, direction:Gst.PadDirection) -> Gst.Pad
+        new_from_static_template(templ:Gst.StaticPadTemplate, name:str) -> Gst.Pad
+        new_from_template(templ:Gst.PadTemplate, name:str=None) -> Gst.Pad
+
+    Object GstPad
+
+    Signals from GstPad:
+      linked (GstPad)
+      unlinked (GstPad)
+
+    Properties from GstPad:
+      direction -> GstPadDirection: Direction
+        The direction of the pad
+      template -> GstPadTemplate: Template
+        The GstPadTemplate of this pad
+      offset -> gint64: Offset
+        The running time offset of the pad
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Caps
         direction: PadDirection
@@ -2459,7 +3327,7 @@ class Pad(Object):
         direction: PadDirection = ...,
         offset: int = ...,
         template: PadTemplate = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def activate_mode(self, mode: PadMode, active: bool) -> bool: ...
@@ -2548,52 +3416,40 @@ class Pad(Object):
     def remove_probe(self, id: int) -> None: ...
     def send_event(self, event: Event) -> bool: ...
     def set_activate_function_full(
-        self, activate: Callable[[Pad, Object], bool], *user_data: Any
+        self, activate: Callable[..., bool], *user_data: Any
     ) -> None: ...
     def set_activatemode_function_full(
-        self,
-        activatemode: Callable[[Pad, Object, PadMode, bool], bool],
-        *user_data: Any,
+        self, activatemode: Callable[..., bool], *user_data: Any
     ) -> None: ...
     def set_active(self, active: bool) -> bool: ...
     def set_chain_function_full(
-        self,
-        chain: Callable[[Pad, Optional[Object], Buffer], FlowReturn],
-        *user_data: Any,
+        self, chain: Callable[..., FlowReturn], *user_data: Any
     ) -> None: ...
     def set_chain_list_function_full(
-        self,
-        chainlist: Callable[[Pad, Optional[Object], BufferList], FlowReturn],
-        *user_data: Any,
+        self, chainlist: Callable[..., FlowReturn], *user_data: Any
     ) -> None: ...
     def set_element_private(self, priv: None) -> None: ...
     def set_event_full_function_full(
-        self,
-        event: Callable[[Pad, Optional[Object], Event], FlowReturn],
-        *user_data: Any,
+        self, event: Callable[..., FlowReturn], *user_data: Any
     ) -> None: ...
     def set_event_function_full(
-        self, event: Callable[[Pad, Optional[Object], Event], bool], *user_data: Any
+        self, event: Callable[..., bool], *user_data: Any
     ) -> None: ...
     def set_getrange_function_full(
-        self,
-        get: Callable[[Pad, Optional[Object], int, int, Buffer], FlowReturn],
-        *user_data: Any,
+        self, get: Callable[..., FlowReturn], *user_data: Any
     ) -> None: ...
     def set_iterate_internal_links_function_full(
-        self, iterintlink: Callable[[Pad, Optional[Object]], Iterator], *user_data: Any
+        self, iterintlink: Callable[..., Iterator], *user_data: Any
     ) -> None: ...
     def set_link_function_full(
-        self,
-        link: Callable[[Pad, Optional[Object], Pad], PadLinkReturn],
-        *user_data: Any,
+        self, link: Callable[..., PadLinkReturn], *user_data: Any
     ) -> None: ...
     def set_offset(self, offset: int) -> None: ...
     def set_query_function_full(
-        self, query: Callable[[Pad, Optional[Object], Query], bool], *user_data: Any
+        self, query: Callable[..., bool], *user_data: Any
     ) -> None: ...
     def set_unlink_function_full(
-        self, unlink: Callable[[Pad, Optional[Object]], None], *user_data: Any
+        self, unlink: Callable[..., None], *user_data: Any
     ) -> None: ...
     def start_task(self, func: Callable[..., None], *user_data: Any) -> bool: ...
     def sticky_events_foreach(
@@ -2605,6 +3461,14 @@ class Pad(Object):
     def use_fixed_caps(self) -> None: ...
 
 class PadClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PadClass()
+    """
+
     parent_class: ObjectClass = ...
     linked: Callable[[Pad, Pad], None] = ...
     unlinked: Callable[[Pad, Pad], None] = ...
@@ -2613,6 +3477,14 @@ class PadClass(GObject.GPointer):
 class PadPrivate(GObject.GPointer): ...
 
 class PadProbeInfo(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PadProbeInfo()
+    """
+
     type: PadProbeType = ...
     id: int = ...
     data: None = ...
@@ -2624,6 +3496,44 @@ class PadProbeInfo(GObject.GPointer):
     def get_query(self) -> Optional[Query]: ...
 
 class PadTemplate(Object):
+    """
+    :Constructors:
+
+    ::
+
+        PadTemplate(**properties)
+        new(name_template:str, direction:Gst.PadDirection, presence:Gst.PadPresence, caps:Gst.Caps) -> Gst.PadTemplate or None
+        new_from_static_pad_template_with_gtype(pad_template:Gst.StaticPadTemplate, pad_type:GType) -> Gst.PadTemplate or None
+        new_with_gtype(name_template:str, direction:Gst.PadDirection, presence:Gst.PadPresence, caps:Gst.Caps, pad_type:GType) -> Gst.PadTemplate or None
+
+    Object GstPadTemplate
+
+    Signals from GstPadTemplate:
+      pad-created (GstPad)
+
+    Properties from GstPadTemplate:
+      name-template -> gchararray: Name template
+        The name template of the pad template
+      direction -> GstPadDirection: Direction
+        The direction of the pad described by the pad template
+      presence -> GstPadPresence: Presence
+        When the pad described by the pad template will become available
+      gtype -> GType: GType
+        The GType of the pad described by the pad template
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Caps
         direction: PadDirection
@@ -2646,7 +3556,7 @@ class PadTemplate(Object):
         gtype: Type = ...,
         name_template: str = ...,
         presence: PadPresence = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def do_pad_created(self, pad: Pad) -> None: ...
@@ -2677,6 +3587,14 @@ class PadTemplate(Object):
     def set_documentation_caps(self, caps: Caps) -> None: ...
 
 class PadTemplateClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PadTemplateClass()
+    """
+
     parent_class: ObjectClass = ...
     pad_created: Callable[[PadTemplate, Pad], None] = ...
     _gst_reserved: list[None] = ...
@@ -2685,10 +3603,26 @@ class ParamArray(GObject.ParamSpec): ...
 class ParamFraction(GObject.ParamSpec): ...
 
 class ParamSpecArray(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecArray()
+    """
+
     parent_instance: GObject.ParamSpec = ...
     element_spec: GObject.ParamSpec = ...
 
 class ParamSpecFraction(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParamSpecFraction()
+    """
+
     parent_instance: GObject.ParamSpec = ...
     min_num: int = ...
     min_den: int = ...
@@ -2698,12 +3632,28 @@ class ParamSpecFraction(GObject.GPointer):
     def_den: int = ...
 
 class ParentBufferMeta(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ParentBufferMeta()
+    """
+
     parent: Meta = ...
     buffer: Buffer = ...
     @staticmethod
     def get_info() -> MetaInfo: ...
 
 class ParseContext(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gst.ParseContext or None
+    """
+
     def copy(self) -> Optional[ParseContext]: ...
     def free(self) -> None: ...
     def get_missing_elements(self) -> Optional[list[str]]: ...
@@ -2711,6 +3661,63 @@ class ParseContext(GObject.GBoxed):
     def new(cls) -> Optional[ParseContext]: ...
 
 class Pipeline(Bin, ChildProxy):
+    """
+    :Constructors:
+
+    ::
+
+        Pipeline(**properties)
+        new(name:str=None) -> Gst.Element
+
+    Object GstPipeline
+
+    Properties from GstPipeline:
+      delay -> guint64: Delay
+        Expected delay needed for elements to spin up to PLAYING in nanoseconds
+      auto-flush-bus -> gboolean: Auto Flush Bus
+        Whether to automatically flush the pipeline's bus when going from READY into NULL state
+      latency -> guint64: Latency
+        Latency to configure on the pipeline
+
+    Signals from GstChildProxy:
+      child-added (GObject, gchararray)
+      child-removed (GObject, gchararray)
+
+    Signals from GstBin:
+      element-added (GstElement)
+      element-removed (GstElement)
+      deep-element-added (GstBin, GstElement)
+      deep-element-removed (GstBin, GstElement)
+      do-latency () -> gboolean
+
+    Properties from GstBin:
+      async-handling -> gboolean: Async Handling
+        The bin will handle Asynchronous state changes
+      message-forward -> gboolean: Message Forward
+        Forwards all children messages
+
+    Signals from GstChildProxy:
+      child-added (GObject, gchararray)
+      child-removed (GObject, gchararray)
+
+    Signals from GstElement:
+      pad-added (GstPad)
+      pad-removed (GstPad)
+      no-more-pads ()
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         auto_flush_bus: bool
         delay: int
@@ -2734,7 +3741,7 @@ class Pipeline(Bin, ChildProxy):
         latency: int = ...,
         async_handling: bool = ...,
         message_forward: bool = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def auto_clock(self) -> None: ...
@@ -2751,18 +3758,48 @@ class Pipeline(Bin, ChildProxy):
     def use_clock(self, clock: Optional[Clock] = None) -> None: ...
 
 class PipelineClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PipelineClass()
+    """
+
     parent_class: BinClass = ...
     _gst_reserved: list[None] = ...
 
 class PipelinePrivate(GObject.GPointer): ...
 
 class Plugin(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Plugin(**properties)
+
+    Object GstPlugin
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def add_dependency(
         self,
         env_vars: Optional[Sequence[str]],
@@ -2827,6 +3864,14 @@ class Plugin(Object):
 class PluginClass(GObject.GPointer): ...
 
 class PluginDesc(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PluginDesc()
+    """
+
     major_version: int = ...
     minor_version: int = ...
     name: str = ...
@@ -2841,12 +3886,34 @@ class PluginDesc(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class PluginFeature(Object):
+    """
+    :Constructors:
+
+    ::
+
+        PluginFeature(**properties)
+
+    Object GstPluginFeature
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def check_version(self, min_major: int, min_minor: int, min_micro: int) -> bool: ...
     def get_plugin(self) -> Optional[Plugin]: ...
     def get_plugin_name(self) -> Optional[str]: ...
@@ -2886,11 +3953,23 @@ class Poll(GObject.GPointer):
     def write_control(self) -> bool: ...
 
 class PollFD(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PollFD()
+    """
+
     fd: int = ...
     idx: int = ...
     def init(self) -> None: ...
 
 class Preset(GObject.GInterface):
+    """
+    Interface GstPreset
+    """
+
     def delete_preset(self, name: str) -> bool: ...
     @staticmethod
     def get_app_dir() -> Optional[str]: ...
@@ -2906,6 +3985,14 @@ class Preset(GObject.GInterface):
     def set_meta(self, name: str, tag: str, value: Optional[str] = None) -> bool: ...
 
 class PresetInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PresetInterface()
+    """
+
     parent: GObject.TypeInterface = ...
     get_preset_names: Callable[[Preset], list[str]] = ...
     get_property_names: Callable[[Preset], list[str]] = ...
@@ -2918,6 +4005,16 @@ class PresetInterface(GObject.GPointer):
     _gst_reserved: list[None] = ...
 
 class Promise(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Promise()
+        new() -> Gst.Promise
+        new_with_change_func(func:Gst.PromiseChangeFunc, user_data=None) -> Gst.Promise
+    """
+
     parent: MiniObject = ...
     def expire(self) -> None: ...
     def get_reply(self) -> Optional[Structure]: ...
@@ -2932,12 +4029,54 @@ class Promise(GObject.GBoxed):
     def wait(self) -> PromiseResult: ...
 
 class ProtectionMeta(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ProtectionMeta()
+    """
+
     meta: Meta = ...
     info: Structure = ...
     @staticmethod
     def get_info() -> MetaInfo: ...
 
 class ProxyPad(Pad):
+    """
+    :Constructors:
+
+    ::
+
+        ProxyPad(**properties)
+
+    Object GstProxyPad
+
+    Signals from GstPad:
+      linked (GstPad)
+      unlinked (GstPad)
+
+    Properties from GstPad:
+      direction -> GstPadDirection: Direction
+        The direction of the pad
+      template -> GstPadTemplate: Template
+        The GstPadTemplate of this pad
+      offset -> gint64: Offset
+        The running time offset of the pad
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Caps
         direction: PadDirection
@@ -2954,7 +4093,7 @@ class ProxyPad(Pad):
         direction: PadDirection = ...,
         offset: int = ...,
         template: PadTemplate = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     @staticmethod
@@ -2976,12 +4115,46 @@ class ProxyPad(Pad):
     ) -> Optional[Iterator]: ...
 
 class ProxyPadClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ProxyPadClass()
+    """
+
     parent_class: PadClass = ...
     _gst_reserved: list[None] = ...
 
 class ProxyPadPrivate(GObject.GPointer): ...
 
 class Query(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Query()
+        new_accept_caps(caps:Gst.Caps) -> Gst.Query
+        new_allocation(caps:Gst.Caps=None, need_pool:bool) -> Gst.Query
+        new_bitrate() -> Gst.Query
+        new_buffering(format:Gst.Format) -> Gst.Query
+        new_caps(filter:Gst.Caps) -> Gst.Query
+        new_context(context_type:str) -> Gst.Query
+        new_convert(src_format:Gst.Format, value:int, dest_format:Gst.Format) -> Gst.Query
+        new_custom(type:Gst.QueryType, structure:Gst.Structure=None) -> Gst.Query
+        new_drain() -> Gst.Query
+        new_duration(format:Gst.Format) -> Gst.Query
+        new_formats() -> Gst.Query
+        new_latency() -> Gst.Query
+        new_position(format:Gst.Format) -> Gst.Query
+        new_scheduling() -> Gst.Query
+        new_seeking(format:Gst.Format) -> Gst.Query
+        new_segment(format:Gst.Format) -> Gst.Query
+        new_selectable() -> Gst.Query
+        new_uri() -> Gst.Query
+    """
+
     mini_object: MiniObject = ...
     type: QueryType = ...
     def add_allocation_meta(
@@ -3011,7 +4184,7 @@ class Query(GObject.GBoxed):
     @classmethod
     def new_accept_caps(cls, caps: Caps) -> Query: ...
     @classmethod
-    def new_allocation(cls, caps: Caps, need_pool: bool) -> Query: ...
+    def new_allocation(cls, caps: Optional[Caps], need_pool: bool) -> Query: ...
     @classmethod
     def new_bitrate(cls) -> Query: ...
     @classmethod
@@ -3027,7 +4200,7 @@ class Query(GObject.GBoxed):
     @classmethod
     def new_custom(
         cls, type: QueryType, structure: Optional[Structure] = None
-    ) -> Optional[Query]: ...
+    ) -> Query: ...
     @classmethod
     def new_drain(cls) -> Query: ...
     @classmethod
@@ -3044,6 +4217,8 @@ class Query(GObject.GBoxed):
     def new_seeking(cls, format: Format) -> Query: ...
     @classmethod
     def new_segment(cls, format: Format) -> Query: ...
+    @classmethod
+    def new_selectable(cls) -> Query: ...
     @classmethod
     def new_uri(cls) -> Query: ...
     def parse_accept_caps(self) -> Caps: ...
@@ -3075,6 +4250,7 @@ class Query(GObject.GBoxed):
     def parse_scheduling(self) -> Tuple[SchedulingFlags, int, int, int]: ...
     def parse_seeking(self) -> Tuple[Format, bool, int, int]: ...
     def parse_segment(self) -> Tuple[float, Format, int, int]: ...
+    def parse_selectable(self) -> bool: ...
     def parse_uri(self) -> str: ...
     def parse_uri_redirection(self) -> str: ...
     def parse_uri_redirection_permanent(self) -> bool: ...
@@ -3090,13 +4266,13 @@ class Query(GObject.GBoxed):
     def set_buffering_stats(
         self, mode: BufferingMode, avg_in: int, avg_out: int, buffering_left: int
     ) -> None: ...
-    def set_caps_result(self, caps: Caps) -> None: ...
-    def set_context(self, context: Context) -> None: ...
+    def set_caps_result(self, caps: Optional[Caps] = None) -> None: ...
+    def set_context(self, context: Optional[Context] = None) -> None: ...
     def set_convert(
         self, src_format: Format, src_value: int, dest_format: Format, dest_value: int
     ) -> None: ...
     def set_duration(self, format: Format, duration: int) -> None: ...
-    def set_formatsv(self, n_formats: int, formats: Sequence[Format]) -> None: ...
+    def set_formatsv(self, formats: Sequence[Format]) -> None: ...
     def set_latency(self, live: bool, min_latency: int, max_latency: int) -> None: ...
     def set_nth_allocation_param(
         self,
@@ -3122,12 +4298,21 @@ class Query(GObject.GBoxed):
     def set_segment(
         self, rate: float, format: Format, start_value: int, stop_value: int
     ) -> None: ...
-    def set_uri(self, uri: str) -> None: ...
-    def set_uri_redirection(self, uri: str) -> None: ...
+    def set_selectable(self, selectable: bool) -> None: ...
+    def set_uri(self, uri: Optional[str] = None) -> None: ...
+    def set_uri_redirection(self, uri: Optional[str] = None) -> None: ...
     def set_uri_redirection_permanent(self, permanent: bool) -> None: ...
     def writable_structure(self) -> Structure: ...
 
 class ReferenceTimestampMeta(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ReferenceTimestampMeta()
+    """
+
     parent: Meta = ...
     reference: Caps = ...
     timestamp: int = ...
@@ -3136,6 +4321,32 @@ class ReferenceTimestampMeta(GObject.GPointer):
     def get_info() -> MetaInfo: ...
 
 class Registry(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Registry(**properties)
+
+    Object GstRegistry
+
+    Signals from GstRegistry:
+      plugin-added (GstPlugin)
+      feature-added (GstPluginFeature)
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -3143,7 +4354,7 @@ class Registry(Object):
     props: Props = ...
     object: Object = ...
     priv: RegistryPrivate = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def add_feature(self, feature: PluginFeature) -> bool: ...
     def add_plugin(self, plugin: Plugin) -> bool: ...
     def check_feature_version(
@@ -3174,11 +4385,27 @@ class Registry(Object):
     def scan_path(self, path: str) -> bool: ...
 
 class RegistryClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        RegistryClass()
+    """
+
     parent_class: ObjectClass = ...
 
 class RegistryPrivate(GObject.GPointer): ...
 
 class Sample(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(buffer:Gst.Buffer=None, caps:Gst.Caps=None, segment:Gst.Segment=None, info:Gst.Structure=None) -> Gst.Sample
+    """
+
     def get_buffer(self) -> Optional[Buffer]: ...
     def get_buffer_list(self) -> Optional[BufferList]: ...
     def get_caps(self) -> Optional[Caps]: ...
@@ -3199,6 +4426,15 @@ class Sample(GObject.GBoxed):
     def set_segment(self, segment: Segment) -> None: ...
 
 class Segment(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Segment()
+        new() -> Gst.Segment
+    """
+
     flags: SegmentFlags = ...
     rate: float = ...
     applied_rate: float = ...
@@ -3248,6 +4484,29 @@ class Segment(GObject.GBoxed):
     def to_stream_time_full(self, format: Format, position: int) -> Tuple[int, int]: ...
 
 class SharedTaskPool(TaskPool):
+    """
+    :Constructors:
+
+    ::
+
+        SharedTaskPool(**properties)
+        new() -> Gst.TaskPool
+
+    Object GstSharedTaskPool
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -3256,19 +4515,35 @@ class SharedTaskPool(TaskPool):
     parent: TaskPool = ...
     priv: SharedTaskPoolPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def get_max_threads(self) -> int: ...
     @classmethod
     def new(cls) -> SharedTaskPool: ...
     def set_max_threads(self, max_threads: int) -> None: ...
 
 class SharedTaskPoolClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SharedTaskPoolClass()
+    """
+
     parent_class: TaskPoolClass = ...
     _gst_reserved: list[None] = ...
 
 class SharedTaskPoolPrivate(GObject.GPointer): ...
 
 class StaticCaps(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StaticCaps()
+    """
+
     caps: Caps = ...
     string: str = ...
     _gst_reserved: list[None] = ...
@@ -3276,6 +4551,14 @@ class StaticCaps(GObject.GPointer):
     def get(self) -> Optional[Caps]: ...
 
 class StaticPadTemplate(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StaticPadTemplate()
+    """
+
     name_template: str = ...
     direction: PadDirection = ...
     presence: PadPresence = ...
@@ -3284,6 +4567,37 @@ class StaticPadTemplate(GObject.GPointer):
     def get_caps(self) -> Caps: ...
 
 class Stream(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Stream(**properties)
+        new(stream_id:str=None, caps:Gst.Caps=None, type:Gst.StreamType, flags:Gst.StreamFlags) -> Gst.Stream
+
+    Object GstStream
+
+    Properties from GstStream:
+      stream-id -> gchararray: Stream ID
+        The stream ID of the stream
+      stream-flags -> GstStreamFlags: Stream Flags
+        The stream flags
+      stream-type -> GstStreamType: Stream Type
+        The type of stream
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         caps: Optional[Caps]
         stream_flags: StreamFlags
@@ -3300,12 +4614,12 @@ class Stream(Object):
     _gst_reserved: list[None] = ...
     def __init__(
         self,
-        caps: Caps = ...,
+        caps: Optional[Caps] = ...,
         stream_flags: StreamFlags = ...,
         stream_id: str = ...,
         stream_type: StreamType = ...,
-        tags: TagList = ...,
-        name: str = ...,
+        tags: Optional[TagList] = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     def get_caps(self) -> Optional[Caps]: ...
@@ -3327,10 +4641,48 @@ class Stream(Object):
     def set_tags(self, tags: Optional[TagList] = None) -> None: ...
 
 class StreamClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StreamClass()
+    """
+
     parent_class: ObjectClass = ...
     _gst_reserved: list[None] = ...
 
 class StreamCollection(Object):
+    """
+    :Constructors:
+
+    ::
+
+        StreamCollection(**properties)
+        new(upstream_id:str=None) -> Gst.StreamCollection
+
+    Object GstStreamCollection
+
+    Signals from GstStreamCollection:
+      stream-notify (GstStream, GParam)
+
+    Properties from GstStreamCollection:
+      upstream-id -> gchararray: Upstream ID
+        The stream ID of the parent stream
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         upstream_id: Optional[str]
         name: Optional[str]
@@ -3342,7 +4694,7 @@ class StreamCollection(Object):
     priv: StreamCollectionPrivate = ...
     _gst_reserved: list[None] = ...
     def __init__(
-        self, upstream_id: str = ..., name: str = ..., parent: Object = ...
+        self, upstream_id: str = ..., name: Optional[str] = ..., parent: Object = ...
     ): ...
     def add_stream(self, stream: Stream) -> bool: ...
     def do_stream_notify(self, stream: Stream, pspec: GObject.ParamSpec) -> None: ...
@@ -3353,6 +4705,14 @@ class StreamCollection(Object):
     def new(cls, upstream_id: Optional[str] = None) -> StreamCollection: ...
 
 class StreamCollectionClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        StreamCollectionClass()
+    """
+
     parent_class: ObjectClass = ...
     stream_notify: Callable[[StreamCollection, Stream, GObject.ParamSpec], None] = ...
     _gst_reserved: list[None] = ...
@@ -3361,6 +4721,18 @@ class StreamCollectionPrivate(GObject.GPointer): ...
 class StreamPrivate(GObject.GPointer): ...
 
 class Structure(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Structure()
+        from_string(string:str) -> Gst.Structure or None, end:str
+        new_empty(name:str) -> Gst.Structure
+        new_from_string(string:str) -> Gst.Structure or None
+        new_id_empty(quark:int) -> Gst.Structure
+    """
+
     type: Type = ...
     name: int = ...
     def can_intersect(self, struct2: Structure) -> bool: ...
@@ -3389,6 +4761,7 @@ class Structure(GObject.GBoxed):
     def get_double(self, fieldname: str) -> Tuple[bool, float]: ...
     def get_enum(self, fieldname: str, enumtype: Type) -> Tuple[bool, int]: ...
     def get_field_type(self, fieldname: str) -> Type: ...
+    def get_flags(self, fieldname: str, flags_type: Type) -> Tuple[bool, int]: ...
     def get_flagset(self, fieldname: str) -> Tuple[bool, int, int]: ...
     def get_fraction(self, fieldname: str) -> Tuple[bool, int, int]: ...
     def get_int(self, fieldname: str) -> Tuple[bool, int]: ...
@@ -3434,6 +4807,43 @@ class Structure(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class SystemClock(Clock):
+    """
+    :Constructors:
+
+    ::
+
+        SystemClock(**properties)
+
+    Object GstSystemClock
+
+    Properties from GstSystemClock:
+      clock-type -> GstClockType: Clock type
+        The type of underlying clock implementation used
+
+    Signals from GstClock:
+      synced (gboolean)
+
+    Properties from GstClock:
+      window-size -> gint: Window size
+        The size of the window used to calculate rate and offset
+      window-threshold -> gint: Window threshold
+        The threshold to start calculating rate and offset
+      timeout -> guint64: Timeout
+        The amount of time, in nanoseconds, to sample master and slave clocks
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         clock_type: ClockType
         timeout: int
@@ -3452,7 +4862,7 @@ class SystemClock(Clock):
         timeout: int = ...,
         window_size: int = ...,
         window_threshold: int = ...,
-        name: str = ...,
+        name: Optional[str] = ...,
         parent: Object = ...,
     ): ...
     @staticmethod
@@ -3461,12 +4871,30 @@ class SystemClock(Clock):
     def set_default(new_clock: Optional[Clock] = None) -> None: ...
 
 class SystemClockClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SystemClockClass()
+    """
+
     parent_class: ClockClass = ...
     _gst_reserved: list[None] = ...
 
 class SystemClockPrivate(GObject.GPointer): ...
 
 class TagList(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        TagList()
+        new_empty() -> Gst.TagList
+        new_from_string(str:str) -> Gst.TagList or None
+    """
+
     mini_object: MiniObject = ...
     def add_value(self, mode: TagMergeMode, tag: str, value: Any) -> None: ...
     def copy(self) -> TagList: ...
@@ -3515,9 +4943,16 @@ class TagList(GObject.GBoxed):
     def peek_string_index(self, tag: str, index: int) -> Tuple[bool, str]: ...
     def remove_tag(self, tag: str) -> None: ...
     def set_scope(self, scope: TagScope) -> None: ...
-    def to_string(self) -> Optional[str]: ...
+    def to_string(self) -> str: ...
 
 class TagSetter(GObject.GInterface):
+    """
+    Interface GstTagSetter
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def add_tag_value(self, mode: TagMergeMode, tag: str, value: Any) -> None: ...
     def get_tag_list(self) -> Optional[TagList]: ...
     def get_tag_merge_mode(self) -> TagMergeMode: ...
@@ -3526,9 +4961,40 @@ class TagSetter(GObject.GInterface):
     def set_tag_merge_mode(self, mode: TagMergeMode) -> None: ...
 
 class TagSetterInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TagSetterInterface()
+    """
+
     g_iface: GObject.TypeInterface = ...
 
 class Task(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Task(**properties)
+        new(func:Gst.TaskFunction, user_data=None) -> Gst.Task
+
+    Object GstTask
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -3545,7 +5011,7 @@ class Task(Object):
     thread: GLib.Thread = ...
     priv: TaskPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     @staticmethod
     def cleanup_all() -> None: ...
     def get_pool(self) -> TaskPool: ...
@@ -3568,11 +5034,42 @@ class Task(Object):
     def stop(self) -> bool: ...
 
 class TaskClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TaskClass()
+    """
+
     parent_class: ObjectClass = ...
     pool: TaskPool = ...
     _gst_reserved: list[None] = ...
 
 class TaskPool(Object):
+    """
+    :Constructors:
+
+    ::
+
+        TaskPool(**properties)
+        new() -> Gst.TaskPool
+
+    Object GstTaskPool
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
@@ -3581,7 +5078,7 @@ class TaskPool(Object):
     object: Object = ...
     pool: GLib.ThreadPool = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def cleanup(self) -> None: ...
     def dispose_handle(self, id: None) -> None: ...
     def do_cleanup(self) -> None: ...
@@ -3596,6 +5093,14 @@ class TaskPool(Object):
     def push(self, func: Callable[..., None], *user_data: Any) -> None: ...
 
 class TaskPoolClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TaskPoolClass()
+    """
+
     parent_class: ObjectClass = ...
     prepare: Callable[[TaskPool], None] = ...
     cleanup: Callable[[TaskPool], None] = ...
@@ -3607,30 +5112,54 @@ class TaskPoolClass(GObject.GPointer):
 class TaskPrivate(GObject.GPointer): ...
 
 class TimedValue(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TimedValue()
+    """
+
     timestamp: int = ...
     value: float = ...
 
 class Toc(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(scope:Gst.TocScope) -> Gst.Toc
+    """
+
     def append_entry(self, entry: TocEntry) -> None: ...
     def dump(self) -> None: ...
     def find_entry(self, uid: str) -> Optional[TocEntry]: ...
     def get_entries(self) -> list[TocEntry]: ...
     def get_scope(self) -> TocScope: ...
-    def get_tags(self) -> TagList: ...
+    def get_tags(self) -> Optional[TagList]: ...
     def merge_tags(self, tags: Optional[TagList], mode: TagMergeMode) -> None: ...
     @classmethod
     def new(cls, scope: TocScope) -> Toc: ...
     def set_tags(self, tags: Optional[TagList] = None) -> None: ...
 
 class TocEntry(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(type:Gst.TocEntryType, uid:str) -> Gst.TocEntry
+    """
+
     def append_sub_entry(self, subentry: TocEntry) -> None: ...
     def get_entry_type(self) -> TocEntryType: ...
     def get_loop(self) -> Tuple[bool, TocLoopType, int]: ...
     def get_parent(self) -> Optional[TocEntry]: ...
     def get_start_stop_times(self) -> Tuple[bool, int, int]: ...
     def get_sub_entries(self) -> list[TocEntry]: ...
-    def get_tags(self) -> TagList: ...
-    def get_toc(self) -> Toc: ...
+    def get_tags(self) -> Optional[TagList]: ...
+    def get_toc(self) -> Optional[Toc]: ...
     def get_uid(self) -> str: ...
     def is_alternative(self) -> bool: ...
     def is_sequence(self) -> bool: ...
@@ -3642,14 +5171,55 @@ class TocEntry(GObject.GBoxed):
     def set_tags(self, tags: Optional[TagList] = None) -> None: ...
 
 class TocSetter(GObject.GInterface):
+    """
+    Interface GstTocSetter
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     def get_toc(self) -> Optional[Toc]: ...
     def reset(self) -> None: ...
     def set_toc(self, toc: Optional[Toc] = None) -> None: ...
 
 class TocSetterInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TocSetterInterface()
+    """
+
     g_iface: GObject.TypeInterface = ...
 
 class Tracer(Object):
+    """
+    :Constructors:
+
+    ::
+
+        Tracer(**properties)
+
+    Object GstTracer
+
+    Properties from GstTracer:
+      params -> gchararray: Params
+        Extra configuration parameters
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         params: str
         name: Optional[str]
@@ -3659,21 +5229,53 @@ class Tracer(Object):
     parent: Object = ...
     priv: TracerPrivate = ...
     _gst_reserved: list[None] = ...
-    def __init__(self, params: str = ..., name: str = ..., parent: Object = ...): ...
+    def __init__(
+        self, params: str = ..., name: Optional[str] = ..., parent: Object = ...
+    ): ...
     @staticmethod
     def register(plugin: Optional[Plugin], name: str, type: Type) -> bool: ...
 
 class TracerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TracerClass()
+    """
+
     parent_class: ObjectClass = ...
     _gst_reserved: list[None] = ...
 
 class TracerFactory(PluginFeature):
+    """
+    :Constructors:
+
+    ::
+
+        TracerFactory(**properties)
+
+    Object GstTracerFactory
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     @staticmethod
     def get_list() -> list[TracerFactory]: ...
     def get_tracer_type(self) -> Type: ...
@@ -3682,23 +5284,53 @@ class TracerFactoryClass(GObject.GPointer): ...
 class TracerPrivate(GObject.GPointer): ...
 
 class TracerRecord(Object):
+    """
+    :Constructors:
+
+    ::
+
+        TracerRecord(**properties)
+
+    Object GstTracerRecord
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
 
 class TracerRecordClass(GObject.GPointer): ...
 
 class TypeFind(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        TypeFind()
+    """
+
     peek: Callable[[None, int, int], int] = ...
     suggest: Callable[[None, int, Caps], None] = ...
     data: None = ...
     get_length: Callable[[None], int] = ...
     _gst_reserved: list[None] = ...
     def get_length(self) -> int: ...
-    def peek(self, offset: int) -> Optional[bytes]: ...
+    def peek(self, offset: int, size: int) -> Optional[int]: ...
     @staticmethod
     def register(
         plugin: Optional[Plugin],
@@ -3713,12 +5345,34 @@ class TypeFind(GObject.GPointer):
     def suggest_empty_simple(self, probability: int, media_type: str) -> None: ...
 
 class TypeFindFactory(PluginFeature):
+    """
+    :Constructors:
+
+    ::
+
+        TypeFindFactory(**properties)
+
+    Object GstTypeFindFactory
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         name: Optional[str]
         parent: Optional[Object]
 
     props: Props = ...
-    def __init__(self, name: str = ..., parent: Object = ...): ...
+    def __init__(self, name: Optional[str] = ..., parent: Object = ...): ...
     def call_function(self, find: TypeFind) -> None: ...
     def get_caps(self) -> Optional[Caps]: ...
     def get_extensions(self) -> Optional[list[str]]: ...
@@ -3729,12 +5383,24 @@ class TypeFindFactory(PluginFeature):
 class TypeFindFactoryClass(GObject.GPointer): ...
 
 class URIHandler(GObject.GInterface):
+    """
+    Interface GstURIHandler
+    """
+
     def get_protocols(self) -> Optional[list[str]]: ...
     def get_uri(self) -> Optional[str]: ...
     def get_uri_type(self) -> URIType: ...
     def set_uri(self, uri: str) -> bool: ...
 
 class URIHandlerInterface(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        URIHandlerInterface()
+    """
+
     parent: GObject.TypeInterface = ...
     get_type: Callable[[Type], URIType] = ...
     get_protocols: Callable[[Type], list[str]] = ...
@@ -3742,8 +5408,16 @@ class URIHandlerInterface(GObject.GPointer):
     set_uri: Callable[[URIHandler, str], bool] = ...
 
 class Uri(GObject.GBoxed):
-    def append_path(self, relative_path: str) -> bool: ...
-    def append_path_segment(self, path_segment: str) -> bool: ...
+    """
+    :Constructors:
+
+    ::
+
+        new(scheme:str=None, userinfo:str=None, host:str=None, port:int, path:str=None, query:str=None, fragment:str=None) -> Gst.Uri
+    """
+
+    def append_path(self, relative_path: Optional[str] = None) -> bool: ...
+    def append_path_segment(self, path_segment: Optional[str] = None) -> bool: ...
     @staticmethod
     def construct(protocol: str, location: str) -> str: ...
     def equal(self, second: Uri) -> bool: ...
@@ -3751,7 +5425,7 @@ class Uri(GObject.GBoxed):
     def from_string(uri: str) -> Optional[Uri]: ...
     @staticmethod
     def from_string_escaped(uri: str) -> Optional[Uri]: ...
-    def from_string_with_base(self, uri: str) -> Uri: ...
+    def from_string_with_base(self, uri: str) -> Optional[Uri]: ...
     def get_fragment(self) -> Optional[str]: ...
     def get_host(self) -> Optional[str]: ...
     @staticmethod
@@ -3777,7 +5451,7 @@ class Uri(GObject.GBoxed):
     def is_writable(self) -> bool: ...
     def join(self, ref_uri: Optional[Uri] = None) -> Optional[Uri]: ...
     @staticmethod
-    def join_strings(base_uri: str, ref_uri: str) -> str: ...
+    def join_strings(base_uri: str, ref_uri: str) -> Optional[str]: ...
     def make_writable(self) -> Uri: ...
     @classmethod
     def new(
@@ -3809,11 +5483,11 @@ class Uri(GObject.GBoxed):
     def remove_query_key(self, query_key: str) -> bool: ...
     def set_fragment(self, fragment: Optional[str] = None) -> bool: ...
     def set_host(self, host: str) -> bool: ...
-    def set_path(self, path: str) -> bool: ...
+    def set_path(self, path: Optional[str] = None) -> bool: ...
     def set_path_segments(self, path_segments: Optional[list[str]] = None) -> bool: ...
     def set_path_string(self, path: str) -> bool: ...
     def set_port(self, port: int) -> bool: ...
-    def set_query_string(self, query: str) -> bool: ...
+    def set_query_string(self, query: Optional[str] = None) -> bool: ...
     def set_query_table(self, query_table: Optional[dict[str, str]] = None) -> bool: ...
     def set_query_value(
         self, query_key: str, query_value: Optional[str] = None
@@ -3823,6 +5497,14 @@ class Uri(GObject.GBoxed):
     def to_string(self) -> str: ...
 
 class ValueArray:
+    """
+    :Constructors:
+
+    ::
+
+        ValueArray(**properties)
+    """
+
     @staticmethod
     def append_and_take_value(value: Any, append_value: Any) -> None: ...
     @staticmethod
@@ -3837,6 +5519,14 @@ class ValueArray:
     def prepend_value(value: Any, prepend_value: Any) -> None: ...
 
 class ValueList:
+    """
+    :Constructors:
+
+    ::
+
+        ValueList(**properties)
+    """
+
     @staticmethod
     def append_and_take_value(value: Any, append_value: Any) -> None: ...
     @staticmethod
@@ -3855,6 +5545,14 @@ class ValueList:
     def prepend_value(value: Any, prepend_value: Any) -> None: ...
 
 class ValueTable(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ValueTable()
+    """
+
     type: Type = ...
     compare: Callable[[Any, Any], int] = ...
     serialize: Callable[[Any], str] = ...
@@ -4305,6 +6003,8 @@ class EventType(GObject.GEnum):
     def get_name(type: EventType) -> str: ...
     @staticmethod
     def to_quark(type: EventType) -> int: ...
+    @staticmethod
+    def to_sticky_ordering(type: EventType) -> int: ...
 
 class FlowReturn(GObject.GEnum):
     CUSTOM_ERROR = -100
@@ -4452,6 +6152,7 @@ class QueryType(GObject.GEnum):
     SCHEDULING = 38401
     SEEKING = 15363
     SEGMENT = 17923
+    SELECTABLE = 53763
     UNKNOWN = 0
     URI = 33283
     @staticmethod
