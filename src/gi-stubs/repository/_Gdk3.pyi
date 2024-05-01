@@ -3300,9 +3300,9 @@ class RGBA(GObject.GBoxed):
     # override
     def __init__(
         self,
-        blue: float = 1.0,
-        green: float = 1.0,
         red: float = 1.0,
+        green: float = 1.0,
+        blue: float = 1.0,
         alpha: float = 1.0,
     ): ...
     def copy(self) -> RGBA: ...
