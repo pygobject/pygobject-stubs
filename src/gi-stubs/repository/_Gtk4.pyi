@@ -55,10 +55,10 @@ ACCESSIBLE_ATTRIBUTE_VARIANT_TITLE_CAPS: str = "title-caps"
 ACCESSIBLE_ATTRIBUTE_VARIANT_UNICASE: str = "unicase"
 ACCESSIBLE_ATTRIBUTE_WEIGHT: str = "weight"
 ACCESSIBLE_VALUE_UNDEFINED: int = -1
-BINARY_AGE: int = 1401
+BINARY_AGE: int = 1602
 IM_MODULE_EXTENSION_POINT_NAME: str = "gtk-im-module"
 INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 1
+INTERFACE_AGE: int = 2
 INVALID_LIST_POSITION: int = 4294967295
 LEVEL_BAR_OFFSET_FULL: str = "full"
 LEVEL_BAR_OFFSET_HIGH: str = "high"
@@ -66,8 +66,8 @@ LEVEL_BAR_OFFSET_LOW: str = "low"
 MAJOR_VERSION: int = 4
 MAX_COMPOSE_LEN: int = 7
 MEDIA_FILE_EXTENSION_POINT_NAME: str = "gtk-media-file"
-MICRO_VERSION: int = 1
-MINOR_VERSION: int = 14
+MICRO_VERSION: int = 2
+MINOR_VERSION: int = 16
 PAPER_NAME_A3: str = "iso_a3"
 PAPER_NAME_A4: str = "iso_a4"
 PAPER_NAME_A5: str = "iso_a5"
@@ -549,7 +549,7 @@ class AboutDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -629,7 +629,7 @@ class AboutDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -838,6 +838,8 @@ class AccessibleTextInterface(GObject.GPointer):
     get_default_attributes: Callable[[AccessibleText], Tuple[list[str], list[str]]] = (
         ...
     )
+    get_extents: Callable[[AccessibleText, int, int, Graphene.Rect], bool] = ...
+    get_offset: Callable[[AccessibleText, Graphene.Point], Tuple[bool, int]] = ...
 
 class AccessibleTextRange(GObject.GPointer):
     """
@@ -1616,7 +1618,7 @@ class AppChooserDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -1684,7 +1686,7 @@ class AppChooserDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -2178,7 +2180,7 @@ class ApplicationWindow(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -2244,7 +2246,7 @@ class ApplicationWindow(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -2605,7 +2607,7 @@ class Assistant(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -2670,7 +2672,7 @@ class Assistant(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -3952,7 +3954,7 @@ class CallbackAction(ShortcutAction):
     ::
 
         CallbackAction(**properties)
-        new(callback:Gtk.ShortcutFunc=None) -> Gtk.CallbackAction
+        new(callback:Gtk.ShortcutFunc, data=None) -> Gtk.CallbackAction
 
     Object GtkCallbackAction
 
@@ -3961,9 +3963,7 @@ class CallbackAction(ShortcutAction):
     """
 
     @classmethod
-    def new(
-        cls, callback: Optional[Callable[..., bool]] = None, *data: Any
-    ) -> CallbackAction: ...
+    def new(cls, callback: Callable[..., bool], *data: Any) -> CallbackAction: ...
 
 class CallbackActionClass(GObject.GPointer): ...
 
@@ -6958,7 +6958,7 @@ class ColorChooserDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -7026,7 +7026,7 @@ class ColorChooserDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -8699,8 +8699,10 @@ class CssSection(GObject.GBoxed):
     ::
 
         new(file:Gio.File=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
+        new_with_bytes(file:Gio.File=None, bytes:GLib.Bytes=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
     """
 
+    def get_bytes(self) -> Optional[GLib.Bytes]: ...
     def get_end_location(self) -> CssLocation: ...
     def get_file(self) -> Optional[Gio.File]: ...
     def get_parent(self) -> Optional[CssSection]: ...
@@ -8708,6 +8710,14 @@ class CssSection(GObject.GBoxed):
     @classmethod
     def new(
         cls, file: Optional[Gio.File], start: CssLocation, end: CssLocation
+    ) -> CssSection: ...
+    @classmethod
+    def new_with_bytes(
+        cls,
+        file: Optional[Gio.File],
+        bytes: Optional[GLib.Bytes],
+        start: CssLocation,
+        end: CssLocation,
     ) -> CssSection: ...
     def print_(self, string: GLib.String) -> None: ...
     def ref(self) -> CssSection: ...
@@ -8940,7 +8950,7 @@ class Dialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -9006,7 +9016,7 @@ class Dialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -9158,6 +9168,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
     ::
 
         DragIcon(**properties)
+        get_for_drag(drag:Gdk.Drag) -> Gtk.Widget
 
     Object GtkDragIcon
 
@@ -9295,8 +9306,8 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
     @staticmethod
     def create_widget_for_value(value: Any) -> Optional[Widget]: ...
     def get_child(self) -> Optional[Widget]: ...
-    @staticmethod
-    def get_for_drag(drag: Gdk.Drag) -> Widget: ...
+    @classmethod
+    def get_for_drag(cls, drag: Gdk.Drag) -> DragIcon: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     @staticmethod
     def set_from_paintable(
@@ -9370,7 +9381,7 @@ class DragSource(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -9610,7 +9621,7 @@ class DropControllerMotion(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -9879,13 +9890,14 @@ class DropTarget(EventController):
     class Props:
         actions: Gdk.DragAction
         current_drop: Optional[Gdk.Drop]
+        drop: Optional[Gdk.Drop]
         formats: Optional[Gdk.ContentFormats]
         preload: bool
         value: Optional[Any]
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -9949,7 +9961,7 @@ class DropTargetAsync(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -10963,7 +10975,7 @@ class EventController(GObject.Object):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -10979,7 +10991,7 @@ class EventController(GObject.Object):
     def get_name(self) -> Optional[str]: ...
     def get_propagation_limit(self) -> PropagationLimit: ...
     def get_propagation_phase(self) -> PropagationPhase: ...
-    def get_widget(self) -> Widget: ...
+    def get_widget(self) -> Optional[Widget]: ...
     def reset(self) -> None: ...
     def set_name(self, name: Optional[str] = None) -> None: ...
     def set_propagation_limit(self, limit: PropagationLimit) -> None: ...
@@ -11023,7 +11035,7 @@ class EventControllerFocus(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -11070,7 +11082,7 @@ class EventControllerKey(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -11116,7 +11128,7 @@ class EventControllerLegacy(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -11166,7 +11178,7 @@ class EventControllerMotion(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -11217,7 +11229,7 @@ class EventControllerScroll(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -11656,7 +11668,7 @@ class FileChooserDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -11727,7 +11739,7 @@ class FileChooserDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -13404,7 +13416,7 @@ class FontChooserDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -13476,7 +13488,7 @@ class FontChooserDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -14422,7 +14434,7 @@ class Gesture(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14510,7 +14522,7 @@ class GestureClick(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14577,7 +14589,7 @@ class GestureDrag(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14649,7 +14661,7 @@ class GestureLongPress(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14726,7 +14738,7 @@ class GesturePan(GestureDrag):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14786,7 +14798,7 @@ class GestureRotate(Gesture):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14845,7 +14857,7 @@ class GestureSingle(Gesture):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14923,7 +14935,7 @@ class GestureStylus(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -14995,7 +15007,7 @@ class GestureSwipe(GestureSingle):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -15053,7 +15065,7 @@ class GestureZoom(Gesture):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -15083,6 +15095,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     Properties from GtkGraphicsOffload:
       child -> GtkWidget: child
       enabled -> GtkGraphicsOffloadEnabled: enabled
+      black-background -> gboolean: black-background
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -15140,6 +15153,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     """
 
     class Props:
+        black_background: bool
         child: Optional[Widget]
         enabled: GraphicsOffloadEnabled
         can_focus: bool
@@ -15181,6 +15195,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
+        black_background: bool = ...,
         child: Optional[Widget] = ...,
         enabled: GraphicsOffloadEnabled = ...,
         can_focus: bool = ...,
@@ -15214,10 +15229,12 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ): ...
+    def get_black_background(self) -> bool: ...
     def get_child(self) -> Optional[Widget]: ...
     def get_enabled(self) -> GraphicsOffloadEnabled: ...
     @classmethod
     def new(cls, child: Optional[Widget] = None) -> GraphicsOffload: ...
+    def set_black_background(self, value: bool) -> None: ...
     def set_child(self, child: Optional[Widget] = None) -> None: ...
     def set_enabled(self, enabled: GraphicsOffloadEnabled) -> None: ...
 
@@ -16712,9 +16729,9 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         self,
         file: str = ...,
         gicon: Gio.Icon = ...,
-        icon_name: str = ...,
+        icon_name: Optional[str] = ...,
         icon_size: IconSize = ...,
-        paintable: Gdk.Paintable = ...,
+        paintable: Optional[Gdk.Paintable] = ...,
         pixel_size: int = ...,
         resource: str = ...,
         use_fallback: bool = ...,
@@ -19821,7 +19838,7 @@ class MessageDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -19894,7 +19911,7 @@ class MessageDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -21091,7 +21108,7 @@ class PadController(EventController):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
 
     props: Props = ...
     def __init__(
@@ -21302,7 +21319,7 @@ class PageSetupUnixDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -21367,7 +21384,7 @@ class PageSetupUnixDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -22725,8 +22742,8 @@ class PrintDialog(GObject.Object):
     class Props:
         accept_label: str
         modal: bool
-        page_setup: PageSetup
-        print_settings: PrintSettings
+        page_setup: Optional[PageSetup]
+        print_settings: Optional[PrintSettings]
         title: str
 
     props: Props = ...
@@ -22740,8 +22757,8 @@ class PrintDialog(GObject.Object):
     ): ...
     def get_accept_label(self) -> str: ...
     def get_modal(self) -> bool: ...
-    def get_page_setup(self) -> PageSetup: ...
-    def get_print_settings(self) -> PrintSettings: ...
+    def get_page_setup(self) -> Optional[PageSetup]: ...
+    def get_print_settings(self) -> Optional[PrintSettings]: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> PrintDialog: ...
@@ -22763,7 +22780,7 @@ class PrintDialog(GObject.Object):
         *user_data: Any,
     ) -> None: ...
     def print_file_finish(self, result: Gio.AsyncResult) -> bool: ...
-    def print_finish(self, result: Gio.AsyncResult) -> Optional[Gio.OutputStream]: ...
+    def print_finish(self, result: Gio.AsyncResult) -> Gio.OutputStream: ...
     def set_accept_label(self, accept_label: str) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_page_setup(self, page_setup: PageSetup) -> None: ...
@@ -22776,7 +22793,7 @@ class PrintDialog(GObject.Object):
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
-    def setup_finish(self, result: Gio.AsyncResult) -> Optional[PrintSetup]: ...
+    def setup_finish(self, result: Gio.AsyncResult) -> PrintSetup: ...
 
 class PrintDialogClass(GObject.GPointer):
     """
@@ -23191,8 +23208,8 @@ class PrintSettings(GObject.Object):
     def unset(self, key: str) -> None: ...
 
 class PrintSetup(GObject.GBoxed):
-    def get_page_setup(self) -> Optional[PageSetup]: ...
-    def get_print_settings(self) -> Optional[PrintSettings]: ...
+    def get_page_setup(self) -> PageSetup: ...
+    def get_print_settings(self) -> PrintSettings: ...
     def ref(self) -> PrintSetup: ...
     def unref(self) -> None: ...
 
@@ -23335,7 +23352,7 @@ class PrintUnixDialog(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -23394,7 +23411,7 @@ class PrintUnixDialog(
         has_selection: bool = ...,
         manual_capabilities: PrintCapabilities = ...,
         page_setup: PageSetup = ...,
-        print_settings: PrintSettings = ...,
+        print_settings: Optional[PrintSettings] = ...,
         support_selection: bool = ...,
         use_header_bar: int = ...,
         application: Optional[Application] = ...,
@@ -23407,7 +23424,7 @@ class PrintUnixDialog(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -24750,7 +24767,9 @@ class ScrollableInterface(GObject.GPointer):
     base_iface: GObject.TypeInterface = ...
     get_border: Callable[[Scrollable], Tuple[bool, Border]] = ...
 
-class Scrollbar(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Scrollbar(
+    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
+):
     """
     :Constructors:
 
@@ -25799,6 +25818,7 @@ class Settings(GObject.Object, StyleProvider):
       gtk-long-press-time -> guint: gtk-long-press-time
       gtk-keynav-use-caret -> gboolean: gtk-keynav-use-caret
       gtk-overlay-scrolling -> gboolean: gtk-overlay-scrolling
+      gtk-font-rendering -> GtkFontRendering: gtk-font-rendering
 
     Signals from GtkStyleProvider:
       gtk-private-changed ()
@@ -25831,6 +25851,7 @@ class Settings(GObject.Object, StyleProvider):
         gtk_entry_select_on_focus: bool
         gtk_error_bell: bool
         gtk_font_name: str
+        gtk_font_rendering: FontRendering
         gtk_fontconfig_timestamp: int
         gtk_hint_font_metrics: bool
         gtk_icon_theme_name: str
@@ -25886,6 +25907,7 @@ class Settings(GObject.Object, StyleProvider):
         gtk_entry_select_on_focus: bool = ...,
         gtk_error_bell: bool = ...,
         gtk_font_name: str = ...,
+        gtk_font_rendering: FontRendering = ...,
         gtk_fontconfig_timestamp: int = ...,
         gtk_hint_font_metrics: bool = ...,
         gtk_icon_theme_name: str = ...,
@@ -26045,7 +26067,7 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
         name: Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget
+        widget: Optional[Widget]
         model: Gio.ListModel
 
     props: Props = ...
@@ -26908,7 +26930,7 @@ class ShortcutsWindow(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -26974,7 +26996,7 @@ class ShortcutsWindow(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -29082,12 +29104,12 @@ class Template:
         self, filename: str = ..., resource_path: str = ..., string: str = ...
     ) -> None: ...
     @classmethod
-    def from_file(cls, filename: str): ...
+    def from_file(cls, filename: str) -> Template: ...
     @classmethod
-    def from_resource(cls, resource_path: str): ...
+    def from_resource(cls, resource_path: str) -> Template: ...
     @classmethod
-    def from_string(cls, string: str): ...
-    def __call__(self, cls): ...
+    def from_string(cls, string: str) -> Template: ...
+    def __call__(self, cls) -> Template: ...
 
     class Callback:
         def __init__(self, name: str = ...) -> None: ...
@@ -29419,6 +29441,12 @@ class TextBuffer(GObject.Object):
     def __init__(
         self, enable_undo: bool = ..., tag_table: TextTagTable = ..., text: str = ...
     ): ...
+    def add_commit_notify(
+        self,
+        flags: TextBufferNotifyFlags,
+        commit_notify: Callable[..., None],
+        *user_data: Any,
+    ) -> int: ...
     def add_mark(self, mark: TextMark, where: TextIter) -> None: ...
     def add_selection_clipboard(self, clipboard: Gdk.Clipboard) -> None: ...
     def apply_tag(self, tag: TextTag, start: TextIter, end: TextIter) -> None: ...
@@ -29532,6 +29560,7 @@ class TextBuffer(GObject.Object):
     def place_cursor(self, where: TextIter) -> None: ...
     def redo(self) -> None: ...
     def remove_all_tags(self, start: TextIter, end: TextIter) -> None: ...
+    def remove_commit_notify(self, commit_notify_handler: int) -> None: ...
     def remove_selection_clipboard(self, clipboard: Gdk.Clipboard) -> None: ...
     def remove_tag(self, tag: TextTag, start: TextIter, end: TextIter) -> None: ...
     def remove_tag_by_name(self, name: str, start: TextIter, end: TextIter) -> None: ...
@@ -33343,7 +33372,7 @@ class Window(
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Widget
+        focus_widget: Optional[Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
@@ -33408,7 +33437,7 @@ class Window(
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Widget = ...,
+        focus_widget: Optional[Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
@@ -33932,6 +33961,7 @@ class DebugFlags(GObject.GFlags):
     BUILDER = 128
     BUILDER_OBJECTS = 65536
     CONSTRAINTS = 32768
+    CSS = 1048576
     GEOMETRY = 16
     ICONFALLBACK = 262144
     ICONTHEME = 32
@@ -34040,6 +34070,12 @@ class StyleContextPrintFlags(GObject.GFlags):
     SHOW_CHANGE = 4
     SHOW_STYLE = 2
 
+class TextBufferNotifyFlags(GObject.GFlags):
+    AFTER_DELETE = 8
+    AFTER_INSERT = 2
+    BEFORE_DELETE = 4
+    BEFORE_INSERT = 1
+
 class TextSearchFlags(GObject.GFlags):
     CASE_INSENSITIVE = 4
     TEXT_ONLY = 2
@@ -34075,6 +34111,7 @@ class AccessibleProperty(GObject.GEnum):
     AUTOCOMPLETE = 0
     DESCRIPTION = 1
     HAS_POPUP = 2
+    HELP_TEXT = 19
     KEY_SHORTCUTS = 3
     LABEL = 4
     LEVEL = 5
@@ -34452,6 +34489,10 @@ class FontLevel(GObject.GEnum):
     FAMILY = 0
     FEATURES = 3
     FONT = 2
+
+class FontRendering(GObject.GEnum):
+    AUTOMATIC = 0
+    MANUAL = 1
 
 class GraphicsOffloadEnabled(GObject.GEnum):
     DISABLED = 1
