@@ -21,12 +21,21 @@ options:
   -u UPDATE   Stub file to update e.g. -u Gdk.pyi
 ```
 
+Usage examples:
+
+```shellsession
+python tools/generate.py GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
+python tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
+isort .
+black .
+```
+
 To re-generate all known stubs, run `tools/update_all.py`.
 You can comment out the libraries you are not interested in.
 
 ## Install development dependencies
 
-    $ pip install .[dev]
+  $ pip install .[dev]
 
 Using editable install `pip install -e .` does not currently work for libraries which have multiple versions
 
@@ -34,7 +43,7 @@ Using editable install `pip install -e .` does not currently work for libraries 
 
 pre-commit is a library which executes checks defined in this repository.
 
-    $ pre-commit install
+  $ pre-commit install
 
 ## Commit Messages
 
