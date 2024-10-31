@@ -336,7 +336,20 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typings = "from typing import Any, Callable, Literal, Optional, Tuple, Type, TypeVar, Sequence"
+    typing_imports = [
+        "Any",
+        "Callable",
+        "Literal",
+        "Optional",
+        "Sequence",
+        "Tuple",
+        "Type",
+        "TypeVar",
+        "Union",
+    ]
+    typings = [
+        f"from typing import {typing_import}" for typing_import in typing_imports
+    ]
 
     typevars: list[str] = []
     imports: list[str] = []
@@ -348,7 +361,7 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     imports += [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return (
-        typings
+        "\n".join(typings)
         + "\n\n"
         + "\n".join(imports)
         + "\n"
