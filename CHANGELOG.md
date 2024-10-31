@@ -1,3 +1,29 @@
+# 2.12.0 (31 Oct 2024)
+
+## Feature
+
+* Add Spelling 1
+* Add GstRtp and GstRtps ([#188](https://github.com/pygobject/pygobject-stubs/issues/188)) (#188)
+
+## Typing
+
+* Improve type hints for
+    - Flatpak: Update to 1.15.10
+    - Gdk3
+    - GdkPixbuf: Update to 2.42.12
+    - Gio
+    - GIRepository: Update to 1.80.1
+    - GLib: Update to 2.80.5
+    - Graphene
+    - Gsk
+    - Gst
+    - Gst: Update to 1.24.7
+    - GstRtspServer
+    - Gtk3
+    - Gtk4: Update to 4.16.2
+    - GtkSource5: Update to 5.12.1
+    - Pango: Update to 1.54.0
+
 # 2.11.0 (03 Apr 2024)
 
 ## Feature
