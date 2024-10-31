@@ -46,6 +46,15 @@ def vec4_z_axis() -> Vec4: ...
 def vec4_zero() -> Vec4: ...
 
 class Box(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Box()
+        alloc() -> Graphene.Box
+    """
+
     min: Vec3 = ...
     max: Vec3 = ...
     @classmethod
@@ -74,11 +83,11 @@ class Box(GObject.GBoxed):
         self, min: Optional[Point3D] = None, max: Optional[Point3D] = None
     ) -> Box: ...
     def init_from_box(self, src: Box) -> Box: ...
-    def init_from_points(self, n_points: int, points: Sequence[Point3D]) -> Box: ...
+    def init_from_points(self, points: Sequence[Point3D]) -> Box: ...
     def init_from_vec3(
         self, min: Optional[Vec3] = None, max: Optional[Vec3] = None
     ) -> Box: ...
-    def init_from_vectors(self, n_vectors: int, vectors: Sequence[Vec3]) -> Box: ...
+    def init_from_vectors(self, vectors: Sequence[Vec3]) -> Box: ...
     def intersection(self, b: Box) -> Tuple[bool, Box]: ...
     @staticmethod
     def minus_one() -> Box: ...
@@ -91,6 +100,15 @@ class Box(GObject.GBoxed):
     def zero() -> Box: ...
 
 class Euler(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Euler()
+        alloc() -> Graphene.Euler
+    """
+
     angles: Vec3 = ...
     order: EulerOrder = ...
     @classmethod
@@ -123,6 +141,15 @@ class Euler(GObject.GBoxed):
     def to_vec3(self) -> Vec3: ...
 
 class Frustum(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Frustum()
+        alloc() -> Graphene.Frustum
+    """
+
     planes: list[Plane] = ...
     @classmethod
     def alloc(cls) -> Frustum: ...
@@ -139,6 +166,15 @@ class Frustum(GObject.GBoxed):
     def intersects_sphere(self, sphere: Sphere) -> bool: ...
 
 class Matrix(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Matrix()
+        alloc() -> Graphene.Matrix
+    """
+
     value: Simd4X4F = ...
     @classmethod
     def alloc(cls) -> Matrix: ...
@@ -230,6 +266,15 @@ class Matrix(GObject.GBoxed):
     def untransform_point(self, p: Point, bounds: Rect) -> Tuple[bool, Point]: ...
 
 class Plane(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Plane()
+        alloc() -> Graphene.Plane
+    """
+
     normal: Vec3 = ...
     constant: float = ...
     @classmethod
@@ -251,6 +296,15 @@ class Plane(GObject.GBoxed):
     ) -> Plane: ...
 
 class Point(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Point()
+        alloc() -> Graphene.Point
+    """
+
     x: float = ...
     y: float = ...
     @classmethod
@@ -268,6 +322,15 @@ class Point(GObject.GBoxed):
     def zero() -> Point: ...
 
 class Point3D(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Point3D()
+        alloc() -> Graphene.Point3D
+    """
+
     x: float = ...
     y: float = ...
     z: float = ...
@@ -294,6 +357,15 @@ class Point3D(GObject.GBoxed):
     def zero() -> Point3D: ...
 
 class Quad(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Quad()
+        alloc() -> Graphene.Quad
+    """
+
     points: list[Point] = ...
     @classmethod
     def alloc(cls) -> Quad: ...
@@ -306,6 +378,15 @@ class Quad(GObject.GBoxed):
     def init_from_rect(self, r: Rect) -> Quad: ...
 
 class Quaternion(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Quaternion()
+        alloc() -> Graphene.Quaternion
+    """
+
     x: float = ...
     y: float = ...
     z: float = ...
@@ -341,6 +422,15 @@ class Quaternion(GObject.GBoxed):
     def to_vec4(self) -> Vec4: ...
 
 class Ray(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Ray()
+        alloc() -> Graphene.Ray
+    """
+
     origin: Vec3 = ...
     direction: Vec3 = ...
     @classmethod
@@ -368,6 +458,14 @@ class Ray(GObject.GBoxed):
     def intersects_triangle(self, t: Triangle) -> bool: ...
 
 class Rect(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Rect()
+    """
+
     origin: Point = ...
     size: Size = ...
     @staticmethod
@@ -407,18 +505,43 @@ class Rect(GObject.GBoxed):
     def zero() -> Rect: ...
 
 class Simd4F(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Simd4F()
+    """
+
     x: float = ...
     y: float = ...
     z: float = ...
     w: float = ...
 
 class Simd4X4F(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        Simd4X4F()
+    """
+
     x: Simd4F = ...
     y: Simd4F = ...
     z: Simd4F = ...
     w: Simd4F = ...
 
 class Size(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Size()
+        alloc() -> Graphene.Size
+    """
+
     width: float = ...
     height: float = ...
     @classmethod
@@ -433,6 +556,15 @@ class Size(GObject.GBoxed):
     def zero() -> Size: ...
 
 class Sphere(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Sphere()
+        alloc() -> Graphene.Sphere
+    """
+
     center: Vec3 = ...
     radius: float = ...
     @classmethod
@@ -446,15 +578,24 @@ class Sphere(GObject.GBoxed):
     def get_radius(self) -> float: ...
     def init(self, center: Optional[Point3D], radius: float) -> Sphere: ...
     def init_from_points(
-        self, n_points: int, points: Sequence[Point3D], center: Optional[Point3D] = None
+        self, points: Sequence[Point3D], center: Optional[Point3D] = None
     ) -> Sphere: ...
     def init_from_vectors(
-        self, n_vectors: int, vectors: Sequence[Vec3], center: Optional[Point3D] = None
+        self, vectors: Sequence[Vec3], center: Optional[Point3D] = None
     ) -> Sphere: ...
     def is_empty(self) -> bool: ...
     def translate(self, point: Point3D) -> Sphere: ...
 
 class Triangle(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Triangle()
+        alloc() -> Graphene.Triangle
+    """
+
     a: Vec3 = ...
     b: Vec3 = ...
     c: Vec3 = ...
@@ -491,6 +632,15 @@ class Triangle(GObject.GBoxed):
     ) -> Triangle: ...
 
 class Vec2(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Vec2()
+        alloc() -> Graphene.Vec2
+    """
+
     value: Simd4F = ...
     def add(self, b: Vec2) -> Vec2: ...
     @classmethod
@@ -525,6 +675,15 @@ class Vec2(GObject.GBoxed):
     def zero() -> Vec2: ...
 
 class Vec3(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Vec3()
+        alloc() -> Graphene.Vec3
+    """
+
     value: Simd4F = ...
     def add(self, b: Vec3) -> Vec3: ...
     @classmethod
@@ -568,6 +727,15 @@ class Vec3(GObject.GBoxed):
     def zero() -> Vec3: ...
 
 class Vec4(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        Vec4()
+        alloc() -> Graphene.Vec4
+    """
+
     value: Simd4F = ...
     def add(self, b: Vec4) -> Vec4: ...
     @classmethod
@@ -586,6 +754,69 @@ class Vec4(GObject.GBoxed):
     def init_from_float(self, src: Sequence[float]) -> Vec4: ...
     def init_from_vec2(self, src: Vec2, z: float, w: float) -> Vec4: ...
     def init_from_vec3(self, src: Vec3, w: float) -> Vec4: ...
+    def init_from_vec4(self, src: Vec4) -> Vec4: ...
+    def interpolate(self, v2: Vec4, factor: float) -> Vec4: ...
+    def length(self) -> float: ...
+    def max(self, b: Vec4) -> Vec4: ...
+    def min(self, b: Vec4) -> Vec4: ...
+    def multiply(self, b: Vec4) -> Vec4: ...
+    def near(self, v2: Vec4, epsilon: float) -> bool: ...
+    def negate(self) -> Vec4: ...
+    def normalize(self) -> Vec4: ...
+    @staticmethod
+    def one() -> Vec4: ...
+    def scale(self, factor: float) -> Vec4: ...
+    def subtract(self, b: Vec4) -> Vec4: ...
+    def to_float(self) -> list[float]: ...
+    @staticmethod
+    def w_axis() -> Vec4: ...
+    @staticmethod
+    def x_axis() -> Vec4: ...
+    @staticmethod
+    def y_axis() -> Vec4: ...
+    @staticmethod
+    def z_axis() -> Vec4: ...
+    @staticmethod
+    def zero() -> Vec4: ...
+
+class EulerOrder(GObject.GEnum):
+    DEFAULT = -1
+    RXYX = 19
+    RXYZ = 28
+    RXZX = 21
+    RXZY = 22
+    RYXY = 25
+    RYXZ = 26
+    RYZX = 20
+    RYZY = 23
+    RZXY = 24
+    RZXZ = 27
+    RZYX = 18
+    RZYZ = 29
+    SXYX = 7
+    SXYZ = 6
+    SXZX = 9
+    SXZY = 8
+    SYXY = 13
+    SYXZ = 12
+    SYZX = 10
+    SYZY = 11
+    SZXY = 14
+    SZXZ = 15
+    SZYX = 16
+    SZYZ = 17
+    XYZ = 0
+    XZY = 3
+    YXZ = 4
+    YZX = 1
+    ZXY = 2
+    ZYX = 5
+
+class RayIntersectionKind(GObject.GEnum):
+    ENTER = 1
+    LEAVE = 2
+    NONE = 0
+
     def init_from_vec4(self, src: Vec4) -> Vec4: ...
     def interpolate(self, v2: Vec4, factor: float) -> Vec4: ...
     def length(self) -> float: ...
