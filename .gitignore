@@ -7,3 +7,10 @@ dist
 *.egg-info
 *.sublime-*
 *.venv
+
+src/gi-stubs/repository/Gdk.pyi
+src/gi-stubs/repository/Gtk.pyi
+src/gi-stubs/repository/GtkSource.pyi
+src/gi-stubs/repository/JavaScriptCore.pyi
+src/gi-stubs/repository/Soup.pyi
+src/gi-stubs/repository/WebKit.pyi
