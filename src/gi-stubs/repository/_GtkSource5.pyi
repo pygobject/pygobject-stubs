@@ -6,6 +6,7 @@ from typing import Sequence
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
+from typing import Union
 
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -4448,6 +4449,7 @@ class TagClass(GObject.GPointer):
     parent_class: Gtk.TextTagClass = ...
     _reserved: list[None] = ...
 
+# override
 class View(
     Gtk.TextView,
     Gtk.Accessible,
@@ -4546,7 +4548,6 @@ class View(
       indent -> gint: indent
       tabs -> PangoTabArray: tabs
       cursor-visible -> gboolean: cursor-visible
-      buffer -> GtkTextBuffer: buffer
       overwrite -> gboolean: overwrite
       accepts-tab -> gboolean: accepts-tab
       im-module -> gchararray: im-module
@@ -4630,7 +4631,7 @@ class View(
         tab_width: int
         accepts_tab: bool
         bottom_margin: int
-        buffer: Gtk.TextBuffer
+        buffer: Buffer
         cursor_visible: bool
         editable: bool
         extra_menu: Gio.MenuModel
@@ -4691,6 +4692,7 @@ class View(
 
     props: Props = ...
     parent_instance: Gtk.TextView = ...
+
     def __init__(
         self,
         auto_indent: bool = ...,
@@ -4775,6 +4777,7 @@ class View(
     def do_show_completion(self) -> None: ...
     def get_auto_indent(self) -> bool: ...
     def get_background_pattern(self) -> BackgroundPatternType: ...
+    def get_buffer(self) -> Buffer: ...
     def get_completion(self) -> Completion: ...
     def get_enable_snippets(self) -> bool: ...
     def get_gutter(self, window_type: Gtk.TextWindowType) -> Gutter: ...
