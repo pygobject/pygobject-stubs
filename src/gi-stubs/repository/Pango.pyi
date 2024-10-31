@@ -1,9 +1,11 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -20,9 +22,9 @@ GLYPH_INVALID_INPUT: int = 4294967295
 GLYPH_UNKNOWN_FLAG: int = 268435456
 SCALE: int = 1024
 VERSION_MAJOR: int = 1
-VERSION_MICRO: int = 12
-VERSION_MINOR: int = 50
-VERSION_STRING: str = "1.50.12"
+VERSION_MICRO: int = 0
+VERSION_MINOR: int = 54
+VERSION_STRING: str = "1.54.0"
 _introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "Pango"
@@ -686,6 +688,12 @@ class FontFamily(GObject.Object, Gio.ListModel):
 
       n-items -> guint:
 
+      name -> gchararray:
+
+      is-monospace -> gboolean:
+
+      is-variable -> gboolean:
+
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
@@ -695,8 +703,11 @@ class FontFamily(GObject.Object, Gio.ListModel):
     """
 
     class Props:
+        is_monospace: bool
+        is_variable: bool
         item_type: Type
         n_items: int
+        name: str
 
     props: Props = ...
     parent_instance: GObject.Object = ...
@@ -776,6 +787,13 @@ class FontMap(GObject.Object, Gio.ListModel):
     def load_fontset(
         self, context: Context, desc: FontDescription, language: Language
     ) -> Optional[Fontset]: ...
+    def reload_font(
+        self,
+        font: Font,
+        scale: float,
+        context: Optional[Context] = None,
+        variations: Optional[str] = None,
+    ) -> Font: ...
 
 class FontMapClass(GObject.GPointer):
     """
@@ -1042,6 +1060,7 @@ class Item(GObject.GBoxed):
     def apply_attrs(self, iter: AttrIterator) -> None: ...
     def copy(self) -> Optional[Item]: ...
     def free(self) -> None: ...
+    def get_char_offset(self) -> int: ...
     @classmethod
     def new(cls) -> Item: ...
     def split(self, split_index: int, split_offset: int) -> Item: ...
@@ -1612,6 +1631,189 @@ class Script(GObject.GEnum):
     ARMENIAN = 3
     BALINESE = 62
     BASSA_VAH = 88
+    BATAK = 78
+    BENGALI = 4
+    BOPOMOFO = 5
+    BRAHMI = 79
+    BRAILLE = 46
+    BUGINESE = 55
+    BUHID = 44
+    CANADIAN_ABORIGINAL = 40
+    CARIAN = 75
+    CAUCASIAN_ALBANIAN = 89
+    CHAKMA = 81
+    CHAM = 72
+    CHEROKEE = 6
+    COMMON = 0
+    COPTIC = 7
+    CUNEIFORM = 63
+    CYPRIOT = 47
+    CYRILLIC = 8
+    DESERET = 9
+    DEVANAGARI = 10
+    DUPLOYAN = 90
+    ELBASAN = 91
+    ETHIOPIC = 11
+    GEORGIAN = 12
+    GLAGOLITIC = 56
+    GOTHIC = 13
+    GRANTHA = 92
+    GREEK = 14
+    GUJARATI = 15
+    GURMUKHI = 16
+    HAN = 17
+    HANGUL = 18
+    HANUNOO = 43
+    HATRAN = 113
+    HEBREW = 19
+    HIRAGANA = 20
+    INHERITED = 1
+    INVALID_CODE = -1
+    KANNADA = 21
+    KATAKANA = 22
+    KAYAH_LI = 67
+    KHAROSHTHI = 60
+    KHMER = 23
+    KHOJKI = 93
+    KHUDAWADI = 94
+    LAO = 24
+    LATIN = 25
+    LEPCHA = 68
+    LIMBU = 48
+    LINEAR_A = 95
+    LINEAR_B = 51
+    LYCIAN = 76
+    LYDIAN = 77
+    MAHAJANI = 96
+    MALAYALAM = 26
+    MANDAIC = 80
+    MANICHAEAN = 97
+    MENDE_KIKAKUI = 98
+    MEROITIC_CURSIVE = 82
+    MEROITIC_HIEROGLYPHS = 83
+    MIAO = 84
+    MODI = 99
+    MONGOLIAN = 27
+    MRO = 100
+    MULTANI = 114
+    MYANMAR = 28
+    NABATAEAN = 101
+    NEW_TAI_LUE = 54
+    NKO = 66
+    OGHAM = 29
+    OLD_HUNGARIAN = 115
+    OLD_ITALIC = 30
+    OLD_NORTH_ARABIAN = 102
+    OLD_PERMIC = 103
+    OLD_PERSIAN = 59
+    OL_CHIKI = 73
+    ORIYA = 31
+    OSMANYA = 49
+    PAHAWH_HMONG = 104
+    PALMYRENE = 105
+    PAU_CIN_HAU = 106
+    PHAGS_PA = 65
+    PHOENICIAN = 64
+    PSALTER_PAHLAVI = 107
+    REJANG = 69
+    RUNIC = 32
+    SAURASHTRA = 71
+    SHARADA = 85
+    SHAVIAN = 50
+    SIDDHAM = 108
+    SIGNWRITING = 116
+    SINHALA = 33
+    SORA_SOMPENG = 86
+    SUNDANESE = 70
+    SYLOTI_NAGRI = 58
+    SYRIAC = 34
+    TAGALOG = 42
+    TAGBANWA = 45
+    TAI_LE = 52
+    TAKRI = 87
+    TAMIL = 35
+    TELUGU = 36
+    THAANA = 37
+    THAI = 38
+    TIBETAN = 39
+    TIFINAGH = 57
+    TIRHUTA = 109
+    UGARITIC = 53
+    UNKNOWN = 61
+    VAI = 74
+    WARANG_CITI = 110
+    YI = 41
+    @staticmethod
+    def for_unichar(ch: str) -> Script: ...
+    @staticmethod
+    def get_sample_language(script: Script) -> Optional[Language]: ...
+
+class Stretch(GObject.GEnum):
+    CONDENSED = 2
+    EXPANDED = 6
+    EXTRA_CONDENSED = 1
+    EXTRA_EXPANDED = 7
+    NORMAL = 4
+    SEMI_CONDENSED = 3
+    SEMI_EXPANDED = 5
+    ULTRA_CONDENSED = 0
+    ULTRA_EXPANDED = 8
+
+class Style(GObject.GEnum):
+    ITALIC = 2
+    NORMAL = 0
+    OBLIQUE = 1
+
+class TabAlign(GObject.GEnum):
+    CENTER = 2
+    DECIMAL = 3
+    LEFT = 0
+    RIGHT = 1
+
+class TextTransform(GObject.GEnum):
+    CAPITALIZE = 3
+    LOWERCASE = 1
+    NONE = 0
+    UPPERCASE = 2
+
+class Underline(GObject.GEnum):
+    DOUBLE = 2
+    DOUBLE_LINE = 6
+    ERROR = 4
+    ERROR_LINE = 7
+    LOW = 3
+    NONE = 0
+    SINGLE = 1
+    SINGLE_LINE = 5
+
+class Variant(GObject.GEnum):
+    ALL_PETITE_CAPS = 4
+    ALL_SMALL_CAPS = 2
+    NORMAL = 0
+    PETITE_CAPS = 3
+    SMALL_CAPS = 1
+    TITLE_CAPS = 6
+    UNICASE = 5
+
+class Weight(GObject.GEnum):
+    BOLD = 700
+    BOOK = 380
+    HEAVY = 900
+    LIGHT = 300
+    MEDIUM = 500
+    NORMAL = 400
+    SEMIBOLD = 600
+    SEMILIGHT = 350
+    THIN = 100
+    ULTRABOLD = 800
+    ULTRAHEAVY = 1000
+    ULTRALIGHT = 200
+
+class WrapMode(GObject.GEnum):
+    CHAR = 1
+    WORD = 0
+    WORD_CHAR = 2
+
     BATAK = 78
     BENGALI = 4
     BOPOMOFO = 5
