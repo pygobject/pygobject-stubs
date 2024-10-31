@@ -6,6 +6,7 @@ from typing import Sequence
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
+from typing import Union
 
 from gi.repository import GObject
 
@@ -3586,6 +3587,7 @@ class UriParamsIter(GObject.GPointer):
     ) -> None: ...
     def next(self) -> Tuple[bool, str, str]: ...
 
+# override
 class Variant(GObject.GPointer):
     """
     :Constructors:
@@ -3764,6 +3766,10 @@ class Variant(GObject.GPointer):
     # override
     def unpack(self) -> Any: ...
     def unref(self) -> None: ...
+    # override
+    def __getitem__(self, key: Any) -> Any: ...
+    # override
+    def __len__(self) -> int: ...
 
 class VariantBuilder(GObject.GBoxed):
     """
