@@ -12,7 +12,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 4
+MICRO_VERSION: int = 10
 MINOR_VERSION: int = 15
 _lock = ...  # FIXME Constant
 _namespace: str = "Flatpak"
@@ -952,6 +952,14 @@ class Transaction(GObject.Object, Gio.Initable):
         self,
         remote: str,
         ref: str,
+        subpaths: Optional[str] = None,
+        previous_ids: Optional[Sequence[str]] = None,
+    ) -> bool: ...
+    def add_rebase_and_uninstall(
+        self,
+        remote: str,
+        new_ref: str,
+        old_ref: str,
         subpaths: Optional[str] = None,
         previous_ids: Optional[Sequence[str]] = None,
     ) -> bool: ...
