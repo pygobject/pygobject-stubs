@@ -64,6 +64,7 @@ libraries = [
     Lib("Secret", "1"),
     Lib("Soup", "2.4", output="_Soup2"),
     Lib("Soup", "3.0", output="_Soup3"),
+    Lib("Spelling", "1"),
     Lib("Vte", "2.91"),
     Lib("WebKit", "6.0", output="_WebKit6"),
     Lib("XApp", "1.0"),
