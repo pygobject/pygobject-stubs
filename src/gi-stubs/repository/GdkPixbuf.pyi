@@ -1,9 +1,11 @@
 from typing import Any
 from typing import Callable
+from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -11,9 +13,9 @@ from gi.repository import GModule
 from gi.repository import GObject
 
 PIXBUF_MAJOR: int = 2
-PIXBUF_MICRO: int = 10
+PIXBUF_MICRO: int = 12
 PIXBUF_MINOR: int = 42
-PIXBUF_VERSION: str = "2.42.10"
+PIXBUF_VERSION: str = "2.42.12"
 _introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "GdkPixbuf"
@@ -23,6 +25,52 @@ _version: str = "2.0"
 def pixbuf_error_quark() -> int: ...
 
 class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
+    """
+    :Constructors:
+
+    ::
+
+        Pixbuf(**properties)
+        new(colorspace:GdkPixbuf.Colorspace, has_alpha:bool, bits_per_sample:int, width:int, height:int) -> GdkPixbuf.Pixbuf or None
+        new_from_bytes(data:GLib.Bytes, colorspace:GdkPixbuf.Colorspace, has_alpha:bool, bits_per_sample:int, width:int, height:int, rowstride:int) -> GdkPixbuf.Pixbuf
+        new_from_data(data:list, colorspace:GdkPixbuf.Colorspace, has_alpha:bool, bits_per_sample:int, width:int, height:int, rowstride:int, destroy_fn:GdkPixbuf.PixbufDestroyNotify=None, destroy_fn_data=None) -> GdkPixbuf.Pixbuf
+        new_from_file(filename:str) -> GdkPixbuf.Pixbuf or None
+        new_from_file_at_scale(filename:str, width:int, height:int, preserve_aspect_ratio:bool) -> GdkPixbuf.Pixbuf or None
+        new_from_file_at_size(filename:str, width:int, height:int) -> GdkPixbuf.Pixbuf or None
+        new_from_inline(data:list, copy_pixels:bool) -> GdkPixbuf.Pixbuf
+        new_from_resource(resource_path:str) -> GdkPixbuf.Pixbuf or None
+        new_from_resource_at_scale(resource_path:str, width:int, height:int, preserve_aspect_ratio:bool) -> GdkPixbuf.Pixbuf or None
+        new_from_stream(stream:Gio.InputStream, cancellable:Gio.Cancellable=None) -> GdkPixbuf.Pixbuf or None
+        new_from_stream_at_scale(stream:Gio.InputStream, width:int, height:int, preserve_aspect_ratio:bool, cancellable:Gio.Cancellable=None) -> GdkPixbuf.Pixbuf or None
+        new_from_stream_finish(async_result:Gio.AsyncResult) -> GdkPixbuf.Pixbuf or None
+        new_from_xpm_data(data:list) -> GdkPixbuf.Pixbuf or None
+
+    Object GdkPixbuf
+
+    Properties from GdkPixbuf:
+      colorspace -> GdkColorspace: Colorspace
+        The colorspace in which the samples are interpreted
+      n-channels -> gint: Number of Channels
+        The number of samples per pixel
+      has-alpha -> gboolean: Has Alpha
+        Whether the pixbuf has an alpha channel
+      bits-per-sample -> gint: Bits per Sample
+        The number of bits per sample
+      width -> gint: Width
+        The number of columns of the pixbuf
+      height -> gint: Height
+        The number of rows of the pixbuf
+      rowstride -> gint: Rowstride
+        The number of bytes between the start of a row and the start of the next row
+      pixels -> gpointer: Pixels
+        A pointer to the pixel data of the pixbuf
+      pixel-bytes -> GBytes: Pixel Bytes
+        Readonly pixel data
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         bits_per_sample: int
         colorspace: Colorspace
@@ -47,7 +95,9 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         rowstride: int = ...,
         width: int = ...,
     ): ...
-    def add_alpha(self, substitute_color: bool, r: int, g: int, b: int) -> Pixbuf: ...
+    def add_alpha(
+        self, substitute_color: bool, r: int, g: int, b: int
+    ) -> Optional[Pixbuf]: ...
     def apply_embedded_orientation(self) -> Optional[Pixbuf]: ...
     @staticmethod
     def calculate_rowstride(
@@ -136,7 +186,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def get_height(self) -> int: ...
     def get_n_channels(self) -> int: ...
     def get_option(self, key: str) -> Optional[str]: ...
-    def get_options(self) -> str: ...
+    def get_options(self) -> dict[str, str]: ...
     def get_pixels(self) -> bytes: ...
     def get_rowstride(self) -> int: ...
     def get_width(self) -> int: ...
@@ -187,9 +237,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         cls, filename: str, width: int, height: int
     ) -> Optional[Pixbuf]: ...
     @classmethod
-    def new_from_inline(
-        cls, data_length: int, data: Sequence[int], copy_pixels: bool
-    ) -> Pixbuf: ...
+    def new_from_inline(cls, data: Sequence[int], copy_pixels: bool) -> Pixbuf: ...
     @classmethod
     def new_from_resource(cls, resource_path: str) -> Optional[Pixbuf]: ...
     @classmethod
@@ -231,7 +279,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         cls, async_result: Gio.AsyncResult
     ) -> Optional[Pixbuf]: ...
     @classmethod
-    def new_from_xpm_data(cls, data: Sequence[str]) -> Pixbuf: ...
+    def new_from_xpm_data(cls, data: Sequence[str]) -> Optional[Pixbuf]: ...
     def new_subpixbuf(
         self, src_x: int, src_y: int, width: int, height: int
     ) -> Pixbuf: ...
@@ -302,6 +350,23 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def set_option(self, key: str, value: str) -> bool: ...
 
 class PixbufAnimation(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufAnimation(**properties)
+        new_from_file(filename:str) -> GdkPixbuf.PixbufAnimation or None
+        new_from_resource(resource_path:str) -> GdkPixbuf.PixbufAnimation or None
+        new_from_stream(stream:Gio.InputStream, cancellable:Gio.Cancellable=None) -> GdkPixbuf.PixbufAnimation or None
+        new_from_stream_finish(async_result:Gio.AsyncResult) -> GdkPixbuf.PixbufAnimation or None
+
+    Object GdkPixbufAnimation
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def do_get_iter(
         self, start_time: Optional[GLib.TimeVal] = None
@@ -337,6 +402,14 @@ class PixbufAnimation(GObject.Object):
     ) -> Optional[PixbufAnimation]: ...
 
 class PixbufAnimationClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufAnimationClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     is_static_image: Callable[[PixbufAnimation], bool] = ...
     get_static_image: Callable[[PixbufAnimation], Pixbuf] = ...
@@ -346,6 +419,19 @@ class PixbufAnimationClass(GObject.GPointer):
     ] = ...
 
 class PixbufAnimationIter(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufAnimationIter(**properties)
+
+    Object GdkPixbufAnimationIter
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     def advance(self, current_time: Optional[GLib.TimeVal] = None) -> bool: ...
     def do_advance(self, current_time: Optional[GLib.TimeVal] = None) -> bool: ...
@@ -357,6 +443,14 @@ class PixbufAnimationIter(GObject.Object):
     def on_currently_loading_frame(self) -> bool: ...
 
 class PixbufAnimationIterClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufAnimationIterClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     get_delay_time: Callable[[PixbufAnimationIter], int] = ...
     get_pixbuf: Callable[[PixbufAnimationIter], Pixbuf] = ...
@@ -364,6 +458,14 @@ class PixbufAnimationIterClass(GObject.GPointer):
     advance: Callable[[PixbufAnimationIter, Optional[GLib.TimeVal]], bool] = ...
 
 class PixbufFormat(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufFormat()
+    """
+
     name: str = ...
     signature: PixbufModulePattern = ...
     domain: str = ...
@@ -373,13 +475,13 @@ class PixbufFormat(GObject.GBoxed):
     flags: int = ...
     disabled: bool = ...
     license: str = ...
-    def copy(self) -> PixbufFormat: ...
+    def copy(self) -> Optional[PixbufFormat]: ...
     def free(self) -> None: ...
-    def get_description(self) -> str: ...
-    def get_extensions(self) -> list[str]: ...
-    def get_license(self) -> str: ...
-    def get_mime_types(self) -> list[str]: ...
-    def get_name(self) -> str: ...
+    def get_description(self) -> Optional[str]: ...
+    def get_extensions(self) -> Optional[list[str]]: ...
+    def get_license(self) -> Optional[str]: ...
+    def get_mime_types(self) -> Optional[list[str]]: ...
+    def get_name(self) -> Optional[str]: ...
     def is_disabled(self) -> bool: ...
     def is_save_option_supported(self, option_key: str) -> bool: ...
     def is_scalable(self) -> bool: ...
@@ -387,6 +489,28 @@ class PixbufFormat(GObject.GBoxed):
     def set_disabled(self, disabled: bool) -> None: ...
 
 class PixbufLoader(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufLoader(**properties)
+        new() -> GdkPixbuf.PixbufLoader
+        new_with_mime_type(mime_type:str) -> GdkPixbuf.PixbufLoader
+        new_with_type(image_type:str) -> GdkPixbuf.PixbufLoader
+
+    Object GdkPixbufLoader
+
+    Signals from GdkPixbufLoader:
+      size-prepared (gint, gint)
+      area-prepared ()
+      area-updated (gint, gint, gint, gint)
+      closed ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     parent_instance: GObject.Object = ...
     priv: None = ...
     def close(self) -> bool: ...
@@ -408,6 +532,14 @@ class PixbufLoader(GObject.Object):
     def write_bytes(self, buffer: GLib.Bytes) -> bool: ...
 
 class PixbufLoaderClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufLoaderClass()
+    """
+
     parent_class: GObject.ObjectClass = ...
     size_prepared: Callable[[PixbufLoader, int, int], None] = ...
     area_prepared: Callable[[PixbufLoader], None] = ...
@@ -415,6 +547,14 @@ class PixbufLoaderClass(GObject.GPointer):
     closed: Callable[[PixbufLoader], None] = ...
 
 class PixbufModule(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufModule()
+    """
+
     module_name: str = ...
     module_path: str = ...
     module: GModule.Module = ...
@@ -436,15 +576,55 @@ class PixbufModule(GObject.GPointer):
     _reserved4: None = ...
 
 class PixbufModulePattern(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufModulePattern()
+    """
+
     prefix: str = ...
     mask: str = ...
     relevance: int = ...
 
 class PixbufNonAnim(PixbufAnimation):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufNonAnim(**properties)
+        new(pixbuf:GdkPixbuf.Pixbuf) -> GdkPixbuf.PixbufAnimation
+
+    Object GdkPixbufNonAnim
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     @classmethod
     def new(cls, pixbuf: Pixbuf) -> PixbufNonAnim: ...
 
 class PixbufSimpleAnim(PixbufAnimation):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufSimpleAnim(**properties)
+        new(width:int, height:int, rate:float) -> GdkPixbuf.PixbufSimpleAnim
+
+    Object GdkPixbufSimpleAnim
+
+    Properties from GdkPixbufSimpleAnim:
+      loop -> gboolean: Loop
+        Whether the animation should loop when it reaches the end
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
     class Props:
         loop: bool
 
