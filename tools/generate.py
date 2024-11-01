@@ -167,6 +167,10 @@ def _callable_get_arguments(
     str_args = list(reversed(str_args))
     names = list(dict_names.values())
 
+    # We need this info to filter out None as return arg for methods
+    # that process Gio.AsyncResult. In python this method raises always.
+    is_async_res = "Gio.AsyncResult" in str_args
+
     if accept_optional_args:
         names.append(f"*{optional_args_name}")
         str_args.append("typing.Any")
@@ -174,7 +178,7 @@ def _callable_get_arguments(
     return_type = _type_to_python(
         type.get_return_type(), current_namespace, needed_namespaces, True
     )
-    if type.may_return_null() and return_type != "None":
+    if type.may_return_null() and return_type != "None" and not is_async_res:
         return_type = f"typing.Optional[{return_type}]"
 
     return_args = list(dict_return_args.values())
@@ -275,7 +279,7 @@ def _type_to_python(
         return "str"
 
     if tag == tags.GTYPE:
-        return "typing.Type[Any]"
+        return "typing.Type[typing.Any]"
 
     if tag in (
         tags.INT8,
@@ -336,7 +340,24 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typevars: list[str] = ['T = typing.TypeVar("T")']
+    typevars: list[str] = [
+        'T = typing.TypeVar("T")',
+    ]
+
+    if namespace == "Gtk":
+        typevars.append(
+            """CellRendererT = typing.TypeVar(
+    "CellRendererT",
+    CellRendererCombo,
+    CellRendererPixbuf,
+    CellRendererProgress,
+    CellRendererSpin,
+    CellRendererSpinner,
+    CellRendererText,
+    CellRendererToggle,
+)"""
+        )
+
     imports: list[str] = []
     if "cairo" in ns:
         imports = ["import cairo"]
@@ -795,7 +816,7 @@ def _gi_build_stub(
                     s.append(f"{n}: {t} = ...")
 
             separator = ",\n                 "
-            ret += f"    def __init__(self, {separator.join(s)}): ...\n"
+            ret += f"    def __init__(self, {separator.join(s)}) -> None: ...\n"
 
         for line in classret.splitlines():
             ret += "    " + line + "\n"
