@@ -275,7 +275,7 @@ def _type_to_python(
         return "str"
 
     if tag == tags.GTYPE:
-        return "typing.Type"
+        return "typing.Type[Any]"
 
     if tag in (
         tags.INT8,

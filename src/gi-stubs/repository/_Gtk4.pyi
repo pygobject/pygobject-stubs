@@ -23799,7 +23799,7 @@ class PropertyExpression(Expression):
     def get_pspec(self) -> GObject.ParamSpec: ...
     @classmethod
     def new(
-        cls, this_type: Type, expression: Optional[Expression], property_name: str
+        cls, this_type: Type[Any], expression: Optional[Expression], property_name: str
     ) -> PropertyExpression: ...
     @classmethod
     def new_for_pspec(
