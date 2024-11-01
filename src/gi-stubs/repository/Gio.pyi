@@ -1891,14 +1891,31 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         observer: Optional[DBusAuthObserver] = None,
         cancellable: Optional[Cancellable] = None,
     ) -> DBusConnection: ...
+    # override
     def register_object(
         self,
-        object_path,
-        interface_info,
-        method_call_closure=None,
-        get_property_closure=None,
-        set_property_closure=None,
-    ): ...  # FIXME Function
+        object_path: str,
+        interface_info: DBusInterfaceInfo,
+        method_call_closure: (
+            Callable[
+                [
+                    DBusConnection,
+                    str,
+                    str,
+                    str,
+                    str,
+                    GLib.Variant,
+                    DBusMethodInvocation,
+                ],
+                Any,
+            ]
+            | None
+        ) = None,
+        get_property_closure: (
+            Callable[[DBusConnection, str, str, str, str], Any] | None
+        ) = None,
+        set_property_closure: Callable[..., Any] | None = None,
+    ) -> int: ...  # FIXME Function
     def register_subtree(
         self,
         object_path: str,
