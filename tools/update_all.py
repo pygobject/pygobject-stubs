@@ -28,6 +28,7 @@ libraries = [
     Lib("Gdk", "3.0", output="_Gdk3"),
     Lib("Gdk", "4.0", output="_Gdk4"),
     Lib("GdkPixbuf", "2.0"),
+    Lib("GdkX11", "4.0"),
     Lib("Geoclue", "2.0"),
     Lib("Ggit", "1.0"),
     Lib("Gio", "2.0"),
