@@ -8,7 +8,7 @@ name = "PyGObject-stubs"
 version = "2.12.0"
 description = "Typing stubs for PyGObject"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 license = {text = "LGPL-2.1"}
 authors = [
   {email = "reiter.christoph@gmail.com"},
@@ -43,7 +43,7 @@ where = ["src"]
 
 [tool.black]
 line-length = 88
-target-version = ['py37']
+target-version = ['py39']
 include = '\.pyi?$'
 
 [tool.codespell]
@@ -69,7 +69,7 @@ exclude = [
   ".venv",
 ]
 
-target-version = "py37"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
