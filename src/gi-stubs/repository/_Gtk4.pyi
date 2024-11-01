@@ -20,6 +20,7 @@ from gi.repository import Gsk
 from gi.repository import Pango
 
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
+T = TypeVar("T")
 
 # override
 CellRendererT = TypeVar(
@@ -29147,7 +29148,7 @@ class Template:
     def from_resource(cls, resource_path: str) -> Template: ...
     @classmethod
     def from_string(cls, string: str) -> Template: ...
-    def __call__(self, cls) -> Template: ...
+    def __call__(self, cls: T) -> T: ...
 
     class Callback:
         def __init__(self, name: str = ...) -> None: ...

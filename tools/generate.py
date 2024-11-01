@@ -336,7 +336,7 @@ def _build(parent: ObjectT, namespace: str, overrides: dict[str, str]) -> str:
     ns = set()
     ret = _gi_build_stub(parent, namespace, dir(parent), ns, overrides, None, "")
 
-    typevars: list[str] = []
+    typevars: list[str] = ['T = typing.TypeVar("T")']
     imports: list[str] = []
     if "cairo" in ns:
         imports = ["import cairo"]
