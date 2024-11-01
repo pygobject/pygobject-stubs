@@ -1684,6 +1684,7 @@ class MappedFile(GBoxed): ...
 class MarkupParseContext(GBoxed): ...
 class MatchInfo(GBoxed): ...
 
+# override
 class Object:
     """
     :Constructors:
@@ -1704,7 +1705,7 @@ class Object:
     qdata: GLib.Data = ...
     props = ...  # FIXME Constant
 
-    # override
+    def __init__(self, **kwargs: Any) -> None: ...
     def bind_property(
         self,
         source_property: str,
@@ -1718,11 +1719,9 @@ class Object:
     def bind_property_full(self, *args, **kargs): ...  # FIXME Function
     def chain(self, *args, **kwargs): ...  # FIXME Function
     def compat_control(self, *args, **kargs): ...  # FIXME Function
-    # override
     def connect(
         self, detailed_signal: str, handler: Callable[..., Any], *args: Any
     ) -> int: ...
-    # override
     def connect_after(
         self, detailed_signal: str, handler: Callable[..., Any], *args: Any
     ) -> int: ...
@@ -1731,13 +1730,10 @@ class Object:
     ): ...  # FIXME Function
     def connect_object(self, *args, **kwargs): ...  # FIXME Function
     def connect_object_after(self, *args, **kwargs): ...  # FIXME Function
-    # override
     def disconnect(self, id: int) -> None: ...
-    # override
     def disconnect_by_func(
         self, handler: Callable[..., Any]
     ) -> None: ...  # FIXME Function
-    # override
     def emit(self, signal_name: str, *args: Any) -> Any: ...
     def emit_stop_by_name(self, detailed_signal): ...  # FIXME Function
     def find_property(self, property_name: str) -> ParamSpec: ...
@@ -1745,15 +1741,12 @@ class Object:
     def freeze_notify(self): ...  # FIXME Function
     def get_data(self, *args, **kargs): ...  # FIXME Function
     def get_properties(self, *args, **kwargs): ...  # FIXME Function
-    # override
     def get_property(self, property_name: str) -> Any: ...
     def get_qdata(self, *args, **kargs): ...  # FIXME Function
     def getv(self, names: Sequence[str], values: Sequence[Any]) -> None: ...
-    # override
     def handler_block(self, handler_id: int) -> _HandlerBlockManager: ...
     def handler_block_by_func(self, *args, **kwargs): ...  # FIXME Function
     def handler_disconnect(*args, **kwargs): ...  # FIXME Function
-    # override
     def handler_is_connected(self, id: int) -> bool: ...
     def handler_unblock(*args, **kwargs): ...  # FIXME Function
     def handler_unblock_by_func(self, *args, **kwargs): ...  # FIXME Function
@@ -1776,17 +1769,14 @@ class Object:
     def run_dispose(self) -> None: ...
     def set_data(self, *args, **kargs): ...  # FIXME Function
     def set_properties(self, *args, **kwargs): ...  # FIXME Function
-    # override
     def set_property(self, property_name: str, value: object) -> None: ...
     def steal_data(self, *args, **kargs): ...  # FIXME Function
     def steal_qdata(self, *args, **kargs): ...  # FIXME Function
     def stop_emission(self, detailed_signal): ...  # FIXME Function
-    # override
     def stop_emission_by_name(self, detailed_signal: str) -> None: ...
     def thaw_notify(self) -> None: ...
     def unref(self, *args, **kargs): ...  # FIXME Function
     def watch_closure(self, *args, **kargs): ...  # FIXME Function
-    # override
     def weak_ref(self, callback: Callable[..., Any], *args: Any) -> None: ...
 
 class ObjectClass(GPointer):
