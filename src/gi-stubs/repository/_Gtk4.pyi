@@ -32396,9 +32396,15 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         self, path: TreePath, column: typing.Optional[TreeViewColumn] = None
     ) -> None: ...
     def row_expanded(self, path: TreePath) -> bool: ...
+    # override
     def scroll_to_cell(
-        self, path, column=None, use_align=False, row_align=0.0, col_align=0.0
-    ): ...  # FIXME Function
+        self,
+        path: typing.Optional[TreePath],
+        column: typing.Optional[TreeViewColumn] = None,
+        use_align: bool = False,
+        row_align: float = 0.0,
+        col_align: float = 0.0,
+    ) -> None: ...  # FIXME Function
     def scroll_to_point(self, tree_x: int, tree_y: int) -> None: ...
     def set_activate_on_single_click(self, single: bool) -> None: ...
     def set_column_drag_function(
@@ -32406,7 +32412,13 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         func: typing.Optional[typing.Callable[..., bool]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def set_cursor(self, path, column=None, start_editing=False): ...  # FIXME Function
+    # override
+    def set_cursor(
+        self,
+        path: TreePath,
+        column: typing.Optional[TreeViewColumn] = None,
+        start_editing: bool = False,
+    ) -> None: ...  # FIXME Function
     def set_cursor_on_cell(
         self,
         path: TreePath,
