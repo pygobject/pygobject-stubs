@@ -1,11 +1,13 @@
 from typing import Any
 from typing import Callable
+from typing import Iterator
 from typing import Literal
 from typing import Optional
 from typing import Sequence
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
+from typing import Union
 
 import cairo
 from gi.repository import Gdk
@@ -18,6 +20,18 @@ from gi.repository import Gsk
 from gi.repository import Pango
 
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
+
+# override
+CellRendererT = TypeVar(
+    "CellRendererT",
+    CellRendererCombo,
+    CellRendererPixbuf,
+    CellRendererProgress,
+    CellRendererSpin,
+    CellRendererSpinner,
+    CellRendererText,
+    CellRendererToggle,
+)
 
 ACCESSIBLE_ATTRIBUTE_BACKGROUND: str = "bg-color"
 ACCESSIBLE_ATTRIBUTE_FAMILY: str = "family-name"
@@ -3346,14 +3360,20 @@ class Builder(GObject.Object):
     ): ...
     def add_from_file(self, filename: str) -> bool: ...
     def add_from_resource(self, resource_path: str) -> bool: ...
-    def add_from_string(self, buffer): ...  # FIXME Function
+    # override
+    def add_from_string(
+        self, buffer: str, length: int = ...
+    ) -> bool: ...  # FIXME Function
     def add_objects_from_file(
         self, filename: str, object_ids: Sequence[str]
     ) -> bool: ...
     def add_objects_from_resource(
         self, resource_path: str, object_ids: Sequence[str]
     ) -> bool: ...
-    def add_objects_from_string(self, buffer, object_ids): ...  # FIXME Function
+    # override
+    def add_objects_from_string(
+        self, buffer: str, object_ids: list[str]
+    ) -> int: ...  # FIXME Function
     def create_closure(
         self,
         function_name: str,
@@ -18577,6 +18597,7 @@ class ListItemClass(GObject.GPointer): ...
 class ListItemFactory(GObject.Object): ...
 class ListItemFactoryClass(GObject.GPointer): ...
 
+# override
 class ListStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -18606,11 +18627,21 @@ class ListStore(
 
     parent: GObject.Object = ...
     priv: ListStorePrivate = ...
-    def append(self, row=None): ...  # FIXME Function
+
+    def __init__(self, *args: Any) -> None: ...
+    def append(
+        self, row: Union[list[Any], Tuple[Any, ...], None] = None
+    ) -> TreeIter: ...  # FIXME Function
     def clear(self) -> None: ...
-    def insert(self, position, row=None): ...  # FIXME Function
-    def insert_after(self, sibling, row=None): ...  # FIXME Function
-    def insert_before(self, sibling, row=None): ...  # FIXME Function
+    def insert(
+        self, position: int, row: Union[list[Any], Tuple[Any, ...], None] = None
+    ) -> TreeIter: ...  # FIXME Function
+    def insert_after(
+        self, sibling: TreeIter, row: Union[list[Any], Tuple[Any, ...], None] = None
+    ) -> TreeIter: ...  # FIXME Function
+    def insert_before(
+        self, sibling: TreeIter, row: Union[list[Any], Tuple[Any, ...], None] = None
+    ) -> TreeIter: ...  # FIXME Function
     def insert_with_values(
         self, position: int, columns: Sequence[int], values: Sequence[Any]
     ) -> TreeIter: ...
@@ -18626,12 +18657,18 @@ class ListStore(
     ) -> None: ...
     @classmethod
     def new(cls, types: Sequence[Type]) -> ListStore: ...
-    def prepend(self, row=None): ...  # FIXME Function
+    def prepend(
+        self, row: Union[list[Any], Tuple[Any, ...], None] = None
+    ) -> TreeIter: ...  # FIXME Function
     def remove(self, iter: TreeIter) -> bool: ...
     def reorder(self, new_order: Sequence[int]) -> None: ...
-    def set(self, treeiter, *args): ...  # FIXME Function
+    def set(
+        self, treeiter: TreeIter, *args: dict[int, Any]
+    ) -> None: ...  # FIXME Function
     def set_column_types(self, types: Sequence[Type]) -> None: ...
-    def set_value(self, treeiter, column, value): ...  # FIXME Function
+    def set_value(
+        self, treeiter: TreeIter, column: int, value: Any
+    ) -> None: ...  # FIXME Function
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
 class ListStoreClass(GObject.GPointer):
@@ -29458,9 +29495,14 @@ class TextBuffer(GObject.Object):
     def begin_user_action(self) -> None: ...
     def copy_clipboard(self, clipboard: Gdk.Clipboard) -> None: ...
     def create_child_anchor(self, iter: TextIter) -> TextChildAnchor: ...
-    def create_mark(self, mark_name, where, left_gravity=False): ...  # FIXME Function
     # override
-    def create_tag(self, tag_name: str, **properties) -> None: ...
+    def create_mark(
+        self, mark_name: Optional[str], where: TextIter, left_gravity: bool = False
+    ) -> TextMark: ...  # FIXME Function
+    # override
+    def create_tag(
+        self, tag_name: Optional[str] = None, **properties: Any
+    ) -> TextTag: ...
     def cut_clipboard(
         self, clipboard: Gdk.Clipboard, default_editable: bool
     ) -> None: ...
@@ -29527,8 +29569,14 @@ class TextBuffer(GObject.Object):
     def get_text(
         self, start: TextIter, end: TextIter, include_hidden_chars: bool
     ) -> str: ...
-    def insert(self, iter, text, length=-1): ...  # FIXME Function
-    def insert_at_cursor(self, text, length=-1): ...  # FIXME Function
+    # override
+    def insert(
+        self, iter: TextIter, text: str, length: int = ...
+    ) -> None: ...  # FIXME Function
+    # override
+    def insert_at_cursor(
+        self, text: str, length: int = ...
+    ) -> None: ...  # FIXME Function
     def insert_child_anchor(self, iter: TextIter, anchor: TextChildAnchor) -> None: ...
     def insert_interactive(
         self, iter: TextIter, text: str, len: int, default_editable: bool
@@ -31162,6 +31210,7 @@ class TreeListRowSorterClass(GObject.GPointer):
 
     parent_class: SorterClass = ...
 
+# override
 class TreeModel(GObject.GInterface):
     """
     Interface GtkTreeModel
@@ -31170,12 +31219,14 @@ class TreeModel(GObject.GInterface):
       notify (GParam)
     """
 
-    def filter_new(self, root: Optional[TreePath] = None) -> TreeModel: ...
+    def filter_new(self, root: Optional[TreePath] = None) -> TreeModelFilter: ...
     def foreach(self, func: Callable[..., bool], *user_data: Any) -> None: ...
-    def get(self, treeiter, *columns): ...  # FIXME Function
+    def get(
+        self, treeiter: TreeIter, *columns: list[str]
+    ) -> Tuple[Any, ...]: ...  # FIXME Function
     def get_column_type(self, index_: int) -> Type: ...
     def get_flags(self) -> TreeModelFlags: ...
-    def get_iter(self, path): ...  # FIXME Function
+    def get_iter(self, path: Union[str, TreePath]) -> TreeIter: ...  # FIXME Function
     def get_iter_first(self) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def get_iter_from_string(
         self, path_string: str
@@ -31189,23 +31240,37 @@ class TreeModel(GObject.GInterface):
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def iter_has_child(self, iter: TreeIter) -> bool: ...
     def iter_n_children(self, iter: Optional[TreeIter] = None) -> int: ...
-    def iter_next(self, aiter): ...  # FIXME Function
+    def iter_next(self, aiter: TreeIter) -> Optional[TreeIter]: ...  # FIXME Function
     def iter_nth_child(
         self, parent: Optional[TreeIter], n: int
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
     def iter_parent(
         self, child: TreeIter
     ) -> Optional[TreeIter]: ...  # CHECK Wrapped function
-    def iter_previous(self, aiter): ...  # FIXME Function
+    def iter_previous(
+        self, aiter: TreeIter
+    ) -> Optional[TreeIter]: ...  # FIXME Function
     def ref_node(self, iter: TreeIter) -> None: ...
-    def row_changed(self, path, iter): ...  # FIXME Function
-    def row_deleted(self, path): ...  # FIXME Function
-    def row_has_child_toggled(self, path, iter): ...  # FIXME Function
-    def row_inserted(self, path, iter): ...  # FIXME Function
-    def rows_reordered(self, path, iter, new_order): ...  # FIXME Function
-    def set_row(self, treeiter, row): ...  # FIXME Function
-    def sort_new_with_model(self): ...  # FIXME Function
+    def row_changed(self, path: TreePath, iter: TreeIter) -> None: ...  # FIXME Function
+    def row_deleted(self, path: TreePath) -> None: ...  # FIXME Function
+    def row_has_child_toggled(
+        self, path: TreePath, iter: TreeIter
+    ) -> None: ...  # FIXME Function
+    def row_inserted(
+        self, path: TreePath, iter: TreeIter
+    ) -> None: ...  # FIXME Function
+    def rows_reordered(
+        self, path: TreePath, iter: Optional[TreeIter], new_order: list[str]
+    ) -> None: ...  # FIXME Function
+    def set_row(self, treeiter: TreeIter, row: list[Any]) -> None: ...  # FIXME Function
+    def sort_new_with_model(self) -> None: ...  # FIXME Function
     def unref_node(self, iter: TreeIter) -> None: ...
+    def __getitem__(
+        self, item: Union[TreeIter, TreePath, str, int]
+    ) -> TreeModelRow: ...
+    def __delitem__(self, item: Union[TreeIter, TreePath, str, int]) -> None: ...
+    def __iter__(self) -> TreeModelRowIter: ...
+    def __len__(self) -> int: ...
 
 class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     """
@@ -31262,7 +31327,12 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     ) -> None: ...
     def set_value(self, iter, column, value): ...  # FIXME Function
     def set_visible_column(self, column: int) -> None: ...
-    def set_visible_func(self, func, data=None): ...  # FIXME Function
+    # override
+    def set_visible_func(
+        self,
+        func: Callable[[TreeModelFilter, TreeIter, Any], bool],
+        data: Optional[Any] = ...,
+    ) -> None: ...
 
 class TreeModelFilterClass(GObject.GPointer):
     """
@@ -31315,7 +31385,10 @@ class TreeModelIface(GObject.GPointer):
     ref_node: Callable[[TreeModel, TreeIter], None] = ...
     unref_node: Callable[[TreeModel, TreeIter], None] = ...
 
+# override
 class TreeModelRow:
+    iter: TreeIter
+    model: TreeModel
     next = ...  # FIXME Constant
     parent = ...  # FIXME Constant
     path = ...  # FIXME Constant
@@ -31324,9 +31397,14 @@ class TreeModelRow:
     def get_next(self): ...  # FIXME Function
     def get_parent(self): ...  # FIXME Function
     def get_previous(self): ...  # FIXME Function
-    def iterchildren(self): ...  # FIXME Function
+    def iterchildren(self) -> Iterator[TreeModelRow]: ...  # FIXME Function
+    def __getitem__(self, key: int) -> Any: ...
+    def __setitem__(self, key: int, value: Any) -> None: ...
 
-class TreeModelRowIter: ...
+# override
+class TreeModelRowIter:
+    def next(self) -> TreeModelRow: ...
+    def __next__(self) -> TreeModelRow: ...
 
 class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     """
@@ -31431,6 +31509,7 @@ class TreePath(GObject.GBoxed):
 
 class TreeRowData(GObject.GBoxed): ...
 
+# override
 class TreeRowReference(GObject.GBoxed):
     """
     :Constructors:
@@ -31441,6 +31520,7 @@ class TreeRowReference(GObject.GBoxed):
         new_proxy(proxy:GObject.Object, model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
     """
 
+    def __init__(self, model: TreeModel, path: TreePath) -> None: ...
     def copy(self) -> TreeRowReference: ...
     @staticmethod
     def deleted(proxy: GObject.Object, path: TreePath) -> None: ...
@@ -31484,14 +31564,21 @@ class TreeSelection(GObject.Object):
     def __init__(self, mode: SelectionMode = ...): ...
     def count_selected_rows(self) -> int: ...
     def get_mode(self) -> SelectionMode: ...
-    def get_selected(self): ...  # FIXME Function
-    def get_selected_rows(self): ...  # FIXME Function
+    # override
+    def get_selected(
+        self,
+    ) -> Tuple[TreeModel, Optional[TreeIter]]: ...  # FIXME Function
+    # override
+    def get_selected_rows(
+        self,
+    ) -> Optional[Tuple[TreeModel, list[TreePath]]]: ...  # FIXME Function
     def get_tree_view(self) -> TreeView: ...
     def iter_is_selected(self, iter: TreeIter) -> bool: ...
     def path_is_selected(self, path: TreePath) -> bool: ...
     def select_all(self) -> None: ...
     def select_iter(self, iter: TreeIter) -> None: ...
-    def select_path(self, path): ...  # FIXME Function
+    # override
+    def select_path(self, path: TreePath) -> None: ...  # FIXME Function
     def select_range(self, start_path: TreePath, end_path: TreePath) -> None: ...
     def selected_foreach(self, func: Callable[..., None], *data: Any) -> None: ...
     def set_mode(self, type: SelectionMode) -> None: ...
@@ -31517,9 +31604,13 @@ class TreeSortable(GObject.GInterface):
     def has_default_sort_func(self) -> bool: ...
     def set_default_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
     def set_sort_column_id(self, sort_column_id: int, order: SortType) -> None: ...
+    # override
     def set_sort_func(
-        self, sort_column_id, sort_func, user_data=None
-    ): ...  # FIXME Function
+        self,
+        sort_column_id: int,
+        sort_func: Callable[[TreeModel, TreeIter, TreeIter, Any], Any],
+        user_data: Optional[Any] = None,
+    ) -> None: ...  # FIXME Function
     def sort_column_changed(self) -> None: ...
 
 class TreeSortableIface(GObject.GPointer):
@@ -31539,6 +31630,7 @@ class TreeSortableIface(GObject.GPointer):
     set_default_sort_func: Callable[..., None] = ...
     has_default_sort_func: Callable[[TreeSortable], bool] = ...
 
+# override
 class TreeStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -31568,7 +31660,13 @@ class TreeStore(
 
     parent: GObject.Object = ...
     priv: TreeStorePrivate = ...
-    def append(self, parent, row=None): ...  # FIXME Function
+
+    # override
+    def __init__(self, *column_types: Any) -> None: ...
+    # override
+    def append(
+        self, parent: Optional[TreeIter], row: Optional[list[Any]] = None
+    ) -> TreeIter: ...
     def clear(self) -> None: ...
     def insert(self, parent, position, row=None): ...  # FIXME Function
     def insert_after(self, parent, sibling, row=None): ...  # FIXME Function
@@ -31908,7 +32006,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def get_path_at_pos(
         self, x: int, y: int
     ) -> Optional[
-        Tuple[TreePath, TreeViewColumn, int, int]
+        Tuple[Optional[TreePath], Optional[TreeViewColumn], int, int]
     ]: ...  # CHECK Wrapped function
     def get_reorderable(self) -> bool: ...
     def get_rubber_banding(self) -> bool: ...
@@ -31926,8 +32024,8 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def get_visible_rect(self) -> Gdk.Rectangle: ...
     def insert_column(self, column: TreeViewColumn, position: int) -> int: ...
     def insert_column_with_attributes(
-        self, position, title, cell, **kwargs
-    ): ...  # FIXME Function
+        self, position: int, title: str, cell: CellRenderer, **kwargs: Any
+    ) -> None: ...  # FIXME Function
     def insert_column_with_data_func(
         self,
         position: int,
@@ -31954,14 +32052,24 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     ) -> None: ...
     def row_expanded(self, path: TreePath) -> bool: ...
     def scroll_to_cell(
-        self, path, column=None, use_align=False, row_align=0.0, col_align=0.0
-    ): ...  # FIXME Function
+        self,
+        path: Optional[TreePath],
+        column: Optional[TreeViewColumn] = None,
+        use_align: bool = False,
+        row_align: float = 0.0,
+        col_align: float = 0.0,
+    ) -> None: ...  # FIXME Function
     def scroll_to_point(self, tree_x: int, tree_y: int) -> None: ...
     def set_activate_on_single_click(self, single: bool) -> None: ...
     def set_column_drag_function(
         self, func: Optional[Callable[..., bool]] = None, *user_data: Any
     ) -> None: ...
-    def set_cursor(self, path, column=None, start_editing=False): ...  # FIXME Function
+    def set_cursor(
+        self,
+        path: TreePath,
+        column: Optional[TreeViewColumn] = None,
+        start_editing: bool = False,
+    ) -> None: ...  # FIXME Function
     def set_cursor_on_cell(
         self,
         path: TreePath,
@@ -32033,6 +32141,7 @@ class TreeViewClass(GObject.GPointer):
     start_interactive_search: Callable[[TreeView], bool] = ...
     _reserved: list[None] = ...
 
+# override
 class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     """
     :Constructors:
@@ -32115,6 +32224,12 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         visible: bool = ...,
         widget: Optional[Widget] = ...,
     ): ...
+    def __init__(
+        self,
+        title: str = ...,
+        cell_renderer: Optional[CellRenderer] = None,
+        **attributes: Any,
+    ): ...
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
     ) -> None: ...
@@ -32163,9 +32278,13 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def queue_resize(self) -> None: ...
     def set_alignment(self, xalign: float) -> None: ...
     def set_attributes(self, cell_renderer, **attributes): ...  # FIXME Function
+    # override
     def set_cell_data_func(
-        self, cell_renderer, func, func_data=None
-    ): ...  # FIXME Function
+        self,
+        cell_renderer: CellRendererT,
+        func: Callable[[TreeViewColumn, CellRendererT, TreeModel, TreeIter, Any], Any],
+        func_data: Optional[object] = None,
+    ) -> None: ...
     def set_clickable(self, clickable: bool) -> None: ...
     def set_expand(self, expand: bool) -> None: ...
     def set_fixed_width(self, fixed_width: int) -> None: ...
