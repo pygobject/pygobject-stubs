@@ -8934,8 +8934,23 @@ class CustomSorter(Sorter):
       notify (GParam)
     """
 
-    def new(sort_func, user_data=None): ...  # FIXME Function
-    def set_sort_func(self, sort_func, user_data=None): ...  # FIXME Function
+    # override
+    @classmethod
+    def new(
+        cls,
+        sort_func: typing.Optional[
+            typing.Callable[[typing.Any, typing.Any, typing.Any], int]
+        ] = None,
+        user_data: typing.Any = None,
+    ) -> CustomSorter: ...  # FIXME Function
+    # override
+    def set_sort_func(
+        self,
+        sort_func: typing.Optional[
+            typing.Callable[[typing.Any, typing.Any, typing.Any], int]
+        ] = None,
+        user_data: typing.Any = None,
+    ) -> None: ...  # FIXME Function
 
 class CustomSorterClass(GObject.GPointer):
     """
