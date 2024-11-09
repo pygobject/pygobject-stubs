@@ -319,7 +319,7 @@ def _type_to_python(
                 return "typing.Any"
 
             if namespace == "GObject" and name == "Closure":
-                return "typing.Callable[..., Any]"
+                return "typing.Callable[..., typing.Any]"
 
             if namespace == "cairo" and name == "Context" and not out_arg:
                 return "cairo.Context[_SomeSurface]"
