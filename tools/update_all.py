@@ -63,6 +63,7 @@ libraries = [
     Lib("Poppler", "0.18"),
     Lib("Rsvg", "2.0"),
     Lib("Secret", "1"),
+    Lib("Shumate", "1.0"),
     Lib("Soup", "2.4", output="_Soup2"),
     Lib("Soup", "3.0", output="_Soup3"),
     Lib("Spelling", "1"),
@@ -95,5 +96,8 @@ if __name__ == "__main__":
 
     if failed_generations:
         print("Generating the following stubs failed:", file=sys.stderr)
-        print("\n".join(f"  - {path}" for path in failed_generations), file=sys.stderr)
+        print(
+            "\n".join(f"  - {path}" for path in failed_generations),
+            file=sys.stderr,
+        )
         sys.exit(1)
