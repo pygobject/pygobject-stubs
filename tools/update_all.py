@@ -42,6 +42,7 @@ libraries = [
     Lib("GSound", "1.0"),
     Lib("Gspell", "1"),
     Lib("Gst", "1.0"),
+    Lib("GstBase", "1.0"),
     Lib("GstRtsp", "1.0"),
     Lib("GstRtp", "1.0"),
     Lib("GstRtspServer", "1.0"),
