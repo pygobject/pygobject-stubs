@@ -23,10 +23,10 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "black>=24.1.1",
-    "codespell",
-    "isort>=5.13.2",
-    "ruff",
+    "black>=25.1.0",
+    "codespell>=2.4.1",
+    "isort>=6.0.1",
+    "ruff>=0.9.10",
     "pre-commit",
     "PyGObject",
 ]
@@ -47,7 +47,7 @@ target-version = ['py39']
 include = '\.pyi?$'
 
 [tool.codespell]
-skip = "*__pycache__*,.mypy_cache,.git,test,*.pyi"
+skip = "*__pycache__*,.mypy_cache,.git,pyproject.toml,test,*.pyi"
 ignore-words-list = """
     astroid,
     inout"""
