@@ -50,7 +50,7 @@ DEFAULT_STUB_CONFIG = [
 
 
 def _get_settings_stub_config(
-    config_settings: Optional[dict[str, str]]
+    config_settings: Optional[dict[str, str]],
 ) -> list[LibVersion]:
     libs = []
     if config_settings is None:
