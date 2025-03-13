@@ -1,3 +1,26 @@
+# 2.13.0 (11 Mar 2025)
+
+## Feature
+
+* Add GstBase ([#206](https://github.com/pygobject/pygobject-stubs/issues/206)) (#206)
+* Add Shumate ([#197](https://github.com/pygobject/pygobject-stubs/issues/197)) (#197)
+* Add stubs for IBus
+* Add GdkX11 4.0
+
+## Typing
+
+* Improve type hints for
+    - Gtk4
+    - Gio
+    - GObject
+    - Gdk4
+    - GLib
+    - GtkSource5
+
+## Change
+
+* Require Python >=3.9
+
 # 2.12.0 (31 Oct 2024)
 
 ## Feature
