@@ -30,6 +30,7 @@ libraries = [
     Lib("GdkPixbuf", "2.0"),
     Lib("GdkX11", "4.0"),
     Lib("Geoclue", "2.0"),
+    Lib("GExiv2", "0.10"),
     Lib("Ggit", "1.0"),
     Lib("Gio", "2.0"),
     Lib("GIRepository", "2.0"),
