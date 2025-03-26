@@ -189,6 +189,9 @@ def _callable_get_arguments(
 
 
 class TypeInfo:
+
+    # This struct tries to emulate gi.TypeInfo
+
     def __init__(
         self,
         obj: Any,
@@ -217,6 +220,9 @@ class TypeInfo:
 
     def get_namespace(self) -> str:
         return self.obj.get_namespace()
+
+    def get_type(self) -> GIRepository.InfoType:
+        return self.obj.get_type()
 
 
 def _build_type(type: GIRepository.BaseInfo) -> TypeInfo:
@@ -314,6 +320,15 @@ def _type_to_python(
         else:
             namespace = interface.get_namespace()
             name = interface.get_name()
+
+            if not re.match(_identifier_re, name):
+                # Convert Flags and Enums with invalid name to int
+                # Example NM 1.0 library
+                if interface.get_type() in (
+                    GIRepository.InfoType.FLAGS,
+                    GIRepository.InfoType.ENUM,
+                ):
+                    return "int"
 
             if namespace == "GObject" and name == "Value":
                 return "typing.Any"
