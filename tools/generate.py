@@ -899,7 +899,9 @@ def _gi_build_stub(
             needed_namespaces.add("GObject")
             base = "GObject.GEnum"
 
+        # Some Enums can be empty in the end
         ret += f"class {name}({base}):\n"
+        length_before = len(ret)
         for key in sorted(vars(obj)):
             if key.startswith("__") or key[0].isdigit():
                 continue
@@ -922,6 +924,11 @@ def _gi_build_stub(
                 ret += f"    {key} = {value}\n"
             else:
                 ret += f"    {key} = ... # FIXME Enum\n"
+
+        if len(ret) == length_before:
+            # No attributes where found
+            ret += "    ...\n"
+
         ret += "\n"
 
     return ret
