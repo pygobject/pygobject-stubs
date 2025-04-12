@@ -1,11 +1,4 @@
-from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
-from typing import TypeVar
+import typing
 
 from gi.repository import Gdk
 from gi.repository import Gio
@@ -14,15 +7,19 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
+T = typing.TypeVar("T")
+
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 0
-MINOR_VERSION: int = 5
-VERSION_S: str = "1.5.0"
+MICRO_VERSION: int = 2
+MINOR_VERSION: int = 6
+VERSION_S: str = "1.6.2"
 _lock = ...  # FIXME Constant
 _namespace: str = "Adw"
 _version: str = "1"
 
+def accent_color_to_rgba(self: AccentColor) -> Gdk.RGBA: ...
+def accent_color_to_standalone_rgba(self: AccentColor, dark: bool) -> Gdk.RGBA: ...
 def breakpoint_condition_parse(str: str) -> BreakpointCondition: ...
 def easing_ease(self: Easing, value: float) -> float: ...
 def get_enable_animations(widget: Gtk.Widget) -> bool: ...
@@ -32,12 +29,13 @@ def get_minor_version() -> int: ...
 def init() -> None: ...
 def is_initialized() -> bool: ...
 def length_unit_from_px(
-    unit: LengthUnit, value: float, settings: Optional[Gtk.Settings] = None
+    unit: LengthUnit, value: float, settings: typing.Optional[Gtk.Settings] = None
 ) -> float: ...
 def length_unit_to_px(
-    unit: LengthUnit, value: float, settings: Optional[Gtk.Settings] = None
+    unit: LengthUnit, value: float, settings: typing.Optional[Gtk.Settings] = None
 ) -> float: ...
 def lerp(a: float, b: float, t: float) -> float: ...
+def rgba_to_standalone(rgba: Gdk.RGBA, dark: bool) -> Gdk.RGBA: ...
 
 class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
@@ -150,15 +148,15 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     class Props:
         application_icon: str
         application_name: str
-        artists: Optional[list[str]]
+        artists: typing.Optional[list[str]]
         comments: str
         copyright: str
         debug_info: str
         debug_info_filename: str
-        designers: Optional[list[str]]
+        designers: typing.Optional[list[str]]
         developer_name: str
-        developers: Optional[list[str]]
-        documenters: Optional[list[str]]
+        developers: typing.Optional[list[str]]
+        documenters: typing.Optional[list[str]]
         issue_url: str
         license: str
         license_type: Gtk.License
@@ -169,12 +167,12 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         version: str
         website: str
         can_close: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         content_height: int
         content_width: int
-        current_breakpoint: Optional[Breakpoint]
-        default_widget: Optional[Gtk.Widget]
-        focus_widget: Gtk.Widget
+        current_breakpoint: typing.Optional[Breakpoint]
+        default_widget: typing.Optional[Gtk.Widget]
+        focus_widget: typing.Optional[Gtk.Widget]
         follows_content_size: bool
         presentation_mode: DialogPresentationMode
         title: str
@@ -182,7 +180,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -192,7 +190,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -200,13 +198,13 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -219,15 +217,15 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         application_icon: str = ...,
         application_name: str = ...,
-        artists: Optional[Sequence[str]] = ...,
+        artists: typing.Optional[typing.Sequence[str]] = ...,
         comments: str = ...,
         copyright: str = ...,
         debug_info: str = ...,
         debug_info_filename: str = ...,
-        designers: Optional[Sequence[str]] = ...,
+        designers: typing.Optional[typing.Sequence[str]] = ...,
         developer_name: str = ...,
-        developers: Optional[Sequence[str]] = ...,
-        documenters: Optional[Sequence[str]] = ...,
+        developers: typing.Optional[typing.Sequence[str]] = ...,
+        documenters: typing.Optional[typing.Sequence[str]] = ...,
         issue_url: str = ...,
         license: str = ...,
         license_type: Gtk.License = ...,
@@ -238,19 +236,19 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         version: str = ...,
         website: str = ...,
         can_close: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         content_height: int = ...,
         content_width: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
-        focus_widget: Gtk.Widget = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         follows_content_size: bool = ...,
         presentation_mode: DialogPresentationMode = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -258,7 +256,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -268,40 +266,40 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_acknowledgement_section(
-        self, name: Optional[str], people: Sequence[str]
+        self, name: typing.Optional[str], people: typing.Sequence[str]
     ) -> None: ...
     def add_credit_section(
-        self, name: Optional[str], people: Sequence[str]
+        self, name: typing.Optional[str], people: typing.Sequence[str]
     ) -> None: ...
     def add_legal_section(
         self,
         title: str,
-        copyright: Optional[str],
+        copyright: typing.Optional[str],
         license_type: Gtk.License,
-        license: Optional[str] = None,
+        license: typing.Optional[str] = None,
     ) -> None: ...
     def add_link(self, title: str, url: str) -> None: ...
     def get_application_icon(self) -> str: ...
     def get_application_name(self) -> str: ...
-    def get_artists(self) -> Optional[list[str]]: ...
+    def get_artists(self) -> typing.Optional[list[str]]: ...
     def get_comments(self) -> str: ...
     def get_copyright(self) -> str: ...
     def get_debug_info(self) -> str: ...
     def get_debug_info_filename(self) -> str: ...
-    def get_designers(self) -> Optional[list[str]]: ...
+    def get_designers(self) -> typing.Optional[list[str]]: ...
     def get_developer_name(self) -> str: ...
-    def get_developers(self) -> Optional[list[str]]: ...
-    def get_documenters(self) -> Optional[list[str]]: ...
+    def get_developers(self) -> typing.Optional[list[str]]: ...
+    def get_documenters(self) -> typing.Optional[list[str]]: ...
     def get_issue_url(self) -> str: ...
     def get_license(self) -> str: ...
     def get_license_type(self) -> Gtk.License: ...
@@ -315,19 +313,27 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def new(cls) -> AboutDialog: ...
     @classmethod
     def new_from_appdata(
-        cls, resource_path: str, release_notes_version: Optional[str] = None
+        cls, resource_path: str, release_notes_version: typing.Optional[str] = None
     ) -> AboutDialog: ...
     def set_application_icon(self, application_icon: str) -> None: ...
     def set_application_name(self, application_name: str) -> None: ...
-    def set_artists(self, artists: Optional[Sequence[str]] = None) -> None: ...
+    def set_artists(
+        self, artists: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_comments(self, comments: str) -> None: ...
     def set_copyright(self, copyright: str) -> None: ...
     def set_debug_info(self, debug_info: str) -> None: ...
     def set_debug_info_filename(self, filename: str) -> None: ...
-    def set_designers(self, designers: Optional[Sequence[str]] = None) -> None: ...
+    def set_designers(
+        self, designers: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_developer_name(self, developer_name: str) -> None: ...
-    def set_developers(self, developers: Optional[Sequence[str]] = None) -> None: ...
-    def set_documenters(self, documenters: Optional[Sequence[str]] = None) -> None: ...
+    def set_developers(
+        self, developers: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
+    def set_documenters(
+        self, documenters: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_issue_url(self, issue_url: str) -> None: ...
     def set_license(self, license: str) -> None: ...
     def set_license_type(self, license_type: Gtk.License) -> None: ...
@@ -492,15 +498,15 @@ class AboutWindow(
     class Props:
         application_icon: str
         application_name: str
-        artists: Optional[list[str]]
+        artists: typing.Optional[list[str]]
         comments: str
         copyright: str
         debug_info: str
         debug_info_filename: str
-        designers: Optional[list[str]]
+        designers: typing.Optional[list[str]]
         developer_name: str
-        developers: Optional[list[str]]
-        documenters: Optional[list[str]]
+        developers: typing.Optional[list[str]]
+        documenters: typing.Optional[list[str]]
         issue_url: str
         license: str
         license_type: Gtk.License
@@ -510,39 +516,39 @@ class AboutWindow(
         translator_credits: str
         version: str
         website: str
-        content: Optional[Gtk.Widget]
-        current_breakpoint: Optional[Breakpoint]
+        content: typing.Optional[Gtk.Widget]
+        current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
-        visible_dialog: Optional[Dialog]
-        application: Optional[Gtk.Application]
-        child: Optional[Gtk.Widget]
+        visible_dialog: typing.Optional[Dialog]
+        application: typing.Optional[Gtk.Application]
+        child: typing.Optional[Gtk.Widget]
         decorated: bool
         default_height: int
-        default_widget: Optional[Gtk.Widget]
+        default_widget: typing.Optional[Gtk.Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Gtk.Widget
+        focus_widget: typing.Optional[Gtk.Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Gtk.Widget]
-        transient_for: Optional[Gtk.Window]
+        title: typing.Optional[str]
+        titlebar: typing.Optional[Gtk.Widget]
+        transient_for: typing.Optional[Gtk.Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -552,7 +558,7 @@ class AboutWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -560,13 +566,13 @@ class AboutWindow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -580,15 +586,15 @@ class AboutWindow(
         self,
         application_icon: str = ...,
         application_name: str = ...,
-        artists: Optional[Sequence[str]] = ...,
+        artists: typing.Optional[typing.Sequence[str]] = ...,
         comments: str = ...,
         copyright: str = ...,
         debug_info: str = ...,
         debug_info_filename: str = ...,
-        designers: Optional[Sequence[str]] = ...,
+        designers: typing.Optional[typing.Sequence[str]] = ...,
         developer_name: str = ...,
-        developers: Optional[Sequence[str]] = ...,
-        documenters: Optional[Sequence[str]] = ...,
+        developers: typing.Optional[typing.Sequence[str]] = ...,
+        documenters: typing.Optional[typing.Sequence[str]] = ...,
         issue_url: str = ...,
         license: str = ...,
         license_type: Gtk.License = ...,
@@ -598,35 +604,35 @@ class AboutWindow(
         translator_credits: str = ...,
         version: str = ...,
         website: str = ...,
-        content: Optional[Gtk.Widget] = ...,
-        application: Optional[Gtk.Application] = ...,
-        child: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
+        application: typing.Optional[Gtk.Application] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Gtk.Widget = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: Optional[str] = ...,
-        titlebar: Optional[Gtk.Widget] = ...,
-        transient_for: Optional[Gtk.Window] = ...,
+        title: typing.Optional[str] = ...,
+        titlebar: typing.Optional[Gtk.Widget] = ...,
+        transient_for: typing.Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -634,7 +640,7 @@ class AboutWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -644,40 +650,40 @@ class AboutWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_acknowledgement_section(
-        self, name: Optional[str], people: Sequence[str]
+        self, name: typing.Optional[str], people: typing.Sequence[str]
     ) -> None: ...
     def add_credit_section(
-        self, name: Optional[str], people: Sequence[str]
+        self, name: typing.Optional[str], people: typing.Sequence[str]
     ) -> None: ...
     def add_legal_section(
         self,
         title: str,
-        copyright: Optional[str],
+        copyright: typing.Optional[str],
         license_type: Gtk.License,
-        license: Optional[str] = None,
+        license: typing.Optional[str] = None,
     ) -> None: ...
     def add_link(self, title: str, url: str) -> None: ...
     def get_application_icon(self) -> str: ...
     def get_application_name(self) -> str: ...
-    def get_artists(self) -> Optional[list[str]]: ...
+    def get_artists(self) -> typing.Optional[list[str]]: ...
     def get_comments(self) -> str: ...
     def get_copyright(self) -> str: ...
     def get_debug_info(self) -> str: ...
     def get_debug_info_filename(self) -> str: ...
-    def get_designers(self) -> Optional[list[str]]: ...
+    def get_designers(self) -> typing.Optional[list[str]]: ...
     def get_developer_name(self) -> str: ...
-    def get_developers(self) -> Optional[list[str]]: ...
-    def get_documenters(self) -> Optional[list[str]]: ...
+    def get_developers(self) -> typing.Optional[list[str]]: ...
+    def get_documenters(self) -> typing.Optional[list[str]]: ...
     def get_issue_url(self) -> str: ...
     def get_license(self) -> str: ...
     def get_license_type(self) -> Gtk.License: ...
@@ -691,19 +697,27 @@ class AboutWindow(
     def new(cls) -> AboutWindow: ...
     @classmethod
     def new_from_appdata(
-        cls, resource_path: str, release_notes_version: Optional[str] = None
+        cls, resource_path: str, release_notes_version: typing.Optional[str] = None
     ) -> AboutWindow: ...
     def set_application_icon(self, application_icon: str) -> None: ...
     def set_application_name(self, application_name: str) -> None: ...
-    def set_artists(self, artists: Optional[Sequence[str]] = None) -> None: ...
+    def set_artists(
+        self, artists: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_comments(self, comments: str) -> None: ...
     def set_copyright(self, copyright: str) -> None: ...
     def set_debug_info(self, debug_info: str) -> None: ...
     def set_debug_info_filename(self, filename: str) -> None: ...
-    def set_designers(self, designers: Optional[Sequence[str]] = None) -> None: ...
+    def set_designers(
+        self, designers: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_developer_name(self, developer_name: str) -> None: ...
-    def set_developers(self, developers: Optional[Sequence[str]] = None) -> None: ...
-    def set_documenters(self, documenters: Optional[Sequence[str]] = None) -> None: ...
+    def set_developers(
+        self, developers: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
+    def set_documenters(
+        self, documenters: typing.Optional[typing.Sequence[str]] = None
+    ) -> None: ...
     def set_issue_url(self, issue_url: str) -> None: ...
     def set_license(self, license: str) -> None: ...
     def set_license_type(self, license_type: Gtk.License) -> None: ...
@@ -819,9 +833,9 @@ class ActionRow(
     """
 
     class Props:
-        activatable_widget: Optional[Gtk.Widget]
-        icon_name: Optional[str]
-        subtitle: Optional[str]
+        activatable_widget: typing.Optional[Gtk.Widget]
+        icon_name: typing.Optional[str]
+        subtitle: typing.Optional[str]
         subtitle_lines: int
         subtitle_selectable: bool
         title_lines: int
@@ -830,13 +844,13 @@ class ActionRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -846,7 +860,7 @@ class ActionRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -854,28 +868,28 @@ class ActionRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
     parent_instance: PreferencesRow = ...
     def __init__(
         self,
-        activatable_widget: Optional[Gtk.Widget] = ...,
-        icon_name: Optional[str] = ...,
+        activatable_widget: typing.Optional[Gtk.Widget] = ...,
+        icon_name: typing.Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
         subtitle_selectable: bool = ...,
@@ -885,13 +899,13 @@ class ActionRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -899,7 +913,7 @@ class ActionRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -909,31 +923,33 @@ class ActionRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def activate(self) -> None: ...
     def add_prefix(self, widget: Gtk.Widget) -> None: ...
     def add_suffix(self, widget: Gtk.Widget) -> None: ...
-    def get_activatable_widget(self) -> Optional[Gtk.Widget]: ...
-    def get_icon_name(self) -> Optional[str]: ...
-    def get_subtitle(self) -> Optional[str]: ...
+    def get_activatable_widget(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_subtitle(self) -> typing.Optional[str]: ...
     def get_subtitle_lines(self) -> int: ...
     def get_subtitle_selectable(self) -> bool: ...
     def get_title_lines(self) -> int: ...
     @classmethod
     def new(cls) -> ActionRow: ...
     def remove(self, widget: Gtk.Widget) -> None: ...
-    def set_activatable_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
+    def set_activatable_widget(
+        self, widget: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
     def set_subtitle_selectable(self, subtitle_selectable: bool) -> None: ...
@@ -949,7 +965,7 @@ class ActionRowClass(GObject.GPointer):
     """
 
     parent_class: PreferencesRowClass = ...
-    activate: Callable[[ActionRow], None] = ...
+    activate: typing.Callable[[ActionRow], None] = ...
     padding: list[None] = ...
 
 class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
@@ -972,6 +988,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       body -> gchararray: body
       body-use-markup -> gboolean: body-use-markup
       extra-child -> GtkWidget: extra-child
+      prefer-wide-layout -> gboolean: prefer-wide-layout
       default-response -> gchararray: default-response
       close-response -> gchararray: close-response
 
@@ -1050,17 +1067,18 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         body: str
         body_use_markup: bool
         close_response: str
-        default_response: Optional[str]
-        extra_child: Optional[Gtk.Widget]
-        heading: Optional[str]
+        default_response: typing.Optional[str]
+        extra_child: typing.Optional[Gtk.Widget]
+        heading: typing.Optional[str]
         heading_use_markup: bool
+        prefer_wide_layout: bool
         can_close: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         content_height: int
         content_width: int
-        current_breakpoint: Optional[Breakpoint]
-        default_widget: Optional[Gtk.Widget]
-        focus_widget: Gtk.Widget
+        current_breakpoint: typing.Optional[Breakpoint]
+        default_widget: typing.Optional[Gtk.Widget]
+        focus_widget: typing.Optional[Gtk.Widget]
         follows_content_size: bool
         presentation_mode: DialogPresentationMode
         title: str
@@ -1068,7 +1086,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1078,7 +1096,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1086,13 +1104,13 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1107,24 +1125,25 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         body: str = ...,
         body_use_markup: bool = ...,
         close_response: str = ...,
-        default_response: Optional[str] = ...,
-        extra_child: Optional[Gtk.Widget] = ...,
-        heading: Optional[str] = ...,
+        default_response: typing.Optional[str] = ...,
+        extra_child: typing.Optional[Gtk.Widget] = ...,
+        heading: typing.Optional[str] = ...,
         heading_use_markup: bool = ...,
+        prefer_wide_layout: bool = ...,
         can_close: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         content_height: int = ...,
         content_width: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
-        focus_widget: Gtk.Widget = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         follows_content_size: bool = ...,
         presentation_mode: DialogPresentationMode = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1132,7 +1151,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1142,48 +1161,50 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
     def choose(
         self,
-        parent: Optional[Gtk.Widget] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
-        *user_data: Any,
+        parent: typing.Optional[Gtk.Widget] = None,
+        cancellable: typing.Optional[Gio.Cancellable] = None,
+        callback: typing.Optional[typing.Callable[..., None]] = None,
+        *user_data: typing.Any,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
     def get_body(self) -> str: ...
     def get_body_use_markup(self) -> bool: ...
     def get_close_response(self) -> str: ...
-    def get_default_response(self) -> Optional[str]: ...
-    def get_extra_child(self) -> Optional[Gtk.Widget]: ...
-    def get_heading(self) -> Optional[str]: ...
+    def get_default_response(self) -> typing.Optional[str]: ...
+    def get_extra_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_heading(self) -> typing.Optional[str]: ...
     def get_heading_use_markup(self) -> bool: ...
+    def get_prefer_wide_layout(self) -> bool: ...
     def get_response_appearance(self, response: str) -> ResponseAppearance: ...
     def get_response_enabled(self, response: str) -> bool: ...
     def get_response_label(self, response: str) -> str: ...
     def has_response(self, response: str) -> bool: ...
     @classmethod
     def new(
-        cls, heading: Optional[str] = None, body: Optional[str] = None
+        cls, heading: typing.Optional[str] = None, body: typing.Optional[str] = None
     ) -> AlertDialog: ...
     def remove_response(self, id: str) -> None: ...
     def set_body(self, body: str) -> None: ...
     def set_body_use_markup(self, use_markup: bool) -> None: ...
     def set_close_response(self, response: str) -> None: ...
-    def set_default_response(self, response: Optional[str] = None) -> None: ...
-    def set_extra_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
-    def set_heading(self, heading: Optional[str] = None) -> None: ...
+    def set_default_response(self, response: typing.Optional[str] = None) -> None: ...
+    def set_extra_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_heading(self, heading: typing.Optional[str] = None) -> None: ...
     def set_heading_use_markup(self, use_markup: bool) -> None: ...
+    def set_prefer_wide_layout(self, prefer_wide_layout: bool) -> None: ...
     def set_response_appearance(
         self, response: str, appearance: ResponseAppearance
     ) -> None: ...
@@ -1200,7 +1221,7 @@ class AlertDialogClass(GObject.GPointer):
     """
 
     parent_class: DialogClass = ...
-    response: Callable[[AlertDialog, str], None] = ...
+    response: typing.Callable[[AlertDialog, str], None] = ...
     padding: list[None] = ...
 
 class Animation(GObject.Object):
@@ -1241,7 +1262,7 @@ class Animation(GObject.Object):
         follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: Gtk.Widget = ...,
-    ): ...
+    ) -> None: ...
     def get_follow_enable_animations_setting(self) -> bool: ...
     def get_state(self) -> AnimationState: ...
     def get_target(self) -> AnimationTarget: ...
@@ -1328,37 +1349,37 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
 
     class Props:
         style_manager: StyleManager
-        active_window: Optional[Gtk.Window]
-        menubar: Optional[Gio.MenuModel]
+        active_window: typing.Optional[Gtk.Window]
+        menubar: typing.Optional[Gio.MenuModel]
         register_session: bool
         screensaver_active: bool
-        application_id: Optional[str]
+        application_id: typing.Optional[str]
         flags: Gio.ApplicationFlags
         inactivity_timeout: int
         is_busy: bool
         is_registered: bool
         is_remote: bool
-        resource_base_path: Optional[str]
-        version: Optional[str]
-        action_group: Optional[Gio.ActionGroup]
+        resource_base_path: typing.Optional[str]
+        version: typing.Optional[str]
+        action_group: typing.Optional[Gio.ActionGroup]
 
     props: Props = ...
     parent_instance: Gtk.Application = ...
     def __init__(
         self,
-        menubar: Optional[Gio.MenuModel] = ...,
+        menubar: typing.Optional[Gio.MenuModel] = ...,
         register_session: bool = ...,
-        action_group: Optional[Gio.ActionGroup] = ...,
-        application_id: Optional[str] = ...,
+        action_group: typing.Optional[Gio.ActionGroup] = ...,
+        application_id: typing.Optional[str] = ...,
         flags: Gio.ApplicationFlags = ...,
         inactivity_timeout: int = ...,
-        resource_base_path: Optional[str] = ...,
+        resource_base_path: typing.Optional[str] = ...,
         version: str = ...,
-    ): ...
+    ) -> None: ...
     def get_style_manager(self) -> StyleManager: ...
     @classmethod
     def new(
-        cls, application_id: Optional[str], flags: Gio.ApplicationFlags
+        cls, application_id: typing.Optional[str], flags: Gio.ApplicationFlags
     ) -> Application: ...
 
 class ApplicationClass(GObject.GPointer):
@@ -1505,40 +1526,40 @@ class ApplicationWindow(
     """
 
     class Props:
-        content: Optional[Gtk.Widget]
-        current_breakpoint: Optional[Breakpoint]
+        content: typing.Optional[Gtk.Widget]
+        current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
-        visible_dialog: Optional[Dialog]
+        visible_dialog: typing.Optional[Dialog]
         show_menubar: bool
-        application: Optional[Gtk.Application]
-        child: Optional[Gtk.Widget]
+        application: typing.Optional[Gtk.Application]
+        child: typing.Optional[Gtk.Widget]
         decorated: bool
         default_height: int
-        default_widget: Optional[Gtk.Widget]
+        default_widget: typing.Optional[Gtk.Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Gtk.Widget
+        focus_widget: typing.Optional[Gtk.Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Gtk.Widget]
-        transient_for: Optional[Gtk.Window]
+        title: typing.Optional[str]
+        titlebar: typing.Optional[Gtk.Widget]
+        transient_for: typing.Optional[Gtk.Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1548,7 +1569,7 @@ class ApplicationWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1556,13 +1577,13 @@ class ApplicationWindow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1575,36 +1596,36 @@ class ApplicationWindow(
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
         self,
-        content: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
         show_menubar: bool = ...,
-        application: Optional[Gtk.Application] = ...,
-        child: Optional[Gtk.Widget] = ...,
+        application: typing.Optional[Gtk.Application] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Gtk.Widget = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: Optional[str] = ...,
-        titlebar: Optional[Gtk.Widget] = ...,
-        transient_for: Optional[Gtk.Window] = ...,
+        title: typing.Optional[str] = ...,
+        titlebar: typing.Optional[Gtk.Widget] = ...,
+        transient_for: typing.Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1612,7 +1633,7 @@ class ApplicationWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1622,23 +1643,23 @@ class ApplicationWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
-    def get_content(self) -> Optional[Gtk.Widget]: ...
-    def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
     def get_dialogs(self) -> Gio.ListModel: ...
-    def get_visible_dialog(self) -> Optional[Dialog]: ...
+    def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls, app: Gtk.Application) -> ApplicationWindow: ...
-    def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class ApplicationWindowClass(GObject.GPointer):
     """
@@ -1726,16 +1747,16 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
 
     class Props:
-        custom_image: Optional[Gdk.Paintable]
-        icon_name: Optional[str]
+        custom_image: typing.Optional[Gdk.Paintable]
+        icon_name: typing.Optional[str]
         show_initials: bool
         size: int
-        text: Optional[str]
+        text: typing.Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1745,7 +1766,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1753,13 +1774,13 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1770,16 +1791,16 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        custom_image: Optional[Gdk.Paintable] = ...,
-        icon_name: Optional[str] = ...,
+        custom_image: typing.Optional[Gdk.Paintable] = ...,
+        icon_name: typing.Optional[str] = ...,
         show_initials: bool = ...,
         size: int = ...,
-        text: Optional[str] = ...,
+        text: typing.Optional[str] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1787,7 +1808,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1797,30 +1818,32 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def draw_to_texture(self, scale_factor: int) -> Gdk.Texture: ...
-    def get_custom_image(self) -> Optional[Gdk.Paintable]: ...
-    def get_icon_name(self) -> Optional[str]: ...
+    def get_custom_image(self) -> typing.Optional[Gdk.Paintable]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
     def get_show_initials(self) -> bool: ...
     def get_size(self) -> int: ...
-    def get_text(self) -> Optional[str]: ...
+    def get_text(self) -> typing.Optional[str]: ...
     @classmethod
-    def new(cls, size: int, text: Optional[str], show_initials: bool) -> Avatar: ...
+    def new(
+        cls, size: int, text: typing.Optional[str], show_initials: bool
+    ) -> Avatar: ...
     def set_custom_image(
-        self, custom_image: Optional[Gdk.Paintable] = None
+        self, custom_image: typing.Optional[Gdk.Paintable] = None
     ) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
     def set_show_initials(self, show_initials: bool) -> None: ...
     def set_size(self, size: int) -> None: ...
-    def set_text(self, text: Optional[str] = None) -> None: ...
+    def set_text(self, text: typing.Optional[str] = None) -> None: ...
 
 class AvatarClass(GObject.GPointer):
     """
@@ -1911,7 +1934,7 @@ class Banner(
     """
 
     class Props:
-        button_label: Optional[str]
+        button_label: typing.Optional[str]
         revealed: bool
         title: str
         use_markup: bool
@@ -1919,7 +1942,7 @@ class Banner(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1929,7 +1952,7 @@ class Banner(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1937,34 +1960,34 @@ class Banner(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
     def __init__(
         self,
-        button_label: Optional[str] = ...,
+        button_label: typing.Optional[str] = ...,
         revealed: bool = ...,
         title: str = ...,
         use_markup: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1972,7 +1995,7 @@ class Banner(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1982,24 +2005,24 @@ class Banner(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
-    def get_button_label(self) -> Optional[str]: ...
+    ) -> None: ...
+    def get_button_label(self) -> typing.Optional[str]: ...
     def get_revealed(self) -> bool: ...
     def get_title(self) -> str: ...
     def get_use_markup(self) -> bool: ...
     @classmethod
     def new(cls, title: str) -> Banner: ...
-    def set_button_label(self, label: Optional[str] = None) -> None: ...
+    def set_button_label(self, label: typing.Optional[str] = None) -> None: ...
     def set_revealed(self, revealed: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
@@ -2085,12 +2108,12 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2100,7 +2123,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2108,13 +2131,13 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2126,12 +2149,12 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2139,7 +2162,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2149,19 +2172,19 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     @classmethod
     def new(cls) -> Bin: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class BinClass(GObject.GPointer):
     """
@@ -2170,6 +2193,222 @@ class BinClass(GObject.GPointer):
     ::
 
         BinClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class BottomSheet(
+    Gtk.Widget, Swipeable, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
+):
+    """
+    :Constructors:
+
+    ::
+
+        BottomSheet(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwBottomSheet
+
+    Signals from AdwBottomSheet:
+      close-attempt ()
+
+    Properties from AdwBottomSheet:
+      content -> GtkWidget: content
+      sheet -> GtkWidget: sheet
+      bottom-bar -> GtkWidget: bottom-bar
+      open -> gboolean: open
+      align -> gfloat: align
+      full-width -> gboolean: full-width
+      show-drag-handle -> gboolean: show-drag-handle
+      modal -> gboolean: modal
+      can-open -> gboolean: can-open
+      can-close -> gboolean: can-close
+      sheet-height -> gint: sheet-height
+      bottom-bar-height -> gint: bottom-bar-height
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        align: float
+        bottom_bar: typing.Optional[Gtk.Widget]
+        bottom_bar_height: int
+        can_close: bool
+        can_open: bool
+        content: typing.Optional[Gtk.Widget]
+        full_width: bool
+        modal: bool
+        open: bool
+        sheet: typing.Optional[Gtk.Widget]
+        sheet_height: int
+        show_drag_handle: bool
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    def __init__(
+        self,
+        align: float = ...,
+        bottom_bar: typing.Optional[Gtk.Widget] = ...,
+        can_close: bool = ...,
+        can_open: bool = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
+        full_width: bool = ...,
+        modal: bool = ...,
+        open: bool = ...,
+        sheet: typing.Optional[Gtk.Widget] = ...,
+        show_drag_handle: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ) -> None: ...
+    def get_align(self) -> float: ...
+    def get_bottom_bar(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_bottom_bar_height(self) -> int: ...
+    def get_can_close(self) -> bool: ...
+    def get_can_open(self) -> bool: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_full_width(self) -> bool: ...
+    def get_modal(self) -> bool: ...
+    def get_open(self) -> bool: ...
+    def get_sheet(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_sheet_height(self) -> int: ...
+    def get_show_drag_handle(self) -> bool: ...
+    @classmethod
+    def new(cls) -> BottomSheet: ...
+    def set_align(self, align: float) -> None: ...
+    def set_bottom_bar(
+        self, bottom_bar: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
+    def set_can_close(self, can_close: bool) -> None: ...
+    def set_can_open(self, can_open: bool) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_full_width(self, full_width: bool) -> None: ...
+    def set_modal(self, modal: bool) -> None: ...
+    def set_open(self, open: bool) -> None: ...
+    def set_sheet(self, sheet: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_show_drag_handle(self, show_drag_handle: bool) -> None: ...
+
+class BottomSheetClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        BottomSheetClass()
     """
 
     parent_class: Gtk.WidgetClass = ...
@@ -2197,22 +2436,29 @@ class Breakpoint(GObject.Object, Gtk.Buildable):
     """
 
     class Props:
-        condition: Optional[BreakpointCondition]
+        condition: typing.Optional[BreakpointCondition]
 
     props: Props = ...
-    def __init__(self, condition: Optional[BreakpointCondition] = ...): ...
-    def add_setter(self, object: GObject.Object, property: str, value: Any) -> None: ...
+    def __init__(
+        self, condition: typing.Optional[BreakpointCondition] = ...
+    ) -> None: ...
+    def add_setter(
+        self,
+        object: GObject.Object,
+        property: str,
+        value: typing.Optional[typing.Any] = None,
+    ) -> None: ...
     def add_setters(
         self,
-        objects: Sequence[GObject.Object],
-        names: Sequence[str],
-        values: Sequence[Any],
+        objects: typing.Sequence[GObject.Object],
+        names: typing.Sequence[str],
+        values: typing.Sequence[typing.Any],
     ) -> None: ...
-    def get_condition(self) -> Optional[BreakpointCondition]: ...
+    def get_condition(self) -> typing.Optional[BreakpointCondition]: ...
     @classmethod
     def new(cls, condition: BreakpointCondition) -> Breakpoint: ...
     def set_condition(
-        self, condition: Optional[BreakpointCondition] = None
+        self, condition: typing.Optional[BreakpointCondition] = None
     ) -> None: ...
 
 class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
@@ -2286,13 +2532,13 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
-        current_breakpoint: Optional[Breakpoint]
+        child: typing.Optional[Gtk.Widget]
+        current_breakpoint: typing.Optional[Breakpoint]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2302,7 +2548,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2310,13 +2556,13 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2328,12 +2574,12 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2341,7 +2587,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2351,22 +2597,22 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
-    def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
     @classmethod
     def new(cls) -> BreakpointBin: ...
     def remove_breakpoint(self, breakpoint: Breakpoint) -> None: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class BreakpointBinClass(GObject.GPointer):
     """
@@ -2506,7 +2752,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2516,7 +2762,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2524,13 +2770,13 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2547,9 +2793,9 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2557,7 +2803,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2567,15 +2813,15 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_can_shrink(self) -> bool: ...
     def get_icon_name(self) -> str: ...
     def get_label(self) -> str: ...
@@ -2598,6 +2844,206 @@ class ButtonContentClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+class ButtonRow(
+    PreferencesRow, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
+):
+    """
+    :Constructors:
+
+    ::
+
+        ButtonRow(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwButtonRow
+
+    Signals from AdwButtonRow:
+      activated ()
+
+    Properties from AdwButtonRow:
+      start-icon-name -> gchararray: start-icon-name
+      end-icon-name -> gchararray: end-icon-name
+
+    Properties from AdwPreferencesRow:
+      title -> gchararray: title
+      use-underline -> gboolean: use-underline
+      title-selectable -> gboolean: title-selectable
+      use-markup -> gboolean: use-markup
+
+    Signals from GtkListBoxRow:
+      activate ()
+
+    Properties from GtkListBoxRow:
+      activatable -> gboolean: activatable
+      selectable -> gboolean: selectable
+      child -> GtkWidget: child
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        end_icon_name: typing.Optional[str]
+        start_icon_name: typing.Optional[str]
+        title: str
+        title_selectable: bool
+        use_markup: bool
+        use_underline: bool
+        activatable: bool
+        child: typing.Optional[Gtk.Widget]
+        selectable: bool
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        action_name: typing.Optional[str]
+        action_target: GLib.Variant
+
+    props: Props = ...
+    def __init__(
+        self,
+        end_icon_name: typing.Optional[str] = ...,
+        start_icon_name: typing.Optional[str] = ...,
+        title: str = ...,
+        title_selectable: bool = ...,
+        use_markup: bool = ...,
+        use_underline: bool = ...,
+        activatable: bool = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
+        selectable: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        action_name: typing.Optional[str] = ...,
+        action_target: GLib.Variant = ...,
+    ) -> None: ...
+    def get_end_icon_name(self) -> typing.Optional[str]: ...
+    def get_start_icon_name(self) -> typing.Optional[str]: ...
+    @classmethod
+    def new(cls) -> ButtonRow: ...
+    def set_end_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+    def set_start_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+
+class ButtonRowClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ButtonRowClass()
+    """
+
+    parent_class: PreferencesRowClass = ...
+
 class CallbackAnimationTarget(AnimationTarget):
     """
     :Constructors:
@@ -2605,7 +3051,7 @@ class CallbackAnimationTarget(AnimationTarget):
     ::
 
         CallbackAnimationTarget(**properties)
-        new(callback:Adw.AnimationTargetFunc=None) -> Adw.AnimationTarget
+        new(callback:Adw.AnimationTargetFunc) -> Adw.AnimationTarget
 
     Object AdwCallbackAnimationTarget
 
@@ -2615,7 +3061,7 @@ class CallbackAnimationTarget(AnimationTarget):
 
     @classmethod
     def new(
-        cls, callback: Callable[..., None], *user_data: Any
+        cls, callback: typing.Callable[..., None], *user_data: typing.Any
     ) -> CallbackAnimationTarget: ...
 
 class CallbackAnimationTargetClass(GObject.GPointer): ...
@@ -2721,7 +3167,7 @@ class Carousel(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2731,7 +3177,7 @@ class Carousel(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2739,13 +3185,13 @@ class Carousel(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2766,9 +3212,9 @@ class Carousel(
         spacing: int = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2776,7 +3222,7 @@ class Carousel(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2786,8 +3232,8 @@ class Carousel(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2795,7 +3241,7 @@ class Carousel(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
+    ) -> None: ...
     def append(self, child: Gtk.Widget) -> None: ...
     def get_allow_long_swipes(self) -> bool: ...
     def get_allow_mouse_drag(self) -> bool: ...
@@ -2905,12 +3351,12 @@ class CarouselIndicatorDots(
     """
 
     class Props:
-        carousel: Optional[Carousel]
+        carousel: typing.Optional[Carousel]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2920,7 +3366,7 @@ class CarouselIndicatorDots(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2928,13 +3374,13 @@ class CarouselIndicatorDots(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2946,12 +3392,12 @@ class CarouselIndicatorDots(
     props: Props = ...
     def __init__(
         self,
-        carousel: Optional[Carousel] = ...,
+        carousel: typing.Optional[Carousel] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2959,7 +3405,7 @@ class CarouselIndicatorDots(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2969,8 +3415,8 @@ class CarouselIndicatorDots(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2978,11 +3424,11 @@ class CarouselIndicatorDots(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
-    def get_carousel(self) -> Optional[Carousel]: ...
+    ) -> None: ...
+    def get_carousel(self) -> typing.Optional[Carousel]: ...
     @classmethod
     def new(cls) -> CarouselIndicatorDots: ...
-    def set_carousel(self, carousel: Optional[Carousel] = None) -> None: ...
+    def set_carousel(self, carousel: typing.Optional[Carousel] = None) -> None: ...
 
 class CarouselIndicatorDotsClass(GObject.GPointer):
     """
@@ -3067,12 +3513,12 @@ class CarouselIndicatorLines(
     """
 
     class Props:
-        carousel: Optional[Carousel]
+        carousel: typing.Optional[Carousel]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3082,7 +3528,7 @@ class CarouselIndicatorLines(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3090,13 +3536,13 @@ class CarouselIndicatorLines(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -3108,12 +3554,12 @@ class CarouselIndicatorLines(
     props: Props = ...
     def __init__(
         self,
-        carousel: Optional[Carousel] = ...,
+        carousel: typing.Optional[Carousel] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3121,7 +3567,7 @@ class CarouselIndicatorLines(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3131,8 +3577,8 @@ class CarouselIndicatorLines(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3140,11 +3586,11 @@ class CarouselIndicatorLines(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
-    def get_carousel(self) -> Optional[Carousel]: ...
+    ) -> None: ...
+    def get_carousel(self) -> typing.Optional[Carousel]: ...
     @classmethod
     def new(cls) -> CarouselIndicatorLines: ...
-    def set_carousel(self, carousel: Optional[Carousel] = None) -> None: ...
+    def set_carousel(self, carousel: typing.Optional[Carousel] = None) -> None: ...
 
 class CarouselIndicatorLinesClass(GObject.GPointer):
     """
@@ -3232,7 +3678,7 @@ class Clamp(
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         maximum_size: int
         tightening_threshold: int
         unit: LengthUnit
@@ -3240,7 +3686,7 @@ class Clamp(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3250,7 +3696,7 @@ class Clamp(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3258,13 +3704,13 @@ class Clamp(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -3276,15 +3722,15 @@ class Clamp(
     props: Props = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3292,7 +3738,7 @@ class Clamp(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3302,8 +3748,8 @@ class Clamp(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3311,14 +3757,14 @@ class Clamp(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_maximum_size(self) -> int: ...
     def get_tightening_threshold(self) -> int: ...
     def get_unit(self) -> LengthUnit: ...
     @classmethod
     def new(cls) -> Clamp: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_maximum_size(self, maximum_size: int) -> None: ...
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
     def set_unit(self, unit: LengthUnit) -> None: ...
@@ -3367,7 +3813,7 @@ class ClampLayout(Gtk.LayoutManager, Gtk.Orientable):
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
+    ) -> None: ...
     def get_maximum_size(self) -> int: ...
     def get_tightening_threshold(self) -> int: ...
     def get_unit(self) -> LengthUnit: ...
@@ -3468,7 +3914,7 @@ class ClampScrollable(
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         maximum_size: int
         tightening_threshold: int
         unit: LengthUnit
@@ -3476,7 +3922,7 @@ class ClampScrollable(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3486,7 +3932,7 @@ class ClampScrollable(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3494,13 +3940,13 @@ class ClampScrollable(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -3508,23 +3954,23 @@ class ClampScrollable(
         width_request: int
         accessible_role: Gtk.AccessibleRole
         orientation: Gtk.Orientation
-        hadjustment: Optional[Gtk.Adjustment]
+        hadjustment: typing.Optional[Gtk.Adjustment]
         hscroll_policy: Gtk.ScrollablePolicy
-        vadjustment: Optional[Gtk.Adjustment]
+        vadjustment: typing.Optional[Gtk.Adjustment]
         vscroll_policy: Gtk.ScrollablePolicy
 
     props: Props = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3532,7 +3978,7 @@ class ClampScrollable(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3542,8 +3988,8 @@ class ClampScrollable(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3551,18 +3997,18 @@ class ClampScrollable(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-        hadjustment: Optional[Gtk.Adjustment] = ...,
+        hadjustment: typing.Optional[Gtk.Adjustment] = ...,
         hscroll_policy: Gtk.ScrollablePolicy = ...,
-        vadjustment: Optional[Gtk.Adjustment] = ...,
+        vadjustment: typing.Optional[Gtk.Adjustment] = ...,
         vscroll_policy: Gtk.ScrollablePolicy = ...,
-    ): ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_maximum_size(self) -> int: ...
     def get_tightening_threshold(self) -> int: ...
     def get_unit(self) -> LengthUnit: ...
     @classmethod
     def new(cls) -> ClampScrollable: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_maximum_size(self, maximum_size: int) -> None: ...
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
     def set_unit(self, unit: LengthUnit) -> None: ...
@@ -3596,11 +4042,13 @@ class ComboRow(
       selected-item -> GObject: selected-item
       model -> GListModel: model
       factory -> GtkListItemFactory: factory
+      header-factory -> GtkListItemFactory: header-factory
       list-factory -> GtkListItemFactory: list-factory
       expression -> GtkExpression: Expression
         Expression to determine strings to search for
       use-subtitle -> gboolean: use-subtitle
       enable-search -> gboolean: enable-search
+      search-match-mode -> GtkStringFilterMatchMode: search-match-mode
 
     Signals from AdwActionRow:
       activated ()
@@ -3684,16 +4132,18 @@ class ComboRow(
 
     class Props:
         enable_search: bool
-        expression: Optional[Gtk.Expression]
-        factory: Optional[Gtk.ListItemFactory]
-        list_factory: Optional[Gtk.ListItemFactory]
-        model: Optional[Gio.ListModel]
+        expression: typing.Optional[Gtk.Expression]
+        factory: typing.Optional[Gtk.ListItemFactory]
+        header_factory: typing.Optional[Gtk.ListItemFactory]
+        list_factory: typing.Optional[Gtk.ListItemFactory]
+        model: typing.Optional[Gio.ListModel]
+        search_match_mode: Gtk.StringFilterMatchMode
         selected: int
-        selected_item: Optional[GObject.Object]
+        selected_item: typing.Optional[GObject.Object]
         use_subtitle: bool
-        activatable_widget: Optional[Gtk.Widget]
-        icon_name: Optional[str]
-        subtitle: Optional[str]
+        activatable_widget: typing.Optional[Gtk.Widget]
+        icon_name: typing.Optional[str]
+        subtitle: typing.Optional[str]
         subtitle_lines: int
         subtitle_selectable: bool
         title_lines: int
@@ -3702,13 +4152,13 @@ class ComboRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3718,7 +4168,7 @@ class ComboRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3726,20 +4176,20 @@ class ComboRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
@@ -3747,14 +4197,16 @@ class ComboRow(
     def __init__(
         self,
         enable_search: bool = ...,
-        expression: Optional[Gtk.Expression] = ...,
-        factory: Optional[Gtk.ListItemFactory] = ...,
-        list_factory: Optional[Gtk.ListItemFactory] = ...,
-        model: Optional[Gio.ListModel] = ...,
+        expression: typing.Optional[Gtk.Expression] = ...,
+        factory: typing.Optional[Gtk.ListItemFactory] = ...,
+        header_factory: typing.Optional[Gtk.ListItemFactory] = ...,
+        list_factory: typing.Optional[Gtk.ListItemFactory] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
+        search_match_mode: Gtk.StringFilterMatchMode = ...,
         selected: int = ...,
         use_subtitle: bool = ...,
-        activatable_widget: Optional[Gtk.Widget] = ...,
-        icon_name: Optional[str] = ...,
+        activatable_widget: typing.Optional[Gtk.Widget] = ...,
+        icon_name: typing.Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
         subtitle_selectable: bool = ...,
@@ -3764,13 +4216,13 @@ class ComboRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3778,7 +4230,7 @@ class ComboRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3788,34 +4240,46 @@ class ComboRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def get_enable_search(self) -> bool: ...
-    def get_expression(self) -> Optional[Gtk.Expression]: ...
-    def get_factory(self) -> Optional[Gtk.ListItemFactory]: ...
-    def get_list_factory(self) -> Optional[Gtk.ListItemFactory]: ...
-    def get_model(self) -> Optional[Gio.ListModel]: ...
+    def get_expression(self) -> typing.Optional[Gtk.Expression]: ...
+    def get_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
+    def get_header_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
+    def get_list_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_search_match_mode(self) -> Gtk.StringFilterMatchMode: ...
     def get_selected(self) -> int: ...
-    def get_selected_item(self) -> Optional[GObject.Object]: ...
+    def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
     def get_use_subtitle(self) -> bool: ...
     @classmethod
     def new(cls) -> ComboRow: ...
     def set_enable_search(self, enable_search: bool) -> None: ...
-    def set_expression(self, expression: Optional[Gtk.Expression] = None) -> None: ...
-    def set_factory(self, factory: Optional[Gtk.ListItemFactory] = None) -> None: ...
-    def set_list_factory(
-        self, factory: Optional[Gtk.ListItemFactory] = None
+    def set_expression(
+        self, expression: typing.Optional[Gtk.Expression] = None
     ) -> None: ...
-    def set_model(self, model: Optional[Gio.ListModel] = None) -> None: ...
+    def set_factory(
+        self, factory: typing.Optional[Gtk.ListItemFactory] = None
+    ) -> None: ...
+    def set_header_factory(
+        self, factory: typing.Optional[Gtk.ListItemFactory] = None
+    ) -> None: ...
+    def set_list_factory(
+        self, factory: typing.Optional[Gtk.ListItemFactory] = None
+    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_search_match_mode(
+        self, search_match_mode: Gtk.StringFilterMatchMode
+    ) -> None: ...
     def set_selected(self, position: int) -> None: ...
     def set_use_subtitle(self, use_subtitle: bool) -> None: ...
 
@@ -3915,12 +4379,12 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
 
     class Props:
         can_close: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         content_height: int
         content_width: int
-        current_breakpoint: Optional[Breakpoint]
-        default_widget: Optional[Gtk.Widget]
-        focus_widget: Gtk.Widget
+        current_breakpoint: typing.Optional[Breakpoint]
+        default_widget: typing.Optional[Gtk.Widget]
+        focus_widget: typing.Optional[Gtk.Widget]
         follows_content_size: bool
         presentation_mode: DialogPresentationMode
         title: str
@@ -3928,7 +4392,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3938,7 +4402,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3946,13 +4410,13 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -3965,19 +4429,19 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def __init__(
         self,
         can_close: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         content_height: int = ...,
         content_width: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
-        focus_widget: Gtk.Widget = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         follows_content_size: bool = ...,
         presentation_mode: DialogPresentationMode = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3985,7 +4449,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3995,41 +4459,41 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def close(self) -> bool: ...
     def do_close_attempt(self) -> None: ...
     def do_closed(self) -> None: ...
     def force_close(self) -> None: ...
     def get_can_close(self) -> bool: ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_content_height(self) -> int: ...
     def get_content_width(self) -> int: ...
-    def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
-    def get_default_widget(self) -> Optional[Gtk.Widget]: ...
-    def get_focus(self) -> Optional[Gtk.Widget]: ...
+    def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
+    def get_default_widget(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_focus(self) -> typing.Optional[Gtk.Widget]: ...
     def get_follows_content_size(self) -> bool: ...
     def get_presentation_mode(self) -> DialogPresentationMode: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> Dialog: ...
-    def present(self, parent: Optional[Gtk.Widget] = None) -> None: ...
+    def present(self, parent: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_can_close(self, can_close: bool) -> None: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_content_height(self, content_height: int) -> None: ...
     def set_content_width(self, content_width: int) -> None: ...
     def set_default_widget(
-        self, default_widget: Optional[Gtk.Widget] = None
+        self, default_widget: typing.Optional[Gtk.Widget] = None
     ) -> None: ...
-    def set_focus(self, focus: Optional[Gtk.Widget] = None) -> None: ...
+    def set_focus(self, focus: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_follows_content_size(self, follows_content_size: bool) -> None: ...
     def set_presentation_mode(
         self, presentation_mode: DialogPresentationMode
@@ -4046,8 +4510,8 @@ class DialogClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    close_attempt: Callable[[Dialog], None] = ...
-    closed: Callable[[Dialog], None] = ...
+    close_attempt: typing.Callable[[Dialog], None] = ...
+    closed: typing.Callable[[Dialog], None] = ...
     padding: list[None] = ...
 
 class EntryRow(
@@ -4080,6 +4544,7 @@ class EntryRow(
       enable-emoji-completion -> gboolean: enable-emoji-completion
       activates-default -> gboolean: activates-default
       text-length -> guint: text-length
+      max-length -> gint: max-length
 
     Signals from GtkEditable:
       changed ()
@@ -4157,10 +4622,11 @@ class EntryRow(
 
     class Props:
         activates_default: bool
-        attributes: Optional[Pango.AttrList]
+        attributes: typing.Optional[Pango.AttrList]
         enable_emoji_completion: bool
         input_hints: Gtk.InputHints
         input_purpose: Gtk.InputPurpose
+        max_length: int
         show_apply_button: bool
         text_length: int
         title: str
@@ -4168,13 +4634,13 @@ class EntryRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -4184,7 +4650,7 @@ class EntryRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4192,20 +4658,20 @@ class EntryRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
         cursor_position: int
         editable: bool
@@ -4221,23 +4687,24 @@ class EntryRow(
     def __init__(
         self,
         activates_default: bool = ...,
-        attributes: Optional[Pango.AttrList] = ...,
+        attributes: typing.Optional[Pango.AttrList] = ...,
         enable_emoji_completion: bool = ...,
         input_hints: Gtk.InputHints = ...,
         input_purpose: Gtk.InputPurpose = ...,
+        max_length: int = ...,
         show_apply_button: bool = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4245,7 +4712,7 @@ class EntryRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4255,15 +4722,15 @@ class EntryRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
         editable: bool = ...,
         enable_undo: bool = ...,
@@ -4271,14 +4738,15 @@ class EntryRow(
         text: str = ...,
         width_chars: int = ...,
         xalign: float = ...,
-    ): ...
+    ) -> None: ...
     def add_prefix(self, widget: Gtk.Widget) -> None: ...
     def add_suffix(self, widget: Gtk.Widget) -> None: ...
     def get_activates_default(self) -> bool: ...
-    def get_attributes(self) -> Optional[Pango.AttrList]: ...
+    def get_attributes(self) -> typing.Optional[Pango.AttrList]: ...
     def get_enable_emoji_completion(self) -> bool: ...
     def get_input_hints(self) -> Gtk.InputHints: ...
     def get_input_purpose(self) -> Gtk.InputPurpose: ...
+    def get_max_length(self) -> int: ...
     def get_show_apply_button(self) -> bool: ...
     def get_text_length(self) -> int: ...
     def grab_focus_without_selecting(self) -> bool: ...
@@ -4286,10 +4754,13 @@ class EntryRow(
     def new(cls) -> EntryRow: ...
     def remove(self, widget: Gtk.Widget) -> None: ...
     def set_activates_default(self, activates: bool) -> None: ...
-    def set_attributes(self, attributes: Optional[Pango.AttrList] = None) -> None: ...
+    def set_attributes(
+        self, attributes: typing.Optional[Pango.AttrList] = None
+    ) -> None: ...
     def set_enable_emoji_completion(self, enable_emoji_completion: bool) -> None: ...
     def set_input_hints(self, hints: Gtk.InputHints) -> None: ...
     def set_input_purpose(self, purpose: Gtk.InputPurpose) -> None: ...
+    def set_max_length(self, max_length: int) -> None: ...
     def set_show_apply_button(self, show_apply_button: bool) -> None: ...
 
 class EntryRowClass(GObject.GPointer):
@@ -4365,14 +4836,14 @@ class EnumListModel(GObject.Object, Gio.ListModel):
     """
 
     class Props:
-        enum_type: Type
+        enum_type: typing.Type[typing.Any]
 
     props: Props = ...
-    def __init__(self, enum_type: Type = ...): ...
+    def __init__(self, enum_type: typing.Type[typing.Any] = ...) -> None: ...
     def find_position(self, value: int) -> int: ...
-    def get_enum_type(self) -> Type: ...
+    def get_enum_type(self) -> typing.Type[typing.Any]: ...
     @classmethod
-    def new(cls, enum_type: Type) -> EnumListModel: ...
+    def new(cls, enum_type: typing.Type[typing.Any]) -> EnumListModel: ...
 
 class EnumListModelClass(GObject.GPointer):
     """
@@ -4479,7 +4950,7 @@ class ExpanderRow(
     class Props:
         enable_expansion: bool
         expanded: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         show_enable_switch: bool
         subtitle: str
         subtitle_lines: int
@@ -4489,13 +4960,13 @@ class ExpanderRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -4505,7 +4976,7 @@ class ExpanderRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4513,20 +4984,20 @@ class ExpanderRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
@@ -4535,7 +5006,7 @@ class ExpanderRow(
         self,
         enable_expansion: bool = ...,
         expanded: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         show_enable_switch: bool = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
@@ -4545,13 +5016,13 @@ class ExpanderRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4559,7 +5030,7 @@ class ExpanderRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4569,34 +5040,34 @@ class ExpanderRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def add_action(self, widget: Gtk.Widget) -> None: ...
     def add_prefix(self, widget: Gtk.Widget) -> None: ...
     def add_row(self, child: Gtk.Widget) -> None: ...
     def add_suffix(self, widget: Gtk.Widget) -> None: ...
     def get_enable_expansion(self) -> bool: ...
     def get_expanded(self) -> bool: ...
-    def get_icon_name(self) -> Optional[str]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
     def get_show_enable_switch(self) -> bool: ...
     def get_subtitle(self) -> str: ...
-    def get_subtitle_lines(self) -> bool: ...
-    def get_title_lines(self) -> bool: ...
+    def get_subtitle_lines(self) -> int: ...
+    def get_title_lines(self) -> int: ...
     @classmethod
     def new(cls) -> ExpanderRow: ...
     def remove(self, child: Gtk.Widget) -> None: ...
     def set_enable_expansion(self, enable_expansion: bool) -> None: ...
     def set_expanded(self, expanded: bool) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
     def set_show_enable_switch(self, show_enable_switch: bool) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
@@ -4706,8 +5177,8 @@ class Flap(
     """
 
     class Props:
-        content: Optional[Gtk.Widget]
-        flap: Optional[Gtk.Widget]
+        content: typing.Optional[Gtk.Widget]
+        flap: typing.Optional[Gtk.Widget]
         flap_position: Gtk.PackType
         fold_duration: int
         fold_policy: FlapFoldPolicy
@@ -4718,7 +5189,7 @@ class Flap(
         reveal_flap: bool
         reveal_params: SpringParams
         reveal_progress: float
-        separator: Optional[Gtk.Widget]
+        separator: typing.Optional[Gtk.Widget]
         swipe_to_close: bool
         swipe_to_open: bool
         transition_type: FlapTransitionType
@@ -4726,7 +5197,7 @@ class Flap(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -4736,7 +5207,7 @@ class Flap(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4744,13 +5215,13 @@ class Flap(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -4762,8 +5233,8 @@ class Flap(
     props: Props = ...
     def __init__(
         self,
-        content: Optional[Gtk.Widget] = ...,
-        flap: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
+        flap: typing.Optional[Gtk.Widget] = ...,
         flap_position: Gtk.PackType = ...,
         fold_duration: int = ...,
         fold_policy: FlapFoldPolicy = ...,
@@ -4772,15 +5243,15 @@ class Flap(
         modal: bool = ...,
         reveal_flap: bool = ...,
         reveal_params: SpringParams = ...,
-        separator: Optional[Gtk.Widget] = ...,
+        separator: typing.Optional[Gtk.Widget] = ...,
         swipe_to_close: bool = ...,
         swipe_to_open: bool = ...,
         transition_type: FlapTransitionType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4788,7 +5259,7 @@ class Flap(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4798,8 +5269,8 @@ class Flap(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4807,9 +5278,9 @@ class Flap(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
-    def get_content(self) -> Optional[Gtk.Widget]: ...
-    def get_flap(self) -> Optional[Gtk.Widget]: ...
+    ) -> None: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_flap(self) -> typing.Optional[Gtk.Widget]: ...
     def get_flap_position(self) -> Gtk.PackType: ...
     def get_fold_duration(self) -> int: ...
     def get_fold_policy(self) -> FlapFoldPolicy: ...
@@ -4820,14 +5291,14 @@ class Flap(
     def get_reveal_flap(self) -> bool: ...
     def get_reveal_params(self) -> SpringParams: ...
     def get_reveal_progress(self) -> float: ...
-    def get_separator(self) -> Optional[Gtk.Widget]: ...
+    def get_separator(self) -> typing.Optional[Gtk.Widget]: ...
     def get_swipe_to_close(self) -> bool: ...
     def get_swipe_to_open(self) -> bool: ...
     def get_transition_type(self) -> FlapTransitionType: ...
     @classmethod
     def new(cls) -> Flap: ...
-    def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
-    def set_flap(self, flap: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_flap(self, flap: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_flap_position(self, position: Gtk.PackType) -> None: ...
     def set_fold_duration(self, duration: int) -> None: ...
     def set_fold_policy(self, policy: FlapFoldPolicy) -> None: ...
@@ -4836,7 +5307,7 @@ class Flap(
     def set_modal(self, modal: bool) -> None: ...
     def set_reveal_flap(self, reveal_flap: bool) -> None: ...
     def set_reveal_params(self, params: SpringParams) -> None: ...
-    def set_separator(self, separator: Optional[Gtk.Widget] = None) -> None: ...
+    def set_separator(self, separator: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_swipe_to_close(self, swipe_to_close: bool) -> None: ...
     def set_swipe_to_open(self, swipe_to_open: bool) -> None: ...
     def set_transition_type(self, transition_type: FlapTransitionType) -> None: ...
@@ -4929,17 +5400,17 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
 
     class Props:
         centering_policy: CenteringPolicy
-        decoration_layout: Optional[str]
+        decoration_layout: typing.Optional[str]
         show_back_button: bool
         show_end_title_buttons: bool
         show_start_title_buttons: bool
         show_title: bool
-        title_widget: Optional[Gtk.Widget]
+        title_widget: typing.Optional[Gtk.Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -4949,7 +5420,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4957,13 +5428,13 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -4975,17 +5446,17 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     def __init__(
         self,
         centering_policy: CenteringPolicy = ...,
-        decoration_layout: Optional[str] = ...,
+        decoration_layout: typing.Optional[str] = ...,
         show_back_button: bool = ...,
         show_end_title_buttons: bool = ...,
         show_start_title_buttons: bool = ...,
         show_title: bool = ...,
-        title_widget: Optional[Gtk.Widget] = ...,
+        title_widget: typing.Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4993,7 +5464,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5003,34 +5474,36 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_centering_policy(self) -> CenteringPolicy: ...
-    def get_decoration_layout(self) -> Optional[str]: ...
+    def get_decoration_layout(self) -> typing.Optional[str]: ...
     def get_show_back_button(self) -> bool: ...
     def get_show_end_title_buttons(self) -> bool: ...
     def get_show_start_title_buttons(self) -> bool: ...
     def get_show_title(self) -> bool: ...
-    def get_title_widget(self) -> Optional[Gtk.Widget]: ...
+    def get_title_widget(self) -> typing.Optional[Gtk.Widget]: ...
     @classmethod
     def new(cls) -> HeaderBar: ...
     def pack_end(self, child: Gtk.Widget) -> None: ...
     def pack_start(self, child: Gtk.Widget) -> None: ...
     def remove(self, child: Gtk.Widget) -> None: ...
     def set_centering_policy(self, centering_policy: CenteringPolicy) -> None: ...
-    def set_decoration_layout(self, layout: Optional[str] = None) -> None: ...
+    def set_decoration_layout(self, layout: typing.Optional[str] = None) -> None: ...
     def set_show_back_button(self, show_back_button: bool) -> None: ...
     def set_show_end_title_buttons(self, setting: bool) -> None: ...
     def set_show_start_title_buttons(self, setting: bool) -> None: ...
     def set_show_title(self, show_title: bool) -> None: ...
-    def set_title_widget(self, title_widget: Optional[Gtk.Widget] = None) -> None: ...
+    def set_title_widget(
+        self, title_widget: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
 
 class HeaderBarClass(GObject.GPointer):
     """
@@ -5039,6 +5512,207 @@ class HeaderBarClass(GObject.GPointer):
     ::
 
         HeaderBarClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class Layout(GObject.Object, Gtk.Buildable):
+    """
+    :Constructors:
+
+    ::
+
+        Layout(**properties)
+        new(content:Gtk.Widget) -> Adw.Layout
+
+    Object AdwLayout
+
+    Properties from AdwLayout:
+      content -> GtkWidget: content
+      name -> gchararray: name
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        content: Gtk.Widget
+        name: typing.Optional[str]
+
+    props: Props = ...
+    def __init__(
+        self, content: Gtk.Widget = ..., name: typing.Optional[str] = ...
+    ) -> None: ...
+    def get_content(self) -> Gtk.Widget: ...
+    def get_name(self) -> typing.Optional[str]: ...
+    @classmethod
+    def new(cls, content: Gtk.Widget) -> Layout: ...
+    def set_name(self, name: typing.Optional[str] = None) -> None: ...
+
+class LayoutClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LayoutClass()
+    """
+
+    parent_class: GObject.ObjectClass = ...
+
+class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        LayoutSlot(**properties)
+        new(id:str) -> Gtk.Widget
+
+    Object AdwLayoutSlot
+
+    Properties from AdwLayoutSlot:
+      id -> gchararray: id
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        id: str
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    def __init__(
+        self,
+        id: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ) -> None: ...
+    def get_slot_id(self) -> str: ...
+    @classmethod
+    def new(cls, id: str) -> LayoutSlot: ...
+
+class LayoutSlotClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        LayoutSlotClass()
     """
 
     parent_class: Gtk.WidgetClass = ...
@@ -5143,13 +5817,13 @@ class Leaflet(
         mode_transition_duration: int
         pages: Gtk.SelectionModel
         transition_type: LeafletTransitionType
-        visible_child: Optional[Gtk.Widget]
-        visible_child_name: Optional[str]
+        visible_child: typing.Optional[Gtk.Widget]
+        visible_child_name: typing.Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -5159,7 +5833,7 @@ class Leaflet(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5167,13 +5841,13 @@ class Leaflet(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -5197,9 +5871,9 @@ class Leaflet(
         visible_child_name: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -5207,7 +5881,7 @@ class Leaflet(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5217,8 +5891,8 @@ class Leaflet(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -5226,15 +5900,15 @@ class Leaflet(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
+    ) -> None: ...
     def append(self, child: Gtk.Widget) -> LeafletPage: ...
     def get_adjacent_child(
         self, direction: NavigationDirection
-    ) -> Optional[Gtk.Widget]: ...
+    ) -> typing.Optional[Gtk.Widget]: ...
     def get_can_navigate_back(self) -> bool: ...
     def get_can_navigate_forward(self) -> bool: ...
     def get_can_unfold(self) -> bool: ...
-    def get_child_by_name(self, name: str) -> Optional[Gtk.Widget]: ...
+    def get_child_by_name(self, name: str) -> typing.Optional[Gtk.Widget]: ...
     def get_child_transition_params(self) -> SpringParams: ...
     def get_child_transition_running(self) -> bool: ...
     def get_fold_threshold_policy(self) -> FoldThresholdPolicy: ...
@@ -5244,10 +5918,10 @@ class Leaflet(
     def get_page(self, child: Gtk.Widget) -> LeafletPage: ...
     def get_pages(self) -> Gtk.SelectionModel: ...
     def get_transition_type(self) -> LeafletTransitionType: ...
-    def get_visible_child(self) -> Optional[Gtk.Widget]: ...
-    def get_visible_child_name(self) -> Optional[str]: ...
+    def get_visible_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_visible_child_name(self) -> typing.Optional[str]: ...
     def insert_child_after(
-        self, child: Gtk.Widget, sibling: Optional[Gtk.Widget] = None
+        self, child: Gtk.Widget, sibling: typing.Optional[Gtk.Widget] = None
     ) -> LeafletPage: ...
     def navigate(self, direction: NavigationDirection) -> bool: ...
     @classmethod
@@ -5255,7 +5929,7 @@ class Leaflet(
     def prepend(self, child: Gtk.Widget) -> LeafletPage: ...
     def remove(self, child: Gtk.Widget) -> None: ...
     def reorder_child_after(
-        self, child: Gtk.Widget, sibling: Optional[Gtk.Widget] = None
+        self, child: Gtk.Widget, sibling: typing.Optional[Gtk.Widget] = None
     ) -> None: ...
     def set_can_navigate_back(self, can_navigate_back: bool) -> None: ...
     def set_can_navigate_forward(self, can_navigate_forward: bool) -> None: ...
@@ -5300,20 +5974,20 @@ class LeafletPage(GObject.Object):
 
     class Props:
         child: Gtk.Widget
-        name: Optional[str]
+        name: typing.Optional[str]
         navigatable: bool
 
     props: Props = ...
     def __init__(
         self,
         child: Gtk.Widget = ...,
-        name: Optional[str] = ...,
+        name: typing.Optional[str] = ...,
         navigatable: bool = ...,
-    ): ...
+    ) -> None: ...
     def get_child(self) -> Gtk.Widget: ...
-    def get_name(self) -> Optional[str]: ...
+    def get_name(self) -> typing.Optional[str]: ...
     def get_navigatable(self) -> bool: ...
-    def set_name(self, name: Optional[str] = None) -> None: ...
+    def set_name(self, name: typing.Optional[str] = None) -> None: ...
     def set_navigatable(self, navigatable: bool) -> None: ...
 
 class LeafletPageClass(GObject.GPointer):
@@ -5451,39 +6125,39 @@ class MessageDialog(
         body: str
         body_use_markup: bool
         close_response: str
-        default_response: Optional[str]
-        extra_child: Optional[Gtk.Widget]
-        heading: Optional[str]
+        default_response: typing.Optional[str]
+        extra_child: typing.Optional[Gtk.Widget]
+        heading: typing.Optional[str]
         heading_use_markup: bool
-        application: Optional[Gtk.Application]
-        child: Optional[Gtk.Widget]
+        application: typing.Optional[Gtk.Application]
+        child: typing.Optional[Gtk.Widget]
         decorated: bool
         default_height: int
-        default_widget: Optional[Gtk.Widget]
+        default_widget: typing.Optional[Gtk.Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Gtk.Widget
+        focus_widget: typing.Optional[Gtk.Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Gtk.Widget]
-        transient_for: Optional[Gtk.Window]
+        title: typing.Optional[str]
+        titlebar: typing.Optional[Gtk.Widget]
+        transient_for: typing.Optional[Gtk.Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -5493,7 +6167,7 @@ class MessageDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5501,13 +6175,13 @@ class MessageDialog(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -5523,38 +6197,38 @@ class MessageDialog(
         body: str = ...,
         body_use_markup: bool = ...,
         close_response: str = ...,
-        default_response: Optional[str] = ...,
-        extra_child: Optional[Gtk.Widget] = ...,
-        heading: Optional[str] = ...,
+        default_response: typing.Optional[str] = ...,
+        extra_child: typing.Optional[Gtk.Widget] = ...,
+        heading: typing.Optional[str] = ...,
         heading_use_markup: bool = ...,
-        application: Optional[Gtk.Application] = ...,
-        child: Optional[Gtk.Widget] = ...,
+        application: typing.Optional[Gtk.Application] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Gtk.Widget = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: Optional[str] = ...,
-        titlebar: Optional[Gtk.Widget] = ...,
-        transient_for: Optional[Gtk.Window] = ...,
+        title: typing.Optional[str] = ...,
+        titlebar: typing.Optional[Gtk.Widget] = ...,
+        transient_for: typing.Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -5562,7 +6236,7 @@ class MessageDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5572,30 +6246,30 @@ class MessageDialog(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
     def choose(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
-        *user_data: Any,
+        cancellable: typing.Optional[Gio.Cancellable] = None,
+        callback: typing.Optional[typing.Callable[..., None]] = None,
+        *user_data: typing.Any,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
     def get_body(self) -> str: ...
     def get_body_use_markup(self) -> bool: ...
     def get_close_response(self) -> str: ...
-    def get_default_response(self) -> Optional[str]: ...
-    def get_extra_child(self) -> Optional[Gtk.Widget]: ...
-    def get_heading(self) -> Optional[str]: ...
+    def get_default_response(self) -> typing.Optional[str]: ...
+    def get_extra_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_heading(self) -> typing.Optional[str]: ...
     def get_heading_use_markup(self) -> bool: ...
     def get_response_appearance(self, response: str) -> ResponseAppearance: ...
     def get_response_enabled(self, response: str) -> bool: ...
@@ -5604,18 +6278,18 @@ class MessageDialog(
     @classmethod
     def new(
         cls,
-        parent: Optional[Gtk.Window] = None,
-        heading: Optional[str] = None,
-        body: Optional[str] = None,
+        parent: typing.Optional[Gtk.Window] = None,
+        heading: typing.Optional[str] = None,
+        body: typing.Optional[str] = None,
     ) -> MessageDialog: ...
     def remove_response(self, id: str) -> None: ...
     def response(self, response: str) -> None: ...
     def set_body(self, body: str) -> None: ...
     def set_body_use_markup(self, use_markup: bool) -> None: ...
     def set_close_response(self, response: str) -> None: ...
-    def set_default_response(self, response: Optional[str] = None) -> None: ...
-    def set_extra_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
-    def set_heading(self, heading: Optional[str] = None) -> None: ...
+    def set_default_response(self, response: typing.Optional[str] = None) -> None: ...
+    def set_extra_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_heading(self, heading: typing.Optional[str] = None) -> None: ...
     def set_heading_use_markup(self, use_markup: bool) -> None: ...
     def set_response_appearance(
         self, response: str, appearance: ResponseAppearance
@@ -5633,8 +6307,176 @@ class MessageDialogClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WindowClass = ...
-    response: Callable[[MessageDialog, str], None] = ...
+    response: typing.Callable[[MessageDialog, str], None] = ...
     padding: list[None] = ...
+
+class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        MultiLayoutView(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwMultiLayoutView
+
+    Properties from AdwMultiLayoutView:
+      layout -> AdwLayout: layout
+      layout-name -> gchararray: layout-name
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        layout: typing.Optional[Layout]
+        layout_name: typing.Optional[str]
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    def __init__(
+        self,
+        layout: Layout = ...,
+        layout_name: str = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ) -> None: ...
+    def add_layout(self, layout: Layout) -> None: ...
+    def get_child(self, id: str) -> typing.Optional[Gtk.Widget]: ...
+    def get_layout(self) -> typing.Optional[Layout]: ...
+    def get_layout_by_name(self, name: str) -> typing.Optional[Layout]: ...
+    def get_layout_name(self) -> typing.Optional[str]: ...
+    @classmethod
+    def new(cls) -> MultiLayoutView: ...
+    def remove_layout(self, layout: Layout) -> None: ...
+    def set_child(self, id: str, child: Gtk.Widget) -> None: ...
+    def set_layout(self, layout: Layout) -> None: ...
+    def set_layout_name(self, name: str) -> None: ...
+
+class MultiLayoutViewClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        MultiLayoutViewClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
 
 class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
@@ -5717,14 +6559,14 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
 
     class Props:
         can_pop: bool
-        child: Optional[Gtk.Widget]
-        tag: Optional[str]
+        child: typing.Optional[Gtk.Widget]
+        tag: typing.Optional[str]
         title: str
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -5734,7 +6576,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5742,13 +6584,13 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -5761,14 +6603,14 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
     def __init__(
         self,
         can_pop: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
-        tag: Optional[str] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
+        tag: typing.Optional[str] = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -5776,7 +6618,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5786,22 +6628,22 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def do_hidden(self) -> None: ...
     def do_hiding(self) -> None: ...
     def do_showing(self) -> None: ...
     def do_shown(self) -> None: ...
     def get_can_pop(self) -> bool: ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
-    def get_tag(self) -> Optional[str]: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_tag(self) -> typing.Optional[str]: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls, child: Gtk.Widget, title: str) -> NavigationPage: ...
@@ -5810,8 +6652,8 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         cls, child: Gtk.Widget, title: str, tag: str
     ) -> NavigationPage: ...
     def set_can_pop(self, can_pop: bool) -> None: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
-    def set_tag(self, tag: Optional[str] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_tag(self, tag: typing.Optional[str] = None) -> None: ...
     def set_title(self, title: str) -> None: ...
 
 class NavigationPageClass(GObject.GPointer):
@@ -5824,10 +6666,10 @@ class NavigationPageClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    showing: Callable[[NavigationPage], None] = ...
-    shown: Callable[[NavigationPage], None] = ...
-    hiding: Callable[[NavigationPage], None] = ...
-    hidden: Callable[[NavigationPage], None] = ...
+    showing: typing.Callable[[NavigationPage], None] = ...
+    shown: typing.Callable[[NavigationPage], None] = ...
+    hiding: typing.Callable[[NavigationPage], None] = ...
+    hidden: typing.Callable[[NavigationPage], None] = ...
     padding: list[None] = ...
 
 class NavigationSplitView(
@@ -5910,18 +6752,18 @@ class NavigationSplitView(
 
     class Props:
         collapsed: bool
-        content: Optional[NavigationPage]
+        content: typing.Optional[NavigationPage]
         max_sidebar_width: float
         min_sidebar_width: float
         show_content: bool
-        sidebar: Optional[NavigationPage]
+        sidebar: typing.Optional[NavigationPage]
         sidebar_width_fraction: float
         sidebar_width_unit: LengthUnit
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -5931,7 +6773,7 @@ class NavigationSplitView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5939,13 +6781,13 @@ class NavigationSplitView(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -5957,18 +6799,18 @@ class NavigationSplitView(
     def __init__(
         self,
         collapsed: bool = ...,
-        content: Optional[NavigationPage] = ...,
+        content: typing.Optional[NavigationPage] = ...,
         max_sidebar_width: float = ...,
         min_sidebar_width: float = ...,
         show_content: bool = ...,
-        sidebar: Optional[NavigationPage] = ...,
+        sidebar: typing.Optional[NavigationPage] = ...,
         sidebar_width_fraction: float = ...,
         sidebar_width_unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -5976,7 +6818,7 @@ class NavigationSplitView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5986,31 +6828,31 @@ class NavigationSplitView(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_collapsed(self) -> bool: ...
-    def get_content(self) -> Optional[NavigationPage]: ...
+    def get_content(self) -> typing.Optional[NavigationPage]: ...
     def get_max_sidebar_width(self) -> float: ...
     def get_min_sidebar_width(self) -> float: ...
     def get_show_content(self) -> bool: ...
-    def get_sidebar(self) -> Optional[NavigationPage]: ...
+    def get_sidebar(self) -> typing.Optional[NavigationPage]: ...
     def get_sidebar_width_fraction(self) -> float: ...
     def get_sidebar_width_unit(self) -> LengthUnit: ...
     @classmethod
     def new(cls) -> NavigationSplitView: ...
     def set_collapsed(self, collapsed: bool) -> None: ...
-    def set_content(self, content: Optional[NavigationPage] = None) -> None: ...
+    def set_content(self, content: typing.Optional[NavigationPage] = None) -> None: ...
     def set_max_sidebar_width(self, width: float) -> None: ...
     def set_min_sidebar_width(self, width: float) -> None: ...
     def set_show_content(self, show_content: bool) -> None: ...
-    def set_sidebar(self, sidebar: Optional[NavigationPage] = None) -> None: ...
+    def set_sidebar(self, sidebar: typing.Optional[NavigationPage] = None) -> None: ...
     def set_sidebar_width_fraction(self, fraction: float) -> None: ...
     def set_sidebar_width_unit(self, unit: LengthUnit) -> None: ...
 
@@ -6109,12 +6951,12 @@ class NavigationView(
         animate_transitions: bool
         navigation_stack: Gio.ListModel
         pop_on_escape: bool
-        visible_page: Optional[NavigationPage]
+        visible_page: typing.Optional[NavigationPage]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -6124,7 +6966,7 @@ class NavigationView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6132,13 +6974,13 @@ class NavigationView(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -6153,9 +6995,9 @@ class NavigationView(
         pop_on_escape: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -6163,7 +7005,7 @@ class NavigationView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6173,22 +7015,24 @@ class NavigationView(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, page: NavigationPage) -> None: ...
-    def find_page(self, tag: str) -> Optional[NavigationPage]: ...
+    def find_page(self, tag: str) -> typing.Optional[NavigationPage]: ...
     def get_animate_transitions(self) -> bool: ...
     def get_navigation_stack(self) -> Gio.ListModel: ...
     def get_pop_on_escape(self) -> bool: ...
-    def get_previous_page(self, page: NavigationPage) -> Optional[NavigationPage]: ...
-    def get_visible_page(self) -> Optional[NavigationPage]: ...
+    def get_previous_page(
+        self, page: NavigationPage
+    ) -> typing.Optional[NavigationPage]: ...
+    def get_visible_page(self) -> typing.Optional[NavigationPage]: ...
     @classmethod
     def new(cls) -> NavigationView: ...
     def pop(self) -> bool: ...
@@ -6197,8 +7041,8 @@ class NavigationView(
     def push(self, page: NavigationPage) -> None: ...
     def push_by_tag(self, tag: str) -> None: ...
     def remove(self, page: NavigationPage) -> None: ...
-    def replace(self, pages: Sequence[NavigationPage]) -> None: ...
-    def replace_with_tags(self, tags: Sequence[str]) -> None: ...
+    def replace(self, pages: typing.Sequence[NavigationPage]) -> None: ...
+    def replace_with_tags(self, tags: typing.Sequence[str]) -> None: ...
     def set_animate_transitions(self, animate_transitions: bool) -> None: ...
     def set_pop_on_escape(self, pop_on_escape: bool) -> None: ...
 
@@ -6297,14 +7141,14 @@ class OverlaySplitView(
 
     class Props:
         collapsed: bool
-        content: Optional[Gtk.Widget]
+        content: typing.Optional[Gtk.Widget]
         enable_hide_gesture: bool
         enable_show_gesture: bool
         max_sidebar_width: float
         min_sidebar_width: float
         pin_sidebar: bool
         show_sidebar: bool
-        sidebar: Optional[Gtk.Widget]
+        sidebar: typing.Optional[Gtk.Widget]
         sidebar_position: Gtk.PackType
         sidebar_width_fraction: float
         sidebar_width_unit: LengthUnit
@@ -6312,7 +7156,7 @@ class OverlaySplitView(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -6322,7 +7166,7 @@ class OverlaySplitView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6330,13 +7174,13 @@ class OverlaySplitView(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -6348,22 +7192,22 @@ class OverlaySplitView(
     def __init__(
         self,
         collapsed: bool = ...,
-        content: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
         enable_hide_gesture: bool = ...,
         enable_show_gesture: bool = ...,
         max_sidebar_width: float = ...,
         min_sidebar_width: float = ...,
         pin_sidebar: bool = ...,
         show_sidebar: bool = ...,
-        sidebar: Optional[Gtk.Widget] = ...,
+        sidebar: typing.Optional[Gtk.Widget] = ...,
         sidebar_position: Gtk.PackType = ...,
         sidebar_width_fraction: float = ...,
         sidebar_width_unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -6371,7 +7215,7 @@ class OverlaySplitView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6381,38 +7225,38 @@ class OverlaySplitView(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_collapsed(self) -> bool: ...
-    def get_content(self) -> Optional[Gtk.Widget]: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_enable_hide_gesture(self) -> bool: ...
     def get_enable_show_gesture(self) -> bool: ...
     def get_max_sidebar_width(self) -> float: ...
     def get_min_sidebar_width(self) -> float: ...
     def get_pin_sidebar(self) -> bool: ...
     def get_show_sidebar(self) -> bool: ...
-    def get_sidebar(self) -> Optional[Gtk.Widget]: ...
+    def get_sidebar(self) -> typing.Optional[Gtk.Widget]: ...
     def get_sidebar_position(self) -> Gtk.PackType: ...
     def get_sidebar_width_fraction(self) -> float: ...
     def get_sidebar_width_unit(self) -> LengthUnit: ...
     @classmethod
     def new(cls) -> OverlaySplitView: ...
     def set_collapsed(self, collapsed: bool) -> None: ...
-    def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_enable_hide_gesture(self, enable_hide_gesture: bool) -> None: ...
     def set_enable_show_gesture(self, enable_show_gesture: bool) -> None: ...
     def set_max_sidebar_width(self, width: float) -> None: ...
     def set_min_sidebar_width(self, width: float) -> None: ...
     def set_pin_sidebar(self, pin_sidebar: bool) -> None: ...
     def set_show_sidebar(self, show_sidebar: bool) -> None: ...
-    def set_sidebar(self, sidebar: Optional[Gtk.Widget] = None) -> None: ...
+    def set_sidebar(self, sidebar: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_sidebar_position(self, position: Gtk.PackType) -> None: ...
     def set_sidebar_width_fraction(self, fraction: float) -> None: ...
     def set_sidebar_width_unit(self, unit: LengthUnit) -> None: ...
@@ -6463,6 +7307,7 @@ class PasswordEntryRow(
       enable-emoji-completion -> gboolean: enable-emoji-completion
       activates-default -> gboolean: activates-default
       text-length -> guint: text-length
+      max-length -> gint: max-length
 
     Signals from GtkEditable:
       changed ()
@@ -6540,10 +7385,11 @@ class PasswordEntryRow(
 
     class Props:
         activates_default: bool
-        attributes: Optional[Pango.AttrList]
+        attributes: typing.Optional[Pango.AttrList]
         enable_emoji_completion: bool
         input_hints: Gtk.InputHints
         input_purpose: Gtk.InputPurpose
+        max_length: int
         show_apply_button: bool
         text_length: int
         title: str
@@ -6551,13 +7397,13 @@ class PasswordEntryRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -6567,7 +7413,7 @@ class PasswordEntryRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6575,20 +7421,20 @@ class PasswordEntryRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
         cursor_position: int
         editable: bool
@@ -6603,23 +7449,24 @@ class PasswordEntryRow(
     def __init__(
         self,
         activates_default: bool = ...,
-        attributes: Optional[Pango.AttrList] = ...,
+        attributes: typing.Optional[Pango.AttrList] = ...,
         enable_emoji_completion: bool = ...,
         input_hints: Gtk.InputHints = ...,
         input_purpose: Gtk.InputPurpose = ...,
+        max_length: int = ...,
         show_apply_button: bool = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -6627,7 +7474,7 @@ class PasswordEntryRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6637,15 +7484,15 @@ class PasswordEntryRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
         editable: bool = ...,
         enable_undo: bool = ...,
@@ -6653,7 +7500,7 @@ class PasswordEntryRow(
         text: str = ...,
         width_chars: int = ...,
         xalign: float = ...,
-    ): ...
+    ) -> None: ...
     @classmethod
     def new(cls) -> PasswordEntryRow: ...
 
@@ -6757,15 +7604,15 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
 
     class Props:
         search_enabled: bool
-        visible_page: Optional[Gtk.Widget]
-        visible_page_name: Optional[str]
+        visible_page: typing.Optional[Gtk.Widget]
+        visible_page_name: typing.Optional[str]
         can_close: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         content_height: int
         content_width: int
-        current_breakpoint: Optional[Breakpoint]
-        default_widget: Optional[Gtk.Widget]
-        focus_widget: Gtk.Widget
+        current_breakpoint: typing.Optional[Breakpoint]
+        default_widget: typing.Optional[Gtk.Widget]
+        focus_widget: typing.Optional[Gtk.Widget]
         follows_content_size: bool
         presentation_mode: DialogPresentationMode
         title: str
@@ -6773,7 +7620,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -6783,7 +7630,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6791,13 +7638,13 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -6813,19 +7660,19 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         visible_page: Gtk.Widget = ...,
         visible_page_name: str = ...,
         can_close: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         content_height: int = ...,
         content_width: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
-        focus_widget: Gtk.Widget = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         follows_content_size: bool = ...,
         presentation_mode: DialogPresentationMode = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -6833,7 +7680,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6843,20 +7690,20 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, page: PreferencesPage) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
     def get_search_enabled(self) -> bool: ...
-    def get_visible_page(self) -> Optional[PreferencesPage]: ...
-    def get_visible_page_name(self) -> Optional[str]: ...
+    def get_visible_page(self) -> typing.Optional[PreferencesPage]: ...
+    def get_visible_page_name(self) -> typing.Optional[str]: ...
     @classmethod
     def new(cls) -> PreferencesDialog: ...
     def pop_subpage(self) -> bool: ...
@@ -6893,6 +7740,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
       title -> gchararray: title
       description -> gchararray: description
       header-suffix -> GtkWidget: header-suffix
+      separate-rows -> gboolean: separate-rows
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -6950,14 +7798,15 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     """
 
     class Props:
-        description: Optional[str]
-        header_suffix: Optional[Gtk.Widget]
+        description: typing.Optional[str]
+        header_suffix: typing.Optional[Gtk.Widget]
+        separate_rows: bool
         title: str
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -6967,7 +7816,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6975,13 +7824,13 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -6993,14 +7842,15 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        description: Optional[str] = ...,
-        header_suffix: Optional[Gtk.Widget] = ...,
+        description: typing.Optional[str] = ...,
+        header_suffix: typing.Optional[Gtk.Widget] = ...,
+        separate_rows: bool = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -7008,7 +7858,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7018,24 +7868,26 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, child: Gtk.Widget) -> None: ...
-    def get_description(self) -> Optional[str]: ...
-    def get_header_suffix(self) -> Optional[Gtk.Widget]: ...
+    def get_description(self) -> typing.Optional[str]: ...
+    def get_header_suffix(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_separate_rows(self) -> bool: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> PreferencesGroup: ...
     def remove(self, child: Gtk.Widget) -> None: ...
-    def set_description(self, description: Optional[str] = None) -> None: ...
-    def set_header_suffix(self, suffix: Optional[Gtk.Widget] = None) -> None: ...
+    def set_description(self, description: typing.Optional[str] = None) -> None: ...
+    def set_header_suffix(self, suffix: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_separate_rows(self, separate_rows: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
 class PreferencesGroupClass(GObject.GPointer):
@@ -7067,6 +7919,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       description -> gchararray: description
       name -> gchararray: name
       use-underline -> gboolean: use-underline
+      description-centered -> gboolean: description-centered
 
     Signals from GtkWidget:
       direction-changed (GtkTextDirection)
@@ -7125,15 +7978,16 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
 
     class Props:
         description: str
-        icon_name: Optional[str]
-        name: Optional[str]
+        description_centered: bool
+        icon_name: typing.Optional[str]
+        name: typing.Optional[str]
         title: str
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -7143,20 +7997,20 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
         margin_top: int
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -7169,15 +8023,16 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def __init__(
         self,
         description: str = ...,
-        icon_name: Optional[str] = ...,
-        name: Optional[str] = ...,
+        description_centered: bool = ...,
+        icon_name: typing.Optional[str] = ...,
+        name: typing.Optional[str] = ...,
         title: str = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -7185,7 +8040,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7194,19 +8049,20 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, group: PreferencesGroup) -> None: ...
     def get_description(self) -> str: ...
-    def get_icon_name(self) -> Optional[str]: ...
-    def get_name(self) -> Optional[str]: ...
+    def get_description_centered(self) -> bool: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> typing.Optional[str]: ...
     def get_title(self) -> str: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
@@ -7214,8 +8070,9 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def remove(self, group: PreferencesGroup) -> None: ...
     def scroll_to_top(self) -> None: ...
     def set_description(self, description: str) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
-    def set_name(self, name: Optional[str] = None) -> None: ...
+    def set_description_centered(self, centered: bool) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: typing.Optional[str] = None) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
@@ -7319,13 +8176,13 @@ class PreferencesRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -7335,7 +8192,7 @@ class PreferencesRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7343,20 +8200,20 @@ class PreferencesRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
@@ -7368,13 +8225,13 @@ class PreferencesRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -7382,7 +8239,7 @@ class PreferencesRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7392,17 +8249,17 @@ class PreferencesRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def get_title(self) -> str: ...
     def get_title_selectable(self) -> bool: ...
     def get_use_markup(self) -> bool: ...
@@ -7549,41 +8406,41 @@ class PreferencesWindow(
     class Props:
         can_navigate_back: bool
         search_enabled: bool
-        visible_page: Optional[Gtk.Widget]
-        visible_page_name: Optional[str]
-        content: Optional[Gtk.Widget]
-        current_breakpoint: Optional[Breakpoint]
+        visible_page: typing.Optional[Gtk.Widget]
+        visible_page_name: typing.Optional[str]
+        content: typing.Optional[Gtk.Widget]
+        current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
-        visible_dialog: Optional[Dialog]
-        application: Optional[Gtk.Application]
-        child: Optional[Gtk.Widget]
+        visible_dialog: typing.Optional[Dialog]
+        application: typing.Optional[Gtk.Application]
+        child: typing.Optional[Gtk.Widget]
         decorated: bool
         default_height: int
-        default_widget: Optional[Gtk.Widget]
+        default_widget: typing.Optional[Gtk.Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Gtk.Widget
+        focus_widget: typing.Optional[Gtk.Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Gtk.Widget]
-        transient_for: Optional[Gtk.Window]
+        title: typing.Optional[str]
+        titlebar: typing.Optional[Gtk.Widget]
+        transient_for: typing.Optional[Gtk.Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -7593,7 +8450,7 @@ class PreferencesWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7601,13 +8458,13 @@ class PreferencesWindow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -7624,35 +8481,35 @@ class PreferencesWindow(
         search_enabled: bool = ...,
         visible_page: Gtk.Widget = ...,
         visible_page_name: str = ...,
-        content: Optional[Gtk.Widget] = ...,
-        application: Optional[Gtk.Application] = ...,
-        child: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
+        application: typing.Optional[Gtk.Application] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Gtk.Widget = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: Optional[str] = ...,
-        titlebar: Optional[Gtk.Widget] = ...,
-        transient_for: Optional[Gtk.Window] = ...,
+        title: typing.Optional[str] = ...,
+        titlebar: typing.Optional[Gtk.Widget] = ...,
+        transient_for: typing.Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -7660,7 +8517,7 @@ class PreferencesWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7670,22 +8527,22 @@ class PreferencesWindow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, page: PreferencesPage) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
     def close_subpage(self) -> None: ...
     def get_can_navigate_back(self) -> bool: ...
     def get_search_enabled(self) -> bool: ...
-    def get_visible_page(self) -> Optional[PreferencesPage]: ...
-    def get_visible_page_name(self) -> Optional[str]: ...
+    def get_visible_page(self) -> typing.Optional[PreferencesPage]: ...
+    def get_visible_page_name(self) -> typing.Optional[str]: ...
     @classmethod
     def new(cls) -> PreferencesWindow: ...
     def pop_subpage(self) -> bool: ...
@@ -7736,7 +8593,7 @@ class PropertyAnimationTarget(AnimationTarget):
     props: Props = ...
     def __init__(
         self, object: GObject.Object = ..., pspec: GObject.ParamSpec = ...
-    ): ...
+    ) -> None: ...
     def get_object(self) -> GObject.Object: ...
     def get_pspec(self) -> GObject.ParamSpec: ...
     @classmethod
@@ -7878,9 +8735,9 @@ class SpinRow(
         update_policy: Gtk.SpinButtonUpdatePolicy
         value: float
         wrap: bool
-        activatable_widget: Optional[Gtk.Widget]
-        icon_name: Optional[str]
-        subtitle: Optional[str]
+        activatable_widget: typing.Optional[Gtk.Widget]
+        icon_name: typing.Optional[str]
+        subtitle: typing.Optional[str]
         subtitle_lines: int
         subtitle_selectable: bool
         title_lines: int
@@ -7889,13 +8746,13 @@ class SpinRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -7905,7 +8762,7 @@ class SpinRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7913,20 +8770,20 @@ class SpinRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
         cursor_position: int
         editable: bool
@@ -7940,7 +8797,7 @@ class SpinRow(
     props: Props = ...
     def __init__(
         self,
-        adjustment: Optional[Gtk.Adjustment] = ...,
+        adjustment: typing.Optional[Gtk.Adjustment] = ...,
         climb_rate: float = ...,
         digits: int = ...,
         numeric: bool = ...,
@@ -7948,8 +8805,8 @@ class SpinRow(
         update_policy: Gtk.SpinButtonUpdatePolicy = ...,
         value: float = ...,
         wrap: bool = ...,
-        activatable_widget: Optional[Gtk.Widget] = ...,
-        icon_name: Optional[str] = ...,
+        activatable_widget: typing.Optional[Gtk.Widget] = ...,
+        icon_name: typing.Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
         subtitle_selectable: bool = ...,
@@ -7959,13 +8816,13 @@ class SpinRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -7973,7 +8830,7 @@ class SpinRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7983,15 +8840,15 @@ class SpinRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
         editable: bool = ...,
         enable_undo: bool = ...,
@@ -7999,9 +8856,12 @@ class SpinRow(
         text: str = ...,
         width_chars: int = ...,
         xalign: float = ...,
-    ): ...
+    ) -> None: ...
     def configure(
-        self, adjustment: Optional[Gtk.Adjustment], climb_rate: float, digits: int
+        self,
+        adjustment: typing.Optional[Gtk.Adjustment],
+        climb_rate: float,
+        digits: int,
     ) -> None: ...
     def get_adjustment(self) -> Gtk.Adjustment: ...
     def get_climb_rate(self) -> float: ...
@@ -8013,11 +8873,13 @@ class SpinRow(
     def get_wrap(self) -> bool: ...
     @classmethod
     def new(
-        cls, adjustment: Optional[Gtk.Adjustment], climb_rate: float, digits: int
+        cls, adjustment: typing.Optional[Gtk.Adjustment], climb_rate: float, digits: int
     ) -> SpinRow: ...
     @classmethod
     def new_with_range(cls, min: float, max: float, step: float) -> SpinRow: ...
-    def set_adjustment(self, adjustment: Optional[Gtk.Adjustment] = None) -> None: ...
+    def set_adjustment(
+        self, adjustment: typing.Optional[Gtk.Adjustment] = None
+    ) -> None: ...
     def set_climb_rate(self, climb_rate: float) -> None: ...
     def set_digits(self, digits: int) -> None: ...
     def set_numeric(self, numeric: bool) -> None: ...
@@ -8038,6 +8900,200 @@ class SpinRowClass(GObject.GPointer):
     """
 
     parent_class: ActionRowClass = ...
+
+class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        Spinner(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwSpinner
+
+    Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+
+    props: Props = ...
+    def __init__(
+        self,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+    ) -> None: ...
+    @classmethod
+    def new(cls) -> Spinner: ...
+
+class SpinnerClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SpinnerClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class SpinnerPaintable(GObject.Object, Gdk.Paintable, Gtk.SymbolicPaintable):
+    """
+    :Constructors:
+
+    ::
+
+        SpinnerPaintable(**properties)
+        new(widget:Gtk.Widget=None) -> Adw.SpinnerPaintable
+
+    Object AdwSpinnerPaintable
+
+    Properties from AdwSpinnerPaintable:
+      widget -> GtkWidget: widget
+
+    Signals from GdkPaintable:
+      invalidate-contents ()
+      invalidate-size ()
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        widget: typing.Optional[Gtk.Widget]
+
+    props: Props = ...
+    def __init__(self, widget: typing.Optional[Gtk.Widget] = ...) -> None: ...
+    def get_widget(self) -> typing.Optional[Gtk.Widget]: ...
+    @classmethod
+    def new(cls, widget: typing.Optional[Gtk.Widget] = None) -> SpinnerPaintable: ...
+    def set_widget(self, widget: typing.Optional[Gtk.Widget] = None) -> None: ...
+
+class SpinnerPaintableClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        SpinnerPaintableClass()
+    """
+
+    parent_class: GObject.ObjectClass = ...
 
 class SplitButton(
     Gtk.Widget, Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget
@@ -8124,19 +9180,19 @@ class SplitButton(
 
     class Props:
         can_shrink: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         direction: Gtk.ArrowType
         dropdown_tooltip: str
-        icon_name: Optional[str]
-        label: Optional[str]
-        menu_model: Optional[Gio.MenuModel]
-        popover: Optional[Gtk.Popover]
+        icon_name: typing.Optional[str]
+        label: typing.Optional[str]
+        menu_model: typing.Optional[Gio.MenuModel]
+        popover: typing.Optional[Gtk.Popover]
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -8146,7 +9202,7 @@ class SplitButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8154,39 +9210,39 @@ class SplitButton(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
     def __init__(
         self,
         can_shrink: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         direction: Gtk.ArrowType = ...,
         dropdown_tooltip: str = ...,
         icon_name: str = ...,
         label: str = ...,
-        menu_model: Optional[Gio.MenuModel] = ...,
-        popover: Optional[Gtk.Popover] = ...,
+        menu_model: typing.Optional[Gio.MenuModel] = ...,
+        popover: typing.Optional[Gtk.Popover] = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -8194,7 +9250,7 @@ class SplitButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8204,38 +9260,40 @@ class SplitButton(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def get_can_shrink(self) -> bool: ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_direction(self) -> Gtk.ArrowType: ...
     def get_dropdown_tooltip(self) -> str: ...
-    def get_icon_name(self) -> Optional[str]: ...
-    def get_label(self) -> Optional[str]: ...
-    def get_menu_model(self) -> Optional[Gio.MenuModel]: ...
-    def get_popover(self) -> Optional[Gtk.Popover]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_label(self) -> typing.Optional[str]: ...
+    def get_menu_model(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_popover(self) -> typing.Optional[Gtk.Popover]: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
     def new(cls) -> SplitButton: ...
     def popdown(self) -> None: ...
     def popup(self) -> None: ...
     def set_can_shrink(self, can_shrink: bool) -> None: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_direction(self, direction: Gtk.ArrowType) -> None: ...
     def set_dropdown_tooltip(self, tooltip: str) -> None: ...
     def set_icon_name(self, icon_name: str) -> None: ...
     def set_label(self, label: str) -> None: ...
-    def set_menu_model(self, menu_model: Optional[Gio.MenuModel] = None) -> None: ...
-    def set_popover(self, popover: Optional[Gtk.Popover] = None) -> None: ...
+    def set_menu_model(
+        self, menu_model: typing.Optional[Gio.MenuModel] = None
+    ) -> None: ...
+    def set_popover(self, popover: typing.Optional[Gtk.Popover] = None) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
 class SplitButtonClass(GObject.GPointer):
@@ -8311,7 +9369,7 @@ class SpringAnimation(Animation):
         follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: Gtk.Widget = ...,
-    ): ...
+    ) -> None: ...
     def calculate_value(self, time: int) -> float: ...
     def calculate_velocity(self, time: int) -> float: ...
     def get_clamp(self) -> bool: ...
@@ -8455,14 +9513,14 @@ class Squeezer(
         transition_duration: int
         transition_running: bool
         transition_type: SqueezerTransitionType
-        visible_child: Optional[Gtk.Widget]
+        visible_child: typing.Optional[Gtk.Widget]
         xalign: float
         yalign: float
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -8472,7 +9530,7 @@ class Squeezer(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8480,13 +9538,13 @@ class Squeezer(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -8508,9 +9566,9 @@ class Squeezer(
         yalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -8518,7 +9576,7 @@ class Squeezer(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8528,8 +9586,8 @@ class Squeezer(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -8537,7 +9595,7 @@ class Squeezer(
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
+    ) -> None: ...
     def add(self, child: Gtk.Widget) -> SqueezerPage: ...
     def get_allow_none(self) -> bool: ...
     def get_homogeneous(self) -> bool: ...
@@ -8548,7 +9606,7 @@ class Squeezer(
     def get_transition_duration(self) -> int: ...
     def get_transition_running(self) -> bool: ...
     def get_transition_type(self) -> SqueezerTransitionType: ...
-    def get_visible_child(self) -> Optional[Gtk.Widget]: ...
+    def get_visible_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_xalign(self) -> float: ...
     def get_yalign(self) -> float: ...
     @classmethod
@@ -8597,7 +9655,7 @@ class SqueezerPage(GObject.Object):
         enabled: bool
 
     props: Props = ...
-    def __init__(self, child: Gtk.Widget = ..., enabled: bool = ...): ...
+    def __init__(self, child: Gtk.Widget = ..., enabled: bool = ...) -> None: ...
     def get_child(self) -> Gtk.Widget: ...
     def get_enabled(self) -> bool: ...
     def set_enabled(self, enabled: bool) -> None: ...
@@ -8687,16 +9745,16 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
-        description: Optional[str]
-        icon_name: Optional[str]
-        paintable: Optional[Gdk.Paintable]
+        child: typing.Optional[Gtk.Widget]
+        description: typing.Optional[str]
+        icon_name: typing.Optional[str]
+        paintable: typing.Optional[Gdk.Paintable]
         title: str
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -8706,7 +9764,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8714,13 +9772,13 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -8731,16 +9789,16 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     props: Props = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
-        description: Optional[str] = ...,
-        icon_name: Optional[str] = ...,
-        paintable: Optional[Gdk.Paintable] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
+        description: typing.Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
+        paintable: typing.Optional[Gdk.Paintable] = ...,
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -8748,7 +9806,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8758,26 +9816,28 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
-    def get_description(self) -> Optional[str]: ...
-    def get_icon_name(self) -> Optional[str]: ...
-    def get_paintable(self) -> Optional[Gdk.Paintable]: ...
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_description(self) -> typing.Optional[str]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_paintable(self) -> typing.Optional[Gdk.Paintable]: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> StatusPage: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
-    def set_description(self, description: Optional[str] = None) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
-    def set_paintable(self, paintable: Optional[Gdk.Paintable] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_description(self, description: typing.Optional[str] = None) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+    def set_paintable(
+        self, paintable: typing.Optional[Gdk.Paintable] = None
+    ) -> None: ...
     def set_title(self, title: str) -> None: ...
 
 class StatusPageClass(GObject.GPointer):
@@ -8807,28 +9867,42 @@ class StyleManager(GObject.Object):
       system-supports-color-schemes -> gboolean: system-supports-color-schemes
       dark -> gboolean: dark
       high-contrast -> gboolean: high-contrast
+      system-supports-accent-colors -> gboolean: system-supports-accent-colors
+      accent-color -> AdwAccentColor: accent-color
+      accent-color-rgba -> GdkRGBA: accent-color-rgba
+      yaru-accent -> gchararray: Yaru Accent
+        Yaru Accent
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        accent_color: AccentColor
+        accent_color_rgba: Gdk.RGBA
         color_scheme: ColorScheme
         dark: bool
-        display: Optional[Gdk.Display]
+        display: typing.Optional[Gdk.Display]
         high_contrast: bool
+        system_supports_accent_colors: bool
         system_supports_color_schemes: bool
+        yaru_accent: str
 
     props: Props = ...
-    def __init__(self, color_scheme: ColorScheme = ..., display: Gdk.Display = ...): ...
+    def __init__(
+        self, color_scheme: ColorScheme = ..., display: Gdk.Display = ...
+    ) -> None: ...
+    def get_accent_color(self) -> AccentColor: ...
+    def get_accent_color_rgba(self) -> Gdk.RGBA: ...
     def get_color_scheme(self) -> ColorScheme: ...
     def get_dark(self) -> bool: ...
     @staticmethod
     def get_default() -> StyleManager: ...
-    def get_display(self) -> Optional[Gdk.Display]: ...
+    def get_display(self) -> typing.Optional[Gdk.Display]: ...
     @staticmethod
     def get_for_display(display: Gdk.Display) -> StyleManager: ...
     def get_high_contrast(self) -> bool: ...
+    def get_system_supports_accent_colors(self) -> bool: ...
     def get_system_supports_color_schemes(self) -> bool: ...
     def set_color_scheme(self, color_scheme: ColorScheme) -> None: ...
 
@@ -8897,7 +9971,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
         swipeable: Swipeable = ...,
         upper_overshoot: bool = ...,
         orientation: Gtk.Orientation = ...,
-    ): ...
+    ) -> None: ...
     def get_allow_long_swipes(self) -> bool: ...
     def get_allow_mouse_drag(self) -> bool: ...
     def get_allow_window_handle(self) -> bool: ...
@@ -8954,13 +10028,13 @@ class SwipeableInterface(GObject.GPointer):
     """
 
     parent: GObject.TypeInterface = ...
-    get_distance: Callable[[Swipeable], float] = ...
-    get_snap_points: Callable[[Swipeable], list[float]] = ...
-    get_progress: Callable[[Swipeable], float] = ...
-    get_cancel_progress: Callable[[Swipeable], float] = ...
-    get_swipe_area: Callable[[Swipeable, NavigationDirection, bool], Gdk.Rectangle] = (
-        ...
-    )
+    get_distance: typing.Callable[[Swipeable], float] = ...
+    get_snap_points: typing.Callable[[Swipeable], list[float]] = ...
+    get_progress: typing.Callable[[Swipeable], float] = ...
+    get_cancel_progress: typing.Callable[[Swipeable], float] = ...
+    get_swipe_area: typing.Callable[
+        [Swipeable, NavigationDirection, bool], Gdk.Rectangle
+    ] = ...
     padding: list[None] = ...
 
 class SwitchRow(
@@ -9061,9 +10135,9 @@ class SwitchRow(
 
     class Props:
         active: bool
-        activatable_widget: Optional[Gtk.Widget]
-        icon_name: Optional[str]
-        subtitle: Optional[str]
+        activatable_widget: typing.Optional[Gtk.Widget]
+        icon_name: typing.Optional[str]
+        subtitle: typing.Optional[str]
         subtitle_lines: int
         subtitle_selectable: bool
         title_lines: int
@@ -9072,13 +10146,13 @@ class SwitchRow(
         use_markup: bool
         use_underline: bool
         activatable: bool
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -9088,7 +10162,7 @@ class SwitchRow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9096,28 +10170,28 @@ class SwitchRow(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
     def __init__(
         self,
         active: bool = ...,
-        activatable_widget: Optional[Gtk.Widget] = ...,
-        icon_name: Optional[str] = ...,
+        activatable_widget: typing.Optional[Gtk.Widget] = ...,
+        icon_name: typing.Optional[str] = ...,
         subtitle: str = ...,
         subtitle_lines: int = ...,
         subtitle_selectable: bool = ...,
@@ -9127,13 +10201,13 @@ class SwitchRow(
         use_markup: bool = ...,
         use_underline: bool = ...,
         activatable: bool = ...,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -9141,7 +10215,7 @@ class SwitchRow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9151,17 +10225,17 @@ class SwitchRow(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
+    ) -> None: ...
     def get_active(self) -> bool: ...
     @classmethod
     def new(cls) -> SwitchRow: ...
@@ -9262,20 +10336,20 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
 
     class Props:
         autohide: bool
-        end_action_widget: Optional[Gtk.Widget]
+        end_action_widget: typing.Optional[Gtk.Widget]
         expand_tabs: bool
         extra_drag_preferred_action: Gdk.DragAction
         extra_drag_preload: bool
         inverted: bool
         is_overflowing: bool
-        start_action_widget: Optional[Gtk.Widget]
+        start_action_widget: typing.Optional[Gtk.Widget]
         tabs_revealed: bool
-        view: Optional[TabView]
+        view: typing.Optional[TabView]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -9285,7 +10359,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9293,13 +10367,13 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -9311,17 +10385,17 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def __init__(
         self,
         autohide: bool = ...,
-        end_action_widget: Optional[Gtk.Widget] = ...,
+        end_action_widget: typing.Optional[Gtk.Widget] = ...,
         expand_tabs: bool = ...,
         extra_drag_preload: bool = ...,
         inverted: bool = ...,
-        start_action_widget: Optional[Gtk.Widget] = ...,
-        view: Optional[TabView] = ...,
+        start_action_widget: typing.Optional[Gtk.Widget] = ...,
+        view: typing.Optional[TabView] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -9329,7 +10403,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9339,36 +10413,42 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_autohide(self) -> bool: ...
-    def get_end_action_widget(self) -> Optional[Gtk.Widget]: ...
+    def get_end_action_widget(self) -> typing.Optional[Gtk.Widget]: ...
     def get_expand_tabs(self) -> bool: ...
     def get_extra_drag_preferred_action(self) -> Gdk.DragAction: ...
     def get_extra_drag_preload(self) -> bool: ...
     def get_inverted(self) -> bool: ...
     def get_is_overflowing(self) -> bool: ...
-    def get_start_action_widget(self) -> Optional[Gtk.Widget]: ...
+    def get_start_action_widget(self) -> typing.Optional[Gtk.Widget]: ...
     def get_tabs_revealed(self) -> bool: ...
-    def get_view(self) -> Optional[TabView]: ...
+    def get_view(self) -> typing.Optional[TabView]: ...
     @classmethod
     def new(cls) -> TabBar: ...
     def set_autohide(self, autohide: bool) -> None: ...
-    def set_end_action_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
+    def set_end_action_widget(
+        self, widget: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
     def set_expand_tabs(self, expand_tabs: bool) -> None: ...
     def set_extra_drag_preload(self, preload: bool) -> None: ...
     def set_inverted(self, inverted: bool) -> None: ...
-    def set_start_action_widget(self, widget: Optional[Gtk.Widget] = None) -> None: ...
-    def set_view(self, view: Optional[TabView] = None) -> None: ...
+    def set_start_action_widget(
+        self, widget: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
+    def set_view(self, view: typing.Optional[TabView] = None) -> None: ...
     def setup_extra_drop_target(
-        self, actions: Gdk.DragAction, types: Optional[Sequence[Type]] = None
+        self,
+        actions: Gdk.DragAction,
+        types: typing.Optional[typing.Sequence[typing.Type[typing.Any]]] = None,
     ) -> None: ...
 
 class TabBarClass(GObject.GPointer):
@@ -9458,12 +10538,12 @@ class TabButton(
     """
 
     class Props:
-        view: Optional[TabView]
+        view: typing.Optional[TabView]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -9473,7 +10553,7 @@ class TabButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9481,31 +10561,31 @@ class TabButton(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        action_name: Optional[str]
+        action_name: typing.Optional[str]
         action_target: GLib.Variant
 
     props: Props = ...
     def __init__(
         self,
-        view: Optional[TabView] = ...,
+        view: typing.Optional[TabView] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -9513,7 +10593,7 @@ class TabButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9523,21 +10603,21 @@ class TabButton(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        action_name: Optional[str] = ...,
+        action_name: typing.Optional[str] = ...,
         action_target: GLib.Variant = ...,
-    ): ...
-    def get_view(self) -> Optional[TabView]: ...
+    ) -> None: ...
+    def get_view(self) -> typing.Optional[TabView]: ...
     @classmethod
     def new(cls) -> TabButton: ...
-    def set_view(self, view: Optional[TabView] = None) -> None: ...
+    def set_view(self, view: typing.Optional[TabView] = None) -> None: ...
 
 class TabButtonClass(GObject.GPointer):
     """
@@ -9636,7 +10716,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         enable_new_tab: bool
         enable_search: bool
         extra_drag_preferred_action: Gdk.DragAction
@@ -9644,15 +10724,15 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         inverted: bool
         open: bool
         search_active: bool
-        secondary_menu: Optional[Gio.MenuModel]
+        secondary_menu: typing.Optional[Gio.MenuModel]
         show_end_title_buttons: bool
         show_start_title_buttons: bool
-        view: Optional[TabView]
+        view: typing.Optional[TabView]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -9662,7 +10742,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9670,13 +10750,13 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -9687,21 +10767,21 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     props: Props = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         enable_new_tab: bool = ...,
         enable_search: bool = ...,
         extra_drag_preload: bool = ...,
         inverted: bool = ...,
         open: bool = ...,
-        secondary_menu: Optional[Gio.MenuModel] = ...,
+        secondary_menu: typing.Optional[Gio.MenuModel] = ...,
         show_end_title_buttons: bool = ...,
         show_start_title_buttons: bool = ...,
-        view: Optional[TabView] = ...,
+        view: typing.Optional[TabView] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -9709,7 +10789,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9719,16 +10799,16 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_enable_new_tab(self) -> bool: ...
     def get_enable_search(self) -> bool: ...
     def get_extra_drag_preferred_action(self) -> Gdk.DragAction: ...
@@ -9736,26 +10816,28 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     def get_inverted(self) -> bool: ...
     def get_open(self) -> bool: ...
     def get_search_active(self) -> bool: ...
-    def get_secondary_menu(self) -> Optional[Gio.MenuModel]: ...
+    def get_secondary_menu(self) -> typing.Optional[Gio.MenuModel]: ...
     def get_show_end_title_buttons(self) -> bool: ...
     def get_show_start_title_buttons(self) -> bool: ...
-    def get_view(self) -> Optional[TabView]: ...
+    def get_view(self) -> typing.Optional[TabView]: ...
     @classmethod
     def new(cls) -> TabOverview: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_enable_new_tab(self, enable_new_tab: bool) -> None: ...
     def set_enable_search(self, enable_search: bool) -> None: ...
     def set_extra_drag_preload(self, preload: bool) -> None: ...
     def set_inverted(self, inverted: bool) -> None: ...
     def set_open(self, open: bool) -> None: ...
     def set_secondary_menu(
-        self, secondary_menu: Optional[Gio.MenuModel] = None
+        self, secondary_menu: typing.Optional[Gio.MenuModel] = None
     ) -> None: ...
     def set_show_end_title_buttons(self, show_end_title_buttons: bool) -> None: ...
     def set_show_start_title_buttons(self, show_start_title_buttons: bool) -> None: ...
-    def set_view(self, view: Optional[TabView] = None) -> None: ...
+    def set_view(self, view: typing.Optional[TabView] = None) -> None: ...
     def setup_extra_drop_target(
-        self, actions: Gdk.DragAction, types: Optional[Sequence[Type]] = None
+        self,
+        actions: Gdk.DragAction,
+        types: typing.Optional[typing.Sequence[typing.Type[typing.Any]]] = None,
     ) -> None: ...
 
 class TabOverviewClass(GObject.GPointer):
@@ -9803,30 +10885,30 @@ class TabPage(GObject.Object, Gtk.Accessible):
 
     class Props:
         child: Gtk.Widget
-        icon: Optional[Gio.Icon]
+        icon: typing.Optional[Gio.Icon]
         indicator_activatable: bool
-        indicator_icon: Optional[Gio.Icon]
+        indicator_icon: typing.Optional[Gio.Icon]
         indicator_tooltip: str
-        keyword: Optional[str]
+        keyword: typing.Optional[str]
         live_thumbnail: bool
         loading: bool
         needs_attention: bool
-        parent: Optional[TabPage]
+        parent: typing.Optional[TabPage]
         pinned: bool
         selected: bool
         thumbnail_xalign: float
         thumbnail_yalign: float
         title: str
-        tooltip: Optional[str]
+        tooltip: typing.Optional[str]
         accessible_role: Gtk.AccessibleRole
 
     props: Props = ...
     def __init__(
         self,
         child: Gtk.Widget = ...,
-        icon: Optional[Gio.Icon] = ...,
+        icon: typing.Optional[Gio.Icon] = ...,
         indicator_activatable: bool = ...,
-        indicator_icon: Optional[Gio.Icon] = ...,
+        indicator_icon: typing.Optional[Gio.Icon] = ...,
         indicator_tooltip: str = ...,
         keyword: str = ...,
         live_thumbnail: bool = ...,
@@ -9838,27 +10920,29 @@ class TabPage(GObject.Object, Gtk.Accessible):
         title: str = ...,
         tooltip: str = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_child(self) -> Gtk.Widget: ...
-    def get_icon(self) -> Optional[Gio.Icon]: ...
+    def get_icon(self) -> typing.Optional[Gio.Icon]: ...
     def get_indicator_activatable(self) -> bool: ...
-    def get_indicator_icon(self) -> Optional[Gio.Icon]: ...
+    def get_indicator_icon(self) -> typing.Optional[Gio.Icon]: ...
     def get_indicator_tooltip(self) -> str: ...
-    def get_keyword(self) -> Optional[str]: ...
+    def get_keyword(self) -> typing.Optional[str]: ...
     def get_live_thumbnail(self) -> bool: ...
     def get_loading(self) -> bool: ...
     def get_needs_attention(self) -> bool: ...
-    def get_parent(self) -> Optional[TabPage]: ...
+    def get_parent(self) -> typing.Optional[TabPage]: ...
     def get_pinned(self) -> bool: ...
     def get_selected(self) -> bool: ...
     def get_thumbnail_xalign(self) -> float: ...
     def get_thumbnail_yalign(self) -> float: ...
     def get_title(self) -> str: ...
-    def get_tooltip(self) -> Optional[str]: ...
+    def get_tooltip(self) -> typing.Optional[str]: ...
     def invalidate_thumbnail(self) -> None: ...
-    def set_icon(self, icon: Optional[Gio.Icon] = None) -> None: ...
+    def set_icon(self, icon: typing.Optional[Gio.Icon] = None) -> None: ...
     def set_indicator_activatable(self, activatable: bool) -> None: ...
-    def set_indicator_icon(self, indicator_icon: Optional[Gio.Icon] = None) -> None: ...
+    def set_indicator_icon(
+        self, indicator_icon: typing.Optional[Gio.Icon] = None
+    ) -> None: ...
     def set_indicator_tooltip(self, tooltip: str) -> None: ...
     def set_keyword(self, keyword: str) -> None: ...
     def set_live_thumbnail(self, live_thumbnail: bool) -> None: ...
@@ -9968,17 +11052,17 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     class Props:
         default_icon: Gio.Icon
         is_transferring_page: bool
-        menu_model: Optional[Gio.MenuModel]
+        menu_model: typing.Optional[Gio.MenuModel]
         n_pages: int
         n_pinned_pages: int
         pages: Gtk.SelectionModel
-        selected_page: Optional[TabPage]
+        selected_page: typing.Optional[TabPage]
         shortcuts: TabViewShortcuts
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -9988,7 +11072,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9996,13 +11080,13 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -10014,14 +11098,14 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def __init__(
         self,
         default_icon: Gio.Icon = ...,
-        menu_model: Optional[Gio.MenuModel] = ...,
+        menu_model: typing.Optional[Gio.MenuModel] = ...,
         selected_page: TabPage = ...,
         shortcuts: TabViewShortcuts = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -10029,7 +11113,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10039,17 +11123,17 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_page(
-        self, child: Gtk.Widget, parent: Optional[TabPage] = None
+        self, child: Gtk.Widget, parent: typing.Optional[TabPage] = None
     ) -> TabPage: ...
     def add_shortcuts(self, shortcuts: TabViewShortcuts) -> None: ...
     def append(self, child: Gtk.Widget) -> TabPage: ...
@@ -10061,14 +11145,14 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def close_pages_before(self, page: TabPage) -> None: ...
     def get_default_icon(self) -> Gio.Icon: ...
     def get_is_transferring_page(self) -> bool: ...
-    def get_menu_model(self) -> Optional[Gio.MenuModel]: ...
+    def get_menu_model(self) -> typing.Optional[Gio.MenuModel]: ...
     def get_n_pages(self) -> int: ...
     def get_n_pinned_pages(self) -> int: ...
     def get_nth_page(self, position: int) -> TabPage: ...
     def get_page(self, child: Gtk.Widget) -> TabPage: ...
     def get_page_position(self, page: TabPage) -> int: ...
     def get_pages(self) -> Gtk.SelectionModel: ...
-    def get_selected_page(self) -> Optional[TabPage]: ...
+    def get_selected_page(self) -> typing.Optional[TabPage]: ...
     def get_shortcuts(self) -> TabViewShortcuts: ...
     def insert(self, child: Gtk.Widget, position: int) -> TabPage: ...
     def insert_pinned(self, child: Gtk.Widget, position: int) -> TabPage: ...
@@ -10086,7 +11170,9 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def select_next_page(self) -> bool: ...
     def select_previous_page(self) -> bool: ...
     def set_default_icon(self, default_icon: Gio.Icon) -> None: ...
-    def set_menu_model(self, menu_model: Optional[Gio.MenuModel] = None) -> None: ...
+    def set_menu_model(
+        self, menu_model: typing.Optional[Gio.MenuModel] = None
+    ) -> None: ...
     def set_page_pinned(self, page: TabPage, pinned: bool) -> None: ...
     def set_selected_page(self, selected_page: TabPage) -> None: ...
     def set_shortcuts(self, shortcuts: TabViewShortcuts) -> None: ...
@@ -10166,7 +11252,7 @@ class TimedAnimation(Animation):
         follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: Gtk.Widget = ...,
-    ): ...
+    ) -> None: ...
     def get_alternate(self) -> bool: ...
     def get_duration(self) -> int: ...
     def get_easing(self) -> Easing: ...
@@ -10223,46 +11309,46 @@ class Toast(GObject.Object):
     """
 
     class Props:
-        action_name: Optional[str]
-        action_target: GLib.Variant
-        button_label: Optional[str]
-        custom_title: Optional[Gtk.Widget]
+        action_name: typing.Optional[str]
+        action_target: typing.Optional[GLib.Variant]
+        button_label: typing.Optional[str]
+        custom_title: typing.Optional[Gtk.Widget]
         priority: ToastPriority
         timeout: int
-        title: Optional[str]
+        title: typing.Optional[str]
         use_markup: bool
 
     props: Props = ...
     def __init__(
         self,
-        action_name: Optional[str] = ...,
-        action_target: GLib.Variant = ...,
-        button_label: Optional[str] = ...,
-        custom_title: Optional[Gtk.Widget] = ...,
+        action_name: typing.Optional[str] = ...,
+        action_target: typing.Optional[GLib.Variant] = ...,
+        button_label: typing.Optional[str] = ...,
+        custom_title: typing.Optional[Gtk.Widget] = ...,
         priority: ToastPriority = ...,
         timeout: int = ...,
         title: str = ...,
         use_markup: bool = ...,
-    ): ...
+    ) -> None: ...
     def dismiss(self) -> None: ...
-    def get_action_name(self) -> Optional[str]: ...
-    def get_action_target_value(self) -> Optional[GLib.Variant]: ...
-    def get_button_label(self) -> Optional[str]: ...
-    def get_custom_title(self) -> Optional[Gtk.Widget]: ...
+    def get_action_name(self) -> typing.Optional[str]: ...
+    def get_action_target_value(self) -> typing.Optional[GLib.Variant]: ...
+    def get_button_label(self) -> typing.Optional[str]: ...
+    def get_custom_title(self) -> typing.Optional[Gtk.Widget]: ...
     def get_priority(self) -> ToastPriority: ...
     def get_timeout(self) -> int: ...
-    def get_title(self) -> Optional[str]: ...
+    def get_title(self) -> typing.Optional[str]: ...
     def get_use_markup(self) -> bool: ...
     @classmethod
     def new(cls, title: str) -> Toast: ...
-    def set_action_name(self, action_name: Optional[str] = None) -> None: ...
+    def set_action_name(self, action_name: typing.Optional[str] = None) -> None: ...
     def set_action_target_value(
-        self, action_target: Optional[GLib.Variant] = None
+        self, action_target: typing.Optional[GLib.Variant] = None
     ) -> None: ...
-    def set_button_label(self, button_label: Optional[str] = None) -> None: ...
-    def set_custom_title(self, widget: Optional[Gtk.Widget] = None) -> None: ...
+    def set_button_label(self, button_label: typing.Optional[str] = None) -> None: ...
+    def set_custom_title(self, widget: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_detailed_action_name(
-        self, detailed_action_name: Optional[str] = None
+        self, detailed_action_name: typing.Optional[str] = None
     ) -> None: ...
     def set_priority(self, priority: ToastPriority) -> None: ...
     def set_timeout(self, timeout: int) -> None: ...
@@ -10350,12 +11436,12 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     """
 
     class Props:
-        child: Optional[Gtk.Widget]
+        child: typing.Optional[Gtk.Widget]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -10365,7 +11451,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10373,13 +11459,13 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -10390,12 +11476,12 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     props: Props = ...
     def __init__(
         self,
-        child: Optional[Gtk.Widget] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -10403,7 +11489,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10413,20 +11499,20 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
-    def get_child(self) -> Optional[Gtk.Widget]: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     @classmethod
     def new(cls) -> ToastOverlay: ...
-    def set_child(self, child: Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class ToastOverlayClass(GObject.GPointer):
     """
@@ -10519,7 +11605,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     class Props:
         bottom_bar_height: int
         bottom_bar_style: ToolbarStyle
-        content: Optional[Gtk.Widget]
+        content: typing.Optional[Gtk.Widget]
         extend_content_to_bottom_edge: bool
         extend_content_to_top_edge: bool
         reveal_bottom_bars: bool
@@ -10530,7 +11616,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -10540,7 +11626,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10548,13 +11634,13 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -10566,7 +11652,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     def __init__(
         self,
         bottom_bar_style: ToolbarStyle = ...,
-        content: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
         extend_content_to_bottom_edge: bool = ...,
         extend_content_to_top_edge: bool = ...,
         reveal_bottom_bars: bool = ...,
@@ -10574,9 +11660,9 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         top_bar_style: ToolbarStyle = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -10584,7 +11670,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10594,20 +11680,20 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_bottom_bar(self, widget: Gtk.Widget) -> None: ...
     def add_top_bar(self, widget: Gtk.Widget) -> None: ...
     def get_bottom_bar_height(self) -> int: ...
     def get_bottom_bar_style(self) -> ToolbarStyle: ...
-    def get_content(self) -> Optional[Gtk.Widget]: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_extend_content_to_bottom_edge(self) -> bool: ...
     def get_extend_content_to_top_edge(self) -> bool: ...
     def get_reveal_bottom_bars(self) -> bool: ...
@@ -10618,7 +11704,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     def new(cls) -> ToolbarView: ...
     def remove(self, widget: Gtk.Widget) -> None: ...
     def set_bottom_bar_style(self, style: ToolbarStyle) -> None: ...
-    def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_extend_content_to_bottom_edge(self, extend: bool) -> None: ...
     def set_extend_content_to_top_edge(self, extend: bool) -> None: ...
     def set_reveal_bottom_bars(self, reveal: bool) -> None: ...
@@ -10713,13 +11799,13 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         hhomogeneous: bool
         pages: Gtk.SelectionModel
         vhomogeneous: bool
-        visible_child: Optional[Gtk.Widget]
-        visible_child_name: Optional[str]
+        visible_child: typing.Optional[Gtk.Widget]
+        visible_child_name: typing.Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -10729,7 +11815,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10737,13 +11823,13 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -10760,9 +11846,9 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         visible_child_name: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -10770,7 +11856,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10780,32 +11866,32 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add(self, child: Gtk.Widget) -> ViewStackPage: ...
     def add_named(
-        self, child: Gtk.Widget, name: Optional[str] = None
+        self, child: Gtk.Widget, name: typing.Optional[str] = None
     ) -> ViewStackPage: ...
     def add_titled(
-        self, child: Gtk.Widget, name: Optional[str], title: str
+        self, child: Gtk.Widget, name: typing.Optional[str], title: str
     ) -> ViewStackPage: ...
     def add_titled_with_icon(
-        self, child: Gtk.Widget, name: Optional[str], title: str, icon_name: str
+        self, child: Gtk.Widget, name: typing.Optional[str], title: str, icon_name: str
     ) -> ViewStackPage: ...
-    def get_child_by_name(self, name: str) -> Optional[Gtk.Widget]: ...
+    def get_child_by_name(self, name: str) -> typing.Optional[Gtk.Widget]: ...
     def get_hhomogeneous(self) -> bool: ...
     def get_page(self, child: Gtk.Widget) -> ViewStackPage: ...
     def get_pages(self) -> Gtk.SelectionModel: ...
     def get_vhomogeneous(self) -> bool: ...
-    def get_visible_child(self) -> Optional[Gtk.Widget]: ...
-    def get_visible_child_name(self) -> Optional[str]: ...
+    def get_visible_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_visible_child_name(self) -> typing.Optional[str]: ...
     @classmethod
     def new(cls) -> ViewStack: ...
     def remove(self, child: Gtk.Widget) -> None: ...
@@ -10852,10 +11938,10 @@ class ViewStackPage(GObject.Object, Gtk.Accessible):
     class Props:
         badge_number: int
         child: Gtk.Widget
-        icon_name: Optional[str]
-        name: Optional[str]
+        icon_name: typing.Optional[str]
+        name: typing.Optional[str]
         needs_attention: bool
-        title: Optional[str]
+        title: typing.Optional[str]
         use_underline: bool
         visible: bool
         accessible_role: Gtk.AccessibleRole
@@ -10865,27 +11951,27 @@ class ViewStackPage(GObject.Object, Gtk.Accessible):
         self,
         badge_number: int = ...,
         child: Gtk.Widget = ...,
-        icon_name: Optional[str] = ...,
-        name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
+        name: typing.Optional[str] = ...,
         needs_attention: bool = ...,
-        title: Optional[str] = ...,
+        title: typing.Optional[str] = ...,
         use_underline: bool = ...,
         visible: bool = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_badge_number(self) -> int: ...
     def get_child(self) -> Gtk.Widget: ...
-    def get_icon_name(self) -> Optional[str]: ...
-    def get_name(self) -> Optional[str]: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> typing.Optional[str]: ...
     def get_needs_attention(self) -> bool: ...
-    def get_title(self) -> Optional[str]: ...
+    def get_title(self) -> typing.Optional[str]: ...
     def get_use_underline(self) -> bool: ...
     def get_visible(self) -> bool: ...
     def set_badge_number(self, badge_number: int) -> None: ...
-    def set_icon_name(self, icon_name: Optional[str] = None) -> None: ...
-    def set_name(self, name: Optional[str] = None) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: typing.Optional[str] = None) -> None: ...
     def set_needs_attention(self, needs_attention: bool) -> None: ...
-    def set_title(self, title: Optional[str] = None) -> None: ...
+    def set_title(self, title: typing.Optional[str] = None) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
@@ -10924,11 +12010,11 @@ class ViewStackPages(GObject.Object, Gio.ListModel, Gtk.SelectionModel):
     """
 
     class Props:
-        selected_page: Optional[ViewStackPage]
+        selected_page: typing.Optional[ViewStackPage]
 
     props: Props = ...
-    def __init__(self, selected_page: ViewStackPage = ...): ...
-    def get_selected_page(self) -> Optional[ViewStackPage]: ...
+    def __init__(self, selected_page: ViewStackPage = ...) -> None: ...
+    def get_selected_page(self) -> typing.Optional[ViewStackPage]: ...
     def set_selected_page(self, page: ViewStackPage) -> None: ...
 
 class ViewStackPagesClass(GObject.GPointer):
@@ -11014,12 +12100,12 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
 
     class Props:
         policy: ViewSwitcherPolicy
-        stack: Optional[ViewStack]
+        stack: typing.Optional[ViewStack]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -11029,7 +12115,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11037,13 +12123,13 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -11055,12 +12141,12 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     def __init__(
         self,
         policy: ViewSwitcherPolicy = ...,
-        stack: Optional[ViewStack] = ...,
+        stack: typing.Optional[ViewStack] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -11068,7 +12154,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11078,21 +12164,21 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_policy(self) -> ViewSwitcherPolicy: ...
-    def get_stack(self) -> Optional[ViewStack]: ...
+    def get_stack(self) -> typing.Optional[ViewStack]: ...
     @classmethod
     def new(cls) -> ViewSwitcher: ...
     def set_policy(self, policy: ViewSwitcherPolicy) -> None: ...
-    def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
+    def set_stack(self, stack: typing.Optional[ViewStack] = None) -> None: ...
 
 class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
@@ -11166,12 +12252,12 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
 
     class Props:
         reveal: bool
-        stack: Optional[ViewStack]
+        stack: typing.Optional[ViewStack]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -11181,7 +12267,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11189,13 +12275,13 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -11207,12 +12293,12 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def __init__(
         self,
         reveal: bool = ...,
-        stack: Optional[ViewStack] = ...,
+        stack: typing.Optional[ViewStack] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -11220,7 +12306,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11230,21 +12316,21 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_reveal(self) -> bool: ...
-    def get_stack(self) -> Optional[ViewStack]: ...
+    def get_stack(self) -> typing.Optional[ViewStack]: ...
     @classmethod
     def new(cls) -> ViewSwitcherBar: ...
     def set_reveal(self, reveal: bool) -> None: ...
-    def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
+    def set_stack(self, stack: typing.Optional[ViewStack] = None) -> None: ...
 
 class ViewSwitcherBarClass(GObject.GPointer):
     """
@@ -11344,7 +12430,7 @@ class ViewSwitcherTitle(
     """
 
     class Props:
-        stack: Optional[ViewStack]
+        stack: typing.Optional[ViewStack]
         subtitle: str
         title: str
         title_visible: bool
@@ -11353,7 +12439,7 @@ class ViewSwitcherTitle(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -11363,7 +12449,7 @@ class ViewSwitcherTitle(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11371,13 +12457,13 @@ class ViewSwitcherTitle(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -11388,15 +12474,15 @@ class ViewSwitcherTitle(
     props: Props = ...
     def __init__(
         self,
-        stack: Optional[ViewStack] = ...,
+        stack: typing.Optional[ViewStack] = ...,
         subtitle: str = ...,
         title: str = ...,
         view_switcher_enabled: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -11404,7 +12490,7 @@ class ViewSwitcherTitle(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11414,23 +12500,23 @@ class ViewSwitcherTitle(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
-    def get_stack(self) -> Optional[ViewStack]: ...
+    ) -> None: ...
+    def get_stack(self) -> typing.Optional[ViewStack]: ...
     def get_subtitle(self) -> str: ...
     def get_title(self) -> str: ...
     def get_title_visible(self) -> bool: ...
     def get_view_switcher_enabled(self) -> bool: ...
     @classmethod
     def new(cls) -> ViewSwitcherTitle: ...
-    def set_stack(self, stack: Optional[ViewStack] = None) -> None: ...
+    def set_stack(self, stack: typing.Optional[ViewStack] = None) -> None: ...
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_view_switcher_enabled(self, enabled: bool) -> None: ...
@@ -11561,39 +12647,39 @@ class Window(
     """
 
     class Props:
-        content: Optional[Gtk.Widget]
-        current_breakpoint: Optional[Breakpoint]
+        content: typing.Optional[Gtk.Widget]
+        current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
-        visible_dialog: Optional[Dialog]
-        application: Optional[Gtk.Application]
-        child: Optional[Gtk.Widget]
+        visible_dialog: typing.Optional[Dialog]
+        application: typing.Optional[Gtk.Application]
+        child: typing.Optional[Gtk.Widget]
         decorated: bool
         default_height: int
-        default_widget: Optional[Gtk.Widget]
+        default_widget: typing.Optional[Gtk.Widget]
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: Gtk.Widget
+        focus_widget: typing.Optional[Gtk.Widget]
         fullscreened: bool
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: Optional[str]
+        icon_name: typing.Optional[str]
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: Optional[str]
-        titlebar: Optional[Gtk.Widget]
-        transient_for: Optional[Gtk.Window]
+        title: typing.Optional[str]
+        titlebar: typing.Optional[Gtk.Widget]
+        transient_for: typing.Optional[Gtk.Window]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -11603,7 +12689,7 @@ class Window(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11611,13 +12697,13 @@ class Window(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -11630,35 +12716,35 @@ class Window(
     parent_instance: Gtk.Window = ...
     def __init__(
         self,
-        content: Optional[Gtk.Widget] = ...,
-        application: Optional[Gtk.Application] = ...,
-        child: Optional[Gtk.Widget] = ...,
+        content: typing.Optional[Gtk.Widget] = ...,
+        application: typing.Optional[Gtk.Application] = ...,
+        child: typing.Optional[Gtk.Widget] = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: Optional[Gtk.Widget] = ...,
+        default_widget: typing.Optional[Gtk.Widget] = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: Gtk.Widget = ...,
+        focus_widget: typing.Optional[Gtk.Widget] = ...,
         fullscreened: bool = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: Optional[str] = ...,
+        icon_name: typing.Optional[str] = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: Optional[str] = ...,
-        titlebar: Optional[Gtk.Widget] = ...,
-        transient_for: Optional[Gtk.Window] = ...,
+        title: typing.Optional[str] = ...,
+        titlebar: typing.Optional[Gtk.Widget] = ...,
+        transient_for: typing.Optional[Gtk.Window] = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -11666,7 +12752,7 @@ class Window(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11676,23 +12762,23 @@ class Window(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
-    def get_content(self) -> Optional[Gtk.Widget]: ...
-    def get_current_breakpoint(self) -> Optional[Breakpoint]: ...
+    def get_content(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
     def get_dialogs(self) -> Gio.ListModel: ...
-    def get_visible_dialog(self) -> Optional[Dialog]: ...
+    def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls) -> Window: ...
-    def set_content(self, content: Optional[Gtk.Widget] = None) -> None: ...
+    def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class WindowClass(GObject.GPointer):
     """
@@ -11783,7 +12869,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -11793,7 +12879,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11801,13 +12887,13 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -11822,9 +12908,9 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -11832,7 +12918,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11842,15 +12928,15 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-    ): ...
+    ) -> None: ...
     def get_subtitle(self) -> str: ...
     def get_title(self) -> str: ...
     @classmethod
@@ -11884,6 +12970,22 @@ class TabViewShortcuts(GObject.GFlags):
     CONTROL_SHIFT_TAB = 2
     CONTROL_TAB = 1
     NONE = 0
+
+class AccentColor(GObject.GEnum):
+    BLUE = 0
+    BROWN = 108
+    GREEN = 2
+    ORANGE = 4
+    PINK = 6
+    PURPLE = 7
+    RED = 5
+    SLATE = 8
+    TEAL = 1
+    YELLOW = 3
+    @staticmethod
+    def to_rgba(self: AccentColor) -> Gdk.RGBA: ...
+    @staticmethod
+    def to_standalone_rgba(self: AccentColor, dark: bool) -> Gdk.RGBA: ...
 
 class AnimationState(GObject.GEnum):
     FINISHED = 3
@@ -11977,11 +13079,11 @@ class LengthUnit(GObject.GEnum):
     SP = 2
     @staticmethod
     def from_px(
-        unit: LengthUnit, value: float, settings: Optional[Gtk.Settings] = None
+        unit: LengthUnit, value: float, settings: typing.Optional[Gtk.Settings] = None
     ) -> float: ...
     @staticmethod
     def to_px(
-        unit: LengthUnit, value: float, settings: Optional[Gtk.Settings] = None
+        unit: LengthUnit, value: float, settings: typing.Optional[Gtk.Settings] = None
     ) -> float: ...
 
 class NavigationDirection(GObject.GEnum):
