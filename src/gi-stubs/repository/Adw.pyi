@@ -11,9 +11,9 @@ T = typing.TypeVar("T")
 
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 2
-MINOR_VERSION: int = 6
-VERSION_S: str = "1.6.2"
+MICRO_VERSION: int = 0
+MINOR_VERSION: int = 7
+VERSION_S: str = "1.7.0"
 _lock = ...  # FIXME Constant
 _namespace: str = "Adw"
 _version: str = "1"
@@ -37,7 +37,9 @@ def length_unit_to_px(
 def lerp(a: float, b: float, t: float) -> float: ...
 def rgba_to_standalone(rgba: Gdk.RGBA, dark: bool) -> Gdk.RGBA: ...
 
-class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+class AboutDialog(
+    Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.ShortcutManager
+):
     """
     :Constructors:
 
@@ -91,7 +93,6 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -100,6 +101,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -140,6 +142,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -191,6 +194,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -257,6 +261,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -289,6 +294,7 @@ class AboutDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         license: typing.Optional[str] = None,
     ) -> None: ...
     def add_link(self, title: str, url: str) -> None: ...
+    def add_other_app(self, appid: str, name: str, summary: str) -> None: ...
     def get_application_icon(self) -> str: ...
     def get_application_name(self) -> str: ...
     def get_artists(self) -> typing.Optional[list[str]]: ...
@@ -405,11 +411,12 @@ class AboutWindow(
       current-breakpoint -> AdwBreakpoint: current-breakpoint
       dialogs -> GListModel: dialogs
       visible-dialog -> AdwDialog: visible-dialog
+      adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -441,7 +448,6 @@ class AboutWindow(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -450,6 +456,7 @@ class AboutWindow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -490,6 +497,7 @@ class AboutWindow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -516,6 +524,7 @@ class AboutWindow(
         translator_credits: str
         version: str
         website: str
+        adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
@@ -559,6 +568,7 @@ class AboutWindow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -604,6 +614,7 @@ class AboutWindow(
         translator_credits: str = ...,
         version: str = ...,
         website: str = ...,
+        adaptive_preview: bool = ...,
         content: typing.Optional[Gtk.Widget] = ...,
         application: typing.Optional[Gtk.Application] = ...,
         child: typing.Optional[Gtk.Widget] = ...,
@@ -641,6 +652,7 @@ class AboutWindow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -778,7 +790,6 @@ class ActionRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -787,6 +798,7 @@ class ActionRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -827,6 +839,7 @@ class ActionRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -861,6 +874,7 @@ class ActionRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -914,6 +928,7 @@ class ActionRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -968,7 +983,9 @@ class ActionRowClass(GObject.GPointer):
     activate: typing.Callable[[ActionRow], None] = ...
     padding: list[None] = ...
 
-class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+class AlertDialog(
+    Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.ShortcutManager
+):
     """
     :Constructors:
 
@@ -1009,7 +1026,6 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1018,6 +1034,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1058,6 +1075,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -1097,6 +1115,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1152,6 +1171,7 @@ class AlertDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1420,6 +1440,7 @@ class ApplicationWindow(
       current-breakpoint -> AdwBreakpoint: current-breakpoint
       dialogs -> GListModel: dialogs
       visible-dialog -> AdwDialog: visible-dialog
+      adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GActionGroup:
       action-added (gchararray)
@@ -1437,9 +1458,9 @@ class ApplicationWindow(
       action-state-changed (gchararray, GVariant)
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -1471,7 +1492,6 @@ class ApplicationWindow(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1480,6 +1500,7 @@ class ApplicationWindow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1520,12 +1541,14 @@ class ApplicationWindow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
@@ -1570,6 +1593,7 @@ class ApplicationWindow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1596,6 +1620,7 @@ class ApplicationWindow(
     parent_instance: Gtk.ApplicationWindow = ...
     def __init__(
         self,
+        adaptive_preview: bool = ...,
         content: typing.Optional[Gtk.Widget] = ...,
         show_menubar: bool = ...,
         application: typing.Optional[Gtk.Application] = ...,
@@ -1634,6 +1659,7 @@ class ApplicationWindow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1653,12 +1679,14 @@ class ApplicationWindow(
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
+    def get_adaptive_preview(self) -> bool: ...
     def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
     def get_dialogs(self) -> Gio.ListModel: ...
     def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls, app: Gtk.Application) -> ApplicationWindow: ...
+    def set_adaptive_preview(self, adaptive_preview: bool) -> None: ...
     def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class ApplicationWindowClass(GObject.GPointer):
@@ -1692,7 +1720,6 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       size -> gint: size
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1701,6 +1728,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1741,6 +1769,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -1767,6 +1796,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1809,6 +1839,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1877,9 +1908,9 @@ class Banner(
       button-label -> gchararray: button-label
       revealed -> gboolean: revealed
       use-markup -> gboolean: use-markup
+      button-style -> AdwBannerButtonStyle: button-style
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1888,6 +1919,7 @@ class Banner(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1928,6 +1960,7 @@ class Banner(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -1935,6 +1968,7 @@ class Banner(
 
     class Props:
         button_label: typing.Optional[str]
+        button_style: BannerButtonStyle
         revealed: bool
         title: str
         use_markup: bool
@@ -1953,6 +1987,7 @@ class Banner(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1980,6 +2015,7 @@ class Banner(
     def __init__(
         self,
         button_label: typing.Optional[str] = ...,
+        button_style: BannerButtonStyle = ...,
         revealed: bool = ...,
         title: str = ...,
         use_markup: bool = ...,
@@ -1996,6 +2032,7 @@ class Banner(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2017,12 +2054,14 @@ class Banner(
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_button_label(self) -> typing.Optional[str]: ...
+    def get_button_style(self) -> BannerButtonStyle: ...
     def get_revealed(self) -> bool: ...
     def get_title(self) -> str: ...
     def get_use_markup(self) -> bool: ...
     @classmethod
     def new(cls, title: str) -> Banner: ...
     def set_button_label(self, label: typing.Optional[str] = None) -> None: ...
+    def set_button_style(self, style: BannerButtonStyle) -> None: ...
     def set_revealed(self, revealed: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
@@ -2053,7 +2092,6 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2062,6 +2100,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2102,6 +2141,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -2124,6 +2164,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2163,6 +2204,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2226,9 +2268,9 @@ class BottomSheet(
       can-close -> gboolean: can-close
       sheet-height -> gint: sheet-height
       bottom-bar-height -> gint: bottom-bar-height
+      reveal-bottom-bar -> gboolean: reveal-bottom-bar
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2237,6 +2279,7 @@ class BottomSheet(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2277,6 +2320,7 @@ class BottomSheet(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -2292,6 +2336,7 @@ class BottomSheet(
         full_width: bool
         modal: bool
         open: bool
+        reveal_bottom_bar: bool
         sheet: typing.Optional[Gtk.Widget]
         sheet_height: int
         show_drag_handle: bool
@@ -2310,6 +2355,7 @@ class BottomSheet(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2342,6 +2388,7 @@ class BottomSheet(
         full_width: bool = ...,
         modal: bool = ...,
         open: bool = ...,
+        reveal_bottom_bar: bool = ...,
         sheet: typing.Optional[Gtk.Widget] = ...,
         show_drag_handle: bool = ...,
         can_focus: bool = ...,
@@ -2357,6 +2404,7 @@ class BottomSheet(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2384,6 +2432,7 @@ class BottomSheet(
     def get_full_width(self) -> bool: ...
     def get_modal(self) -> bool: ...
     def get_open(self) -> bool: ...
+    def get_reveal_bottom_bar(self) -> bool: ...
     def get_sheet(self) -> typing.Optional[Gtk.Widget]: ...
     def get_sheet_height(self) -> int: ...
     def get_show_drag_handle(self) -> bool: ...
@@ -2399,6 +2448,7 @@ class BottomSheet(
     def set_full_width(self, full_width: bool) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_open(self, open: bool) -> None: ...
+    def set_reveal_bottom_bar(self, reveal: bool) -> None: ...
     def set_sheet(self, sheet: typing.Optional[Gtk.Widget] = None) -> None: ...
     def set_show_drag_handle(self, show_drag_handle: bool) -> None: ...
 
@@ -2477,7 +2527,6 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2486,6 +2535,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2526,6 +2576,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -2549,6 +2600,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2588,6 +2640,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2689,7 +2742,6 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2698,6 +2750,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2738,6 +2791,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -2763,6 +2817,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2804,6 +2859,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2879,7 +2935,6 @@ class ButtonRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2888,6 +2943,7 @@ class ButtonRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2928,6 +2984,7 @@ class ButtonRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -2958,6 +3015,7 @@ class ButtonRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3006,6 +3064,7 @@ class ButtonRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3099,7 +3158,6 @@ class Carousel(
       reveal-duration -> guint: reveal-duration
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3108,6 +3166,7 @@ class Carousel(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3148,6 +3207,7 @@ class Carousel(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -3178,6 +3238,7 @@ class Carousel(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3223,6 +3284,7 @@ class Carousel(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3296,7 +3358,6 @@ class CarouselIndicatorDots(
       carousel -> AdwCarousel: carousel
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3305,6 +3366,7 @@ class CarouselIndicatorDots(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3345,6 +3407,7 @@ class CarouselIndicatorDots(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -3367,6 +3430,7 @@ class CarouselIndicatorDots(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3406,6 +3470,7 @@ class CarouselIndicatorDots(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3458,7 +3523,6 @@ class CarouselIndicatorLines(
       carousel -> AdwCarousel: carousel
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3467,6 +3531,7 @@ class CarouselIndicatorLines(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3507,6 +3572,7 @@ class CarouselIndicatorLines(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -3529,6 +3595,7 @@ class CarouselIndicatorLines(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3568,6 +3635,7 @@ class CarouselIndicatorLines(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3623,7 +3691,6 @@ class Clamp(
       unit -> AdwLengthUnit: unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3632,6 +3699,7 @@ class Clamp(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3672,6 +3740,7 @@ class Clamp(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -3697,6 +3766,7 @@ class Clamp(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3739,6 +3809,7 @@ class Clamp(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3859,7 +3930,6 @@ class ClampScrollable(
       unit -> AdwLengthUnit: unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3868,6 +3938,7 @@ class ClampScrollable(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3908,6 +3979,7 @@ class ClampScrollable(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -3933,6 +4005,7 @@ class ClampScrollable(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3979,6 +4052,7 @@ class ClampScrollable(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4076,7 +4150,6 @@ class ComboRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4085,6 +4158,7 @@ class ComboRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4125,6 +4199,7 @@ class ComboRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -4169,6 +4244,7 @@ class ComboRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4231,6 +4307,7 @@ class ComboRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4295,7 +4372,9 @@ class ComboRowClass(GObject.GPointer):
     parent_class: ActionRowClass = ...
     padding: list[None] = ...
 
-class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+class Dialog(
+    Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.ShortcutManager
+):
     """
     :Constructors:
 
@@ -4323,7 +4402,6 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4332,6 +4410,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4372,6 +4451,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -4403,6 +4483,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4450,6 +4531,7 @@ class Dialog(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4566,7 +4648,6 @@ class EntryRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4575,6 +4656,7 @@ class EntryRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4615,6 +4697,7 @@ class EntryRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -4651,6 +4734,7 @@ class EntryRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4713,6 +4797,7 @@ class EntryRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4893,7 +4978,6 @@ class ExpanderRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4902,6 +4986,7 @@ class ExpanderRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4942,6 +5027,7 @@ class ExpanderRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -4977,6 +5063,7 @@ class ExpanderRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5031,6 +5118,7 @@ class ExpanderRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5122,7 +5210,6 @@ class Flap(
       swipe-to-close -> gboolean: swipe-to-close
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5131,6 +5218,7 @@ class Flap(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5171,6 +5259,7 @@ class Flap(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -5208,6 +5297,7 @@ class Flap(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5260,6 +5350,7 @@ class Flap(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5344,7 +5435,6 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       show-title -> gboolean: show-title
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5353,6 +5443,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5393,6 +5484,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -5421,6 +5513,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5465,6 +5558,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5512,6 +5606,186 @@ class HeaderBarClass(GObject.GPointer):
     ::
 
         HeaderBarClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class InlineViewSwitcher(
+    Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
+):
+    """
+    :Constructors:
+
+    ::
+
+        InlineViewSwitcher(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwInlineViewSwitcher
+
+    Properties from AdwInlineViewSwitcher:
+      stack -> AdwViewStack: stack
+      display-mode -> AdwInlineViewSwitcherDisplayMode: display-mode
+      homogeneous -> gboolean: homogeneous
+      can-shrink -> gboolean: can-shrink
+
+    Signals from GtkWidget:
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        can_shrink: bool
+        display_mode: InlineViewSwitcherDisplayMode
+        homogeneous: bool
+        stack: typing.Optional[ViewStack]
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        orientation: Gtk.Orientation
+
+    props: Props = ...
+    def __init__(
+        self,
+        can_shrink: bool = ...,
+        display_mode: InlineViewSwitcherDisplayMode = ...,
+        homogeneous: bool = ...,
+        stack: typing.Optional[ViewStack] = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        orientation: Gtk.Orientation = ...,
+    ) -> None: ...
+    def get_can_shrink(self) -> bool: ...
+    def get_display_mode(self) -> InlineViewSwitcherDisplayMode: ...
+    def get_homogeneous(self) -> bool: ...
+    def get_stack(self) -> typing.Optional[ViewStack]: ...
+    @classmethod
+    def new(cls) -> InlineViewSwitcher: ...
+    def set_can_shrink(self, can_shrink: bool) -> None: ...
+    def set_display_mode(self, mode: InlineViewSwitcherDisplayMode) -> None: ...
+    def set_homogeneous(self, homogeneous: bool) -> None: ...
+    def set_stack(self, stack: typing.Optional[ViewStack] = None) -> None: ...
+
+class InlineViewSwitcherClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        InlineViewSwitcherClass()
     """
 
     parent_class: Gtk.WidgetClass = ...
@@ -5575,7 +5849,6 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       id -> gchararray: id
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5584,6 +5857,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5624,6 +5898,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -5646,6 +5921,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5684,6 +5960,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -5751,7 +6028,6 @@ class Leaflet(
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5760,6 +6036,7 @@ class Leaflet(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5800,6 +6077,7 @@ class Leaflet(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -5834,6 +6112,7 @@ class Leaflet(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -5882,6 +6161,7 @@ class Leaflet(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6033,9 +6313,9 @@ class MessageDialog(
       close-response -> gchararray: close-response
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -6067,7 +6347,6 @@ class MessageDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6076,6 +6355,7 @@ class MessageDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6116,6 +6396,7 @@ class MessageDialog(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -6168,6 +6449,7 @@ class MessageDialog(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6237,6 +6519,7 @@ class MessageDialog(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6326,7 +6609,6 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       layout-name -> gchararray: layout-name
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6335,6 +6617,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6375,6 +6658,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -6398,6 +6682,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6437,6 +6722,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6503,7 +6789,6 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
       can-pop -> gboolean: can-pop
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6512,6 +6797,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6552,6 +6838,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -6577,6 +6864,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6619,6 +6907,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6688,6 +6977,7 @@ class NavigationSplitView(
     Properties from AdwNavigationSplitView:
       sidebar -> AdwNavigationPage: sidebar
       content -> AdwNavigationPage: content
+      sidebar-position -> GtkPackType: sidebar-position
       collapsed -> gboolean: collapsed
       show-content -> gboolean: show-content
       min-sidebar-width -> gdouble: min-sidebar-width
@@ -6696,7 +6986,6 @@ class NavigationSplitView(
       sidebar-width-unit -> AdwLengthUnit: sidebar-width-unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6705,6 +6994,7 @@ class NavigationSplitView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6745,6 +7035,7 @@ class NavigationSplitView(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -6757,6 +7048,7 @@ class NavigationSplitView(
         min_sidebar_width: float
         show_content: bool
         sidebar: typing.Optional[NavigationPage]
+        sidebar_position: Gtk.PackType
         sidebar_width_fraction: float
         sidebar_width_unit: LengthUnit
         can_focus: bool
@@ -6774,6 +7066,7 @@ class NavigationSplitView(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6804,6 +7097,7 @@ class NavigationSplitView(
         min_sidebar_width: float = ...,
         show_content: bool = ...,
         sidebar: typing.Optional[NavigationPage] = ...,
+        sidebar_position: Gtk.PackType = ...,
         sidebar_width_fraction: float = ...,
         sidebar_width_unit: LengthUnit = ...,
         can_focus: bool = ...,
@@ -6819,6 +7113,7 @@ class NavigationSplitView(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -6843,6 +7138,7 @@ class NavigationSplitView(
     def get_min_sidebar_width(self) -> float: ...
     def get_show_content(self) -> bool: ...
     def get_sidebar(self) -> typing.Optional[NavigationPage]: ...
+    def get_sidebar_position(self) -> Gtk.PackType: ...
     def get_sidebar_width_fraction(self) -> float: ...
     def get_sidebar_width_unit(self) -> LengthUnit: ...
     @classmethod
@@ -6853,6 +7149,7 @@ class NavigationSplitView(
     def set_min_sidebar_width(self, width: float) -> None: ...
     def set_show_content(self, show_content: bool) -> None: ...
     def set_sidebar(self, sidebar: typing.Optional[NavigationPage] = None) -> None: ...
+    def set_sidebar_position(self, position: Gtk.PackType) -> None: ...
     def set_sidebar_width_fraction(self, fraction: float) -> None: ...
     def set_sidebar_width_unit(self, unit: LengthUnit) -> None: ...
 
@@ -6888,12 +7185,14 @@ class NavigationView(
 
     Properties from AdwNavigationView:
       visible-page -> AdwNavigationPage: visible-page
+      visible-page-tag -> gchararray: visible-page-tag
+      hhomogeneous -> gboolean: hhomogeneous
+      vhomogeneous -> gboolean: vhomogeneous
       animate-transitions -> gboolean: animate-transitions
       pop-on-escape -> gboolean: pop-on-escape
       navigation-stack -> GListModel: navigation-stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6902,6 +7201,7 @@ class NavigationView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6942,6 +7242,7 @@ class NavigationView(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -6949,9 +7250,12 @@ class NavigationView(
 
     class Props:
         animate_transitions: bool
+        hhomogeneous: bool
         navigation_stack: Gio.ListModel
         pop_on_escape: bool
+        vhomogeneous: bool
         visible_page: typing.Optional[NavigationPage]
+        visible_page_tag: typing.Optional[str]
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -6967,6 +7271,7 @@ class NavigationView(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -6992,7 +7297,9 @@ class NavigationView(
     def __init__(
         self,
         animate_transitions: bool = ...,
+        hhomogeneous: bool = ...,
         pop_on_escape: bool = ...,
+        vhomogeneous: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
@@ -7006,6 +7313,7 @@ class NavigationView(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7027,12 +7335,15 @@ class NavigationView(
     def add(self, page: NavigationPage) -> None: ...
     def find_page(self, tag: str) -> typing.Optional[NavigationPage]: ...
     def get_animate_transitions(self) -> bool: ...
+    def get_hhomogeneous(self) -> bool: ...
     def get_navigation_stack(self) -> Gio.ListModel: ...
     def get_pop_on_escape(self) -> bool: ...
     def get_previous_page(
         self, page: NavigationPage
     ) -> typing.Optional[NavigationPage]: ...
+    def get_vhomogeneous(self) -> bool: ...
     def get_visible_page(self) -> typing.Optional[NavigationPage]: ...
+    def get_visible_page_tag(self) -> typing.Optional[str]: ...
     @classmethod
     def new(cls) -> NavigationView: ...
     def pop(self) -> bool: ...
@@ -7044,7 +7355,9 @@ class NavigationView(
     def replace(self, pages: typing.Sequence[NavigationPage]) -> None: ...
     def replace_with_tags(self, tags: typing.Sequence[str]) -> None: ...
     def set_animate_transitions(self, animate_transitions: bool) -> None: ...
+    def set_hhomogeneous(self, hhomogeneous: bool) -> None: ...
     def set_pop_on_escape(self, pop_on_escape: bool) -> None: ...
+    def set_vhomogeneous(self, vhomogeneous: bool) -> None: ...
 
 class NavigationViewClass(GObject.GPointer):
     """
@@ -7085,7 +7398,6 @@ class OverlaySplitView(
       sidebar-width-unit -> AdwLengthUnit: sidebar-width-unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7094,6 +7406,7 @@ class OverlaySplitView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7134,6 +7447,7 @@ class OverlaySplitView(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -7167,6 +7481,7 @@ class OverlaySplitView(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7216,6 +7531,7 @@ class OverlaySplitView(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7329,7 +7645,6 @@ class PasswordEntryRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7338,6 +7653,7 @@ class PasswordEntryRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7378,6 +7694,7 @@ class PasswordEntryRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -7414,6 +7731,7 @@ class PasswordEntryRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7475,6 +7793,7 @@ class PasswordEntryRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7515,7 +7834,9 @@ class PasswordEntryRowClass(GObject.GPointer):
 
     parent_class: EntryRowClass = ...
 
-class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+class PreferencesDialog(
+    Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.ShortcutManager
+):
     """
     :Constructors:
 
@@ -7548,7 +7869,6 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7557,6 +7877,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7597,6 +7918,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -7631,6 +7953,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7681,6 +8004,7 @@ class PreferencesDialog(Dialog, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7743,7 +8067,6 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
       separate-rows -> gboolean: separate-rows
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7752,6 +8075,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7792,6 +8116,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -7817,6 +8142,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -7859,6 +8185,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -7920,9 +8247,9 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       name -> gchararray: name
       use-underline -> gboolean: use-underline
       description-centered -> gboolean: description-centered
+      banner -> AdwBanner: banner
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7931,6 +8258,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7971,12 +8299,14 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        banner: typing.Optional[Banner]
         description: str
         description_centered: bool
         icon_name: typing.Optional[str]
@@ -7998,6 +8328,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8022,6 +8353,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
+        banner: typing.Optional[Banner] = ...,
         description: str = ...,
         description_centered: bool = ...,
         icon_name: typing.Optional[str] = ...,
@@ -8041,6 +8373,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8059,6 +8392,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add(self, group: PreferencesGroup) -> None: ...
+    def get_banner(self) -> typing.Optional[Banner]: ...
     def get_description(self) -> str: ...
     def get_description_centered(self) -> bool: ...
     def get_icon_name(self) -> typing.Optional[str]: ...
@@ -8069,6 +8403,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     def new(cls) -> PreferencesPage: ...
     def remove(self, group: PreferencesGroup) -> None: ...
     def scroll_to_top(self) -> None: ...
+    def set_banner(self, banner: typing.Optional[Banner] = None) -> None: ...
     def set_description(self, description: str) -> None: ...
     def set_description_centered(self, centered: bool) -> None: ...
     def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
@@ -8116,7 +8451,6 @@ class PreferencesRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8125,6 +8459,7 @@ class PreferencesRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8165,6 +8500,7 @@ class PreferencesRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -8193,6 +8529,7 @@ class PreferencesRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8240,6 +8577,7 @@ class PreferencesRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8313,11 +8651,12 @@ class PreferencesWindow(
       current-breakpoint -> AdwBreakpoint: current-breakpoint
       dialogs -> GListModel: dialogs
       visible-dialog -> AdwDialog: visible-dialog
+      adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -8349,7 +8688,6 @@ class PreferencesWindow(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8358,6 +8696,7 @@ class PreferencesWindow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8398,6 +8737,7 @@ class PreferencesWindow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -8408,6 +8748,7 @@ class PreferencesWindow(
         search_enabled: bool
         visible_page: typing.Optional[Gtk.Widget]
         visible_page_name: typing.Optional[str]
+        adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
@@ -8451,6 +8792,7 @@ class PreferencesWindow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8481,6 +8823,7 @@ class PreferencesWindow(
         search_enabled: bool = ...,
         visible_page: Gtk.Widget = ...,
         visible_page_name: str = ...,
+        adaptive_preview: bool = ...,
         content: typing.Optional[Gtk.Widget] = ...,
         application: typing.Optional[Gtk.Application] = ...,
         child: typing.Optional[Gtk.Widget] = ...,
@@ -8518,6 +8861,7 @@ class PreferencesWindow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8672,7 +9016,6 @@ class SpinRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8681,6 +9024,7 @@ class SpinRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8721,6 +9065,7 @@ class SpinRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -8763,6 +9108,7 @@ class SpinRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -8831,6 +9177,7 @@ class SpinRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -8913,7 +9260,6 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Object AdwSpinner
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8922,6 +9268,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8962,6 +9309,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -8983,6 +9331,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9020,6 +9369,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9124,7 +9474,6 @@ class SplitButton(
       dropdown-tooltip -> gchararray: dropdown-tooltip
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9133,6 +9482,7 @@ class SplitButton(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9173,6 +9523,7 @@ class SplitButton(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -9203,6 +9554,7 @@ class SplitButton(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9251,6 +9603,7 @@ class SplitButton(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9450,7 +9803,6 @@ class Squeezer(
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9459,6 +9811,7 @@ class Squeezer(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9499,6 +9852,7 @@ class Squeezer(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -9531,6 +9885,7 @@ class Squeezer(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9577,6 +9932,7 @@ class Squeezer(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9690,7 +10046,6 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9699,6 +10054,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9739,6 +10095,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -9765,6 +10122,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -9807,6 +10165,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -9870,8 +10229,8 @@ class StyleManager(GObject.Object):
       system-supports-accent-colors -> gboolean: system-supports-accent-colors
       accent-color -> AdwAccentColor: accent-color
       accent-color-rgba -> GdkRGBA: accent-color-rgba
-      yaru-accent -> gchararray: Yaru Accent
-        Yaru Accent
+      document-font-name -> gchararray: document-font-name
+      monospace-font-name -> gchararray: monospace-font-name
 
     Signals from GObject:
       notify (GParam)
@@ -9883,10 +10242,11 @@ class StyleManager(GObject.Object):
         color_scheme: ColorScheme
         dark: bool
         display: typing.Optional[Gdk.Display]
+        document_font_name: str
         high_contrast: bool
+        monospace_font_name: str
         system_supports_accent_colors: bool
         system_supports_color_schemes: bool
-        yaru_accent: str
 
     props: Props = ...
     def __init__(
@@ -9899,9 +10259,11 @@ class StyleManager(GObject.Object):
     @staticmethod
     def get_default() -> StyleManager: ...
     def get_display(self) -> typing.Optional[Gdk.Display]: ...
+    def get_document_font_name(self) -> str: ...
     @staticmethod
     def get_for_display(display: Gdk.Display) -> StyleManager: ...
     def get_high_contrast(self) -> bool: ...
+    def get_monospace_font_name(self) -> str: ...
     def get_system_supports_accent_colors(self) -> bool: ...
     def get_system_supports_color_schemes(self) -> bool: ...
     def set_color_scheme(self, color_scheme: ColorScheme) -> None: ...
@@ -10079,7 +10441,6 @@ class SwitchRow(
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10088,6 +10449,7 @@ class SwitchRow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10128,6 +10490,7 @@ class SwitchRow(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -10163,6 +10526,7 @@ class SwitchRow(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10216,6 +10580,7 @@ class SwitchRow(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10280,7 +10645,6 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       extra-drag-preferred-action -> GdkDragAction: extra-drag-preferred-action
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10289,6 +10653,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10329,6 +10694,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -10360,6 +10726,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10404,6 +10771,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10483,7 +10851,6 @@ class TabButton(
       view -> AdwTabView: view
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10492,6 +10859,7 @@ class TabButton(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10532,6 +10900,7 @@ class TabButton(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -10554,6 +10923,7 @@ class TabButton(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10594,6 +10964,7 @@ class TabButton(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10661,7 +11032,6 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       extra-drag-preload -> gboolean: extra-drag-preload
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10670,6 +11040,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10710,6 +11081,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -10743,6 +11115,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -10790,6 +11163,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -10995,7 +11369,6 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11004,6 +11377,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11044,6 +11418,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -11073,6 +11448,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11114,6 +11490,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11381,7 +11758,6 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11390,6 +11766,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11430,6 +11807,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -11452,6 +11830,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11490,6 +11869,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11509,6 +11889,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
+    def dismiss_all(self) -> None: ...
     def get_child(self) -> typing.Optional[Gtk.Widget]: ...
     @classmethod
     def new(cls) -> ToastOverlay: ...
@@ -11525,30 +11906,101 @@ class ToastOverlayClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
-class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+class Toggle(GObject.Object):
     """
     :Constructors:
 
     ::
 
-        ToolbarView(**properties)
+        Toggle(**properties)
+        new() -> Adw.Toggle
+
+    Object AdwToggle
+
+    Properties from AdwToggle:
+      name -> gchararray: name
+      label -> gchararray: label
+      use-underline -> gboolean: use-underline
+      icon-name -> gchararray: icon-name
+      tooltip -> gchararray: tooltip
+      child -> GtkWidget: child
+      enabled -> gboolean: enabled
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        child: typing.Optional[Gtk.Widget]
+        enabled: bool
+        icon_name: typing.Optional[str]
+        label: typing.Optional[str]
+        name: str
+        tooltip: str
+        use_underline: bool
+
+    props: Props = ...
+    def __init__(
+        self,
+        child: typing.Optional[Gtk.Widget] = ...,
+        enabled: bool = ...,
+        icon_name: typing.Optional[str] = ...,
+        label: typing.Optional[str] = ...,
+        name: typing.Optional[str] = ...,
+        tooltip: str = ...,
+        use_underline: bool = ...,
+    ) -> None: ...
+    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_enabled(self) -> bool: ...
+    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_index(self) -> int: ...
+    def get_label(self) -> typing.Optional[str]: ...
+    def get_name(self) -> str: ...
+    def get_tooltip(self) -> str: ...
+    def get_use_underline(self) -> bool: ...
+    @classmethod
+    def new(cls) -> Toggle: ...
+    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_enabled(self, enabled: bool) -> None: ...
+    def set_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
+    def set_label(self, label: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_tooltip(self, tooltip: str) -> None: ...
+    def set_use_underline(self, use_underline: bool) -> None: ...
+
+class ToggleClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ToggleClass()
+    """
+
+    parent_class: GObject.ObjectClass = ...
+
+class ToggleGroup(
+    Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
+):
+    """
+    :Constructors:
+
+    ::
+
+        ToggleGroup(**properties)
         new() -> Gtk.Widget
 
-    Object AdwToolbarView
+    Object AdwToggleGroup
 
-    Properties from AdwToolbarView:
-      content -> GtkWidget: content
-      top-bar-style -> AdwToolbarStyle: top-bar-style
-      bottom-bar-style -> AdwToolbarStyle: bottom-bar-style
-      reveal-top-bars -> gboolean: reveal-top-bars
-      reveal-bottom-bars -> gboolean: reveal-bottom-bars
-      extend-content-to-top-edge -> gboolean: extend-content-to-top-edge
-      extend-content-to-bottom-edge -> gboolean: extend-content-to-bottom-edge
-      top-bar-height -> gint: top-bar-height
-      bottom-bar-height -> gint: bottom-bar-height
+    Properties from AdwToggleGroup:
+      n-toggles -> guint: n-toggles
+      active -> guint: active
+      active-name -> gchararray: active-name
+      homogeneous -> gboolean: homogeneous
+      can-shrink -> gboolean: can-shrink
+      toggles -> GtkSelectionModel: toggles
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11557,6 +12009,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11597,6 +12050,199 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        active: int
+        active_name: typing.Optional[str]
+        can_shrink: bool
+        homogeneous: bool
+        n_toggles: int
+        toggles: Gtk.SelectionModel
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        orientation: Gtk.Orientation
+
+    props: Props = ...
+    def __init__(
+        self,
+        active: int = ...,
+        active_name: typing.Optional[str] = ...,
+        can_shrink: bool = ...,
+        homogeneous: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        orientation: Gtk.Orientation = ...,
+    ) -> None: ...
+    def add(self, toggle: Toggle) -> None: ...
+    def get_active(self) -> int: ...
+    def get_active_name(self) -> typing.Optional[str]: ...
+    def get_can_shrink(self) -> bool: ...
+    def get_homogeneous(self) -> bool: ...
+    def get_n_toggles(self) -> int: ...
+    def get_toggle(self, index: int) -> typing.Optional[Toggle]: ...
+    def get_toggle_by_name(self, name: str) -> typing.Optional[Toggle]: ...
+    def get_toggles(self) -> Gtk.SelectionModel: ...
+    @classmethod
+    def new(cls) -> ToggleGroup: ...
+    def remove(self, toggle: Toggle) -> None: ...
+    def remove_all(self) -> None: ...
+    def set_active(self, active: int) -> None: ...
+    def set_active_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_can_shrink(self, can_shrink: bool) -> None: ...
+    def set_homogeneous(self, homogeneous: bool) -> None: ...
+
+class ToggleGroupClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        ToggleGroupClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
+    """
+    :Constructors:
+
+    ::
+
+        ToolbarView(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwToolbarView
+
+    Properties from AdwToolbarView:
+      content -> GtkWidget: content
+      top-bar-style -> AdwToolbarStyle: top-bar-style
+      bottom-bar-style -> AdwToolbarStyle: bottom-bar-style
+      reveal-top-bars -> gboolean: reveal-top-bars
+      reveal-bottom-bars -> gboolean: reveal-bottom-bars
+      extend-content-to-top-edge -> gboolean: extend-content-to-top-edge
+      extend-content-to-bottom-edge -> gboolean: extend-content-to-bottom-edge
+      top-bar-height -> gint: top-bar-height
+      bottom-bar-height -> gint: bottom-bar-height
+
+    Signals from GtkWidget:
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -11627,6 +12273,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11671,6 +12318,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11738,10 +12386,12 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       vhomogeneous -> gboolean: vhomogeneous
       visible-child -> GtkWidget: visible-child
       visible-child-name -> gchararray: visible-child-name
+      enable-transitions -> gboolean: enable-transitions
+      transition-duration -> guint: transition-duration
+      transition-running -> gboolean: transition-running
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11750,6 +12400,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11790,14 +12441,18 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        enable_transitions: bool
         hhomogeneous: bool
         pages: Gtk.SelectionModel
+        transition_duration: int
+        transition_running: bool
         vhomogeneous: bool
         visible_child: typing.Optional[Gtk.Widget]
         visible_child_name: typing.Optional[str]
@@ -11816,6 +12471,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -11840,7 +12496,9 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     props: Props = ...
     def __init__(
         self,
+        enable_transitions: bool = ...,
         hhomogeneous: bool = ...,
+        transition_duration: int = ...,
         vhomogeneous: bool = ...,
         visible_child: Gtk.Widget = ...,
         visible_child_name: str = ...,
@@ -11857,6 +12515,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -11886,16 +12545,21 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         self, child: Gtk.Widget, name: typing.Optional[str], title: str, icon_name: str
     ) -> ViewStackPage: ...
     def get_child_by_name(self, name: str) -> typing.Optional[Gtk.Widget]: ...
+    def get_enable_transitions(self) -> bool: ...
     def get_hhomogeneous(self) -> bool: ...
     def get_page(self, child: Gtk.Widget) -> ViewStackPage: ...
     def get_pages(self) -> Gtk.SelectionModel: ...
+    def get_transition_duration(self) -> int: ...
+    def get_transition_running(self) -> bool: ...
     def get_vhomogeneous(self) -> bool: ...
     def get_visible_child(self) -> typing.Optional[Gtk.Widget]: ...
     def get_visible_child_name(self) -> typing.Optional[str]: ...
     @classmethod
     def new(cls) -> ViewStack: ...
     def remove(self, child: Gtk.Widget) -> None: ...
+    def set_enable_transitions(self, enable_transitions: bool) -> None: ...
     def set_hhomogeneous(self, hhomogeneous: bool) -> None: ...
+    def set_transition_duration(self, duration: int) -> None: ...
     def set_vhomogeneous(self, vhomogeneous: bool) -> None: ...
     def set_visible_child(self, child: Gtk.Widget) -> None: ...
     def set_visible_child_name(self, name: str) -> None: ...
@@ -12044,7 +12708,6 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       stack -> AdwViewStack: stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12053,6 +12716,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12093,6 +12757,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -12116,6 +12781,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12155,6 +12821,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -12196,7 +12863,6 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       reveal -> gboolean: reveal
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12205,6 +12871,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12245,6 +12912,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -12268,6 +12936,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12307,6 +12976,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -12375,7 +13045,6 @@ class ViewSwitcherTitle(
       title-visible -> gboolean: title-visible
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12384,6 +13053,7 @@ class ViewSwitcherTitle(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12424,6 +13094,7 @@ class ViewSwitcherTitle(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -12450,6 +13121,7 @@ class ViewSwitcherTitle(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12491,6 +13163,7 @@ class ViewSwitcherTitle(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -12556,11 +13229,12 @@ class Window(
       current-breakpoint -> AdwBreakpoint: current-breakpoint
       dialogs -> GListModel: dialogs
       visible-dialog -> AdwDialog: visible-dialog
+      adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -12592,7 +13266,6 @@ class Window(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12601,6 +13274,7 @@ class Window(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12641,12 +13315,14 @@ class Window(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
+        adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
         dialogs: Gio.ListModel
@@ -12690,6 +13366,7 @@ class Window(
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12716,6 +13393,7 @@ class Window(
     parent_instance: Gtk.Window = ...
     def __init__(
         self,
+        adaptive_preview: bool = ...,
         content: typing.Optional[Gtk.Widget] = ...,
         application: typing.Optional[Gtk.Application] = ...,
         child: typing.Optional[Gtk.Widget] = ...,
@@ -12753,6 +13431,7 @@ class Window(
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -12772,12 +13451,14 @@ class Window(
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
+    def get_adaptive_preview(self) -> bool: ...
     def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
     def get_dialogs(self) -> Gio.ListModel: ...
     def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls) -> Window: ...
+    def set_adaptive_preview(self, adaptive_preview: bool) -> None: ...
     def set_content(self, content: typing.Optional[Gtk.Widget] = None) -> None: ...
 
 class WindowClass(GObject.GPointer):
@@ -12808,7 +13489,6 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       subtitle -> gchararray: subtitle
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12817,6 +13497,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12857,6 +13538,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
@@ -12880,6 +13562,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool
         hexpand_set: bool
         layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -12919,6 +13602,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         hexpand: bool = ...,
         hexpand_set: bool = ...,
         layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -12955,6 +13639,344 @@ class WindowTitleClass(GObject.GPointer):
 
     parent_class: Gtk.WidgetClass = ...
 
+class WrapBox(
+    Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Orientable
+):
+    """
+    :Constructors:
+
+    ::
+
+        WrapBox(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwWrapBox
+
+    Properties from AdwWrapBox:
+      child-spacing -> gint: child-spacing
+      child-spacing-unit -> AdwLengthUnit: child-spacing-unit
+      pack-direction -> AdwPackDirection: pack-direction
+      align -> gfloat: align
+      justify -> AdwJustifyMode: justify
+      justify-last-line -> gboolean: justify-last-line
+      line-spacing -> gint: line-spacing
+      line-spacing-unit -> AdwLengthUnit: line-spacing-unit
+      line-homogeneous -> gboolean: line-homogeneous
+      natural-line-length -> gint: natural-line-length
+      natural-line-length-unit -> AdwLengthUnit: natural-line-length-unit
+      wrap-reverse -> gboolean: wrap-reverse
+      wrap-policy -> AdwWrapPolicy: wrap-policy
+
+    Signals from GtkWidget:
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        align: float
+        child_spacing: int
+        child_spacing_unit: LengthUnit
+        justify: JustifyMode
+        justify_last_line: bool
+        line_homogeneous: bool
+        line_spacing: int
+        line_spacing_unit: LengthUnit
+        natural_line_length: int
+        natural_line_length_unit: LengthUnit
+        pack_direction: PackDirection
+        wrap_policy: WrapPolicy
+        wrap_reverse: bool
+        can_focus: bool
+        can_target: bool
+        css_classes: list[str]
+        css_name: str
+        cursor: typing.Optional[Gdk.Cursor]
+        focus_on_click: bool
+        focusable: bool
+        halign: Gtk.Align
+        has_default: bool
+        has_focus: bool
+        has_tooltip: bool
+        height_request: int
+        hexpand: bool
+        hexpand_set: bool
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
+        margin_bottom: int
+        margin_end: int
+        margin_start: int
+        margin_top: int
+        name: str
+        opacity: float
+        overflow: Gtk.Overflow
+        parent: typing.Optional[Gtk.Widget]
+        receives_default: bool
+        root: typing.Optional[Gtk.Root]
+        scale_factor: int
+        sensitive: bool
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
+        valign: Gtk.Align
+        vexpand: bool
+        vexpand_set: bool
+        visible: bool
+        width_request: int
+        accessible_role: Gtk.AccessibleRole
+        orientation: Gtk.Orientation
+
+    props: Props = ...
+    def __init__(
+        self,
+        align: float = ...,
+        child_spacing: int = ...,
+        child_spacing_unit: LengthUnit = ...,
+        justify: JustifyMode = ...,
+        justify_last_line: bool = ...,
+        line_homogeneous: bool = ...,
+        line_spacing: int = ...,
+        line_spacing_unit: LengthUnit = ...,
+        natural_line_length: int = ...,
+        natural_line_length_unit: LengthUnit = ...,
+        pack_direction: PackDirection = ...,
+        wrap_policy: WrapPolicy = ...,
+        wrap_reverse: bool = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: typing.Sequence[str] = ...,
+        css_name: str = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: Gtk.Align = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: Gtk.Overflow = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
+        valign: Gtk.Align = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+        accessible_role: Gtk.AccessibleRole = ...,
+        orientation: Gtk.Orientation = ...,
+    ) -> None: ...
+    def append(self, child: Gtk.Widget) -> None: ...
+    def get_align(self) -> float: ...
+    def get_child_spacing(self) -> int: ...
+    def get_child_spacing_unit(self) -> LengthUnit: ...
+    def get_justify(self) -> JustifyMode: ...
+    def get_justify_last_line(self) -> bool: ...
+    def get_line_homogeneous(self) -> bool: ...
+    def get_line_spacing(self) -> int: ...
+    def get_line_spacing_unit(self) -> LengthUnit: ...
+    def get_natural_line_length(self) -> int: ...
+    def get_natural_line_length_unit(self) -> LengthUnit: ...
+    def get_pack_direction(self) -> PackDirection: ...
+    def get_wrap_policy(self) -> WrapPolicy: ...
+    def get_wrap_reverse(self) -> bool: ...
+    def insert_child_after(
+        self, child: Gtk.Widget, sibling: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
+    @classmethod
+    def new(cls) -> WrapBox: ...
+    def prepend(self, child: Gtk.Widget) -> None: ...
+    def remove(self, child: Gtk.Widget) -> None: ...
+    def reorder_child_after(
+        self, child: Gtk.Widget, sibling: typing.Optional[Gtk.Widget] = None
+    ) -> None: ...
+    def set_align(self, align: float) -> None: ...
+    def set_child_spacing(self, child_spacing: int) -> None: ...
+    def set_child_spacing_unit(self, unit: LengthUnit) -> None: ...
+    def set_justify(self, justify: JustifyMode) -> None: ...
+    def set_justify_last_line(self, justify_last_line: bool) -> None: ...
+    def set_line_homogeneous(self, homogeneous: bool) -> None: ...
+    def set_line_spacing(self, line_spacing: int) -> None: ...
+    def set_line_spacing_unit(self, unit: LengthUnit) -> None: ...
+    def set_natural_line_length(self, natural_line_length: int) -> None: ...
+    def set_natural_line_length_unit(self, unit: LengthUnit) -> None: ...
+    def set_pack_direction(self, pack_direction: PackDirection) -> None: ...
+    def set_wrap_policy(self, wrap_policy: WrapPolicy) -> None: ...
+    def set_wrap_reverse(self, wrap_reverse: bool) -> None: ...
+
+class WrapBoxClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WrapBoxClass()
+    """
+
+    parent_class: Gtk.WidgetClass = ...
+
+class WrapLayout(Gtk.LayoutManager, Gtk.Orientable):
+    """
+    :Constructors:
+
+    ::
+
+        WrapLayout(**properties)
+        new() -> Gtk.LayoutManager
+
+    Object AdwWrapLayout
+
+    Properties from AdwWrapLayout:
+      child-spacing -> gint: child-spacing
+      child-spacing-unit -> AdwLengthUnit: child-spacing-unit
+      pack-direction -> AdwPackDirection: pack-direction
+      align -> gfloat: align
+      justify -> AdwJustifyMode: justify
+      justify-last-line -> gboolean: justify-last-line
+      line-spacing -> gint: line-spacing
+      line-spacing-unit -> AdwLengthUnit: line-spacing-unit
+      line-homogeneous -> gboolean: line-homogeneous
+      natural-line-length -> gint: natural-line-length
+      natural-line-length-unit -> AdwLengthUnit: natural-line-length-unit
+      wrap-reverse -> gboolean: wrap-reverse
+      wrap-policy -> AdwWrapPolicy: wrap-policy
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        align: float
+        child_spacing: int
+        child_spacing_unit: LengthUnit
+        justify: JustifyMode
+        justify_last_line: bool
+        line_homogeneous: bool
+        line_spacing: int
+        line_spacing_unit: LengthUnit
+        natural_line_length: int
+        natural_line_length_unit: LengthUnit
+        pack_direction: PackDirection
+        wrap_policy: WrapPolicy
+        wrap_reverse: bool
+        orientation: Gtk.Orientation
+
+    props: Props = ...
+    def __init__(
+        self,
+        align: float = ...,
+        child_spacing: int = ...,
+        child_spacing_unit: LengthUnit = ...,
+        justify: JustifyMode = ...,
+        justify_last_line: bool = ...,
+        line_homogeneous: bool = ...,
+        line_spacing: int = ...,
+        line_spacing_unit: LengthUnit = ...,
+        natural_line_length: int = ...,
+        natural_line_length_unit: LengthUnit = ...,
+        pack_direction: PackDirection = ...,
+        wrap_policy: WrapPolicy = ...,
+        wrap_reverse: bool = ...,
+        orientation: Gtk.Orientation = ...,
+    ) -> None: ...
+    def get_align(self) -> float: ...
+    def get_child_spacing(self) -> int: ...
+    def get_child_spacing_unit(self) -> LengthUnit: ...
+    def get_justify(self) -> JustifyMode: ...
+    def get_justify_last_line(self) -> bool: ...
+    def get_line_homogeneous(self) -> bool: ...
+    def get_line_spacing(self) -> int: ...
+    def get_line_spacing_unit(self) -> LengthUnit: ...
+    def get_natural_line_length(self) -> int: ...
+    def get_natural_line_length_unit(self) -> LengthUnit: ...
+    def get_pack_direction(self) -> PackDirection: ...
+    def get_wrap_policy(self) -> WrapPolicy: ...
+    def get_wrap_reverse(self) -> bool: ...
+    @classmethod
+    def new(cls) -> WrapLayout: ...
+    def set_align(self, align: float) -> None: ...
+    def set_child_spacing(self, child_spacing: int) -> None: ...
+    def set_child_spacing_unit(self, unit: LengthUnit) -> None: ...
+    def set_justify(self, justify: JustifyMode) -> None: ...
+    def set_justify_last_line(self, justify_last_line: bool) -> None: ...
+    def set_line_homogeneous(self, homogeneous: bool) -> None: ...
+    def set_line_spacing(self, line_spacing: int) -> None: ...
+    def set_line_spacing_unit(self, unit: LengthUnit) -> None: ...
+    def set_natural_line_length(self, natural_line_length: int) -> None: ...
+    def set_natural_line_length_unit(self, unit: LengthUnit) -> None: ...
+    def set_pack_direction(self, pack_direction: PackDirection) -> None: ...
+    def set_wrap_policy(self, wrap_policy: WrapPolicy) -> None: ...
+    def set_wrap_reverse(self, wrap_reverse: bool) -> None: ...
+
+class WrapLayoutClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        WrapLayoutClass()
+    """
+
+    parent_class: Gtk.LayoutManagerClass = ...
+
 class TabViewShortcuts(GObject.GFlags):
     ALL_SHORTCUTS = 4095
     ALT_DIGITS = 1024
@@ -12973,8 +13995,8 @@ class TabViewShortcuts(GObject.GFlags):
 
 class AccentColor(GObject.GEnum):
     BLUE = 0
-    BROWN = 108
     GREEN = 2
+    MAIA = 108
     ORANGE = 4
     PINK = 6
     PURPLE = 7
@@ -12992,6 +14014,10 @@ class AnimationState(GObject.GEnum):
     IDLE = 0
     PAUSED = 1
     PLAYING = 2
+
+class BannerButtonStyle(GObject.GEnum):
+    DEFAULT = 0
+    SUGGESTED = 1
 
 class BreakpointConditionLengthType(GObject.GEnum):
     MAX_HEIGHT = 3
@@ -13020,12 +14046,15 @@ class DialogPresentationMode(GObject.GEnum):
     FLOATING = 1
 
 class Easing(GObject.GEnum):
+    EASE = 31
+    EASE_IN = 32
     EASE_IN_BACK = 25
     EASE_IN_BOUNCE = 28
     EASE_IN_CIRC = 19
     EASE_IN_CUBIC = 4
     EASE_IN_ELASTIC = 22
     EASE_IN_EXPO = 16
+    EASE_IN_OUT = 34
     EASE_IN_OUT_BACK = 27
     EASE_IN_OUT_BOUNCE = 30
     EASE_IN_OUT_CIRC = 21
@@ -13040,6 +14069,7 @@ class Easing(GObject.GEnum):
     EASE_IN_QUART = 7
     EASE_IN_QUINT = 10
     EASE_IN_SINE = 13
+    EASE_OUT = 33
     EASE_OUT_BACK = 26
     EASE_OUT_BOUNCE = 29
     EASE_OUT_CIRC = 20
@@ -13068,6 +14098,16 @@ class FoldThresholdPolicy(GObject.GEnum):
     MINIMUM = 0
     NATURAL = 1
 
+class InlineViewSwitcherDisplayMode(GObject.GEnum):
+    BOTH = 2
+    ICONS = 1
+    LABELS = 0
+
+class JustifyMode(GObject.GEnum):
+    FILL = 1
+    NONE = 0
+    SPREAD = 2
+
 class LeafletTransitionType(GObject.GEnum):
     OVER = 0
     SLIDE = 2
@@ -13090,6 +14130,10 @@ class NavigationDirection(GObject.GEnum):
     BACK = 0
     FORWARD = 1
 
+class PackDirection(GObject.GEnum):
+    END_TO_START = 1
+    START_TO_END = 0
+
 class ResponseAppearance(GObject.GEnum):
     DEFAULT = 0
     DESTRUCTIVE = 2
@@ -13111,3 +14155,7 @@ class ToolbarStyle(GObject.GEnum):
 class ViewSwitcherPolicy(GObject.GEnum):
     NARROW = 0
     WIDE = 1
+
+class WrapPolicy(GObject.GEnum):
+    MINIMUM = 0
+    NATURAL = 1
