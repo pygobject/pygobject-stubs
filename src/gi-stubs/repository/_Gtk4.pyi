@@ -1,5 +1,7 @@
 import typing
 
+import os
+
 import cairo
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -29453,14 +29455,17 @@ class SymbolicPaintableInterface(GObject.GPointer):
 # override
 class Template:
     def __init__(
-        self, filename: str = ..., resource_path: str = ..., string: str = ...
+        self,
+        filename: str | os.PathLike[str] = ...,
+        resource_path: str = ...,
+        string: str | bytes = ...,
     ) -> None: ...
     @classmethod
-    def from_file(cls, filename: str) -> Template: ...
+    def from_file(cls, filename: str | os.PathLike[str]) -> Template: ...
     @classmethod
     def from_resource(cls, resource_path: str) -> Template: ...
     @classmethod
-    def from_string(cls, string: str) -> Template: ...
+    def from_string(cls, string: str | bytes) -> Template: ...
     def __call__(self, cls: T) -> T: ...
 
     class Callback:
