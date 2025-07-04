@@ -76,6 +76,7 @@ libraries = [
     Lib("WebKit", "6.0", output="_WebKit6"),
     Lib("XApp", "1.0"),
     Lib("Xdp", "1.0"),
+    Lib("win32", "1.0"),
 ]
 
 if __name__ == "__main__":
