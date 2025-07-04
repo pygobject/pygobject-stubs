@@ -37,6 +37,7 @@ libraries = [
     Lib("Gio", "2.0"),
     Lib("GioWin32", "2.0"),
     Lib("GLib", "2.0"),
+    Lib("GLibWin32", "2.0"),
     Lib("GModule", "2.0"),
     Lib("Goa", "1.0"),
     Lib("GObject", "2.0"),
