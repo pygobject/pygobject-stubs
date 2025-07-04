@@ -35,6 +35,9 @@ libraries = [
     Lib("GExiv2", "0.10"),
     Lib("Ggit", "1.0"),
     Lib("Gio", "2.0"),
+    # This only works for either version at a time
+    # Lib("GIRepository", "2.0", output="_GIRepository2"),
+    Lib("GIRepository", "3.0", output="_GIRepository3"),
     Lib("GioWin32", "2.0"),
     Lib("GLib", "2.0"),
     Lib("GLibWin32", "2.0"),
