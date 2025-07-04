@@ -35,7 +35,7 @@ libraries = [
     Lib("GExiv2", "0.10"),
     Lib("Ggit", "1.0"),
     Lib("Gio", "2.0"),
-    Lib("GIRepository", "2.0"),
+    Lib("GioWin32", "2.0"),
     Lib("GLib", "2.0"),
     Lib("GModule", "2.0"),
     Lib("Goa", "1.0"),
