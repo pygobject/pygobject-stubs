@@ -42,6 +42,7 @@ class LibVersion:
 DEFAULT_STUB_CONFIG = [
     LibVersion("Gdk", "4"),
     LibVersion("GdkWin32", "4"),
+    LibVersion("GIRepository", "3"),
     LibVersion("Gtk", "4"),
     LibVersion("GtkSource", "5"),
     LibVersion("JavaScriptCore", "6"),
