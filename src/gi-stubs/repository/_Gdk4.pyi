@@ -2735,14 +2735,18 @@ class Clipboard(GObject.Object):
         callback: typing.Optional[typing.Callable[..., None]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def read_text_finish(self, result: Gio.AsyncResult) -> str: ...
+    # override
+    def read_text_finish(self, result: Gio.AsyncResult) -> typing.Optional[str]: ...
     def read_texture_async(
         self,
         cancellable: typing.Optional[Gio.Cancellable] = None,
         callback: typing.Optional[typing.Callable[..., None]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def read_texture_finish(self, result: Gio.AsyncResult) -> Texture: ...
+    # override
+    def read_texture_finish(
+        self, result: Gio.AsyncResult
+    ) -> typing.Optional[Texture]: ...
     def read_value_async(
         self,
         type: typing.Type[typing.Any],
