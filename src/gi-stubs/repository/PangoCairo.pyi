@@ -7,6 +7,7 @@ import cairo
 from gi.repository import GObject
 from gi.repository import Pango
 
+T = TypeVar("T")
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 _lock = ...  # FIXME Constant
