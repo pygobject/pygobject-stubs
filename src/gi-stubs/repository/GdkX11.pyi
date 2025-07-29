@@ -13,6 +13,8 @@ from gi.repository import GObject
 from gi.repository import Pango
 from gi.repository import xlib
 
+T = TypeVar("T")
+
 _lock = ...  # FIXME Constant
 _namespace: str = "GdkX11"
 _version: str = "4.0"
@@ -55,7 +57,7 @@ class X11AppLaunchContext(Gdk.AppLaunchContext):
         display: Gdk.Display
 
     props: Props = ...
-    def __init__(self, display: Gdk.Display = ...): ...
+    def __init__(self, display: Gdk.Display = ...) -> None: ...
 
 class X11AppLaunchContextClass(GObject.GPointer): ...
 
@@ -92,7 +94,7 @@ class X11DeviceManagerXI2(GObject.Object):
         major: int = ...,
         minor: int = ...,
         opcode: int = ...,
-    ): ...
+    ) -> None: ...
 
 class X11DeviceManagerXI2Class(GObject.GPointer): ...
 
@@ -130,6 +132,8 @@ class X11DeviceXI2(Gdk.Device):
       num-lock-state -> gboolean: num-lock-state
       scroll-lock-state -> gboolean: scroll-lock-state
       modifier-state -> GdkModifierType: modifier-state
+      layout-names -> GStrv: layout-names
+      active-layout-index -> gint: active-layout-index
 
     Signals from GObject:
       notify (GParam)
@@ -137,11 +141,13 @@ class X11DeviceXI2(Gdk.Device):
 
     class Props:
         device_id: int
+        active_layout_index: int
         caps_lock_state: bool
         direction: Pango.Direction
         display: Gdk.Display
         has_bidi_layouts: bool
         has_cursor: bool
+        layout_names: Optional[list[str]]
         modifier_state: Gdk.ModifierType
         n_axes: int
         name: str
@@ -151,7 +157,7 @@ class X11DeviceXI2(Gdk.Device):
         scroll_lock_state: bool
         seat: Gdk.Seat
         source: Gdk.InputSource
-        tool: Gdk.DeviceTool
+        tool: Optional[Gdk.DeviceTool]
         vendor_id: Optional[str]
 
     props: Props = ...
@@ -166,7 +172,7 @@ class X11DeviceXI2(Gdk.Device):
         seat: Gdk.Seat = ...,
         source: Gdk.InputSource = ...,
         vendor_id: str = ...,
-    ): ...
+    ) -> None: ...
 
 class X11DeviceXI2Class(GObject.GPointer): ...
 
@@ -226,7 +232,9 @@ class X11Display(Gdk.Display):
     def get_xscreen(self) -> xlib.Screen: ...
     def grab(self) -> None: ...
     @staticmethod
-    def open(display_name: Optional[str] = None) -> Optional[Gdk.Display]: ...
+    def open(
+        display_name: Optional[str] = None,
+    ) -> Optional[Gdk.Display]: ...
     def set_cursor_theme(self, theme: Optional[str], size: int) -> None: ...
     @staticmethod
     def set_program_class(display: Gdk.Display, program_class: str) -> None: ...
@@ -287,7 +295,7 @@ class X11Drag(Gdk.Drag):
         formats: Gdk.ContentFormats = ...,
         selected_action: Gdk.DragAction = ...,
         surface: Gdk.Surface = ...,
-    ): ...
+    ) -> None: ...
 
 class X11DragClass(GObject.GPointer): ...
 
@@ -328,7 +336,7 @@ class X11GLContext(Gdk.GLContext):
         shared_context: Gdk.GLContext = ...,
         display: Gdk.Display = ...,
         surface: Gdk.Surface = ...,
-    ): ...
+    ) -> None: ...
 
 class X11GLContextClass(GObject.GPointer): ...
 
@@ -380,7 +388,7 @@ class X11Monitor(Gdk.Monitor):
         width_mm: int
 
     props: Props = ...
-    def __init__(self, display: Gdk.Display = ...): ...
+    def __init__(self, display: Gdk.Display = ...) -> None: ...
     def get_output(self) -> int: ...
     def get_workarea(self) -> Gdk.Rectangle: ...
 
@@ -460,7 +468,7 @@ class X11Surface(Gdk.Surface):
         cursor: Optional[Gdk.Cursor] = ...,
         display: Gdk.Display = ...,
         frame_clock: Gdk.FrameClock = ...,
-    ): ...
+    ) -> None: ...
     def get_desktop(self) -> int: ...
     def get_group(self) -> Optional[Gdk.Surface]: ...
     def get_xid(self) -> int: ...
