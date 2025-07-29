@@ -11,11 +11,13 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
+T = TypeVar("T")
+
 BACKEND_EXTENSION_POINT_NAME: str = "secret-backend"
 COLLECTION_DEFAULT: str = "default"
 COLLECTION_SESSION: str = "session"
 MAJOR_VERSION: int = 0
-MICRO_VERSION: int = 2
+MICRO_VERSION: int = 7
 MINOR_VERSION: int = 21
 _lock = ...  # FIXME Constant
 _namespace: str = "Secret"
@@ -182,23 +184,14 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
 
     Properties from GDBusProxy:
       g-connection -> GDBusConnection: g-connection
-        The connection the proxy is for
-      g-bus-type -> GBusType: Bus Type
-        The bus to connect to, if any
+      g-bus-type -> GBusType: g-bus-type
       g-name -> gchararray: g-name
-        The well-known or unique name that the proxy is for
       g-name-owner -> gchararray: g-name-owner
-        The unique name for the owner
       g-flags -> GDBusProxyFlags: g-flags
-        Flags for the proxy
       g-object-path -> gchararray: g-object-path
-        The object path the proxy is for
       g-interface-name -> gchararray: g-interface-name
-        The D-Bus interface name the proxy is for
-      g-default-timeout -> gint: Default Timeout
-        Timeout for remote method invocation
-      g-interface-info -> GDBusInterfaceInfo: Interface Information
-        Interface Information
+      g-default-timeout -> gint: g-default-timeout
+      g-interface-info -> GDBusInterfaceInfo: g-interface-info
 
     Signals from GObject:
       notify (GParam)
@@ -239,7 +232,7 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         g_interface_name: str = ...,
         g_name: str = ...,
         g_object_path: str = ...,
-    ): ...
+    ) -> None: ...
     @staticmethod
     def create(
         service: Optional[Service],
@@ -278,7 +271,7 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         *user_data: Any,
     ) -> None: ...
     @staticmethod
-    def for_alias_finish(result: Gio.AsyncResult) -> Optional[Collection]: ...
+    def for_alias_finish(result: Gio.AsyncResult) -> Collection: ...
     @staticmethod
     def for_alias_sync(
         service: Optional[Service],
@@ -373,23 +366,14 @@ class Item(
 
     Properties from GDBusProxy:
       g-connection -> GDBusConnection: g-connection
-        The connection the proxy is for
-      g-bus-type -> GBusType: Bus Type
-        The bus to connect to, if any
+      g-bus-type -> GBusType: g-bus-type
       g-name -> gchararray: g-name
-        The well-known or unique name that the proxy is for
       g-name-owner -> gchararray: g-name-owner
-        The unique name for the owner
       g-flags -> GDBusProxyFlags: g-flags
-        Flags for the proxy
       g-object-path -> gchararray: g-object-path
-        The object path the proxy is for
       g-interface-name -> gchararray: g-interface-name
-        The D-Bus interface name the proxy is for
-      g-default-timeout -> gint: Default Timeout
-        Timeout for remote method invocation
-      g-interface-info -> GDBusInterfaceInfo: Interface Information
-        Interface Information
+      g-default-timeout -> gint: g-default-timeout
+      g-interface-info -> GDBusInterfaceInfo: g-interface-info
 
     Signals from GObject:
       notify (GParam)
@@ -432,7 +416,7 @@ class Item(
         created: int = ...,
         label: str = ...,
         modified: int = ...,
-    ): ...
+    ) -> None: ...
     @staticmethod
     def create(
         collection: Collection,
@@ -566,23 +550,14 @@ class Prompt(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
 
     Properties from GDBusProxy:
       g-connection -> GDBusConnection: g-connection
-        The connection the proxy is for
-      g-bus-type -> GBusType: Bus Type
-        The bus to connect to, if any
+      g-bus-type -> GBusType: g-bus-type
       g-name -> gchararray: g-name
-        The well-known or unique name that the proxy is for
       g-name-owner -> gchararray: g-name-owner
-        The unique name for the owner
       g-flags -> GDBusProxyFlags: g-flags
-        Flags for the proxy
       g-object-path -> gchararray: g-object-path
-        The object path the proxy is for
       g-interface-name -> gchararray: g-interface-name
-        The D-Bus interface name the proxy is for
-      g-default-timeout -> gint: Default Timeout
-        Timeout for remote method invocation
-      g-interface-info -> GDBusInterfaceInfo: Interface Information
-        Interface Information
+      g-default-timeout -> gint: g-default-timeout
+      g-interface-info -> GDBusInterfaceInfo: g-interface-info
 
     Signals from GObject:
       notify (GParam)
@@ -612,7 +587,7 @@ class Prompt(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         g_interface_name: str = ...,
         g_name: str = ...,
         g_object_path: str = ...,
-    ): ...
+    ) -> None: ...
     def perform(
         self,
         window_id: Optional[str],
@@ -667,7 +642,7 @@ class Retrievable(GObject.GInterface):
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
-    def retrieve_secret_finish(self, result: Gio.AsyncResult) -> Optional[Value]: ...
+    def retrieve_secret_finish(self, result: Gio.AsyncResult) -> Value: ...
     def retrieve_secret_sync(
         self, cancellable: Optional[Gio.Cancellable] = None
     ) -> Optional[Value]: ...
@@ -683,9 +658,7 @@ class RetrievableInterface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     retrieve_secret: Callable[..., None] = ...
-    retrieve_secret_finish: Callable[
-        [Retrievable, Gio.AsyncResult], Optional[Value]
-    ] = ...
+    retrieve_secret_finish: Callable[[Retrievable, Gio.AsyncResult], Value] = ...
 
 class Schema(GObject.GBoxed):
     """
@@ -752,23 +725,14 @@ class Service(
 
     Properties from GDBusProxy:
       g-connection -> GDBusConnection: g-connection
-        The connection the proxy is for
-      g-bus-type -> GBusType: Bus Type
-        The bus to connect to, if any
+      g-bus-type -> GBusType: g-bus-type
       g-name -> gchararray: g-name
-        The well-known or unique name that the proxy is for
       g-name-owner -> gchararray: g-name-owner
-        The unique name for the owner
       g-flags -> GDBusProxyFlags: g-flags
-        Flags for the proxy
       g-object-path -> gchararray: g-object-path
-        The object path the proxy is for
       g-interface-name -> gchararray: g-interface-name
-        The D-Bus interface name the proxy is for
-      g-default-timeout -> gint: Default Timeout
-        Timeout for remote method invocation
-      g-interface-info -> GDBusInterfaceInfo: Interface Information
-        Interface Information
+      g-default-timeout -> gint: g-default-timeout
+      g-interface-info -> GDBusInterfaceInfo: g-interface-info
 
     Signals from GObject:
       notify (GParam)
@@ -800,7 +764,7 @@ class Service(
         g_name: str = ...,
         g_object_path: str = ...,
         flags: ServiceFlags = ...,
-    ): ...
+    ) -> None: ...
     def clear(
         self,
         schema: Optional[Schema],
@@ -827,8 +791,8 @@ class Service(
     def decode_dbus_secret(self, value: GLib.Variant) -> Value: ...
     @staticmethod
     def disconnect() -> None: ...
-    def do_get_collection_gtype(self) -> Type: ...
-    def do_get_item_gtype(self) -> Type: ...
+    def do_get_collection_gtype(self) -> Type[Any]: ...
+    def do_get_item_gtype(self) -> Type[Any]: ...
     def do_prompt_async(
         self,
         prompt: Prompt,
@@ -862,12 +826,12 @@ class Service(
         callback: Optional[Callable[..., None]] = None,
         *user_data: Any,
     ) -> None: ...
-    def get_collection_gtype(self) -> Type: ...
+    def get_collection_gtype(self) -> Type[Any]: ...
     def get_collections(self) -> Optional[list[Collection]]: ...
     @staticmethod
     def get_finish(result: Gio.AsyncResult) -> Service: ...
     def get_flags(self) -> ServiceFlags: ...
-    def get_item_gtype(self) -> Type: ...
+    def get_item_gtype(self) -> Type[Any]: ...
     def get_session_algorithms(self) -> Optional[str]: ...
     def get_session_dbus_path(self) -> Optional[str]: ...
     @staticmethod
@@ -916,7 +880,7 @@ class Service(
     ) -> Value: ...
     @staticmethod
     def open(
-        service_gtype: Type,
+        service_gtype: Type[Any],
         service_bus_name: Optional[str],
         flags: ServiceFlags,
         cancellable: Optional[Gio.Cancellable] = None,
@@ -927,7 +891,7 @@ class Service(
     def open_finish(result: Gio.AsyncResult) -> Service: ...
     @staticmethod
     def open_sync(
-        service_gtype: Type,
+        service_gtype: Type[Any],
         service_bus_name: Optional[str],
         flags: ServiceFlags,
         cancellable: Optional[Gio.Cancellable] = None,
@@ -1026,15 +990,15 @@ class ServiceClass(GObject.GPointer):
     """
 
     parent_class: Gio.DBusProxyClass = ...
-    collection_gtype: Type = ...
-    item_gtype: Type = ...
+    collection_gtype: Type[Any] = ...
+    item_gtype: Type[Any] = ...
     prompt_sync: Callable[
         [Service, Prompt, Optional[Gio.Cancellable], GLib.VariantType], GLib.Variant
     ] = ...
     prompt_async: Callable[..., None] = ...
     prompt_finish: Callable[[Service, Gio.AsyncResult], GLib.Variant] = ...
-    get_collection_gtype: Callable[[Service], Type] = ...
-    get_item_gtype: Callable[[Service], Type] = ...
+    get_collection_gtype: Callable[[Service], Type[Any]] = ...
+    get_item_gtype: Callable[[Service], Type[Any]] = ...
     padding: list[None] = ...
 
 class ServicePrivate(GObject.GPointer): ...
