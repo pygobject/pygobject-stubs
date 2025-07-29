@@ -12,6 +12,8 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GtkSource
 
+T = TypeVar("T")
+
 _lock = ...  # FIXME Constant
 _namespace: str = "Spelling"
 _version: str = "1"
@@ -25,15 +27,13 @@ class Checker(GObject.Object):
     ::
 
         Checker(**properties)
-        new(provider:Spelling.Provider, language:str) -> Spelling.Checker
+        new(provider:Spelling.Provider=None, language:str=None) -> Spelling.Checker
 
     Object SpellingChecker
 
     Properties from SpellingChecker:
-      language -> gchararray: Language
-        The language code
-      provider -> SpellingProvider: Provider
-        The spell check provider
+      language -> gchararray: language
+      provider -> SpellingProvider: provider
 
     Signals from GObject:
       notify (GParam)
@@ -44,7 +44,7 @@ class Checker(GObject.Object):
         provider: Provider
 
     props: Props = ...
-    def __init__(self, language: str = ..., provider: Provider = ...): ...
+    def __init__(self, language: str = ..., provider: Provider = ...) -> None: ...
     def add_word(self, word: str) -> None: ...
     def check_word(self, word: str, word_len: int) -> bool: ...
     @staticmethod
@@ -55,7 +55,11 @@ class Checker(GObject.Object):
     def ignore_word(self, word: str) -> None: ...
     def list_corrections(self, word: str) -> Optional[list[str]]: ...
     @classmethod
-    def new(cls, provider: Provider, language: str) -> Checker: ...
+    def new(
+        cls,
+        provider: Optional[Provider] = None,
+        language: Optional[str] = None,
+    ) -> Checker: ...
     def set_language(self, language: str) -> None: ...
 
 class CheckerClass(GObject.GPointer):
@@ -69,6 +73,37 @@ class CheckerClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
+class Dictionary(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Dictionary(**properties)
+
+    Object SpellingDictionary
+
+    Properties from SpellingDictionary:
+      code -> gchararray: code
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+    class Props:
+        code: Optional[str]
+
+    props: Props = ...
+    def __init__(self, code: str = ...) -> None: ...
+    def add_word(self, word: str) -> None: ...
+    def contains_word(self, word: str, word_len: int) -> bool: ...
+    def get_code(self) -> Optional[str]: ...
+    def get_extra_word_chars(self) -> str: ...
+    def ignore_word(self, word: str) -> None: ...
+    def list_corrections(self, word: str, word_len: int) -> Optional[list[str]]: ...
+
+class DictionaryClass(GObject.GPointer): ...
+
 class Language(GObject.Object):
     """
     :Constructors:
@@ -80,67 +115,32 @@ class Language(GObject.Object):
     Object SpellingLanguage
 
     Properties from SpellingLanguage:
-      code -> gchararray: Code
-        The language code
+      code -> gchararray: code
+      group -> gchararray: group
+      name -> gchararray: name
 
     Signals from GObject:
       notify (GParam)
     """
 
     class Props:
-        code: str
+        code: Optional[str]
+        group: Optional[str]
+        name: Optional[str]
 
     props: Props = ...
-    def __init__(self, code: str = ...): ...
-    def add_word(self, word: str) -> None: ...
-    def contains_word(self, word: str, word_len: int) -> bool: ...
-    def get_code(self) -> str: ...
-    def get_extra_word_chars(self) -> str: ...
-    def ignore_word(self, word: str) -> None: ...
-    def list_corrections(self, word: str, word_len: int) -> Optional[list[str]]: ...
+    def __init__(self, code: str = ..., group: str = ..., name: str = ...) -> None: ...
+    def get_code(self) -> Optional[str]: ...
+    def get_group(self) -> Optional[str]: ...
+    def get_name(self) -> Optional[str]: ...
 
-class LanguageClass(GObject.GPointer): ...
-
-class LanguageInfo(GObject.Object):
+class LanguageClass(GObject.GPointer):
     """
     :Constructors:
 
     ::
 
-        LanguageInfo(**properties)
-
-    Object SpellingLanguageInfo
-
-    Properties from SpellingLanguageInfo:
-      code -> gchararray: Code
-        The language code
-      group -> gchararray: Group
-        A group for sorting, usually the country name
-      name -> gchararray: Name
-        The name of the language
-
-    Signals from GObject:
-      notify (GParam)
-    """
-
-    class Props:
-        code: str
-        group: str
-        name: str
-
-    props: Props = ...
-    def __init__(self, code: str = ..., group: str = ..., name: str = ...): ...
-    def get_code(self) -> str: ...
-    def get_group(self) -> str: ...
-    def get_name(self) -> str: ...
-
-class LanguageInfoClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        LanguageInfoClass()
+        LanguageClass()
     """
 
     parent_class: GObject.ObjectClass = ...
@@ -164,16 +164,16 @@ class Provider(GObject.Object):
     """
 
     class Props:
-        display_name: str
+        display_name: Optional[str]
 
     props: Props = ...
-    def __init__(self, display_name: str = ...): ...
+    def __init__(self, display_name: str = ...) -> None: ...
     @staticmethod
     def get_default() -> Provider: ...
-    def get_default_code(self) -> str: ...
-    def get_display_name(self) -> str: ...
-    def get_language(self, language: str) -> Optional[Language]: ...
-    def list_languages(self) -> list[LanguageInfo]: ...
+    def get_default_code(self) -> Optional[str]: ...
+    def get_display_name(self) -> Optional[str]: ...
+    def list_languages(self) -> Gio.ListModel: ...
+    def load_dictionary(self, language: str) -> Optional[Dictionary]: ...
     def supports_language(self, language: str) -> bool: ...
 
 class ProviderClass(GObject.GPointer): ...
@@ -190,14 +190,10 @@ class TextBufferAdapter(GObject.Object, Gio.ActionGroup):
     Object SpellingTextBufferAdapter
 
     Properties from SpellingTextBufferAdapter:
-      buffer -> GtkSourceBuffer: Buffer
-        Buffer
-      checker -> SpellingChecker: Checker
-        Checker
-      enabled -> gboolean: Enabled
-        If spellcheck is enabled
-      language -> gchararray: Language
-        The language code such as en_US
+      buffer -> GtkSourceBuffer: buffer
+      checker -> SpellingChecker: checker
+      enabled -> gboolean: enabled
+      language -> gchararray: language
 
     Signals from GActionGroup:
       action-added (gchararray)
@@ -213,7 +209,7 @@ class TextBufferAdapter(GObject.Object, Gio.ActionGroup):
         buffer: Optional[GtkSource.Buffer]
         checker: Optional[Checker]
         enabled: bool
-        language: str
+        language: Optional[str]
 
     props: Props = ...
     def __init__(
@@ -222,11 +218,11 @@ class TextBufferAdapter(GObject.Object, Gio.ActionGroup):
         checker: Checker = ...,
         enabled: bool = ...,
         language: str = ...,
-    ): ...
+    ) -> None: ...
     def get_buffer(self) -> Optional[GtkSource.Buffer]: ...
     def get_checker(self) -> Optional[Checker]: ...
     def get_enabled(self) -> bool: ...
-    def get_language(self) -> str: ...
+    def get_language(self) -> Optional[str]: ...
     def get_menu_model(self) -> Gio.MenuModel: ...
     def get_tag(self) -> Optional[Gtk.TextTag]: ...
     def invalidate_all(self) -> None: ...
@@ -235,6 +231,7 @@ class TextBufferAdapter(GObject.Object, Gio.ActionGroup):
     def set_checker(self, checker: Checker) -> None: ...
     def set_enabled(self, enabled: bool) -> None: ...
     def set_language(self, language: str) -> None: ...
+    def update_corrections(self) -> None: ...
 
 class TextBufferAdapterClass(GObject.GPointer):
     """
