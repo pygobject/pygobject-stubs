@@ -12,6 +12,8 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import HarfBuzz
 
+T = TypeVar("T")
+
 ANALYSIS_FLAG_CENTERED_BASELINE: int = 1
 ANALYSIS_FLAG_IS_ELLIPSIS: int = 2
 ANALYSIS_FLAG_NEED_HYPHEN: int = 4
@@ -22,9 +24,9 @@ GLYPH_INVALID_INPUT: int = 4294967295
 GLYPH_UNKNOWN_FLAG: int = 268435456
 SCALE: int = 1024
 VERSION_MAJOR: int = 1
-VERSION_MICRO: int = 0
-VERSION_MINOR: int = 54
-VERSION_STRING: str = "1.54.0"
+VERSION_MICRO: int = 4
+VERSION_MINOR: int = 56
+VERSION_STRING: str = "1.56.4"
 _introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "Pango"
@@ -36,8 +38,8 @@ def attr_background_alpha_new(alpha: int) -> Attribute: ...
 def attr_background_new(red: int, green: int, blue: int) -> Attribute: ...
 def attr_baseline_shift_new(shift: int) -> Attribute: ...
 def attr_break(
-    text: str, length: int, attr_list: AttrList, offset: int, attrs: Sequence[LogAttr]
-) -> None: ...
+    text: str, length: int, attr_list: AttrList, offset: int
+) -> list[LogAttr]: ...
 def attr_fallback_new(enable_fallback: bool) -> Attribute: ...
 def attr_family_new(family: str) -> Attribute: ...
 def attr_font_desc_new(desc: FontDescription) -> Attribute: ...
@@ -82,22 +84,18 @@ def attr_variant_new(variant: Variant) -> Attribute: ...
 def attr_weight_new(weight: Weight) -> Attribute: ...
 def attr_word_new() -> Attribute: ...
 def bidi_type_for_unichar(ch: str) -> BidiType: ...
-def break_(
-    text: str, length: int, analysis: Analysis, attrs: Sequence[LogAttr]
-) -> None: ...
+def break_(text: str, length: int, analysis: Analysis) -> list[LogAttr]: ...
 def default_break(
-    text: str, length: int, analysis: Optional[Analysis], attrs: LogAttr, attrs_len: int
-) -> None: ...
-def extents_to_pixels(
-    inclusive: Optional[Rectangle] = None, nearest: Optional[Rectangle] = None
-) -> None: ...
+    text: str, length: int, analysis: Optional[Analysis] = None
+) -> list[LogAttr]: ...
+def extents_to_pixels() -> Tuple[Rectangle, Rectangle]: ...
 def find_base_dir(text: str, length: int) -> Direction: ...
 def find_paragraph_boundary(text: str, length: int) -> Tuple[int, int]: ...
 def font_description_from_string(str: str) -> FontDescription: ...
 def get_log_attrs(
-    text: str, length: int, level: int, language: Language, attrs: Sequence[LogAttr]
-) -> None: ...
-def get_mirror_char(ch: str, mirrored_ch: str) -> bool: ...
+    text: str, length: int, level: int, language: Language
+) -> list[LogAttr]: ...
+def get_mirror_char(ch: str) -> Tuple[bool, str]: ...
 def gravity_get_for_matrix(matrix: Optional[Matrix] = None) -> Gravity: ...
 def gravity_get_for_script(
     script: Script, base_gravity: Gravity, hint: GravityHint
@@ -128,14 +126,14 @@ def language_from_string(language: Optional[str] = None) -> Optional[Language]: 
 def language_get_default() -> Language: ...
 def language_get_preferred() -> Optional[list[Language]]: ...
 def layout_deserialize_error_quark() -> int: ...
-def log2vis_get_embedding_levels(
-    text: str, length: int, pbase_dir: Direction
-) -> int: ...
+def log2vis_get_embedding_levels(text: str, length: int) -> Tuple[bytes, Direction]: ...
 def markup_parser_finish(
     context: GLib.MarkupParseContext,
 ) -> Tuple[bool, AttrList, str, str]: ...
 def markup_parser_new(accel_marker: str) -> GLib.MarkupParseContext: ...
-def parse_enum(type: Type, str: Optional[str], warn: bool) -> Tuple[bool, int, str]: ...
+def parse_enum(
+    type: Type[Any], str: Optional[str], warn: bool
+) -> Tuple[bool, int, str]: ...
 def parse_markup(
     markup_text: str, length: int, accel_marker: str
 ) -> Tuple[bool, AttrList, str, str]: ...
@@ -151,38 +149,35 @@ def scan_string(out: GLib.String) -> Tuple[bool, str]: ...
 def scan_word(out: GLib.String) -> Tuple[bool, str]: ...
 def script_for_unichar(ch: str) -> Script: ...
 def script_get_sample_language(script: Script) -> Optional[Language]: ...
-def shape(text: str, length: int, analysis: Analysis, glyphs: GlyphString) -> None: ...
+def shape(text: str, length: int, analysis: Analysis) -> GlyphString: ...
 def shape_full(
     item_text: str,
     item_length: int,
     paragraph_text: Optional[str],
     paragraph_length: int,
     analysis: Analysis,
-    glyphs: GlyphString,
-) -> None: ...
+) -> GlyphString: ...
 def shape_item(
     item: Item,
     paragraph_text: Optional[str],
     paragraph_length: int,
     log_attrs: Optional[LogAttr],
-    glyphs: GlyphString,
     flags: ShapeFlags,
-) -> None: ...
+) -> GlyphString: ...
 def shape_with_flags(
     item_text: str,
     item_length: int,
     paragraph_text: Optional[str],
     paragraph_length: int,
     analysis: Analysis,
-    glyphs: GlyphString,
     flags: ShapeFlags,
-) -> None: ...
+) -> GlyphString: ...
 def skip_space() -> Tuple[bool, str]: ...
 def split_file_list(str: str) -> list[str]: ...
 def tab_array_from_string(text: str) -> Optional[TabArray]: ...
 def tailor_break(
-    text: str, length: int, analysis: Analysis, offset: int, attrs: Sequence[LogAttr]
-) -> None: ...
+    text: str, length: int, analysis: Analysis, offset: int
+) -> list[LogAttr]: ...
 def trim_string(str: str) -> str: ...
 def unichar_direction(ch: str) -> Direction: ...
 def units_from_double(d: float) -> int: ...
@@ -547,7 +542,7 @@ class Font(GObject.Object):
     def do_get_glyph_extents(self, glyph: int) -> Tuple[Rectangle, Rectangle]: ...
     def do_get_metrics(self, language: Optional[Language] = None) -> FontMetrics: ...
     def get_coverage(self, language: Language) -> Coverage: ...
-    def get_face(self) -> FontFace: ...
+    def get_face(self) -> Optional[FontFace]: ...
     def get_features(self) -> Tuple[list[HarfBuzz.feature_t], int]: ...
     def get_font_map(self) -> Optional[FontMap]: ...
     def get_glyph_extents(self, glyph: int) -> Tuple[Rectangle, Rectangle]: ...
@@ -596,6 +591,7 @@ class FontDescription(GObject.GBoxed):
     @staticmethod
     def from_string(str: str) -> FontDescription: ...
     def get_family(self) -> Optional[str]: ...
+    def get_features(self) -> Optional[str]: ...
     def get_gravity(self) -> Gravity: ...
     def get_set_fields(self) -> FontMask: ...
     def get_size(self) -> int: ...
@@ -617,6 +613,8 @@ class FontDescription(GObject.GBoxed):
     def set_absolute_size(self, size: float) -> None: ...
     def set_family(self, family: str) -> None: ...
     def set_family_static(self, family: str) -> None: ...
+    def set_features(self, features: Optional[str] = None) -> None: ...
+    def set_features_static(self, features: str) -> None: ...
     def set_gravity(self, gravity: Gravity) -> None: ...
     def set_size(self, size: int) -> None: ...
     def set_stretch(self, stretch: Stretch) -> None: ...
@@ -705,7 +703,7 @@ class FontFamily(GObject.Object, Gio.ListModel):
     class Props:
         is_monospace: bool
         is_variable: bool
-        item_type: Type
+        item_type: Type[Any]
         n_items: int
         name: str
 
@@ -763,11 +761,12 @@ class FontMap(GObject.Object, Gio.ListModel):
     """
 
     class Props:
-        item_type: Type
+        item_type: Type[Any]
         n_items: int
 
     props: Props = ...
     parent_instance: GObject.Object = ...
+    def add_font_file(self, filename: str) -> bool: ...
     def changed(self) -> None: ...
     def create_context(self) -> Context: ...
     def do_changed(self) -> None: ...
@@ -954,7 +953,7 @@ class GlyphItem(GObject.GBoxed):
     def apply_attrs(self, text: str, list: AttrList) -> list[GlyphItem]: ...
     def copy(self) -> Optional[GlyphItem]: ...
     def free(self) -> None: ...
-    def get_logical_widths(self, text: str, logical_widths: Sequence[int]) -> None: ...
+    def get_logical_widths(self, text: str) -> list[int]: ...
     def letter_space(
         self, text: str, log_attrs: Sequence[LogAttr], letter_spacing: int
     ) -> None: ...
@@ -1005,12 +1004,8 @@ class GlyphString(GObject.GBoxed):
     ) -> Tuple[Rectangle, Rectangle]: ...
     def free(self) -> None: ...
     def get_logical_widths(
-        self,
-        text: str,
-        length: int,
-        embedding_level: int,
-        logical_widths: Sequence[int],
-    ) -> None: ...
+        self, text: str, length: int, embedding_level: int
+    ) -> list[int]: ...
     def get_width(self) -> int: ...
     def index_to_x(
         self, text: str, length: int, analysis: Analysis, index_: int, trailing: bool
@@ -1163,7 +1158,7 @@ class Layout(GObject.Object):
     def set_spacing(self, spacing: int) -> None: ...
     def set_tabs(self, tabs: Optional[TabArray] = None) -> None: ...
     # override
-    def set_text(self, text: str, length=-1) -> None: ...
+    def set_text(self, text: str, length: int = -1) -> None: ...
     def set_width(self, width: int) -> None: ...
     def set_wrap(self, wrap: WrapMode) -> None: ...
     def write_to_file(self, flags: LayoutSerializeFlags, filename: str) -> bool: ...
@@ -1447,6 +1442,7 @@ class TabArray(GObject.GBoxed):
 
 class FontMask(GObject.GFlags):
     FAMILY = 1
+    FEATURES = 256
     GRAVITY = 64
     SIZE = 32
     STRETCH = 16
@@ -1811,188 +1807,6 @@ class Weight(GObject.GEnum):
 
 class WrapMode(GObject.GEnum):
     CHAR = 1
-    WORD = 0
-    WORD_CHAR = 2
-
-    BATAK = 78
-    BENGALI = 4
-    BOPOMOFO = 5
-    BRAHMI = 79
-    BRAILLE = 46
-    BUGINESE = 55
-    BUHID = 44
-    CANADIAN_ABORIGINAL = 40
-    CARIAN = 75
-    CAUCASIAN_ALBANIAN = 89
-    CHAKMA = 81
-    CHAM = 72
-    CHEROKEE = 6
-    COMMON = 0
-    COPTIC = 7
-    CUNEIFORM = 63
-    CYPRIOT = 47
-    CYRILLIC = 8
-    DESERET = 9
-    DEVANAGARI = 10
-    DUPLOYAN = 90
-    ELBASAN = 91
-    ETHIOPIC = 11
-    GEORGIAN = 12
-    GLAGOLITIC = 56
-    GOTHIC = 13
-    GRANTHA = 92
-    GREEK = 14
-    GUJARATI = 15
-    GURMUKHI = 16
-    HAN = 17
-    HANGUL = 18
-    HANUNOO = 43
-    HATRAN = 113
-    HEBREW = 19
-    HIRAGANA = 20
-    INHERITED = 1
-    INVALID_CODE = -1
-    KANNADA = 21
-    KATAKANA = 22
-    KAYAH_LI = 67
-    KHAROSHTHI = 60
-    KHMER = 23
-    KHOJKI = 93
-    KHUDAWADI = 94
-    LAO = 24
-    LATIN = 25
-    LEPCHA = 68
-    LIMBU = 48
-    LINEAR_A = 95
-    LINEAR_B = 51
-    LYCIAN = 76
-    LYDIAN = 77
-    MAHAJANI = 96
-    MALAYALAM = 26
-    MANDAIC = 80
-    MANICHAEAN = 97
-    MENDE_KIKAKUI = 98
-    MEROITIC_CURSIVE = 82
-    MEROITIC_HIEROGLYPHS = 83
-    MIAO = 84
-    MODI = 99
-    MONGOLIAN = 27
-    MRO = 100
-    MULTANI = 114
-    MYANMAR = 28
-    NABATAEAN = 101
-    NEW_TAI_LUE = 54
-    NKO = 66
-    OGHAM = 29
-    OLD_HUNGARIAN = 115
-    OLD_ITALIC = 30
-    OLD_NORTH_ARABIAN = 102
-    OLD_PERMIC = 103
-    OLD_PERSIAN = 59
-    OL_CHIKI = 73
-    ORIYA = 31
-    OSMANYA = 49
-    PAHAWH_HMONG = 104
-    PALMYRENE = 105
-    PAU_CIN_HAU = 106
-    PHAGS_PA = 65
-    PHOENICIAN = 64
-    PSALTER_PAHLAVI = 107
-    REJANG = 69
-    RUNIC = 32
-    SAURASHTRA = 71
-    SHARADA = 85
-    SHAVIAN = 50
-    SIDDHAM = 108
-    SIGNWRITING = 116
-    SINHALA = 33
-    SORA_SOMPENG = 86
-    SUNDANESE = 70
-    SYLOTI_NAGRI = 58
-    SYRIAC = 34
-    TAGALOG = 42
-    TAGBANWA = 45
-    TAI_LE = 52
-    TAKRI = 87
-    TAMIL = 35
-    TELUGU = 36
-    THAANA = 37
-    THAI = 38
-    TIBETAN = 39
-    TIFINAGH = 57
-    TIRHUTA = 109
-    UGARITIC = 53
-    UNKNOWN = 61
-    VAI = 74
-    WARANG_CITI = 110
-    YI = 41
-    @staticmethod
-    def for_unichar(ch: str) -> Script: ...
-    @staticmethod
-    def get_sample_language(script: Script) -> Optional[Language]: ...
-
-class Stretch(GObject.GEnum):
-    CONDENSED = 2
-    EXPANDED = 6
-    EXTRA_CONDENSED = 1
-    EXTRA_EXPANDED = 7
-    NORMAL = 4
-    SEMI_CONDENSED = 3
-    SEMI_EXPANDED = 5
-    ULTRA_CONDENSED = 0
-    ULTRA_EXPANDED = 8
-
-class Style(GObject.GEnum):
-    ITALIC = 2
-    NORMAL = 0
-    OBLIQUE = 1
-
-class TabAlign(GObject.GEnum):
-    CENTER = 2
-    DECIMAL = 3
-    LEFT = 0
-    RIGHT = 1
-
-class TextTransform(GObject.GEnum):
-    CAPITALIZE = 3
-    LOWERCASE = 1
-    NONE = 0
-    UPPERCASE = 2
-
-class Underline(GObject.GEnum):
-    DOUBLE = 2
-    DOUBLE_LINE = 6
-    ERROR = 4
-    ERROR_LINE = 7
-    LOW = 3
-    NONE = 0
-    SINGLE = 1
-    SINGLE_LINE = 5
-
-class Variant(GObject.GEnum):
-    ALL_PETITE_CAPS = 4
-    ALL_SMALL_CAPS = 2
-    NORMAL = 0
-    PETITE_CAPS = 3
-    SMALL_CAPS = 1
-    TITLE_CAPS = 6
-    UNICASE = 5
-
-class Weight(GObject.GEnum):
-    BOLD = 700
-    BOOK = 380
-    HEAVY = 900
-    LIGHT = 300
-    MEDIUM = 500
-    NORMAL = 400
-    SEMIBOLD = 600
-    SEMILIGHT = 350
-    THIN = 100
-    ULTRABOLD = 800
-    ULTRAHEAVY = 1000
-    ULTRALIGHT = 200
-
-class WrapMode(GObject.GEnum):
-    CHAR = 1
+    NONE = 3
     WORD = 0
     WORD_CHAR = 2
