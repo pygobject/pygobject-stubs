@@ -1291,7 +1291,7 @@ class GError:
     def new_literal(domain, message, code): ...  # FIXME Function
 
 # override
-class GInterface(Protocol):
+class GInterface(typing.Protocol):
     g_type_instance: TypeInstance = ...
     ref_count: int = ...
     qdata: GLib.Data = ...
@@ -1360,7 +1360,7 @@ class GInterface(Protocol):
     @classmethod
     def newv(
         cls,
-        object_type: typing.Type,
+        object_type: typing.Type[typing.Any],
         n_parameters: int,
         parameters: typing.Sequence[Parameter],
     ) -> Object: ...
@@ -1822,7 +1822,7 @@ class Object:
     def list_properties(self) -> list[ParamSpec]: ...
     @classmethod
     def newv(
-        cls, object_type: typing.Type, parameters: typing.Sequence[Parameter]
+        cls, object_type: typing.Type[Any], parameters: typing.Sequence[Parameter]
     ) -> Object: ...
     def notify(self, property_name: str) -> None: ...
     def notify_by_pspec(self, *args, **kargs): ...
@@ -2372,8 +2372,8 @@ class Signal(str):
         name: typing.Any = "",
         func: typing.Optional[typing.Callable] = None,
         flags: int = SIGNAL_RUN_FIRST,
-        return_type: typing.Optional[typing.Type] = None,
-        arg_types: typing.Optional[typing.Sequence[typing.Type]] = None,
+        return_type: typing.Optional[typing.Type[typing.Any]] = None,
+        arg_types: typing.Optional[typing.Sequence[typing.Type[typing.Any]]] = None,
         doc: str = "",
         accumulator: typing.Optional[typing.Callable] = None,
         accu_data: typing.Any = None,
@@ -2752,25 +2752,25 @@ class TypeModule(TypePlugin):
 
     def add_interface(
         self,
-        instance_type: typing.Type,
-        interface_type: typing.Type,
+        instance_type: typing.Type[typing.Any],
+        interface_type: typing.Type[typing.Any],
         interface_info: InterfaceInfo,
     ) -> None: ...
     def do_load(self) -> bool: ...
     def do_unload(self) -> None: ...
     def register_enum(
         self, name: str, const_static_values: EnumValue
-    ) -> typing.Type: ...
+    ) -> typing.Type[typing.Any]: ...
     def register_flags(
         self, name: str, const_static_values: FlagsValue
-    ) -> typing.Type: ...
+    ) -> typing.Type[typing.Any]: ...
     def register_type(
         self,
-        parent_type: typing.Type,
+        parent_type: typing.Type[typing.Any],
         type_name: str,
         type_info: TypeInfo,
         flags: TypeFlags,
-    ) -> typing.Type: ...
+    ) -> typing.Type[typing.Any]: ...
     def set_name(self, name: str) -> None: ...
     def unuse(self) -> None: ...
     def use(self) -> bool: ...
