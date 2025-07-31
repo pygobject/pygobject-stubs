@@ -12,12 +12,8 @@ repos:
     hooks:
       - id: isort
 
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.10
+    rev: v0.12.7
     hooks:
-      - id: ruff
+      - id: ruff-check
+      - id: ruff-format
