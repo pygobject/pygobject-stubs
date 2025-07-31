@@ -27,7 +27,7 @@ Usage examples:
 python tools/generate.py GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
 python tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
 isort .
-black .
+ruff format .
 ```
 
 To re-generate all known stubs, run `tools/update_all.py`.

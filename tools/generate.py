@@ -189,7 +189,6 @@ def _callable_get_arguments(
 
 
 class TypeInfo:
-
     # This struct tries to emulate gi.TypeInfo
 
     def __init__(
