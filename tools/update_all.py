@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
         if gen_process.returncode == 0:
             print(f"Formatting {output_path}", file=sys.stderr)
-            subprocess.run(["black", output_path])
+            subprocess.run(["ruff", "format", output_path])
             print(f"Sorting imports in {output_path}", file=sys.stderr)
             subprocess.run(["isort", output_path])
         else:

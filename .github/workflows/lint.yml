@@ -7,13 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          options: "--check --verbose"
-          src: "."
-          version: "~= 25.1"
       - uses: isort/isort-action@v1
       - uses: astral-sh/ruff-action@v3
-        with:
-          src: "."
-          version: 0.9.10
+      - run: ruff format

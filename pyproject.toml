@@ -23,10 +23,9 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "black>=25.1.0",
     "codespell>=2.4.1",
     "isort>=6.0.1",
-    "ruff>=0.9.10",
+    "ruff>=0.12.7",
     "pre-commit",
     "PyGObject",
 ]
@@ -40,11 +39,6 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "*" = ["*.pyi"]
-
-[tool.black]
-line-length = 88
-target-version = ['py39']
-include = '\.pyi?$'
 
 [tool.codespell]
 skip = "*__pycache__*,.mypy_cache,.git,pyproject.toml,test,*.pyi"
