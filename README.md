@@ -4,6 +4,12 @@
 
 ## Installation
 
+With uv:
+```shell
+uv add --dev pygobject-stubs
+```
+
+With pip:
 ```shell
 pip install pygobject-stubs
 ```
