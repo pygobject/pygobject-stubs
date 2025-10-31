@@ -1,3 +1,43 @@
+# 2.14.0 (17 Sep 2025)
+
+## Feature
+
+* Add GIRepository 3.0
+* Add win32 1.0
+* Add GLibWin32 2.0
+* Add GioWin32 2.0
+* Add GdkWin32 3.0 and 4.0
+* Add Atspi ([#215](https://github.com/pygobject/pygobject-stubs/issues/215)) (#215)
+* Add XdpGtk4 ([#212](https://github.com/pygobject/pygobject-stubs/issues/212)) (#212#203)
+* Add GExiv2 ([#209](https://github.com/pygobject/pygobject-stubs/issues/209)) (#209)
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Gdk4
+    - GdkPixbuf
+    - GdkX11
+    - Gio
+    - Gio
+    - GIRepository 2.0
+    - GLib
+    - GObject
+    - Graphene
+    - Gsk
+    - Gtk4
+    - Pango
+    - PangoCairo
+    - PyGObject
+    - Secret
+    - Soup3
+    - Spelling
+
+## Bug Fixes
+
+* Generator: Handle enums with no attributes
+* Generator: Convert Flags with invalid names to int
+
 # 2.13.0 (11 Mar 2025)
 
 ## Feature
