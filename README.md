@@ -35,6 +35,18 @@ If no configuration is set, the most recent version of each library is installed
 
 `--no-cache-dir` is only necessary on subsequent reinstalls, otherwise the stubs will not be rebuild and a cache of a previous installation is used.
 
+#### uv
+
+```
+[tool.uv]
+config-settings-package = { pygobject-stubs = { config = "Gtk3,Gdk3,Soup2" } }
+```
+
+#### poetry
+
+https://python-poetry.org/docs/configuration/#installerbuild-config-settingspackage-name
+
+
 ### Project Integration
 
 Usually you want the stubs to be installed as part of the development dependencies.
