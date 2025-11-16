@@ -6,6 +6,7 @@ build
 dist
 *.egg-info
 *.sublime-*
+*.vscode
 *.venv
 
 src/gi-stubs/repository/Gdk.pyi
