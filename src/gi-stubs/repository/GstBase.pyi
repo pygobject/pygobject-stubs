@@ -10,6 +10,7 @@ BASE_PARSE_FLAG_DRAINING: int = 2
 BASE_PARSE_FLAG_LOST_SYNC: int = 1
 BASE_TRANSFORM_SINK_NAME: str = "sink"
 BASE_TRANSFORM_SRC_NAME: str = "src"
+_lock = ...  # FIXME Constant
 _namespace: str = "GstBase"
 _version: str = "1.0"
 
@@ -77,7 +78,6 @@ class Adapter(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def available(self) -> int: ...
     def available_fast(self) -> int: ...
     def clear(self) -> None: ...
@@ -125,6 +125,9 @@ class Aggregator(Gst.Element):
 
     Object GstAggregator
 
+    Signals from GstAggregator:
+      samples-selected (GstSegment, guint64, guint64, guint64, GstStructure)
+
     Properties from GstAggregator:
       latency -> guint64: Buffer latency
         Additional latency in live mode to allow upstream to take longer to produce buffers for the current position (in nanoseconds)
@@ -154,8 +157,7 @@ class Aggregator(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Element.Props):
         emit_signals: bool
         latency: int
         min_upstream_latency: int
@@ -224,6 +226,7 @@ class Aggregator(Gst.Element):
     def get_latency(self) -> int: ...
     def negotiate(self) -> bool: ...
     def peek_next_sample(self, pad: AggregatorPad) -> typing.Optional[Gst.Sample]: ...
+    def push_src_event(self, event: Gst.Event) -> bool: ...
     def selected_samples(
         self,
         pts: int,
@@ -295,6 +298,9 @@ class AggregatorPad(Gst.Pad):
 
     Object GstAggregatorPad
 
+    Signals from GstAggregatorPad:
+      buffer-consumed (GstBuffer)
+
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
@@ -304,6 +310,8 @@ class AggregatorPad(Gst.Pad):
       unlinked (GstPad)
 
     Properties from GstPad:
+      caps -> GstCaps: Caps
+        The capabilities of the pad
       direction -> GstPadDirection: Direction
         The direction of the pad
       template -> GstPadTemplate: Template
@@ -323,8 +331,7 @@ class AggregatorPad(Gst.Pad):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Pad.Props):
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -404,8 +411,7 @@ class BaseParse(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Element.Props):
         disable_passthrough: bool
         name: typing.Optional[str]
         parent: typing.Optional[Gst.Object]
@@ -546,6 +552,8 @@ class BaseSink(Gst.Element):
         Timestamp offset in nanoseconds
       enable-last-sample -> gboolean: Enable Last Buffer
         Enable the last-sample property
+      last-sample -> GstSample: Last Sample
+        The last sample received in the sink
       blocksize -> guint: Block size
         Size in bytes to pull per buffer (0 = default)
       render-delay -> guint64: Render Delay
@@ -556,6 +564,8 @@ class BaseSink(Gst.Element):
         The maximum bits per second to render (0 = disabled)
       processing-deadline -> guint64: Processing deadline
         Maximum processing time for a buffer in nanoseconds
+      stats -> GstStructure: Statistics
+        Sink Statistics
 
     Signals from GstElement:
       pad-added (GstPad)
@@ -574,8 +584,7 @@ class BaseSink(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Element.Props):
         _async: bool
         blocksize: int
         enable_last_sample: bool
@@ -730,6 +739,8 @@ class BaseSrc(Gst.Element):
         Run typefind before negotiating (deprecated, non-functional)
       do-timestamp -> gboolean: Do timestamp
         Apply current stream time to buffers
+      automatic-eos -> gboolean: Automatic EOS
+        Automatically EOS when the segment is done
 
     Signals from GstElement:
       pad-added (GstPad)
@@ -748,8 +759,8 @@ class BaseSrc(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Element.Props):
+        automatic_eos: bool
         blocksize: int
         do_timestamp: bool
         num_buffers: int
@@ -779,6 +790,7 @@ class BaseSrc(Gst.Element):
     _gst_reserved: list[None] = ...
     def __init__(
         self,
+        automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
         num_buffers: int = ...,
@@ -818,6 +830,7 @@ class BaseSrc(Gst.Element):
     def negotiate(self) -> bool: ...
     def new_seamless_segment(self, start: int, stop: int, time: int) -> bool: ...
     def new_segment(self, segment: Gst.Segment) -> bool: ...
+    def push_segment(self, segment: Gst.Segment) -> bool: ...
     def query_latency(self) -> typing.Tuple[bool, bool, int, int]: ...
     def set_async(self, _async: bool) -> None: ...
     def set_automatic_eos(self, automatic_eos: bool) -> None: ...
@@ -900,8 +913,7 @@ class BaseTransform(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Element.Props):
         qos: bool
         name: typing.Optional[str]
         parent: typing.Optional[Gst.Object]
@@ -1282,8 +1294,7 @@ class CollectPads(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gst.Object.Props):
         name: typing.Optional[str]
         parent: typing.Optional[Gst.Object]
 
@@ -1393,8 +1404,7 @@ class DataQueue(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         current_level_bytes: int
         current_level_time: int
         current_level_visible: int
@@ -1430,7 +1440,6 @@ class FlowCombiner(GObject.GBoxed):
 
         new() -> GstBase.FlowCombiner
     """
-
     def add_pad(self, pad: Gst.Pad) -> None: ...
     def clear(self) -> None: ...
     def free(self) -> None: ...
@@ -1462,6 +1471,8 @@ class PushSrc(BaseSrc):
         Run typefind before negotiating (deprecated, non-functional)
       do-timestamp -> gboolean: Do timestamp
         Apply current stream time to buffers
+      automatic-eos -> gboolean: Automatic EOS
+        Automatically EOS when the segment is done
 
     Signals from GstElement:
       pad-added (GstPad)
@@ -1480,8 +1491,8 @@ class PushSrc(BaseSrc):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(BaseSrc.Props):
+        automatic_eos: bool
         blocksize: int
         do_timestamp: bool
         num_buffers: int
@@ -1494,6 +1505,7 @@ class PushSrc(BaseSrc):
     _gst_reserved: list[None] = ...
     def __init__(
         self,
+        automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
         num_buffers: int = ...,

@@ -70,6 +70,7 @@ libraries = [
     Lib("GstWebRTC", "1.0", init=GST_INIT),
     Lib("GstAudio", "1.0", init=GST_INIT),
     Lib("GstVideo", "1.0", init=GST_INIT),
+    Lib("GstApp", "1.0", init=GST_INIT),
     Lib("Gtk", "3.0", output="_Gtk3"),
     Lib("Gtk", "4.0", output="_Gtk4"),
     Lib("GtkSource", "4", output="_GtkSource4"),
