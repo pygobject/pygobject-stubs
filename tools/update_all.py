@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import typing
+
+import argparse
 import subprocess
 import sys
 from pathlib import Path
@@ -9,11 +12,20 @@ class Lib:
     name: str
     version: str
     output: str
+    init: str
 
-    def __init__(self, name: str, version: str, *, output: str | None = None) -> None:
+    def __init__(
+        self, name: str, version: str, *, output: str | None = None, init: str = ""
+    ) -> None:
         self.name = name
         self.version = version
         self.output = output or name
+        self.init = init
+
+
+GST_INIT = (
+    'gi.require_version("Gst", "1.0"); from gi.repository import Gst; Gst.init(None)'
+)
 
 
 # Add libraries below. When multiple versions are available, specify the output argument.
@@ -48,14 +60,16 @@ libraries = [
     Lib("Gsk", "4.0"),
     Lib("GSound", "1.0"),
     Lib("Gspell", "1"),
-    Lib("Gst", "1.0"),
-    Lib("GstBase", "1.0"),
-    Lib("GstRtsp", "1.0"),
-    Lib("GstRtp", "1.0"),
-    Lib("GstRtspServer", "1.0"),
-    Lib("GstPbutils", "1.0"),
-    Lib("GstSdp", "1.0"),
-    Lib("GstWebRTC", "1.0"),
+    Lib("Gst", "1.0", init=GST_INIT),
+    Lib("GstBase", "1.0", init=GST_INIT),
+    Lib("GstRtsp", "1.0", init=GST_INIT),
+    Lib("GstRtp", "1.0", init=GST_INIT),
+    Lib("GstRtspServer", "1.0", init=GST_INIT),
+    Lib("GstPbutils", "1.0", init=GST_INIT),
+    Lib("GstSdp", "1.0", init=GST_INIT),
+    Lib("GstWebRTC", "1.0", init=GST_INIT),
+    Lib("GstAudio", "1.0", init=GST_INIT),
+    Lib("GstVideo", "1.0", init=GST_INIT),
     Lib("Gtk", "3.0", output="_Gtk3"),
     Lib("Gtk", "4.0", output="_Gtk4"),
     Lib("GtkSource", "4", output="_GtkSource4"),
@@ -83,16 +97,33 @@ libraries = [
 ]
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Update stubs")
+    parser.add_argument(
+        "--only", type=str, help="Update only modules with the given name prefix"
+    )
+
+    args = parser.parse_args()
+
     repo_path = Path("src/gi-stubs/repository")
     failed_generations = []
 
     for lib in libraries:
+        if args.only and not lib.name.startswith(args.only):
+            continue
+
         output_path = repo_path / f"{lib.output}.pyi"
 
         print(f"Generating {output_path}", file=sys.stderr)
-        gen_process = subprocess.run(
-            ["tools/generate.py", lib.name, lib.version, "-u", output_path],
-        )
+        cmd: typing.List[str | Path] = [
+            "tools/generate.py",
+            lib.name,
+            lib.version,
+            "-u",
+            output_path,
+        ]
+        if lib.init:
+            cmd += ["--init", lib.init]
+        gen_process = subprocess.run(cmd)
 
         if gen_process.returncode == 0:
             print(f"Formatting {output_path}", file=sys.stderr)

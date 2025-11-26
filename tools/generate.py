@@ -966,9 +966,13 @@ def _get_gname(obj: Type[Any]) -> Optional[str]:
     return obj.__gtype__.name  # type: ignore
 
 
-def start(module: str, version: str, overrides: dict[str, str]) -> str:
+def start(
+    module: str, version: str, init: str | None, overrides: dict[str, str]
+) -> str:
     gi.require_version(module, version)
     m = importlib.import_module(f".{module}", "gi.repository")
+    if init:
+        exec(init)
     return _build(m, args.module, overrides)
 
 
@@ -978,6 +982,11 @@ if __name__ == "__main__":
     parser.add_argument("version", type=str, help="3.0, 4.0, ...")
     parser.add_argument(
         "-u", dest="update", type=str, help="Stub file to update e.g. -u Gdk.pyi"
+    )
+    parser.add_argument(
+        "--init",
+        type=str,
+        help='Initialization code that must be evaluated first e.g. \'gi.require_version("Gst", "1.0"); from gi.repository import Gst; Gst.init(None)\'',
     )
 
     args = parser.parse_args()
@@ -989,10 +998,10 @@ if __name__ == "__main__":
                 overrides = parse.parse(file.read())
         except FileNotFoundError:
             pass
-        output = start(args.module, args.version, overrides)
+        output = start(args.module, args.version, args.init, overrides)
         print("Running with this overrides:")
         pprint.pprint(overrides)
         with open(args.update, "w+") as file:
             file.write(output)
     else:
-        print(start(args.module, args.version, {}))
+        print(start(args.module, args.version, args.init, {}))
