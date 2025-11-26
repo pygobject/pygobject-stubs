@@ -34,6 +34,14 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 
 ObjectT = Union[ModuleType, Type[Any]]
 
+RESERVED_KEYWORDS = {"async"}
+
+
+def fix_argument_name(name: str) -> str:
+    if name in RESERVED_KEYWORDS:
+        name = f"_{name}"
+    return name.replace("-", "_")
+
 
 def _object_get_props(
     obj: GI.ObjectInfo,
@@ -428,7 +436,9 @@ def _build_function_info(
     (names, args, return_args) = _callable_get_arguments(
         function, current_namespace, needed_namespaces, True
     )
-    args_types = [f"{name}: {args[i]}" for (i, name) in enumerate(names)]
+    args_types = [
+        f"{fix_argument_name(name)}: {args[i]}" for (i, name) in enumerate(names)
+    ]
 
     # Return type
     if return_signature:
@@ -774,7 +784,7 @@ def _gi_build_stub(
             names: list[str] = []
             s: list[str] = []
             for p in itertools.chain(readable_props, writable_props):
-                n = p.get_name().replace("-", "_")
+                n = fix_argument_name(p.get_name())
                 if n in names:
                     # Avoid duplicates
                     continue
@@ -812,7 +822,7 @@ def _gi_build_stub(
             names: list[str] = []
             s: list[str] = []
             for p in writable_props:
-                n = p.get_name().replace("-", "_")
+                n = fix_argument_name(p.get_name())
                 if n in names:
                     # Avoid duplicates
                     continue
