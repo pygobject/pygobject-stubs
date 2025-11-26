@@ -680,6 +680,7 @@ def _gi_build_stub(
         readable_props: list[GIRepository.BaseInfo] = []
         writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
+        props_parents: list[str] = []
         fields: list[str] = []
         if hasattr(obj, "__info__"):
             object_info = obj.__info__  # type: ignore
@@ -705,6 +706,7 @@ def _gi_build_stub(
                     else:
                         parents.append(f"{p.get_namespace()}.{p.get_name()}")
                         needed_namespaces.add(p.get_namespace())
+                    props_parents.append(f"{parents[-1]}.Props")
 
                 ifaces = object_info.get_interfaces()
                 for i in ifaces:
@@ -807,8 +809,14 @@ def _gi_build_stub(
                 else:
                     s.append(f"{n}: {t}")
 
+            props_string_parents = ""
+            if len(props_parents) > 0:
+                props_string_parents = f"({', '.join(props_parents)})"
+
             separator = "\n        "
-            ret += f"    class Props:\n        {separator.join(s)}\n"
+            ret += (
+                f"    class Props{props_string_parents}:\n        {separator.join(s)}\n"
+            )
             ret += f"    props: Props = ...\n"
 
         for field in fields:
