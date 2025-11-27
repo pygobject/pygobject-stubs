@@ -124,21 +124,26 @@ def _callable_get_arguments(
         if i in skip:
             continue
 
+        def skip_arg(index: int) -> None:
+            if index < 0:
+                return
+            if index < i:
+                dict_names.pop(index, None)
+                dict_args.pop(index, None)
+                dict_return_args.pop(index, None)
+            elif index > i:
+                skip.append(index)
+
         if arg.get_closure_index() >= 0:
             accept_optional_args = True
             optional_args_name = function_args[arg.get_closure_index()].get_name()
-            skip.append(arg.get_closure_index())
-            skip.append(arg.get_destroy_index())
+            skip_arg(arg.get_closure_index())
+            skip_arg(arg.get_destroy_index())
 
         # Filter out array length args
         arg_type = arg.get_type_info()
         len_arg: int = arg_type.get_array_length_index()
-        if len_arg >= 0:
-            skip.append(len_arg)
-            if len_arg < i:
-                dict_names.pop(len_arg, None)
-                dict_args.pop(len_arg, None)
-                dict_return_args.pop(len_arg, None)
+        skip_arg(len_arg)
 
         # Need to check because user_data can be the first arg
         if arg.get_closure_index() != i and arg.get_destroy_index() != i:
