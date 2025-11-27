@@ -633,7 +633,10 @@ def _gi_build_stub(
             val = val.real
 
         if isinstance(val, str):
-            ret += f'{name}: {val.__class__.__name__} = "{val}"\n'
+            if len(val) > 50:
+                ret += f"{name}: {val.__class__.__name__} = ...\n"
+            else:
+                ret += f'{name}: {val.__class__.__name__} = "{val}"\n'
         elif isinstance(val, (bool, float, int)):
             ret += f"{name}: {val.__class__.__name__} = {val}\n"
         elif val.__class__.__name__ == "Atom":
