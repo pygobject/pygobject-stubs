@@ -41,7 +41,7 @@ where = ["src"]
 "*" = ["*.pyi"]
 
 [tool.codespell]
-skip = "*__pycache__*,.mypy_cache,.git,pyproject.toml,test,*.pyi"
+skip = "*__pycache__*,.mypy_cache,.git,pyproject.toml,test,*.pyi,*venv"
 ignore-words-list = """
     astroid,
     inout"""
