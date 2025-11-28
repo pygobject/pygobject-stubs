@@ -543,7 +543,16 @@ def _build_function(
 
     signature: Optional[str] = None
     try:
-        signature = str(inspect.signature(function))
+        try:
+            # This requires Python 3.14
+            signature = inspect.signature(function).format(
+                quote_annotation_strings=False
+            )
+        except:
+            # This should be a good enough fallback for older Pythons
+            signature = (
+                str(inspect.signature(function)).replace('"', "").replace("'", "")
+            )
     except:
         if in_class:
             signature = "(self, *args, **kwargs)"
