@@ -1012,7 +1012,7 @@ def _find_methods(obj: Type[Any]) -> list[str]:
 
 def _get_gname(obj: Type[Any]) -> Optional[str]:
     if not hasattr(obj, "__gtype__"):
-        return None
+        return obj.__name__
     return obj.__gtype__.name  # type: ignore
 
 
