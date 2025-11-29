@@ -1,5 +1,7 @@
 import typing
 
+import enum
+
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -360,7 +362,7 @@ class NewFrameClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class MemoryFormatSelection(GObject.GFlags):
+class MemoryFormatSelection(enum.IntFlag):
     A8B8G8R8 = 64
     A8R8G8B8 = 16
     A8R8G8B8_PREMULTIPLIED = 2
@@ -385,14 +387,14 @@ class MemoryFormatSelection(GObject.GFlags):
     R8G8B8A8 = 32
     R8G8B8A8_PREMULTIPLIED = 4
 
-class LoaderError(GObject.GEnum):
+class LoaderError(enum.IntEnum):
     FAILED = 0
     NO_MORE_FRAMES = 2
     UNKNOWN_IMAGE_FORMAT = 1
     @staticmethod
     def quark() -> int: ...
 
-class MemoryFormat(GObject.GEnum):
+class MemoryFormat(enum.IntEnum):
     A8B8G8R8 = 6
     A8R8G8B8 = 4
     A8R8G8B8_PREMULTIPLIED = 1
@@ -421,7 +423,7 @@ class MemoryFormat(GObject.GEnum):
     @staticmethod
     def is_premultiplied(memory_format: MemoryFormat) -> bool: ...
 
-class SandboxSelector(GObject.GEnum):
+class SandboxSelector(enum.IntEnum):
     AUTO = 0
     BWRAP = 1
     FLATPAK_SPAWN = 2
