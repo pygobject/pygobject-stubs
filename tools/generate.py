@@ -35,6 +35,15 @@ _identifier_re = r"^[A-Za-z_]\w*$"
 ObjectT = Union[ModuleType, Type[Any]]
 
 RESERVED_KEYWORDS = {"async"}
+ALLOWED_FUNCTIONS = {
+    "__enter__",
+    "__iter__",
+    "__getitem__",
+    "__setitem__",
+    "__len__",
+    "__int__",
+    "__float__",
+}
 
 
 def fix_argument_name(name: str) -> str:
@@ -532,7 +541,7 @@ def _build_function(
     in_class: Optional[Any],
     needed_namespaces: set[str],
 ) -> str:
-    if name.startswith("_"):
+    if name.startswith("_") and name not in ALLOWED_FUNCTIONS:
         return ""
 
     if hasattr(function, "__wrapped__"):
@@ -599,7 +608,7 @@ def _gi_build_stub(
     ret = ""
 
     for name in children:
-        if name.startswith("__"):
+        if name.startswith("__") and name not in ALLOWED_FUNCTIONS:
             continue
 
         # Check if this is a valid name in python
