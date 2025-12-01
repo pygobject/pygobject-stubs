@@ -7,6 +7,7 @@ from gi.repository import Gst
 from gi.repository import GstNet
 from gi.repository import GstRtsp
 from gi.repository import GstSdp
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 

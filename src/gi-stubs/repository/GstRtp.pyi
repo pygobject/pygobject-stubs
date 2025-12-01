@@ -4,6 +4,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GstBase
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 

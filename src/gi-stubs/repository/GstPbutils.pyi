@@ -5,6 +5,7 @@ from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GstAudio
 from gi.repository import GstVideo
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
