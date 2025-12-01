@@ -595,6 +595,28 @@ def _gi_build_stub(
     in_class: Optional[Any],
     prefix_name: str,
 ) -> str:
+    return _gi_build_stub_parts(
+        repo,
+        parent,
+        current_namespace,
+        children,
+        needed_namespaces,
+        overrides,
+        in_class,
+        prefix_name,
+    )[0]
+
+
+def _gi_build_stub_parts(
+    repo: GIRepository.Repository,
+    parent: ObjectT,
+    current_namespace: str,
+    children: list[str],
+    needed_namespaces: set[str],
+    overrides: dict[str, str],
+    in_class: Optional[Any],
+    prefix_name: str,
+) -> tuple[str, list[GI.FieldInfo]]:
     """
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
@@ -637,20 +659,20 @@ def _gi_build_stub(
         elif callable(obj):
             # Fall back to a function for anything callable
             functions[name] = obj
-        elif in_class:
-            # Check if obj was already processed
-            if hasattr(in_class, "__info__"):
-                obj_info = in_class.__info__
-                if isinstance(obj_info, (GI.StructInfo, GI.ObjectInfo)):
-                    if not (name in [f.get_name() for f in obj_info.get_fields()]):
-                        constants[name] = obj
-                else:
-                    constants[name] = obj
-            else:
-                constants[name] = obj
         else:
             # Assume everything else is some manner of constant
             constants[name] = obj
+
+    # Remove fields from constants to preserve output order
+    fields: list[GI.FieldInfo] = []
+    if in_class:
+        obj_info = getattr(in_class, "__info__", None)
+        if isinstance(obj_info, (GI.StructInfo, GI.ObjectInfo)):
+            for f in obj_info.get_fields():
+                field_name = f.get_name()
+                if field_name in constants:
+                    del constants[field_name]
+                    fields.append(f)
 
     # Constants
     for name in sorted(constants):
@@ -681,7 +703,7 @@ def _gi_build_stub(
         else:
             ret += f"{name} = ... # FIXME Constant\n"
 
-    if ret and constants:
+    if ret and functions:
         ret += "\n"
 
     # Functions
@@ -695,7 +717,7 @@ def _gi_build_stub(
             current_namespace, name, functions[name], in_class, needed_namespaces
         )
 
-    if ret and functions:
+    if ret and classes:
         ret += "\n"
 
     # Classes
@@ -707,11 +729,11 @@ def _gi_build_stub(
 
         full_name = _generate_full_name(prefix_name, name)
 
-        classret = _gi_build_stub(
+        classret, fields = _gi_build_stub_parts(
             repo,
             obj,
             current_namespace,
-            _find_methods(obj),
+            _find_methods_and_fields(obj),
             needed_namespaces,
             overrides,
             obj,
@@ -722,22 +744,8 @@ def _gi_build_stub(
         writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
         props_parents: list[str] = []
-        fields: list[str] = []
         if hasattr(obj, "__info__"):
             object_info = obj.__info__  # type: ignore
-
-            if isinstance(object_info, GI.StructInfo):
-                for f in object_info.get_fields():
-                    t = _type_to_python(
-                        f.get_type_info(), current_namespace, needed_namespaces, True
-                    )
-                    n = f.get_name()
-                    if n in dir(obj):
-                        override = _check_override(full_name, n, overrides)
-                        if override:
-                            fields.append(override)
-                        else:
-                            fields.append(f"{n}: {t}")
 
             if isinstance(object_info, GI.ObjectInfo):
                 p = object_info.get_parent()
@@ -756,18 +764,6 @@ def _gi_build_stub(
                     else:
                         parents.append(f"{i.get_namespace()}.{i.get_name()}")
                         needed_namespaces.add(i.get_namespace())
-
-                for f in object_info.get_fields():
-                    t = _type_to_python(
-                        f.get_type_info(), current_namespace, needed_namespaces, True
-                    )
-                    n = f.get_name()
-                    if n in dir(obj):
-                        override = _check_override(full_name, n, overrides)
-                        if override:
-                            fields.append(override)
-                        else:
-                            fields.append(f"{n}: {t}")
 
                 # Properties
                 (rp, wp) = _object_get_props(repo, object_info)
@@ -879,8 +875,16 @@ def _gi_build_stub(
             )
             ret += f"    props: Props = ...\n"
 
-        for field in fields:
-            ret += f"    {field} = ...\n"
+        for f in fields:
+            t = _type_to_python(
+                f.get_type_info(), current_namespace, needed_namespaces, True
+            )
+            n = f.get_name()
+            override = _check_override(full_name, n, overrides)
+            if override:
+                ret += f"    {override} = ...\n"
+            else:
+                ret += f"    {n}: {t} = ...\n"
 
         class_constructor_override = _check_override(full_name, "__init__", overrides)
         if class_constructor_override:
@@ -913,6 +917,9 @@ def _gi_build_stub(
         for line in classret.splitlines():
             ret += "    " + line + "\n"
 
+        ret += "\n"
+
+    if ret and flags:
         ret += "\n"
 
     # Flags
@@ -956,6 +963,9 @@ def _gi_build_stub(
                 ret += f"    {key} = {value}\n"
             else:
                 ret += f"    {key} = ... # FIXME Flags\n"
+        ret += "\n"
+
+    if ret and enums:
         ret += "\n"
 
     # Enums
@@ -1008,10 +1018,10 @@ def _gi_build_stub(
 
         ret += "\n"
 
-    return ret
+    return ret, fields
 
 
-def _find_methods(obj: Type[Any]) -> list[str]:
+def _find_methods_and_fields(obj: Type[Any]) -> list[str]:
     mro = inspect.getmro(obj)
     main_name = _get_gname(mro[0])
 
@@ -1029,8 +1039,7 @@ def _find_methods(obj: Type[Any]) -> list[str]:
     if hasattr(obj, "__info__"):
         obj_info = obj.__info__  # type: ignore
         if isinstance(obj_info, (GI.ObjectInfo, GI.StructInfo)):
-            methods = obj_info.get_methods()
-            for m in methods:
+            for m in obj_info.get_methods() + obj_info.get_fields():
                 name = m.get_name()
                 if name in dir(obj) and not name in obj_attrs:
                     obj_attrs.add(name)
