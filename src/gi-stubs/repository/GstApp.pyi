@@ -7,12 +7,6 @@ from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
-_introspection_module = ...  # FIXME Constant
-_lock = ...  # FIXME Constant
-_namespace: str = "GstApp"
-_overrides_module = ...  # FIXME Constant
-_version: str = "1.0"
-
 class AppSink(GstBase.BaseSink, Gst.URIHandler):
     """
     :Constructors:
@@ -110,7 +104,6 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         max_bytes: int
         max_time: int
         wait_on_eos: bool
-        _async: bool
         blocksize: int
         enable_last_sample: bool
         last_sample: typing.Optional[Gst.Sample]
@@ -129,7 +122,6 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     props: Props = ...
     basesink: GstBase.BaseSink = ...
     priv: AppSinkPrivate = ...
-    _gst_reserved: list[None] = ...
     def __init__(
         self,
         buffer_list: bool = ...,
@@ -140,7 +132,6 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         max_bytes: int = ...,
         max_time: int = ...,
         wait_on_eos: bool = ...,
-        _async: bool = ...,
         blocksize: int = ...,
         enable_last_sample: bool = ...,
         max_bitrate: int = ...,
@@ -208,7 +199,6 @@ class AppSinkClass(GObject.GPointer):
     try_pull_object: typing.Callable[
         [AppSink, int], typing.Optional[Gst.MiniObject]
     ] = ...
-    _gst_reserved: list[None] = ...
 
 class AppSinkPrivate(GObject.GPointer): ...
 
@@ -331,7 +321,6 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     props: Props = ...
     basesrc: GstBase.BaseSrc = ...
     priv: AppSrcPrivate = ...
-    _gst_reserved: list[None] = ...
     def __init__(
         self,
         block: bool = ...,
@@ -410,7 +399,6 @@ class AppSrcClass(GObject.GPointer):
     end_of_stream: typing.Callable[[AppSrc], Gst.FlowReturn] = ...
     push_sample: typing.Callable[[AppSrc, Gst.Sample], Gst.FlowReturn] = ...
     push_buffer_list: typing.Callable[[AppSrc, Gst.BufferList], Gst.FlowReturn] = ...
-    _gst_reserved: list[None] = ...
 
 class AppSrcPrivate(GObject.GPointer): ...
 

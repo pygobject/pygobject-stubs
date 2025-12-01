@@ -14,9 +14,6 @@ SDP_BWTYPE_EXT_PREFIX: str = "X-"
 SDP_BWTYPE_RR: str = "RR"
 SDP_BWTYPE_RS: str = "RS"
 SDP_BWTYPE_TIAS: str = "TIAS"
-_lock = ...  # FIXME Constant
-_namespace: str = "GstSdp"
-_version: str = "1.0"
 
 def sdp_address_is_multicast(nettype: str, addrtype: str, addr: str) -> bool: ...
 def sdp_make_keymgmt(uri: str, base64: str) -> str: ...
