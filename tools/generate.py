@@ -795,6 +795,25 @@ def _gi_build_stub(
                     parents.append(f"GObject.GPointer")
                     needed_namespaces.add("GObject")
 
+        # Add non-GI base classes. Overrides could define new classes, such as:
+        # class FooError(Exception):
+        #    pass
+        for b in obj.__bases__:
+            if hasattr(b, "__gtype__"):
+                continue
+            type_fullname = f"{b.__module__}.{b.__qualname__}"
+            if type_fullname.startswith("gi.overrides."):
+                type_fullname = type_fullname[len("gi.overrides.") :]
+            ns, type_name = type_fullname.split(".", 1)
+            if ns == current_namespace:
+                parents.append(type_name)
+            elif ns == "builtins":
+                if type_name != "object":
+                    parents.append(type_name)
+            else:
+                parents.append(type_fullname)
+                needed_namespaces.add(ns)
+
         string_parents = ""
         if len(parents) > 0:
             string_parents = f"({', '.join(parents)})"
