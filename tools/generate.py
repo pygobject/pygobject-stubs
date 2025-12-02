@@ -368,6 +368,7 @@ def _build(
     ns: set[str] = set()
     ret = _gi_build_stub(repo, parent, namespace, dir(parent), ns, overrides, None, "")
 
+    imports: list[str] = []
     typevars: list[str] = [
         'T = typing.TypeVar("T")',
     ]
@@ -385,8 +386,9 @@ def _build(
     CellRendererToggle,
 )"""
         )
+    elif namespace == "GObject":
+        imports.append("import enum")
 
-    imports: list[str] = []
     if "cairo" in ns:
         imports = ["import cairo"]
         typevars.append(
@@ -397,10 +399,9 @@ def _build(
     imports += [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return (
-        "import typing"
-        + "\n\n"
-        + "import enum"
-        + "\n\n"
+        "import typing\n"
+        + "from typing_extensions import Self\n"
+        + "\n"
         + "\n".join(imports)
         + "\n"
         + "\n".join(typevars)
@@ -885,13 +886,10 @@ def _gi_build_stub(
             if name != "GFlags":
                 base = "GFlags"
             else:
-                base = ""
+                base = "enum.IntFlag"
         else:
             needed_namespaces.add("GObject")
             base = "GObject.GFlags"
-
-        if str(obj).startswith("<flag"):
-            base = "enum.IntFlag"
 
         ret += f"class {name}({base}):\n"
         for key in sorted(vars(obj)):
@@ -931,13 +929,10 @@ def _gi_build_stub(
             if name != "GEnum":
                 base = "GEnum"
             else:
-                base = ""
+                base = "enum.IntEnum"
         else:
             needed_namespaces.add("GObject")
             base = "GObject.GEnum"
-
-        if str(obj).startswith("<enum"):
-            base = "enum.IntEnum"
 
         # Some Enums can be empty in the end
         ret += f"class {name}({base}):\n"

@@ -1,7 +1,6 @@
 import typing
 
-from enum import Enum
-from enum import Flag
+import enum
 
 from gi.repository import GLib
 
@@ -3088,8 +3087,7 @@ class ConnectFlags(GFlags):
     SWAPPED = 2
 
 # override
-# IntFlag is close enough to whatever GFlags does
-class GFlags(int, Flag):
+class GFlags(enum.IntFlag):
     __gtype__: GType
     first_value_name: str
     first_value_nick: str
@@ -3167,8 +3165,7 @@ class TypeFundamentalFlags(GFlags):
     INSTANTIATABLE = 2
 
 # override
-# IntEnum is close enough to whatever GEnum does
-class GEnum(int, Enum):
+class GEnum(enum.IntEnum):
     __gtype__: GType
     value_name: str
     value_nick: str
