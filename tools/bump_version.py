@@ -10,6 +10,7 @@ REPO_DIR = Path(__file__).resolve().parent.parent
 
 
 PYPROJECT_TOML = REPO_DIR / "pyproject.toml"
+MESON_BUILD = REPO_DIR / "meson.build"
 CHANGELOG = REPO_DIR / "CHANGELOG.md"
 
 VERSION_RX = r"version = \"(\d+\.\d+\.\d+)"
@@ -25,13 +26,13 @@ def get_current_version() -> str:
     return match[1]
 
 
-def bump_pyproject_toml(current_version: str, new_version: str) -> None:
-    with PYPROJECT_TOML.open("r", encoding="utf8") as f:
+def bump_version(filename: Path, current_version: str, new_version: str) -> None:
+    with filename.open("r", encoding="utf8") as f:
         content = f.read()
 
     content = content.replace(current_version, new_version, 1)
 
-    with PYPROJECT_TOML.open("w", encoding="utf8") as f:
+    with filename.open("w", encoding="utf8") as f:
         f.write(content)
 
 
@@ -57,5 +58,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     current_version = get_current_version()
-    bump_pyproject_toml(current_version, args.version)
+    bump_version(PYPROJECT_TOML, current_version, args.version)
+    bump_version(MESON_BUILD, current_version, args.version)
     make_changelog(args.version)
