@@ -4,6 +4,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import HarfBuzz
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -20,7 +21,6 @@ VERSION_MAJOR: int = 1
 VERSION_MICRO: int = 4
 VERSION_MINOR: int = 56
 VERSION_STRING: str = "1.56.4"
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "Pango"
 _overrides_module = ...  # FIXME Constant
@@ -315,7 +315,6 @@ class AttrList(GObject.GBoxed):
 
         new() -> Pango.AttrList
     """
-
     def change(self, attr: Attribute) -> None: ...
     def copy(self) -> typing.Optional[AttrList]: ...
     def equal(self, other_list: AttrList) -> bool: ...
@@ -449,7 +448,6 @@ class Context(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def changed(self) -> None: ...
     def get_base_dir(self) -> Direction: ...
     def get_base_gravity(self) -> Gravity: ...
@@ -500,7 +498,6 @@ class Coverage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def copy(self) -> Coverage: ...
     @staticmethod
     def from_bytes(bytes: typing.Sequence[int]) -> typing.Optional[Coverage]: ...
@@ -595,7 +592,6 @@ class FontDescription(GObject.GBoxed):
 
         new() -> Pango.FontDescription
     """
-
     def better_match(
         self, old_match: typing.Optional[FontDescription], new_match: FontDescription
     ) -> bool: ...
@@ -714,8 +710,7 @@ class FontFamily(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         is_monospace: bool
         is_variable: bool
         item_type: typing.Type[typing.Any]
@@ -780,8 +775,7 @@ class FontMap(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
@@ -929,7 +923,6 @@ class FontsetSimple(Fontset):
     Signals from GObject:
       notify (GParam)
     """
-
     def append(self, font: Font) -> None: ...
     @classmethod
     def new(cls, language: Language) -> FontsetSimple: ...
@@ -1116,7 +1109,6 @@ class Layout(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def context_changed(self) -> None: ...
     def copy(self) -> Layout: ...
     @staticmethod
@@ -1443,7 +1435,6 @@ class ScriptIter(GObject.GBoxed):
 
         new(text:str, length:int) -> Pango.ScriptIter
     """
-
     def free(self) -> None: ...
     def get_range(self) -> typing.Tuple[str, str, Script]: ...
     @classmethod
@@ -1458,7 +1449,6 @@ class TabArray(GObject.GBoxed):
 
         new(initial_size:int, positions_in_pixels:bool) -> Pango.TabArray
     """
-
     def copy(self) -> TabArray: ...
     def free(self) -> None: ...
     @staticmethod
