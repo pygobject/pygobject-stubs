@@ -6,14 +6,15 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 0
+MICRO_VERSION: int = 7
 MINOR_VERSION: int = 7
-VERSION_S: str = "1.7.0"
+VERSION_S: str = "1.7.7"
 _lock = ...  # FIXME Constant
 _namespace: str = "Adw"
 _version: str = "1"
@@ -147,8 +148,7 @@ class AboutDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         application_icon: str
         application_name: str
         artists: typing.Optional[list[str]]
@@ -502,8 +502,7 @@ class AboutWindow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         application_icon: str
         application_name: str
         artists: typing.Optional[list[str]]
@@ -844,8 +843,7 @@ class ActionRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(PreferencesRow.Props):
         activatable_widget: typing.Optional[Gtk.Widget]
         icon_name: typing.Optional[str]
         subtitle: typing.Optional[str]
@@ -1080,8 +1078,7 @@ class AlertDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         body: str
         body_use_markup: bool
         close_response: str
@@ -1267,8 +1264,7 @@ class Animation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         follow_enable_animations_setting: bool
         state: AnimationState
         target: AnimationTarget
@@ -1366,8 +1362,7 @@ class Application(Gtk.Application, Gio.ActionGroup, Gio.ActionMap):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Application.Props):
         style_manager: StyleManager
         active_window: typing.Optional[Gtk.Window]
         menubar: typing.Optional[Gio.MenuModel]
@@ -1546,8 +1541,7 @@ class ApplicationWindow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.ApplicationWindow.Props):
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
@@ -1774,8 +1768,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         custom_image: typing.Optional[Gdk.Paintable]
         icon_name: typing.Optional[str]
         show_initials: bool
@@ -1965,8 +1958,7 @@ class Banner(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         button_label: typing.Optional[str]
         button_style: BannerButtonStyle
         revealed: bool
@@ -2146,8 +2138,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         can_focus: bool
         can_target: bool
@@ -2325,8 +2316,7 @@ class BottomSheet(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         align: float
         bottom_bar: typing.Optional[Gtk.Widget]
         bottom_bar_height: int
@@ -2484,8 +2474,7 @@ class Breakpoint(GObject.Object, Gtk.Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         condition: typing.Optional[BreakpointCondition]
 
     props: Props = ...
@@ -2581,8 +2570,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
         can_focus: bool
@@ -2701,7 +2689,6 @@ class BreakpointCondition(GObject.GBoxed):
         new_or(condition_1:Adw.BreakpointCondition, condition_2:Adw.BreakpointCondition) -> Adw.BreakpointCondition
         new_ratio(type:Adw.BreakpointConditionRatioType, width:int, height:int) -> Adw.BreakpointCondition
     """
-
     def copy(self) -> BreakpointCondition: ...
     def free(self) -> None: ...
     @classmethod
@@ -2796,8 +2783,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_shrink: bool
         icon_name: str
         label: str
@@ -2989,8 +2975,7 @@ class ButtonRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(PreferencesRow.Props):
         end_icon_name: typing.Optional[str]
         start_icon_name: typing.Optional[str]
         title: str
@@ -3117,7 +3102,6 @@ class CallbackAnimationTarget(AnimationTarget):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(
         cls, callback: typing.Callable[..., None], *user_data: typing.Any
@@ -3212,8 +3196,7 @@ class Carousel(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
         allow_scroll_wheel: bool
@@ -3412,8 +3395,7 @@ class CarouselIndicatorDots(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         carousel: typing.Optional[Carousel]
         can_focus: bool
         can_target: bool
@@ -3577,8 +3559,7 @@ class CarouselIndicatorLines(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         carousel: typing.Optional[Carousel]
         can_focus: bool
         can_target: bool
@@ -3745,8 +3726,7 @@ class Clamp(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         maximum_size: int
         tightening_threshold: int
@@ -3870,8 +3850,7 @@ class ClampLayout(Gtk.LayoutManager, Gtk.Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.LayoutManager.Props):
         maximum_size: int
         tightening_threshold: int
         unit: LengthUnit
@@ -3984,8 +3963,7 @@ class ClampScrollable(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         maximum_size: int
         tightening_threshold: int
@@ -4204,8 +4182,7 @@ class ComboRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ActionRow.Props):
         enable_search: bool
         expression: typing.Optional[Gtk.Expression]
         factory: typing.Optional[Gtk.ListItemFactory]
@@ -4456,8 +4433,7 @@ class Dialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_close: bool
         child: typing.Optional[Gtk.Widget]
         content_height: int
@@ -4702,8 +4678,7 @@ class EntryRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(PreferencesRow.Props):
         activates_default: bool
         attributes: typing.Optional[Pango.AttrList]
         enable_emoji_completion: bool
@@ -4877,8 +4852,7 @@ class EnumListItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         name: str
         nick: str
         value: int
@@ -4919,8 +4893,7 @@ class EnumListModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         enum_type: typing.Type[typing.Any]
 
     props: Props = ...
@@ -5032,8 +5005,7 @@ class ExpanderRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(PreferencesRow.Props):
         enable_expansion: bool
         expanded: bool
         icon_name: typing.Optional[str]
@@ -5264,8 +5236,7 @@ class Flap(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         content: typing.Optional[Gtk.Widget]
         flap: typing.Optional[Gtk.Widget]
         flap_position: Gtk.PackType
@@ -5489,8 +5460,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         centering_policy: CenteringPolicy
         decoration_layout: typing.Optional[str]
         show_back_button: bool
@@ -5684,8 +5654,7 @@ class InlineViewSwitcher(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_shrink: bool
         display_mode: InlineViewSwitcherDisplayMode
         homogeneous: bool
@@ -5808,8 +5777,7 @@ class Layout(GObject.Object, Gtk.Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         content: Gtk.Widget
         name: typing.Optional[str]
 
@@ -5903,8 +5871,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         id: str
         can_focus: bool
         can_target: bool
@@ -6082,8 +6049,7 @@ class Leaflet(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_navigate_back: bool
         can_navigate_forward: bool
         can_unfold: bool
@@ -6251,8 +6217,7 @@ class LeafletPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Gtk.Widget
         name: typing.Optional[str]
         navigatable: bool
@@ -6401,8 +6366,7 @@ class MessageDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Window.Props):
         body: str
         body_use_markup: bool
         close_response: str
@@ -6663,8 +6627,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         layout: typing.Optional[Layout]
         layout_name: typing.Optional[str]
         can_focus: bool
@@ -6843,8 +6806,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_pop: bool
         child: typing.Optional[Gtk.Widget]
         tag: typing.Optional[str]
@@ -7040,8 +7002,7 @@ class NavigationSplitView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         collapsed: bool
         content: typing.Optional[NavigationPage]
         max_sidebar_width: float
@@ -7247,8 +7208,7 @@ class NavigationView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         animate_transitions: bool
         hhomogeneous: bool
         navigation_stack: Gio.ListModel
@@ -7452,8 +7412,7 @@ class OverlaySplitView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         collapsed: bool
         content: typing.Optional[Gtk.Widget]
         enable_hide_gesture: bool
@@ -7699,8 +7658,7 @@ class PasswordEntryRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EntryRow.Props):
         activates_default: bool
         attributes: typing.Optional[Pango.AttrList]
         enable_emoji_completion: bool
@@ -7923,8 +7881,7 @@ class PreferencesDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         search_enabled: bool
         visible_page: typing.Optional[Gtk.Widget]
         visible_page_name: typing.Optional[str]
@@ -8121,8 +8078,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         description: typing.Optional[str]
         header_suffix: typing.Optional[Gtk.Widget]
         separate_rows: bool
@@ -8304,8 +8260,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         banner: typing.Optional[Banner]
         description: str
         description_centered: bool
@@ -8505,8 +8460,7 @@ class PreferencesRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.ListBoxRow.Props):
         title: str
         title_selectable: bool
         use_markup: bool
@@ -8742,8 +8696,7 @@ class PreferencesWindow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         can_navigate_back: bool
         search_enabled: bool
         visible_page: typing.Optional[Gtk.Widget]
@@ -8929,8 +8882,7 @@ class PropertyAnimationTarget(AnimationTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(AnimationTarget.Props):
         object: GObject.Object
         pspec: GObject.ParamSpec
 
@@ -9070,8 +9022,7 @@ class SpinRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ActionRow.Props):
         adjustment: Gtk.Adjustment
         climb_rate: float
         digits: int
@@ -9314,8 +9265,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -9423,8 +9373,7 @@ class SpinnerPaintable(GObject.Object, Gdk.Paintable, Gtk.SymbolicPaintable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         widget: typing.Optional[Gtk.Widget]
 
     props: Props = ...
@@ -9528,8 +9477,7 @@ class SplitButton(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         can_shrink: bool
         child: typing.Optional[Gtk.Widget]
         direction: Gtk.ArrowType
@@ -9694,8 +9642,7 @@ class SpringAnimation(Animation):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Animation.Props):
         clamp: bool
         epsilon: float
         estimated_duration: int
@@ -9760,7 +9707,6 @@ class SpringParams(GObject.GBoxed):
         new(damping_ratio:float, mass:float, stiffness:float) -> Adw.SpringParams
         new_full(damping:float, mass:float, stiffness:float) -> Adw.SpringParams
     """
-
     def get_damping(self) -> float: ...
     def get_damping_ratio(self) -> float: ...
     def get_mass(self) -> float: ...
@@ -9857,8 +9803,7 @@ class Squeezer(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         allow_none: bool
         homogeneous: bool
         interpolate_size: bool
@@ -10005,8 +9950,7 @@ class SqueezerPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Gtk.Widget
         enabled: bool
 
@@ -10100,8 +10044,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         description: typing.Optional[str]
         icon_name: typing.Optional[str]
@@ -10235,8 +10178,7 @@ class StyleManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accent_color: AccentColor
         accent_color_rgba: Gdk.RGBA
         color_scheme: ColorScheme
@@ -10309,8 +10251,7 @@ class SwipeTracker(GObject.Object, Gtk.Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
         allow_window_handle: bool
@@ -10371,7 +10312,6 @@ class Swipeable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_cancel_progress(self) -> float: ...
     def get_distance(self) -> float: ...
     def get_progress(self) -> float: ...
@@ -10495,8 +10435,7 @@ class SwitchRow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ActionRow.Props):
         active: bool
         activatable_widget: typing.Optional[Gtk.Widget]
         icon_name: typing.Optional[str]
@@ -10699,8 +10638,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         autohide: bool
         end_action_widget: typing.Optional[Gtk.Widget]
         expand_tabs: bool
@@ -10905,8 +10843,7 @@ class TabButton(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         view: typing.Optional[TabView]
         can_focus: bool
         can_target: bool
@@ -11086,8 +11023,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         enable_new_tab: bool
         enable_search: bool
@@ -11256,8 +11192,7 @@ class TabPage(GObject.Object, Gtk.Accessible):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Gtk.Widget
         icon: typing.Optional[Gio.Icon]
         indicator_activatable: bool
@@ -11423,8 +11358,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         default_icon: Gio.Icon
         is_transferring_page: bool
         menu_model: typing.Optional[Gio.MenuModel]
@@ -11601,8 +11535,7 @@ class TimedAnimation(Animation):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Animation.Props):
         alternate: bool
         duration: int
         easing: Easing
@@ -11684,8 +11617,7 @@ class Toast(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         action_name: typing.Optional[str]
         action_target: typing.Optional[GLib.Variant]
         button_label: typing.Optional[str]
@@ -11812,8 +11744,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         child: typing.Optional[Gtk.Widget]
         can_focus: bool
         can_target: bool
@@ -11929,8 +11860,7 @@ class Toggle(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: typing.Optional[Gtk.Widget]
         enabled: bool
         icon_name: typing.Optional[str]
@@ -12055,8 +11985,7 @@ class ToggleGroup(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         active: int
         active_name: typing.Optional[str]
         can_shrink: bool
@@ -12247,8 +12176,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         bottom_bar_height: int
         bottom_bar_style: ToolbarStyle
         content: typing.Optional[Gtk.Widget]
@@ -12446,8 +12374,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         enable_transitions: bool
         hhomogeneous: bool
         pages: Gtk.SelectionModel
@@ -12598,8 +12525,7 @@ class ViewStackPage(GObject.Object, Gtk.Accessible):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         badge_number: int
         child: Gtk.Widget
         icon_name: typing.Optional[str]
@@ -12672,8 +12598,7 @@ class ViewStackPages(GObject.Object, Gio.ListModel, Gtk.SelectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         selected_page: typing.Optional[ViewStackPage]
 
     props: Props = ...
@@ -12762,8 +12687,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         policy: ViewSwitcherPolicy
         stack: typing.Optional[ViewStack]
         can_focus: bool
@@ -12917,8 +12841,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         reveal: bool
         stack: typing.Optional[ViewStack]
         can_focus: bool
@@ -13099,8 +13022,7 @@ class ViewSwitcherTitle(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         stack: typing.Optional[ViewStack]
         subtitle: str
         title: str
@@ -13320,8 +13242,7 @@ class Window(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Window.Props):
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
@@ -13543,8 +13464,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         subtitle: str
         title: str
         can_focus: bool
@@ -13722,8 +13642,7 @@ class WrapBox(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.Widget.Props):
         align: float
         child_spacing: int
         child_spacing_unit: LengthUnit
@@ -13902,8 +13821,7 @@ class WrapLayout(Gtk.LayoutManager, Gtk.Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.LayoutManager.Props):
         align: float
         child_spacing: int
         child_spacing_unit: LengthUnit
