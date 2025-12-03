@@ -663,6 +663,9 @@ def _gi_build_stub_parts(
             # Assume everything else is some manner of constant
             constants[name] = obj
 
+    # Filter out private constants
+    constants = {k: v for k, v in constants.items() if not k.startswith("_")}
+
     # Remove fields from constants to preserve output order
     fields: list[GI.FieldInfo] = []
     if in_class:
