@@ -1,6 +1,7 @@
 import typing
 
 from gi.repository import GObject
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -120,7 +121,7 @@ MAXUINT64: int = 18446744073709551615
 MAXUINT8: int = 255
 MAXULONG: int = 18446744073709551615
 MAXUSHORT: int = 65535
-MICRO_VERSION: int = 3
+MICRO_VERSION: int = 4
 MINDOUBLE: float = 2.2250738585072014e-308
 MINFLOAT: float = 1.1754943508222875e-38
 MININT: int = -2147483648
@@ -203,7 +204,6 @@ USER_DIRECTORY_VIDEOS: int = 7
 VA_COPY_AS_ARRAY: int = 1
 VERSION_MIN_REQUIRED: int = 2
 WIN32_MSG_HANDLE: int = 19981206
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "GLib"
 _overrides_module = ...  # FIXME Constant
@@ -1299,7 +1299,6 @@ class BookmarkFile(GObject.GBoxed):
 
         new() -> GLib.BookmarkFile
     """
-
     def add_application(
         self,
         uri: str,
@@ -1435,7 +1434,6 @@ class Bytes(GObject.GBoxed):
         new(data:list=None) -> GLib.Bytes
         new_take(data:list=None) -> GLib.Bytes
     """
-
     def compare(self, bytes2: Bytes) -> int: ...
     def equal(self, bytes2: Bytes) -> bool: ...
     def get_data(self) -> typing.Optional[bytes]: ...
@@ -1471,7 +1469,6 @@ class Checksum(GObject.GBoxed):
 
         new(checksum_type:GLib.ChecksumType) -> GLib.Checksum or None
     """
-
     def copy(self) -> Checksum: ...
     def free(self) -> None: ...
     def get_string(self) -> str: ...
@@ -1622,7 +1619,6 @@ class DateTime(GObject.GBoxed):
         new_now_utc() -> GLib.DateTime or None
         new_utc(year:int, month:int, day:int, hour:int, minute:int, seconds:float) -> GLib.DateTime or None
     """
-
     def add(self, timespan: int) -> typing.Optional[DateTime]: ...
     def add_days(self, days: int) -> typing.Optional[DateTime]: ...
     def add_full(
@@ -1733,7 +1729,6 @@ class Dir(GObject.GBoxed):
 
         open(path:str, flags:int) -> GLib.Dir
     """
-
     def close(self) -> None: ...
     @staticmethod
     def make_tmp(tmpl: typing.Optional[str] = None) -> str: ...
@@ -1886,7 +1881,6 @@ class Hmac(GObject.GBoxed):
 
         new(digest_type:GLib.ChecksumType, key:list) -> GLib.Hmac or None
     """
-
     def copy(self) -> Hmac: ...
     def get_digest(self, buffer: typing.Sequence[int]) -> None: ...
     def get_string(self) -> str: ...
@@ -2002,7 +1996,7 @@ class IOChannel(GObject.GBoxed):
     _whence_map = ...  # FIXME Constant
 
     def add_watch(
-        self, condition, callback, *user_data, **kwargs
+        self, condition, callback, *user_data, priority=0
     ): ...  # FIXME Function
     def close(self) -> None: ...
     @staticmethod
@@ -2021,7 +2015,7 @@ class IOChannel(GObject.GBoxed):
     @classmethod
     def new_file(cls, filename: str, mode: str) -> IOChannel: ...
     def read(self, max_count=-1): ...  # FIXME Function
-    def read_chars(self) -> typing.Tuple[IOStatus, bytes, int]: ...
+    def read_chars(self, max_count=-1): ...  # FIXME Function
     def read_line(self) -> typing.Tuple[IOStatus, str, int, int]: ...
     def read_line_string(
         self, buffer: String, terminator_pos: typing.Optional[int] = None
@@ -2145,7 +2139,6 @@ class KeyFile(GObject.GBoxed):
 
         new() -> GLib.KeyFile
     """
-
     @staticmethod
     def error_quark() -> int: ...
     def get_boolean(self, group_name: str, key: str) -> bool: ...
@@ -2263,7 +2256,6 @@ class MainContext(GObject.GBoxed):
         new() -> GLib.MainContext
         new_with_flags(flags:GLib.MainContextFlags) -> GLib.MainContext
     """
-
     def acquire(self) -> bool: ...
     def add_poll(self, fd: PollFD, priority: int) -> None: ...
     def check(self, max_priority: int, fds: typing.Sequence[PollFD]) -> bool: ...
@@ -2292,7 +2284,10 @@ class MainContext(GObject.GBoxed):
     def prepare(self) -> typing.Tuple[bool, int]: ...
     def push_thread_default(self) -> None: ...
     def pusher_new(self) -> None: ...
-    def query(self, max_priority: int) -> typing.Tuple[int, int, list[PollFD]]: ...
+    # override
+    def query(
+        self, max_priority: int
+    ) -> typing.Tuple[int, list[PollFD]]: ...  # FIXME Function
     def ref(self) -> MainContext: ...
     @staticmethod
     def ref_thread_default() -> MainContext: ...
@@ -2310,7 +2305,6 @@ class MainLoop(GObject.GBoxed):
 
         new(context:GLib.MainContext=None, is_running:bool) -> GLib.MainLoop
     """
-
     def get_context(self) -> MainContext: ...
     def is_running(self) -> bool: ...
     @classmethod
@@ -2331,7 +2325,6 @@ class MappedFile(GObject.GBoxed):
         new(filename:str, writable:bool) -> GLib.MappedFile
         new_from_fd(fd:int, writable:bool) -> GLib.MappedFile
     """
-
     def free(self) -> None: ...
     def get_bytes(self) -> Bytes: ...
     def get_contents(self) -> typing.Optional[str]: ...
@@ -2351,7 +2344,6 @@ class MarkupParseContext(GObject.GBoxed):
 
         new(parser:GLib.MarkupParser, flags:GLib.MarkupParseFlags, user_data=None, user_data_dnotify:GLib.DestroyNotify) -> GLib.MarkupParseContext
     """
-
     def end_parse(self) -> bool: ...
     def free(self) -> None: ...
     def get_element(self) -> str: ...
@@ -2566,7 +2558,6 @@ class PatternSpec(GObject.GBoxed):
 
         new(pattern:str) -> GLib.PatternSpec
     """
-
     def copy(self) -> PatternSpec: ...
     def equal(self, pspec2: PatternSpec) -> bool: ...
     def free(self) -> None: ...
@@ -2712,7 +2703,6 @@ class Rand(GObject.GBoxed):
         new_with_seed(seed:int) -> GLib.Rand
         new_with_seed_array(seed:int, seed_length:int) -> GLib.Rand
     """
-
     def copy(self) -> Rand: ...
     def double(self) -> float: ...
     def double_range(self, begin: float, end: float) -> float: ...
@@ -2753,7 +2743,6 @@ class Regex(GObject.GBoxed):
 
         new(pattern:str, compile_options:GLib.RegexCompileFlags, match_options:GLib.RegexMatchFlags) -> GLib.Regex or None
     """
-
     @staticmethod
     def check_replacement(replacement: str) -> typing.Tuple[bool, bool]: ...
     @staticmethod
@@ -3212,7 +3201,6 @@ class StrvBuilder(GObject.GBoxed):
 
         new() -> GLib.StrvBuilder
     """
-
     def add(self, value: str) -> None: ...
     def addv(self, value: typing.Sequence[str]) -> None: ...
     def end(self) -> list[str]: ...
@@ -3379,7 +3367,6 @@ class TimeZone(GObject.GBoxed):
         new_offset(seconds:int) -> GLib.TimeZone
         new_utc() -> GLib.TimeZone
     """
-
     def adjust_time(self, type: TimeType) -> typing.Tuple[int, int]: ...
     def find_interval(self, type: TimeType, time_: int) -> int: ...
     def get_abbreviation(self, interval: int) -> str: ...
@@ -3519,7 +3506,6 @@ class Tree(GObject.GBoxed):
 
         new_full(key_compare_func:GLib.CompareDataFunc, key_compare_data=None, key_destroy_func:GLib.DestroyNotify) -> GLib.Tree
     """
-
     def destroy(self) -> None: ...
     def foreach(
         self, func: typing.Callable[..., bool], *user_data: typing.Any
@@ -3922,7 +3908,6 @@ class VariantBuilder(GObject.GBoxed):
 
         new(type:GLib.VariantType) -> GLib.VariantBuilder
     """
-
     # override
     def __init__(self, type: VariantType): ...
     def add_value(self, value: Variant) -> None: ...
@@ -3942,7 +3927,6 @@ class VariantDict(GObject.GBoxed):
 
         new(from_asv:GLib.Variant=None) -> GLib.VariantDict
     """
-
     def clear(self) -> None: ...
     def contains(self, key: str) -> bool: ...
     def end(self) -> Variant: ...
@@ -3968,7 +3952,6 @@ class VariantType(GObject.GBoxed):
         new_maybe(element:GLib.VariantType) -> GLib.VariantType
         new_tuple(items:list) -> GLib.VariantType
     """
-
     # override
     def __init__(self, string: str) -> None: ...
     @staticmethod
@@ -4084,7 +4067,7 @@ class LogLevelFlags(GObject.GFlags):
     LEVEL_DEBUG = 128
     LEVEL_ERROR = 4
     LEVEL_INFO = 64
-    LEVEL_MASK = 18446744073709551612
+    LEVEL_MASK = 4294967292
     LEVEL_MESSAGE = 32
     LEVEL_WARNING = 16
 
