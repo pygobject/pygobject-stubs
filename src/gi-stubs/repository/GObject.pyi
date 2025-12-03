@@ -3,6 +3,7 @@ import typing
 import enum
 
 from gi.repository import GLib
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -134,7 +135,6 @@ TYPE_VARIANT = ...  # FIXME Constant
 VALUE_COLLECT_FORMAT_MAX_LENGTH: int = 8
 VALUE_INTERNED_STRING: int = 268435456
 VALUE_NOCOPY_CONTENTS: int = 134217728
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "GObject"
 _overrides_module = ...  # FIXME Constant
@@ -375,7 +375,7 @@ def get_application_name() -> typing.Optional[str]: ...
 def get_current_time(): ...  # FIXME Function
 def get_prgname() -> typing.Optional[str]: ...
 def gtype_get_type() -> typing.Type[typing.Any]: ...
-def idle_add(function, *user_data, **kwargs): ...  # FIXME Function
+def idle_add(function, *user_data, priority=200): ...  # FIXME Function
 def io_add_watch(*args, **kwargs): ...  # FIXME Function
 def list_properties(*args, **kwargs): ...  # FIXME Function
 def main_context_default() -> GLib.MainContext: ...
@@ -693,8 +693,10 @@ def source_set_dummy_callback(source: GLib.Source) -> None: ...
 def spawn_async(*args, **kwargs): ...  # FIXME Function
 def strdup_value_contents(value: typing.Any) -> str: ...
 def threads_init(): ...  # FIXME Function
-def timeout_add(interval, function, *user_data, **kwargs): ...  # FIXME Function
-def timeout_add_seconds(interval, function, *user_data, **kwargs): ...  # FIXME Function
+def timeout_add(interval, function, *user_data, priority=0): ...  # FIXME Function
+def timeout_add_seconds(
+    interval, function, *user_data, priority=0
+): ...  # FIXME Function
 def type_add_class_private(
     class_type: typing.Type[typing.Any], private_size: int
 ) -> None: ...
@@ -839,8 +841,7 @@ class Binding(Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Object.Props):
         flags: BindingFlags
         source: typing.Optional[Object]
         source_property: str
@@ -884,8 +885,7 @@ class BindingGroup(Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Object.Props):
         source: typing.Optional[Object]
 
     props: Props = ...
@@ -1281,6 +1281,8 @@ class FlagsValue(GPointer):
     value_name: str = ...
     value_nick: str = ...
 
+class Float: ...
+
 class GBoxed:
     def copy(self, /): ...  # FIXME Function
 
@@ -1392,7 +1394,6 @@ class GObjectWeakRef:
     """
     A GObject weak reference
     """
-
     def unref(self, /): ...  # FIXME Function
 
 class GParamSpec:
@@ -1496,7 +1497,7 @@ class IOChannel(GBoxed):
     _whence_map = ...  # FIXME Constant
 
     def add_watch(
-        self, condition, callback, *user_data, **kwargs
+        self, condition, callback, *user_data, priority=0
     ): ...  # FIXME Function
     def close(self) -> None: ...
     @staticmethod
@@ -1515,7 +1516,7 @@ class IOChannel(GBoxed):
     @classmethod
     def new_file(cls, filename: str, mode: str) -> IOChannel: ...
     def read(self, max_count=-1): ...  # FIXME Function
-    def read_chars(self) -> typing.Tuple[GLib.IOStatus, bytes, int]: ...
+    def read_chars(self, max_count=-1): ...  # FIXME Function
     def read_line(self) -> typing.Tuple[GLib.IOStatus, str, int, int]: ...
     def read_line_string(
         self, buffer: GLib.String, terminator_pos: typing.Optional[int] = None
@@ -1680,7 +1681,6 @@ class MainContext(GBoxed):
         new() -> GLib.MainContext
         new_with_flags(flags:GLib.MainContextFlags) -> GLib.MainContext
     """
-
     def acquire(self) -> bool: ...
     def add_poll(self, fd: GLib.PollFD, priority: int) -> None: ...
     def check(self, max_priority: int, fds: typing.Sequence[GLib.PollFD]) -> bool: ...
@@ -1708,7 +1708,10 @@ class MainContext(GBoxed):
     def prepare(self) -> typing.Tuple[bool, int]: ...
     def push_thread_default(self) -> None: ...
     def pusher_new(self) -> None: ...
-    def query(self, max_priority: int) -> typing.Tuple[int, int, list[GLib.PollFD]]: ...
+    # override
+    def query(
+        self, max_priority: int
+    ) -> typing.Tuple[int, list[GLib.PollFD]]: ...  # FIXME Function
     def ref(self) -> GLib.MainContext: ...
     @staticmethod
     def ref_thread_default() -> GLib.MainContext: ...
@@ -1726,7 +1729,6 @@ class MainLoop(GBoxed):
 
         new(context:GLib.MainContext=None, is_running:bool) -> GLib.MainLoop
     """
-
     def get_context(self) -> GLib.MainContext: ...
     def is_running(self) -> bool: ...
     @classmethod
@@ -1757,6 +1759,7 @@ class Object:
     Signals from GObject:
       notify (GParam)
     """
+
     class Props: ...
     props: Props = ...
     g_type_instance: TypeInstance = ...
@@ -2024,6 +2027,7 @@ class ParamSpecEnum(ParamSpec):
     parent_instance: ParamSpec = ...
     enum_class: EnumClass = ...
     default_value: int = ...
+    def enum_class(fget): ...  # FIXME Function
 
 class ParamSpecFlags(ParamSpec):
     """
@@ -2037,6 +2041,7 @@ class ParamSpecFlags(ParamSpec):
     parent_instance: ParamSpec = ...
     flags_class: FlagsClass = ...
     default_value: int = ...
+    def flags_class(fget): ...  # FIXME Function
 
 class ParamSpecFloat(ParamSpec):
     """
@@ -2417,8 +2422,7 @@ class SignalGroup(Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Object.Props):
         target: typing.Optional[Object]
         target_type: typing.Type[typing.Any]
 
@@ -2795,7 +2799,6 @@ class TypePlugin(Object):
     """
     Interface GTypePlugin
     """
-
     def complete_interface_info(
         self,
         instance_type: typing.Type[typing.Any],
@@ -3036,13 +3039,14 @@ class property:
 
     .. code-block:: python
 
-         class MyObject(GObject.Object):
-             prop = GObject.Property(type=str)
+        class MyObject(GObject.Object):
+            prop = GObject.Property(type=str)
 
-         obj = MyObject()
-         obj.prop = 'value'
 
-         obj.prop  # now is 'value'
+        obj = MyObject()
+        obj.prop = "value"
+
+        obj.prop  # now is 'value'
 
     The API is similar to the builtin :py:func:`property`:
 
@@ -3053,12 +3057,12 @@ class property:
 
             @GObject.Property
             def prop(self):
-                'Read only property.'
+                "Read only property."
                 return 1
 
             @GObject.Property(type=int)
             def propInt(self):
-                'Read-write integer property.'
+                "Read-write integer property."
                 return self.value
 
             @propInt.setter
