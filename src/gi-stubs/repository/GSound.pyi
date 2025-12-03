@@ -1,9 +1,10 @@
-from typing import Any
-from typing import Callable
-from typing import Optional
+import typing
 
 from gi.repository import Gio
 from gi.repository import GObject
+from typing_extensions import Self
+
+T = typing.TypeVar("T")
 
 ATTR_APPLICATION_ICON: str = "application.icon"
 ATTR_APPLICATION_ICON_NAME: str = "application.icon_name"
@@ -51,26 +52,42 @@ ATTR_WINDOW_X11_MONITOR: str = "window.x11.monitor"
 ATTR_WINDOW_X11_SCREEN: str = "window.x11.screen"
 ATTR_WINDOW_X11_XID: str = "window.x11.xid"
 ATTR_WINDOW_Y: str = "window.y"
+_lock = ...  # FIXME Constant
 _namespace: str = "GSound"
 _version: str = "1.0"
 
 def error_quark() -> int: ...
 
 class Context(GObject.Object, Gio.Initable):
+    """
+    :Constructors:
+
+    ::
+
+        Context(**properties)
+        new(cancellable:Gio.Cancellable=None) -> GSound.Context
+
+    Object GSoundContext
+
+    Signals from GObject:
+      notify (GParam)
+    """
     def cache(self, attrs: dict[str, str]) -> bool: ...
     @classmethod
-    def new(cls, cancellable: Optional[Gio.Cancellable] = None) -> Context: ...
+    def new(cls, cancellable: typing.Optional[Gio.Cancellable] = None) -> Context: ...
     def open(self) -> bool: ...
     def play_full(
         self,
         attrs: dict[str, str],
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
-        *user_data: Any,
+        cancellable: typing.Optional[Gio.Cancellable] = None,
+        callback: typing.Optional[typing.Callable[..., None]] = None,
+        *user_data: typing.Any,
     ) -> None: ...
     def play_full_finish(self, result: Gio.AsyncResult) -> bool: ...
     def play_simple(
-        self, attrs: dict[str, str], cancellable: Optional[Gio.Cancellable] = None
+        self,
+        attrs: dict[str, str],
+        cancellable: typing.Optional[Gio.Cancellable] = None,
     ) -> bool: ...
     def set_attributes(self, attrs: dict[str, str]) -> bool: ...
     def set_driver(self, driver: str) -> bool: ...
