@@ -4,6 +4,7 @@ from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Pango
 from gi.repository import xlib
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -44,8 +45,7 @@ class X11AppLaunchContext(Gdk.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.AppLaunchContext.Props):
         display: Gdk.Display
 
     props: Props = ...
@@ -72,8 +72,7 @@ class X11DeviceManagerXI2(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display: Gdk.Display
         major: int
         minor: int
@@ -130,8 +129,7 @@ class X11DeviceXI2(Gdk.Device):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.Device.Props):
         device_id: int
         active_layout_index: int
         caps_lock_state: bool
@@ -198,8 +196,7 @@ class X11Display(Gdk.Display):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.Display.Props):
         composited: bool
         dmabuf_formats: Gdk.DmabufFormats
         input_shapes: bool
@@ -272,8 +269,7 @@ class X11Drag(Gdk.Drag):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.Drag.Props):
         actions: Gdk.DragAction
         content: Gdk.ContentProvider
         device: Gdk.Device
@@ -317,8 +313,7 @@ class X11GLContext(Gdk.GLContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.GLContext.Props):
         allowed_apis: Gdk.GLAPI
         api: Gdk.GLAPI
         shared_context: typing.Optional[Gdk.GLContext]
@@ -367,8 +362,7 @@ class X11Monitor(Gdk.Monitor):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.Monitor.Props):
         connector: typing.Optional[str]
         description: typing.Optional[str]
         display: Gdk.Display
@@ -406,7 +400,6 @@ class X11Screen(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_current_desktop(self) -> int: ...
     def get_monitor_output(self, monitor_num: int) -> int: ...
     def get_number_of_desktops(self) -> int: ...
@@ -447,8 +440,7 @@ class X11Surface(Gdk.Surface):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gdk.Surface.Props):
         cursor: typing.Optional[Gdk.Cursor]
         display: Gdk.Display
         frame_clock: Gdk.FrameClock
