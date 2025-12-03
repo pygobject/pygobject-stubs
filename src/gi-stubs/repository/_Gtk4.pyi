@@ -11,6 +11,7 @@ from gi.repository import GObject
 from gi.repository import Graphene
 from gi.repository import Gsk
 from gi.repository import Pango
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 CellRendererT = typing.TypeVar(
@@ -123,7 +124,6 @@ STYLE_PROVIDER_PRIORITY_USER: int = 800
 TEXT_VIEW_PRIORITY_VALIDATE: int = 125
 TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: int = -1
 TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: int = -2
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "Gtk"
 _overrides_module = ...  # FIXME Constant
@@ -392,8 +392,7 @@ class ATContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accessible: Accessible
         accessible_role: AccessibleRole
         display: Gdk.Display
@@ -540,8 +539,7 @@ class AboutDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         artists: list[str]
         authors: list[str]
         comments: typing.Optional[str]
@@ -743,7 +741,6 @@ class Accessible(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def announce(
         self, message: str, priority: AccessibleAnnouncementPriority
     ) -> None: ...
@@ -818,7 +815,6 @@ class AccessibleList(GObject.GBoxed):
         new_from_array(accessibles:list) -> Gtk.AccessibleList
         new_from_list(list:list) -> Gtk.AccessibleList
     """
-
     def get_objects(self) -> list[Accessible]: ...
     @classmethod
     def new_from_array(
@@ -848,7 +844,6 @@ class AccessibleText(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def update_caret_position(self) -> None: ...
     def update_contents(
         self, change: AccessibleTextContentChange, start: int, end: int
@@ -967,8 +962,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         revealed: bool
         can_focus: bool
         can_target: bool
@@ -1062,7 +1056,6 @@ class Actionable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_action_name(self) -> typing.Optional[str]: ...
     def get_action_target_value(self) -> typing.Optional[GLib.Variant]: ...
     def set_action_name(self, action_name: typing.Optional[str] = None) -> None: ...
@@ -1103,7 +1096,6 @@ class ActivateAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get() -> ActivateAction: ...
 
@@ -1135,8 +1127,7 @@ class Adjustment(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         lower: float
         page_increment: float
         page_size: float
@@ -1229,8 +1220,7 @@ class AlertDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         buttons: typing.Optional[list[str]]
         cancel_button: int
         default_button: int
@@ -1299,8 +1289,7 @@ class AlternativeTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ShortcutTrigger.Props):
         first: ShortcutTrigger
         second: ShortcutTrigger
 
@@ -1344,8 +1333,7 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(MultiFilter.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
@@ -1362,7 +1350,6 @@ class AppChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_app_info(self) -> typing.Optional[Gio.AppInfo]: ...
     def get_content_type(self) -> str: ...
     def refresh(self) -> None: ...
@@ -1444,8 +1431,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         heading: typing.Optional[str]
         modal: bool
         show_default_item: bool
@@ -1663,8 +1649,7 @@ class AppChooserDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         gfile: Gio.File
         heading: typing.Optional[str]
         use_header_bar: int
@@ -1883,8 +1868,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         default_text: typing.Optional[str]
         show_all: bool
         show_default: bool
@@ -2043,8 +2027,7 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gio.Application.Props):
         active_window: typing.Optional[Window]
         menubar: typing.Optional[Gio.MenuModel]
         register_session: bool
@@ -2233,8 +2216,7 @@ class ApplicationWindow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         show_menubar: bool
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -2453,8 +2435,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         obey_child: bool
         ratio: float
@@ -2665,8 +2646,7 @@ class Assistant(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         pages: Gio.ListModel
         use_header_bar: int
         application: typing.Optional[Application]
@@ -2839,8 +2819,7 @@ class AssistantPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Widget
         complete: bool
         page_type: AssistantPageType
@@ -2870,7 +2849,6 @@ class BinLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls) -> BinLayout: ...
 
@@ -2894,7 +2872,6 @@ class Bitset(GObject.GBoxed):
         new_empty() -> Gtk.Bitset
         new_range(start:int, n_items:int) -> Gtk.Bitset
     """
-
     def add(self, value: int) -> bool: ...
     def add_range(self, start: int, n_items: int) -> None: ...
     def add_range_closed(self, first: int, last: int) -> None: ...
@@ -2977,8 +2954,7 @@ class BookmarkList(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         attributes: typing.Optional[str]
         filename: str
         io_priority: int
@@ -3038,8 +3014,7 @@ class BoolFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Filter.Props):
         expression: typing.Optional[Expression]
         invert: bool
 
@@ -3158,8 +3133,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -3295,8 +3269,7 @@ class BoxLayout(LayoutManager, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutManager.Props):
         baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -3341,7 +3314,6 @@ class Buildable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_buildable_id(self) -> typing.Optional[str]: ...
 
 class BuildableIface(GObject.GPointer):
@@ -3420,8 +3392,7 @@ class Builder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         current_object: typing.Optional[GObject.Object]
         scope: BuilderScope
         translation_domain: typing.Optional[str]
@@ -3589,8 +3560,7 @@ class BuilderListItemFactory(ListItemFactory):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ListItemFactory.Props):
         bytes: GLib.Bytes
         resource: typing.Optional[str]
         scope: typing.Optional[BuilderScope]
@@ -3716,8 +3686,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         can_shrink: bool
         child: typing.Optional[Widget]
         has_frame: bool
@@ -3855,7 +3824,6 @@ class CClosureExpression(Expression):
         CClosureExpression(**properties)
         new(value_type:GType, marshal:GObject.ClosureMarshal=None, params:list, callback_func:GObject.Callback, user_data=None) -> Gtk.CClosureExpression
     """
-
     @classmethod
     def new(
         cls,
@@ -3958,8 +3926,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         day: int
         month: int
         show_day_names: bool
@@ -4079,7 +4046,6 @@ class CallbackAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(
         cls, callback: typing.Callable[..., bool], *data: typing.Any
@@ -4111,8 +4077,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         edit_widget: typing.Optional[CellEditable]
         edited_cell: typing.Optional[CellRenderer]
         focus_cell: typing.Optional[CellRenderer]
@@ -4310,7 +4275,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self, renderer: CellRenderer, sibling: CellRenderer
     ) -> bool: ...
     # override
-    def list_cell_properties(self) -> list[GObject.ParamSpec]: ...  # FIXME Function
+    def list_cell_properties(self) -> list[GObject.ParamSpec]: ...
     def remove(self, renderer: CellRenderer) -> None: ...
     def remove_focus_sibling(
         self, renderer: CellRenderer, sibling: CellRenderer
@@ -4365,8 +4330,7 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellArea.Props):
         spacing: int
         edit_widget: typing.Optional[CellEditable]
         edited_cell: typing.Optional[CellRenderer]
@@ -4486,8 +4450,7 @@ class CellAreaContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         area: CellArea
         minimum_height: int
         minimum_width: int
@@ -4547,7 +4510,6 @@ class CellEditable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def editing_done(self) -> None: ...
     def remove_widget(self) -> None: ...
     def start_editing(self, event: typing.Optional[Gdk.Event] = None) -> None: ...
@@ -4575,7 +4537,6 @@ class CellLayout(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_attribute(
         self, cell: CellRenderer, attribute: str, column: int
     ) -> None: ...
@@ -4647,8 +4608,7 @@ class CellRenderer(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         cell_background_rgba: Gdk.RGBA
         cell_background_set: bool
         editing: bool
@@ -4882,8 +4842,7 @@ class CellRendererAccel(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRendererText.Props):
         accel_key: int
         accel_mode: CellRendererAccelMode
         accel_mods: Gdk.ModifierType
@@ -5182,8 +5141,7 @@ class CellRendererCombo(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRendererText.Props):
         has_entry: bool
         model: TreeModel
         text_column: int
@@ -5363,8 +5321,7 @@ class CellRendererPixbuf(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRenderer.Props):
         gicon: Gio.Icon
         icon_name: str
         icon_size: IconSize
@@ -5461,8 +5418,7 @@ class CellRendererProgress(CellRenderer, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRenderer.Props):
         inverted: bool
         pulse: int
         text: str
@@ -5605,8 +5561,7 @@ class CellRendererSpin(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRendererText.Props):
         adjustment: Adjustment
         climb_rate: float
         digits: int
@@ -5782,8 +5737,7 @@ class CellRendererSpinner(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRenderer.Props):
         active: bool
         pulse: int
         size: IconSize
@@ -5913,8 +5867,7 @@ class CellRendererText(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRenderer.Props):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
@@ -6104,8 +6057,7 @@ class CellRendererToggle(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(CellRenderer.Props):
         activatable: bool
         active: bool
         inconsistent: bool
@@ -6234,8 +6186,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         cell_area: CellArea
         cell_area_context: CellAreaContext
         draw_sensitive: bool
@@ -6412,8 +6363,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         baseline_position: BaselinePosition
         center_widget: typing.Optional[Widget]
         end_widget: typing.Optional[Widget]
@@ -6530,8 +6480,7 @@ class CenterLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutManager.Props):
         shrink_center_last: bool
 
     props: Props = ...
@@ -6642,8 +6591,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         active: bool
         child: typing.Optional[Widget]
         inconsistent: bool
@@ -6776,7 +6724,6 @@ class ClosureExpression(Expression):
         ClosureExpression(**properties)
         new(value_type:GType, closure:GObject.Closure, params:list=None) -> Gtk.ClosureExpression
     """
-
     @classmethod
     def new(
         cls,
@@ -6864,8 +6811,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         modal: bool
         show_editor: bool
         title: str
@@ -6964,7 +6910,6 @@ class ColorChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_palette(
         self,
         orientation: Orientation,
@@ -7098,8 +7043,7 @@ class ColorChooserDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         show_editor: bool
         use_header_bar: int
         application: typing.Optional[Application]
@@ -7324,8 +7268,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         show_editor: bool
         can_focus: bool
         can_target: bool
@@ -7426,8 +7369,7 @@ class ColorDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         modal: bool
         title: str
         with_alpha: bool
@@ -7527,8 +7469,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         dialog: typing.Optional[ColorDialog]
         rgba: Gdk.RGBA
         can_focus: bool
@@ -7716,8 +7657,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         columns: Gio.ListModel
         enable_rubberband: bool
         header_factory: typing.Optional[ListItemFactory]
@@ -7889,8 +7829,7 @@ class ColumnViewCell(ListItem):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ListItem.Props):
         child: typing.Optional[Widget]
         focusable: bool
         item: typing.Optional[GObject.Object]
@@ -7948,8 +7887,7 @@ class ColumnViewColumn(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         column_view: typing.Optional[ColumnView]
         expand: bool
         factory: typing.Optional[ListItemFactory]
@@ -8025,8 +7963,7 @@ class ColumnViewRow(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accessible_description: str
         accessible_label: str
         activatable: bool
@@ -8081,8 +8018,7 @@ class ColumnViewSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Sorter.Props):
         primary_sort_column: typing.Optional[ColumnViewColumn]
         primary_sort_order: SortType
 
@@ -8201,8 +8137,7 @@ class ComboBox(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         active: int
         active_id: typing.Optional[str]
         button_sensitivity: SensitivityType
@@ -8453,8 +8388,7 @@ class ComboBoxText(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ComboBox.Props):
         active: int
         active_id: typing.Optional[str]
         button_sensitivity: SensitivityType
@@ -8573,7 +8507,6 @@ class ConstantExpression(Expression):
         ConstantExpression(**properties)
         new_for_value(value:GObject.Value) -> Gtk.ConstantExpression
     """
-
     def get_value(self) -> typing.Any: ...
     @classmethod
     def new_for_value(cls, value: typing.Any) -> ConstantExpression: ...
@@ -8603,8 +8536,7 @@ class Constraint(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         constant: float
         multiplier: float
         relation: ConstraintRelation
@@ -8694,8 +8626,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         max_height: int
         max_width: int
         min_height: int
@@ -8755,7 +8686,6 @@ class ConstraintLayout(LayoutManager, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_constraint(self, constraint: Constraint) -> None: ...
     def add_constraints_from_description(
         self,
@@ -8790,8 +8720,7 @@ class ConstraintLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutChild.Props):
         child_widget: Widget
         layout_manager: LayoutManager
 
@@ -8885,7 +8814,6 @@ class CssSection(GObject.GBoxed):
         new(file:Gio.File=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
         new_with_bytes(file:Gio.File=None, bytes:GLib.Bytes=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
     """
-
     def get_bytes(self) -> typing.Optional[GLib.Bytes]: ...
     def get_end_location(self) -> CssLocation: ...
     def get_file(self) -> typing.Optional[Gio.File]: ...
@@ -8927,7 +8855,6 @@ class CustomFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(
         cls,
@@ -8965,7 +8892,6 @@ class CustomLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(
         cls,
@@ -9004,7 +8930,6 @@ class CustomSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
-
     # override
     @classmethod
     def new(
@@ -9143,8 +9068,7 @@ class Dialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         use_header_bar: int
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -9324,8 +9248,7 @@ class DirectoryList(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         attributes: typing.Optional[str]
         error: typing.Optional[GLib.Error]
         file: typing.Optional[Gio.File]
@@ -9440,8 +9363,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         can_focus: bool
         can_target: bool
@@ -9583,8 +9505,7 @@ class DragSource(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         actions: Gdk.DragAction
         content: typing.Optional[Gdk.ContentProvider]
         button: int
@@ -9698,8 +9619,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         content_height: int
         content_width: int
         can_focus: bool
@@ -9833,8 +9753,7 @@ class DropControllerMotion(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         contains_pointer: bool
         drop: typing.Optional[Gdk.Drop]
         is_pointer: bool
@@ -9940,8 +9859,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         enable_search: bool
         expression: typing.Optional[Expression]
         factory: typing.Optional[ListItemFactory]
@@ -10115,8 +10033,7 @@ class DropTarget(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         actions: Gdk.DragAction
         current_drop: typing.Optional[Gdk.Drop]
         drop: typing.Optional[Gdk.Drop]
@@ -10188,8 +10105,7 @@ class DropTargetAsync(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         actions: Gdk.DragAction
         formats: typing.Optional[Gdk.ContentFormats]
         name: typing.Optional[str]
@@ -10228,7 +10144,6 @@ class Editable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def delegate_get_accessible_platform_state(
         self, state: AccessiblePlatformState
     ) -> bool: ...
@@ -10372,8 +10287,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         editing: bool
         can_focus: bool
         can_target: bool
@@ -10564,8 +10478,7 @@ class EmojiChooser(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Popover.Props):
         autohide: bool
         cascade_popdown: bool
         child: typing.Optional[Widget]
@@ -10781,8 +10694,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         attributes: typing.Optional[Pango.AttrList]
         buffer: EntryBuffer
@@ -11064,8 +10976,7 @@ class EntryBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         length: int
         max_length: int
         text: str
@@ -11164,8 +11075,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         cell_area: CellArea
         inline_completion: bool
         inline_selection: bool
@@ -11237,8 +11147,7 @@ class EventController(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
@@ -11295,8 +11204,7 @@ class EventControllerFocus(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         contains_focus: bool
         is_focus: bool
         name: typing.Optional[str]
@@ -11344,8 +11252,7 @@ class EventControllerKey(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
@@ -11390,8 +11297,7 @@ class EventControllerLegacy(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
@@ -11438,8 +11344,7 @@ class EventControllerMotion(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         contains_pointer: bool
         is_pointer: bool
         name: typing.Optional[str]
@@ -11490,8 +11395,7 @@ class EventControllerScroll(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         flags: EventControllerScrollFlags
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
@@ -11541,8 +11445,7 @@ class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(MultiFilter.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
@@ -11631,8 +11534,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         expanded: bool
         label: typing.Optional[str]
@@ -11748,7 +11650,6 @@ class Expression:
 
         Expression(**properties)
     """
-
     def bind(
         self,
         target: GObject.Object,
@@ -11782,7 +11683,6 @@ class FileChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_choice(
         self,
         id: str,
@@ -11930,8 +11830,7 @@ class FileChooserDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -12092,8 +11991,7 @@ class FileChooserNative(NativeDialog, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(NativeDialog.Props):
         accept_label: typing.Optional[str]
         cancel_label: typing.Optional[str]
         modal: bool
@@ -12231,8 +12129,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         search_mode: bool
         show_time: bool
         subtitle: str
@@ -12346,8 +12243,7 @@ class FileDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accept_label: typing.Optional[str]
         default_filter: typing.Optional[FileFilter]
         filters: typing.Optional[Gio.ListModel]
@@ -12497,8 +12393,7 @@ class FileFilter(Filter, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Filter.Props):
         name: typing.Optional[str]
         mime_types: list[str]
         patterns: list[str]
@@ -12544,8 +12439,7 @@ class FileLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         always_ask: bool
         file: typing.Optional[Gio.File]
         writable: bool
@@ -12666,8 +12560,7 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         filter: typing.Optional[Filter]
         incremental: bool
         item_type: typing.Type[typing.Any]
@@ -12773,8 +12666,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -12885,7 +12777,6 @@ class FixedLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls) -> FixedLayout: ...
 
@@ -12909,8 +12800,7 @@ class FixedLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutChild.Props):
         transform: typing.Optional[Gsk.Transform]
         child_widget: Widget
         layout_manager: LayoutManager
@@ -12972,8 +12862,7 @@ class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
         n_items: int
@@ -13082,8 +12971,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         accept_unpaired_release: bool
         activate_on_single_click: bool
         column_spacing: int
@@ -13298,8 +13186,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         can_focus: bool
         can_target: bool
@@ -13477,8 +13364,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         modal: bool
         title: str
         use_font: bool
@@ -13592,7 +13478,6 @@ class FontChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_font(self) -> typing.Optional[str]: ...
     def get_font_desc(self) -> typing.Optional[Pango.FontDescription]: ...
     def get_font_face(self) -> typing.Optional[Pango.FontFace]: ...
@@ -13736,8 +13621,7 @@ class FontChooserDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -13973,8 +13857,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         tweak_action: Gio.Action
         can_focus: bool
         can_target: bool
@@ -14085,8 +13968,7 @@ class FontDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         filter: typing.Optional[Filter]
         font_map: typing.Optional[Pango.FontMap]
         language: typing.Optional[Pango.Language]
@@ -14231,8 +14113,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         dialog: typing.Optional[FontDialog]
         font_desc: typing.Optional[Pango.FontDescription]
         font_features: typing.Optional[str]
@@ -14432,8 +14313,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         label: typing.Optional[str]
         label_widget: typing.Optional[Widget]
@@ -14622,8 +14502,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         allowed_apis: Gdk.GLAPI
         api: Gdk.GLAPI
         auto_render: bool
@@ -14777,8 +14656,7 @@ class Gesture(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         n_points: int
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
@@ -14862,8 +14740,7 @@ class GestureClick(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -14929,8 +14806,7 @@ class GestureDrag(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -15000,8 +14876,7 @@ class GestureLongPress(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         delay_factor: float
         button: int
         exclusive: bool
@@ -15077,8 +14952,7 @@ class GesturePan(GestureDrag):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureDrag.Props):
         orientation: Orientation
         button: int
         exclusive: bool
@@ -15141,8 +15015,7 @@ class GestureRotate(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gesture.Props):
         n_points: int
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
@@ -15197,8 +15070,7 @@ class GestureSingle(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gesture.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -15274,8 +15146,7 @@ class GestureStylus(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         stylus_only: bool
         button: int
         exclusive: bool
@@ -15349,8 +15220,7 @@ class GestureSwipe(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -15410,8 +15280,7 @@ class GestureZoom(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gesture.Props):
         n_points: int
         name: typing.Optional[str]
         propagation_limit: PropagationLimit
@@ -15503,8 +15372,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         black_background: bool
         child: typing.Optional[Widget]
         enabled: GraphicsOffloadEnabled
@@ -15676,8 +15544,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         baseline_row: int
         column_homogeneous: bool
         column_spacing: int
@@ -15830,8 +15697,7 @@ class GridLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutManager.Props):
         baseline_row: int
         column_homogeneous: bool
         column_spacing: int
@@ -15885,8 +15751,7 @@ class GridLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutChild.Props):
         column: int
         column_span: int
         row: int
@@ -16018,8 +15883,7 @@ class GridView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ListBase.Props):
         enable_rubberband: bool
         factory: typing.Optional[ListItemFactory]
         max_columns: int
@@ -16217,8 +16081,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         decoration_layout: typing.Optional[str]
         show_title_buttons: bool
         title_widget: typing.Optional[Widget]
@@ -16340,8 +16203,7 @@ class IMContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
@@ -16469,8 +16331,7 @@ class IMContextSimple(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IMContext.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
@@ -16523,8 +16384,7 @@ class IMMulticontext(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IMContext.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
@@ -16579,8 +16439,7 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         file: typing.Optional[Gio.File]
         icon_name: typing.Optional[str]
         is_symbolic: bool
@@ -16619,8 +16478,7 @@ class IconTheme(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display: typing.Optional[Gdk.Display]
         icon_names: list[str]
         resource_path: typing.Optional[list[str]]
@@ -16771,8 +16629,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activate_on_single_click: bool
         cell_area: CellArea
         column_spacing: int
@@ -17073,8 +16930,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         file: str
         gicon: typing.Optional[Gio.Icon]
         icon_name: typing.Optional[str]
@@ -17277,8 +17133,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         message_type: MessageType
         revealed: bool
         show_close_button: bool
@@ -17453,8 +17308,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         attributes: typing.Optional[Pango.AttrList]
         min_chars: int
         min_lines: int
@@ -17602,8 +17456,7 @@ class KeyvalTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ShortcutTrigger.Props):
         keyval: int
         modifiers: Gdk.ModifierType
 
@@ -17713,8 +17566,7 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         attributes: typing.Optional[Pango.AttrList]
         ellipsize: Pango.EllipsizeMode
         extra_menu: typing.Optional[Gio.MenuModel]
@@ -17897,8 +17749,7 @@ class LayoutChild(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child_widget: Widget
         layout_manager: LayoutManager
 
@@ -18061,8 +17912,7 @@ class LevelBar(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         inverted: bool
         max_value: float
         min_value: float
@@ -18253,8 +18103,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Button.Props):
         uri: str
         visited: bool
         can_shrink: bool
@@ -18426,8 +18275,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         orientation: Orientation
         can_focus: bool
         can_target: bool
@@ -18596,8 +18444,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         accept_unpaired_release: bool
         activate_on_single_click: bool
         selection_mode: SelectionMode
@@ -18812,8 +18659,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activatable: bool
         child: typing.Optional[Widget]
         selectable: bool
@@ -18945,8 +18791,7 @@ class ListHeader(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: typing.Optional[Widget]
         end: int
         item: typing.Optional[GObject.Object]
@@ -18988,8 +18833,7 @@ class ListItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accessible_description: str
         accessible_label: str
         activatable: bool
@@ -19213,8 +19057,7 @@ class ListView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ListBase.Props):
         enable_rubberband: bool
         factory: typing.Optional[ListItemFactory]
         header_factory: typing.Optional[ListItemFactory]
@@ -19428,8 +19271,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Button.Props):
         permission: typing.Optional[Gio.Permission]
         text_lock: str
         text_unlock: str
@@ -19563,8 +19405,7 @@ class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         has_map: bool
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
@@ -19668,8 +19509,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         media_stream: typing.Optional[MediaStream]
         can_focus: bool
         can_target: bool
@@ -19805,8 +19645,7 @@ class MediaFile(MediaStream, Gdk.Paintable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(MediaStream.Props):
         file: typing.Optional[Gio.File]
         input_stream: typing.Optional[Gio.InputStream]
         duration: int
@@ -19905,8 +19744,7 @@ class MediaStream(GObject.Object, Gdk.Paintable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         duration: int
         ended: bool
         error: typing.Optional[GLib.Error]
@@ -20076,8 +19914,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         active: bool
         always_show_arrow: bool
         can_shrink: bool
@@ -20327,8 +20164,7 @@ class MessageDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         message_area: Widget
         message_type: MessageType
         secondary_text: str
@@ -20483,7 +20319,6 @@ class MnemonicAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get() -> MnemonicAction: ...
 
@@ -20506,8 +20341,7 @@ class MnemonicTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ShortcutTrigger.Props):
         keyval: int
 
     props: Props = ...
@@ -20556,8 +20390,7 @@ class MountOperation(Gio.MountOperation):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gio.MountOperation.Props):
         display: Gdk.Display
         is_showing: bool
         parent: typing.Optional[Window]
@@ -20636,8 +20469,7 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Filter.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
@@ -20675,8 +20507,7 @@ class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
         n_items: int
@@ -20723,8 +20554,7 @@ class MultiSorter(Sorter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Sorter.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
@@ -20762,8 +20592,7 @@ class NamedAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ShortcutAction.Props):
         action_name: str
 
     props: Props = ...
@@ -20781,7 +20610,6 @@ class Native(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get_for_surface(surface: Gdk.Surface) -> typing.Optional[Native]: ...
     def get_renderer(self) -> typing.Optional[Gsk.Renderer]: ...
@@ -20812,8 +20640,7 @@ class NativeDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         modal: bool
         title: typing.Optional[str]
         transient_for: typing.Optional[Window]
@@ -20875,7 +20702,6 @@ class NeverTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get() -> NeverTrigger: ...
 
@@ -20909,8 +20735,7 @@ class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
         n_items: int
@@ -21021,8 +20846,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         enable_popup: bool
         group_name: typing.Optional[str]
         page: int
@@ -21208,8 +21032,7 @@ class NotebookPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Widget
         detachable: bool
         menu: Widget
@@ -21250,7 +21073,6 @@ class NothingAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get() -> NothingAction: ...
 
@@ -21277,8 +21099,7 @@ class NumericSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Sorter.Props):
         expression: typing.Optional[Expression]
         sort_order: SortType
 
@@ -21315,7 +21136,6 @@ class ObjectExpression(Expression):
         ObjectExpression(**properties)
         new(object:GObject.Object) -> Gtk.ObjectExpression
     """
-
     def get_object(self) -> typing.Optional[GObject.Object]: ...
     @classmethod
     def new(cls, object: GObject.Object) -> ObjectExpression: ...
@@ -21327,7 +21147,6 @@ class Orientable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_orientation(self) -> Orientation: ...
     def set_orientation(self, orientation: Orientation) -> None: ...
 
@@ -21414,8 +21233,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         can_focus: bool
         can_target: bool
@@ -21515,7 +21333,6 @@ class OverlayLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls) -> OverlayLayout: ...
 
@@ -21540,8 +21357,7 @@ class OverlayLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(LayoutChild.Props):
         clip_overlay: bool
         measure: bool
         child_widget: Widget
@@ -21621,8 +21437,7 @@ class PadController(EventController):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         action_group: Gio.ActionGroup
         pad: Gdk.Device
         name: typing.Optional[str]
@@ -21679,7 +21494,6 @@ class PageSetup(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def copy(self) -> PageSetup: ...
     def get_bottom_margin(self, unit: Unit) -> float: ...
     def get_left_margin(self, unit: Unit) -> float: ...
@@ -21827,8 +21641,7 @@ class PageSetupUnixDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -22051,8 +21864,7 @@ class Paned(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         end_child: typing.Optional[Widget]
         max_position: int
         min_position: int
@@ -22179,7 +21991,6 @@ class PaperSize(GObject.GBoxed):
         new_from_key_file(key_file:GLib.KeyFile, group_name:str=None) -> Gtk.PaperSize
         new_from_ppd(ppd_name:str, ppd_display_name:str, width:float, height:float) -> Gtk.PaperSize
     """
-
     def copy(self) -> PaperSize: ...
     def free(self) -> None: ...
     @staticmethod
@@ -22311,8 +22122,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         extra_menu: typing.Optional[Gio.MenuModel]
         placeholder_text: str
@@ -22437,8 +22247,7 @@ class PasswordEntryBuffer(EntryBuffer):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EntryBuffer.Props):
         length: int
         max_length: int
         text: str
@@ -22540,8 +22349,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         alternative_text: typing.Optional[str]
         can_shrink: bool
         content_fit: ContentFit
@@ -22755,8 +22563,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         autohide: bool
         cascade_popdown: bool
         child: typing.Optional[Widget]
@@ -22973,8 +22780,7 @@ class PopoverMenu(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Popover.Props):
         flags: PopoverMenuFlags
         menu_model: typing.Optional[Gio.MenuModel]
         visible_submenu: str
@@ -23153,8 +22959,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         menu_model: typing.Optional[Gio.MenuModel]
         can_focus: bool
         can_target: bool
@@ -23253,7 +23058,6 @@ class PrintContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def create_pango_context(self) -> Pango.Context: ...
     def create_pango_layout(self) -> Pango.Layout: ...
     def get_cairo_context(self) -> cairo.Context: ...
@@ -23289,8 +23093,7 @@ class PrintDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accept_label: str
         modal: bool
         page_setup: typing.Optional[PageSetup]
@@ -23381,8 +23184,7 @@ class PrintJob(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         page_setup: PageSetup
         printer: Printer
         settings: PrintSettings
@@ -23490,8 +23292,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         allow_async: bool
         current_page: int
         custom_tab_label: typing.Optional[str]
@@ -23622,7 +23423,6 @@ class PrintOperationPreview(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def end_preview(self) -> None: ...
     def is_selected(self, page_nr: int) -> bool: ...
     def render_page(self, page_nr: int) -> None: ...
@@ -23672,7 +23472,6 @@ class PrintSettings(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def copy(self) -> PrintSettings: ...
     def foreach(
         self, func: typing.Callable[..., None], *user_data: typing.Any
@@ -23887,8 +23686,7 @@ class PrintUnixDialog(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Dialog.Props):
         current_page: int
         embed_page_setup: bool
         has_selection: bool
@@ -24078,8 +23876,7 @@ class Printer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accepting_jobs: bool
         accepts_pdf: bool
         accepts_ps: bool
@@ -24202,8 +23999,7 @@ class ProgressBar(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         ellipsize: Pango.EllipsizeMode
         fraction: float
         inverted: bool
@@ -24316,7 +24112,6 @@ class PropertyExpression(Expression):
         new(this_type:GType, expression:Gtk.Expression=None, property_name:str) -> Gtk.PropertyExpression
         new_for_pspec(expression:Gtk.Expression=None, pspec:GObject.ParamSpec) -> Gtk.PropertyExpression
     """
-
     def get_expression(self) -> typing.Optional[Expression]: ...
     def get_pspec(self) -> GObject.ParamSpec: ...
     @classmethod
@@ -24418,8 +24213,7 @@ class Range(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
@@ -24622,8 +24416,7 @@ class RecentManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         filename: str
         size: int
 
@@ -24766,8 +24559,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         child_revealed: bool
         reveal_child: bool
@@ -24868,7 +24660,6 @@ class Root(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_display(self) -> Gdk.Display: ...
     def get_focus(self) -> typing.Optional[Widget]: ...
     def set_focus(self, focus: typing.Optional[Widget] = None) -> None: ...
@@ -24964,8 +24755,7 @@ class Scale(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Range.Props):
         digits: int
         draw_value: bool
         has_origin: bool
@@ -25170,8 +24960,7 @@ class ScaleButton(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         active: bool
         adjustment: Adjustment
         has_frame: bool
@@ -25311,7 +25100,6 @@ class ScrollInfo(GObject.GBoxed):
 
         new() -> Gtk.ScrollInfo
     """
-
     def get_enable_horizontal(self) -> bool: ...
     def get_enable_vertical(self) -> bool: ...
     @classmethod
@@ -25328,7 +25116,6 @@ class Scrollable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_border(self) -> typing.Tuple[bool, Border]: ...
     def get_hadjustment(self) -> typing.Optional[Adjustment]: ...
     def get_hscroll_policy(self) -> ScrollablePolicy: ...
@@ -25426,8 +25213,7 @@ class Scrollbar(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         adjustment: Adjustment
         can_focus: bool
         can_target: bool
@@ -25602,8 +25388,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         hadjustment: Adjustment
         has_frame: bool
@@ -25818,8 +25603,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         key_capture_widget: typing.Optional[Widget]
         search_mode_enabled: bool
@@ -26000,8 +25784,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         input_hints: InputHints
         input_purpose: InputPurpose
@@ -26120,7 +25903,6 @@ class SectionModel(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_section(self, position: int) -> typing.Tuple[int, int]: ...
     def sections_changed(self, position: int, n_items: int) -> None: ...
 
@@ -26158,8 +25940,7 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         model: typing.Optional[SelectionModel]
         n_items: int
@@ -26191,7 +25972,6 @@ class SelectionModel(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_selection(self) -> Bitset: ...
     def get_selection_in_range(self, position: int, n_items: int) -> Bitset: ...
     def is_selected(self, position: int) -> bool: ...
@@ -26292,8 +26072,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -26441,8 +26220,7 @@ class Settings(GObject.Object, StyleProvider):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
         gtk_application_prefer_dark_theme: bool
@@ -26577,8 +26355,7 @@ class Shortcut(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         action: typing.Optional[ShortcutAction]
         arguments: typing.Optional[GLib.Variant]
         trigger: typing.Optional[ShortcutTrigger]
@@ -26617,7 +26394,6 @@ class ShortcutAction(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def activate(
         self,
         flags: ShortcutActionFlags,
@@ -26673,8 +26449,7 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(EventController.Props):
         item_type: typing.Type[typing.Any]
         mnemonic_modifiers: Gdk.ModifierType
         n_items: int
@@ -26778,8 +26553,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         accelerator: typing.Optional[str]
         disabled_text: typing.Optional[str]
         can_focus: bool
@@ -26895,7 +26669,6 @@ class ShortcutTrigger(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def compare(self, trigger2: ShortcutTrigger) -> int: ...
     def equal(self, trigger2: ShortcutTrigger) -> bool: ...
     def hash(self) -> int: ...
@@ -26987,8 +26760,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Box.Props):
         height: int
         title: str
         view: str
@@ -27164,8 +26936,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Box.Props):
         max_height: int
         section_name: str
         title: str
@@ -27338,8 +27109,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -27546,8 +27316,7 @@ class ShortcutsWindow(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Window.Props):
         section_name: str
         view_name: str
         application: typing.Optional[Application]
@@ -27691,8 +27460,7 @@ class SignalAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ShortcutAction.Props):
         signal_name: str
 
     props: Props = ...
@@ -27723,7 +27491,6 @@ class SignalListItemFactory(ListItemFactory):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls) -> SignalListItemFactory: ...
 
@@ -27761,8 +27528,7 @@ class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionMode
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         autoselect: bool
         can_unselect: bool
         item_type: typing.Type[typing.Any]
@@ -27819,8 +27585,7 @@ class SizeGroup(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         mode: SizeGroupMode
 
     props: Props = ...
@@ -27861,8 +27626,7 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
         n_items: int
@@ -27912,7 +27676,6 @@ class Snapshot(Gdk.Snapshot):
     Signals from GObject:
       notify (GParam)
     """
-
     def append_border(
         self,
         outline: Gsk.RoundedRect,
@@ -28083,8 +27846,7 @@ class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         incremental: bool
         item_type: typing.Type[typing.Any]
         model: typing.Optional[Gio.ListModel]
@@ -28284,8 +28046,7 @@ class SpinButton(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         adjustment: Adjustment
         climb_rate: float
@@ -28498,8 +28259,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         spinning: bool
         can_focus: bool
         can_target: bool
@@ -28658,8 +28418,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         hhomogeneous: bool
         interpolate_size: bool
         pages: SelectionModel
@@ -28802,8 +28561,7 @@ class StackPage(GObject.Object, Accessible):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child: Widget
         icon_name: typing.Optional[str]
         name: typing.Optional[str]
@@ -28908,8 +28666,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         stack: typing.Optional[Stack]
         can_focus: bool
         can_target: bool
@@ -29058,8 +28815,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         stack: typing.Optional[Stack]
         can_focus: bool
         can_target: bool
@@ -29211,8 +28967,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -29316,8 +29071,7 @@ class StringFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Filter.Props):
         expression: typing.Optional[Expression]
         ignore_case: bool
         match_mode: StringFilterMatchMode
@@ -29377,8 +29131,7 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
         strings: list[str]
@@ -29429,8 +29182,7 @@ class StringObject(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         string: str
 
     props: Props = ...
@@ -29471,8 +29223,7 @@ class StringSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Sorter.Props):
         collation: Collation
         expression: typing.Optional[Expression]
         ignore_case: bool
@@ -29522,8 +29273,7 @@ class StyleContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display: Gdk.Display
 
     props: Props = ...
@@ -29650,8 +29400,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         active: bool
         state: bool
         can_focus: bool
@@ -29746,7 +29495,6 @@ class SymbolicPaintable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def snapshot_symbolic(
         self,
         snapshot: Gdk.Snapshot,
@@ -29897,8 +29645,7 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         attributes: typing.Optional[Pango.AttrList]
         buffer: EntryBuffer
@@ -30102,8 +29849,7 @@ class TextBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         can_redo: bool
         can_undo: bool
         cursor_position: int
@@ -30485,8 +30231,7 @@ class TextMark(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         left_gravity: bool
         name: typing.Optional[str]
 
@@ -30620,8 +30365,7 @@ class TextTag(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         accumulative_margin: bool
         allow_breaks: bool
         allow_breaks_set: bool
@@ -30846,7 +30590,6 @@ class TextTagTable(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
-
     def add(self, tag: TextTag) -> bool: ...
     def foreach(self, func: typing.Callable[..., None], *data: typing.Any) -> None: ...
     def get_size(self) -> int: ...
@@ -30964,8 +30707,7 @@ class TextView(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         accepts_tab: bool
         bottom_margin: int
         buffer: TextBuffer
@@ -31327,8 +31069,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Button.Props):
         active: bool
         can_shrink: bool
         child: typing.Optional[Widget]
@@ -31460,7 +31201,6 @@ class Tooltip(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def set_custom(self, custom_widget: typing.Optional[Widget] = None) -> None: ...
     def set_icon(self, paintable: typing.Optional[Gdk.Paintable] = None) -> None: ...
     def set_icon_from_gicon(self, gicon: typing.Optional[Gio.Icon] = None) -> None: ...
@@ -31475,7 +31215,6 @@ class TreeDragDest(GObject.GInterface):
     """
     Interface GtkTreeDragDest
     """
-
     def drag_data_received(self, dest: TreePath, value: typing.Any) -> bool: ...
     def row_drop_possible(self, dest_path: TreePath, value: typing.Any) -> bool: ...
 
@@ -31498,7 +31237,6 @@ class TreeDragSource(GObject.GInterface):
     """
     Interface GtkTreeDragSource
     """
-
     def drag_data_delete(self, path: TreePath) -> bool: ...
     def drag_data_get(self, path: TreePath) -> typing.Optional[Gdk.ContentProvider]: ...
     def row_draggable(self, path: TreePath) -> bool: ...
@@ -31593,8 +31331,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         hide_expander: bool
         indent_for_depth: bool
@@ -31743,8 +31480,7 @@ class TreeListModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         autoexpand: bool
         item_type: typing.Type[typing.Any]
         model: Gio.ListModel
@@ -31800,8 +31536,7 @@ class TreeListRow(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         children: typing.Optional[Gio.ListModel]
         depth: int
         expandable: bool
@@ -31851,8 +31586,7 @@ class TreeListRowSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Sorter.Props):
         sorter: typing.Optional[Sorter]
 
     props: Props = ...
@@ -31951,8 +31685,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         child_model: TreeModel
         virtual_root: TreePath
 
@@ -32097,8 +31830,7 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         model: TreeModel
 
     props: Props = ...
@@ -32147,7 +31879,6 @@ class TreePath(GObject.GBoxed):
         new_from_indices(indices:list) -> Gtk.TreePath
         new_from_string(path:str) -> Gtk.TreePath or None
     """
-
     def append_index(self, index_: int) -> None: ...
     def compare(self, b: TreePath) -> int: ...
     def copy(self) -> TreePath: ...
@@ -32222,8 +31953,7 @@ class TreeSelection(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         mode: SelectionMode
 
     props: Props = ...
@@ -32265,7 +31995,6 @@ class TreeSortable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_sort_column_id(
         self,
     ) -> (
@@ -32489,8 +32218,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         activate_on_single_click: bool
         enable_grid_lines: TreeViewGridLines
         enable_search: bool
@@ -33015,8 +32743,7 @@ class UriLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         uri: typing.Optional[str]
 
     props: Props = ...
@@ -33122,8 +32849,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         autoplay: bool
         file: typing.Optional[Gio.File]
         graphics_offload: GraphicsOffloadEnabled
@@ -33312,8 +33038,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         scroll_to_focus: bool
         can_focus: bool
@@ -33495,8 +33220,7 @@ class VolumeButton(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(ScaleButton.Props):
         use_symbolic: bool
         active: bool
         adjustment: Adjustment
@@ -33651,8 +33375,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -34120,8 +33843,7 @@ class WidgetPaintable(GObject.Object, Gdk.Paintable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         widget: typing.Optional[Widget]
 
     props: Props = ...
@@ -34246,8 +33968,7 @@ class Window(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
         decorated: bool
@@ -34537,8 +34258,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         decoration_layout: typing.Optional[str]
         empty: bool
         side: PackType
@@ -34748,8 +34468,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Widget.Props):
         child: typing.Optional[Widget]
         can_focus: bool
         can_target: bool
