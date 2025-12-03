@@ -6,6 +6,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 _SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)
@@ -2469,7 +2470,6 @@ KEY_zerosuperior: int = 16785520
 KEY_zstroke: int = 16777654
 MODIFIER_MASK: int = 469769999
 PRIORITY_REDRAW: int = 120
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "Gdk"
 _overrides_module = ...  # FIXME Constant
@@ -2585,8 +2585,7 @@ class AppLaunchContext(Gio.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gio.AppLaunchContext.Props):
         display: Display
 
     props: Props = ...
@@ -2605,7 +2604,6 @@ class ButtonEvent(Event):
 
         ButtonEvent(**properties)
     """
-
     def get_button(self) -> int: ...
 
 class CairoContext(DrawContext):
@@ -2625,8 +2623,7 @@ class CairoContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(DrawContext.Props):
         display: typing.Optional[Display]
         surface: typing.Optional[Surface]
 
@@ -2654,8 +2651,7 @@ class CicpParams(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         color_primaries: int
         matrix_coefficients: int
         range: CicpRange
@@ -2705,8 +2701,7 @@ class Clipboard(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         content: typing.Optional[ContentProvider]
         display: Display
         formats: ContentFormats
@@ -2800,7 +2795,6 @@ class ContentDeserializer(GObject.Object, Gio.AsyncResult):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_cancellable(self) -> typing.Optional[Gio.Cancellable]: ...
     def get_gtype(self) -> typing.Type[typing.Any]: ...
     def get_input_stream(self) -> Gio.InputStream: ...
@@ -2824,7 +2818,6 @@ class ContentFormats(GObject.GBoxed):
         new(mime_types:list=None) -> Gdk.ContentFormats
         new_for_gtype(type:GType) -> Gdk.ContentFormats
     """
-
     # override
     def contain_gtype(self, type: typing.Any) -> bool: ...
     def contain_mime_type(self, mime_type: str) -> bool: ...
@@ -2861,7 +2854,6 @@ class ContentFormatsBuilder(GObject.GBoxed):
 
         new() -> Gdk.ContentFormatsBuilder
     """
-
     def add_formats(self, formats: ContentFormats) -> None: ...
     def add_gtype(self, type: typing.Type[typing.Any]) -> None: ...
     def add_mime_type(self, mime_type: str) -> None: ...
@@ -2894,8 +2886,7 @@ class ContentProvider(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         formats: ContentFormats
         storable_formats: ContentFormats
 
@@ -2975,7 +2966,6 @@ class ContentSerializer(GObject.Object, Gio.AsyncResult):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_cancellable(self) -> typing.Optional[Gio.Cancellable]: ...
     def get_gtype(self) -> typing.Type[typing.Any]: ...
     def get_mime_type(self) -> str: ...
@@ -2998,7 +2988,6 @@ class CrossingEvent(Event):
 
         CrossingEvent(**properties)
     """
-
     def get_detail(self) -> NotifyType: ...
     def get_focus(self) -> bool: ...
     def get_mode(self) -> CrossingMode: ...
@@ -3026,8 +3015,7 @@ class Cursor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         fallback: typing.Optional[Cursor]
         hotspot_x: int
         hotspot_y: int
@@ -3078,7 +3066,6 @@ class DNDEvent(Event):
 
         DNDEvent(**properties)
     """
-
     def get_drop(self) -> typing.Optional[Drop]: ...
 
 class DeleteEvent(Event): ...
@@ -3120,8 +3107,7 @@ class Device(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         active_layout_index: int
         caps_lock_state: bool
         direction: Pango.Direction
@@ -3182,7 +3168,6 @@ class DevicePad(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_feature_group(self, feature: DevicePadFeature, feature_idx: int) -> int: ...
     def get_group_n_modes(self, group_idx: int) -> int: ...
     def get_n_features(self, feature: DevicePadFeature) -> int: ...
@@ -3209,8 +3194,7 @@ class DeviceTool(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         axes: AxisFlags
         hardware_id: int
         serial: int
@@ -3256,8 +3240,7 @@ class Display(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         composited: bool
         dmabuf_formats: DmabufFormats
         input_shapes: bool
@@ -3321,8 +3304,7 @@ class DisplayManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         default_display: typing.Optional[Display]
 
     props: Props = ...
@@ -3370,8 +3352,7 @@ class DmabufTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Texture.Props):
         color_state: ColorState
         height: int
         width: int
@@ -3407,8 +3388,7 @@ class DmabufTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         color_state: typing.Optional[ColorState]
         display: Display
         fourcc: int
@@ -3500,8 +3480,7 @@ class Drag(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         actions: DragAction
         content: ContentProvider
         device: Device
@@ -3547,7 +3526,6 @@ class DragSurface(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def present(self, width: int, height: int) -> bool: ...
 
 class DragSurfaceInterface(GObject.GPointer): ...
@@ -3572,8 +3550,7 @@ class DrawContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display: typing.Optional[Display]
         surface: typing.Optional[Surface]
 
@@ -3607,8 +3584,7 @@ class Drop(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         actions: DragAction
         device: Device
         display: Display
@@ -3662,7 +3638,6 @@ class Event:
 
         Event(**properties)
     """
-
     def get_axes(self) -> typing.Tuple[bool, list[float]]: ...
     def get_axis(self, axis_use: AxisUse) -> typing.Tuple[bool, float]: ...
     def get_device(self) -> typing.Optional[Device]: ...
@@ -3692,7 +3667,6 @@ class FileList(GObject.GBoxed):
         new_from_array(files:list) -> Gdk.FileList
         new_from_list(files:list) -> Gdk.FileList
     """
-
     def get_files(self) -> list[Gio.File]: ...
     @classmethod
     def new_from_array(cls, files: typing.Sequence[Gio.File]) -> FileList: ...
@@ -3707,7 +3681,6 @@ class FocusEvent(Event):
 
         FocusEvent(**properties)
     """
-
     def get_in(self) -> bool: ...
 
 class FrameClock(GObject.Object):
@@ -3732,7 +3705,6 @@ class FrameClock(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def begin_updating(self) -> None: ...
     def end_updating(self) -> None: ...
     def get_current_timings(self) -> typing.Optional[FrameTimings]: ...
@@ -3779,8 +3751,7 @@ class GLContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(DrawContext.Props):
         allowed_apis: GLAPI
         api: GLAPI
         shared_context: typing.Optional[GLContext]
@@ -3846,8 +3817,7 @@ class GLTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Texture.Props):
         color_state: ColorState
         height: int
         width: int
@@ -3894,8 +3864,7 @@ class GLTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         color_state: ColorState
         context: typing.Optional[GLContext]
         format: MemoryFormat
@@ -3960,7 +3929,6 @@ class GrabBrokenEvent(Event):
 
         GrabBrokenEvent(**properties)
     """
-
     def get_grab_surface(self) -> Surface: ...
     def get_implicit(self) -> bool: ...
 
@@ -3972,7 +3940,6 @@ class KeyEvent(Event):
 
         KeyEvent(**properties)
     """
-
     def get_consumed_modifiers(self) -> ModifierType: ...
     def get_keycode(self) -> int: ...
     def get_keyval(self) -> int: ...
@@ -4022,8 +3989,7 @@ class MemoryTexture(Texture, Paintable, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Texture.Props):
         color_state: ColorState
         height: int
         width: int
@@ -4066,8 +4032,7 @@ class MemoryTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         bytes: typing.Optional[GLib.Bytes]
         color_state: ColorState
         format: MemoryFormat
@@ -4145,8 +4110,7 @@ class Monitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         connector: typing.Optional[str]
         description: typing.Optional[str]
         display: Display
@@ -4188,7 +4152,6 @@ class PadEvent(Event):
 
         PadEvent(**properties)
     """
-
     def get_axis_value(self) -> typing.Tuple[int, float]: ...
     def get_button(self) -> int: ...
     def get_group_mode(self) -> typing.Tuple[int, int]: ...
@@ -4200,7 +4163,6 @@ class Paintable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def compute_concrete_size(
         self,
         specified_width: float,
@@ -4243,7 +4205,6 @@ class Popup(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_autohide(self) -> bool: ...
     def get_parent(self) -> typing.Optional[Surface]: ...
     def get_position_x(self) -> int: ...
@@ -4262,7 +4223,6 @@ class PopupLayout(GObject.GBoxed):
 
         new(anchor_rect:Gdk.Rectangle, rect_anchor:Gdk.Gravity, surface_anchor:Gdk.Gravity) -> Gdk.PopupLayout
     """
-
     def copy(self) -> PopupLayout: ...
     def equal(self, other: PopupLayout) -> bool: ...
     def get_anchor_hints(self) -> AnchorHints: ...
@@ -4345,7 +4305,6 @@ class ScrollEvent(Event):
 
         ScrollEvent(**properties)
     """
-
     def get_deltas(self) -> typing.Tuple[float, float]: ...
     def get_direction(self) -> ScrollDirection: ...
     def get_unit(self) -> ScrollUnit: ...
@@ -4373,8 +4332,7 @@ class Seat(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display: Display
 
     props: Props = ...
@@ -4422,8 +4380,7 @@ class Surface(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         cursor: typing.Optional[Cursor]
         display: Display
         frame_clock: FrameClock
@@ -4507,8 +4464,7 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         color_state: ColorState
         height: int
         width: int
@@ -4547,7 +4503,6 @@ class TextureDownloader(GObject.GBoxed):
 
         new(texture:Gdk.Texture) -> Gdk.TextureDownloader
     """
-
     def copy(self) -> TextureDownloader: ...
     def download_bytes(self) -> typing.Tuple[GLib.Bytes, int]: ...
     def download_into(self, data: typing.Sequence[int], stride: int) -> None: ...
@@ -4581,7 +4536,6 @@ class Toplevel(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def begin_move(
         self, device: Device, button: int, x: float, y: float, timestamp: int
     ) -> None: ...
@@ -4624,7 +4578,6 @@ class ToplevelLayout(GObject.GBoxed):
 
         new() -> Gdk.ToplevelLayout
     """
-
     def copy(self) -> ToplevelLayout: ...
     def equal(self, other: ToplevelLayout) -> bool: ...
     def get_fullscreen(self) -> typing.Tuple[bool, bool]: ...
@@ -4657,7 +4610,6 @@ class TouchEvent(Event):
 
         TouchEvent(**properties)
     """
-
     def get_emulating_pointer(self) -> bool: ...
 
 class TouchpadEvent(Event):
@@ -4668,7 +4620,6 @@ class TouchpadEvent(Event):
 
         TouchpadEvent(**properties)
     """
-
     def get_deltas(self) -> typing.Tuple[float, float]: ...
     def get_gesture_phase(self) -> TouchpadGesturePhase: ...
     def get_n_fingers(self) -> int: ...
@@ -4695,8 +4646,7 @@ class VulkanContext(DrawContext, Gio.Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(DrawContext.Props):
         display: typing.Optional[Display]
         surface: typing.Optional[Surface]
 
