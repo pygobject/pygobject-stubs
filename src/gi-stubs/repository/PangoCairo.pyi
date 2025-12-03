@@ -3,6 +3,7 @@ import typing
 import cairo
 from gi.repository import GObject
 from gi.repository import Pango
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 _SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)
@@ -64,7 +65,6 @@ class Font(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_scaled_font(self) -> typing.Optional[cairo.ScaledFont]: ...
 
 class FontMap(GObject.GInterface):
@@ -74,7 +74,6 @@ class FontMap(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     # override
     @classmethod
     def get_default(cls) -> Pango.FontMap: ...
