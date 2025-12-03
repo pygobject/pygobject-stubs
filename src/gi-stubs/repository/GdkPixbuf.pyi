@@ -4,6 +4,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GModule
 from gi.repository import GObject
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -11,7 +12,6 @@ PIXBUF_MAJOR: int = 2
 PIXBUF_MICRO: int = 12
 PIXBUF_MINOR: int = 42
 PIXBUF_VERSION: str = "2.42.12"
-_introspection_module = ...  # FIXME Constant
 _lock = ...  # FIXME Constant
 _namespace: str = "GdkPixbuf"
 _overrides_module = ...  # FIXME Constant
@@ -65,8 +65,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         bits_per_sample: int
         colorspace: Colorspace
         has_alpha: bool
@@ -617,7 +616,6 @@ class PixbufNonAnim(PixbufAnimation):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls, pixbuf: Pixbuf) -> PixbufNonAnim: ...
 
@@ -639,8 +637,7 @@ class PixbufSimpleAnim(PixbufAnimation):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(PixbufAnimation.Props):
         loop: bool
 
     props: Props = ...
