@@ -4,6 +4,7 @@ from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GtkSource
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -31,8 +32,7 @@ class Checker(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         language: typing.Optional[str]
         provider: Provider
 
@@ -82,8 +82,7 @@ class Dictionary(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         code: typing.Optional[str]
 
     props: Props = ...
@@ -117,8 +116,7 @@ class Language(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         code: typing.Optional[str]
         group: typing.Optional[str]
         name: typing.Optional[str]
@@ -157,8 +155,7 @@ class Provider(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         display_name: typing.Optional[str]
 
     props: Props = ...
@@ -199,8 +196,7 @@ class TextBufferAdapter(GObject.Object, Gio.ActionGroup):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         buffer: typing.Optional[GtkSource.Buffer]
         checker: typing.Optional[Checker]
         enabled: bool
