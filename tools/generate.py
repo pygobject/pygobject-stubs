@@ -573,9 +573,16 @@ def _build_function(
         else:
             signature = "(*args, **kwargs)"
 
-    definition = f"def {name}{signature}: ... # FIXME Function\n"
+    definition = f"def {name}{signature}:"
+    docstring = (function.__doc__ or "").strip()
+    if docstring:
+        docstring = f'"""\n{docstring}\n"""'
+        docstring = textwrap.indent(docstring, "    ")
+        definition += f"\n{docstring}"
+    else:
+        definition += f" ..."
 
-    return definition
+    return definition + "  # FIXME Function\n"
 
 
 def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Optional[str]:
