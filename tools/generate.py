@@ -577,7 +577,12 @@ def _build_function(
         else:
             signature_string = "(*args, **kwargs)"
 
-    definition = f"def {name}{signature_string}:"
+    definition = ""
+    if in_class:
+        static_function = inspect.getattr_static(in_class, function.__name__, None)
+        if static_function and isinstance(static_function, staticmethod):
+            definition += "@staticmethod\n"
+    definition += f"def {name}{signature_string}:"
     docstring = (function.__doc__ or "").strip()
     if docstring:
         docstring = f'"""\n{docstring}\n"""'
