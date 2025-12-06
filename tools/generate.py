@@ -555,25 +555,29 @@ def _build_function(
             current_namespace, name, function, in_class, needed_namespaces
         )
 
-    signature: Optional[str] = None
+    signature_string: str
+    missing_annotation = False
     try:
+        signature = inspect.signature(function)
+        for param in signature.parameters.values():
+            if param.name != "self" and param.annotation is inspect.Parameter.empty:
+                missing_annotation = True
+        if signature.return_annotation is inspect.Signature.empty:
+            missing_annotation = True
         try:
             # This requires Python 3.14
-            signature = inspect.signature(function).format(
-                quote_annotation_strings=False
-            )
+            signature_string = signature.format(quote_annotation_strings=False)
         except:
             # This should be a good enough fallback for older Pythons
-            signature = (
-                str(inspect.signature(function)).replace('"', "").replace("'", "")
-            )
+            signature_string = str(signature).replace('"', "").replace("'", "")
     except:
+        missing_annotation = True
         if in_class:
-            signature = "(self, *args, **kwargs)"
+            signature_string = "(self, *args, **kwargs)"
         else:
-            signature = "(*args, **kwargs)"
+            signature_string = "(*args, **kwargs)"
 
-    definition = f"def {name}{signature}:"
+    definition = f"def {name}{signature_string}:"
     docstring = (function.__doc__ or "").strip()
     if docstring:
         docstring = f'"""\n{docstring}\n"""'
@@ -582,7 +586,11 @@ def _build_function(
     else:
         definition += f" ..."
 
-    return definition + "  # FIXME Function\n"
+    if missing_annotation:
+        definition += "  # FIXME: Override is missing typing annotation"
+    definition += "\n"
+
+    return definition
 
 
 def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Optional[str]:
