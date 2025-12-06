@@ -13,7 +13,7 @@ SYMBOLS_PATTERNS = [
     CLASS_PATTERN,
     r"^\s*(?P<symbol>\w*)\s*(:|=)[^,)]*$",  # Constants
 ]
-DOCUMENTATION_PATTERN = r'^\s*"""\s*$'
+DOCUMENTATION_PATTERN = r'^\s*""".*$'
 INDENTATION_SPACES = 4
 
 OverridableSymbols = ast.ClassDef | ast.FunctionDef | ast.AnnAssign | ast.Assign
