@@ -1,3 +1,42 @@
+# 2.15.0 (01 Dec 2025)
+
+## Feature
+
+* Add Gly
+* Add GlyGtk4
+* Add overridden function docstring
+
+## Improvements
+
+* Add non-GI base classes
+* Allow stub for some special python methods
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - Gdk4
+    - GdkPixbuf
+    - GdkX11
+    - GLib
+    - GObject
+    - Gsk
+    - GSound
+    - Gst*
+    - Gtk4
+    - Pango
+    - PangoCairo
+    - Spelling
+
+## Change
+
+* Filter out private constants and fields
+
+## Bug Fixes
+
+* Correctly skip field if a method has the same name
+* skip closure/destroy arguments preceding current arg
+
 # 2.14.0 (17 Sep 2025)
 
 ## Feature
