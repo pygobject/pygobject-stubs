@@ -1,3 +1,19 @@
+# 2.16.0 (08 Dec 2025)
+
+## Improvements
+
+* Remove FIXME when override function is typed
+
+## Typing
+
+* Improve type hints for
+    - Gst*
+
+## Bug Fixes
+
+* Gst module cannot reference itself
+* Add [@staticmethod](https://github.com/staticmethod) for override methods
+
 # 2.15.0 (01 Dec 2025)
 
 ## Feature
