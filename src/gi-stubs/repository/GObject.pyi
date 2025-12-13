@@ -135,10 +135,6 @@ TYPE_VARIANT = ...  # FIXME Constant
 VALUE_COLLECT_FORMAT_MAX_LENGTH: int = 8
 VALUE_INTERNED_STRING: int = 268435456
 VALUE_NOCOPY_CONTENTS: int = 134217728
-_lock = ...  # FIXME Constant
-_namespace: str = "GObject"
-_overrides_module = ...  # FIXME Constant
-_version: str = "2.0"
 features = ...  # FIXME Constant
 glib_version = ...  # FIXME Constant
 pygobject_version = ...  # FIXME Constant
@@ -336,10 +332,14 @@ def cclosure_marshal_generic(
     invocation_hint: None,
     marshal_data: None,
 ) -> None: ...
-def child_watch_add(*args, **kwargs): ...  # FIXME Function
+def child_watch_add(*args, **kwargs):
+    """
+    child_watch_add(priority, pid, function, *data).
+    """  # FIXME: Override is missing typing annotation
+
 def clear_signal_handler(handler_id_ptr: int, instance: Object) -> None: ...
 def enum_complete_type_info(
-    g_enum_type: typing.Type[typing.Any], const_values: EnumValue
+    g_enum_type: typing.Type[typing.Any], const_values: typing.Sequence[EnumValue]
 ) -> TypeInfo: ...
 def enum_get_value(enum_class: EnumClass, value: int) -> typing.Optional[EnumValue]: ...
 def enum_get_value_by_name(
@@ -354,9 +354,11 @@ def enum_register_static(
 def enum_to_string(g_enum_type: typing.Type[typing.Any], value: int) -> str: ...
 def filename_display_basename(filename: str) -> str: ...
 def filename_display_name(filename: str) -> str: ...
-def filename_from_utf8(utf8string, len=-1): ...  # FIXME Function
+def filename_from_utf8(
+    utf8string, len=-1
+): ...  # FIXME: Override is missing typing annotation
 def flags_complete_type_info(
-    g_flags_type: typing.Type[typing.Any], const_values: FlagsValue
+    g_flags_type: typing.Type[typing.Any], const_values: typing.Sequence[FlagsValue]
 ) -> TypeInfo: ...
 def flags_get_first_value(
     flags_class: FlagsClass, value: int
@@ -372,16 +374,26 @@ def flags_register_static(
 ) -> typing.Type[typing.Any]: ...
 def flags_to_string(flags_type: typing.Type[typing.Any], value: int) -> str: ...
 def get_application_name() -> typing.Optional[str]: ...
-def get_current_time(): ...  # FIXME Function
+def get_current_time(): ...  # FIXME: Override is missing typing annotation
 def get_prgname() -> typing.Optional[str]: ...
 def gtype_get_type() -> typing.Type[typing.Any]: ...
-def idle_add(function, *user_data, priority=200): ...  # FIXME Function
-def io_add_watch(*args, **kwargs): ...  # FIXME Function
-def list_properties(*args, **kwargs): ...  # FIXME Function
+def idle_add(
+    function, *user_data, priority=200
+): ...  # FIXME: Override is missing typing annotation
+def io_add_watch(*args, **kwargs):
+    """
+    io_add_watch(channel, priority, condition, func, *user_data) -> event_source_id.
+    """  # FIXME: Override is missing typing annotation
+
+def list_properties(
+    *args, **kwargs
+): ...  # FIXME: Override is missing typing annotation
 def main_context_default() -> GLib.MainContext: ...
 def main_depth() -> int: ...
-def markup_escape_text(text, length=-1): ...  # FIXME Function
-def new(*args, **kwargs): ...  # FIXME Function
+def markup_escape_text(
+    text, length=-1
+): ...  # FIXME: Override is missing typing annotation
+def new(*args, **kwargs): ...  # FIXME: Override is missing typing annotation
 def param_spec_boolean(
     name: str,
     nick: typing.Optional[str],
@@ -568,15 +580,17 @@ def param_values_cmp(
     pspec: ParamSpec, value1: typing.Any, value2: typing.Any
 ) -> int: ...
 def pointer_type_register_static(name: str) -> typing.Type[typing.Any]: ...
-def remove_emission_hook(obj, detailed_signal, hook_id): ...  # FIXME Function
+def remove_emission_hook(
+    obj, detailed_signal, hook_id
+): ...  # FIXME: Override is missing typing annotation
 def set_application_name(application_name: str) -> None: ...
 def set_prgname(prgname: str) -> None: ...
 def signal_accumulator_first_wins(
     ihint, return_accu, handler_return, user_data=None
-): ...  # FIXME Function
+): ...  # FIXME: Override is missing typing annotation
 def signal_accumulator_true_handled(
     ihint, return_accu, handler_return, user_data=None
-): ...  # FIXME Function
+): ...  # FIXME: Override is missing typing annotation
 def signal_add_emission_hook(
     signal_id: int,
     detail: int,
@@ -605,7 +619,25 @@ def signal_emitv(
 def signal_get_invocation_hint(
     instance: Object,
 ) -> typing.Optional[SignalInvocationHint]: ...
-def signal_handler_block(obj, handler_id): ...  # FIXME Function
+def signal_handler_block(obj, handler_id):
+    """
+    Blocks the signal handler from being invoked until
+    handler_unblock() is called.
+
+    :param GObject.Object obj:
+        Object instance to block handlers for.
+    :param int handler_id:
+        Id of signal to block.
+    :returns:
+        A context manager which optionally can be used to
+        automatically unblock the handler:
+
+    .. code-block:: python
+
+        with GObject.signal_handler_block(obj, id):
+            pass
+    """  # FIXME: Override is missing typing annotation
+
 def signal_handler_disconnect(instance: Object, handler_id: int) -> None: ...
 
 # override
@@ -662,11 +694,11 @@ def signal_has_handler_pending(
     instance: Object, signal_id: int, detail: int, may_be_blocked: bool
 ) -> bool: ...
 def signal_is_valid_name(name: str) -> bool: ...
-def signal_list_ids(type_): ...  # FIXME Function
-def signal_list_names(type_): ...  # FIXME Function
-def signal_lookup(name, type_): ...  # FIXME Function
+def signal_list_ids(type_): ...  # FIXME: Override is missing typing annotation
+def signal_list_names(type_): ...  # FIXME: Override is missing typing annotation
+def signal_lookup(name, type_): ...  # FIXME: Override is missing typing annotation
 def signal_name(signal_id: int) -> typing.Optional[str]: ...
-def signal_new(*args, **kwargs): ...  # FIXME Function
+def signal_new(*args, **kwargs): ...  # FIXME: Override is missing typing annotation
 def signal_override_class_closure(
     signal_id: int,
     instance_type: typing.Type[typing.Any],
@@ -677,8 +709,22 @@ def signal_override_class_handler(
     instance_type: typing.Type[typing.Any],
     class_handler: typing.Callable[[], None],
 ) -> None: ...
-def signal_parse_name(detailed_signal, itype, force_detail_quark): ...  # FIXME Function
-def signal_query(id_or_name, type_=None): ...  # FIXME Function
+def signal_parse_name(detailed_signal, itype, force_detail_quark):
+    """
+    Parse a detailed signal name into (signal_id, detail).
+
+    :param str detailed_signal:
+        Signal name which can include detail.
+        For example: "notify:prop_name"
+    :returns:
+        Tuple of (signal_id, detail)
+    :raises ValueError:
+        If the given signal is unknown.
+    """  # FIXME: Override is missing typing annotation
+
+def signal_query(
+    id_or_name, type_=None
+): ...  # FIXME: Override is missing typing annotation
 def signal_remove_emission_hook(signal_id: int, hook_id: int) -> None: ...
 def signal_stop_emission(instance: Object, signal_id: int, detail: int) -> None: ...
 def signal_stop_emission_by_name(instance: Object, detailed_signal: str) -> None: ...
@@ -690,13 +736,25 @@ def source_set_closure(
     source: GLib.Source, closure: typing.Callable[..., typing.Any]
 ) -> None: ...
 def source_set_dummy_callback(source: GLib.Source) -> None: ...
-def spawn_async(*args, **kwargs): ...  # FIXME Function
+def spawn_async(*args, **kwargs):
+    """
+    spawn_async(argv, envp=None, working_directory=None,
+                flags=0, child_setup=None, user_data=None,
+                standard_input=None, standard_output=None,
+                standard_error=None) -> (pid, stdin, stdout, stderr)
+
+    Execute a child program asynchronously within a glib.MainLoop()
+    See the reference manual for a complete reference.
+    """  # FIXME: Override is missing typing annotation
+
 def strdup_value_contents(value: typing.Any) -> str: ...
-def threads_init(): ...  # FIXME Function
-def timeout_add(interval, function, *user_data, priority=0): ...  # FIXME Function
+def threads_init(): ...  # FIXME: Override is missing typing annotation
+def timeout_add(
+    interval, function, *user_data, priority=0
+): ...  # FIXME: Override is missing typing annotation
 def timeout_add_seconds(
     interval, function, *user_data, priority=0
-): ...  # FIXME Function
+): ...  # FIXME: Override is missing typing annotation
 def type_add_class_private(
     class_type: typing.Type[typing.Any], private_size: int
 ) -> None: ...
@@ -745,7 +803,7 @@ def type_default_interface_unref(g_iface: TypeInterface) -> None: ...
 def type_depth(type: typing.Type[typing.Any]) -> int: ...
 def type_ensure(type: typing.Type[typing.Any]) -> None: ...
 def type_free_instance(instance: TypeInstance) -> None: ...
-def type_from_name(name): ...  # FIXME Function
+def type_from_name(name): ...  # FIXME: Override is missing typing annotation
 def type_fundamental(type_id: typing.Type[typing.Any]) -> typing.Type[typing.Any]: ...
 def type_fundamental_next() -> typing.Type[typing.Any]: ...
 def type_get_instance_count(type: typing.Type[typing.Any]) -> int: ...
@@ -779,10 +837,10 @@ def type_name_from_instance(instance: TypeInstance) -> str: ...
 def type_next_base(
     leaf_type: typing.Type[typing.Any], root_type: typing.Type[typing.Any]
 ) -> typing.Type[typing.Any]: ...
-def type_parent(type_): ...  # FIXME Function
+def type_parent(type_): ...  # FIXME: Override is missing typing annotation
 def type_qname(type: typing.Type[typing.Any]) -> int: ...
 def type_query(type: typing.Type[typing.Any]) -> TypeQuery: ...
-def type_register(*args, **kwargs): ...  # FIXME Function
+def type_register(*args, **kwargs): ...  # FIXME: Override is missing typing annotation
 def type_register_dynamic(
     parent_type: typing.Type[typing.Any],
     type_name: str,
@@ -1281,15 +1339,17 @@ class FlagsValue(GPointer):
     value_name: str = ...
     value_nick: str = ...
 
-class Float: ...
+class Float(float): ...
 
 class GBoxed:
-    def copy(self, /): ...  # FIXME Function
+    def copy(self, /): ...  # FIXME: Override is missing typing annotation
 
-class GError:
-    def copy(self): ...  # FIXME Function
-    def matches(self, domain, code): ...  # FIXME Function
-    def new_literal(domain, message, code): ...  # FIXME Function
+class GError(RuntimeError):
+    def copy(self): ...  # FIXME: Override is missing typing annotation
+    def matches(self, domain, code): ...  # FIXME: Override is missing typing annotation
+    def new_literal(
+        domain, message, code
+    ): ...  # FIXME: Override is missing typing annotation
 
 # override
 class GInterface(typing.Protocol):
@@ -1394,7 +1454,7 @@ class GObjectWeakRef:
     """
     A GObject weak reference
     """
-    def unref(self, /): ...  # FIXME Function
+    def unref(self, /): ...  # FIXME: Override is missing typing annotation
 
 class GParamSpec:
     """
@@ -1410,15 +1470,17 @@ class GParamSpec:
     flags: ParamFlags = ...
     value_type: typing.Type[typing.Any] = ...
     owner_type: typing.Type[typing.Any] = ...
-    _nick: str = ...
-    _blurb: str = ...
     qdata: GLib.Data = ...
     ref_count: int = ...
     param_id: int = ...
-    def blurb(fget): ...  # FIXME Function
+    def blurb(fget): ...  # FIXME: Override is missing typing annotation
     def do_finalize(self) -> None: ...
-    def do_get_property(self, pspec): ...  # FIXME Function
-    def do_set_property(self, pspec, value): ...  # FIXME Function
+    def do_get_property(
+        self, pspec
+    ): ...  # FIXME: Override is missing typing annotation
+    def do_set_property(
+        self, pspec, value
+    ): ...  # FIXME: Override is missing typing annotation
     def do_value_is_valid(self, value: typing.Any) -> bool: ...
     def do_value_set_default(self, value: typing.Any) -> None: ...
     def do_value_validate(self, value: typing.Any) -> bool: ...
@@ -1432,7 +1494,7 @@ class GParamSpec:
     def get_redirect_target(self) -> typing.Optional[ParamSpec]: ...
     @staticmethod
     def is_valid_name(name: str) -> bool: ...
-    def nick(fget): ...  # FIXME Function
+    def nick(fget): ...  # FIXME: Override is missing typing annotation
     def set_qdata(self, quark: int, data: None) -> None: ...
     def sink(self) -> None: ...
     def steal_qdata(self, quark: int) -> None: ...
@@ -1448,17 +1510,20 @@ class GType:
     parent = ...  # FIXME Constant
     pytype = ...  # FIXME Constant
 
-    def from_name(self, *args, **kwargs): ...  # FIXME Function
-    def has_value_table(self, /): ...  # FIXME Function
-    def is_a(self, *args, **kwargs): ...  # FIXME Function
-    def is_abstract(self, /): ...  # FIXME Function
-    def is_classed(self, /): ...  # FIXME Function
-    def is_deep_derivable(self, /): ...  # FIXME Function
-    def is_derivable(self, /): ...  # FIXME Function
-    def is_instantiatable(self, /): ...  # FIXME Function
-    def is_interface(self, /): ...  # FIXME Function
-    def is_value_abstract(self, /): ...  # FIXME Function
-    def is_value_type(self, /): ...  # FIXME Function
+    @staticmethod
+    def from_name(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def has_value_table(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_a(self, *args, **kwargs): ...  # FIXME: Override is missing typing annotation
+    def is_abstract(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_classed(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_deep_derivable(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_derivable(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_instantiatable(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_interface(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_value_abstract(self, /): ...  # FIXME: Override is missing typing annotation
+    def is_value_type(self, /): ...  # FIXME: Override is missing typing annotation
 
 class HashTable(GBoxed): ...
 class Hmac(GBoxed): ...
@@ -1494,11 +1559,10 @@ class IOChannel(GBoxed):
     is_seekable: int = ...
     reserved1: None = ...
     reserved2: None = ...
-    _whence_map = ...  # FIXME Constant
-
+    def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def add_watch(
         self, condition, callback, *user_data, priority=0
-    ): ...  # FIXME Function
+    ): ...  # FIXME: Override is missing typing annotation
     def close(self) -> None: ...
     @staticmethod
     def error_from_errno(en: int) -> GLib.IOChannelError: ...
@@ -1515,18 +1579,30 @@ class IOChannel(GBoxed):
     def init(self) -> None: ...
     @classmethod
     def new_file(cls, filename: str, mode: str) -> IOChannel: ...
-    def read(self, max_count=-1): ...  # FIXME Function
-    def read_chars(self, max_count=-1): ...  # FIXME Function
+    def read(self, max_count=-1):
+        """
+        Reads data from a :obj:`~gi.repository.GLib.IOChannel`.
+        """  # FIXME: Override is missing typing annotation
+    def read_chars(self, max_count=-1):
+        """
+        Alias for GLib.IOChannel.read().
+        """  # FIXME: Override is missing typing annotation
     def read_line(self) -> typing.Tuple[GLib.IOStatus, str, int, int]: ...
     def read_line_string(
         self, buffer: GLib.String, terminator_pos: typing.Optional[int] = None
     ) -> GLib.IOStatus: ...
     def read_to_end(self) -> typing.Tuple[GLib.IOStatus, bytes]: ...
     def read_unichar(self) -> typing.Tuple[GLib.IOStatus, str]: ...
-    def readline(self, size_hint=-1): ...  # FIXME Function
-    def readlines(self, size_hint=-1): ...  # FIXME Function
+    def readline(
+        self, size_hint=-1
+    ): ...  # FIXME: Override is missing typing annotation
+    def readlines(
+        self, size_hint=-1
+    ): ...  # FIXME: Override is missing typing annotation
     def ref(self) -> GLib.IOChannel: ...
-    def seek(self, offset, whence=0): ...  # FIXME Function
+    def seek(
+        self, offset, whence=0
+    ): ...  # FIXME: Override is missing typing annotation
     def seek_position(self, offset: int, type: GLib.SeekType) -> GLib.IOStatus: ...
     def set_buffer_size(self, size: int) -> None: ...
     def set_buffered(self, buffered: bool) -> None: ...
@@ -1539,12 +1615,12 @@ class IOChannel(GBoxed):
     @classmethod
     def unix_new(cls, fd: int) -> IOChannel: ...
     def unref(self) -> None: ...
-    def write(self, buf, buflen=-1): ...  # FIXME Function
+    def write(self, buf, buflen=-1): ...  # FIXME: Override is missing typing annotation
     def write_chars(
         self, buf: typing.Sequence[int], count: int
     ) -> typing.Tuple[GLib.IOStatus, int]: ...
     def write_unichar(self, thechar: str) -> GLib.IOStatus: ...
-    def writelines(self, lines): ...  # FIXME Function
+    def writelines(self, lines): ...  # FIXME: Override is missing typing annotation
 
 class Idle(GBoxed):
     """
@@ -1576,10 +1652,11 @@ class Idle(GBoxed):
     def add_unix_fd(self, fd: int, events: GLib.IOCondition) -> None: ...
     def attach(self, context: typing.Optional[GLib.MainContext] = None) -> int: ...
     def destroy(self) -> None: ...
-    def finalize(self): ...  # FIXME Function
+    def dup_context(self) -> typing.Optional[GLib.MainContext]: ...
+    def finalize(self): ...  # FIXME: Override is missing typing annotation
     def get_can_recurse(self) -> bool: ...
     def get_context(self) -> typing.Optional[GLib.MainContext]: ...
-    def get_current_time(self): ...  # FIXME Function
+    def get_current_time(self): ...  # FIXME: Override is missing typing annotation
     def get_id(self) -> int: ...
     def get_name(self) -> typing.Optional[str]: ...
     def get_priority(self) -> int: ...
@@ -1600,7 +1677,9 @@ class Idle(GBoxed):
     def remove_child_source(self, child_source: GLib.Source) -> None: ...
     def remove_poll(self, fd: GLib.PollFD) -> None: ...
     def remove_unix_fd(self, tag: None) -> None: ...
-    def set_callback(self, fn, user_data=None): ...  # FIXME Function
+    def set_callback(
+        self, fn, user_data=None
+    ): ...  # FIXME: Override is missing typing annotation
     def set_callback_indirect(
         self, callback_data: None, callback_funcs: GLib.SourceCallbackFuncs
     ) -> None: ...
@@ -1689,16 +1768,20 @@ class MainContext(GBoxed):
     def dispatch(self) -> None: ...
     def find_source_by_funcs_user_data(
         self, funcs: GLib.SourceFuncs, user_data: None
-    ) -> GLib.Source: ...
+    ) -> typing.Optional[GLib.Source]: ...
     def find_source_by_id(self, source_id: int) -> GLib.Source: ...
-    def find_source_by_user_data(self, user_data: None) -> GLib.Source: ...
+    def find_source_by_user_data(
+        self, user_data: None
+    ) -> typing.Optional[GLib.Source]: ...
     @staticmethod
     def get_thread_default() -> typing.Optional[GLib.MainContext]: ...
     def invoke_full(
         self, priority: int, function: typing.Callable[..., bool], *data: typing.Any
     ) -> None: ...
     def is_owner(self) -> bool: ...
-    def iteration(self, may_block=True): ...  # FIXME Function
+    def iteration(
+        self, may_block=True
+    ): ...  # FIXME: Override is missing typing annotation
     @classmethod
     def new(cls) -> MainContext: ...
     @classmethod
@@ -1709,9 +1792,7 @@ class MainContext(GBoxed):
     def push_thread_default(self) -> None: ...
     def pusher_new(self) -> None: ...
     # override
-    def query(
-        self, max_priority: int
-    ) -> typing.Tuple[int, list[GLib.PollFD]]: ...  # FIXME Function
+    def query(self, max_priority: int) -> typing.Tuple[int, list[GLib.PollFD]]: ...
     def ref(self) -> GLib.MainContext: ...
     @staticmethod
     def ref_thread_default() -> GLib.MainContext: ...
@@ -1737,7 +1818,7 @@ class MainLoop(GBoxed):
     ) -> MainLoop: ...
     def quit(self) -> None: ...
     def ref(self) -> GLib.MainLoop: ...
-    def run(self): ...  # FIXME Function
+    def run(self): ...  # FIXME: Override is missing typing annotation
     def unref(self) -> None: ...
 
 class MappedFile(GBoxed): ...
@@ -1891,18 +1972,34 @@ class ObjectConstructParam(GPointer):
     value: typing.Any = ...
 
 class OptionContext:
-    def add_group(self, *args, **kwargs): ...  # FIXME Function
-    def get_help_enabled(self, /): ...  # FIXME Function
-    def get_ignore_unknown_options(self, /): ...  # FIXME Function
-    def get_main_group(self, /): ...  # FIXME Function
-    def parse(self, *args, **kwargs): ...  # FIXME Function
-    def set_help_enabled(self, *args, **kwargs): ...  # FIXME Function
-    def set_ignore_unknown_options(self, *args, **kwargs): ...  # FIXME Function
-    def set_main_group(self, *args, **kwargs): ...  # FIXME Function
+    def add_group(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def get_help_enabled(self, /): ...  # FIXME: Override is missing typing annotation
+    def get_ignore_unknown_options(
+        self, /
+    ): ...  # FIXME: Override is missing typing annotation
+    def get_main_group(self, /): ...  # FIXME: Override is missing typing annotation
+    def parse(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def set_help_enabled(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def set_ignore_unknown_options(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def set_main_group(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
 
 class OptionGroup:
-    def add_entries(self, *args, **kwargs): ...  # FIXME Function
-    def set_translation_domain(self, *args, **kwargs): ...  # FIXME Function
+    def add_entries(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
+    def set_translation_domain(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
 
 class ParamSpec:
     """
@@ -1918,15 +2015,17 @@ class ParamSpec:
     flags: ParamFlags = ...
     value_type: typing.Type[typing.Any] = ...
     owner_type: typing.Type[typing.Any] = ...
-    _nick: str = ...
-    _blurb: str = ...
     qdata: GLib.Data = ...
     ref_count: int = ...
     param_id: int = ...
-    def blurb(fget): ...  # FIXME Function
+    def blurb(fget): ...  # FIXME: Override is missing typing annotation
     def do_finalize(self) -> None: ...
-    def do_get_property(self, pspec): ...  # FIXME Function
-    def do_set_property(self, pspec, value): ...  # FIXME Function
+    def do_get_property(
+        self, pspec
+    ): ...  # FIXME: Override is missing typing annotation
+    def do_set_property(
+        self, pspec, value
+    ): ...  # FIXME: Override is missing typing annotation
     def do_value_is_valid(self, value: typing.Any) -> bool: ...
     def do_value_set_default(self, value: typing.Any) -> None: ...
     def do_value_validate(self, value: typing.Any) -> bool: ...
@@ -1940,7 +2039,7 @@ class ParamSpec:
     def get_redirect_target(self) -> typing.Optional[ParamSpec]: ...
     @staticmethod
     def is_valid_name(name: str) -> bool: ...
-    def nick(fget): ...  # FIXME Function
+    def nick(fget): ...  # FIXME: Override is missing typing annotation
     def set_qdata(self, quark: int, data: None) -> None: ...
     def sink(self) -> None: ...
     def steal_qdata(self, quark: int) -> None: ...
@@ -2025,9 +2124,8 @@ class ParamSpecEnum(ParamSpec):
     """
 
     parent_instance: ParamSpec = ...
-    enum_class: EnumClass = ...
     default_value: int = ...
-    def enum_class(fget): ...  # FIXME Function
+    def enum_class(fget): ...  # FIXME: Override is missing typing annotation
 
 class ParamSpecFlags(ParamSpec):
     """
@@ -2039,9 +2137,8 @@ class ParamSpecFlags(ParamSpec):
     """
 
     parent_instance: ParamSpec = ...
-    flags_class: FlagsClass = ...
     default_value: int = ...
-    def flags_class(fget): ...  # FIXME Function
+    def flags_class(fget): ...  # FIXME: Override is missing typing annotation
 
 class ParamSpecFloat(ParamSpec):
     """
@@ -2311,22 +2408,8 @@ class Parameter(GPointer):
 
 class PatternSpec(GBoxed): ...
 
-class Pid:
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def close(self, /): ...  # FIXME Function
-    def conjugate(self, /): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
+class Pid(int):
+    def close(self, /): ...  # FIXME: Override is missing typing annotation
 
 class PollFD(GBoxed):
     """
@@ -2522,10 +2605,11 @@ class Source(GBoxed):
     def add_unix_fd(self, fd: int, events: GLib.IOCondition) -> None: ...
     def attach(self, context: typing.Optional[GLib.MainContext] = None) -> int: ...
     def destroy(self) -> None: ...
-    def finalize(self): ...  # FIXME Function
+    def dup_context(self) -> typing.Optional[GLib.MainContext]: ...
+    def finalize(self): ...  # FIXME: Override is missing typing annotation
     def get_can_recurse(self) -> bool: ...
     def get_context(self) -> typing.Optional[GLib.MainContext]: ...
-    def get_current_time(self): ...  # FIXME Function
+    def get_current_time(self): ...  # FIXME: Override is missing typing annotation
     def get_id(self) -> int: ...
     def get_name(self) -> typing.Optional[str]: ...
     def get_priority(self) -> int: ...
@@ -2546,7 +2630,9 @@ class Source(GBoxed):
     def remove_child_source(self, child_source: GLib.Source) -> None: ...
     def remove_poll(self, fd: GLib.PollFD) -> None: ...
     def remove_unix_fd(self, tag: None) -> None: ...
-    def set_callback(self, fn, user_data=None): ...  # FIXME Function
+    def set_callback(
+        self, fn, user_data=None
+    ): ...  # FIXME: Override is missing typing annotation
     def set_callback_indirect(
         self, callback_data: None, callback_funcs: GLib.SourceCallbackFuncs
     ) -> None: ...
@@ -2596,10 +2682,11 @@ class Timeout(GBoxed):
     def add_unix_fd(self, fd: int, events: GLib.IOCondition) -> None: ...
     def attach(self, context: typing.Optional[GLib.MainContext] = None) -> int: ...
     def destroy(self) -> None: ...
-    def finalize(self): ...  # FIXME Function
+    def dup_context(self) -> typing.Optional[GLib.MainContext]: ...
+    def finalize(self): ...  # FIXME: Override is missing typing annotation
     def get_can_recurse(self) -> bool: ...
     def get_context(self) -> typing.Optional[GLib.MainContext]: ...
-    def get_current_time(self): ...  # FIXME Function
+    def get_current_time(self): ...  # FIXME: Override is missing typing annotation
     def get_id(self) -> int: ...
     def get_name(self) -> typing.Optional[str]: ...
     def get_priority(self) -> int: ...
@@ -2620,7 +2707,9 @@ class Timeout(GBoxed):
     def remove_child_source(self, child_source: GLib.Source) -> None: ...
     def remove_poll(self, fd: GLib.PollFD) -> None: ...
     def remove_unix_fd(self, tag: None) -> None: ...
-    def set_callback(self, fn, user_data=None): ...  # FIXME Function
+    def set_callback(
+        self, fn, user_data=None
+    ): ...  # FIXME: Override is missing typing annotation
     def set_callback_indirect(
         self, callback_data: None, callback_funcs: GLib.SourceCallbackFuncs
     ) -> None: ...
@@ -2883,15 +2972,13 @@ class Value(GBoxed):
 
     g_type: typing.Type[typing.Any] = ...
     data: list[_Value__data__union] = ...
-    _Value__g_type = ...  # FIXME Constant
-
     def copy(self, dest_value: typing.Any) -> None: ...
     def dup_object(self) -> typing.Optional[Object]: ...
     def dup_string(self) -> typing.Optional[str]: ...
     def dup_variant(self) -> typing.Optional[GLib.Variant]: ...
     def fits_pointer(self) -> bool: ...
     def get_boolean(self) -> bool: ...
-    def get_boxed(self): ...  # FIXME Function
+    def get_boxed(self): ...  # FIXME: Override is missing typing annotation
     def get_char(self) -> int: ...
     def get_double(self) -> float: ...
     def get_enum(self) -> int: ...
@@ -2910,7 +2997,7 @@ class Value(GBoxed):
     def get_uint(self) -> int: ...
     def get_uint64(self) -> int: ...
     def get_ulong(self) -> int: ...
-    def get_value(self): ...  # FIXME Function
+    def get_value(self): ...  # FIXME: Override is missing typing annotation
     def get_variant(self) -> typing.Optional[GLib.Variant]: ...
     # override
     def init(self, g_type: typing.Any) -> typing.Any: ...
@@ -2918,7 +3005,7 @@ class Value(GBoxed):
     def peek_pointer(self) -> None: ...
     def reset(self) -> typing.Any: ...
     def set_boolean(self, v_boolean: bool) -> None: ...
-    def set_boxed(self, boxed): ...  # FIXME Function
+    def set_boxed(self, boxed): ...  # FIXME: Override is missing typing annotation
     def set_boxed_take_ownership(self, v_boxed: None) -> None: ...
     def set_char(self, v_char: int) -> None: ...
     def set_double(self, v_double: float) -> None: ...
@@ -2945,7 +3032,7 @@ class Value(GBoxed):
     def set_uint(self, v_uint: int) -> None: ...
     def set_uint64(self, v_uint64: int) -> None: ...
     def set_ulong(self, v_ulong: int) -> None: ...
-    def set_value(self, py_value): ...  # FIXME Function
+    def set_value(self, py_value): ...  # FIXME: Override is missing typing annotation
     def set_variant(self, variant: typing.Optional[GLib.Variant] = None) -> None: ...
     def steal_string(self) -> typing.Optional[str]: ...
     def take_boxed(self, v_boxed: None) -> None: ...
@@ -2992,13 +3079,7 @@ class ValueArray(GBoxed):
 class VariantBuilder(GBoxed): ...
 class VariantDict(GBoxed): ...
 class VariantType(GBoxed): ...
-
-class Warning:
-    args = ...  # FIXME Constant
-
-    def add_note(self, object, /): ...  # FIXME Function
-    def with_traceback(self, object, /): ...  # FIXME Function
-
+class Warning(Warning): ...
 class WeakRef(GPointer): ...
 
 class _Value__data__union(GPointer):
@@ -3069,15 +3150,15 @@ class property:
             def propInt(self, value):
                 self.value = value
     """
-
-    _default_lookup = ...  # FIXME Constant
-    _max_value_lookup = ...  # FIXME Constant
-    _min_value_lookup = ...  # FIXME Constant
-    _type_from_pytype_lookup = ...  # FIXME Constant
-
-    def get_pspec_args(self): ...  # FIXME Function
-    def getter(self, fget): ...  # FIXME Function
-    def setter(self, fset): ...  # FIXME Function
+    def get_pspec_args(self): ...  # FIXME: Override is missing typing annotation
+    def getter(self, fget):
+        """
+        Set the getter function to fget. For use as a decorator.
+        """  # FIXME: Override is missing typing annotation
+    def setter(self, fset):
+        """
+        Set the setter function to fset. For use as a decorator.
+        """  # FIXME: Override is missing typing annotation
 
 class BindingFlags(GFlags):
     BIDIRECTIONAL = 1
