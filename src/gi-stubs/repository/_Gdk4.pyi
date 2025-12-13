@@ -2,6 +2,7 @@ import typing
 
 import cairo
 from gi.repository import GdkPixbuf
+from gi.repository import gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -2470,10 +2471,6 @@ KEY_zerosuperior: int = 16785520
 KEY_zstroke: int = 16777654
 MODIFIER_MASK: int = 469769999
 PRIORITY_REDRAW: int = 120
-_lock = ...  # FIXME Constant
-_namespace: str = "Gdk"
-_overrides_module = ...  # FIXME Constant
-_version: str = "4.0"
 
 def cairo_draw_from_gl(
     cr: cairo.Context[_SomeSurface],
@@ -2767,6 +2764,7 @@ class Clipboard(GObject.Object):
 class ColorState(GObject.GBoxed):
     def create_cicp_params(self) -> typing.Optional[CicpParams]: ...
     def equal(self, other: ColorState) -> bool: ...
+    def equivalent(self, other: ColorState) -> bool: ...
     @staticmethod
     def get_oklab() -> ColorState: ...
     @staticmethod
@@ -3630,7 +3628,7 @@ class Drop(GObject.Object):
     def read_value_finish(self, result: Gio.AsyncResult) -> typing.Any: ...
     def status(self, actions: DragAction, preferred: DragAction) -> None: ...
 
-class Event:
+class Event(gi.Fundamental):
     """
     :Constructors:
 
@@ -3667,6 +3665,9 @@ class FileList(GObject.GBoxed):
         new_from_array(files:list) -> Gdk.FileList
         new_from_list(files:list) -> Gdk.FileList
     """
+    def __getitem__(self, index): ...  # FIXME: Override is missing typing annotation
+    def __iter__(self): ...  # FIXME: Override is missing typing annotation
+    def __len__(self): ...  # FIXME: Override is missing typing annotation
     def get_files(self) -> list[Gio.File]: ...
     @classmethod
     def new_from_array(cls, files: typing.Sequence[Gio.File]) -> FileList: ...
@@ -4059,7 +4060,9 @@ class MemoryTextureBuilder(GObject.Object):
     def get_color_state(self) -> ColorState: ...
     def get_format(self) -> MemoryFormat: ...
     def get_height(self) -> int: ...
+    def get_offset(self, plane: int) -> int: ...
     def get_stride(self) -> int: ...
+    def get_stride_for_plane(self, plane: int) -> int: ...
     def get_update_region(self) -> typing.Optional[cairo.Region]: ...
     def get_update_texture(self) -> typing.Optional[Texture]: ...
     def get_width(self) -> int: ...
@@ -4069,7 +4072,9 @@ class MemoryTextureBuilder(GObject.Object):
     def set_color_state(self, color_state: ColorState) -> None: ...
     def set_format(self, format: MemoryFormat) -> None: ...
     def set_height(self, height: int) -> None: ...
+    def set_offset(self, plane: int, offset: int) -> None: ...
     def set_stride(self, stride: int) -> None: ...
+    def set_stride_for_plane(self, plane: int, stride: int) -> None: ...
     def set_update_region(
         self, region: typing.Optional[cairo.Region] = None
     ) -> None: ...
@@ -4307,6 +4312,8 @@ class ScrollEvent(Event):
     """
     def get_deltas(self) -> typing.Tuple[float, float]: ...
     def get_direction(self) -> ScrollDirection: ...
+    @staticmethod
+    def get_relative_direction(event: Event) -> ScrollRelativeDirection: ...
     def get_unit(self) -> ScrollUnit: ...
     def is_stop(self) -> bool: ...
 
@@ -4427,7 +4434,9 @@ class Surface(GObject.Object):
     def request_layout(self) -> None: ...
     def set_cursor(self, cursor: typing.Optional[Cursor] = None) -> None: ...
     def set_device_cursor(self, device: Device, cursor: Cursor) -> None: ...
-    def set_input_region(self, region: cairo.Region) -> None: ...
+    def set_input_region(
+        self, region: typing.Optional[cairo.Region] = None
+    ) -> None: ...
     def set_opaque_region(
         self, region: typing.Optional[cairo.Region] = None
     ) -> None: ...
@@ -4505,6 +4514,9 @@ class TextureDownloader(GObject.GBoxed):
     """
     def copy(self) -> TextureDownloader: ...
     def download_bytes(self) -> typing.Tuple[GLib.Bytes, int]: ...
+    def download_bytes_with_planes(
+        self,
+    ) -> typing.Tuple[GLib.Bytes, list[int], list[int]]: ...
     def download_into(self, data: typing.Sequence[int], stride: int) -> None: ...
     def free(self) -> None: ...
     def get_color_state(self) -> ColorState: ...
@@ -4549,6 +4561,8 @@ class Toplevel(GObject.GInterface):
         timestamp: int,
     ) -> None: ...
     def focus(self, timestamp: int) -> None: ...
+    def get_capabilities(self) -> ToplevelCapabilities: ...
+    def get_gravity(self) -> Gravity: ...
     def get_state(self) -> ToplevelState: ...
     def inhibit_system_shortcuts(
         self, event: typing.Optional[Event] = None
@@ -4559,6 +4573,7 @@ class Toplevel(GObject.GInterface):
     def restore_system_shortcuts(self) -> None: ...
     def set_decorated(self, decorated: bool) -> None: ...
     def set_deletable(self, deletable: bool) -> None: ...
+    def set_gravity(self, gravity: Gravity) -> None: ...
     def set_icon_list(self, surfaces: list[Texture]) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_startup_id(self, startup_id: str) -> None: ...
@@ -4626,7 +4641,7 @@ class TouchpadEvent(Event):
     def get_pinch_angle_delta(self) -> float: ...
     def get_pinch_scale(self) -> float: ...
 
-class VulkanContext(DrawContext, Gio.Initable):
+class VulkanContext(DrawContext):
     """
     :Constructors:
 
@@ -4682,6 +4697,7 @@ class DragAction(GObject.GFlags):
     COPY = 1
     LINK = 4
     MOVE = 2
+    NONE = 0
     @staticmethod
     def is_unique(action: DragAction) -> bool: ...
 
@@ -4727,6 +4743,16 @@ class SeatCapabilities(GObject.GFlags):
     TABLET_PAD = 16
     TABLET_STYLUS = 4
     TOUCH = 2
+
+class ToplevelCapabilities(GObject.GFlags):
+    EDGE_CONSTRAINTS = 1
+    FULLSCREEN = 32
+    INHIBIT_SHORTCUTS = 2
+    LOWER = 128
+    MAXIMIZE = 16
+    MINIMIZE = 64
+    TITLEBAR_GESTURES = 4
+    WINDOW_MENU = 8
 
 class ToplevelState(GObject.GFlags):
     ABOVE = 16
@@ -4813,7 +4839,7 @@ class EventType(GObject.GEnum):
     DRAG_MOTION = 13
     DROP_START = 14
     ENTER_NOTIFY = 6
-    EVENT_LAST = 29
+    EVENT_LAST = 30
     FOCUS_CHANGE = 8
     GRAB_BROKEN = 16
     KEY_PRESS = 4
@@ -4822,6 +4848,7 @@ class EventType(GObject.GEnum):
     MOTION_NOTIFY = 1
     PAD_BUTTON_PRESS = 23
     PAD_BUTTON_RELEASE = 24
+    PAD_DIAL = 29
     PAD_GROUP_MODE = 27
     PAD_RING = 25
     PAD_STRIP = 26
@@ -4887,14 +4914,39 @@ class MemoryFormat(GObject.GEnum):
     B8G8R8 = 8
     B8G8R8A8 = 3
     B8G8R8A8_PREMULTIPLIED = 0
+    B8G8R8G8_422 = 55
     B8G8R8X8 = 29
+    G10X6_B10X6R10X6_420 = 39
+    G12X4_B12X4R12X4_420 = 40
     G16 = 23
     G16A16 = 22
     G16A16_PREMULTIPLIED = 21
+    G16_B16R16_420 = 41
+    G16_B16_R16_420 = 62
+    G16_B16_R16_422 = 63
+    G16_B16_R16_444 = 64
     G8 = 20
     G8A8 = 19
     G8A8_PREMULTIPLIED = 18
-    N_FORMATS = 33
+    G8B8G8R8_422 = 52
+    G8R8G8B8_422 = 53
+    G8_B8R8_420 = 33
+    G8_B8R8_422 = 35
+    G8_B8R8_444 = 37
+    G8_B8_R8_410 = 42
+    G8_B8_R8_411 = 44
+    G8_B8_R8_420 = 46
+    G8_B8_R8_422 = 48
+    G8_B8_R8_444 = 50
+    G8_R8B8_420 = 34
+    G8_R8B8_422 = 36
+    G8_R8B8_444 = 38
+    G8_R8_B8_410 = 43
+    G8_R8_B8_411 = 45
+    G8_R8_B8_420 = 47
+    G8_R8_B8_422 = 49
+    G8_R8_B8_444 = 51
+    N_FORMATS = 65
     R16G16B16 = 9
     R16G16B16A16 = 11
     R16G16B16A16_FLOAT = 14
@@ -4907,7 +4959,14 @@ class MemoryFormat(GObject.GEnum):
     R8G8B8 = 7
     R8G8B8A8 = 5
     R8G8B8A8_PREMULTIPLIED = 2
+    R8G8B8G8_422 = 54
     R8G8B8X8 = 31
+    X4G12_X4B12_X4R12_420 = 59
+    X4G12_X4B12_X4R12_422 = 60
+    X4G12_X4B12_X4R12_444 = 61
+    X6G10_X6B10_X6R10_420 = 56
+    X6G10_X6B10_X6R10_422 = 57
+    X6G10_X6B10_X6R10_444 = 58
     X8B8G8R8 = 32
     X8R8G8B8 = 30
 
@@ -4925,6 +4984,11 @@ class ScrollDirection(GObject.GEnum):
     RIGHT = 3
     SMOOTH = 4
     UP = 0
+
+class ScrollRelativeDirection(GObject.GEnum):
+    IDENTICAL = 0
+    INVERTED = 1
+    UNKNOWN = 2
 
 class ScrollUnit(GObject.GEnum):
     SURFACE = 1
