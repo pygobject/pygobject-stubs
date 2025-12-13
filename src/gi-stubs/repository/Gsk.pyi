@@ -2,6 +2,7 @@ import typing
 
 import cairo
 from gi.repository import Gdk
+from gi.repository import gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Graphene
@@ -11,10 +12,7 @@ from typing_extensions import Self
 T = typing.TypeVar("T")
 _SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)
 
-_lock = ...  # FIXME Constant
-_namespace: str = "Gsk"
-_version: str = "4.0"
-
+def component_transfer_equal(self: None, other: None) -> bool: ...
 def path_parse(string: str) -> typing.Optional[Path]: ...
 def serialization_error_quark() -> int: ...
 def stroke_equal(stroke1: None, stroke2: None) -> bool: ...
@@ -205,6 +203,58 @@ class ColorStop(GObject.GPointer):
 
     offset: float = ...
     color: Gdk.RGBA = ...
+
+class ComponentTransfer(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new_discrete(values:list) -> Gsk.ComponentTransfer
+        new_gamma(amp:float, exp:float, ofs:float) -> Gsk.ComponentTransfer
+        new_identity() -> Gsk.ComponentTransfer
+        new_levels(n:float) -> Gsk.ComponentTransfer
+        new_linear(m:float, b:float) -> Gsk.ComponentTransfer
+        new_table(values:list) -> Gsk.ComponentTransfer
+    """
+    def copy(self) -> ComponentTransfer: ...
+    # override
+    @staticmethod
+    def equal(value1: None, value2: None) -> bool: ...
+    def free(self) -> None: ...
+    @classmethod
+    def new_discrete(cls, values: typing.Sequence[float]) -> ComponentTransfer: ...
+    @classmethod
+    def new_gamma(cls, amp: float, exp: float, ofs: float) -> ComponentTransfer: ...
+    @classmethod
+    def new_identity(cls) -> ComponentTransfer: ...
+    @classmethod
+    def new_levels(cls, n: float) -> ComponentTransfer: ...
+    @classmethod
+    def new_linear(cls, m: float, b: float) -> ComponentTransfer: ...
+    @classmethod
+    def new_table(cls, values: typing.Sequence[float]) -> ComponentTransfer: ...
+
+class ComponentTransferNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        ComponentTransferNode(**properties)
+        new(child:Gsk.RenderNode, r:Gsk.ComponentTransfer, g:Gsk.ComponentTransfer, b:Gsk.ComponentTransfer, a:Gsk.ComponentTransfer) -> Gsk.ComponentTransferNode
+    """
+    def get_child(self) -> RenderNode: ...
+    def get_transfer(self, component: int) -> ComponentTransfer: ...
+    @classmethod
+    def new(
+        cls,
+        child: RenderNode,
+        r: ComponentTransfer,
+        g: ComponentTransfer,
+        b: ComponentTransfer,
+        a: ComponentTransfer,
+    ) -> ComponentTransferNode: ...
 
 class ConicGradientNode(RenderNode):
     """
@@ -556,6 +606,12 @@ class Path(GObject.GBoxed):
         func: typing.Callable[..., bool],
         *user_data: typing.Any,
     ) -> bool: ...
+    def foreach_intersection(
+        self,
+        path2: typing.Optional[Path],
+        func: typing.Callable[..., bool],
+        *user_data: typing.Any,
+    ) -> bool: ...
     def get_bounds(self) -> typing.Tuple[bool, Graphene.Rect]: ...
     def get_closest_point(
         self, point: Graphene.Point, threshold: float
@@ -707,7 +763,7 @@ class RadialGradientNode(RenderNode):
         color_stops: typing.Sequence[ColorStop],
     ) -> RadialGradientNode: ...
 
-class RenderNode:
+class RenderNode(gi.Fundamental):
     """
     :Constructors:
 
@@ -1044,6 +1100,9 @@ class Transform(GObject.GBoxed):
     def get_category(self) -> TransformCategory: ...
     def invert(self) -> typing.Optional[Transform]: ...
     def matrix(self, matrix: Graphene.Matrix) -> Transform: ...
+    def matrix_2d(
+        self, xx: float, yx: float, xy: float, yy: float, dx: float, dy: float
+    ) -> typing.Optional[Transform]: ...
     @classmethod
     def new(cls) -> Transform: ...
     @staticmethod
@@ -1185,6 +1244,12 @@ class PathDirection(GObject.GEnum):
     TO_END = 2
     TO_START = 1
 
+class PathIntersection(GObject.GEnum):
+    END = 3
+    NONE = 0
+    NORMAL = 1
+    START = 2
+
 class PathOperation(GObject.GEnum):
     CLOSE = 1
     CONIC = 5
@@ -1201,6 +1266,7 @@ class RenderNodeType(GObject.GEnum):
     CLIP_NODE = 17
     COLOR_MATRIX_NODE = 15
     COLOR_NODE = 3
+    COMPONENT_TRANSFER_NODE = 31
     CONIC_GRADIENT_NODE = 8
     CONTAINER_NODE = 1
     CROSS_FADE_NODE = 21
