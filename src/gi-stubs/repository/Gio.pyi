@@ -1,7 +1,9 @@
 import typing
 
+from gi.repository import GioUnix
 from gi.repository import GLib
 from gi.repository import GObject
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
@@ -137,11 +139,6 @@ VOLUME_IDENTIFIER_KIND_NFS_MOUNT: str = "nfs-mount"
 VOLUME_IDENTIFIER_KIND_UNIX_DEVICE: str = "unix-device"
 VOLUME_IDENTIFIER_KIND_UUID: str = "uuid"
 VOLUME_MONITOR_EXTENSION_POINT_NAME: str = "gio-volume-monitor"
-_introspection_module = ...  # FIXME Constant
-_lock = ...  # FIXME Constant
-_namespace: str = "Gio"
-_overrides_module = ...  # FIXME Constant
-_version: str = "2.0"
 
 def action_name_is_valid(action_name: str) -> bool: ...
 def action_parse_detailed_name(
@@ -453,49 +450,53 @@ def unix_is_system_device_path(device_path: str) -> bool: ...
 def unix_is_system_fs_type(fs_type: str) -> bool: ...
 def unix_mount_at(
     mount_path: str,
-) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
-def unix_mount_compare(mount1: UnixMountEntry, mount2: UnixMountEntry) -> int: ...
-def unix_mount_copy(mount_entry: UnixMountEntry) -> UnixMountEntry: ...
+) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
+def unix_mount_compare(
+    mount1: GioUnix.MountEntry, mount2: GioUnix.MountEntry
+) -> int: ...
+def unix_mount_copy(mount_entry: GioUnix.MountEntry) -> GioUnix.MountEntry: ...
 def unix_mount_entries_changed_since(time: int) -> bool: ...
-def unix_mount_entries_get() -> typing.Tuple[list[UnixMountEntry], int]: ...
+def unix_mount_entries_get() -> typing.Tuple[list[GioUnix.MountEntry], int]: ...
 def unix_mount_entries_get_from_file(
     table_path: str,
-) -> typing.Tuple[typing.Optional[list[UnixMountEntry]], int]: ...
+) -> typing.Tuple[typing.Optional[list[GioUnix.MountEntry]], int]: ...
 def unix_mount_entry_at(
     mount_path: str,
-) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
+) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
 def unix_mount_entry_for(
     file_path: str,
-) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
+) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
 def unix_mount_for(
     file_path: str,
-) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
-def unix_mount_free(mount_entry: UnixMountEntry) -> None: ...
-def unix_mount_get_device_path(mount_entry: UnixMountEntry) -> str: ...
-def unix_mount_get_fs_type(mount_entry: UnixMountEntry) -> str: ...
-def unix_mount_get_mount_path(mount_entry: UnixMountEntry) -> str: ...
-def unix_mount_get_options(mount_entry: UnixMountEntry) -> typing.Optional[str]: ...
-def unix_mount_get_root_path(mount_entry: UnixMountEntry) -> typing.Optional[str]: ...
-def unix_mount_guess_can_eject(mount_entry: UnixMountEntry) -> bool: ...
-def unix_mount_guess_icon(mount_entry: UnixMountEntry) -> Icon: ...
-def unix_mount_guess_name(mount_entry: UnixMountEntry) -> str: ...
-def unix_mount_guess_should_display(mount_entry: UnixMountEntry) -> bool: ...
-def unix_mount_guess_symbolic_icon(mount_entry: UnixMountEntry) -> Icon: ...
-def unix_mount_is_readonly(mount_entry: UnixMountEntry) -> bool: ...
-def unix_mount_is_system_internal(mount_entry: UnixMountEntry) -> bool: ...
+) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
+def unix_mount_free(mount_entry: GioUnix.MountEntry) -> None: ...
+def unix_mount_get_device_path(mount_entry: GioUnix.MountEntry) -> str: ...
+def unix_mount_get_fs_type(mount_entry: GioUnix.MountEntry) -> str: ...
+def unix_mount_get_mount_path(mount_entry: GioUnix.MountEntry) -> str: ...
+def unix_mount_get_options(mount_entry: GioUnix.MountEntry) -> typing.Optional[str]: ...
+def unix_mount_get_root_path(
+    mount_entry: GioUnix.MountEntry,
+) -> typing.Optional[str]: ...
+def unix_mount_guess_can_eject(mount_entry: GioUnix.MountEntry) -> bool: ...
+def unix_mount_guess_icon(mount_entry: GioUnix.MountEntry) -> Icon: ...
+def unix_mount_guess_name(mount_entry: GioUnix.MountEntry) -> str: ...
+def unix_mount_guess_should_display(mount_entry: GioUnix.MountEntry) -> bool: ...
+def unix_mount_guess_symbolic_icon(mount_entry: GioUnix.MountEntry) -> Icon: ...
+def unix_mount_is_readonly(mount_entry: GioUnix.MountEntry) -> bool: ...
+def unix_mount_is_system_internal(mount_entry: GioUnix.MountEntry) -> bool: ...
 def unix_mount_point_at(
     mount_path: str,
-) -> typing.Tuple[typing.Optional[UnixMountPoint], int]: ...
+) -> typing.Tuple[typing.Optional[GioUnix.MountPoint], int]: ...
 def unix_mount_points_changed_since(time: int) -> bool: ...
-def unix_mount_points_get() -> typing.Tuple[list[UnixMountPoint], int]: ...
+def unix_mount_points_get() -> typing.Tuple[list[GioUnix.MountPoint], int]: ...
 def unix_mount_points_get_from_file(
     table_path: str,
-) -> typing.Tuple[typing.Optional[list[UnixMountPoint]], int]: ...
+) -> typing.Tuple[typing.Optional[list[GioUnix.MountPoint]], int]: ...
 def unix_mounts_changed_since(time: int) -> bool: ...
-def unix_mounts_get() -> typing.Tuple[list[UnixMountEntry], int]: ...
+def unix_mounts_get() -> typing.Tuple[list[GioUnix.MountEntry], int]: ...
 def unix_mounts_get_from_file(
     table_path: str,
-) -> typing.Tuple[typing.Optional[list[UnixMountEntry]], int]: ...
+) -> typing.Tuple[typing.Optional[list[GioUnix.MountEntry]], int]: ...
 
 class Action(GObject.GInterface):
     """
@@ -504,7 +505,6 @@ class Action(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def activate(self, parameter: typing.Optional[GLib.Variant] = None) -> None: ...
     def change_state(self, value: GLib.Variant) -> None: ...
     def get_enabled(self) -> bool: ...
@@ -547,7 +547,6 @@ class ActionGroup(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def action_added(self, action_name: str) -> None: ...
     def action_enabled_changed(self, action_name: str, enabled: bool) -> None: ...
     def action_removed(self, action_name: str) -> None: ...
@@ -643,9 +642,40 @@ class ActionMap(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_action(self, action: Action) -> None: ...
-    def add_action_entries(self, entries, user_data=None): ...  # FIXME Function
+    def add_action_entries(self, entries, user_data=None):
+        """
+        The ``add_action_entries()`` method is a convenience function for creating
+        multiple :class:`~gi.repository.Gio.SimpleAction` instances and adding them
+        to a :class:`~gi.repository.Gio.ActionMap`.
+        Each action is constructed as per one entry.
+
+        :param list entries:
+            List of entry tuples for :meth:`add_action` method. The entry tuple can
+            vary in size with the following information:
+
+            * The name of the action. Must be specified.
+            * The callback to connect to the "activate" signal of the
+              action. Since GLib 2.40, this can be ``None`` for stateful
+              actions, in which case the default handler is used. For
+              boolean-stated actions with no parameter, this is a toggle.
+              For other state types (and parameter type equal to the state
+              type) this will be a function that just calls change_state
+              (which you should provide).
+            * The type of the parameter that must be passed to the activate
+              function for this action, given as a single :class:`~gi.repository.GLib.Variant` type
+              string (or ``None`` for no parameter)
+            * The initial state for this action, given in GLib.Variant text
+              format. The state is parsed with no extra type information, so
+              type tags must be added to the string if they are necessary.
+              Stateless actions should give ``None`` here.
+            * The callback to connect to the "change-state" signal of the
+              action. All stateful actions should provide a handler here;
+              stateless actions should not.
+
+        :param user_data:
+            The user data for signal connections, or ``None``
+        """  # FIXME: Override is missing typing annotation
     def lookup_action(self, action_name: str) -> typing.Optional[Action]: ...
     def remove_action(self, action_name: str) -> None: ...
     def remove_action_entries(self, entries: typing.Sequence[ActionEntry]) -> None: ...
@@ -671,7 +701,6 @@ class AppInfo(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_supports_type(self, content_type: str) -> bool: ...
     def can_delete(self) -> bool: ...
     def can_remove_supports_type(self) -> bool: ...
@@ -824,7 +853,6 @@ class AppInfoMonitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get() -> AppInfoMonitor: ...
 
@@ -896,9 +924,6 @@ class AppLaunchContextClass(GObject.GPointer):
     launch_started: typing.Callable[
         [AppLaunchContext, AppInfo, GLib.Variant], None
     ] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
 
 class AppLaunchContextPrivate(GObject.GPointer): ...
 
@@ -942,8 +967,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         application_id: typing.Optional[str]
         flags: ApplicationFlags
         inactivity_timeout: int
@@ -981,6 +1005,22 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     ) -> None: ...
     def add_option_group(self, group: GLib.OptionGroup) -> None: ...
     def bind_busy_property(self, object: GObject.Object, property: str) -> None: ...
+    def create_asyncio_task(self, coro):
+        """
+        Safely create an asyncio task. The application will not quit until the
+        task completes. For potentially longer running tasks, you should add
+        cancellation logic to abort a task when it is not needed anymore (e.g.
+        cancelling it from the Gtk.Window.do_unmap event).
+
+        Note that python will only log a raised exception if the Task is
+        destroyed without the result having been collected. However, this does
+        also not happen when the task is cancelled. As such, be careful to not
+        cancel tasks that are already finished.
+
+        You can deal with this by either only storing a weak reference to the
+        Task, by explicitly collecting the result, or by only cancelling it if
+        it is not done already.
+        """  # FIXME: Override is missing typing annotation
     def do_activate(self) -> None: ...
     def do_add_platform_data(self, builder: GLib.VariantBuilder) -> None: ...
     def do_after_emit(self, platform_data: GLib.Variant) -> None: ...
@@ -1106,8 +1146,7 @@ class ApplicationCommandLine(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         is_remote: bool
         arguments: GLib.Variant
         options: GLib.Variant
@@ -1169,7 +1208,6 @@ class AsyncInitable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def init_async(
         self,
         io_priority: int,
@@ -1210,7 +1248,6 @@ class AsyncResult(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_source_object(self) -> typing.Optional[GObject.Object]: ...
     def get_user_data(self) -> None: ...
     def is_tagged(self, source_tag: None) -> bool: ...
@@ -1254,8 +1291,7 @@ class BufferedInputStream(FilterInputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(FilterInputStream.Props):
         buffer_size: int
         base_stream: InputStream
         close_base_stream: bool
@@ -1319,11 +1355,6 @@ class BufferedInputStreamClass(GObject.GPointer):
     ] = ...
     fill_async: typing.Callable[..., None] = ...
     fill_finish: typing.Callable[[BufferedInputStream, AsyncResult], int] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class BufferedInputStreamPrivate(GObject.GPointer): ...
 
@@ -1350,8 +1381,7 @@ class BufferedOutputStream(FilterOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(FilterOutputStream.Props):
         auto_grow: bool
         buffer_size: int
         base_stream: OutputStream
@@ -1388,8 +1418,6 @@ class BufferedOutputStreamClass(GObject.GPointer):
     """
 
     parent_class: FilterOutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
 
 class BufferedOutputStreamPrivate(GObject.GPointer): ...
 
@@ -1410,8 +1438,7 @@ class BytesIcon(GObject.Object, Icon, LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         bytes: GLib.Bytes
 
     props: Props = ...
@@ -1472,11 +1499,6 @@ class CancellableClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
     cancelled: typing.Callable[[typing.Optional[Cancellable]], None] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class CancellablePrivate(GObject.GPointer): ...
 
@@ -1499,8 +1521,7 @@ class CharsetConverter(GObject.Object, Converter, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         from_charset: str
         to_charset: str
         use_fallback: bool
@@ -1533,7 +1554,6 @@ class Converter(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def convert(
         self,
         inbuf: typing.Sequence[int],
@@ -1585,8 +1605,7 @@ class ConverterInputStream(FilterInputStream, PollableInputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(FilterInputStream.Props):
         converter: Converter
         base_stream: InputStream
         close_base_stream: bool
@@ -1616,11 +1635,6 @@ class ConverterInputStreamClass(GObject.GPointer):
     """
 
     parent_class: FilterInputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class ConverterInputStreamPrivate(GObject.GPointer): ...
 
@@ -1645,8 +1659,7 @@ class ConverterOutputStream(FilterOutputStream, PollableOutputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(FilterOutputStream.Props):
         converter: Converter
         base_stream: OutputStream
         close_base_stream: bool
@@ -1676,11 +1689,6 @@ class ConverterOutputStreamClass(GObject.GPointer):
     """
 
     parent_class: FilterOutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class ConverterOutputStreamPrivate(GObject.GPointer): ...
 
@@ -1698,7 +1706,6 @@ class Credentials(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_unix_pid(self) -> int: ...
     def get_unix_user(self) -> int: ...
     def is_same_user(self, other_credentials: Credentials) -> bool: ...
@@ -1729,7 +1736,6 @@ class DBusActionGroup(GObject.Object, ActionGroup, RemoteActionGroup):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get(
         connection: DBusConnection, bus_name: typing.Optional[str], object_path: str
@@ -1789,7 +1795,6 @@ class DBusAuthObserver(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def allow_mechanism(self, mechanism: str) -> bool: ...
     def authorize_authenticated_peer(
         self, stream: IOStream, credentials: typing.Optional[Credentials] = None
@@ -1828,8 +1833,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         capabilities: DBusCapabilityFlags
         closed: bool
         exit_on_close: bool
@@ -1995,24 +1999,15 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         self,
         object_path: str,
         interface_info: DBusInterfaceInfo,
-        method_call_closure: (
-            typing.Callable[
-                [
-                    DBusConnection,
-                    str,
-                    str,
-                    str,
-                    str,
-                    GLib.Variant,
-                    DBusMethodInvocation,
-                ],
-                typing.Any,
-            ]
-            | None
-        ) = None,
-        get_property_closure: (
-            typing.Callable[[DBusConnection, str, str, str, str], typing.Any] | None
-        ) = None,
+        method_call_closure: typing.Callable[
+            [DBusConnection, str, str, str, str, GLib.Variant, DBusMethodInvocation],
+            typing.Any,
+        ]
+        | None = None,
+        get_property_closure: typing.Callable[
+            [DBusConnection, str, str, str, str], typing.Any
+        ]
+        | None = None,
         set_property_closure: typing.Callable[..., typing.Any] | None = None,
     ) -> int: ...
     def register_object_with_closures2(
@@ -2090,7 +2085,6 @@ class DBusInterface(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_info(self) -> DBusInterfaceInfo: ...
     def get_object(self) -> typing.Optional[DBusObject]: ...
     def set_object(self, object: typing.Optional[DBusObject] = None) -> None: ...
@@ -2155,8 +2149,7 @@ class DBusInterfaceSkeleton(GObject.Object, DBusInterface):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         g_flags: DBusInterfaceSkeletonFlags
 
     props: Props = ...
@@ -2234,7 +2227,6 @@ class DBusMenuModel(MenuModel):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get(
         connection: DBusConnection, bus_name: typing.Optional[str], object_path: str
@@ -2260,8 +2252,7 @@ class DBusMessage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         locked: bool
 
     props: Props = ...
@@ -2365,7 +2356,6 @@ class DBusMethodInvocation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_connection(self) -> DBusConnection: ...
     def get_interface_name(self) -> typing.Optional[str]: ...
     def get_message(self) -> DBusMessage: ...
@@ -2416,7 +2406,6 @@ class DBusObject(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_interface(self, interface_name: str) -> typing.Optional[DBusInterface]: ...
     def get_interfaces(self) -> list[DBusInterface]: ...
     def get_object_path(self) -> str: ...
@@ -2446,7 +2435,6 @@ class DBusObjectManager(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_interface(
         self, object_path: str, interface_name: str
     ) -> typing.Optional[DBusInterface]: ...
@@ -2494,8 +2482,7 @@ class DBusObjectManagerClient(
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         connection: DBusConnection
         flags: DBusObjectManagerClientFlags
         get_proxy_type_destroy_notify: None
@@ -2668,8 +2655,7 @@ class DBusObjectManagerServer(GObject.Object, DBusObjectManager):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         connection: typing.Optional[DBusConnection]
         object_path: str
 
@@ -2726,8 +2712,7 @@ class DBusObjectProxy(GObject.Object, DBusObject):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         g_connection: DBusConnection
         g_object_path: str
 
@@ -2779,8 +2764,7 @@ class DBusObjectSkeleton(GObject.Object, DBusObject):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         g_object_path: str
 
     props: Props = ...
@@ -2943,8 +2927,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         g_connection: DBusConnection
         g_default_timeout: int
         g_flags: DBusProxyFlags
@@ -3128,8 +3111,7 @@ class DBusServer(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         active: bool
         address: str
         authentication_observer: DBusAuthObserver
@@ -3216,8 +3198,7 @@ class DataInputStream(BufferedInputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(BufferedInputStream.Props):
         byte_order: DataStreamByteOrder
         newline_type: DataStreamNewlineType
         buffer_size: int
@@ -3235,6 +3216,7 @@ class DataInputStream(BufferedInputStream, Seekable):
         base_stream: InputStream = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
+    def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def get_byte_order(self) -> DataStreamByteOrder: ...
     def get_newline_type(self) -> DataStreamNewlineType: ...
     @classmethod
@@ -3306,11 +3288,6 @@ class DataInputStreamClass(GObject.GPointer):
     """
 
     parent_class: BufferedInputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class DataInputStreamPrivate(GObject.GPointer): ...
 
@@ -3335,8 +3312,7 @@ class DataOutputStream(FilterOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(FilterOutputStream.Props):
         byte_order: DataStreamByteOrder
         base_stream: OutputStream
         close_base_stream: bool
@@ -3389,11 +3365,6 @@ class DataOutputStreamClass(GObject.GPointer):
     """
 
     parent_class: FilterOutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class DataOutputStreamPrivate(GObject.GPointer): ...
 
@@ -3404,7 +3375,6 @@ class DatagramBased(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def condition_check(self, condition: GLib.IOCondition) -> GLib.IOCondition: ...
     def condition_wait(
         self,
@@ -3479,7 +3449,6 @@ class DebugController(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_debug_enabled(self) -> bool: ...
     def set_debug_enabled(self, debug_enabled: bool) -> None: ...
 
@@ -3503,8 +3472,7 @@ class DebugControllerDBus(GObject.Object, DebugController, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         connection: DBusConnection
         debug_enabled: bool
 
@@ -3553,9 +3521,9 @@ class DesktopAppInfo(GObject.Object, AppInfo):
     ::
 
         DesktopAppInfo(**properties)
-        new(desktop_id:str) -> Gio.DesktopAppInfo or None
-        new_from_filename(filename:str) -> Gio.DesktopAppInfo or None
-        new_from_keyfile(key_file:GLib.KeyFile) -> Gio.DesktopAppInfo or None
+        new(desktop_id:str) -> GioUnix.DesktopAppInfo or None
+        new_from_filename(filename:str) -> GioUnix.DesktopAppInfo or None
+        new_from_keyfile(key_file:GLib.KeyFile) -> GioUnix.DesktopAppInfo or None
 
     Object GDesktopAppInfo
 
@@ -3565,8 +3533,7 @@ class DesktopAppInfo(GObject.Object, AppInfo):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         filename: typing.Optional[str]
 
     props: Props = ...
@@ -3577,7 +3544,7 @@ class DesktopAppInfo(GObject.Object, AppInfo):
     def get_filename(self) -> typing.Optional[str]: ...
     def get_generic_name(self) -> typing.Optional[str]: ...
     @staticmethod
-    def get_implementations(interface: str) -> list[DesktopAppInfo]: ...
+    def get_implementations(interface: str) -> list[GioUnix.DesktopAppInfo]: ...
     def get_is_hidden(self) -> bool: ...
     def get_keywords(self) -> list[str]: ...
     def get_locale_string(self, key: str) -> typing.Optional[str]: ...
@@ -3613,13 +3580,11 @@ class DesktopAppInfo(GObject.Object, AppInfo):
     ) -> bool: ...
     def list_actions(self) -> list[str]: ...
     @classmethod
-    def new(cls, desktop_id: str) -> typing.Optional[DesktopAppInfo]: ...
+    def new(cls, desktop_id: str) -> DesktopAppInfo: ...
     @classmethod
-    def new_from_filename(cls, filename: str) -> typing.Optional[DesktopAppInfo]: ...
+    def new_from_filename(cls, filename: str) -> DesktopAppInfo: ...
     @classmethod
-    def new_from_keyfile(
-        cls, key_file: GLib.KeyFile
-    ) -> typing.Optional[DesktopAppInfo]: ...
+    def new_from_keyfile(cls, key_file: GLib.KeyFile) -> DesktopAppInfo: ...
     @staticmethod
     def search(search_string: str) -> list[typing.Sequence[str]]: ...
     @staticmethod
@@ -3643,7 +3608,6 @@ class DesktopAppInfoLookup(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_default_for_uri_scheme(
         self, uri_scheme: str
     ) -> typing.Optional[AppInfo]: ...
@@ -3659,7 +3623,7 @@ class DesktopAppInfoLookupIface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
     get_default_for_uri_scheme: typing.Callable[
-        [DesktopAppInfoLookup, str], typing.Optional[AppInfo]
+        [GioUnix.DesktopAppInfoLookup, str], typing.Optional[AppInfo]
     ] = ...
 
 class Drive(GObject.GInterface):
@@ -3669,7 +3633,6 @@ class Drive(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_eject(self) -> bool: ...
     def can_poll_for_media(self) -> bool: ...
     def can_start(self) -> bool: ...
@@ -3781,7 +3744,6 @@ class DtlsClientConnection(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_accepted_cas(self) -> list[typing.Sequence[int]]: ...
     def get_server_identity(self) -> SocketConnectable: ...
     def get_validation_flags(self) -> TlsCertificateFlags: ...
@@ -3811,7 +3773,6 @@ class DtlsConnection(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def close(self, cancellable: typing.Optional[Cancellable] = None) -> bool: ...
     def close_async(
         self,
@@ -3913,7 +3874,6 @@ class DtlsServerConnection(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def new(
         base_socket: DatagramBased, certificate: typing.Optional[TlsCertificate] = None
@@ -3949,8 +3909,7 @@ class Emblem(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         icon: GObject.Object
         origin: EmblemOrigin
 
@@ -3985,8 +3944,7 @@ class EmblemedIcon(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         gicon: Icon
 
     props: Props = ...
@@ -4016,6 +3974,19 @@ class EmblemedIconClass(GObject.GPointer):
 
 class EmblemedIconPrivate(GObject.GPointer): ...
 
+class FDMessageClass(GObject.GPointer):
+    """
+    :Constructors:
+
+    ::
+
+        FDMessageClass()
+    """
+
+    parent_class: SocketControlMessageClass = ...
+
+class FDMessagePrivate(GObject.GPointer): ...
+
 class File(GObject.GInterface):
     """
     Interface GFile
@@ -4023,7 +3994,6 @@ class File(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def append_to(
         self, flags: FileCreateFlags, cancellable: typing.Optional[Cancellable] = None
     ) -> FileOutputStream: ...
@@ -4618,7 +4588,6 @@ class FileAttributeMatcher(GObject.GBoxed):
 
         new(attributes:str) -> Gio.FileAttributeMatcher
     """
-
     def enumerate_namespace(self, ns: str) -> bool: ...
     def enumerate_next(self) -> typing.Optional[str]: ...
     def matches(self, attribute: str) -> bool: ...
@@ -4639,7 +4608,6 @@ class FileDescriptorBased(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_fd(self) -> int: ...
 
 class FileDescriptorBasedIface(GObject.GPointer):
@@ -4652,7 +4620,7 @@ class FileDescriptorBasedIface(GObject.GPointer):
     """
 
     g_iface: GObject.TypeInterface = ...
-    get_fd: typing.Callable[[FileDescriptorBased], int] = ...
+    get_fd: typing.Callable[[GioUnix.FileDescriptorBased], int] = ...
 
 class FileEnumerator(GObject.Object):
     """
@@ -4670,14 +4638,14 @@ class FileEnumerator(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         container: File
 
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: FileEnumeratorPrivate = ...
     def __init__(self, container: File = ...) -> None: ...
+    def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def close(self, cancellable: typing.Optional[Cancellable] = None) -> bool: ...
     def close_async(
         self,
@@ -4751,13 +4719,6 @@ class FileEnumeratorClass(GObject.GPointer):
     ] = ...
     close_async: typing.Callable[..., None] = ...
     close_finish: typing.Callable[[FileEnumerator, AsyncResult], bool] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
 
 class FileEnumeratorPrivate(GObject.GPointer): ...
 
@@ -4779,8 +4740,7 @@ class FileIOStream(IOStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IOStream.Props):
         closed: bool
         input_stream: InputStream
         output_stream: OutputStream
@@ -4852,11 +4812,6 @@ class FileIOStreamClass(GObject.GPointer):
     query_info_async: typing.Callable[..., None] = ...
     query_info_finish: typing.Callable[[FileIOStream, AsyncResult], FileInfo] = ...
     get_etag: typing.Callable[[FileIOStream], typing.Optional[str]] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class FileIOStreamPrivate(GObject.GPointer): ...
 
@@ -4877,8 +4832,7 @@ class FileIcon(GObject.Object, Icon, LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         file: File
 
     props: Props = ...
@@ -4945,13 +4899,9 @@ class FileIface(GObject.GPointer):
     query_settable_attributes: typing.Callable[
         [File, typing.Optional[Cancellable]], FileAttributeInfoList
     ] = ...
-    _query_settable_attributes_async: None = ...
-    _query_settable_attributes_finish: None = ...
     query_writable_namespaces: typing.Callable[
         [File, typing.Optional[Cancellable]], FileAttributeInfoList
     ] = ...
-    _query_writable_namespaces_async: None = ...
-    _query_writable_namespaces_finish: None = ...
     set_attribute: typing.Callable[
         [
             File,
@@ -5089,7 +5039,6 @@ class FileInfo(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def clear_status(self) -> None: ...
     def copy_into(self, dest_info: FileInfo) -> None: ...
     def dup(self) -> FileInfo: ...
@@ -5248,11 +5197,6 @@ class FileInputStreamClass(GObject.GPointer):
     ] = ...
     query_info_async: typing.Callable[..., None] = ...
     query_info_finish: typing.Callable[[FileInputStream, AsyncResult], FileInfo] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class FileInputStreamPrivate(GObject.GPointer): ...
 
@@ -5276,8 +5220,7 @@ class FileMonitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         cancelled: bool
         rate_limit: int
 
@@ -5291,7 +5234,10 @@ class FileMonitor(GObject.Object):
         self, file: File, other_file: File, event_type: FileMonitorEvent
     ) -> None: ...
     def emit_event(
-        self, child: File, other_file: File, event_type: FileMonitorEvent
+        self,
+        child: File,
+        other_file: typing.Optional[File],
+        event_type: FileMonitorEvent,
     ) -> None: ...
     def is_cancelled(self) -> bool: ...
     def set_rate_limit(self, limit_msecs: int) -> None: ...
@@ -5308,11 +5254,6 @@ class FileMonitorClass(GObject.GPointer):
     parent_class: GObject.ObjectClass = ...
     changed: typing.Callable[[FileMonitor, File, File, FileMonitorEvent], None] = ...
     cancel: typing.Callable[[FileMonitor], bool] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class FileMonitorPrivate(GObject.GPointer): ...
 
@@ -5396,11 +5337,6 @@ class FileOutputStreamClass(GObject.GPointer):
     query_info_async: typing.Callable[..., None] = ...
     query_info_finish: typing.Callable[[FileOutputStream, AsyncResult], FileInfo] = ...
     get_etag: typing.Callable[[FileOutputStream], typing.Optional[str]] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class FileOutputStreamPrivate(GObject.GPointer): ...
 
@@ -5421,7 +5357,6 @@ class FilenameCompleter(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def do_got_completion_data(self) -> None: ...
     def get_completion_suffix(self, initial_text: str) -> typing.Optional[str]: ...
     def get_completions(self, initial_text: str) -> list[str]: ...
@@ -5440,9 +5375,6 @@ class FilenameCompleterClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
     got_completion_data: typing.Callable[[FilenameCompleter], None] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
 
 class FilterInputStream(InputStream):
     """
@@ -5461,8 +5393,7 @@ class FilterInputStream(InputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(InputStream.Props):
         base_stream: InputStream
         close_base_stream: bool
 
@@ -5486,9 +5417,6 @@ class FilterInputStreamClass(GObject.GPointer):
     """
 
     parent_class: InputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
 
 class FilterOutputStream(OutputStream):
     """
@@ -5507,8 +5435,7 @@ class FilterOutputStream(OutputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(OutputStream.Props):
         base_stream: OutputStream
         close_base_stream: bool
 
@@ -5532,9 +5459,6 @@ class FilterOutputStreamClass(GObject.GPointer):
     """
 
     parent_class: OutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
 
 class IOExtension(GObject.GPointer):
     def get_name(self) -> str: ...
@@ -5572,7 +5496,6 @@ class IOModule(GObject.TypeModule, GObject.TypePlugin):
     Signals from GObject:
       notify (GParam)
     """
-
     @classmethod
     def new(cls, filename: str) -> IOModule: ...
     @staticmethod
@@ -5610,8 +5533,7 @@ class IOStream(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         closed: bool
         input_stream: InputStream
         output_stream: OutputStream
@@ -5674,16 +5596,6 @@ class IOStreamClass(GObject.GPointer):
     close_fn: typing.Callable[[IOStream, typing.Optional[Cancellable]], bool] = ...
     close_async: typing.Callable[..., None] = ...
     close_finish: typing.Callable[[IOStream, AsyncResult], bool] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
-    _g_reserved8: None = ...
-    _g_reserved9: None = ...
-    _g_reserved10: None = ...
 
 class IOStreamPrivate(GObject.GPointer): ...
 
@@ -5694,7 +5606,6 @@ class Icon(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def deserialize(value: GLib.Variant) -> typing.Optional[Icon]: ...
     def equal(self, icon2: typing.Optional[Icon] = None) -> bool: ...
@@ -5729,6 +5640,7 @@ class InetAddress(GObject.Object):
         InetAddress(**properties)
         new_any(family:Gio.SocketFamily) -> Gio.InetAddress
         new_from_bytes(bytes:list, family:Gio.SocketFamily) -> Gio.InetAddress
+        new_from_bytes_with_ipv6_info(bytes:list, family:Gio.SocketFamily, flowinfo:int, scope_id:int) -> Gio.InetAddress
         new_from_string(string:str) -> Gio.InetAddress or None
         new_loopback(family:Gio.SocketFamily) -> Gio.InetAddress
 
@@ -5747,14 +5659,16 @@ class InetAddress(GObject.Object):
       is-mc-node-local -> gboolean: is-mc-node-local
       is-mc-org-local -> gboolean: is-mc-org-local
       is-mc-site-local -> gboolean: is-mc-site-local
+      flowinfo -> guint: flowinfo
+      scope-id -> guint: scope-id
 
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         bytes: None
         family: SocketFamily
+        flowinfo: int
         is_any: bool
         is_link_local: bool
         is_loopback: bool
@@ -5765,14 +5679,22 @@ class InetAddress(GObject.Object):
         is_mc_site_local: bool
         is_multicast: bool
         is_site_local: bool
+        scope_id: int
 
     props: Props = ...
     parent_instance: GObject.Object = ...
     priv: InetAddressPrivate = ...
-    def __init__(self, bytes: None = ..., family: SocketFamily = ...) -> None: ...
+    def __init__(
+        self,
+        bytes: None = ...,
+        family: SocketFamily = ...,
+        flowinfo: int = ...,
+        scope_id: int = ...,
+    ) -> None: ...
     def do_to_string(self) -> str: ...
     def equal(self, other_address: InetAddress) -> bool: ...
     def get_family(self) -> SocketFamily: ...
+    def get_flowinfo(self) -> int: ...
     def get_is_any(self) -> bool: ...
     def get_is_link_local(self) -> bool: ...
     def get_is_loopback(self) -> bool: ...
@@ -5784,11 +5706,20 @@ class InetAddress(GObject.Object):
     def get_is_multicast(self) -> bool: ...
     def get_is_site_local(self) -> bool: ...
     def get_native_size(self) -> int: ...
+    def get_scope_id(self) -> int: ...
     @classmethod
     def new_any(cls, family: SocketFamily) -> InetAddress: ...
     @classmethod
     def new_from_bytes(
         cls, bytes: typing.Sequence[int], family: SocketFamily
+    ) -> InetAddress: ...
+    @classmethod
+    def new_from_bytes_with_ipv6_info(
+        cls,
+        bytes: typing.Sequence[int],
+        family: SocketFamily,
+        flowinfo: int,
+        scope_id: int,
     ) -> InetAddress: ...
     @classmethod
     def new_from_string(cls, string: str) -> typing.Optional[InetAddress]: ...
@@ -5829,8 +5760,7 @@ class InetAddressMask(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         address: InetAddress
         family: SocketFamily
         length: int
@@ -5888,8 +5818,7 @@ class InetSocketAddress(SocketAddress, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketAddress.Props):
         address: InetAddress
         flowinfo: int
         port: int
@@ -5935,7 +5864,6 @@ class Initable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def init(self, cancellable: typing.Optional[Cancellable] = None) -> bool: ...
     @staticmethod
     def newv(
@@ -6102,11 +6030,6 @@ class InputStreamClass(GObject.GPointer):
     skip_finish: typing.Callable[[InputStream, AsyncResult], int] = ...
     close_async: typing.Callable[..., None] = ...
     close_finish: typing.Callable[[InputStream, AsyncResult], bool] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class InputStreamPrivate(GObject.GPointer): ...
 
@@ -6168,13 +6091,15 @@ class ListStore(GObject.Object, ListModel):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
         n_items: int
 
     props: Props = ...
     def __init__(self, item_type: typing.Type[typing.Any] = ...) -> None: ...
+    def __setitem__(
+        self, key, value
+    ): ...  # FIXME: Override is missing typing annotation
     def append(self, item: GObject.Object) -> None: ...
     def find(self, item: GObject.Object) -> typing.Tuple[bool, int]: ...
     # override
@@ -6228,7 +6153,6 @@ class LoadableIcon(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def load(
         self, size: int, cancellable: typing.Optional[Cancellable] = None
     ) -> typing.Tuple[InputStream, str]: ...
@@ -6306,11 +6230,6 @@ class MemoryInputStreamClass(GObject.GPointer):
     """
 
     parent_class: InputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class MemoryInputStreamPrivate(GObject.GPointer): ...
 
@@ -6321,7 +6240,6 @@ class MemoryMonitor(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def dup_default() -> MemoryMonitor: ...
 
@@ -6360,8 +6278,7 @@ class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(OutputStream.Props):
         data: typing.Optional[None]
         data_size: int
         size: int
@@ -6388,11 +6305,6 @@ class MemoryOutputStreamClass(GObject.GPointer):
     """
 
     parent_class: OutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class MemoryOutputStreamPrivate(GObject.GPointer): ...
 
@@ -6413,7 +6325,6 @@ class Menu(MenuModel):
     Signals from GObject:
       notify (GParam)
     """
-
     def append(
         self,
         label: typing.Optional[str] = None,
@@ -6512,7 +6423,6 @@ class MenuItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_attribute_value(
         self, attribute: str, expected_type: typing.Optional[GLib.VariantType] = None
     ) -> typing.Optional[GLib.Variant]: ...
@@ -6672,7 +6582,6 @@ class Mount(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_eject(self) -> bool: ...
     def can_unmount(self) -> bool: ...
     def eject(
@@ -6782,6 +6691,8 @@ class MountIface(GObject.GPointer):
     get_sort_key: typing.Callable[[Mount], typing.Optional[str]] = ...
     get_symbolic_icon: typing.Callable[[Mount], Icon] = ...
 
+class MountMonitorClass(GObject.GPointer): ...
+
 class MountOperation(GObject.Object):
     """
     :Constructors:
@@ -6815,8 +6726,7 @@ class MountOperation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         anonymous: bool
         choice: int
         domain: typing.Optional[str]
@@ -6905,15 +6815,6 @@ class MountOperationClass(GObject.GPointer):
         [MountOperation, str, typing.Sequence[int], typing.Sequence[str]], None
     ] = ...
     show_unmount_progress: typing.Callable[[MountOperation, str, int, int], None] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
-    _g_reserved8: None = ...
-    _g_reserved9: None = ...
 
 class MountOperationPrivate(GObject.GPointer): ...
 
@@ -6934,8 +6835,7 @@ class NativeSocketAddress(SocketAddress, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketAddress.Props):
         family: SocketFamily
 
     props: Props = ...
@@ -7019,8 +6919,7 @@ class NetworkAddress(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         hostname: str
         port: int
         scheme: typing.Optional[str]
@@ -7063,7 +6962,6 @@ class NetworkMonitor(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_reach(
         self,
         connectable: SocketConnectable,
@@ -7120,8 +7018,7 @@ class NetworkService(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         domain: str
         protocol: str
         scheme: str
@@ -7172,7 +7069,6 @@ class Notification(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     def add_button(self, label: str, detailed_action: str) -> None: ...
     def add_button_with_target(
         self, label: str, action: str, target: typing.Optional[GLib.Variant] = None
@@ -7437,11 +7333,6 @@ class OutputStreamClass(GObject.GPointer):
     writev_finish: typing.Callable[
         [OutputStream, AsyncResult], typing.Tuple[bool, int]
     ] = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
-    _g_reserved8: None = ...
 
 class OutputStreamPrivate(GObject.GPointer): ...
 
@@ -7475,8 +7366,7 @@ class Permission(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         allowed: bool
         can_acquire: bool
         can_release: bool
@@ -7550,7 +7440,6 @@ class PollableInputStream(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_poll(self) -> bool: ...
     def create_source(
         self, cancellable: typing.Optional[Cancellable] = None
@@ -7586,7 +7475,6 @@ class PollableOutputStream(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_poll(self) -> bool: ...
     def create_source(
         self, cancellable: typing.Optional[Cancellable] = None
@@ -7633,7 +7521,6 @@ class PowerProfileMonitor(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def dup_default() -> PowerProfileMonitor: ...
     def get_power_saver_enabled(self) -> bool: ...
@@ -7673,8 +7560,7 @@ class PropertyAction(GObject.Object, Action):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         enabled: bool
         invert_boolean: bool
         name: str
@@ -7704,7 +7590,6 @@ class Proxy(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def connect(
         self,
         connection: IOStream,
@@ -7756,8 +7641,7 @@ class ProxyAddress(InetSocketAddress, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(InetSocketAddress.Props):
         destination_hostname: str
         destination_port: int
         destination_protocol: str
@@ -7837,8 +7721,7 @@ class ProxyAddressEnumerator(SocketAddressEnumerator):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketAddressEnumerator.Props):
         connectable: SocketConnectable
         default_port: int
         proxy_resolver: ProxyResolver
@@ -7865,13 +7748,6 @@ class ProxyAddressEnumeratorClass(GObject.GPointer):
     """
 
     parent_class: SocketAddressEnumeratorClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
 
 class ProxyAddressEnumeratorPrivate(GObject.GPointer): ...
 class ProxyAddressPrivate(GObject.GPointer): ...
@@ -7900,7 +7776,6 @@ class ProxyResolver(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def get_default() -> ProxyResolver: ...
     def is_supported(self) -> bool: ...
@@ -7940,7 +7815,6 @@ class RemoteActionGroup(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def activate_action_full(
         self,
         action_name: str,
@@ -7987,8 +7861,7 @@ class Resolver(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         timeout: int
 
     props: Props = ...
@@ -8190,7 +8063,6 @@ class Resource(GObject.GBoxed):
 
         new_from_data(data:GLib.Bytes) -> Gio.Resource
     """
-
     def enumerate_children(
         self, path: str, lookup_flags: ResourceLookupFlags
     ) -> list[str]: ...
@@ -8218,7 +8090,6 @@ class Seekable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_seek(self) -> bool: ...
     def can_truncate(self) -> bool: ...
     def seek(
@@ -8278,8 +8149,7 @@ class Settings(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         backend: SettingsBackend
         delay_apply: bool
         has_unapplied: bool
@@ -8299,6 +8169,12 @@ class Settings(GObject.Object):
         schema_id: str = ...,
         settings_schema: SettingsSchema = ...,
     ) -> None: ...
+    def __getitem__(self, key): ...  # FIXME: Override is missing typing annotation
+    def __iter__(self): ...  # FIXME: Override is missing typing annotation
+    def __len__(self): ...  # FIXME: Override is missing typing annotation
+    def __setitem__(
+        self, key, value
+    ): ...  # FIXME: Override is missing typing annotation
     def apply(self) -> None: ...
     def bind(
         self, key: str, object: GObject.Object, property: str, flags: SettingsBindFlags
@@ -8344,7 +8220,7 @@ class Settings(GObject.Object):
     def get_user_value(self, key: str) -> typing.Optional[GLib.Variant]: ...
     def get_value(self, key: str) -> GLib.Variant: ...
     def is_writable(self, name: str) -> bool: ...
-    def keys(self): ...  # FIXME Function
+    def keys(self): ...  # FIXME: Override is missing typing annotation
     def list_children(self) -> list[str]: ...
     def list_keys(self) -> list[str]: ...
     @staticmethod
@@ -8508,7 +8384,6 @@ class SettingsSchemaSource(GObject.GBoxed):
 
         new_from_directory(directory:str, parent:Gio.SettingsSchemaSource=None, trusted:bool) -> Gio.SettingsSchemaSource
     """
-
     @staticmethod
     def get_default() -> typing.Optional[SettingsSchemaSource]: ...
     def list_schemas(self, recursive: bool) -> typing.Tuple[list[str], list[str]]: ...
@@ -8551,8 +8426,7 @@ class SimpleAction(GObject.Object, Action):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         enabled: bool
         name: str
         parameter_type: GLib.VariantType
@@ -8645,7 +8519,6 @@ class SimpleAsyncResult(GObject.Object, AsyncResult):
     Signals from GObject:
       notify (GParam)
     """
-
     def complete(self) -> None: ...
     def complete_in_idle(self) -> None: ...
     def get_op_res_gboolean(self) -> bool: ...
@@ -8704,8 +8577,7 @@ class SimpleIOStream(IOStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IOStream.Props):
         input_stream: InputStream
         output_stream: OutputStream
         closed: bool
@@ -8738,8 +8610,7 @@ class SimplePermission(Permission):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Permission.Props):
         allowed: bool
         can_acquire: bool
         can_release: bool
@@ -8765,8 +8636,7 @@ class SimpleProxyResolver(GObject.Object, ProxyResolver):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         default_proxy: typing.Optional[str]
         ignore_hosts: list[str]
 
@@ -8797,11 +8667,6 @@ class SimpleProxyResolverClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class SimpleProxyResolverPrivate(GObject.GPointer): ...
 
@@ -8836,8 +8701,7 @@ class Socket(GObject.Object, DatagramBased, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         blocking: bool
         broadcast: bool
         family: SocketFamily
@@ -9042,8 +8906,7 @@ class SocketAddress(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         family: SocketFamily
 
     props: Props = ...
@@ -9136,16 +8999,6 @@ class SocketClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
-    _g_reserved7: None = ...
-    _g_reserved8: None = ...
-    _g_reserved9: None = ...
-    _g_reserved10: None = ...
 
 class SocketClient(GObject.Object):
     """
@@ -9175,8 +9028,7 @@ class SocketClient(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         enable_proxy: bool
         family: SocketFamily
         local_address: typing.Optional[SocketAddress]
@@ -9305,10 +9157,6 @@ class SocketClientClass(GObject.GPointer):
     event: typing.Callable[
         [SocketClient, SocketClientEvent, SocketConnectable, IOStream], None
     ] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
 
 class SocketClientPrivate(GObject.GPointer): ...
 
@@ -9319,7 +9167,6 @@ class SocketConnectable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def enumerate(self) -> SocketAddressEnumerator: ...
     def proxy_enumerate(self) -> SocketAddressEnumerator: ...
     def to_string(self) -> str: ...
@@ -9359,8 +9206,7 @@ class SocketConnection(IOStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IOStream.Props):
         socket: Socket
         closed: bool
         input_stream: InputStream
@@ -9407,12 +9253,6 @@ class SocketConnectionClass(GObject.GPointer):
     """
 
     parent_class: IOStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
 
 class SocketConnectionPrivate(GObject.GPointer): ...
 
@@ -9460,11 +9300,6 @@ class SocketControlMessageClass(GObject.GPointer):
     get_type: typing.Callable[[SocketControlMessage], int] = ...
     serialize: typing.Callable[[SocketControlMessage, None], None] = ...
     deserialize: None = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class SocketControlMessagePrivate(GObject.GPointer): ...
 
@@ -9488,8 +9323,7 @@ class SocketListener(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         listen_backlog: int
 
     props: Props = ...
@@ -9555,11 +9389,6 @@ class SocketListenerClass(GObject.GPointer):
     parent_class: GObject.ObjectClass = ...
     changed: typing.Callable[[SocketListener], None] = ...
     event: typing.Callable[[SocketListener, SocketListenerEvent, Socket], None] = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
 
 class SocketListenerPrivate(GObject.GPointer): ...
 class SocketPrivate(GObject.GPointer): ...
@@ -9590,8 +9419,7 @@ class SocketService(SocketListener):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketListener.Props):
         active: bool
         listen_backlog: int
 
@@ -9621,12 +9449,6 @@ class SocketServiceClass(GObject.GPointer):
     incoming: typing.Callable[
         [SocketService, SocketConnection, GObject.Object], bool
     ] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
 
 class SocketServicePrivate(GObject.GPointer): ...
 
@@ -9638,7 +9460,6 @@ class SrvTarget(GObject.GBoxed):
 
         new(hostname:str, port:int, priority:int, weight:int) -> Gio.SrvTarget
     """
-
     def copy(self) -> SrvTarget: ...
     def free(self) -> None: ...
     def get_hostname(self) -> str: ...
@@ -9684,8 +9505,7 @@ class Subprocess(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         argv: list[str]
         flags: SubprocessFlags
 
@@ -9771,8 +9591,7 @@ class SubprocessLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         flags: SubprocessFlags
 
     props: Props = ...
@@ -9812,8 +9631,7 @@ class Task(GObject.Object, AsyncResult):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         completed: bool
 
     props: Props = ...
@@ -9915,8 +9733,7 @@ class TcpConnection(SocketConnection):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketConnection.Props):
         graceful_disconnect: bool
         socket: Socket
         closed: bool
@@ -9973,8 +9790,7 @@ class TcpWrapperConnection(TcpConnection):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(TcpConnection.Props):
         base_io_stream: IOStream
         graceful_disconnect: bool
         socket: Socket
@@ -10025,8 +9841,7 @@ class TestDBus(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         flags: TestDBusFlags
 
     props: Props = ...
@@ -10063,8 +9878,7 @@ class ThemedIcon(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         names: list[str]
         use_default_fallbacks: bool
         name: str
@@ -10109,8 +9923,7 @@ class ThreadedResolver(Resolver):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Resolver.Props):
         timeout: int
 
     props: Props = ...
@@ -10159,8 +9972,7 @@ class ThreadedSocketService(SocketService):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketService.Props):
         max_threads: int
         active: bool
         listen_backlog: int
@@ -10190,11 +10002,6 @@ class ThreadedSocketServiceClass(GObject.GPointer):
     run: typing.Callable[
         [ThreadedSocketService, SocketConnection, GObject.Object], bool
     ] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class ThreadedSocketServicePrivate(GObject.GPointer): ...
 
@@ -10205,7 +10012,6 @@ class TlsBackend(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def get_certificate_type(self) -> typing.Type[typing.Any]: ...
     def get_client_connection_type(self) -> typing.Type[typing.Any]: ...
     @staticmethod
@@ -10277,8 +10083,7 @@ class TlsCertificate(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         certificate: bytes
         certificate_pem: str
         dns_names: typing.Optional[list[None]]
@@ -10378,7 +10183,6 @@ class TlsClientConnection(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def copy_session_state(self, source: TlsClientConnection) -> None: ...
     def get_accepted_cas(self) -> list[typing.Sequence[int]]: ...
     def get_server_identity(self) -> typing.Optional[SocketConnectable]: ...
@@ -10443,8 +10247,7 @@ class TlsConnection(IOStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(IOStream.Props):
         advertised_protocols: typing.Optional[list[str]]
         base_io_stream: IOStream
         certificate: typing.Optional[TlsCertificate]
@@ -10821,7 +10624,6 @@ class TlsFileDatabase(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def new(anchors: str) -> TlsFileDatabase: ...
 
@@ -10973,8 +10775,7 @@ class TlsPassword(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         description: str
         flags: TlsPasswordFlags
         warning: str
@@ -11039,7 +10840,6 @@ class TlsServerConnection(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def new(
         base_io_stream: IOStream, certificate: typing.Optional[TlsCertificate] = None
@@ -11077,8 +10877,7 @@ class UnixConnection(SocketConnection):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketConnection.Props):
         socket: Socket
         closed: bool
         input_stream: InputStream
@@ -11144,8 +10943,7 @@ class UnixCredentialsMessage(SocketControlMessage):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketControlMessage.Props):
         credentials: Credentials
 
     props: Props = ...
@@ -11172,8 +10970,6 @@ class UnixCredentialsMessageClass(GObject.GPointer):
     """
 
     parent_class: SocketControlMessageClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
 
 class UnixCredentialsMessagePrivate(GObject.GPointer): ...
 
@@ -11215,11 +11011,6 @@ class UnixFDListClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class UnixFDListPrivate(GObject.GPointer): ...
 
@@ -11229,7 +11020,7 @@ class UnixFDMessage(SocketControlMessage):
 
     ::
 
-        UnixFDMessage(**properties)
+        FDMessage(**properties)
         new() -> Gio.SocketControlMessage
         new_with_fd_list(fd_list:Gio.UnixFDList) -> Gio.SocketControlMessage
 
@@ -11241,44 +11032,28 @@ class UnixFDMessage(SocketControlMessage):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketControlMessage.Props):
         fd_list: UnixFDList
 
     props: Props = ...
     parent_instance: SocketControlMessage = ...
-    priv: UnixFDMessagePrivate = ...
+    priv: GioUnix.FDMessagePrivate = ...
     def __init__(self, fd_list: UnixFDList = ...) -> None: ...
     def append_fd(self, fd: int) -> bool: ...
     def get_fd_list(self) -> UnixFDList: ...
     @classmethod
-    def new(cls) -> UnixFDMessage: ...
+    def new(cls) -> FDMessage: ...
     @classmethod
-    def new_with_fd_list(cls, fd_list: UnixFDList) -> UnixFDMessage: ...
+    def new_with_fd_list(cls, fd_list: UnixFDList) -> FDMessage: ...
     def steal_fds(self) -> list[int]: ...
 
-class UnixFDMessageClass(GObject.GPointer):
+class UnixInputStream(InputStream, PollableInputStream, GioUnix.FileDescriptorBased):
     """
     :Constructors:
 
     ::
 
-        UnixFDMessageClass()
-    """
-
-    parent_class: SocketControlMessageClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-
-class UnixFDMessagePrivate(GObject.GPointer): ...
-
-class UnixInputStream(InputStream, FileDescriptorBased, PollableInputStream):
-    """
-    :Constructors:
-
-    ::
-
-        UnixInputStream(**properties)
+        InputStream(**properties)
         new(fd:int, close_fd:bool) -> Gio.InputStream
 
     Object GUnixInputStream
@@ -11290,19 +11065,18 @@ class UnixInputStream(InputStream, FileDescriptorBased, PollableInputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(InputStream.Props):
         close_fd: bool
         fd: int
 
     props: Props = ...
     parent_instance: InputStream = ...
-    priv: UnixInputStreamPrivate = ...
+    priv: GioUnix.InputStreamPrivate = ...
     def __init__(self, close_fd: bool = ..., fd: int = ...) -> None: ...
     def get_close_fd(self) -> bool: ...
     def get_fd(self) -> int: ...
     @classmethod
-    def new(cls, fd: int, close_fd: bool) -> UnixInputStream: ...
+    def new(cls, fd: int, close_fd: bool) -> InputStream: ...
     def set_close_fd(self, close_fd: bool) -> None: ...
 
 class UnixInputStreamClass(GObject.GPointer):
@@ -11311,25 +11085,24 @@ class UnixInputStreamClass(GObject.GPointer):
 
     ::
 
-        UnixInputStreamClass()
+        InputStreamClass()
     """
 
     parent_class: InputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class UnixInputStreamPrivate(GObject.GPointer): ...
 
 class UnixMountEntry(GObject.GBoxed):
     @staticmethod
-    def at(mount_path: str) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
-    def compare(self, mount2: UnixMountEntry) -> int: ...
-    def copy(self) -> UnixMountEntry: ...
+    def at(
+        mount_path: str,
+    ) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
+    def compare(self, mount2: GioUnix.MountEntry) -> int: ...
+    def copy(self) -> GioUnix.MountEntry: ...
     @staticmethod
-    def for_(file_path: str) -> typing.Tuple[typing.Optional[UnixMountEntry], int]: ...
+    def for_(
+        file_path: str,
+    ) -> typing.Tuple[typing.Optional[GioUnix.MountEntry], int]: ...
     def free(self) -> None: ...
     def get_device_path(self) -> str: ...
     def get_fs_type(self) -> str: ...
@@ -11350,8 +11123,8 @@ class UnixMountMonitor(GObject.Object):
 
     ::
 
-        UnixMountMonitor(**properties)
-        new() -> Gio.UnixMountMonitor
+        MountMonitor(**properties)
+        new() -> GioUnix.MountMonitor
 
     Object GUnixMountMonitor
 
@@ -11362,20 +11135,19 @@ class UnixMountMonitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
-    def get() -> UnixMountMonitor: ...
+    def get() -> GioUnix.MountMonitor: ...
     @classmethod
-    def new(cls) -> UnixMountMonitor: ...
+    def new(cls) -> MountMonitor: ...
     def set_rate_limit(self, limit_msec: int) -> None: ...
-
-class UnixMountMonitorClass(GObject.GPointer): ...
 
 class UnixMountPoint(GObject.GBoxed):
     @staticmethod
-    def at(mount_path: str) -> typing.Tuple[typing.Optional[UnixMountPoint], int]: ...
-    def compare(self, mount2: UnixMountPoint) -> int: ...
-    def copy(self) -> UnixMountPoint: ...
+    def at(
+        mount_path: str,
+    ) -> typing.Tuple[typing.Optional[GioUnix.MountPoint], int]: ...
+    def compare(self, mount2: GioUnix.MountPoint) -> int: ...
+    def copy(self) -> GioUnix.MountPoint: ...
     def free(self) -> None: ...
     def get_device_path(self) -> str: ...
     def get_fs_type(self) -> str: ...
@@ -11389,13 +11161,13 @@ class UnixMountPoint(GObject.GBoxed):
     def is_readonly(self) -> bool: ...
     def is_user_mountable(self) -> bool: ...
 
-class UnixOutputStream(OutputStream, FileDescriptorBased, PollableOutputStream):
+class UnixOutputStream(OutputStream, PollableOutputStream, GioUnix.FileDescriptorBased):
     """
     :Constructors:
 
     ::
 
-        UnixOutputStream(**properties)
+        OutputStream(**properties)
         new(fd:int, close_fd:bool) -> Gio.OutputStream
 
     Object GUnixOutputStream
@@ -11407,19 +11179,18 @@ class UnixOutputStream(OutputStream, FileDescriptorBased, PollableOutputStream):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(OutputStream.Props):
         close_fd: bool
         fd: int
 
     props: Props = ...
     parent_instance: OutputStream = ...
-    priv: UnixOutputStreamPrivate = ...
+    priv: GioUnix.OutputStreamPrivate = ...
     def __init__(self, close_fd: bool = ..., fd: int = ...) -> None: ...
     def get_close_fd(self) -> bool: ...
     def get_fd(self) -> int: ...
     @classmethod
-    def new(cls, fd: int, close_fd: bool) -> UnixOutputStream: ...
+    def new(cls, fd: int, close_fd: bool) -> OutputStream: ...
     def set_close_fd(self, close_fd: bool) -> None: ...
 
 class UnixOutputStreamClass(GObject.GPointer):
@@ -11428,15 +11199,10 @@ class UnixOutputStreamClass(GObject.GPointer):
 
     ::
 
-        UnixOutputStreamClass()
+        OutputStreamClass()
     """
 
     parent_class: OutputStreamClass = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
 
 class UnixOutputStreamPrivate(GObject.GPointer): ...
 
@@ -11465,8 +11231,7 @@ class UnixSocketAddress(SocketAddress, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(SocketAddress.Props):
         abstract: bool
         address_type: UnixSocketAddressType
         path: str
@@ -11606,12 +11371,6 @@ class VfsClass(GObject.GPointer):
     local_file_removed: typing.Callable[[Vfs, str], None] = ...
     local_file_moved: typing.Callable[[Vfs, str, str], None] = ...
     deserialize_icon: None = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
 
 class Volume(GObject.GInterface):
     """
@@ -11620,7 +11379,6 @@ class Volume(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-
     def can_eject(self) -> bool: ...
     def can_mount(self) -> bool: ...
     def eject(
@@ -11783,12 +11541,6 @@ class VolumeMonitorClass(GObject.GPointer):
     adopt_orphan_mount: None = ...
     drive_eject_button: typing.Callable[[VolumeMonitor, Drive], None] = ...
     drive_stop_button: typing.Callable[[VolumeMonitor, Drive], None] = ...
-    _g_reserved1: None = ...
-    _g_reserved2: None = ...
-    _g_reserved3: None = ...
-    _g_reserved4: None = ...
-    _g_reserved5: None = ...
-    _g_reserved6: None = ...
 
 class ZlibCompressor(GObject.Object, Converter):
     """
@@ -11805,15 +11557,16 @@ class ZlibCompressor(GObject.Object, Converter):
       format -> GZlibCompressorFormat: format
       level -> gint: level
       file-info -> GFileInfo: file-info
+      os -> gint: os
 
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         file_info: typing.Optional[FileInfo]
         format: ZlibCompressorFormat
         level: int
+        os: int
 
     props: Props = ...
     def __init__(
@@ -11821,11 +11574,14 @@ class ZlibCompressor(GObject.Object, Converter):
         file_info: typing.Optional[FileInfo] = ...,
         format: ZlibCompressorFormat = ...,
         level: int = ...,
+        os: int = ...,
     ) -> None: ...
     def get_file_info(self) -> typing.Optional[FileInfo]: ...
+    def get_os(self) -> int: ...
     @classmethod
     def new(cls, format: ZlibCompressorFormat, level: int) -> ZlibCompressor: ...
     def set_file_info(self, file_info: typing.Optional[FileInfo] = None) -> None: ...
+    def set_os(self, os: int) -> None: ...
 
 class ZlibCompressorClass(GObject.GPointer):
     """
@@ -11856,8 +11612,7 @@ class ZlibDecompressor(GObject.Object, Converter):
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(GObject.Object.Props):
         file_info: typing.Optional[FileInfo]
         format: ZlibCompressorFormat
 
