@@ -579,7 +579,12 @@ def _build_function(
 
     definition = ""
     if in_class:
-        static_function = inspect.getattr_static(in_class, function.__name__, None)
+        if hasattr(function, "name"):
+            function_name = function.name
+        else:
+            function_name = function.__name__
+
+        static_function = inspect.getattr_static(in_class, function_name, None)
         if static_function and isinstance(static_function, staticmethod):
             definition += "@staticmethod\n"
     definition += f"def {name}{signature_string}:"
