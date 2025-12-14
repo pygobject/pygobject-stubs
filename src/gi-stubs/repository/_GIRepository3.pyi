@@ -1,14 +1,13 @@
 import typing
 
+from gi.repository import gi
 from gi.repository import GLib
 from gi.repository import GObject
+from typing_extensions import Self
 
 T = typing.TypeVar("T")
 
 TYPE_TAG_N_TYPES: int = 22
-_lock = ...  # FIXME Constant
-_namespace: str = "GIRepository"
-_version: str = "3.0"
 
 def invoke_error_quark() -> int: ...
 def type_tag_argument_from_hash_pointer(
@@ -66,26 +65,6 @@ class Argument(GObject.GPointer):
     v_ulong = ...  # FIXME Constant
     v_ushort = ...  # FIXME Constant
 
-class ArrayType:
-    ARRAY: ArrayType = 1
-    BYTE_ARRAY: ArrayType = 3
-    C: ArrayType = 0
-    PTR_ARRAY: ArrayType = 2
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
 class AttributeIter(GObject.GPointer):
     """
     :Constructors:
@@ -96,9 +75,8 @@ class AttributeIter(GObject.GPointer):
     """
 
     data: None = ...
-    _dummy: list[None] = ...
 
-class BaseInfo:
+class BaseInfo(gi.Fundamental):
     """
     :Constructors:
 
@@ -106,7 +84,6 @@ class BaseInfo:
 
         BaseInfo(**properties)
     """
-
     def clear(self) -> None: ...
     def equal(self, info2: BaseInfo) -> bool: ...
     def get_attribute(self, name: str) -> typing.Optional[str]: ...
@@ -144,7 +121,6 @@ class CallableInfo(BaseInfo):
 
         CallableInfo(**properties)
     """
-
     def can_throw_gerror(self) -> bool: ...
     def get_arg(self, n: int) -> ArgInfo: ...
     def get_async_function(self) -> typing.Optional[CallableInfo]: ...
@@ -181,27 +157,7 @@ class ConstantInfo(BaseInfo):
 
         ConstantInfo(**properties)
     """
-
     def get_type_info(self) -> TypeInfo: ...
-
-class Direction:
-    IN: Direction = 0
-    INOUT: Direction = 2
-    OUT: Direction = 1
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
 
 class EnumInfo(RegisteredTypeInfo):
     """
@@ -211,7 +167,6 @@ class EnumInfo(RegisteredTypeInfo):
 
         EnumInfo(**properties)
     """
-
     def get_error_domain(self) -> typing.Optional[str]: ...
     def get_method(self, n: int) -> FunctionInfo: ...
     def get_n_methods(self) -> int: ...
@@ -227,29 +182,10 @@ class FieldInfo(BaseInfo):
 
         FieldInfo(**properties)
     """
-
     def get_flags(self) -> FieldInfoFlags: ...
     def get_offset(self) -> int: ...
     def get_size(self) -> int: ...
     def get_type_info(self) -> TypeInfo: ...
-
-class FieldInfoFlags:
-    READABLE: FieldInfoFlags = 1
-    WRITABLE: FieldInfoFlags = 2
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
 
 class FlagsInfo(EnumInfo): ...
 
@@ -261,33 +197,10 @@ class FunctionInfo(CallableInfo):
 
         FunctionInfo(**properties)
     """
-
     def get_flags(self) -> FunctionInfoFlags: ...
     def get_property(self) -> typing.Optional[PropertyInfo]: ...
     def get_symbol(self) -> str: ...
     def get_vfunc(self) -> typing.Optional[VFuncInfo]: ...
-
-class FunctionInfoFlags:
-    IS_ASYNC: FunctionInfoFlags = 32
-    IS_CONSTRUCTOR: FunctionInfoFlags = 2
-    IS_GETTER: FunctionInfoFlags = 4
-    IS_METHOD: FunctionInfoFlags = 1
-    IS_SETTER: FunctionInfoFlags = 8
-    WRAPS_VFUNC: FunctionInfoFlags = 16
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
 
 class InterfaceInfo(RegisteredTypeInfo):
     """
@@ -297,7 +210,6 @@ class InterfaceInfo(RegisteredTypeInfo):
 
         InterfaceInfo(**properties)
     """
-
     def find_method(self, name: str) -> typing.Optional[FunctionInfo]: ...
     def find_signal(self, name: str) -> typing.Optional[SignalInfo]: ...
     def find_vfunc(self, name: str) -> typing.Optional[VFuncInfo]: ...
@@ -315,25 +227,6 @@ class InterfaceInfo(RegisteredTypeInfo):
     def get_signal(self, n: int) -> SignalInfo: ...
     def get_vfunc(self, n: int) -> VFuncInfo: ...
 
-class InvokeError:
-    ARGUMENT_MISMATCH: InvokeError = 2
-    FAILED: InvokeError = 0
-    SYMBOL_NOT_FOUND: InvokeError = 1
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
 class ObjectInfo(RegisteredTypeInfo):
     """
     :Constructors:
@@ -342,7 +235,6 @@ class ObjectInfo(RegisteredTypeInfo):
 
         ObjectInfo(**properties)
     """
-
     def find_method(self, name: str) -> typing.Optional[FunctionInfo]: ...
     def find_method_using_interfaces(
         self, name: str
@@ -386,7 +278,6 @@ class PropertyInfo(BaseInfo):
 
         PropertyInfo(**properties)
     """
-
     def get_flags(self) -> GObject.ParamFlags: ...
     def get_getter(self) -> typing.Optional[FunctionInfo]: ...
     def get_ownership_transfer(self) -> Transfer: ...
@@ -401,7 +292,6 @@ class RegisteredTypeInfo(BaseInfo):
 
         RegisteredTypeInfo(**properties)
     """
-
     def get_g_type(self) -> typing.Type[typing.Any]: ...
     def get_type_init_function_name(self) -> typing.Optional[str]: ...
     def get_type_name(self) -> typing.Optional[str]: ...
@@ -421,9 +311,10 @@ class Repository(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @staticmethod
     def dump(input_filename: str, output_filename: str) -> bool: ...
+    @staticmethod
+    def dup_default() -> Repository: ...
     def enumerate_versions(self, namespace_: str) -> list[str]: ...
     @staticmethod
     def error_quark() -> int: ...
@@ -452,7 +343,8 @@ class Repository(GObject.Object):
         self, namespace_: str, version: typing.Optional[str] = None
     ) -> bool: ...
     def load_typelib(self, typelib: Typelib, flags: RepositoryLoadFlags) -> str: ...
-    def new() -> Repository: ...  # FIXME Function
+    @classmethod
+    def new(cls) -> Repository: ...
     def prepend_library_path(self, directory: str) -> None: ...
     def prepend_search_path(self, directory: str) -> None: ...
     def require(
@@ -477,64 +369,6 @@ class RepositoryClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class RepositoryError:
-    LIBRARY_NOT_FOUND: RepositoryError = 3
-    NAMESPACE_MISMATCH: RepositoryError = 1
-    NAMESPACE_VERSION_CONFLICT: RepositoryError = 2
-    TYPELIB_NOT_FOUND: RepositoryError = 0
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
-class RepositoryLoadFlags:
-    LAZY: RepositoryLoadFlags = 1
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
-class ScopeType:
-    ASYNC: ScopeType = 2
-    CALL: ScopeType = 1
-    FOREVER: ScopeType = 4
-    INVALID: ScopeType = 0
-    NOTIFIED: ScopeType = 3
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
 class SignalInfo(CallableInfo):
     """
     :Constructors:
@@ -543,7 +377,6 @@ class SignalInfo(CallableInfo):
 
         SignalInfo(**properties)
     """
-
     def get_class_closure(self) -> typing.Optional[VFuncInfo]: ...
     def get_flags(self) -> GObject.SignalFlags: ...
     def true_stops_emit(self) -> bool: ...
@@ -556,7 +389,6 @@ class StructInfo(RegisteredTypeInfo):
 
         StructInfo(**properties)
     """
-
     def find_field(self, name: str) -> typing.Optional[FieldInfo]: ...
     def find_method(self, name: str) -> typing.Optional[FunctionInfo]: ...
     def get_alignment(self) -> int: ...
@@ -569,25 +401,6 @@ class StructInfo(RegisteredTypeInfo):
     def get_size(self) -> int: ...
     def is_foreign(self) -> bool: ...
     def is_gtype_struct(self) -> bool: ...
-
-class Transfer:
-    CONTAINER: Transfer = 1
-    EVERYTHING: Transfer = 2
-    NOTHING: Transfer = 0
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
 
 class TypeInfo(BaseInfo):
     """
@@ -612,44 +425,6 @@ class TypeInfo(BaseInfo):
     def is_pointer(self) -> bool: ...
     def is_zero_terminated(self) -> bool: ...
 
-class TypeTag:
-    ARRAY: TypeTag = 15
-    BOOLEAN: TypeTag = 1
-    DOUBLE: TypeTag = 11
-    ERROR: TypeTag = 20
-    FILENAME: TypeTag = 14
-    FLOAT: TypeTag = 10
-    GHASH: TypeTag = 19
-    GLIST: TypeTag = 17
-    GSLIST: TypeTag = 18
-    GTYPE: TypeTag = 12
-    INT16: TypeTag = 4
-    INT32: TypeTag = 6
-    INT64: TypeTag = 8
-    INT8: TypeTag = 2
-    INTERFACE: TypeTag = 16
-    UINT16: TypeTag = 5
-    UINT32: TypeTag = 7
-    UINT64: TypeTag = 9
-    UINT8: TypeTag = 3
-    UNICHAR: TypeTag = 21
-    UTF8: TypeTag = 13
-    VOID: TypeTag = 0
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
-
 class Typelib(GObject.GBoxed):
     """
     :Constructors:
@@ -658,9 +433,9 @@ class Typelib(GObject.GBoxed):
 
         new_from_bytes(bytes:GLib.Bytes) -> GIRepository.Typelib
     """
-
     def get_namespace(self) -> str: ...
-    def new_from_bytes(bytes: GLib.Bytes) -> Typelib: ...  # FIXME Function
+    @classmethod
+    def new_from_bytes(cls, bytes: GLib.Bytes) -> Typelib: ...
     def ref(self) -> Typelib: ...
     def symbol(self, symbol_name: str) -> typing.Tuple[bool, None]: ...
     def unref(self) -> None: ...
@@ -673,7 +448,6 @@ class UnionInfo(RegisteredTypeInfo):
 
         UnionInfo(**properties)
     """
-
     def find_method(self, name: str) -> typing.Optional[FunctionInfo]: ...
     def get_alignment(self) -> int: ...
     def get_copy_function_name(self) -> typing.Optional[str]: ...
@@ -698,31 +472,11 @@ class VFuncInfo(CallableInfo):
 
         VFuncInfo(**properties)
     """
-
     def get_address(self, implementor_gtype: typing.Type[typing.Any]) -> None: ...
     def get_flags(self) -> VFuncInfoFlags: ...
     def get_invoker(self) -> typing.Optional[FunctionInfo]: ...
     def get_offset(self) -> int: ...
     def get_signal(self) -> typing.Optional[SignalInfo]: ...
-
-class VFuncInfoFlags:
-    CHAIN_UP: VFuncInfoFlags = 1
-    NOT_OVERRIDE: VFuncInfoFlags = 4
-    OVERRIDE: VFuncInfoFlags = 2
-    denominator = ...  # FIXME Constant
-    imag = ...  # FIXME Constant
-    numerator = ...  # FIXME Constant
-    real = ...  # FIXME Constant
-
-    def as_integer_ratio(self, /): ...  # FIXME Function
-    def bit_count(self, /): ...  # FIXME Function
-    def bit_length(self, /): ...  # FIXME Function
-    def conjugate(self, *args, **kwargs): ...  # FIXME Function
-    def from_bytes(bytes, byteorder="big", *, signed=False): ...  # FIXME Function
-    def is_integer(self, /): ...  # FIXME Function
-    def to_bytes(
-        self, /, length=1, byteorder="big", *, signed=False
-    ): ...  # FIXME Function
 
 class ValueInfo(BaseInfo):
     """
@@ -732,5 +486,86 @@ class ValueInfo(BaseInfo):
 
         ValueInfo(**properties)
     """
-
     def get_value(self) -> int: ...
+
+class FieldInfoFlags(GObject.GFlags):
+    INFO_FLAGS_NONE = 0
+    IS_READABLE = 1
+    IS_WRITABLE = 2
+
+class FunctionInfoFlags(GObject.GFlags):
+    INFO_FLAGS_NONE = 0
+    IS_ASYNC = 32
+    IS_CONSTRUCTOR = 2
+    IS_GETTER = 4
+    IS_METHOD = 1
+    IS_SETTER = 8
+    WRAPS_VFUNC = 16
+
+class RepositoryLoadFlags(GObject.GFlags):
+    LAZY = 1
+    NONE = 0
+
+class VFuncInfoFlags(GObject.GFlags):
+    INFO_FLAGS_NONE = 0
+    MUST_CHAIN_UP = 1
+    MUST_NOT_OVERRIDE = 4
+    MUST_OVERRIDE = 2
+
+class ArrayType(GObject.GEnum):
+    ARRAY = 1
+    BYTE_ARRAY = 3
+    C = 0
+    PTR_ARRAY = 2
+
+class Direction(GObject.GEnum):
+    IN = 0
+    INOUT = 2
+    OUT = 1
+
+class InvokeError(GObject.GEnum):
+    ARGUMENT_MISMATCH = 2
+    FAILED = 0
+    SYMBOL_NOT_FOUND = 1
+
+class RepositoryError(GObject.GEnum):
+    LIBRARY_NOT_FOUND = 3
+    NAMESPACE_MISMATCH = 1
+    NAMESPACE_VERSION_CONFLICT = 2
+    TYPELIB_NOT_FOUND = 0
+
+class ScopeType(GObject.GEnum):
+    ASYNC = 2
+    CALL = 1
+    FOREVER = 4
+    INVALID = 0
+    NOTIFIED = 3
+
+class Transfer(GObject.GEnum):
+    CONTAINER = 1
+    EVERYTHING = 2
+    NOTHING = 0
+
+class TypeTag(GObject.GEnum):
+    ARRAY = 15
+    BOOLEAN = 1
+    DOUBLE = 11
+    ERROR = 20
+    FILENAME = 14
+    FLOAT = 10
+    GHASH = 19
+    GLIST = 17
+    GSLIST = 18
+    GTYPE = 12
+    INT16 = 4
+    INT32 = 6
+    INT64 = 8
+    INT8 = 2
+    INTERFACE = 16
+    UINT16 = 5
+    UINT32 = 7
+    UINT64 = 9
+    UINT8 = 3
+    UNICHAR = 21
+    UTF8 = 13
+    VOID = 0
