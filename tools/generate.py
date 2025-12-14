@@ -6,12 +6,7 @@
 
 from __future__ import annotations
 
-from typing import Any
-from typing import Callable
-from typing import Optional
-from typing import Tuple
-from typing import Type
-from typing import Union
+import typing
 
 import argparse
 import importlib
@@ -32,7 +27,7 @@ from gi.repository import GObject
 
 _identifier_re = r"^[A-Za-z_]\w*$"
 
-ObjectT = Union[ModuleType, Type[Any]]
+ObjectT = typing.Union[ModuleType, typing.Type[typing.Any]]
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
@@ -55,9 +50,9 @@ def fix_argument_name(name: str) -> str:
 def _object_get_props(
     repo: GIRepository.Repository,
     obj: GI.ObjectInfo,
-) -> Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
+) -> typing.Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
     parents: list[GI.ObjectInfo] = []
-    parent: Optional[GI.ObjectInfo] = obj.get_parent()
+    parent: typing.Optional[GI.ObjectInfo] = obj.get_parent()
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
@@ -114,7 +109,7 @@ def _callable_get_arguments(
     current_namespace: str,
     needed_namespaces: set[str],
     can_default: bool = False,
-) -> Tuple[list[str], list[str], list[str]]:
+) -> typing.Tuple[list[str], list[str], list[str]]:
     function_args = type.get_arguments()
     accept_optional_args = False
     optional_args_name = ""
@@ -216,10 +211,10 @@ class TypeInfo:
 
     def __init__(
         self,
-        obj: Any,
-        get_tag: Callable[[TypeInfo], int],
-        get_param_type: Callable[[TypeInfo, int], TypeInfo],
-        get_interface: Callable[[TypeInfo], TypeInfo],
+        obj: typing.Any,
+        get_tag: typing.Callable[[TypeInfo], int],
+        get_param_type: typing.Callable[[TypeInfo, int], TypeInfo],
+        get_interface: typing.Callable[[TypeInfo], TypeInfo],
     ):
         self.obj = obj
         self._get_tag = get_tag
@@ -388,6 +383,7 @@ def _build(
     ]
 
     if namespace == "Gtk":
+        imports.append("import os")
         typevars.append(
             """CellRendererT = typing.TypeVar(
     "CellRendererT",
@@ -398,13 +394,15 @@ def _build(
     CellRendererSpinner,
     CellRendererText,
     CellRendererToggle,
-)"""
+)
+WidgetT = typing.TypeVar("WidgetT", bound=Widget)
+"""
         )
     elif namespace == "GObject":
         imports.append("import enum")
 
     if "cairo" in ns:
-        imports = ["import cairo"]
+        imports.append("import cairo")
         typevars.append(
             '_SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)'
         )
@@ -435,10 +433,10 @@ def _build_function_info(
     current_namespace: str,
     name: str,
     function: GI.FunctionInfo | GI.VFuncInfo,
-    in_class: Optional[Any],
+    in_class: typing.Optional[typing.Any],
     needed_namespaces: set[str],
-    return_signature: Optional[str] = None,
-    comment: Optional[str] = None,
+    return_signature: typing.Optional[str] = None,
+    comment: typing.Optional[str] = None,
 ) -> str:
     constructor: bool = False
     method: bool = isinstance(function, GI.VFuncInfo)
@@ -495,8 +493,8 @@ def _build_function_info(
 def _wrapped_strip_boolean_result(
     current_namespace: str,
     name: str,
-    function: Any,
-    in_class: Optional[Any],
+    function: typing.Any,
+    in_class: typing.Optional[typing.Any],
     needed_namespaces: set[str],
 ) -> str:
     real_function = function.__wrapped__
@@ -537,8 +535,8 @@ def _wrapped_strip_boolean_result(
 def _build_function(
     current_namespace: str,
     name: str,
-    function: Any,
-    in_class: Optional[Any],
+    function: typing.Any,
+    in_class: typing.Optional[typing.Any],
     needed_namespaces: set[str],
 ) -> str:
     if name.startswith("_") and name not in ALLOWED_FUNCTIONS:
@@ -603,7 +601,9 @@ def _build_function(
     return definition
 
 
-def _check_override(prefix: str, name: str, overrides: dict[str, str]) -> Optional[str]:
+def _check_override(
+    prefix: str, name: str, overrides: dict[str, str]
+) -> typing.Optional[str]:
     full_name = _generate_full_name(prefix, name)
     if full_name in overrides:
         return "# override\n" + overrides[full_name]
@@ -617,7 +617,7 @@ def _gi_build_stub(
     children: list[str],
     needed_namespaces: set[str],
     overrides: dict[str, str],
-    in_class: Optional[Any],
+    in_class: typing.Optional[typing.Any],
     prefix_name: str,
 ) -> str:
     return _gi_build_stub_parts(
@@ -639,18 +639,18 @@ def _gi_build_stub_parts(
     children: list[str],
     needed_namespaces: set[str],
     overrides: dict[str, str],
-    in_class: Optional[Any],
+    in_class: typing.Optional[typing.Any],
     prefix_name: str,
 ) -> tuple[str, list[GI.FieldInfo]]:
     """
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
     """
-    classes: dict[str, Type[Any]] = {}
-    functions: dict[str, Callable[..., Any]] = {}
-    constants: dict[str, Any] = {}
-    flags: dict[str, Type[Any]] = {}
-    enums: dict[str, Type[Any]] = {}
+    classes: dict[str, typing.Type[typing.Any]] = {}
+    functions: dict[str, typing.Callable[..., typing.Any]] = {}
+    constants: dict[str, typing.Any] = {}
+    flags: dict[str, typing.Type[typing.Any]] = {}
+    enums: dict[str, typing.Type[typing.Any]] = {}
 
     ret = ""
 
@@ -1049,7 +1049,7 @@ def _gi_build_stub_parts(
     return ret, fields
 
 
-def _find_methods_and_fields(obj: Type[Any]) -> list[str]:
+def _find_methods_and_fields(obj: typing.Type[typing.Any]) -> list[str]:
     mro = inspect.getmro(obj)
     main_name = _get_gname(mro[0])
 
@@ -1075,7 +1075,7 @@ def _find_methods_and_fields(obj: Type[Any]) -> list[str]:
     return sorted(list(obj_attrs))
 
 
-def _get_gname(obj: Type[Any]) -> Optional[str]:
+def _get_gname(obj: typing.Type[typing.Any]) -> typing.Optional[str]:
     if not hasattr(obj, "__gtype__"):
         return obj.__name__
     return obj.__gtype__.name  # type: ignore
