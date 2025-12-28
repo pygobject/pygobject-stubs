@@ -95,6 +95,26 @@ def _install_stubs(stub_config: list[LibVersion]) -> None:
         shutil.copy(stub_path, new_stub_path)
 
 
+def get_requires_for_build_editable(config_settings: Any | None = None) -> list[str]:
+    return _orig.get_requires_for_build_editable(config_settings)
+
+
+def prepare_metadata_for_build_editable(
+    metadata_directory: Any, config_settings: Any | None = None
+) -> str:
+    return _orig.prepare_metadata_for_build_editable(
+        metadata_directory, config_settings
+    )
+
+
+def build_editable(
+    wheel_directory: str,
+    config_settings: Optional[dict[str, str]] = None,
+    metadata_directory: Optional[str] = None,
+) -> str:
+    return _orig.build_editable(wheel_directory, config_settings, metadata_directory)
+
+
 def get_requires_for_build_sdist(*args: Any, **kwargs: Any) -> str:
     return _orig.get_requires_for_build_sdist(*args, **kwargs)
 
