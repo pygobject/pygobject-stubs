@@ -7,7 +7,7 @@ You can generate stubs with `tools/generate.py`.
 Usage:
 
 ```shellsession
-$ python tools/generate.py -h
+$ uv run tools/generate.py -h
 usage: generate.py [-h] [-u UPDATE] module version
 
 Generate module stubs
@@ -24,20 +24,13 @@ options:
 Usage examples:
 
 ```shellsession
-python tools/generate.py GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
-python tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
-isort .
-ruff format .
+uv run ./tools/generate.py GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
+uv run ./tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
+uv run pre-commit run --all
 ```
 
-To re-generate all known stubs, run `tools/update_all.py`.
+To re-generate all known stubs, run `uv run ./tools/update_all.py`.
 You can comment out the libraries you are not interested in.
-
-## Install development dependencies
-
-  $ pip install .[dev]
-
-Using editable install `pip install -e .` does not currently work for libraries which have multiple versions
 
 ## Use pre-commit
 
