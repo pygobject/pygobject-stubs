@@ -24,18 +24,18 @@ dependencies = [
     "typing_extensions",
 ]
 
-[project.optional-dependencies]
+[project.urls]
+homepage = "https://github.com/pygobject/pygobject-stubs"
+repository = "https://github.com/pygobject/pygobject-stubs"
+
+[dependency-groups]
 dev = [
+    "pygobject>=3.53.0",
     "codespell>=2.4.1",
     "isort>=6.0.1",
     "ruff>=0.12.7",
     "pre-commit",
-    "PyGObject",
 ]
-
-[project.urls]
-homepage = "https://github.com/pygobject/pygobject-stubs"
-repository = "https://github.com/pygobject/pygobject-stubs"
 
 [tool.setuptools.packages.find]
 where = ["src"]
