@@ -4657,6 +4657,7 @@ class View(
         HOME and END keys move to first/last non whitespace characters on line before going to the start/end of the line
       space-drawer -> GtkSourceSpaceDrawer: Space Drawer
 
+      annotations -> GtkSourceAnnotations: annotations
       tab-width -> guint: Tab Width
         Width of a tab character expressed in spaces
 
@@ -4691,6 +4692,7 @@ class View(
       indent -> gint: indent
       tabs -> PangoTabArray: tabs
       cursor-visible -> gboolean: cursor-visible
+      buffer -> GtkTextBuffer: buffer
       overwrite -> gboolean: overwrite
       accepts-tab -> gboolean: accepts-tab
       im-module -> gchararray: im-module
@@ -4700,6 +4702,7 @@ class View(
       extra-menu -> GMenuModel: extra-menu
 
     Signals from GtkWidget:
+      direction-changed (GtkTextDirection)
       hide ()
       show ()
       destroy ()
@@ -4708,7 +4711,6 @@ class View(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
-      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4749,12 +4751,13 @@ class View(
       css-name -> gchararray: css-name
       css-classes -> GStrv: css-classes
       layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
 
     Signals from GObject:
       notify (GParam)
     """
-
-    class Props:
+    class Props(Gtk.TextView.Props):
+        annotations: Annotations
         auto_indent: bool
         background_pattern: BackgroundPatternType
         completion: Completion
@@ -4762,7 +4765,7 @@ class View(
         highlight_current_line: bool
         indent_on_tab: bool
         indent_width: int
-        indenter: Optional[Indenter]
+        indenter: typing.Optional[Indenter]
         insert_spaces_instead_of_tabs: bool
         right_margin_position: int
         show_line_marks: bool
@@ -4790,14 +4793,14 @@ class View(
         pixels_below_lines: int
         pixels_inside_wrap: int
         right_margin: int
-        tabs: Optional[Pango.TabArray]
+        tabs: typing.Optional[Pango.TabArray]
         top_margin: int
         wrap_mode: Gtk.WrapMode
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: typing.Optional[Gdk.Cursor]
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -4807,7 +4810,8 @@ class View(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: typing.Optional[Gtk.LayoutManager]
+        limit_events: bool
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -4815,27 +4819,26 @@ class View(
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: typing.Optional[Gtk.Widget]
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: typing.Optional[Gtk.Root]
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: typing.Optional[str]
+        tooltip_text: typing.Optional[str]
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: Gtk.AccessibleRole
-        hadjustment: Optional[Gtk.Adjustment]
+        hadjustment: typing.Optional[Gtk.Adjustment]
         hscroll_policy: Gtk.ScrollablePolicy
-        vadjustment: Optional[Gtk.Adjustment]
+        vadjustment: typing.Optional[Gtk.Adjustment]
         vscroll_policy: Gtk.ScrollablePolicy
 
     props: Props = ...
     parent_instance: Gtk.TextView = ...
-
     def __init__(
         self,
         auto_indent: bool = ...,
@@ -4844,7 +4847,7 @@ class View(
         highlight_current_line: bool = ...,
         indent_on_tab: bool = ...,
         indent_width: int = ...,
-        indenter: Optional[Indenter] = ...,
+        indenter: typing.Optional[Indenter] = ...,
         insert_spaces_instead_of_tabs: bool = ...,
         right_margin_position: int = ...,
         show_line_marks: bool = ...,
@@ -4855,10 +4858,10 @@ class View(
         tab_width: int = ...,
         accepts_tab: bool = ...,
         bottom_margin: int = ...,
-        buffer: Optional[Gtk.TextBuffer] = ...,
+        buffer: typing.Optional[Buffer] = ...,
         cursor_visible: bool = ...,
         editable: bool = ...,
-        extra_menu: Optional[Gio.MenuModel] = ...,
+        extra_menu: typing.Optional[Gio.MenuModel] = ...,
         im_module: str = ...,
         indent: int = ...,
         input_hints: Gtk.InputHints = ...,
@@ -4876,9 +4879,9 @@ class View(
         wrap_mode: Gtk.WrapMode = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
+        css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: typing.Optional[Gdk.Cursor] = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -4886,7 +4889,8 @@ class View(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -4896,28 +4900,29 @@ class View(
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: typing.Optional[str] = ...,
+        tooltip_text: typing.Optional[str] = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
-        hadjustment: Optional[Gtk.Adjustment] = ...,
+        hadjustment: typing.Optional[Gtk.Adjustment] = ...,
         hscroll_policy: Gtk.ScrollablePolicy = ...,
-        vadjustment: Optional[Gtk.Adjustment] = ...,
+        vadjustment: typing.Optional[Gtk.Adjustment] = ...,
         vscroll_policy: Gtk.ScrollablePolicy = ...,
-    ): ...
+    ) -> None: ...
     def do_line_mark_activated(
         self, iter: Gtk.TextIter, button: int, state: Gdk.ModifierType, n_presses: int
     ) -> None: ...
     def do_move_lines(self, down: bool) -> None: ...
     def do_move_words(self, step: int) -> None: ...
     def do_push_snippet(
-        self, snippet: Snippet, location: Optional[Gtk.TextIter] = None
+        self, snippet: Snippet, location: typing.Optional[Gtk.TextIter] = None
     ) -> None: ...
     def do_show_completion(self) -> None: ...
+    def get_annotations(self) -> Annotations: ...
     def get_auto_indent(self) -> bool: ...
     def get_background_pattern(self) -> BackgroundPatternType: ...
     def get_buffer(self) -> Buffer: ...
@@ -4928,7 +4933,7 @@ class View(
     def get_hover(self) -> Hover: ...
     def get_indent_on_tab(self) -> bool: ...
     def get_indent_width(self) -> int: ...
-    def get_indenter(self) -> Optional[Indenter]: ...
+    def get_indenter(self) -> typing.Optional[Indenter]: ...
     def get_insert_spaces_instead_of_tabs(self) -> bool: ...
     def get_mark_attributes(self, category: str, priority: int) -> MarkAttributes: ...
     def get_right_margin_position(self) -> int: ...
@@ -4946,7 +4951,7 @@ class View(
     @classmethod
     def new_with_buffer(cls, buffer: Buffer) -> View: ...
     def push_snippet(
-        self, snippet: Snippet, location: Optional[Gtk.TextIter] = None
+        self, snippet: Snippet, location: typing.Optional[Gtk.TextIter] = None
     ) -> None: ...
     def set_auto_indent(self, enable: bool) -> None: ...
     def set_background_pattern(
@@ -4956,7 +4961,7 @@ class View(
     def set_highlight_current_line(self, highlight: bool) -> None: ...
     def set_indent_on_tab(self, enable: bool) -> None: ...
     def set_indent_width(self, width: int) -> None: ...
-    def set_indenter(self, indenter: Optional[Indenter] = None) -> None: ...
+    def set_indenter(self, indenter: typing.Optional[Indenter] = None) -> None: ...
     def set_insert_spaces_instead_of_tabs(self, enable: bool) -> None: ...
     def set_mark_attributes(
         self, category: str, attributes: MarkAttributes, priority: int
