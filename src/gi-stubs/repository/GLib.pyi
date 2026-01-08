@@ -1775,34 +1775,11 @@ class Dir(GObject.GBoxed):
 class DoubleIEEE754(GObject.GPointer):
     v_double = ...  # FIXME Constant
 
-# override
-class Error(Exception):
-    args: typing.Any
-    code: GObject.GEnum
-    domain: int
-    message: str
-
-    def __init__(
-        self,
-        message: str = ...,
-        domain: typing.Union[int, str] = ...,
-        code: typing.Union[GObject.GEnum, int] = ...,
-    ) -> None: ...
-    def copy(self) -> Error: ...
-    def matches(
-        self, domain: typing.Union[int, str], code: typing.Union[GObject.GEnum, int]
-    ) -> bool: ...
-    @classmethod
-    def new_literal(
-        cls, domain: int, message: str, code: typing.Union[GObject.GEnum, int]
-    ) -> Error: ...
-
 class FloatIEEE754(GObject.GPointer):
     v_float = ...  # FIXME Constant
 
 # override
-class GError:
-    args: typing.Any
+class GError(RuntimeError):
     code: GObject.GEnum
     domain: int
     message: str
@@ -1821,6 +1798,9 @@ class GError:
     def new_literal(
         cls, domain: int, message: str, code: typing.Union[GObject.GEnum, int]
     ) -> GError: ...
+
+# override
+Error = GError
 
 class HashTable(GObject.GBoxed):
     @staticmethod
