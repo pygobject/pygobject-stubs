@@ -812,6 +812,7 @@ class VideoAggregator(GstBase.Aggregator):
     priv: VideoAggregatorPrivate = ...
     def __init__(
         self,
+        *,
         force_live: bool = ...,
         emit_signals: bool = ...,
         latency: int = ...,
@@ -923,6 +924,7 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     priv: VideoAggregatorConvertPadPrivate = ...
     def __init__(
         self,
+        *,
         converter_config: Gst.Structure = ...,
         max_last_buffer_repeat: int = ...,
         repeat_after_eos: bool = ...,
@@ -1024,6 +1026,7 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
     priv: VideoAggregatorPadPrivate = ...
     def __init__(
         self,
+        *,
         max_last_buffer_repeat: int = ...,
         repeat_after_eos: bool = ...,
         zorder: int = ...,
@@ -1156,6 +1159,7 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
     parent_instance: VideoAggregatorConvertPad = ...
     def __init__(
         self,
+        *,
         converter_config: Gst.Structure = ...,
         max_last_buffer_repeat: int = ...,
         repeat_after_eos: bool = ...,
@@ -1259,7 +1263,7 @@ class VideoBufferPool(Gst.BufferPool):
     bufferpool: Gst.BufferPool = ...
     priv: VideoBufferPoolPrivate = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
     @classmethod
     def new(cls) -> VideoBufferPool: ...
@@ -1509,6 +1513,7 @@ class VideoDecoder(Gst.Element):
     padding: list[None] = ...
     def __init__(
         self,
+        *,
         automatic_request_sync_point_flags: VideoDecoderRequestSyncPointFlags = ...,
         automatic_request_sync_points: bool = ...,
         discard_corrupted_frames: bool = ...,
@@ -1713,6 +1718,7 @@ class VideoEncoder(Gst.Element, Gst.Preset):
     padding: list[None] = ...
     def __init__(
         self,
+        *,
         min_force_key_unit_interval: int = ...,
         qos: bool = ...,
         name: typing.Optional[str] = ...,
@@ -1849,6 +1855,7 @@ class VideoFilter(GstBase.BaseTransform):
     out_info: VideoInfo = ...
     def __init__(
         self,
+        *,
         qos: bool = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -2462,6 +2469,7 @@ class VideoSink(GstBase.BaseSink):
     priv: VideoSinkPrivate = ...
     def __init__(
         self,
+        *,
         show_preroll_frame: bool = ...,
         blocksize: int = ...,
         enable_last_sample: bool = ...,

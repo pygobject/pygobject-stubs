@@ -170,6 +170,7 @@ class Aggregator(Gst.Element):
     priv: AggregatorPrivate = ...
     def __init__(
         self,
+        *,
         emit_signals: bool = ...,
         latency: int = ...,
         min_upstream_latency: int = ...,
@@ -342,6 +343,7 @@ class AggregatorPad(Gst.Pad):
     priv: AggregatorPadPrivate = ...
     def __init__(
         self,
+        *,
         emit_signals: bool = ...,
         direction: Gst.PadDirection = ...,
         offset: int = ...,
@@ -419,6 +421,7 @@ class BaseParse(Gst.Element):
     priv: BaseParsePrivate = ...
     def __init__(
         self,
+        *,
         disable_passthrough: bool = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -612,6 +615,7 @@ class BaseSink(Gst.Element):
     priv: BaseSinkPrivate = ...
     def __init__(
         self,
+        *,
         blocksize: int = ...,
         enable_last_sample: bool = ...,
         max_bitrate: int = ...,
@@ -774,6 +778,7 @@ class BaseSrc(Gst.Element):
     priv: BaseSrcPrivate = ...
     def __init__(
         self,
+        *,
         automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
@@ -911,6 +916,7 @@ class BaseTransform(Gst.Element):
     priv: BaseTransformPrivate = ...
     def __init__(
         self,
+        *,
         qos: bool = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -1281,7 +1287,7 @@ class CollectPads(Gst.Object):
     stream_lock: GLib.RecMutex = ...
     priv: CollectPadsPrivate = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
     def add_pad(
         self,
@@ -1477,6 +1483,7 @@ class PushSrc(BaseSrc):
     parent: BaseSrc = ...
     def __init__(
         self,
+        *,
         automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,

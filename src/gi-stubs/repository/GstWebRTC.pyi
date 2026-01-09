@@ -60,6 +60,7 @@ class WebRTCDTLSTransport(Gst.Object):
     props: Props = ...
     def __init__(
         self,
+        *,
         certificate: str = ...,
         client: bool = ...,
         session_id: int = ...,
@@ -133,6 +134,7 @@ class WebRTCDataChannel(GObject.Object):
     props: Props = ...
     def __init__(
         self,
+        *,
         buffered_amount_low_threshold: int = ...,
         id: int = ...,
         label: str = ...,
@@ -196,6 +198,7 @@ class WebRTCICE(Gst.Object):
     max_rtp_port: int = ...
     def __init__(
         self,
+        *,
         max_rtp_port: int = ...,
         min_rtp_port: int = ...,
         name: typing.Optional[str] = ...,
@@ -388,6 +391,7 @@ class WebRTCICEStream(Gst.Object):
     stream_id: int = ...
     def __init__(
         self,
+        *,
         stream_id: int = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -467,6 +471,7 @@ class WebRTCICETransport(Gst.Object):
     sink: Gst.Element = ...
     def __init__(
         self,
+        *,
         component: WebRTCICEComponent = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -524,7 +529,7 @@ class WebRTCRTPReceiver(Gst.Object):
 
     props: Props = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
 
 class WebRTCRTPReceiverClass(GObject.GPointer): ...
@@ -566,6 +571,7 @@ class WebRTCRTPSender(Gst.Object):
     props: Props = ...
     def __init__(
         self,
+        *,
         priority: WebRTCPriorityType = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -629,6 +635,7 @@ class WebRTCRTPTransceiver(Gst.Object):
     props: Props = ...
     def __init__(
         self,
+        *,
         codec_preferences: Gst.Caps = ...,
         direction: WebRTCRTPTransceiverDirection = ...,
         mlineindex: int = ...,
@@ -682,7 +689,7 @@ class WebRTCSCTPTransport(Gst.Object):
 
     props: Props = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
 
 class WebRTCSCTPTransportClass(GObject.GPointer): ...

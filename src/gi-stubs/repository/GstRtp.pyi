@@ -398,6 +398,7 @@ class RTPBaseAudioPayload(RTPBasePayload):
     sample_size: int = ...
     def __init__(
         self,
+        *,
         buffer_list: bool = ...,
         auto_header_extension: bool = ...,
         max_ptime: int = ...,
@@ -500,6 +501,7 @@ class RTPBaseDepayload(Gst.Element):
     priv: RTPBaseDepayloadPrivate = ...
     def __init__(
         self,
+        *,
         auto_header_extension: bool = ...,
         max_reorder: int = ...,
         source_info: bool = ...,
@@ -654,6 +656,7 @@ class RTPBasePayload(Gst.Element):
     priv: RTPBasePayloadPrivate = ...
     def __init__(
         self,
+        *,
         auto_header_extension: bool = ...,
         max_ptime: int = ...,
         min_ptime: int = ...,
@@ -835,7 +838,7 @@ class RTPHeaderExtension(Gst.Element):
     props: Props = ...
     parent: Gst.Element = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
     @staticmethod
     def create_from_uri(uri: str) -> typing.Optional[RTPHeaderExtension]: ...

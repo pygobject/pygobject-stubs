@@ -942,7 +942,7 @@ def _gi_build_stub_parts(
                     s.append(f"{n}: {t} = ...")
 
             separator = ",\n                 "
-            ret += f"    def __init__(self, {separator.join(s)}) -> None: ...\n"
+            ret += f"    def __init__(self, *, {separator.join(s)}) -> None: ...\n"
 
         for line in classret.splitlines():
             ret += "    " + line + "\n"

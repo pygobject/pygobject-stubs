@@ -242,6 +242,7 @@ class RTSPClient(GObject.Object):
     priv: RTSPClientPrivate = ...
     def __init__(
         self,
+        *,
         drop_backlog: bool = ...,
         mount_points: typing.Optional[RTSPMountPoints] = ...,
         post_session_timeout: int = ...,
@@ -556,6 +557,7 @@ class RTSPMedia(GObject.Object):
     priv: RTSPMediaPrivate = ...
     def __init__(
         self,
+        *,
         bind_mcast_address: bool = ...,
         buffer_size: int = ...,
         clock: typing.Optional[Gst.Clock] = ...,
@@ -804,6 +806,7 @@ class RTSPMediaFactory(GObject.Object):
     priv: RTSPMediaFactoryPrivate = ...
     def __init__(
         self,
+        *,
         bind_mcast_address: bool = ...,
         buffer_size: int = ...,
         clock: typing.Optional[Gst.Clock] = ...,
@@ -1000,6 +1003,7 @@ class RTSPMediaFactoryURI(RTSPMediaFactory):
     priv: RTSPMediaFactoryURIPrivate = ...
     def __init__(
         self,
+        *,
         uri: str = ...,
         use_gstpay: bool = ...,
         bind_mcast_address: bool = ...,
@@ -1141,6 +1145,7 @@ class RTSPOnvifClient(RTSPClient):
     parent: RTSPClient = ...
     def __init__(
         self,
+        *,
         drop_backlog: bool = ...,
         mount_points: typing.Optional[RTSPMountPoints] = ...,
         post_session_timeout: int = ...,
@@ -1245,6 +1250,7 @@ class RTSPOnvifMedia(RTSPMedia):
     priv: RTSPOnvifMediaPrivate = ...
     def __init__(
         self,
+        *,
         bind_mcast_address: bool = ...,
         buffer_size: int = ...,
         clock: typing.Optional[Gst.Clock] = ...,
@@ -1357,6 +1363,7 @@ class RTSPOnvifMediaFactory(RTSPMediaFactory):
     priv: RTSPOnvifMediaFactoryPrivate = ...
     def __init__(
         self,
+        *,
         bind_mcast_address: bool = ...,
         buffer_size: int = ...,
         clock: typing.Optional[Gst.Clock] = ...,
@@ -1455,6 +1462,7 @@ class RTSPOnvifServer(RTSPServer):
     parent: RTSPServer = ...
     def __init__(
         self,
+        *,
         address: str = ...,
         backlog: int = ...,
         content_length_limit: int = ...,
@@ -1545,6 +1553,7 @@ class RTSPServer(GObject.Object):
     priv: RTSPServerPrivate = ...
     def __init__(
         self,
+        *,
         address: str = ...,
         backlog: int = ...,
         content_length_limit: int = ...,
@@ -1650,6 +1659,7 @@ class RTSPSession(GObject.Object):
     priv: RTSPSessionPrivate = ...
     def __init__(
         self,
+        *,
         extra_timeout: int = ...,
         sessionid: str = ...,
         timeout: int = ...,
@@ -1766,7 +1776,7 @@ class RTSPSessionPool(GObject.Object):
     props: Props = ...
     parent: GObject.Object = ...
     priv: RTSPSessionPoolPrivate = ...
-    def __init__(self, max_sessions: int = ...) -> None: ...
+    def __init__(self, *, max_sessions: int = ...) -> None: ...
     def cleanup(self) -> int: ...
     def create(self) -> typing.Optional[RTSPSession]: ...
     def create_watch(self) -> GLib.Source: ...
@@ -1839,6 +1849,7 @@ class RTSPStream(GObject.Object):
     priv: RTSPStreamPrivate = ...
     def __init__(
         self,
+        *,
         control: typing.Optional[str] = ...,
         profiles: GstRtsp.RTSPProfile = ...,
         protocols: GstRtsp.RTSPLowerTrans = ...,
@@ -2091,7 +2102,7 @@ class RTSPThreadPool(GObject.Object):
     props: Props = ...
     parent: GObject.Object = ...
     priv: RTSPThreadPoolPrivate = ...
-    def __init__(self, max_threads: int = ...) -> None: ...
+    def __init__(self, *, max_threads: int = ...) -> None: ...
     @staticmethod
     def cleanup() -> None: ...
     def do_configure_thread(self, thread: RTSPThread, ctx: RTSPContext) -> None: ...

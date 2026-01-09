@@ -124,6 +124,7 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     priv: AppSinkPrivate = ...
     def __init__(
         self,
+        *,
         buffer_list: bool = ...,
         caps: typing.Optional[Gst.Caps] = ...,
         drop: bool = ...,
@@ -323,6 +324,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     priv: AppSrcPrivate = ...
     def __init__(
         self,
+        *,
         block: bool = ...,
         caps: typing.Optional[Gst.Caps] = ...,
         duration: int = ...,

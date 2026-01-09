@@ -272,6 +272,7 @@ class AudioAggregator(GstBase.Aggregator):
     priv: AudioAggregatorPrivate = ...
     def __init__(
         self,
+        *,
         alignment_threshold: int = ...,
         discont_wait: int = ...,
         force_live: bool = ...,
@@ -381,6 +382,7 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     priv: AudioAggregatorConvertPadPrivate = ...
     def __init__(
         self,
+        *,
         converter_config: Gst.Structure = ...,
         qos_messages: bool = ...,
         emit_signals: bool = ...,
@@ -467,6 +469,7 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
     priv: AudioAggregatorPadPrivate = ...
     def __init__(
         self,
+        *,
         qos_messages: bool = ...,
         emit_signals: bool = ...,
         direction: Gst.PadDirection = ...,
@@ -606,6 +609,7 @@ class AudioBaseSink(GstBase.BaseSink):
     priv: AudioBaseSinkPrivate = ...
     def __init__(
         self,
+        *,
         alignment_threshold: int = ...,
         buffer_time: int = ...,
         can_activate_pull: bool = ...,
@@ -740,6 +744,7 @@ class AudioBaseSrc(GstBase.PushSrc):
     priv: AudioBaseSrcPrivate = ...
     def __init__(
         self,
+        *,
         buffer_time: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
@@ -878,6 +883,7 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
     priv: AudioCdSrcPrivate = ...
     def __init__(
         self,
+        *,
         device: str = ...,
         mode: AudioCdSrcMode = ...,
         track: int = ...,
@@ -1001,6 +1007,7 @@ class AudioClock(Gst.SystemClock):
     time_offset: int = ...
     def __init__(
         self,
+        *,
         clock_type: Gst.ClockType = ...,
         timeout: int = ...,
         window_size: int = ...,
@@ -1122,6 +1129,7 @@ class AudioDecoder(Gst.Element):
     priv: AudioDecoderPrivate = ...
     def __init__(
         self,
+        *,
         max_errors: int = ...,
         min_latency: int = ...,
         plc: bool = ...,
@@ -1304,6 +1312,7 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     priv: AudioEncoderPrivate = ...
     def __init__(
         self,
+        *,
         hard_resync: bool = ...,
         perfect_timestamp: bool = ...,
         tolerance: int = ...,
@@ -1445,6 +1454,7 @@ class AudioFilter(GstBase.BaseTransform):
     info: AudioInfo = ...
     def __init__(
         self,
+        *,
         qos: bool = ...,
         name: typing.Optional[str] = ...,
         parent: Gst.Object = ...,
@@ -1662,7 +1672,7 @@ class AudioRingBuffer(Gst.Object):
     cb_data_notify: typing.Callable[[None], None] = ...
     priv: AudioRingBufferPrivate = ...
     def __init__(
-        self, name: typing.Optional[str] = ..., parent: Gst.Object = ...
+        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
     ) -> None: ...
     def acquire(self, spec: AudioRingBufferSpec) -> bool: ...
     def activate(self, active: bool) -> bool: ...
@@ -1874,6 +1884,7 @@ class AudioSink(AudioBaseSink):
     thread: GLib.Thread = ...
     def __init__(
         self,
+        *,
         alignment_threshold: int = ...,
         buffer_time: int = ...,
         can_activate_pull: bool = ...,
@@ -2010,6 +2021,7 @@ class AudioSrc(AudioBaseSrc):
     thread: GLib.Thread = ...
     def __init__(
         self,
+        *,
         buffer_time: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
