@@ -612,6 +612,15 @@ def _check_override(
     return None
 
 
+def _format_annotation(annotation: typing.Any) -> str:
+    try:
+        # This requires Python 3.14
+        return inspect.formatannotation(annotation, quote_annotation_strings=False)
+    except:
+        # This should be a good enough fallback for older Pythons
+        return inspect.formatannotation(annotation).replace('"', "").replace("'", "")
+
+
 def _gi_build_stub(
     repo: GIRepository.Repository,
     parent: ObjectT,
@@ -693,6 +702,13 @@ def _gi_build_stub_parts(
     # Filter out private constants
     constants = {k: v for k, v in constants.items() if not k.startswith("_")}
 
+    # Those are type hints overrides can have for instance attributes
+    annotations = {
+        k: v
+        for k, v in getattr(parent, "__annotations__", {}).items()
+        if not k.startswith("_") and k not in constants
+    }
+
     # Remove fields from constants to preserve output order
     fields: list[GI.FieldInfo] = []
     if in_class:
@@ -703,6 +719,10 @@ def _gi_build_stub_parts(
                 if field_name in constants:
                     del constants[field_name]
                     fields.append(f)
+
+    # annotations
+    for name in sorted(annotations):
+        ret += f"{name}: {_format_annotation(annotations[name])}\n"
 
     # Constants
     for name in sorted(constants):
@@ -721,17 +741,25 @@ def _gi_build_stub_parts(
         if str(val.__class__).startswith(("<flag", "<enum")):
             val = val.real
 
+        annotation = getattr(parent, "__annotations__", {}).get(name)
+        if annotation:
+            annotation_string = _format_annotation(annotation)
+        else:
+            annotation_string = val.__class__.__name__
+
         if isinstance(val, str):
             if len(val) > 50:
-                ret += f"{name}: {val.__class__.__name__} = ...\n"
+                ret += f"{name}: {annotation_string} = ...\n"
             else:
-                ret += f'{name}: {val.__class__.__name__} = "{val}"\n'
+                ret += f'{name}: {annotation_string} = "{val}"\n'
         elif isinstance(val, (bool, float, int)):
-            ret += f"{name}: {val.__class__.__name__} = {val}\n"
+            ret += f"{name}: {annotation_string} = {val}\n"
         elif val.__class__.__name__ == "Atom":
-            ret += f"{name}: {val.__class__.__name__} = ...\n"
+            ret += f"{name}: {annotation_string} = ...\n"
+        elif annotation is not None:
+            ret += f"{name}: {annotation_string} = ...\n"
         else:
-            ret += f"{name} = ... # FIXME Constant\n"
+            ret += f"{name} = ...  # FIXME: Constant is missing typing annotation\n"
 
     if ret and functions:
         ret += "\n"
