@@ -840,7 +840,7 @@ class BinClass(GObject.GPointer):
 class BinPrivate(GObject.GPointer): ...
 class Bitmask: ...
 
-class Buffer(GObject.GBoxed, MiniObjectMixin):
+class Buffer(MiniObjectMixin, GObject.GBoxed):
     """
     :Constructors:
 
@@ -862,6 +862,8 @@ class Buffer(GObject.GBoxed, MiniObjectMixin):
     duration: int = ...
     offset: int = ...
     offset_end: int = ...
+    flags = ...  # FIXME Constant
+
     def add_custom_meta(self, name: str) -> typing.Optional[CustomMeta]: ...
     def add_meta(self, info: MetaInfo, params: None) -> typing.Optional[Meta]: ...
     def add_parent_buffer_meta(
@@ -1244,7 +1246,7 @@ class ByteArrayInterface(GObject.GPointer):
     len: int = ...
     resize: typing.Callable[[ByteArrayInterface, int], bool] = ...
 
-class Caps(GObject.GBoxed, MiniObjectMixin):
+class Caps(MiniObjectMixin, GObject.GBoxed):
     """
     :Constructors:
 
@@ -1577,7 +1579,7 @@ class ClockEntry(GObject.GPointer):
 
 class ClockPrivate(GObject.GPointer): ...
 
-class Context(GObject.GBoxed, MiniObjectMixin):
+class Context(MiniObjectMixin, GObject.GBoxed):
     """
     :Constructors:
 
@@ -2570,7 +2572,7 @@ class ElementFactory(PluginFeature):
 
 class ElementFactoryClass(GObject.GPointer): ...
 
-class Event(GObject.GBoxed, MiniObjectMixin):
+class Event(MiniObjectMixin, GObject.GBoxed):
     """
     :Constructors:
 
@@ -2844,6 +2846,7 @@ class GhostPad(ProxyPad):
     def new_no_target_from_template(
         cls, name: typing.Optional[str], templ: PadTemplate
     ) -> GhostPad: ...
+    def query_caps(self, filter: typing.Optional[Caps] = None) -> Caps: ...
     def set_target(self, newtarget: typing.Optional[Pad] = None) -> bool: ...
 
 class GhostPadClass(GObject.GPointer):
@@ -4502,7 +4505,7 @@ class ProxyPadClass(GObject.GPointer):
 
 class ProxyPadPrivate(GObject.GPointer): ...
 
-class Query(GObject.GBoxed, MiniObjectMixin):
+class Query(MiniObjectMixin, GObject.GBoxed):
     """
     :Constructors:
 

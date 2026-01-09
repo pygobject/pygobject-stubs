@@ -763,7 +763,7 @@ def _gi_build_stub_parts(
             repo,
             obj,
             current_namespace,
-            _find_methods_and_fields(obj),
+            _find_attributes(obj),
             needed_namespaces,
             overrides,
             obj,
@@ -774,8 +774,11 @@ def _gi_build_stub_parts(
         writable_props: list[GIRepository.BaseInfo] = []
         parents: list[str] = []
         props_parents: list[str] = []
-        if hasattr(obj, "__info__"):
-            object_info = obj.__info__  # type: ignore
+        object_info = obj.__dict__.get("__info__")
+        bases = [obj] if object_info else obj.__bases__
+        for b in bases:
+            object_info = b.__dict__.get("__info__")
+            gtype = b.__dict__.get("__gtype__")
 
             if isinstance(object_info, GI.ObjectInfo):
                 p = object_info.get_parent()
@@ -800,45 +803,43 @@ def _gi_build_stub_parts(
                 readable_props.extend(rp)
                 writable_props.extend(wp)
 
-            if isinstance(object_info, GI.InterfaceInfo):
+            elif isinstance(object_info, GI.InterfaceInfo):
                 if current_namespace == "GObject":
                     parents.append("Object")
                 else:
                     parents.append("GObject.GInterface")
                     needed_namespaces.add("GObject")
 
-            if issubclass(obj, GObject.GBoxed):
+            elif gtype and issubclass(b, GObject.GBoxed):
                 if current_namespace == "GObject":
                     parents.append(f"GBoxed")
                 else:
                     parents.append(f"GObject.GBoxed")
                     needed_namespaces.add("GObject")
 
-            if issubclass(obj, GObject.GPointer):
+            elif gtype and issubclass(b, GObject.GPointer):
                 if current_namespace == "GObject":
                     parents.append(f"GPointer")
                 else:
                     parents.append(f"GObject.GPointer")
                     needed_namespaces.add("GObject")
 
-        # Add non-GI base classes. Overrides could define new classes, such as:
-        # class FooError(Exception):
-        #    pass
-        for b in obj.__bases__:
-            if hasattr(b, "__gtype__"):
-                continue
-            type_fullname = f"{b.__module__}.{b.__qualname__}"
-            if type_fullname.startswith("gi.overrides."):
-                type_fullname = type_fullname[len("gi.overrides.") :]
-            ns, type_name = type_fullname.split(".", 1)
-            if ns == current_namespace:
-                parents.append(type_name)
-            elif ns == "builtins":
-                if type_name != "object":
-                    parents.append(type_name)
             else:
-                parents.append(type_fullname)
-                needed_namespaces.add(ns)
+                # Add non-GI base classes. Overrides could define new classes, such as:
+                # class FooError(Exception):
+                #    pass
+                type_fullname = f"{b.__module__}.{b.__qualname__}"
+                if type_fullname.startswith("gi.overrides."):
+                    type_fullname = type_fullname[len("gi.overrides.") :]
+                ns, type_name = type_fullname.split(".", 1)
+                if ns == current_namespace:
+                    parents.append(type_name)
+                elif ns == "builtins":
+                    if type_name != "object":
+                        parents.append(type_name)
+                else:
+                    parents.append(type_fullname)
+                    needed_namespaces.add(ns)
 
         string_parents = ""
         if len(parents) > 0:
@@ -1051,36 +1052,19 @@ def _gi_build_stub_parts(
     return ret, fields
 
 
-def _find_methods_and_fields(obj: typing.Type[typing.Any]) -> list[str]:
-    mro = inspect.getmro(obj)
-    main_name = _get_gname(mro[0])
+def _find_attributes(obj: typing.Type[typing.Any]) -> list[str]:
+    # Get all attributes resolved in this class, excluding inherited ones.
+    # This includes overridden attributes that could have a different signature
+    # in parent classes.
+    obj_attrs = set(obj.__dict__.keys())
 
-    all_attrs = set(dir(obj))
-    other_attrs: set[str] = set()
-    for o in mro[1:]:
-        name = _get_gname(o)
-        if name == main_name:
-            continue
-        other_attrs.update(dir(o))
-
-    obj_attrs = all_attrs - other_attrs
-
-    # Search for overridden methods
-    if hasattr(obj, "__info__"):
-        obj_info = obj.__info__  # type: ignore
-        if isinstance(obj_info, (GI.ObjectInfo, GI.StructInfo)):
-            for m in obj_info.get_methods() + obj_info.get_fields():
-                name = m.get_name()
-                if name in dir(obj) and not name in obj_attrs:
-                    obj_attrs.add(name)
+    # Add inherited GI attributes if we are a direct override of a GI class.
+    if "__info__" not in obj.__dict__:
+        for base in obj.__bases__:
+            if "__info__" in base.__dict__:
+                obj_attrs.update(base.__dict__.keys())
 
     return sorted(list(obj_attrs))
-
-
-def _get_gname(obj: typing.Type[typing.Any]) -> typing.Optional[str]:
-    if not hasattr(obj, "__gtype__"):
-        return obj.__name__
-    return obj.__gtype__.name  # type: ignore
 
 
 def start(
