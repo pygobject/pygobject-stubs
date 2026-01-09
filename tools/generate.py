@@ -32,12 +32,14 @@ ObjectT = typing.Union[ModuleType, typing.Type[typing.Any]]
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
     "__enter__",
+    "__exit__",
     "__iter__",
     "__getitem__",
     "__setitem__",
     "__len__",
     "__int__",
     "__float__",
+    "__bool__",
 }
 
 

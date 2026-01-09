@@ -2932,6 +2932,9 @@ class MapError(Exception): ...
 
 class MapInfo:
     def __enter__(self) -> Self: ...
+    def __exit__(
+        self, type, value, tb
+    ): ...  # FIXME: Override is missing typing annotation
     def __iter__(self): ...  # FIXME: Override is missing typing annotation
 
 class Memory(GObject.GBoxed):
@@ -3845,6 +3848,9 @@ class PadProbeInfo(GObject.GPointer):
 
 class PadProbeInfoObjectContextManager:
     def __enter__(self) -> MiniObject: ...
+    def __exit__(
+        self, _type, _value, _tb
+    ): ...  # FIXME: Override is missing typing annotation
 
 class PadTemplate(Object):
     """
@@ -5115,6 +5121,9 @@ class Structure(GObject.GBoxed):
     type: typing.Type[typing.Any] = ...
     name: int = ...
     def __enter__(self) -> Self: ...
+    def __exit__(
+        self, _type, _value, _tb
+    ): ...  # FIXME: Override is missing typing annotation
     def __getitem__(self, key: str) -> typing.Any: ...
     def __setitem__(self, key: str, value: typing.Any) -> None: ...
     def can_intersect(self, struct2: Structure) -> bool: ...
@@ -5236,6 +5245,9 @@ class StructureContextManager:
     A Gst.Structure wrapper to force usage of a context manager.
     """
     def __enter__(self) -> Structure: ...
+    def __exit__(
+        self, _type, _value, _tb
+    ): ...  # FIXME: Override is missing typing annotation
 
 class SystemClock(Clock):
     """
