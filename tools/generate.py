@@ -31,6 +31,7 @@ ObjectT = typing.Union[ModuleType, typing.Type[typing.Any]]
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
+    "__new__",
     "__enter__",
     "__exit__",
     "__iter__",
@@ -475,12 +476,17 @@ def _build_function_info(
     # Generate string
     prepend = ""
     if constructor:
-        args_types.insert(0, "cls")
-        prepend = "@classmethod\n"
-        # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
-        rt = function.get_container().get_name()
-        if return_type != f"typing.Optional[{rt}]":
-            return_type = rt
+        if name == "__new__":
+            prepend = "@staticmethod\n"
+            args_types.insert(0, "cls: type[Self]")
+            return_type = "Self"
+        else:
+            prepend = "@classmethod\n"
+            args_types.insert(0, "cls")
+            # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
+            rt = function.get_container().get_name()
+            if return_type != f"typing.Optional[{rt}]":
+                return_type = rt
     elif method:
         args_types.insert(0, "self")
     elif static:
