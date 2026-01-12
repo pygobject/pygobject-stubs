@@ -102,7 +102,9 @@ libraries = [
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Update stubs")
     parser.add_argument(
-        "--only", type=str, help="Update only modules with the given name prefix"
+        "--only",
+        type=str,
+        help="Update only modules with the given name prefixes, comma-separated",
     )
 
     args = parser.parse_args()
@@ -110,8 +112,11 @@ if __name__ == "__main__":
     repo_path = Path("src/gi-stubs/repository")
     failed_generations = []
 
+    only = args.only.split(",") if args.only else []
+    only = [prefix.strip() for prefix in only]
+
     for lib in libraries:
-        if args.only and not lib.name.startswith(args.only):
+        if only and not any(lib.name.startswith(prefix) for prefix in only):
             continue
 
         output_path = repo_path / f"{lib.output}.pyi"
