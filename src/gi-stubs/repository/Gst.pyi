@@ -781,6 +781,9 @@ class Bin(Element, ChildProxy):
         name: typing.Optional[str] = ...,
         parent: Object = ...,
     ) -> None: ...
+    def __init__(
+        self, name: typing.Optional[str] = None
+    ): ...  # FIXME: Override is missing typing annotation
     def add(self, *args: Element) -> None: ...
     def do_add_element(self, element: Element) -> bool: ...
     def do_deep_element_added(self, sub_bin: Bin, child: Element) -> None: ...
@@ -842,7 +845,19 @@ class BinClass(GObject.GPointer):
     deep_element_removed: typing.Callable[[Bin, Bin, Element], None] = ...
 
 class BinPrivate(GObject.GPointer): ...
-class Bitmask: ...
+
+class Bitmask:
+    """
+    :Constructors:
+
+    ::
+
+        Bitmask(**properties)
+    """
+
+    v: int
+
+    def __init__(self, v: int) -> None: ...
 
 class Buffer(MiniObjectMixin, GObject.GBoxed):
     """
@@ -2170,7 +2185,22 @@ class DeviceProviderFactory(PluginFeature):
 
 class DeviceProviderFactoryClass(GObject.GPointer): ...
 class DeviceProviderPrivate(GObject.GPointer): ...
-class DoubleRange: ...
+
+class DoubleRange:
+    """
+    :Constructors:
+
+    ::
+
+        DoubleRange(**properties)
+    """
+
+    start: float
+    stop: float
+
+    def __init__(
+        self, start: float, stop: float
+    ): ...  # FIXME: Override is missing typing annotation
 
 class DynamicTypeFactory(PluginFeature):
     """
@@ -2791,8 +2821,25 @@ class Fraction:
     num: int
 
     def __float__(self) -> float: ...
+    def __init__(
+        self, num: int, denom: int = 1
+    ): ...  # FIXME: Override is missing typing annotation
 
-class FractionRange: ...
+class FractionRange:
+    """
+    :Constructors:
+
+    ::
+
+        FractionRange(**properties)
+    """
+
+    start: Fraction
+    stop: Fraction
+
+    def __init__(
+        self, start: Fraction, stop: Fraction
+    ): ...  # FIXME: Override is missing typing annotation
 
 class GhostPad(ProxyPad):
     """
@@ -2854,6 +2901,12 @@ class GhostPad(ProxyPad):
         name: typing.Optional[str] = ...,
         parent: Object = ...,
     ) -> None: ...
+    def __init__(
+        self,
+        name: str,
+        target: typing.Optional[Pad] = None,
+        direction: typing.Optional[PadDirection] = None,
+    ): ...  # FIXME: Override is missing typing annotation
     @staticmethod
     def activate_mode_default(
         pad: Pad, parent: typing.Optional[Object], mode: PadMode, active: bool
@@ -2926,8 +2979,25 @@ class IdStr(GObject.GBoxed):
     def set_static_str_with_len(self, value: str, len: int) -> None: ...
     def set_with_len(self, value: str, len: int) -> None: ...
 
-class Int64Range: ...
-class IntRange: ...
+class Int64Range:
+    """
+    :Constructors:
+
+    ::
+
+        Int64Range(**properties)
+    """
+    def __init__(self, r: range): ...  # FIXME: Override is missing typing annotation
+
+class IntRange:
+    """
+    :Constructors:
+
+    ::
+
+        IntRange(**properties)
+    """
+    def __init__(self, r: range): ...  # FIXME: Override is missing typing annotation
 
 class Iterator(GObject.GBoxed):
     """
@@ -2984,6 +3054,7 @@ class MapInfo:
     def __exit__(
         self, type, value, tb
     ): ...  # FIXME: Override is missing typing annotation
+    def __init__(self): ...  # FIXME: Override is missing typing annotation
     def __iter__(self): ...  # FIXME: Override is missing typing annotation
 
 class Memory(GObject.GBoxed):
@@ -3711,6 +3782,9 @@ class Pad(Object):
         name: typing.Optional[str] = ...,
         parent: Object = ...,
     ) -> None: ...
+    def __init__(
+        self, *args, **kwargs
+    ): ...  # FIXME: Override is missing typing annotation
     def activate_mode(self, mode: PadMode, active: bool) -> bool: ...
     def add_probe(
         self,
@@ -3900,6 +3974,9 @@ class PadProbeInfoObjectContextManager:
     def __enter__(self) -> MiniObject: ...
     def __exit__(
         self, _type, _value, _tb
+    ): ...  # FIXME: Override is missing typing annotation
+    def __init__(
+        self, object: MiniObject, info: PadProbeInfo
     ): ...  # FIXME: Override is missing typing annotation
 
 class PadTemplate(Object):
@@ -4152,6 +4229,9 @@ class Pipeline(Bin, ChildProxy):
         name: typing.Optional[str] = ...,
         parent: Object = ...,
     ) -> None: ...
+    def __init__(
+        self, name: typing.Optional[str] = None
+    ): ...  # FIXME: Override is missing typing annotation
     def auto_clock(self) -> None: ...
     def get_auto_flush_bus(self) -> bool: ...
     def get_bus(self) -> Bus: ...
@@ -5321,6 +5401,9 @@ class StructureContextManager:
     def __exit__(
         self, _type, _value, _tb
     ): ...  # FIXME: Override is missing typing annotation
+    def __init__(
+        self, structure: Structure, parent: MiniObject
+    ): ...  # FIXME: Override is missing typing annotation
 
 class SystemClock(Clock):
     """
@@ -5411,6 +5494,7 @@ class TagList(GObject.GBoxed):
 
     mini_object: MiniObject = ...
     def __getitem__(self, index: int) -> typing.Any: ...
+    def __init__(self): ...  # FIXME: Override is missing typing annotation
     def __len__(self) -> int: ...
     def __setitem__(self, key: str, value: typing.Any) -> None: ...
     def add_value(self, mode: TagMergeMode, tag: str, value: typing.Any) -> None: ...
@@ -6072,6 +6156,9 @@ class ValueArray:
         ValueArray(**properties)
     """
     def __getitem__(self, index: int) -> typing.Any: ...
+    def __init__(
+        self, array: typing.List[typing.Any]
+    ): ...  # FIXME: Override is missing typing annotation
     def __len__(self) -> int: ...
     def __setitem__(self, index: int, value: typing.Any) -> None: ...
     @staticmethod
@@ -6096,6 +6183,9 @@ class ValueList:
         ValueList(**properties)
     """
     def __getitem__(self, index: int) -> typing.Any: ...
+    def __init__(
+        self, array: typing.List[typing.Any]
+    ): ...  # FIXME: Override is missing typing annotation
     def __len__(self) -> int: ...
     def __setitem__(self, index: int, value: typing.Any) -> None: ...
     @staticmethod

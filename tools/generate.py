@@ -32,6 +32,7 @@ ObjectT = typing.Union[ModuleType, typing.Type[typing.Any]]
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
     "__new__",
+    "__init__",
     "__enter__",
     "__exit__",
     "__iter__",
@@ -771,6 +772,8 @@ def _gi_build_stub_parts(
         ret += "\n"
 
     # Functions
+    if "__new__" in functions:
+        functions.pop("__init__", None)
     for name in sorted(functions):
         override = _check_override(prefix_name, name, overrides)
         if override:
