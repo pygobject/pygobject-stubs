@@ -15,6 +15,7 @@ import itertools
 import pprint
 import re
 import textwrap
+import types
 from types import ModuleType
 
 import gi
@@ -404,6 +405,10 @@ WidgetT = typing.TypeVar("WidgetT", bound=Widget)
         )
     elif namespace == "GObject":
         imports.append("import enum")
+    elif namespace == "Gio":
+        typevars.append(
+            'ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object)'
+        )
 
     if "cairo" in ns:
         imports.append("import cairo")
@@ -812,7 +817,7 @@ def _gi_build_stub_parts(
         parents: list[str] = []
         props_parents: list[str] = []
         object_info = obj.__dict__.get("__info__")
-        bases = [obj] if object_info else obj.__bases__
+        bases = [obj] if object_info else types.get_original_bases(obj)
         for b in bases:
             object_info = b.__dict__.get("__info__")
             gtype = b.__dict__.get("__gtype__")
@@ -866,6 +871,9 @@ def _gi_build_stub_parts(
                 # class FooError(Exception):
                 #    pass
                 type_fullname = f"{b.__module__}.{b.__qualname__}"
+                if type_fullname.startswith("typing."):
+                    type_fullname = str(b).replace("~", "")
+
                 if type_fullname.startswith("gi.overrides."):
                     type_fullname = type_fullname[len("gi.overrides.") :]
                 ns, type_name = type_fullname.split(".", 1)
@@ -876,7 +884,6 @@ def _gi_build_stub_parts(
                         parents.append(type_name)
                 else:
                     parents.append(type_fullname)
-                    needed_namespaces.add(ns)
 
         string_parents = ""
         if len(parents) > 0:

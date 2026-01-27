@@ -3,10 +3,10 @@ import typing
 from gi.repository import GioUnix
 from gi.repository import GLib
 from gi.repository import GObject
-from gi.repository import typing
 from typing_extensions import Self
 
 T = typing.TypeVar("T")
+ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object)
 
 DBUS_METHOD_INVOCATION_HANDLED: bool = True
 DBUS_METHOD_INVOCATION_UNHANDLED: bool = False
@@ -6067,7 +6067,7 @@ class ListModelInterface(GObject.GPointer):
     get_n_items: typing.Callable[[ListModel], int] = ...
     get_item: typing.Callable[[ListModel, int], typing.Optional[GObject.Object]] = ...
 
-class ListStore(GObject.Object, ListModel, typing.Generic):
+class ListStore(GObject.Object, ListModel, typing.Generic[ObjectItemType]):
     """
     :Constructors:
 
