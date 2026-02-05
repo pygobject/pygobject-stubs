@@ -80,4 +80,5 @@ ignore = [
   "PYI026",  # Use `typing_extensions.TypeAlias`
   "PYI052",  # Need type annotation
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
+  "PYI016",  # Duplicate union member `None`
 ]
