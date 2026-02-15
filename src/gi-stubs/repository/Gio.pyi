@@ -992,9 +992,6 @@ class Application(GObject.Object, ActionGroup, ActionMap):
         resource_base_path: typing.Optional[str] = ...,
         version: str = ...,
     ) -> None: ...
-    def __init__(
-        self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
     def activate(self) -> None: ...
     def add_main_option(
         self,
@@ -8172,11 +8169,6 @@ class Settings(GObject.Object):
     ) -> None: ...
     def __bool__(self): ...  # FIXME: Override is missing typing annotation
     def __getitem__(self, key): ...  # FIXME: Override is missing typing annotation
-    def __init__(self, *args, **kwargs):
-        """
-        Initializer for a GObject based classes with support for property
-        sets through the use of explicit keyword arguments.
-        """  # FIXME: Override is missing typing annotation
     def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def __len__(self): ...  # FIXME: Override is missing typing annotation
     def __setitem__(
@@ -11556,9 +11548,6 @@ class VolumeMonitor(GObject.Object):
 
     parent_instance: GObject.Object = ...
     priv: None = ...
-    def __init__(
-        self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
     @staticmethod
     def adopt_orphan_mount(mount: Mount) -> Volume: ...
     def do_drive_changed(self, drive: Drive) -> None: ...

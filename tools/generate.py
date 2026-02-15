@@ -777,7 +777,7 @@ def _gi_build_stub_parts(
         ret += "\n"
 
     # Functions
-    if "__new__" in functions:
+    if "__new__" in functions or (in_class and issubclass(in_class, GObject.GObject)):
         functions.pop("__init__", None)
     for name in sorted(functions):
         override = _check_override(prefix_name, name, overrides)
