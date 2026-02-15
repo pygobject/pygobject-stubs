@@ -8,7 +8,7 @@ name = "PyGObject-stubs"
 version = "2.16.0"
 description = "Typing stubs for PyGObject"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = {text = "LGPL-2.1"}
 authors = [
   {email = "reiter.christoph@gmail.com"},
@@ -21,6 +21,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+    "PyGObject>=3.55.0",
     "typing_extensions",
 ]
 
@@ -30,7 +31,7 @@ repository = "https://github.com/pygobject/pygobject-stubs"
 
 [dependency-groups]
 dev = [
-    "pygobject>=3.53.0",
+    "PyGObject@git+https://gitlab.gnome.org/GNOME/pygobject.git",
     "codespell>=2.4.1",
     "isort>=6.0.1",
     "ruff>=0.12.7",
