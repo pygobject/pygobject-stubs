@@ -766,9 +766,7 @@ def _gi_build_stub_parts(
                 ret += f'{name}: {annotation_string} = "{val}"\n'
         elif isinstance(val, (bool, float, int)):
             ret += f"{name}: {annotation_string} = {val}\n"
-        elif val.__class__.__name__ == "Atom":
-            ret += f"{name}: {annotation_string} = ...\n"
-        elif annotation is not None:
+        elif annotation is not None or not in_class:
             ret += f"{name}: {annotation_string} = ...\n"
         else:
             ret += f"{name} = ...  # FIXME: Constant is missing typing annotation\n"
