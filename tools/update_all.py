@@ -33,6 +33,7 @@ libraries = [
     Lib("Adw", "1"),
     Lib("AppIndicator3", "0.1"),
     Lib("AppStream", "1.0"),
+    Lib("Aravis", "0.8"),
     Lib("Atk", "1.0"),
     Lib("AyatanaAppIndicator3", "0.1"),
     Lib("Farstream", "0.2"),
