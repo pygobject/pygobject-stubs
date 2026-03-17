@@ -21167,9 +21167,10 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         width_request: int = ...,
         orientation: Orientation = ...,
     ): ...
+    # override
     def bind_model(
         self,
-        model: Optional[Gio.ListModel],
+        model: Optional[Gio.ListModel[Any]],
         create_widget_func: Callable[..., Widget],
         *user_data: Any,
     ) -> None: ...
@@ -33342,9 +33343,10 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
+    # override
     def bind_model(
         self,
-        model: Optional[Gio.ListModel] = None,
+        model: Optional[Gio.ListModel[Any]] = None,
         create_widget_func: Optional[Callable[..., Widget]] = None,
         *user_data: Any,
     ) -> None: ...

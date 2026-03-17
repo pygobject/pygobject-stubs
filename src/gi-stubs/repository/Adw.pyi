@@ -500,6 +500,7 @@ class AboutWindow(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(Window.Props):
         application_icon: str
         application_name: str
@@ -524,7 +525,7 @@ class AboutWindow(
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
-        dialogs: Gio.ListModel
+        dialogs: Gio.ListModel[typing.Any]
         visible_dialog: typing.Optional[Dialog]
         application: typing.Optional[Gtk.Application]
         child: typing.Optional[Gtk.Widget]
@@ -1542,11 +1543,12 @@ class ApplicationWindow(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(Gtk.ApplicationWindow.Props):
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
-        dialogs: Gio.ListModel
+        dialogs: Gio.ListModel[typing.Any]
         visible_dialog: typing.Optional[Dialog]
         show_menubar: bool
         application: typing.Optional[Gtk.Application]
@@ -1679,7 +1681,8 @@ class ApplicationWindow(
     def get_adaptive_preview(self) -> bool: ...
     def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
-    def get_dialogs(self) -> Gio.ListModel: ...
+    # override
+    def get_dialogs(self) -> Gio.ListModel[typing.Any]: ...
     def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls, app: Gtk.Application) -> ApplicationWindow: ...
@@ -4185,13 +4188,14 @@ class ComboRow(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(ActionRow.Props):
         enable_search: bool
         expression: typing.Optional[Gtk.Expression]
         factory: typing.Optional[Gtk.ListItemFactory]
         header_factory: typing.Optional[Gtk.ListItemFactory]
         list_factory: typing.Optional[Gtk.ListItemFactory]
-        model: typing.Optional[Gio.ListModel]
+        model: typing.Optional[Gio.ListModel[typing.Any]]
         search_match_mode: Gtk.StringFilterMatchMode
         selected: int
         selected_item: typing.Optional[GObject.Object]
@@ -4250,6 +4254,7 @@ class ComboRow(
 
     props: Props = ...
     parent_instance: ActionRow = ...
+    # override
     def __init__(
         self,
         enable_search: bool = ...,
@@ -4257,7 +4262,7 @@ class ComboRow(
         factory: typing.Optional[Gtk.ListItemFactory] = ...,
         header_factory: typing.Optional[Gtk.ListItemFactory] = ...,
         list_factory: typing.Optional[Gtk.ListItemFactory] = ...,
-        model: typing.Optional[Gio.ListModel] = ...,
+        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
         search_match_mode: Gtk.StringFilterMatchMode = ...,
         selected: int = ...,
         use_subtitle: bool = ...,
@@ -4313,7 +4318,8 @@ class ComboRow(
     def get_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
     def get_header_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
     def get_list_factory(self) -> typing.Optional[Gtk.ListItemFactory]: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    # override
+    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
     def get_search_match_mode(self) -> Gtk.StringFilterMatchMode: ...
     def get_selected(self) -> int: ...
     def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
@@ -4333,7 +4339,10 @@ class ComboRow(
     def set_list_factory(
         self, factory: typing.Optional[Gtk.ListItemFactory] = None
     ) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    # override
+    def set_model(
+        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
+    ) -> None: ...
     def set_search_match_mode(
         self, search_match_mode: Gtk.StringFilterMatchMode
     ) -> None: ...
@@ -4876,7 +4885,8 @@ class EnumListItemClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class EnumListModel(GObject.Object, Gio.ListModel):
+# override
+class EnumListModel(GObject.Object, Gio.ListModel[typing.Any]):
     """
     :Constructors:
 
@@ -7214,10 +7224,11 @@ class NavigationView(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(Gtk.Widget.Props):
         animate_transitions: bool
         hhomogeneous: bool
-        navigation_stack: Gio.ListModel
+        navigation_stack: Gio.ListModel[typing.Any]
         pop_on_escape: bool
         vhomogeneous: bool
         visible_page: typing.Optional[NavigationPage]
@@ -7302,7 +7313,8 @@ class NavigationView(
     def find_page(self, tag: str) -> typing.Optional[NavigationPage]: ...
     def get_animate_transitions(self) -> bool: ...
     def get_hhomogeneous(self) -> bool: ...
-    def get_navigation_stack(self) -> Gio.ListModel: ...
+    # override
+    def get_navigation_stack(self) -> Gio.ListModel[typing.Any]: ...
     def get_pop_on_escape(self) -> bool: ...
     def get_previous_page(
         self, page: NavigationPage
@@ -8167,9 +8179,10 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add(self, child: Gtk.Widget) -> None: ...
+    # override
     def bind_model(
         self,
-        model: typing.Optional[Gio.ListModel] = None,
+        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
         create_row_func: typing.Optional[typing.Callable[..., Gtk.Widget]] = None,
         *user_data: typing.Any,
     ) -> None: ...
@@ -8712,6 +8725,7 @@ class PreferencesWindow(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(Window.Props):
         can_navigate_back: bool
         search_enabled: bool
@@ -8720,7 +8734,7 @@ class PreferencesWindow(
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
-        dialogs: Gio.ListModel
+        dialogs: Gio.ListModel[typing.Any]
         visible_dialog: typing.Optional[Dialog]
         application: typing.Optional[Gtk.Application]
         child: typing.Optional[Gtk.Widget]
@@ -9341,7 +9355,8 @@ class ShortcutsItemClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class ShortcutsSection(GObject.Object, Gio.ListModel, Gtk.Buildable):
+# override
+class ShortcutsSection(GObject.Object, Gio.ListModel[typing.Any], Gtk.Buildable):
     """
     :Constructors:
 
@@ -13056,7 +13071,8 @@ class ViewStackPageClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class ViewStackPages(GObject.Object, Gio.ListModel, Gtk.SelectionModel):
+# override
+class ViewStackPages(GObject.Object, Gio.ListModel[typing.Any], Gtk.SelectionModel):
     """
     :Constructors:
 
@@ -13723,11 +13739,12 @@ class Window(
     Signals from GObject:
       notify (GParam)
     """
+    # override
     class Props(Gtk.Window.Props):
         adaptive_preview: bool
         content: typing.Optional[Gtk.Widget]
         current_breakpoint: typing.Optional[Breakpoint]
-        dialogs: Gio.ListModel
+        dialogs: Gio.ListModel[typing.Any]
         visible_dialog: typing.Optional[Dialog]
         application: typing.Optional[Gtk.Application]
         child: typing.Optional[Gtk.Widget]
@@ -13858,7 +13875,8 @@ class Window(
     def get_adaptive_preview(self) -> bool: ...
     def get_content(self) -> typing.Optional[Gtk.Widget]: ...
     def get_current_breakpoint(self) -> typing.Optional[Breakpoint]: ...
-    def get_dialogs(self) -> Gio.ListModel: ...
+    # override
+    def get_dialogs(self) -> Gio.ListModel[typing.Any]: ...
     def get_visible_dialog(self) -> typing.Optional[Dialog]: ...
     @classmethod
     def new(cls) -> Window: ...
