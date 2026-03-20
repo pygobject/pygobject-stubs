@@ -1302,8 +1302,7 @@ class AlternativeTrigger(ShortcutTrigger):
 
 class AlternativeTriggerClass(GObject.GPointer): ...
 
-# override
-class AnyFilter(MultiFilter, Gio.ListModel[typing.Any], Buildable):
+class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -2650,9 +2649,8 @@ class Assistant(
     Signals from GObject:
       notify (GParam)
     """
-    # override
     class Props(Window.Props):
-        pages: Gio.ListModel[typing.Any]
+        pages: Gio.ListModel
         use_header_bar: int
         application: typing.Optional[Application]
         child: typing.Optional[Widget]
@@ -2787,8 +2785,7 @@ class Assistant(
     def get_page_complete(self, page: Widget) -> bool: ...
     def get_page_title(self, page: Widget) -> str: ...
     def get_page_type(self, page: Widget) -> AssistantPageType: ...
-    # override
-    def get_pages(self) -> Gio.ListModel[typing.Any]: ...
+    def get_pages(self) -> Gio.ListModel: ...
     def insert_page(self, page: Widget, position: int) -> int: ...
     @classmethod
     def new(cls) -> Assistant: ...
@@ -2937,8 +2934,7 @@ class BitsetIter(GObject.GBoxed):
     def next(self) -> typing.Tuple[bool, int]: ...
     def previous(self) -> typing.Tuple[bool, int]: ...
 
-# override
-class BookmarkList(GObject.Object, Gio.ListModel[typing.Any]):
+class BookmarkList(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
@@ -7729,9 +7725,8 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
-    # override
     class Props(Widget.Props):
-        columns: Gio.ListModel[typing.Any]
+        columns: Gio.ListModel
         enable_rubberband: bool
         header_factory: typing.Optional[ListItemFactory]
         model: typing.Optional[SelectionModel]
@@ -7832,8 +7827,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def append_column(self, column: ColumnViewColumn) -> None: ...
-    # override
-    def get_columns(self) -> Gio.ListModel[typing.Any]: ...
+    def get_columns(self) -> Gio.ListModel: ...
     def get_enable_rubberband(self) -> bool: ...
     def get_header_factory(self) -> typing.Optional[ListItemFactory]: ...
     def get_model(self) -> typing.Optional[SelectionModel]: ...
@@ -8771,10 +8765,8 @@ class ConstraintLayout(LayoutManager, Buildable):
     def add_guide(self, guide: ConstraintGuide) -> None: ...
     @classmethod
     def new(cls) -> ConstraintLayout: ...
-    # override
-    def observe_constraints(self) -> Gio.ListModel[typing.Any]: ...
-    # override
-    def observe_guides(self) -> Gio.ListModel[typing.Any]: ...
+    def observe_constraints(self) -> Gio.ListModel: ...
+    def observe_guides(self) -> Gio.ListModel: ...
     def remove_all_constraints(self) -> None: ...
     def remove_constraint(self, constraint: Constraint) -> None: ...
     def remove_guide(self, guide: ConstraintGuide) -> None: ...
@@ -9328,8 +9320,7 @@ class DialogClass(GObject.GPointer):
     close: typing.Callable[[Dialog], None] = ...
     padding: list[None] = ...
 
-# override
-class DirectoryList(GObject.Object, Gio.ListModel[typing.Any]):
+class DirectoryList(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
@@ -9974,7 +9965,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         factory: typing.Optional[ListItemFactory]
         header_factory: typing.Optional[ListItemFactory]
         list_factory: typing.Optional[ListItemFactory]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         search_match_mode: StringFilterMatchMode
         selected: int
         selected_item: typing.Optional[GObject.Object]
@@ -10025,7 +10016,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         factory: typing.Optional[ListItemFactory] = ...,
         header_factory: typing.Optional[ListItemFactory] = ...,
         list_factory: typing.Optional[ListItemFactory] = ...,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
         search_match_mode: StringFilterMatchMode = ...,
         selected: int = ...,
         show_arrow: bool = ...,
@@ -10066,17 +10057,15 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def get_factory(self) -> typing.Optional[ListItemFactory]: ...
     def get_header_factory(self) -> typing.Optional[ListItemFactory]: ...
     def get_list_factory(self) -> typing.Optional[ListItemFactory]: ...
-    # override
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def get_search_match_mode(self) -> StringFilterMatchMode: ...
     def get_selected(self) -> int: ...
     def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
     def get_show_arrow(self) -> bool: ...
-    # override
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
+        model: typing.Optional[Gio.ListModel] = None,
         expression: typing.Optional[Expression] = None,
     ) -> DropDown: ...
     @classmethod
@@ -10092,10 +10081,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def set_list_factory(
         self, factory: typing.Optional[ListItemFactory] = None
     ) -> None: ...
-    # override
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
     def set_search_match_mode(
         self, search_match_mode: StringFilterMatchMode
     ) -> None: ...
@@ -11539,8 +11525,7 @@ class EventControllerScroll(EventController):
 
 class EventControllerScrollClass(GObject.GPointer): ...
 
-# override
-class EveryFilter(MultiFilter, Gio.ListModel[typing.Any], Buildable):
+class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -11820,14 +11805,12 @@ class FileChooser(GObject.GInterface):
     def get_current_folder(self) -> typing.Optional[Gio.File]: ...
     def get_current_name(self) -> typing.Optional[str]: ...
     def get_file(self) -> typing.Optional[Gio.File]: ...
-    # override
-    def get_files(self) -> Gio.ListModel[typing.Any]: ...
+    def get_files(self) -> Gio.ListModel: ...
     def get_filter(self) -> typing.Optional[FileFilter]: ...
     # override
     def get_filters(self) -> Gio.ListModel[FileFilter]: ...
     def get_select_multiple(self) -> bool: ...
-    # override
-    def get_shortcut_folders(self) -> Gio.ListModel[typing.Any]: ...
+    def get_shortcut_folders(self) -> Gio.ListModel: ...
     def remove_choice(self, id: str) -> None: ...
     def remove_filter(self, filter: FileFilter) -> None: ...
     def remove_shortcut_folder(self, folder: Gio.File) -> bool: ...
@@ -12025,7 +12008,7 @@ class FileChooserDialog(
         filter: typing.Optional[FileFilter]
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
-        shortcut_folders: Gio.ListModel[typing.Any]
+        shortcut_folders: Gio.ListModel
         startup_id: str
 
     props: Props = ...
@@ -12133,7 +12116,7 @@ class FileChooserNative(NativeDialog, FileChooser):
         filter: typing.Optional[FileFilter]
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
-        shortcut_folders: Gio.ListModel[typing.Any]
+        shortcut_folders: Gio.ListModel
 
     props: Props = ...
     def __init__(
@@ -12305,7 +12288,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         filter: typing.Optional[FileFilter]
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
-        shortcut_folders: Gio.ListModel[typing.Any]
+        shortcut_folders: Gio.ListModel
 
     props: Props = ...
     def __init__(
@@ -12424,10 +12407,7 @@ class FileDialog(GObject.Object):
         callback: typing.Optional[typing.Callable[..., None]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    # override
-    def open_multiple_finish(
-        self, result: Gio.AsyncResult
-    ) -> Gio.ListModel[typing.Any]: ...
+    def open_multiple_finish(self, result: Gio.AsyncResult) -> Gio.ListModel: ...
     def open_multiple_text_files(
         self,
         parent: typing.Optional[Window] = None,
@@ -12435,10 +12415,9 @@ class FileDialog(GObject.Object):
         callback: typing.Optional[typing.Callable[..., None]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    # override
     def open_multiple_text_files_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[Gio.ListModel[typing.Any], str]: ...
+    ) -> typing.Tuple[Gio.ListModel, str]: ...
     def open_text_file(
         self,
         parent: typing.Optional[Window] = None,
@@ -12482,10 +12461,9 @@ class FileDialog(GObject.Object):
         callback: typing.Optional[typing.Callable[..., None]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    # override
     def select_multiple_folders_finish(
         self, result: Gio.AsyncResult
-    ) -> Gio.ListModel[typing.Any]: ...
+    ) -> Gio.ListModel: ...
     def set_accept_label(self, accept_label: typing.Optional[str] = None) -> None: ...
     def set_default_filter(
         self, filter: typing.Optional[FileFilter] = None
@@ -12666,8 +12644,7 @@ class FilterClass(GObject.GPointer):
     match: typing.Callable[[Filter, typing.Optional[GObject.Object]], bool] = ...
     get_strictness: typing.Callable[[Filter], FilterMatch] = ...
 
-# override
-class FilterListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
+class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -12700,7 +12677,7 @@ class FilterListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
         filter: typing.Optional[Filter]
         incremental: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
         pending: int
         watch_items: bool
@@ -12710,25 +12687,23 @@ class FilterListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
         self,
         filter: typing.Optional[Filter] = ...,
         incremental: bool = ...,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
         watch_items: bool = ...,
     ) -> None: ...
     def get_filter(self) -> typing.Optional[Filter]: ...
     def get_incremental(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def get_pending(self) -> int: ...
     def get_watch_items(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
+        model: typing.Optional[Gio.ListModel] = None,
         filter: typing.Optional[Filter] = None,
     ) -> FilterListModel: ...
     def set_filter(self, filter: typing.Optional[Filter] = None) -> None: ...
     def set_incremental(self, incremental: bool) -> None: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
     def set_watch_items(self, watch_items: bool) -> None: ...
 
 class FilterListModelClass(GObject.GPointer):
@@ -12979,8 +12954,7 @@ class FixedLayoutClass(GObject.GPointer):
 
     parent_class: LayoutManagerClass = ...
 
-# override
-class FlattenListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
+class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -13007,24 +12981,16 @@ class FlattenListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
 
     props: Props = ...
-    def __init__(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = ...
-    ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
-    def get_model_for_item(
-        self, position: int
-    ) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_model_for_item(self, position: int) -> typing.Optional[Gio.ListModel]: ...
     @classmethod
-    def new(
-        cls, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> FlattenListModel: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> FlattenListModel: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
 
 class FlattenListModelClass(GObject.GPointer):
     """
@@ -13214,10 +13180,9 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation = ...,
     ) -> None: ...
     def append(self, child: Widget) -> None: ...
-    # override
     def bind_model(
         self,
-        model: typing.Optional[Gio.ListModel[typing.Any]],
+        model: typing.Optional[Gio.ListModel],
         create_widget_func: typing.Callable[..., Widget],
         *user_data: typing.Any,
     ) -> None: ...
@@ -18694,10 +18659,9 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def append(self, child: Widget) -> None: ...
-    # override
     def bind_model(
         self,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
+        model: typing.Optional[Gio.ListModel] = None,
         create_widget_func: typing.Optional[typing.Callable[..., Widget]] = None,
         *user_data: typing.Any,
     ) -> None: ...
@@ -19546,8 +19510,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         self, permission: typing.Optional[Gio.Permission] = None
     ) -> None: ...
 
-# override
-class MapListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
+class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -19580,15 +19543,13 @@ class MapListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
         n_items: int
 
     props: Props = ...
-    def __init__(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = ...
-    ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def has_map(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
+        model: typing.Optional[Gio.ListModel] = None,
         map_func: typing.Optional[typing.Callable[..., GObject.Object]] = None,
         *user_data: typing.Any,
     ) -> MapListModel: ...
@@ -19597,9 +19558,7 @@ class MapListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
         map_func: typing.Optional[typing.Callable[..., GObject.Object]] = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
 
 class MapListModelClass(GObject.GPointer):
     """
@@ -20605,8 +20564,7 @@ class MountOperationClass(GObject.GPointer):
 
 class MountOperationPrivate(GObject.GPointer): ...
 
-# override
-class MultiFilter(Filter, Gio.ListModel[typing.Any], Buildable):
+class MultiFilter(Filter, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -20639,10 +20597,7 @@ class MultiFilter(Filter, Gio.ListModel[typing.Any], Buildable):
 
 class MultiFilterClass(GObject.GPointer): ...
 
-# override
-class MultiSelection(
-    GObject.Object, Gio.ListModel[typing.Any], SectionModel, SelectionModel
-):
+class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -20672,21 +20627,15 @@ class MultiSelection(
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
 
     props: Props = ...
-    def __init__(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = ...
-    ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     @classmethod
-    def new(
-        cls, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> MultiSelection: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> MultiSelection: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
 
 class MultiSelectionClass(GObject.GPointer):
     """
@@ -20699,8 +20648,7 @@ class MultiSelectionClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-# override
-class MultiSorter(Sorter, Gio.ListModel[typing.Any], Buildable):
+class MultiSorter(Sorter, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -20873,10 +20821,7 @@ class NeverTrigger(ShortcutTrigger):
 
 class NeverTriggerClass(GObject.GPointer): ...
 
-# override
-class NoSelection(
-    GObject.Object, Gio.ListModel[typing.Any], SectionModel, SelectionModel
-):
+class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -20906,21 +20851,15 @@ class NoSelection(
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
 
     props: Props = ...
-    def __init__(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = ...
-    ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     @classmethod
-    def new(
-        cls, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> NoSelection: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> NoSelection: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
 
 class NoSelectionClass(GObject.GPointer):
     """
@@ -21021,12 +20960,11 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
-    # override
     class Props(Widget.Props):
         enable_popup: bool
         group_name: typing.Optional[str]
         page: int
-        pages: Gio.ListModel[typing.Any]
+        pages: Gio.ListModel
         scrollable: bool
         show_border: bool
         show_tabs: bool
@@ -21128,8 +21066,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     def get_n_pages(self) -> int: ...
     def get_nth_page(self, page_num: int) -> typing.Optional[Widget]: ...
     def get_page(self, child: Widget) -> NotebookPage: ...
-    # override
-    def get_pages(self) -> Gio.ListModel[typing.Any]: ...
+    def get_pages(self) -> Gio.ListModel: ...
     def get_scrollable(self) -> bool: ...
     def get_show_border(self) -> bool: ...
     def get_show_tabs(self) -> bool: ...
@@ -26085,8 +26022,7 @@ class SectionModelInterface(GObject.GPointer):
     g_iface: GObject.TypeInterface = ...
     get_section: typing.Callable[[SectionModel, int], typing.Tuple[int, int]] = ...
 
-# override
-class SelectionFilterModel(GObject.Object, Gio.ListModel[typing.Any]):
+class SelectionFilterModel(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
@@ -26592,8 +26528,7 @@ class ShortcutClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-# override
-class ShortcutController(EventController, Gio.ListModel[typing.Any], Buildable):
+class ShortcutController(EventController, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -26633,13 +26568,13 @@ class ShortcutController(EventController, Gio.ListModel[typing.Any], Buildable):
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
         widget: typing.Optional[Widget]
-        model: Gio.ListModel[typing.Any]
+        model: Gio.ListModel
 
     props: Props = ...
     def __init__(
         self,
         mnemonic_modifiers: Gdk.ModifierType = ...,
-        model: Gio.ListModel[typing.Any] = ...,
+        model: Gio.ListModel = ...,
         scope: ShortcutScope = ...,
         name: typing.Optional[str] = ...,
         propagation_limit: PropagationLimit = ...,
@@ -26651,7 +26586,7 @@ class ShortcutController(EventController, Gio.ListModel[typing.Any], Buildable):
     @classmethod
     def new(cls) -> ShortcutController: ...
     @classmethod
-    def new_for_model(cls, model: Gio.ListModel[typing.Any]) -> ShortcutController: ...
+    def new_for_model(cls, model: Gio.ListModel) -> ShortcutController: ...
     def remove_shortcut(self, shortcut: Shortcut) -> None: ...
     def set_mnemonics_modifiers(self, modifiers: Gdk.ModifierType) -> None: ...
     def set_scope(self, scope: ShortcutScope) -> None: ...
@@ -27674,10 +27609,7 @@ class SignalListItemFactory(ListItemFactory):
 
 class SignalListItemFactoryClass(GObject.GPointer): ...
 
-# override
-class SingleSelection(
-    GObject.Object, Gio.ListModel[typing.Any], SectionModel, SelectionModel
-):
+class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     :Constructors:
 
@@ -27713,7 +27645,7 @@ class SingleSelection(
         autoselect: bool
         can_unselect: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
         selected: int
         selected_item: typing.Optional[GObject.Object]
@@ -27723,23 +27655,19 @@ class SingleSelection(
         self,
         autoselect: bool = ...,
         can_unselect: bool = ...,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
         selected: int = ...,
     ) -> None: ...
     def get_autoselect(self) -> bool: ...
     def get_can_unselect(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def get_selected(self) -> int: ...
     def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
     @classmethod
-    def new(
-        cls, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> SingleSelection: ...
+    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> SingleSelection: ...
     def set_autoselect(self, autoselect: bool) -> None: ...
     def set_can_unselect(self, can_unselect: bool) -> None: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
     def set_selected(self, position: int) -> None: ...
 
 class SingleSelectionClass(GObject.GPointer):
@@ -27784,8 +27712,7 @@ class SizeGroup(GObject.Object, Buildable):
     def remove_widget(self, widget: Widget) -> None: ...
     def set_mode(self, mode: SizeGroupMode) -> None: ...
 
-# override
-class SliceListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
+class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -27814,7 +27741,7 @@ class SliceListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
         offset: int
         size: int
@@ -27822,20 +27749,18 @@ class SliceListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
     props: Props = ...
     def __init__(
         self,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
         offset: int = ...,
         size: int = ...,
     ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def get_offset(self) -> int: ...
     def get_size(self) -> int: ...
     @classmethod
     def new(
-        cls, model: typing.Optional[Gio.ListModel[typing.Any]], offset: int, size: int
+        cls, model: typing.Optional[Gio.ListModel], offset: int, size: int
     ) -> SliceListModel: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
     def set_offset(self, offset: int) -> None: ...
     def set_size(self, size: int) -> None: ...
 
@@ -28012,8 +27937,7 @@ class Snapshot(Gdk.Snapshot):
 
 class SnapshotClass(GObject.GPointer): ...
 
-# override
-class SortListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
+class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     :Constructors:
 
@@ -28045,7 +27969,7 @@ class SortListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
     class Props(GObject.Object.Props):
         incremental: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel[typing.Any]]
+        model: typing.Optional[Gio.ListModel]
         n_items: int
         pending: int
         section_sorter: typing.Optional[Sorter]
@@ -28055,25 +27979,23 @@ class SortListModel(GObject.Object, Gio.ListModel[typing.Any], SectionModel):
     def __init__(
         self,
         incremental: bool = ...,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = ...,
+        model: typing.Optional[Gio.ListModel] = ...,
         section_sorter: typing.Optional[Sorter] = ...,
         sorter: typing.Optional[Sorter] = ...,
     ) -> None: ...
     def get_incremental(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
     def get_pending(self) -> int: ...
     def get_section_sorter(self) -> typing.Optional[Sorter]: ...
     def get_sorter(self) -> typing.Optional[Sorter]: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel[typing.Any]] = None,
+        model: typing.Optional[Gio.ListModel] = None,
         sorter: typing.Optional[Sorter] = None,
     ) -> SortListModel: ...
     def set_incremental(self, incremental: bool) -> None: ...
-    def set_model(
-        self, model: typing.Optional[Gio.ListModel[typing.Any]] = None
-    ) -> None: ...
+    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
     def set_section_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
     def set_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
 
@@ -29299,8 +29221,7 @@ class StringFilterClass(GObject.GPointer):
 
     parent_class: FilterClass = ...
 
-# override
-class StringList(GObject.Object, Gio.ListModel[typing.Any], Buildable):
+class StringList(GObject.Object, Gio.ListModel, Buildable):
     """
     :Constructors:
 
@@ -31637,8 +31558,7 @@ class TreeIter(GObject.GBoxed):
     def copy(self) -> TreeIter: ...
     def free(self) -> None: ...
 
-# override
-class TreeListModel(GObject.Object, Gio.ListModel[typing.Any]):
+class TreeListModel(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
@@ -31665,7 +31585,7 @@ class TreeListModel(GObject.Object, Gio.ListModel[typing.Any]):
     class Props(GObject.Object.Props):
         autoexpand: bool
         item_type: typing.Type[typing.Any]
-        model: Gio.ListModel[typing.Any]
+        model: Gio.ListModel
         n_items: int
         passthrough: bool
 
@@ -31673,16 +31593,16 @@ class TreeListModel(GObject.Object, Gio.ListModel[typing.Any]):
     def __init__(self, autoexpand: bool = ..., passthrough: bool = ...) -> None: ...
     def get_autoexpand(self) -> bool: ...
     def get_child_row(self, position: int) -> typing.Optional[TreeListRow]: ...
-    def get_model(self) -> Gio.ListModel[typing.Any]: ...
+    def get_model(self) -> Gio.ListModel: ...
     def get_passthrough(self) -> bool: ...
     def get_row(self, position: int) -> typing.Optional[TreeListRow]: ...
     @classmethod
     def new(
         cls,
-        root: Gio.ListModel[typing.Any],
+        root: Gio.ListModel,
         passthrough: bool,
         autoexpand: bool,
-        create_func: typing.Callable[..., typing.Optional[Gio.ListModel[typing.Any]]],
+        create_func: typing.Callable[..., typing.Optional[Gio.ListModel]],
         *user_data: typing.Any,
     ) -> TreeListModel: ...
     def set_autoexpand(self, autoexpand: bool) -> None: ...
@@ -31718,9 +31638,8 @@ class TreeListRow(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-    # override
     class Props(GObject.Object.Props):
-        children: typing.Optional[Gio.ListModel[typing.Any]]
+        children: typing.Optional[Gio.ListModel]
         depth: int
         expandable: bool
         expanded: bool
@@ -31729,8 +31648,7 @@ class TreeListRow(GObject.Object):
     props: Props = ...
     def __init__(self, expanded: bool = ...) -> None: ...
     def get_child_row(self, position: int) -> typing.Optional[TreeListRow]: ...
-    # override
-    def get_children(self) -> typing.Optional[Gio.ListModel[typing.Any]]: ...
+    def get_children(self) -> typing.Optional[Gio.ListModel]: ...
     def get_depth(self) -> int: ...
     def get_expanded(self) -> bool: ...
     def get_item(self) -> typing.Optional[GObject.Object]: ...
@@ -33844,10 +33762,8 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         self, orientation: Orientation, for_size: int
     ) -> typing.Tuple[int, int, int, int]: ...
     def mnemonic_activate(self, group_cycling: bool) -> bool: ...
-    # override
-    def observe_children(self) -> Gio.ListModel[typing.Any]: ...
-    # override
-    def observe_controllers(self) -> Gio.ListModel[typing.Any]: ...
+    def observe_children(self) -> Gio.ListModel: ...
+    def observe_controllers(self) -> Gio.ListModel: ...
     def pick(self, x: float, y: float, flags: PickFlags) -> typing.Optional[Widget]: ...
     # override
     @classmethod
@@ -34321,7 +34237,7 @@ class Window(
     def get_titlebar(self) -> typing.Optional[Widget]: ...
     # override
     @staticmethod
-    def get_toplevels() -> Gio.ListModel[typing.Any]: ...
+    def get_toplevels() -> Gio.ListModel: ...
     def get_transient_for(self) -> typing.Optional[Window]: ...
     def has_group(self) -> bool: ...
     def is_active(self) -> bool: ...

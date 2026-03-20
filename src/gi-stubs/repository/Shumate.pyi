@@ -1309,8 +1309,7 @@ class MapSourceClass(GObject.GPointer):
     fill_tile_finish: typing.Callable[[MapSource, Gio.AsyncResult], bool] = ...
     padding: list[None] = ...
 
-# override
-class MapSourceRegistry(GObject.Object, Gio.ListModel[typing.Any]):
+class MapSourceRegistry(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 

@@ -678,8 +678,7 @@ class FontFaceClass(GObject.GPointer):
     is_synthesized: typing.Callable[[FontFace], bool] = ...
     get_family: typing.Callable[[FontFace], FontFamily] = ...
 
-# override
-class FontFamily(GObject.Object, Gio.ListModel[typing.Any]):
+class FontFamily(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
@@ -749,8 +748,7 @@ class FontFamilyClass(GObject.GPointer):
         [FontFamily, typing.Optional[str]], typing.Optional[FontFace]
     ] = ...
 
-# override
-class FontMap(GObject.Object, Gio.ListModel[typing.Any]):
+class FontMap(GObject.Object, Gio.ListModel):
     """
     :Constructors:
 
