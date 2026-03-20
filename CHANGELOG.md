@@ -1,3 +1,45 @@
+# 2.17.0 (18 Mar 2026)
+
+## Feature
+
+* Add Aravis 0.8 ([#266](https://github.com/pygobject/pygobject-stubs/issues/266)) (#266)
+* Add ECal 2.0
+* Add EDataServer 1.2
+* Add ICalGLib 3.0
+* Support Generic[T] base class
+
+## Typing
+
+* Improve type hints for
+    - Adw
+    - DBus
+    - DBusGLib
+    - Gdk4
+    - GdkWayland
+    - Gio
+    - GioUnix
+    - GLib
+    - GObject
+    - Gsk
+    - Gst
+    - Gtk4
+    - GtkSource5
+    - Pango
+
+## Change
+
+* Require PyGObject>=3.55.0
+
+## Bug Fixes
+
+* Add type annotation for override module fields
+* Ignore GObject __init__ override
+* Ignore PYI016 - Duplicate union member `None`
+* Get the correct list of attributes for a class
+* __init__() and set_properties() does not allow positional args
+* Add stub for __exit__()
+* Generator: Get function name via name attribute if available
+
 # 2.16.0 (08 Dec 2025)
 
 ## Improvements
