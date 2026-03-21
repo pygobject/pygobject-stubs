@@ -1,6 +1,6 @@
 import typing
 
-from gi.repository import gi
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from typing_extensions import Self
@@ -76,7 +76,7 @@ class AttributeIter(GObject.GPointer):
 
     data: None = ...
 
-class BaseInfo(gi.Fundamental):
+class BaseInfo(_gi.Fundamental):
     """
     :Constructors:
 

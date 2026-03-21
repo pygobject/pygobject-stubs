@@ -417,6 +417,10 @@ WidgetT = typing.TypeVar("WidgetT", bound=Widget)
         )
         ns.remove("cairo")
 
+    if "_gi" in ns:
+        imports.append("from gi import _gi")
+        ns.remove("_gi")
+
     imports += [f"from gi.repository import {n}" for n in sorted(ns)]
 
     return (
@@ -829,6 +833,13 @@ def _gi_build_stub_parts(
                         parents.append(f"{p.get_namespace()}.{p.get_name()}")
                         needed_namespaces.add(p.get_namespace())
                     props_parents.append(f"{parents[-1]}.Props")
+                elif object_info.get_fundamental():
+                    # If no parent, but it's a fundamental, it inherits from gi._gi.Fundamental
+                    if current_namespace == "_gi":
+                        parents.append("Fundamental")
+                    else:
+                        parents.append("_gi.Fundamental")
+                        needed_namespaces.add("_gi")
 
                 ifaces = object_info.get_interfaces()
                 for i in ifaces:
