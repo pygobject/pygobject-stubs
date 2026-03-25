@@ -15,7 +15,7 @@ def error_quark() -> int: ...
 def get_default_arch() -> str: ...
 def get_supported_arches() -> list[str]: ...
 def get_system_installations(
-    cancellable: typing.Optional[Gio.Cancellable] = None,
+    cancellable: Gio.Cancellable | None = None,
 ) -> list[Installation]: ...
 def portal_error_quark() -> int: ...
 def transaction_operation_type_to_string(kind: TransactionOperationType) -> str: ...
@@ -117,53 +117,51 @@ class Installation(GObject.Object):
         self,
         remote: Remote,
         if_needed: bool,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def cleanup_local_refs_sync(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     def create_monitor(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Gio.FileMonitor: ...
-    def drop_caches(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
-    ) -> bool: ...
+    def drop_caches(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def fetch_remote_metadata_sync(
         self,
         remote_name: str,
         ref: Ref,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> GLib.Bytes: ...
     def fetch_remote_ref_sync(
         self,
         remote_name: str,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> RemoteRef: ...
     def fetch_remote_ref_sync_full(
         self,
         remote_name: str,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str],
-        branch: typing.Optional[str],
+        arch: str | None,
+        branch: str | None,
         flags: QueryFlags,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> RemoteRef: ...
     def fetch_remote_size_sync(
         self,
         remote_name: str,
         ref: Ref,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> typing.Tuple[bool, int, int]: ...
     def get_config(
-        self, key: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, key: str, cancellable: Gio.Cancellable | None = None
     ) -> str: ...
     def get_current_installed_app(
-        self, name: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, name: str, cancellable: Gio.Cancellable | None = None
     ) -> InstalledRef: ...
     def get_default_languages(self) -> list[str]: ...
     def get_default_locales(self) -> list[str]: ...
@@ -173,9 +171,9 @@ class Installation(GObject.Object):
         self,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> InstalledRef: ...
     def get_is_user(self) -> bool: ...
     def get_min_free_space_bytes(self) -> typing.Tuple[bool, int]: ...
@@ -183,7 +181,7 @@ class Installation(GObject.Object):
     def get_path(self) -> Gio.File: ...
     def get_priority(self) -> int: ...
     def get_remote_by_name(
-        self, name: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, name: str, cancellable: Gio.Cancellable | None = None
     ) -> Remote: ...
     def get_storage_type(self) -> StorageType: ...
     def install(
@@ -191,17 +189,17 @@ class Installation(GObject.Object):
         remote_name: str,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> InstalledRef: ...
     def install_bundle(
         self,
         file: Gio.File,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> InstalledRef: ...
     def install_full(
@@ -210,151 +208,143 @@ class Installation(GObject.Object):
         remote_name: str,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        subpaths: typing.Optional[typing.Sequence[str]] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        subpaths: typing.Sequence[str] | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> InstalledRef: ...
     def install_ref_file(
         self,
         ref_file_data: GLib.Bytes,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> RemoteRef: ...
     def launch(
         self,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        commit: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        commit: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def launch_full(
         self,
         flags: LaunchFlags,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        commit: typing.Optional[str] = None,
-        instance_out: typing.Optional[Instance] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        commit: str | None = None,
+        instance_out: Instance | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def list_installed_refs(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> list[InstalledRef]: ...
     def list_installed_refs_by_kind(
-        self, kind: RefKind, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, kind: RefKind, cancellable: Gio.Cancellable | None = None
     ) -> list[InstalledRef]: ...
     def list_installed_refs_for_update(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> list[InstalledRef]: ...
     def list_installed_related_refs_sync(
         self,
         remote_name: str,
         ref: str,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[RelatedRef]: ...
     def list_pinned_refs(
         self,
-        arch: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[InstalledRef]: ...
     def list_remote_refs_sync(
-        self, remote_or_uri: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, remote_or_uri: str, cancellable: Gio.Cancellable | None = None
     ) -> list[RemoteRef]: ...
     def list_remote_refs_sync_full(
         self,
         remote_or_uri: str,
         flags: QueryFlags,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[RemoteRef]: ...
     def list_remote_related_refs_for_installed_sync(
         self,
         remote_name: str,
         ref: str,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[RelatedRef]: ...
     def list_remote_related_refs_sync(
         self,
         remote_name: str,
         ref: str,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[RelatedRef]: ...
     def list_remotes(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> list[Remote]: ...
     def list_remotes_by_type(
         self,
         types: typing.Sequence[RemoteType],
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[Remote]: ...
     def list_unused_refs(
         self,
-        arch: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[InstalledRef]: ...
     def list_unused_refs_with_options(
         self,
-        arch: typing.Optional[str] = None,
-        metadata_injection: typing.Optional[dict[None, None]] = None,
-        options: typing.Optional[GLib.Variant] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        metadata_injection: dict[None, None] | None = None,
+        options: GLib.Variant | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> list[InstalledRef]: ...
     def load_app_overrides(
-        self, app_id: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, app_id: str, cancellable: Gio.Cancellable | None = None
     ) -> str: ...
     def modify_remote(
-        self, remote: Remote, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, remote: Remote, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     @classmethod
     def new_for_path(
         cls,
         path: Gio.File,
         user: bool,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Installation: ...
     @classmethod
-    def new_system(
-        cls, cancellable: typing.Optional[Gio.Cancellable] = None
-    ) -> Installation: ...
+    def new_system(cls, cancellable: Gio.Cancellable | None = None) -> Installation: ...
     @classmethod
     def new_system_with_id(
         cls,
-        id: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        id: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Installation: ...
     @classmethod
-    def new_user(
-        cls, cancellable: typing.Optional[Gio.Cancellable] = None
-    ) -> Installation: ...
-    def prune_local_repo(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
-    ) -> bool: ...
+    def new_user(cls, cancellable: Gio.Cancellable | None = None) -> Installation: ...
+    def prune_local_repo(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def remove_local_ref_sync(
         self,
         remote_name: str,
         ref: str,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def remove_remote(
-        self, name: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, name: str, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
-    def run_triggers(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
-    ) -> bool: ...
+    def run_triggers(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def set_config_sync(
-        self, key: str, value: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, key: str, value: str, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     def set_no_interaction(self, no_interaction: bool) -> None: ...
     def uninstall(
         self,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> bool: ...
     def uninstall_full(
@@ -362,10 +352,10 @@ class Installation(GObject.Object):
         flags: UninstallFlags,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> bool: ...
     def update(
@@ -373,42 +363,42 @@ class Installation(GObject.Object):
         flags: UpdateFlags,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> InstalledRef: ...
     def update_appstream_full_sync(
         self,
         remote_name: str,
-        arch: typing.Optional[str] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        out_changed: typing.Optional[bool] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        out_changed: bool | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> bool: ...
     def update_appstream_sync(
         self,
         remote_name: str,
-        arch: typing.Optional[str] = None,
-        out_changed: typing.Optional[bool] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        out_changed: bool | None = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def update_full(
         self,
         flags: UpdateFlags,
         kind: RefKind,
         name: str,
-        arch: typing.Optional[str] = None,
-        branch: typing.Optional[str] = None,
-        subpaths: typing.Optional[typing.Sequence[str]] = None,
-        progress: typing.Optional[typing.Callable[..., None]] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        arch: str | None = None,
+        branch: str | None = None,
+        subpaths: typing.Sequence[str] | None = None,
+        progress: typing.Callable[..., None] | None = None,
+        cancellable: Gio.Cancellable | None = None,
         *progress_data: typing.Any,
     ) -> InstalledRef: ...
     def update_remote_sync(
-        self, name: str, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, name: str, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
 
 class InstallationClass(GObject.GPointer):
@@ -480,8 +470,8 @@ class InstalledRef(Ref):
       notify (GParam)
     """
     class Props(Ref.Props):
-        appdata_content_rating: typing.Optional[dict[None, None]]
-        appdata_content_rating_type: typing.Optional[str]
+        appdata_content_rating: dict[None, None] | None
+        appdata_content_rating_type: str | None
         appdata_license: str
         appdata_name: str
         appdata_summary: str
@@ -491,7 +481,7 @@ class InstalledRef(Ref):
         end_of_life_rebase: str
         installed_size: int
         is_current: bool
-        latest_commit: typing.Optional[str]
+        latest_commit: str | None
         origin: str
         subpaths: list[str]
         arch: str
@@ -526,8 +516,8 @@ class InstalledRef(Ref):
         kind: RefKind = ...,
         name: str = ...,
     ) -> None: ...
-    def get_appdata_content_rating(self) -> typing.Optional[dict[str, str]]: ...
-    def get_appdata_content_rating_type(self) -> typing.Optional[str]: ...
+    def get_appdata_content_rating(self) -> dict[str, str] | None: ...
+    def get_appdata_content_rating_type(self) -> str | None: ...
     def get_appdata_license(self) -> str: ...
     def get_appdata_name(self) -> str: ...
     def get_appdata_summary(self) -> str: ...
@@ -537,14 +527,14 @@ class InstalledRef(Ref):
     def get_eol_rebase(self) -> str: ...
     def get_installed_size(self) -> int: ...
     def get_is_current(self) -> bool: ...
-    def get_latest_commit(self) -> typing.Optional[str]: ...
+    def get_latest_commit(self) -> str | None: ...
     def get_origin(self) -> str: ...
     def get_subpaths(self) -> list[str]: ...
     def load_appdata(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> GLib.Bytes: ...
     def load_metadata(
-        self, cancellable: typing.Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> GLib.Bytes: ...
 
 class InstalledRefClass(GObject.GPointer):
@@ -575,7 +565,7 @@ class Instance(GObject.Object):
     parent: GObject.Object = ...
     @staticmethod
     def get_all() -> list[Instance]: ...
-    def get_app(self) -> typing.Optional[str]: ...
+    def get_app(self) -> str | None: ...
     def get_arch(self) -> str: ...
     def get_branch(self) -> str: ...
     def get_child_pid(self) -> int: ...
@@ -774,11 +764,9 @@ class Remote(GObject.Object):
     props: Props = ...
     parent: GObject.Object = ...
     def __init__(self, name: str = ..., type: RemoteType = ...) -> None: ...
-    def get_appstream_dir(self, arch: typing.Optional[str] = None) -> Gio.File: ...
-    def get_appstream_timestamp(
-        self, arch: typing.Optional[str] = None
-    ) -> Gio.File: ...
-    def get_collection_id(self) -> typing.Optional[str]: ...
+    def get_appstream_dir(self, arch: str | None = None) -> Gio.File: ...
+    def get_appstream_timestamp(self, arch: str | None = None) -> Gio.File: ...
+    def get_collection_id(self) -> str | None: ...
     def get_comment(self) -> str: ...
     def get_default_branch(self) -> str: ...
     def get_description(self) -> str: ...
@@ -799,7 +787,7 @@ class Remote(GObject.Object):
     def new(cls, name: str) -> Remote: ...
     @classmethod
     def new_from_file(cls, name: str, data: GLib.Bytes) -> Remote: ...
-    def set_collection_id(self, collection_id: typing.Optional[str] = None) -> None: ...
+    def set_collection_id(self, collection_id: str | None = None) -> None: ...
     def set_comment(self, comment: str) -> None: ...
     def set_default_branch(self, default_branch: str) -> None: ...
     def set_description(self, description: str) -> None: ...
@@ -873,7 +861,7 @@ class RemoteRef(Ref):
         end_of_life: str
         end_of_life_rebase: str
         installed_size: int
-        metadata: typing.Optional[GLib.Bytes]
+        metadata: GLib.Bytes | None
         remote_name: str
         arch: str
         branch: str
@@ -903,7 +891,7 @@ class RemoteRef(Ref):
     def get_eol(self) -> str: ...
     def get_eol_rebase(self) -> str: ...
     def get_installed_size(self) -> int: ...
-    def get_metadata(self) -> typing.Optional[GLib.Bytes]: ...
+    def get_metadata(self) -> GLib.Bytes | None: ...
     def get_remote_name(self) -> str: ...
 
 class RemoteRefClass(GObject.GPointer):
@@ -968,34 +956,34 @@ class Transaction(GObject.Object, Gio.Initable):
         self,
         remote: str,
         ref: str,
-        subpaths: typing.Optional[typing.Sequence[str]] = None,
+        subpaths: typing.Sequence[str] | None = None,
     ) -> bool: ...
     def add_install_bundle(
-        self, file: Gio.File, gpg_data: typing.Optional[GLib.Bytes] = None
+        self, file: Gio.File, gpg_data: GLib.Bytes | None = None
     ) -> bool: ...
     def add_install_flatpakref(self, flatpakref_data: GLib.Bytes) -> bool: ...
     def add_rebase(
         self,
         remote: str,
         ref: str,
-        subpaths: typing.Optional[str] = None,
-        previous_ids: typing.Optional[typing.Sequence[str]] = None,
+        subpaths: str | None = None,
+        previous_ids: typing.Sequence[str] | None = None,
     ) -> bool: ...
     def add_rebase_and_uninstall(
         self,
         remote: str,
         new_ref: str,
         old_ref: str,
-        subpaths: typing.Optional[str] = None,
-        previous_ids: typing.Optional[typing.Sequence[str]] = None,
+        subpaths: str | None = None,
+        previous_ids: typing.Sequence[str] | None = None,
     ) -> bool: ...
     def add_sideload_repo(self, path: str) -> None: ...
     def add_uninstall(self, ref: str) -> bool: ...
     def add_update(
         self,
         ref: str,
-        subpaths: typing.Optional[typing.Sequence[str]] = None,
-        commit: typing.Optional[str] = None,
+        subpaths: typing.Sequence[str] | None = None,
+        commit: str | None = None,
     ) -> bool: ...
     def complete_basic_auth(
         self, id: int, user: str, password: str, options: GLib.Variant
@@ -1028,7 +1016,7 @@ class Transaction(GObject.Object, Gio.Initable):
     ) -> bool: ...
     def do_ready(self) -> bool: ...
     def do_ready_pre_auth(self) -> bool: ...
-    def do_run(self, cancellable: typing.Optional[Gio.Cancellable] = None) -> bool: ...
+    def do_run(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def do_webflow_done(self, options: GLib.Variant, id: int) -> None: ...
     def do_webflow_start(
         self, remote: str, url: str, options: GLib.Variant, id: int
@@ -1042,7 +1030,7 @@ class Transaction(GObject.Object, Gio.Initable):
     def get_no_interaction(self) -> bool: ...
     def get_no_pull(self) -> bool: ...
     def get_operation_for_ref(
-        self, remote: typing.Optional[str], ref: str
+        self, remote: str | None, ref: str
     ) -> TransactionOperation: ...
     def get_operations(self) -> list[TransactionOperation]: ...
     def get_parent_window(self) -> str: ...
@@ -1051,9 +1039,9 @@ class Transaction(GObject.Object, Gio.Initable):
     def new_for_installation(
         cls,
         installation: Installation,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Transaction: ...
-    def run(self, cancellable: typing.Optional[Gio.Cancellable] = None) -> bool: ...
+    def run(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def set_auto_install_debug(self, auto_install_debug: bool) -> None: ...
     def set_auto_install_sdk(self, auto_install_sdk: bool) -> None: ...
     def set_default_arch(self, arch: str) -> None: ...
@@ -1097,7 +1085,7 @@ class TransactionClass(GObject.GPointer):
     add_new_remote: typing.Callable[
         [Transaction, TransactionRemoteReason, str, str, str], bool
     ] = ...
-    run: typing.Callable[[Transaction, typing.Optional[Gio.Cancellable]], bool] = ...
+    run: typing.Callable[[Transaction, Gio.Cancellable | None], bool] = ...
     end_of_lifed_with_rebase: typing.Callable[
         [Transaction, str, str, str, str, str], bool
     ] = ...
@@ -1134,7 +1122,7 @@ class TransactionOperation(GObject.Object):
     def get_old_metadata(self) -> GLib.KeyFile: ...
     def get_operation_type(self) -> TransactionOperationType: ...
     def get_ref(self) -> str: ...
-    def get_related_to_ops(self) -> typing.Optional[list[TransactionOperation]]: ...
+    def get_related_to_ops(self) -> list[TransactionOperation] | None: ...
     def get_remote(self) -> str: ...
     def get_requires_authentication(self) -> bool: ...
     def get_subpaths(self) -> list[str]: ...

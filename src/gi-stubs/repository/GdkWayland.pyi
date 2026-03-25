@@ -51,18 +51,18 @@ class WaylandDevice(Gdk.Device):
         display: Gdk.Display
         has_bidi_layouts: bool
         has_cursor: bool
-        layout_names: typing.Optional[list[str]]
+        layout_names: list[str] | None
         modifier_state: Gdk.ModifierType
         n_axes: int
         name: str
         num_lock_state: bool
         num_touches: int
-        product_id: typing.Optional[str]
+        product_id: str | None
         scroll_lock_state: bool
         seat: Gdk.Seat
         source: Gdk.InputSource
-        tool: typing.Optional[Gdk.DeviceTool]
-        vendor_id: typing.Optional[str]
+        tool: Gdk.DeviceTool | None
+        vendor_id: str | None
 
     props: Props = ...
     def __init__(
@@ -76,7 +76,7 @@ class WaylandDevice(Gdk.Device):
         source: Gdk.InputSource = ...,
         vendor_id: str = ...,
     ) -> None: ...
-    def get_node_path(self) -> typing.Optional[str]: ...
+    def get_node_path(self) -> str | None: ...
     def get_xkb_keymap(self) -> None: ...
 
 class WaylandDeviceClass(GObject.GPointer): ...
@@ -117,7 +117,7 @@ class WaylandDisplay(Gdk.Display):
 
     props: Props = ...
     def get_egl_display(self) -> None: ...
-    def get_startup_notification_id(self) -> typing.Optional[str]: ...
+    def get_startup_notification_id(self) -> str | None: ...
     def query_registry(self, global_: str) -> bool: ...
     def set_cursor_theme(self, name: str, size: int) -> None: ...
     def set_startup_notification_id(self, startup_id: str) -> None: ...
@@ -149,9 +149,9 @@ class WaylandGLContext(Gdk.GLContext):
     class Props(Gdk.GLContext.Props):
         allowed_apis: Gdk.GLAPI
         api: Gdk.GLAPI
-        shared_context: typing.Optional[Gdk.GLContext]
-        display: typing.Optional[Gdk.Display]
-        surface: typing.Optional[Gdk.Surface]
+        shared_context: Gdk.GLContext | None
+        display: Gdk.Display | None
+        surface: Gdk.Surface | None
 
     props: Props = ...
     def __init__(
@@ -196,13 +196,13 @@ class WaylandMonitor(Gdk.Monitor):
       notify (GParam)
     """
     class Props(Gdk.Monitor.Props):
-        connector: typing.Optional[str]
-        description: typing.Optional[str]
+        connector: str | None
+        description: str | None
         display: Gdk.Display
         geometry: Gdk.Rectangle
         height_mm: int
-        manufacturer: typing.Optional[str]
-        model: typing.Optional[str]
+        manufacturer: str | None
+        model: str | None
         refresh_rate: int
         scale: float
         scale_factor: int
@@ -246,7 +246,7 @@ class WaylandPopup(WaylandSurface, Gdk.Popup):
       notify (GParam)
     """
     class Props(WaylandSurface.Props):
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         display: Gdk.Display
         frame_clock: Gdk.FrameClock
         height: int
@@ -255,12 +255,12 @@ class WaylandPopup(WaylandSurface, Gdk.Popup):
         scale_factor: int
         width: int
         autohide: bool
-        parent: typing.Optional[Gdk.Surface]
+        parent: Gdk.Surface | None
 
     props: Props = ...
     def __init__(
         self,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         display: Gdk.Display = ...,
         frame_clock: Gdk.FrameClock = ...,
         autohide: bool = ...,
@@ -328,7 +328,7 @@ class WaylandSurface(Gdk.Surface):
       notify (GParam)
     """
     class Props(Gdk.Surface.Props):
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         display: Gdk.Display
         frame_clock: Gdk.FrameClock
         height: int
@@ -340,7 +340,7 @@ class WaylandSurface(Gdk.Surface):
     props: Props = ...
     def __init__(
         self,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         display: Gdk.Display = ...,
         frame_clock: Gdk.FrameClock = ...,
     ) -> None: ...
@@ -380,7 +380,7 @@ class WaylandToplevel(WaylandSurface, Gdk.Toplevel):
       notify (GParam)
     """
     class Props(WaylandSurface.Props):
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         display: Gdk.Display
         frame_clock: Gdk.FrameClock
         height: int
@@ -404,7 +404,7 @@ class WaylandToplevel(WaylandSurface, Gdk.Toplevel):
     props: Props = ...
     def __init__(
         self,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         display: Gdk.Display = ...,
         frame_clock: Gdk.FrameClock = ...,
         decorated: bool = ...,

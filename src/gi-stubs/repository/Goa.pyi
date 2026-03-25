@@ -114,26 +114,24 @@ class Account(GObject.GInterface):
 
     def call_ensure_credentials(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_ensure_credentials_finish(
         self, res: Gio.AsyncResult
     ) -> Tuple[bool, int]: ...
     def call_ensure_credentials_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, int]: ...
     def call_remove(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_remove_finish(self, res: Gio.AsyncResult) -> bool: ...
-    def call_remove_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
-    ) -> bool: ...
+    def call_remove_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def complete_ensure_credentials(
         self, invocation: Gio.DBusMethodInvocation, expires_in: int
     ) -> None: ...
@@ -162,14 +160,14 @@ class AccountIface(GObject.GPointer):
     get_chat_disabled: Callable[[Account], bool] = ...
     get_contacts_disabled: Callable[[Account], bool] = ...
     get_documents_disabled: Callable[[Account], bool] = ...
-    get_id: Callable[[Account], Optional[str]] = ...
-    get_identity: Callable[[Account], Optional[str]] = ...
+    get_id: Callable[[Account], str | None] = ...
+    get_identity: Callable[[Account], str | None] = ...
     get_is_temporary: Callable[[Account], bool] = ...
     get_mail_disabled: Callable[[Account], bool] = ...
-    get_presentation_identity: Callable[[Account], Optional[str]] = ...
-    get_provider_icon: Callable[[Account], Optional[str]] = ...
-    get_provider_name: Callable[[Account], Optional[str]] = ...
-    get_provider_type: Callable[[Account], Optional[str]] = ...
+    get_presentation_identity: Callable[[Account], str | None] = ...
+    get_provider_icon: Callable[[Account], str | None] = ...
+    get_provider_name: Callable[[Account], str | None] = ...
+    get_provider_type: Callable[[Account], str | None] = ...
     get_ticketing_disabled: Callable[[Account], bool] = ...
     get_files_disabled: Callable[[Account], bool] = ...
     get_photos_disabled: Callable[[Account], bool] = ...
@@ -301,10 +299,10 @@ class AccountProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -315,8 +313,8 @@ class AccountProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -328,16 +326,16 @@ class AccountProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> AccountProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> AccountProxy: ...
 
 class AccountProxyClass(GObject.GPointer):
@@ -475,7 +473,7 @@ class CalendarIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     get_accept_ssl_errors: Callable[[Calendar], bool] = ...
-    get_uri: Callable[[Calendar], Optional[str]] = ...
+    get_uri: Callable[[Calendar], str | None] = ...
 
 class CalendarProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Calendar
@@ -554,10 +552,10 @@ class CalendarProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -568,8 +566,8 @@ class CalendarProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -581,16 +579,16 @@ class CalendarProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> CalendarProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> CalendarProxy: ...
 
 class CalendarProxyClass(GObject.GPointer):
@@ -757,10 +755,10 @@ class ChatProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -771,8 +769,8 @@ class ChatProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -784,16 +782,16 @@ class ChatProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ChatProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ChatProxy: ...
 
 class ChatProxyClass(GObject.GPointer):
@@ -884,19 +882,19 @@ class Client(GObject.Object, Gio.AsyncInitable, Gio.Initable):
 
     props: Props = ...
     def get_accounts(self) -> list[Object]: ...
-    def get_manager(self) -> Optional[Manager]: ...
+    def get_manager(self) -> Manager | None: ...
     def get_object_manager(self) -> Gio.DBusObjectManager: ...
     def lookup_by_id(self, id: str) -> Object: ...
     @staticmethod
     def new(
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
     def new_finish(cls, res: Gio.AsyncResult) -> Client: ...
     @classmethod
-    def new_sync(cls, cancellable: Optional[Gio.Cancellable] = None) -> Client: ...
+    def new_sync(cls, cancellable: Gio.Cancellable | None = None) -> Client: ...
 
 class ClientClass(GObject.GPointer):
     """
@@ -935,7 +933,7 @@ class ContactsIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     get_accept_ssl_errors: Callable[[Contacts], bool] = ...
-    get_uri: Callable[[Contacts], Optional[str]] = ...
+    get_uri: Callable[[Contacts], str | None] = ...
 
 class ContactsProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Contacts
@@ -1014,10 +1012,10 @@ class ContactsProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1028,8 +1026,8 @@ class ContactsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1041,16 +1039,16 @@ class ContactsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ContactsProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ContactsProxy: ...
 
 class ContactsProxyClass(GObject.GPointer):
@@ -1217,10 +1215,10 @@ class DocumentsProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1231,8 +1229,8 @@ class DocumentsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1244,16 +1242,16 @@ class DocumentsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> DocumentsProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> DocumentsProxy: ...
 
 class DocumentsProxyClass(GObject.GPointer):
@@ -1339,7 +1337,7 @@ class ExchangeIface(GObject.GPointer):
     """
 
     parent_iface: GObject.TypeInterface = ...
-    get_host: Callable[[Exchange], Optional[str]] = ...
+    get_host: Callable[[Exchange], str | None] = ...
     get_accept_ssl_errors: Callable[[Exchange], bool] = ...
 
 class ExchangeProxy(
@@ -1419,10 +1417,10 @@ class ExchangeProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1433,8 +1431,8 @@ class ExchangeProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1446,16 +1444,16 @@ class ExchangeProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ExchangeProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ExchangeProxy: ...
 
 class ExchangeProxyClass(GObject.GPointer):
@@ -1549,7 +1547,7 @@ class FilesIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     get_accept_ssl_errors: Callable[[Files], bool] = ...
-    get_uri: Callable[[Files], Optional[str]] = ...
+    get_uri: Callable[[Files], str | None] = ...
 
 class FilesProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Files
@@ -1628,10 +1626,10 @@ class FilesProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1642,8 +1640,8 @@ class FilesProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1655,16 +1653,16 @@ class FilesProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> FilesProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> FilesProxy: ...
 
 class FilesProxyClass(GObject.GPointer):
@@ -1757,18 +1755,18 @@ class MailIface(GObject.GPointer):
     """
 
     parent_iface: GObject.TypeInterface = ...
-    get_email_address: Callable[[Mail], Optional[str]] = ...
-    get_imap_host: Callable[[Mail], Optional[str]] = ...
+    get_email_address: Callable[[Mail], str | None] = ...
+    get_imap_host: Callable[[Mail], str | None] = ...
     get_imap_supported: Callable[[Mail], bool] = ...
     get_imap_use_tls: Callable[[Mail], bool] = ...
-    get_imap_user_name: Callable[[Mail], Optional[str]] = ...
-    get_smtp_host: Callable[[Mail], Optional[str]] = ...
+    get_imap_user_name: Callable[[Mail], str | None] = ...
+    get_smtp_host: Callable[[Mail], str | None] = ...
     get_smtp_supported: Callable[[Mail], bool] = ...
     get_smtp_use_tls: Callable[[Mail], bool] = ...
-    get_smtp_user_name: Callable[[Mail], Optional[str]] = ...
+    get_smtp_user_name: Callable[[Mail], str | None] = ...
     get_imap_accept_ssl_errors: Callable[[Mail], bool] = ...
     get_imap_use_ssl: Callable[[Mail], bool] = ...
-    get_name: Callable[[Mail], Optional[str]] = ...
+    get_name: Callable[[Mail], str | None] = ...
     get_smtp_accept_ssl_errors: Callable[[Mail], bool] = ...
     get_smtp_use_auth: Callable[[Mail], bool] = ...
     get_smtp_use_ssl: Callable[[Mail], bool] = ...
@@ -1885,10 +1883,10 @@ class MailProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1899,8 +1897,8 @@ class MailProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -1912,16 +1910,16 @@ class MailProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MailProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MailProxy: ...
 
 class MailProxyClass(GObject.GPointer):
@@ -2036,8 +2034,8 @@ class Manager(GObject.GInterface):
         arg_presentation_identity: str,
         arg_credentials: GLib.Variant,
         arg_details: GLib.Variant,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_add_account_finish(self, res: Gio.AsyncResult) -> Tuple[bool, str]: ...
@@ -2048,20 +2046,20 @@ class Manager(GObject.GInterface):
         arg_presentation_identity: str,
         arg_credentials: GLib.Variant,
         arg_details: GLib.Variant,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Tuple[bool, str]: ...
     def call_is_supported_provider(
         self,
         arg_provider_type: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_is_supported_provider_finish(
         self, res: Gio.AsyncResult
     ) -> Tuple[bool, bool]: ...
     def call_is_supported_provider_sync(
-        self, arg_provider_type: str, cancellable: Optional[Gio.Cancellable] = None
+        self, arg_provider_type: str, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, bool]: ...
     def complete_add_account(
         self, invocation: Gio.DBusMethodInvocation, account_object_path: str
@@ -2171,10 +2169,10 @@ class ManagerProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2185,8 +2183,8 @@ class ManagerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2198,16 +2196,16 @@ class ManagerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ManagerProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ManagerProxy: ...
 
 class ManagerProxyClass(GObject.GPointer):
@@ -2371,10 +2369,10 @@ class MapsProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2385,8 +2383,8 @@ class MapsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2398,16 +2396,16 @@ class MapsProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MapsProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MapsProxy: ...
 
 class MapsProxyClass(GObject.GPointer):
@@ -2494,7 +2492,7 @@ class MediaServerIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     get_dlna_supported: Callable[[MediaServer], bool] = ...
-    get_udn: Callable[[MediaServer], Optional[str]] = ...
+    get_udn: Callable[[MediaServer], str | None] = ...
 
 class MediaServerProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, MediaServer
@@ -2573,10 +2571,10 @@ class MediaServerProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2587,8 +2585,8 @@ class MediaServerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2600,16 +2598,16 @@ class MediaServerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MediaServerProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MediaServerProxy: ...
 
 class MediaServerProxyClass(GObject.GPointer):
@@ -2776,10 +2774,10 @@ class MusicProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2790,8 +2788,8 @@ class MusicProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -2803,16 +2801,16 @@ class MusicProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MusicProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> MusicProxy: ...
 
 class MusicProxyClass(GObject.GPointer):
@@ -2883,15 +2881,15 @@ class OAuth2Based(GObject.GInterface):
 
     def call_get_access_token(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_get_access_token_finish(
         self, res: Gio.AsyncResult
     ) -> Tuple[bool, str, int]: ...
     def call_get_access_token_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, str, int]: ...
     def complete_get_access_token(
         self, invocation: Gio.DBusMethodInvocation, access_token: str, expires_in: int
@@ -2916,8 +2914,8 @@ class OAuth2BasedIface(GObject.GPointer):
     handle_get_access_token: Callable[
         [OAuth2Based, Gio.DBusMethodInvocation], bool
     ] = ...
-    get_client_id: Callable[[OAuth2Based], Optional[str]] = ...
-    get_client_secret: Callable[[OAuth2Based], Optional[str]] = ...
+    get_client_id: Callable[[OAuth2Based], str | None] = ...
+    get_client_secret: Callable[[OAuth2Based], str | None] = ...
 
 class OAuth2BasedProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, OAuth2Based
@@ -2999,10 +2997,10 @@ class OAuth2BasedProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3013,8 +3011,8 @@ class OAuth2BasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3026,16 +3024,16 @@ class OAuth2BasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> OAuth2BasedProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> OAuth2BasedProxy: ...
 
 class OAuth2BasedProxyClass(GObject.GPointer):
@@ -3116,15 +3114,15 @@ class OAuthBased(GObject.GInterface):
 
     def call_get_access_token(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_get_access_token_finish(
         self, res: Gio.AsyncResult
     ) -> Tuple[bool, str, str, int]: ...
     def call_get_access_token_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, str, str, int]: ...
     def complete_get_access_token(
         self,
@@ -3153,8 +3151,8 @@ class OAuthBasedIface(GObject.GPointer):
     handle_get_access_token: Callable[
         [OAuthBased, Gio.DBusMethodInvocation], bool
     ] = ...
-    get_consumer_key: Callable[[OAuthBased], Optional[str]] = ...
-    get_consumer_secret: Callable[[OAuthBased], Optional[str]] = ...
+    get_consumer_key: Callable[[OAuthBased], str | None] = ...
+    get_consumer_secret: Callable[[OAuthBased], str | None] = ...
 
 class OAuthBasedProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, OAuthBased
@@ -3236,10 +3234,10 @@ class OAuthBasedProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3250,8 +3248,8 @@ class OAuthBasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3263,16 +3261,16 @@ class OAuthBasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> OAuthBasedProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> OAuthBasedProxy: ...
 
 class OAuthBasedProxyClass(GObject.GPointer):
@@ -3351,26 +3349,26 @@ class Object(GObject.GInterface):
       notify (GParam)
     """
 
-    def get_account(self) -> Optional[Account]: ...
-    def get_calendar(self) -> Optional[Calendar]: ...
-    def get_chat(self) -> Optional[Chat]: ...
-    def get_contacts(self) -> Optional[Contacts]: ...
-    def get_documents(self) -> Optional[Documents]: ...
-    def get_exchange(self) -> Optional[Exchange]: ...
-    def get_files(self) -> Optional[Files]: ...
-    def get_mail(self) -> Optional[Mail]: ...
-    def get_manager(self) -> Optional[Manager]: ...
-    def get_maps(self) -> Optional[Maps]: ...
-    def get_media_server(self) -> Optional[MediaServer]: ...
-    def get_music(self) -> Optional[Music]: ...
-    def get_oauth2_based(self) -> Optional[OAuth2Based]: ...
-    def get_oauth_based(self) -> Optional[OAuthBased]: ...
-    def get_password_based(self) -> Optional[PasswordBased]: ...
-    def get_photos(self) -> Optional[Photos]: ...
-    def get_printers(self) -> Optional[Printers]: ...
-    def get_read_later(self) -> Optional[ReadLater]: ...
-    def get_ticketing(self) -> Optional[Ticketing]: ...
-    def get_todo(self) -> Optional[Todo]: ...
+    def get_account(self) -> Account | None: ...
+    def get_calendar(self) -> Calendar | None: ...
+    def get_chat(self) -> Chat | None: ...
+    def get_contacts(self) -> Contacts | None: ...
+    def get_documents(self) -> Documents | None: ...
+    def get_exchange(self) -> Exchange | None: ...
+    def get_files(self) -> Files | None: ...
+    def get_mail(self) -> Mail | None: ...
+    def get_manager(self) -> Manager | None: ...
+    def get_maps(self) -> Maps | None: ...
+    def get_media_server(self) -> MediaServer | None: ...
+    def get_music(self) -> Music | None: ...
+    def get_oauth2_based(self) -> OAuth2Based | None: ...
+    def get_oauth_based(self) -> OAuthBased | None: ...
+    def get_password_based(self) -> PasswordBased | None: ...
+    def get_photos(self) -> Photos | None: ...
+    def get_printers(self) -> Printers | None: ...
+    def get_read_later(self) -> ReadLater | None: ...
+    def get_ticketing(self) -> Ticketing | None: ...
+    def get_todo(self) -> Todo | None: ...
 
 class ObjectIface(GObject.GPointer):
     """
@@ -3446,7 +3444,7 @@ class ObjectManagerClient(
         get_proxy_type_func: None
         get_proxy_type_user_data: None
         name: str
-        name_owner: Optional[str]
+        name_owner: str | None
         object_path: str
         bus_type: Gio.BusType
 
@@ -3468,17 +3466,17 @@ class ObjectManagerClient(
     def get_proxy_type(
         manager: Gio.DBusObjectManagerClient,
         object_path: str,
-        interface_name: Optional[str],
+        interface_name: str | None,
         user_data: None,
     ) -> Type: ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusObjectManagerClientFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3489,8 +3487,8 @@ class ObjectManagerClient(
         flags: Gio.DBusObjectManagerClientFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3502,16 +3500,16 @@ class ObjectManagerClient(
         flags: Gio.DBusObjectManagerClientFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ObjectManagerClient: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusObjectManagerClientFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ObjectManagerClient: ...
 
 class ObjectManagerClientClass(GObject.GPointer):
@@ -3559,26 +3557,26 @@ class ObjectProxy(Gio.DBusObjectProxy, Gio.DBusObject, Object):
     class Props:
         g_connection: Gio.DBusConnection
         g_object_path: str
-        account: Optional[Account]
-        calendar: Optional[Calendar]
-        chat: Optional[Chat]
-        contacts: Optional[Contacts]
-        documents: Optional[Documents]
-        exchange: Optional[Exchange]
-        files: Optional[Files]
-        mail: Optional[Mail]
-        manager: Optional[Manager]
-        maps: Optional[Maps]
-        media_server: Optional[MediaServer]
-        music: Optional[Music]
-        oauth_based: Optional[OAuthBased]
-        oauth2_based: Optional[OAuth2Based]
-        password_based: Optional[PasswordBased]
-        photos: Optional[Photos]
-        printers: Optional[Printers]
-        read_later: Optional[ReadLater]
-        ticketing: Optional[Ticketing]
-        todo: Optional[Todo]
+        account: Account | None
+        calendar: Calendar | None
+        chat: Chat | None
+        contacts: Contacts | None
+        documents: Documents | None
+        exchange: Exchange | None
+        files: Files | None
+        mail: Mail | None
+        manager: Manager | None
+        maps: Maps | None
+        media_server: MediaServer | None
+        music: Music | None
+        oauth_based: OAuthBased | None
+        oauth2_based: OAuth2Based | None
+        password_based: PasswordBased | None
+        photos: Photos | None
+        printers: Printers | None
+        read_later: ReadLater | None
+        ticketing: Ticketing | None
+        todo: Todo | None
 
     props: Props = ...
     parent_instance: Gio.DBusObjectProxy = ...
@@ -3656,26 +3654,26 @@ class ObjectSkeleton(Gio.DBusObjectSkeleton, Gio.DBusObject, Object):
 
     class Props:
         g_object_path: str
-        account: Optional[Account]
-        calendar: Optional[Calendar]
-        chat: Optional[Chat]
-        contacts: Optional[Contacts]
-        documents: Optional[Documents]
-        exchange: Optional[Exchange]
-        files: Optional[Files]
-        mail: Optional[Mail]
-        manager: Optional[Manager]
-        maps: Optional[Maps]
-        media_server: Optional[MediaServer]
-        music: Optional[Music]
-        oauth_based: Optional[OAuthBased]
-        oauth2_based: Optional[OAuth2Based]
-        password_based: Optional[PasswordBased]
-        photos: Optional[Photos]
-        printers: Optional[Printers]
-        read_later: Optional[ReadLater]
-        ticketing: Optional[Ticketing]
-        todo: Optional[Todo]
+        account: Account | None
+        calendar: Calendar | None
+        chat: Chat | None
+        contacts: Contacts | None
+        documents: Documents | None
+        exchange: Exchange | None
+        files: Files | None
+        mail: Mail | None
+        manager: Manager | None
+        maps: Maps | None
+        media_server: MediaServer | None
+        music: Music | None
+        oauth_based: OAuthBased | None
+        oauth2_based: OAuth2Based | None
+        password_based: PasswordBased | None
+        photos: Photos | None
+        printers: Printers | None
+        read_later: ReadLater | None
+        ticketing: Ticketing | None
+        todo: Todo | None
 
     props: Props = ...
     parent_instance: Gio.DBusObjectSkeleton = ...
@@ -3706,28 +3704,26 @@ class ObjectSkeleton(Gio.DBusObjectSkeleton, Gio.DBusObject, Object):
     ): ...
     @classmethod
     def new(cls, object_path: str) -> ObjectSkeleton: ...
-    def set_account(self, interface_: Optional[Account] = None) -> None: ...
-    def set_calendar(self, interface_: Optional[Calendar] = None) -> None: ...
-    def set_chat(self, interface_: Optional[Chat] = None) -> None: ...
-    def set_contacts(self, interface_: Optional[Contacts] = None) -> None: ...
-    def set_documents(self, interface_: Optional[Documents] = None) -> None: ...
-    def set_exchange(self, interface_: Optional[Exchange] = None) -> None: ...
-    def set_files(self, interface_: Optional[Files] = None) -> None: ...
-    def set_mail(self, interface_: Optional[Mail] = None) -> None: ...
-    def set_manager(self, interface_: Optional[Manager] = None) -> None: ...
-    def set_maps(self, interface_: Optional[Maps] = None) -> None: ...
-    def set_media_server(self, interface_: Optional[MediaServer] = None) -> None: ...
-    def set_music(self, interface_: Optional[Music] = None) -> None: ...
-    def set_oauth2_based(self, interface_: Optional[OAuth2Based] = None) -> None: ...
-    def set_oauth_based(self, interface_: Optional[OAuthBased] = None) -> None: ...
-    def set_password_based(
-        self, interface_: Optional[PasswordBased] = None
-    ) -> None: ...
-    def set_photos(self, interface_: Optional[Photos] = None) -> None: ...
-    def set_printers(self, interface_: Optional[Printers] = None) -> None: ...
-    def set_read_later(self, interface_: Optional[ReadLater] = None) -> None: ...
-    def set_ticketing(self, interface_: Optional[Ticketing] = None) -> None: ...
-    def set_todo(self, interface_: Optional[Todo] = None) -> None: ...
+    def set_account(self, interface_: Account | None = None) -> None: ...
+    def set_calendar(self, interface_: Calendar | None = None) -> None: ...
+    def set_chat(self, interface_: Chat | None = None) -> None: ...
+    def set_contacts(self, interface_: Contacts | None = None) -> None: ...
+    def set_documents(self, interface_: Documents | None = None) -> None: ...
+    def set_exchange(self, interface_: Exchange | None = None) -> None: ...
+    def set_files(self, interface_: Files | None = None) -> None: ...
+    def set_mail(self, interface_: Mail | None = None) -> None: ...
+    def set_manager(self, interface_: Manager | None = None) -> None: ...
+    def set_maps(self, interface_: Maps | None = None) -> None: ...
+    def set_media_server(self, interface_: MediaServer | None = None) -> None: ...
+    def set_music(self, interface_: Music | None = None) -> None: ...
+    def set_oauth2_based(self, interface_: OAuth2Based | None = None) -> None: ...
+    def set_oauth_based(self, interface_: OAuthBased | None = None) -> None: ...
+    def set_password_based(self, interface_: PasswordBased | None = None) -> None: ...
+    def set_photos(self, interface_: Photos | None = None) -> None: ...
+    def set_printers(self, interface_: Printers | None = None) -> None: ...
+    def set_read_later(self, interface_: ReadLater | None = None) -> None: ...
+    def set_ticketing(self, interface_: Ticketing | None = None) -> None: ...
+    def set_todo(self, interface_: Todo | None = None) -> None: ...
 
 class ObjectSkeletonClass(GObject.GPointer):
     """
@@ -3753,13 +3749,13 @@ class PasswordBased(GObject.GInterface):
     def call_get_password(
         self,
         arg_id: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_get_password_finish(self, res: Gio.AsyncResult) -> Tuple[bool, str]: ...
     def call_get_password_sync(
-        self, arg_id: str, cancellable: Optional[Gio.Cancellable] = None
+        self, arg_id: str, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, str]: ...
     def complete_get_password(
         self, invocation: Gio.DBusMethodInvocation, password: str
@@ -3861,10 +3857,10 @@ class PasswordBasedProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3875,8 +3871,8 @@ class PasswordBasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -3888,16 +3884,16 @@ class PasswordBasedProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PasswordBasedProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PasswordBasedProxy: ...
 
 class PasswordBasedProxyClass(GObject.GPointer):
@@ -4062,10 +4058,10 @@ class PhotosProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4076,8 +4072,8 @@ class PhotosProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4089,16 +4085,16 @@ class PhotosProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PhotosProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PhotosProxy: ...
 
 class PhotosProxyClass(GObject.GPointer):
@@ -4258,10 +4254,10 @@ class PrintersProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4272,8 +4268,8 @@ class PrintersProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4285,16 +4281,16 @@ class PrintersProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PrintersProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> PrintersProxy: ...
 
 class PrintersProxyClass(GObject.GPointer):
@@ -4454,10 +4450,10 @@ class ReadLaterProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4468,8 +4464,8 @@ class ReadLaterProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4481,16 +4477,16 @@ class ReadLaterProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ReadLaterProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ReadLaterProxy: ...
 
 class ReadLaterProxyClass(GObject.GPointer):
@@ -4561,13 +4557,13 @@ class Ticketing(GObject.GInterface):
 
     def call_get_ticket(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_get_ticket_finish(self, res: Gio.AsyncResult) -> bool: ...
     def call_get_ticket_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     def complete_get_ticket(self, invocation: Gio.DBusMethodInvocation) -> None: ...
     @staticmethod
@@ -4588,7 +4584,7 @@ class TicketingIface(GObject.GPointer):
 
     parent_iface: GObject.TypeInterface = ...
     handle_get_ticket: Callable[[Ticketing, Gio.DBusMethodInvocation], bool] = ...
-    get_details: Callable[[Ticketing], Optional[GLib.Variant]] = ...
+    get_details: Callable[[Ticketing], GLib.Variant | None] = ...
 
 class TicketingProxy(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Ticketing
@@ -4668,10 +4664,10 @@ class TicketingProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4682,8 +4678,8 @@ class TicketingProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4695,16 +4691,16 @@ class TicketingProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> TicketingProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> TicketingProxy: ...
 
 class TicketingProxyClass(GObject.GPointer):
@@ -4870,10 +4866,10 @@ class TodoProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4884,8 +4880,8 @@ class TodoProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -4897,16 +4893,16 @@ class TodoProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> TodoProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> TodoProxy: ...
 
 class TodoProxyClass(GObject.GPointer):

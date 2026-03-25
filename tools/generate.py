@@ -35,7 +35,7 @@ from gi.repository import GObject
 
 _identifier_re = r"^[A-Za-z_]\w*$"
 
-ObjectT = typing.Union[ModuleType, typing.Type[typing.Any]]
+ObjectT: typing.TypeAlias = ModuleType | typing.Type[typing.Any]
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
@@ -64,7 +64,7 @@ def _object_get_props(
     obj: GI.ObjectInfo,
 ) -> typing.Tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
     parents: list[GI.ObjectInfo] = []
-    parent: typing.Optional[GI.ObjectInfo] = obj.get_parent()
+    parent: GI.ObjectInfo | None = obj.get_parent()
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
@@ -182,11 +182,10 @@ def _callable_get_arguments(
         )
 
         if a.may_be_null() and t != "None":
-            optional_symbol = stub.get_import("typing", "Optional")
             if can_default:
-                str_args.append(f"{optional_symbol}[{t}] = None")
+                str_args.append(f"{t} | None = None")
             else:
-                str_args.append(f"{optional_symbol}[{t}]")
+                str_args.append(f"{t} | None")
         else:
             can_default = False
             str_args.append(t)
@@ -204,7 +203,7 @@ def _callable_get_arguments(
 
     return_type = _type_to_python(stub, type.get_return_type(), True)
     if type.may_return_null() and return_type != "None" and not is_async_res:
-        return_type = f"{stub.get_import('typing', 'Optional')}[{return_type}]"
+        return_type = f"{return_type} | None"
 
     return_args = list(dict_return_args.values())
     if return_type != "None" or len(return_args) == 0:
@@ -379,9 +378,9 @@ def _build_function_info(
     stub: Stub,
     name: str,
     function: GI.FunctionInfo | GI.VFuncInfo,
-    in_class: typing.Optional[typing.Any],
-    return_signature: typing.Optional[str] = None,
-    comment: typing.Optional[str] = None,
+    in_class: typing.Any | None,
+    return_signature: str | None = None,
+    comment: str | None = None,
 ) -> str:
     constructor: bool = False
     method: bool = isinstance(function, GI.VFuncInfo)
@@ -426,7 +425,7 @@ def _build_function_info(
             args_types.insert(0, "cls")
             # Override return value, for example Gtk.Button.new returns a Gtk.Widget instead of Gtk.Button
             rt = function.get_container().get_name()
-            if return_type != f"{stub.get_import('typing', 'Optional')}[{rt}]":
+            if return_type != f"{rt} | None":
                 return_type = rt
     elif method:
         args_types.insert(0, "self")
@@ -443,7 +442,7 @@ def _wrapped_strip_boolean_result(
     stub: Stub,
     name: str,
     function: typing.Any,
-    in_class: typing.Optional[typing.Any],
+    in_class: typing.Any | None,
 ) -> str:
     real_function = function.__wrapped__
     fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
@@ -459,9 +458,7 @@ def _wrapped_strip_boolean_result(
         return_signature = f"{return_args[0]}"
 
     if fail_ret is None:
-        return_signature = (
-            f"{stub.get_import('typing', 'Optional')}[{return_signature}]"
-        )
+        return_signature = f"{return_signature} | None"
     else:
         if type(fail_ret) is tuple:
             if len(fail_ret) > 0:
@@ -487,7 +484,7 @@ def _build_function(
     stub: Stub,
     name: str,
     function: typing.Any,
-    in_class: typing.Optional[typing.Any],
+    in_class: typing.Any | None,
 ) -> str:
     if name.startswith("_") and name not in ALLOWED_FUNCTIONS:
         return ""
@@ -543,6 +540,55 @@ def _build_function(
     return definition
 
 
+def _replace_optional(formatted: str) -> str:
+    for prefix in ("typing.Optional[", "Optional["):
+        while (idx := formatted.find(prefix)) != -1:
+            depth = 0
+            for i in range(idx + len(prefix) - 1, len(formatted)):
+                if formatted[i] == "[":
+                    depth += 1
+                elif formatted[i] == "]":
+                    depth -= 1
+                    if depth == 0:
+                        inner = formatted[idx + len(prefix) : i]
+                        formatted = (
+                            formatted[:idx] + inner + " | None" + formatted[i + 1 :]
+                        )
+                        break
+    return formatted
+
+
+def _replace_union(formatted: str) -> str:
+    for prefix in ("typing.Union[", "Union["):
+        while (start := formatted.find(prefix)) != -1:
+            bracket_depth = 0
+            for end in range(start + len(prefix) - 1, len(formatted)):
+                if formatted[end] == "[":
+                    bracket_depth += 1
+                elif formatted[end] == "]":
+                    bracket_depth -= 1
+                    if bracket_depth == 0:
+                        inner = formatted[start + len(prefix) : end]
+                        # Split by top-level commas only
+                        parts: list[str] = []
+                        part_start = 0
+                        nesting_depth = 0
+                        for pos, char in enumerate(inner):
+                            if char == "[":
+                                nesting_depth += 1
+                            elif char == "]":
+                                nesting_depth -= 1
+                            elif char == "," and nesting_depth == 0:
+                                parts.append(inner[part_start:pos].strip())
+                                part_start = pos + 1
+                        parts.append(inner[part_start:].strip())
+                        formatted = (
+                            formatted[:start] + " | ".join(parts) + formatted[end + 1 :]
+                        )
+                        break
+    return formatted
+
+
 _typing_re: typing.Final = re.compile(r"(?:typing\.)(?P<name>\w+)(?P<suffix>\b)")
 _free_typing_re: typing.Final = re.compile(
     r"(?P<prefix>[^.])(?P<name>Any|Self)(?P<suffix>\b)"
@@ -576,7 +622,7 @@ class Stub:
             for _import in imports
         }
 
-    def check_override(self, prefix: str, name: str) -> typing.Optional[str]:
+    def check_override(self, prefix: str, name: str) -> str | None:
         full_name = _generate_full_name(prefix, name)
         if full_name in self.overrides:
             return "# override\n" + self.__fix_annotations(self.overrides[full_name])
@@ -632,7 +678,7 @@ class Stub:
         name: str,
         /,
         *,
-        current_namespace_member: typing.Optional[str] = None,
+        current_namespace_member: str | None = None,
     ) -> str:
         if namespace == self.namespace:
             return (
@@ -665,6 +711,8 @@ class Stub:
         return f"{match.group('prefix')}{symbol}{match.group('suffix')}"
 
     def __fix_annotations(self, formatted: str) -> str:
+        formatted = _replace_optional(formatted)
+        formatted = _replace_union(formatted)
         formatted = _typing_re.sub(self.__replace_typing, formatted)
         formatted = _free_typing_re.sub(self.__replace_free_typing, formatted)
         return re.sub(rf"(\b){self.namespace}\.", r"\1", formatted)
@@ -737,7 +785,7 @@ def _gi_build_stub_parts(
     stub: Stub,
     parent: ObjectT,
     children: list[str],
-    in_class: typing.Optional[typing.Any],
+    in_class: typing.Any | None,
     prefix_name: str,
 ) -> tuple[str, list[GI.FieldInfo]]:
     """
@@ -990,12 +1038,12 @@ def _gi_build_stub_parts(
                 getter = GIRepository.PropertyInfo.get_getter(p)
                 setter = GIRepository.PropertyInfo.get_setter(p)
                 if getter and GIRepository.CallableInfo.may_return_null(getter):
-                    s.append(f"{n}: {stub.get_import('typing', 'Optional')}[{t}]")
+                    s.append(f"{n}: {t} | None")
                 elif setter and not getter:
                     # If is writable only prop check if setter can accept NULL
                     arg_info = GIRepository.CallableInfo.get_arg(setter, 0)
                     if GIRepository.ArgInfo.may_be_null(arg_info):
-                        s.append(f"{n}: {stub.get_import('typing', 'Optional')}[{t}]")
+                        s.append(f"{n}: {t} | None")
                     else:
                         s.append(f"{n}: {t}")
                 else:
@@ -1039,9 +1087,7 @@ def _gi_build_stub_parts(
                 if setter:
                     arg_info = GIRepository.CallableInfo.get_arg(setter, 0)
                     if GIRepository.ArgInfo.may_be_null(arg_info):
-                        s.append(
-                            f"{n}: {stub.get_import('typing', 'Optional')}[{t}] = ..."
-                        )
+                        s.append(f"{n}: {t} | None = ...")
                     else:
                         s.append(f"{n}: {t} = ...")
                 else:

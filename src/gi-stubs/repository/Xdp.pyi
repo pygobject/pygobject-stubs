@@ -46,10 +46,10 @@ class Portal(GObject.Object, Gio.Initable):
 
     def access_camera(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         flags: CameraFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def access_camera_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -58,23 +58,23 @@ class Portal(GObject.Object, Gio.Initable):
         id: str,
         notification: GLib.Variant,
         flags: NotificationFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def add_notification_finish(self, result: Gio.AsyncResult) -> bool: ...
     def compose_email(
         self,
-        parent: Optional[Parent],
-        addresses: Optional[Sequence[str]],
-        cc: Optional[Sequence[str]],
-        bcc: Optional[Sequence[str]],
-        subject: Optional[str],
-        body: Optional[str],
-        attachments: Optional[Sequence[str]],
+        parent: Parent | None,
+        addresses: Sequence[str] | None,
+        cc: Sequence[str] | None,
+        bcc: Sequence[str] | None,
+        subject: str | None,
+        body: str | None,
+        attachments: Sequence[str] | None,
         flags: EmailFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def compose_email_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -84,8 +84,8 @@ class Portal(GObject.Object, Gio.Initable):
         outputs: OutputType,
         flags: RemoteDesktopFlags,
         cursor_mode: CursorMode,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def create_remote_desktop_session_finish(
@@ -97,9 +97,9 @@ class Portal(GObject.Object, Gio.Initable):
         flags: ScreencastFlags,
         cursor_mode: CursorMode,
         persist_mode: PersistMode,
-        restore_token: Optional[str] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        restore_token: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def create_screencast_session_finish(self, result: Gio.AsyncResult) -> Session: ...
@@ -107,8 +107,8 @@ class Portal(GObject.Object, Gio.Initable):
     def dynamic_launcher_get_icon(
         self,
         desktop_file_id: str,
-        out_icon_format: Optional[str] = None,
-        out_icon_size: Optional[int] = None,
+        out_icon_format: str | None = None,
+        out_icon_size: int | None = None,
     ) -> GLib.Variant: ...
     def dynamic_launcher_install(
         self, token: str, desktop_file_id: str, desktop_entry: str
@@ -118,15 +118,15 @@ class Portal(GObject.Object, Gio.Initable):
     ) -> bool: ...
     def dynamic_launcher_prepare_install(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         name: str,
         icon_v: GLib.Variant,
         launcher_type: LauncherType,
-        target: Optional[str],
+        target: str | None,
         editable_name: bool,
         editable_icon: bool,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def dynamic_launcher_prepare_install_finish(
@@ -138,26 +138,26 @@ class Portal(GObject.Object, Gio.Initable):
     def dynamic_launcher_uninstall(self, desktop_file_id: str) -> bool: ...
     def get_user_information(
         self,
-        parent: Optional[Parent],
-        reason: Optional[str],
+        parent: Parent | None,
+        reason: str | None,
         flags: UserInformationFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def get_user_information_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     @classmethod
-    def initable_new(cls) -> Optional[Portal]: ...
+    def initable_new(cls) -> Portal | None: ...
     def is_camera_present(self) -> bool: ...
     def location_monitor_start(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         distance_threshold: int,
         time_threshold: int,
         accuracy: LocationAccuracy,
         flags: LocationMonitorFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def location_monitor_start_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -169,21 +169,21 @@ class Portal(GObject.Object, Gio.Initable):
         parent: Parent,
         uri: str,
         flags: OpenUriFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def open_directory_finish(self, result: Gio.AsyncResult) -> bool: ...
     def open_file(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         title: str,
-        filters: Optional[GLib.Variant],
-        current_filter: Optional[GLib.Variant],
-        choices: Optional[GLib.Variant],
+        filters: GLib.Variant | None,
+        current_filter: GLib.Variant | None,
+        choices: GLib.Variant | None,
         flags: OpenFileFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def open_file_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
@@ -193,52 +193,52 @@ class Portal(GObject.Object, Gio.Initable):
         parent: Parent,
         uri: str,
         flags: OpenUriFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def open_uri_finish(self, result: Gio.AsyncResult) -> bool: ...
     def pick_color(
         self,
-        parent: Optional[Parent] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        parent: Parent | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def pick_color_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def prepare_print(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         title: str,
-        settings: Optional[GLib.Variant],
-        page_setup: Optional[GLib.Variant],
+        settings: GLib.Variant | None,
+        page_setup: GLib.Variant | None,
         flags: PrintFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def prepare_print_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def print_file(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         title: str,
         token: int,
         file: str,
         flags: PrintFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def print_file_finish(self, result: Gio.AsyncResult) -> bool: ...
     def remove_notification(self, id: str) -> None: ...
     def request_background(
         self,
-        parent: Optional[Parent],
-        reason: Optional[str],
+        parent: Parent | None,
+        reason: str | None,
         commandline: Sequence[str],
         flags: BackgroundFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def request_background_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -250,51 +250,51 @@ class Portal(GObject.Object, Gio.Initable):
     def running_under_snap() -> bool: ...
     def save_file(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         title: str,
-        current_name: Optional[str],
-        current_folder: Optional[str],
-        current_file: Optional[str],
-        filters: Optional[GLib.Variant],
-        current_filter: Optional[GLib.Variant],
-        choices: Optional[GLib.Variant],
+        current_name: str | None,
+        current_folder: str | None,
+        current_file: str | None,
+        filters: GLib.Variant | None,
+        current_filter: GLib.Variant | None,
+        choices: GLib.Variant | None,
         flags: SaveFileFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def save_file_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def save_files(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         title: str,
-        current_name: Optional[str],
-        current_folder: Optional[str],
+        current_name: str | None,
+        current_folder: str | None,
         files: GLib.Variant,
-        choices: Optional[GLib.Variant],
+        choices: GLib.Variant | None,
         flags: SaveFileFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def save_files_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def session_inhibit(
         self,
-        parent: Optional[Parent],
-        reason: Optional[str],
+        parent: Parent | None,
+        reason: str | None,
         flags: InhibitFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def session_inhibit_finish(self, result: Gio.AsyncResult) -> int: ...
     def session_monitor_query_end_response(self) -> None: ...
     def session_monitor_start(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         flags: SessionMonitorFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def session_monitor_start_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -302,19 +302,19 @@ class Portal(GObject.Object, Gio.Initable):
     def session_uninhibit(self, id: int) -> None: ...
     def set_background_status(
         self,
-        status_message: Optional[str] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        status_message: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def set_background_status_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_wallpaper(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         uri: str,
         flags: WallpaperFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def set_wallpaper_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -322,32 +322,32 @@ class Portal(GObject.Object, Gio.Initable):
         self,
         cwd: str,
         argv: Sequence[str],
-        fds: Optional[Sequence[int]],
-        map_to: Optional[Sequence[int]],
-        env: Optional[Sequence[str]],
+        fds: Sequence[int] | None,
+        map_to: Sequence[int] | None,
+        env: Sequence[str] | None,
         flags: SpawnFlags,
-        sandbox_expose: Optional[Sequence[str]] = None,
-        sandbox_expose_ro: Optional[Sequence[str]] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        sandbox_expose: Sequence[str] | None = None,
+        sandbox_expose_ro: Sequence[str] | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def spawn_finish(self, result: Gio.AsyncResult) -> int: ...
     def spawn_signal(self, pid: int, signal: int, to_process_group: bool) -> None: ...
     def take_screenshot(
         self,
-        parent: Optional[Parent],
+        parent: Parent | None,
         flags: ScreenshotFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
-    def take_screenshot_finish(self, result: Gio.AsyncResult) -> Optional[str]: ...
+    def take_screenshot_finish(self, result: Gio.AsyncResult) -> str | None: ...
     def trash_file(
         self,
         path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def trash_file_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -355,16 +355,16 @@ class Portal(GObject.Object, Gio.Initable):
         self,
         parent: Parent,
         flags: UpdateInstallFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def update_install_finish(self, result: Gio.AsyncResult) -> bool: ...
     def update_monitor_start(
         self,
         flags: UpdateMonitorFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def update_monitor_start_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -402,7 +402,7 @@ class Session(GObject.Object):
     def connect_to_eis(self) -> int: ...
     def get_devices(self) -> DeviceType: ...
     def get_persist_mode(self) -> PersistMode: ...
-    def get_restore_token(self) -> Optional[str]: ...
+    def get_restore_token(self) -> str | None: ...
     def get_session_state(self) -> SessionState: ...
     def get_session_type(self) -> SessionType: ...
     def get_streams(self) -> GLib.Variant: ...
@@ -415,9 +415,9 @@ class Session(GObject.Object):
     def pointer_position(self, stream: int, x: float, y: float) -> None: ...
     def start(
         self,
-        parent: Optional[Parent] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        parent: Parent | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *data: Any,
     ) -> None: ...
     def start_finish(self, result: Gio.AsyncResult) -> bool: ...

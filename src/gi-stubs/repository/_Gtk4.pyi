@@ -131,7 +131,7 @@ def accelerator_get_label(
     accelerator_key: int, accelerator_mods: Gdk.ModifierType
 ) -> str: ...
 def accelerator_get_label_with_keycode(
-    display: typing.Optional[Gdk.Display],
+    display: Gdk.Display | None,
     accelerator_key: int,
     keycode: int,
     accelerator_mods: Gdk.ModifierType,
@@ -140,7 +140,7 @@ def accelerator_name(
     accelerator_key: int, accelerator_mods: Gdk.ModifierType
 ) -> str: ...
 def accelerator_name_with_keycode(
-    display: typing.Optional[Gdk.Display],
+    display: Gdk.Display | None,
     accelerator_key: int,
     keycode: int,
     accelerator_mods: Gdk.ModifierType,
@@ -149,7 +149,7 @@ def accelerator_parse(
     accelerator: str,
 ) -> typing.Tuple[bool, int, Gdk.ModifierType]: ...
 def accelerator_parse_with_keycode(
-    accelerator: str, display: typing.Optional[Gdk.Display] = None
+    accelerator: str, display: Gdk.Display | None = None
 ) -> typing.Tuple[bool, int, list[int], Gdk.ModifierType]: ...
 def accelerator_valid(keyval: int, modifiers: Gdk.ModifierType) -> bool: ...
 def accessible_property_init_value(
@@ -167,7 +167,7 @@ def bitset_iter_init_last(set: Bitset) -> typing.Tuple[bool, BitsetIter, int]: .
 def builder_error_quark() -> int: ...
 def check_version(
     required_major: int, required_minor: int, required_micro: int
-) -> typing.Optional[str]: ...
+) -> str | None: ...
 def constraint_vfl_parser_error_quark() -> int: ...
 def css_parser_error_quark() -> int: ...
 def css_parser_warning_quark() -> int: ...
@@ -203,7 +203,7 @@ def icon_theme_error_quark() -> int: ...
 def init() -> None: ...
 def init_check() -> bool: ...
 def is_initialized() -> bool: ...
-def native_get_for_surface(surface: Gdk.Surface) -> typing.Optional[Native]: ...
+def native_get_for_surface(surface: Gdk.Surface) -> Native | None: ...
 def paper_size_get_default() -> str: ...
 def paper_size_get_paper_sizes(include_custom: bool) -> list[PaperSize]: ...
 def param_spec_expression(
@@ -211,13 +211,13 @@ def param_spec_expression(
 ) -> GObject.ParamSpec: ...
 def print_error_quark() -> int: ...
 def print_run_page_setup_dialog(
-    parent: typing.Optional[Window],
-    page_setup: typing.Optional[PageSetup],
+    parent: Window | None,
+    page_setup: PageSetup | None,
     settings: PrintSettings,
 ) -> PageSetup: ...
 def print_run_page_setup_dialog_async(
-    parent: typing.Optional[Window],
-    page_setup: typing.Optional[PageSetup],
+    parent: Window | None,
+    page_setup: PageSetup | None,
     settings: PrintSettings,
     done_cb: typing.Callable[..., None],
     *data: typing.Any,
@@ -319,13 +319,13 @@ def render_option(
 ) -> None: ...
 def rgb_to_hsv(r: float, g: float, b: float) -> typing.Tuple[float, float, float]: ...
 def set_debug_flags(flags: DebugFlags) -> None: ...
-def show_uri(parent: typing.Optional[Window], uri: str, timestamp: int) -> None: ...
+def show_uri(parent: Window | None, uri: str, timestamp: int) -> None: ...
 def show_uri_full(
-    parent: typing.Optional[Window],
+    parent: Window | None,
     uri: str,
     timestamp: int,
-    cancellable: typing.Optional[Gio.Cancellable] = None,
-    callback: typing.Optional[typing.Callable[..., None]] = None,
+    cancellable: Gio.Cancellable | None = None,
+    callback: typing.Callable[..., None] | None = None,
     *user_data: typing.Any,
 ) -> None: ...
 def show_uri_full_finish(parent: Window, result: Gio.AsyncResult) -> bool: ...
@@ -360,11 +360,11 @@ def tree_get_row_drag_data(
 ) -> typing.Tuple[bool, TreeModel, TreePath]: ...
 def tree_row_reference_deleted(proxy: GObject.Object, path: TreePath) -> None: ...
 def tree_row_reference_inserted(proxy: GObject.Object, path: TreePath) -> None: ...
-def value_dup_expression(value: typing.Any) -> typing.Optional[Expression]: ...
-def value_get_expression(value: typing.Any) -> typing.Optional[Expression]: ...
+def value_dup_expression(value: typing.Any) -> Expression | None: ...
+def value_get_expression(value: typing.Any) -> Expression | None: ...
 def value_set_expression(value: typing.Any, expression: Expression) -> None: ...
 def value_take_expression(
-    value: typing.Any, expression: typing.Optional[Expression] = None
+    value: typing.Any, expression: Expression | None = None
 ) -> None: ...
 
 class ATContext(GObject.Object):
@@ -407,7 +407,7 @@ class ATContext(GObject.Object):
         accessible_role: AccessibleRole,
         accessible: Accessible,
         display: Gdk.Display,
-    ) -> typing.Optional[ATContext]: ...
+    ) -> ATContext | None: ...
     def get_accessible(self) -> Accessible: ...
     def get_accessible_role(self) -> AccessibleRole: ...
 
@@ -540,50 +540,50 @@ class AboutDialog(
     class Props(Window.Props):
         artists: list[str]
         authors: list[str]
-        comments: typing.Optional[str]
-        copyright: typing.Optional[str]
+        comments: str | None
+        copyright: str | None
         documenters: list[str]
-        license: typing.Optional[str]
+        license: str | None
         license_type: License
-        logo: typing.Optional[Gdk.Paintable]
-        logo_icon_name: typing.Optional[str]
-        program_name: typing.Optional[str]
-        system_information: typing.Optional[str]
-        translator_credits: typing.Optional[str]
-        version: typing.Optional[str]
-        website: typing.Optional[str]
-        website_label: typing.Optional[str]
+        logo: Gdk.Paintable | None
+        logo_icon_name: str | None
+        program_name: str | None
+        system_information: str | None
+        translator_credits: str | None
+        version: str | None
+        website: str | None
+        website_label: str | None
         wrap_license: bool
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -593,7 +593,7 @@ class AboutDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -602,13 +602,13 @@ class AboutDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -622,49 +622,49 @@ class AboutDialog(
         self,
         artists: typing.Sequence[str] = ...,
         authors: typing.Sequence[str] = ...,
-        comments: typing.Optional[str] = ...,
-        copyright: typing.Optional[str] = ...,
+        comments: str | None = ...,
+        copyright: str | None = ...,
         documenters: typing.Sequence[str] = ...,
-        license: typing.Optional[str] = ...,
+        license: str | None = ...,
         license_type: License = ...,
-        logo: typing.Optional[Gdk.Paintable] = ...,
-        logo_icon_name: typing.Optional[str] = ...,
-        program_name: typing.Optional[str] = ...,
-        system_information: typing.Optional[str] = ...,
-        translator_credits: typing.Optional[str] = ...,
-        version: typing.Optional[str] = ...,
-        website: typing.Optional[str] = ...,
+        logo: Gdk.Paintable | None = ...,
+        logo_icon_name: str | None = ...,
+        program_name: str | None = ...,
+        system_information: str | None = ...,
+        translator_credits: str | None = ...,
+        version: str | None = ...,
+        website: str | None = ...,
         website_label: str = ...,
         wrap_license: bool = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -672,7 +672,7 @@ class AboutDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -683,8 +683,8 @@ class AboutDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -697,40 +697,36 @@ class AboutDialog(
     ) -> None: ...
     def get_artists(self) -> list[str]: ...
     def get_authors(self) -> list[str]: ...
-    def get_comments(self) -> typing.Optional[str]: ...
-    def get_copyright(self) -> typing.Optional[str]: ...
+    def get_comments(self) -> str | None: ...
+    def get_copyright(self) -> str | None: ...
     def get_documenters(self) -> list[str]: ...
-    def get_license(self) -> typing.Optional[str]: ...
+    def get_license(self) -> str | None: ...
     def get_license_type(self) -> License: ...
-    def get_logo(self) -> typing.Optional[Gdk.Paintable]: ...
-    def get_logo_icon_name(self) -> typing.Optional[str]: ...
-    def get_program_name(self) -> typing.Optional[str]: ...
-    def get_system_information(self) -> typing.Optional[str]: ...
-    def get_translator_credits(self) -> typing.Optional[str]: ...
-    def get_version(self) -> typing.Optional[str]: ...
-    def get_website(self) -> typing.Optional[str]: ...
-    def get_website_label(self) -> typing.Optional[str]: ...
+    def get_logo(self) -> Gdk.Paintable | None: ...
+    def get_logo_icon_name(self) -> str | None: ...
+    def get_program_name(self) -> str | None: ...
+    def get_system_information(self) -> str | None: ...
+    def get_translator_credits(self) -> str | None: ...
+    def get_version(self) -> str | None: ...
+    def get_website(self) -> str | None: ...
+    def get_website_label(self) -> str | None: ...
     def get_wrap_license(self) -> bool: ...
     @classmethod
     def new(cls) -> AboutDialog: ...
     def set_artists(self, artists: typing.Sequence[str]) -> None: ...
     def set_authors(self, authors: typing.Sequence[str]) -> None: ...
-    def set_comments(self, comments: typing.Optional[str] = None) -> None: ...
-    def set_copyright(self, copyright: typing.Optional[str] = None) -> None: ...
+    def set_comments(self, comments: str | None = None) -> None: ...
+    def set_copyright(self, copyright: str | None = None) -> None: ...
     def set_documenters(self, documenters: typing.Sequence[str]) -> None: ...
-    def set_license(self, license: typing.Optional[str] = None) -> None: ...
+    def set_license(self, license: str | None = None) -> None: ...
     def set_license_type(self, license_type: License) -> None: ...
-    def set_logo(self, logo: typing.Optional[Gdk.Paintable] = None) -> None: ...
-    def set_logo_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
-    def set_program_name(self, name: typing.Optional[str] = None) -> None: ...
-    def set_system_information(
-        self, system_information: typing.Optional[str] = None
-    ) -> None: ...
-    def set_translator_credits(
-        self, translator_credits: typing.Optional[str] = None
-    ) -> None: ...
-    def set_version(self, version: typing.Optional[str] = None) -> None: ...
-    def set_website(self, website: typing.Optional[str] = None) -> None: ...
+    def set_logo(self, logo: Gdk.Paintable | None = None) -> None: ...
+    def set_logo_icon_name(self, icon_name: str | None = None) -> None: ...
+    def set_program_name(self, name: str | None = None) -> None: ...
+    def set_system_information(self, system_information: str | None = None) -> None: ...
+    def set_translator_credits(self, translator_credits: str | None = None) -> None: ...
+    def set_version(self, version: str | None = None) -> None: ...
+    def set_website(self, website: str | None = None) -> None: ...
     def set_website_label(self, website_label: str) -> None: ...
     def set_wrap_license(self, wrap_license: bool) -> None: ...
 
@@ -744,23 +740,23 @@ class Accessible(GObject.GInterface):
     def announce(
         self, message: str, priority: AccessibleAnnouncementPriority
     ) -> None: ...
-    def get_accessible_parent(self) -> typing.Optional[Accessible]: ...
+    def get_accessible_parent(self) -> Accessible | None: ...
     def get_accessible_role(self) -> AccessibleRole: ...
     def get_at_context(self) -> ATContext: ...
     def get_bounds(self) -> typing.Tuple[bool, int, int, int, int]: ...
-    def get_first_accessible_child(self) -> typing.Optional[Accessible]: ...
-    def get_next_accessible_sibling(self) -> typing.Optional[Accessible]: ...
+    def get_first_accessible_child(self) -> Accessible | None: ...
+    def get_next_accessible_sibling(self) -> Accessible | None: ...
     def get_platform_state(self, state: AccessiblePlatformState) -> bool: ...
     def reset_property(self, property: AccessibleProperty) -> None: ...
     def reset_relation(self, relation: AccessibleRelation) -> None: ...
     def reset_state(self, state: AccessibleState) -> None: ...
     def set_accessible_parent(
         self,
-        parent: typing.Optional[Accessible] = None,
-        next_sibling: typing.Optional[Accessible] = None,
+        parent: Accessible | None = None,
+        next_sibling: Accessible | None = None,
     ) -> None: ...
     def update_next_accessible_sibling(
-        self, new_sibling: typing.Optional[Accessible] = None
+        self, new_sibling: Accessible | None = None
     ) -> None: ...
     def update_platform_state(self, state: AccessiblePlatformState) -> None: ...
     def update_property(
@@ -789,19 +785,13 @@ class AccessibleInterface(GObject.GPointer):
     """
 
     g_iface: GObject.TypeInterface = ...
-    get_at_context: typing.Callable[[Accessible], typing.Optional[ATContext]] = ...
+    get_at_context: typing.Callable[[Accessible], ATContext | None] = ...
     get_platform_state: typing.Callable[
         [Accessible, AccessiblePlatformState], bool
     ] = ...
-    get_accessible_parent: typing.Callable[
-        [Accessible], typing.Optional[Accessible]
-    ] = ...
-    get_first_accessible_child: typing.Callable[
-        [Accessible], typing.Optional[Accessible]
-    ] = ...
-    get_next_accessible_sibling: typing.Callable[
-        [Accessible], typing.Optional[Accessible]
-    ] = ...
+    get_accessible_parent: typing.Callable[[Accessible], Accessible | None] = ...
+    get_first_accessible_child: typing.Callable[[Accessible], Accessible | None] = ...
+    get_next_accessible_sibling: typing.Callable[[Accessible], Accessible | None] = ...
     get_bounds: typing.Callable[
         [Accessible], typing.Tuple[bool, int, int, int, int]
     ] = ...
@@ -968,7 +958,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -978,7 +968,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -987,13 +977,13 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1009,7 +999,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -1017,7 +1007,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -1028,8 +1018,8 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1037,16 +1027,14 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_center_widget(self) -> typing.Optional[Widget]: ...
+    def get_center_widget(self) -> Widget | None: ...
     def get_revealed(self) -> bool: ...
     @classmethod
     def new(cls) -> ActionBar: ...
     def pack_end(self, child: Widget) -> None: ...
     def pack_start(self, child: Widget) -> None: ...
     def remove(self, child: Widget) -> None: ...
-    def set_center_widget(
-        self, center_widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_center_widget(self, center_widget: Widget | None = None) -> None: ...
     def set_revealed(self, revealed: bool) -> None: ...
 
 class Actionable(GObject.GInterface):
@@ -1056,11 +1044,11 @@ class Actionable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-    def get_action_name(self) -> typing.Optional[str]: ...
-    def get_action_target_value(self) -> typing.Optional[GLib.Variant]: ...
-    def set_action_name(self, action_name: typing.Optional[str] = None) -> None: ...
+    def get_action_name(self) -> str | None: ...
+    def get_action_target_value(self) -> GLib.Variant | None: ...
+    def set_action_name(self, action_name: str | None = None) -> None: ...
     def set_action_target_value(
-        self, target_value: typing.Optional[GLib.Variant] = None
+        self, target_value: GLib.Variant | None = None
     ) -> None: ...
     def set_detailed_action_name(self, detailed_action_name: str) -> None: ...
 
@@ -1074,13 +1062,11 @@ class ActionableInterface(GObject.GPointer):
     """
 
     g_iface: GObject.TypeInterface = ...
-    get_action_name: typing.Callable[[Actionable], typing.Optional[str]] = ...
-    set_action_name: typing.Callable[[Actionable, typing.Optional[str]], None] = ...
-    get_action_target_value: typing.Callable[
-        [Actionable], typing.Optional[GLib.Variant]
-    ] = ...
+    get_action_name: typing.Callable[[Actionable], str | None] = ...
+    set_action_name: typing.Callable[[Actionable, str | None], None] = ...
+    get_action_target_value: typing.Callable[[Actionable], GLib.Variant | None] = ...
     set_action_target_value: typing.Callable[
-        [Actionable, typing.Optional[GLib.Variant]], None
+        [Actionable, GLib.Variant | None], None
     ] = ...
 
 class ActivateAction(ShortcutAction):
@@ -1217,7 +1203,7 @@ class AlertDialog(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        buttons: typing.Optional[list[str]]
+        buttons: list[str] | None
         cancel_button: int
         default_button: int
         detail: str
@@ -1236,13 +1222,13 @@ class AlertDialog(GObject.Object):
     ) -> None: ...
     def choose(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> int: ...
-    def get_buttons(self) -> typing.Optional[list[str]]: ...
+    def get_buttons(self) -> list[str] | None: ...
     def get_cancel_button(self) -> int: ...
     def get_default_button(self) -> int: ...
     def get_detail(self) -> str: ...
@@ -1254,7 +1240,7 @@ class AlertDialog(GObject.Object):
     def set_detail(self, detail: str) -> None: ...
     def set_message(self, message: str) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
-    def show(self, parent: typing.Optional[Window] = None) -> None: ...
+    def show(self, parent: Window | None = None) -> None: ...
 
 class AlertDialogClass(GObject.GPointer):
     """
@@ -1346,7 +1332,7 @@ class AppChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-    def get_app_info(self) -> typing.Optional[Gio.AppInfo]: ...
+    def get_app_info(self) -> Gio.AppInfo | None: ...
     def get_content_type(self) -> str: ...
     def refresh(self) -> None: ...
 
@@ -1428,7 +1414,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       notify (GParam)
     """
     class Props(Widget.Props):
-        heading: typing.Optional[str]
+        heading: str | None
         modal: bool
         show_default_item: bool
         show_dialog_item: bool
@@ -1436,7 +1422,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1446,7 +1432,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -1455,13 +1441,13 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1481,7 +1467,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -1489,7 +1475,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -1500,8 +1486,8 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1512,7 +1498,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
     ) -> None: ...
     def append_custom_item(self, name: str, label: str, icon: Gio.Icon) -> None: ...
     def append_separator(self) -> None: ...
-    def get_heading(self) -> typing.Optional[str]: ...
+    def get_heading(self) -> str | None: ...
     def get_modal(self) -> bool: ...
     def get_show_default_item(self) -> bool: ...
     def get_show_dialog_item(self) -> bool: ...
@@ -1648,38 +1634,38 @@ class AppChooserDialog(
     """
     class Props(Dialog.Props):
         gfile: Gio.File
-        heading: typing.Optional[str]
+        heading: str | None
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1689,7 +1675,7 @@ class AppChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -1698,13 +1684,13 @@ class AppChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1720,35 +1706,35 @@ class AppChooserDialog(
         gfile: Gio.File = ...,
         heading: str = ...,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -1756,7 +1742,7 @@ class AppChooserDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -1767,8 +1753,8 @@ class AppChooserDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1777,15 +1763,15 @@ class AppChooserDialog(
         accessible_role: AccessibleRole = ...,
         content_type: str = ...,
     ) -> None: ...
-    def get_heading(self) -> typing.Optional[str]: ...
+    def get_heading(self) -> str | None: ...
     def get_widget(self) -> Widget: ...
     @classmethod
     def new(
-        cls, parent: typing.Optional[Window], flags: DialogFlags, file: Gio.File
+        cls, parent: Window | None, flags: DialogFlags, file: Gio.File
     ) -> AppChooserDialog: ...
     @classmethod
     def new_for_content_type(
-        cls, parent: typing.Optional[Window], flags: DialogFlags, content_type: str
+        cls, parent: Window | None, flags: DialogFlags, content_type: str
     ) -> AppChooserDialog: ...
     def set_heading(self, heading: str) -> None: ...
 
@@ -1868,7 +1854,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       notify (GParam)
     """
     class Props(Widget.Props):
-        default_text: typing.Optional[str]
+        default_text: str | None
         show_all: bool
         show_default: bool
         show_fallback: bool
@@ -1878,7 +1864,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -1888,7 +1874,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -1897,13 +1883,13 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -1925,7 +1911,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -1933,7 +1919,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -1944,8 +1930,8 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1954,7 +1940,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
         accessible_role: AccessibleRole = ...,
         content_type: str = ...,
     ) -> None: ...
-    def get_default_text(self) -> typing.Optional[str]: ...
+    def get_default_text(self) -> str | None: ...
     def get_show_all(self) -> bool: ...
     def get_show_default(self) -> bool: ...
     def get_show_fallback(self) -> bool: ...
@@ -2027,31 +2013,31 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
       notify (GParam)
     """
     class Props(Gio.Application.Props):
-        active_window: typing.Optional[Window]
-        menubar: typing.Optional[Gio.MenuModel]
+        active_window: Window | None
+        menubar: Gio.MenuModel | None
         register_session: bool
         screensaver_active: bool
-        application_id: typing.Optional[str]
+        application_id: str | None
         flags: Gio.ApplicationFlags
         inactivity_timeout: int
         is_busy: bool
         is_registered: bool
         is_remote: bool
-        resource_base_path: typing.Optional[str]
-        version: typing.Optional[str]
-        action_group: typing.Optional[Gio.ActionGroup]
+        resource_base_path: str | None
+        version: str | None
+        action_group: Gio.ActionGroup | None
 
     props: Props = ...
     parent_instance: Gio.Application = ...
     def __init__(
         self,
-        menubar: typing.Optional[Gio.MenuModel] = ...,
+        menubar: Gio.MenuModel | None = ...,
         register_session: bool = ...,
-        action_group: typing.Optional[Gio.ActionGroup] = ...,
-        application_id: typing.Optional[str] = ...,
+        action_group: Gio.ActionGroup | None = ...,
+        application_id: str | None = ...,
         flags: Gio.ApplicationFlags = ...,
         inactivity_timeout: int = ...,
-        resource_base_path: typing.Optional[str] = ...,
+        resource_base_path: str | None = ...,
         version: str = ...,
     ) -> None: ...
     def add_window(self, window: Window) -> None: ...
@@ -2059,27 +2045,27 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
     def do_window_removed(self, window: Window) -> None: ...
     def get_accels_for_action(self, detailed_action_name: str) -> list[str]: ...
     def get_actions_for_accel(self, accel: str) -> list[str]: ...
-    def get_active_window(self) -> typing.Optional[Window]: ...
-    def get_menu_by_id(self, id: str) -> typing.Optional[Gio.Menu]: ...
-    def get_menubar(self) -> typing.Optional[Gio.MenuModel]: ...
-    def get_window_by_id(self, id: int) -> typing.Optional[Window]: ...
+    def get_active_window(self) -> Window | None: ...
+    def get_menu_by_id(self, id: str) -> Gio.Menu | None: ...
+    def get_menubar(self) -> Gio.MenuModel | None: ...
+    def get_window_by_id(self, id: int) -> Window | None: ...
     def get_windows(self) -> list[Window]: ...
     def inhibit(
         self,
-        window: typing.Optional[Window],
+        window: Window | None,
         flags: ApplicationInhibitFlags,
-        reason: typing.Optional[str] = None,
+        reason: str | None = None,
     ) -> int: ...
     def list_action_descriptions(self) -> list[str]: ...
     @classmethod
     def new(
-        cls, application_id: typing.Optional[str], flags: Gio.ApplicationFlags
+        cls, application_id: str | None, flags: Gio.ApplicationFlags
     ) -> Application: ...
     def remove_window(self, window: Window) -> None: ...
     def set_accels_for_action(
         self, detailed_action_name: str, accels: typing.Sequence[str]
     ) -> None: ...
-    def set_menubar(self, menubar: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_menubar(self, menubar: Gio.MenuModel | None = None) -> None: ...
     def uninhibit(self, cookie: int) -> None: ...
 
 class ApplicationClass(GObject.GPointer):
@@ -2218,36 +2204,36 @@ class ApplicationWindow(
     """
     class Props(Window.Props):
         show_menubar: bool
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -2257,7 +2243,7 @@ class ApplicationWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -2266,13 +2252,13 @@ class ApplicationWindow(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -2286,35 +2272,35 @@ class ApplicationWindow(
     def __init__(
         self,
         show_menubar: bool = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -2322,7 +2308,7 @@ class ApplicationWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -2333,8 +2319,8 @@ class ApplicationWindow(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2342,14 +2328,12 @@ class ApplicationWindow(
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_help_overlay(self) -> typing.Optional[ShortcutsWindow]: ...
+    def get_help_overlay(self) -> ShortcutsWindow | None: ...
     def get_id(self) -> int: ...
     def get_show_menubar(self) -> bool: ...
     @classmethod
     def new(cls, application: Application) -> ApplicationWindow: ...
-    def set_help_overlay(
-        self, help_overlay: typing.Optional[ShortcutsWindow] = None
-    ) -> None: ...
+    def set_help_overlay(self, help_overlay: ShortcutsWindow | None = None) -> None: ...
     def set_show_menubar(self, show_menubar: bool) -> None: ...
 
 class ApplicationWindowClass(GObject.GPointer):
@@ -2438,7 +2422,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         obey_child: bool
         ratio: float
         xalign: float
@@ -2447,7 +2431,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -2457,7 +2441,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -2466,13 +2450,13 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -2483,7 +2467,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         obey_child: bool = ...,
         ratio: float = ...,
         xalign: float = ...,
@@ -2492,7 +2476,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -2500,7 +2484,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -2511,8 +2495,8 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2520,7 +2504,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_obey_child(self) -> bool: ...
     def get_ratio(self) -> float: ...
     def get_xalign(self) -> float: ...
@@ -2529,7 +2513,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     def new(
         cls, xalign: float, yalign: float, ratio: float, obey_child: bool
     ) -> AspectFrame: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_obey_child(self, obey_child: bool) -> None: ...
     def set_ratio(self, ratio: float) -> None: ...
     def set_xalign(self, xalign: float) -> None: ...
@@ -2652,36 +2636,36 @@ class Assistant(
     class Props(Window.Props):
         pages: Gio.ListModel
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -2691,7 +2675,7 @@ class Assistant(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -2700,13 +2684,13 @@ class Assistant(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -2719,35 +2703,35 @@ class Assistant(
     def __init__(
         self,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -2755,7 +2739,7 @@ class Assistant(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -2766,8 +2750,8 @@ class Assistant(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2780,7 +2764,7 @@ class Assistant(
     def commit(self) -> None: ...
     def get_current_page(self) -> int: ...
     def get_n_pages(self) -> int: ...
-    def get_nth_page(self, page_num: int) -> typing.Optional[Widget]: ...
+    def get_nth_page(self, page_num: int) -> Widget | None: ...
     def get_page(self, child: Widget) -> AssistantPage: ...
     def get_page_complete(self, page: Widget) -> bool: ...
     def get_page_title(self, page: Widget) -> str: ...
@@ -2797,7 +2781,7 @@ class Assistant(
     def set_current_page(self, page_num: int) -> None: ...
     def set_forward_page_func(
         self,
-        page_func: typing.Optional[typing.Callable[..., int]] = None,
+        page_func: typing.Callable[..., int] | None = None,
         *data: typing.Any,
     ) -> None: ...
     def set_page_complete(self, page: Widget, complete: bool) -> None: ...
@@ -2960,7 +2944,7 @@ class BookmarkList(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        attributes: typing.Optional[str]
+        attributes: str | None
         filename: str
         io_priority: int
         item_type: typing.Type[typing.Any]
@@ -2970,21 +2954,21 @@ class BookmarkList(GObject.Object, Gio.ListModel):
     props: Props = ...
     def __init__(
         self,
-        attributes: typing.Optional[str] = ...,
+        attributes: str | None = ...,
         filename: str = ...,
         io_priority: int = ...,
     ) -> None: ...
-    def get_attributes(self) -> typing.Optional[str]: ...
+    def get_attributes(self) -> str | None: ...
     def get_filename(self) -> str: ...
     def get_io_priority(self) -> int: ...
     def is_loading(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        filename: typing.Optional[str] = None,
-        attributes: typing.Optional[str] = None,
+        filename: str | None = None,
+        attributes: str | None = None,
     ) -> BookmarkList: ...
-    def set_attributes(self, attributes: typing.Optional[str] = None) -> None: ...
+    def set_attributes(self, attributes: str | None = None) -> None: ...
     def set_io_priority(self, io_priority: int) -> None: ...
 
 class BookmarkListClass(GObject.GPointer):
@@ -3020,20 +3004,18 @@ class BoolFilter(Filter):
       notify (GParam)
     """
     class Props(Filter.Props):
-        expression: typing.Optional[Expression]
+        expression: Expression | None
         invert: bool
 
     props: Props = ...
     def __init__(
-        self, expression: typing.Optional[Expression] = ..., invert: bool = ...
+        self, expression: Expression | None = ..., invert: bool = ...
     ) -> None: ...
-    def get_expression(self) -> typing.Optional[Expression]: ...
+    def get_expression(self) -> Expression | None: ...
     def get_invert(self) -> bool: ...
     @classmethod
-    def new(cls, expression: typing.Optional[Expression] = None) -> BoolFilter: ...
-    def set_expression(
-        self, expression: typing.Optional[Expression] = None
-    ) -> None: ...
+    def new(cls, expression: Expression | None = None) -> BoolFilter: ...
+    def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_invert(self, invert: bool) -> None: ...
 
 class BoolFilterClass(GObject.GPointer):
@@ -3147,7 +3129,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3157,7 +3139,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -3166,13 +3148,13 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -3193,7 +3175,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -3201,7 +3183,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -3212,8 +3194,8 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3228,14 +3210,14 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def get_homogeneous(self) -> bool: ...
     def get_spacing(self) -> int: ...
     def insert_child_after(
-        self, child: Widget, sibling: typing.Optional[Widget] = None
+        self, child: Widget, sibling: Widget | None = None
     ) -> None: ...
     @classmethod
     def new(cls, orientation: Orientation, spacing: int) -> Box: ...
     def prepend(self, child: Widget) -> None: ...
     def remove(self, child: Widget) -> None: ...
     def reorder_child_after(
-        self, child: Widget, sibling: typing.Optional[Widget] = None
+        self, child: Widget, sibling: Widget | None = None
     ) -> None: ...
     def set_baseline_child(self, child: int) -> None: ...
     def set_baseline_position(self, position: BaselinePosition) -> None: ...
@@ -3319,7 +3301,7 @@ class Buildable(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-    def get_buildable_id(self) -> typing.Optional[str]: ...
+    def get_buildable_id(self) -> str | None: ...
 
 class BuildableIface(GObject.GPointer):
     """
@@ -3334,27 +3316,27 @@ class BuildableIface(GObject.GPointer):
     set_id: typing.Callable[[Buildable, str], None] = ...
     get_id: typing.Callable[[Buildable], str] = ...
     add_child: typing.Callable[
-        [Buildable, Builder, GObject.Object, typing.Optional[str]], None
+        [Buildable, Builder, GObject.Object, str | None], None
     ] = ...
     set_buildable_property: typing.Callable[
         [Buildable, Builder, str, typing.Any], None
     ] = ...
     construct_child: None = ...
     custom_tag_start: typing.Callable[
-        [Buildable, Builder, typing.Optional[GObject.Object], str],
+        [Buildable, Builder, GObject.Object | None, str],
         typing.Tuple[bool, BuildableParser, None],
     ] = ...
     custom_tag_end: typing.Callable[
-        [Buildable, Builder, typing.Optional[GObject.Object], str, None], None
+        [Buildable, Builder, GObject.Object | None, str, None], None
     ] = ...
     custom_finished: typing.Callable[
-        [Buildable, Builder, typing.Optional[GObject.Object], str, None], None
+        [Buildable, Builder, GObject.Object | None, str, None], None
     ] = ...
     parser_finished: typing.Callable[[Buildable, Builder], None] = ...
     get_internal_child: typing.Callable[[Buildable, Builder, str], GObject.Object] = ...
 
 class BuildableParseContext(GObject.GPointer):
-    def get_element(self) -> typing.Optional[str]: ...
+    def get_element(self) -> str | None: ...
     def get_element_stack(self) -> list[str]: ...
     def get_position(self) -> typing.Tuple[int, int]: ...
     def pop(self) -> None: ...
@@ -3398,9 +3380,9 @@ class Builder(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        current_object: typing.Optional[GObject.Object]
+        current_object: GObject.Object | None
         scope: BuilderScope
-        translation_domain: typing.Optional[str]
+        translation_domain: str | None
 
     props: Props = ...
     g_type_instance: GObject.TypeInstance = ...
@@ -3408,9 +3390,9 @@ class Builder(GObject.Object):
     qdata: GLib.Data = ...
     def __init__(
         self,
-        current_object: typing.Optional[GObject.Object] = ...,
-        scope: typing.Optional[BuilderScope] = ...,
-        translation_domain: typing.Optional[str] = ...,
+        current_object: GObject.Object | None = ...,
+        scope: BuilderScope | None = ...,
+        translation_domain: str | None = ...,
     ) -> None: ...
     def add_from_file(self, filename: str) -> bool: ...
     def add_from_resource(self, resource_path: str) -> bool: ...
@@ -3428,8 +3410,8 @@ class Builder(GObject.Object):
         self,
         function_name: str,
         flags: BuilderClosureFlags,
-        object: typing.Optional[GObject.Object] = None,
-    ) -> typing.Optional[typing.Callable[..., typing.Any]]: ...
+        object: GObject.Object | None = None,
+    ) -> typing.Callable[..., typing.Any] | None: ...
     def define_builder_scope(): ...  # FIXME: Override is missing typing annotation
     def expose_object(self, name: str, object: GObject.Object) -> None: ...
     def extend_with_template(
@@ -3439,11 +3421,11 @@ class Builder(GObject.Object):
         buffer: str,
         length: int,
     ) -> bool: ...
-    def get_current_object(self) -> typing.Optional[GObject.Object]: ...
-    def get_object(self, name: str) -> typing.Optional[GObject.Object]: ...
+    def get_current_object(self) -> GObject.Object | None: ...
+    def get_object(self, name: str) -> GObject.Object | None: ...
     def get_objects(self) -> list[GObject.Object]: ...
     def get_scope(self) -> BuilderScope: ...
-    def get_translation_domain(self) -> typing.Optional[str]: ...
+    def get_translation_domain(self) -> str | None: ...
     def get_type_from_name(self, type_name: str) -> typing.Type[typing.Any]: ...
     @classmethod
     def new(cls) -> Builder: ...
@@ -3454,10 +3436,10 @@ class Builder(GObject.Object):
     @classmethod
     def new_from_string(cls, string: str, length: int) -> Builder: ...
     def set_current_object(
-        self, current_object: typing.Optional[GObject.Object] = None
+        self, current_object: GObject.Object | None = None
     ) -> None: ...
-    def set_scope(self, scope: typing.Optional[BuilderScope] = None) -> None: ...
-    def set_translation_domain(self, domain: typing.Optional[str] = None) -> None: ...
+    def set_scope(self, scope: BuilderScope | None = None) -> None: ...
+    def set_translation_domain(self, domain: str | None = None) -> None: ...
     def value_from_string(
         self, pspec: GObject.ParamSpec, string: str
     ) -> typing.Tuple[bool, typing.Any]: ...
@@ -3623,23 +3605,23 @@ class BuilderListItemFactory(ListItemFactory):
     """
     class Props(ListItemFactory.Props):
         bytes: GLib.Bytes
-        resource: typing.Optional[str]
-        scope: typing.Optional[BuilderScope]
+        resource: str | None
+        scope: BuilderScope | None
 
     props: Props = ...
     def __init__(
         self, bytes: GLib.Bytes = ..., resource: str = ..., scope: BuilderScope = ...
     ) -> None: ...
     def get_bytes(self) -> GLib.Bytes: ...
-    def get_resource(self) -> typing.Optional[str]: ...
-    def get_scope(self) -> typing.Optional[BuilderScope]: ...
+    def get_resource(self) -> str | None: ...
+    def get_scope(self) -> BuilderScope | None: ...
     @classmethod
     def new_from_bytes(
-        cls, scope: typing.Optional[BuilderScope], bytes: GLib.Bytes
+        cls, scope: BuilderScope | None, bytes: GLib.Bytes
     ) -> BuilderListItemFactory: ...
     @classmethod
     def new_from_resource(
-        cls, scope: typing.Optional[BuilderScope], resource_path: str
+        cls, scope: BuilderScope | None, resource_path: str
     ) -> BuilderListItemFactory: ...
 
 class BuilderListItemFactoryClass(GObject.GPointer): ...
@@ -3749,16 +3731,16 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         can_shrink: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         has_frame: bool
-        icon_name: typing.Optional[str]
-        label: typing.Optional[str]
+        icon_name: str | None
+        label: str | None
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -3768,7 +3750,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -3777,20 +3759,20 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
 
     props: Props = ...
@@ -3798,7 +3780,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def __init__(
         self,
         can_shrink: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
         label: str = ...,
@@ -3807,7 +3789,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -3815,7 +3797,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -3826,24 +3808,24 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_clicked(self) -> None: ...
     def get_can_shrink(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_has_frame(self) -> bool: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
-    def get_label(self) -> typing.Optional[str]: ...
+    def get_icon_name(self) -> str | None: ...
+    def get_label(self) -> str | None: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
     def new(cls) -> Button: ...
@@ -3854,7 +3836,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     @classmethod
     def new_with_mnemonic(cls, label: str) -> Button: ...
     def set_can_shrink(self, can_shrink: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_has_frame(self, has_frame: bool) -> None: ...
     def set_icon_name(self, icon_name: str) -> None: ...
     def set_label(self, label: str) -> None: ...
@@ -3889,18 +3871,17 @@ class CClosureExpression(Expression):
     def new(
         cls,
         value_type: typing.Type[typing.Any],
-        marshal: typing.Optional[
-            typing.Callable[
-                [
-                    typing.Callable[..., typing.Any],
-                    typing.Optional[typing.Any],
-                    typing.Sequence[typing.Any],
-                    None,
-                    None,
-                ],
+        marshal: typing.Callable[
+            [
+                typing.Callable[..., typing.Any],
+                typing.Any | None,
+                typing.Sequence[typing.Any],
                 None,
-            ]
-        ],
+                None,
+            ],
+            None,
+        ]
+        | None,
         params: typing.Sequence[Expression],
         callback_func: typing.Callable[..., None],
         *user_data: typing.Any,
@@ -4000,7 +3981,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -4010,7 +3991,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -4019,13 +4000,13 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -4047,7 +4028,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -4055,7 +4036,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -4066,8 +4047,8 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -4143,13 +4124,13 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
       notify (GParam)
     """
     class Props(GObject.InitiallyUnowned.Props):
-        edit_widget: typing.Optional[CellEditable]
-        edited_cell: typing.Optional[CellRenderer]
-        focus_cell: typing.Optional[CellRenderer]
+        edit_widget: CellEditable | None
+        edited_cell: CellRenderer | None
+        focus_cell: CellRenderer | None
 
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
-    def __init__(self, focus_cell: typing.Optional[CellRenderer] = ...) -> None: ...
+    def __init__(self, focus_cell: CellRenderer | None = ...) -> None: ...
     def activate(
         self,
         context: CellAreaContext,
@@ -4307,12 +4288,10 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         y: int,
     ) -> typing.Tuple[CellRenderer, Gdk.Rectangle]: ...
     def get_current_path_string(self) -> str: ...
-    def get_edit_widget(self) -> typing.Optional[CellEditable]: ...
-    def get_edited_cell(self) -> typing.Optional[CellRenderer]: ...
-    def get_focus_cell(self) -> typing.Optional[CellRenderer]: ...
-    def get_focus_from_sibling(
-        self, renderer: CellRenderer
-    ) -> typing.Optional[CellRenderer]: ...
+    def get_edit_widget(self) -> CellEditable | None: ...
+    def get_edited_cell(self) -> CellRenderer | None: ...
+    def get_focus_cell(self) -> CellRenderer | None: ...
+    def get_focus_from_sibling(self, renderer: CellRenderer) -> CellRenderer | None: ...
     def get_focus_siblings(self, renderer: CellRenderer) -> list[CellRenderer]: ...
     def get_preferred_height(
         self, context: CellAreaContext, widget: Widget
@@ -4352,9 +4331,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Widget,
         for_size: int,
     ) -> typing.Tuple[int, int]: ...
-    def set_focus_cell(
-        self, renderer: typing.Optional[CellRenderer] = None
-    ) -> None: ...
+    def set_focus_cell(self, renderer: CellRenderer | None = None) -> None: ...
     def snapshot(
         self,
         context: CellAreaContext,
@@ -4397,16 +4374,16 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
     """
     class Props(CellArea.Props):
         spacing: int
-        edit_widget: typing.Optional[CellEditable]
-        edited_cell: typing.Optional[CellRenderer]
-        focus_cell: typing.Optional[CellRenderer]
+        edit_widget: CellEditable | None
+        edited_cell: CellRenderer | None
+        focus_cell: CellRenderer | None
         orientation: Orientation
 
     props: Props = ...
     def __init__(
         self,
         spacing: int = ...,
-        focus_cell: typing.Optional[CellRenderer] = ...,
+        focus_cell: CellRenderer | None = ...,
         orientation: Orientation = ...,
     ) -> None: ...
     def get_spacing(self) -> int: ...
@@ -4577,7 +4554,7 @@ class CellEditable(GObject.GInterface):
     """
     def editing_done(self) -> None: ...
     def remove_widget(self) -> None: ...
-    def start_editing(self, event: typing.Optional[Gdk.Event] = None) -> None: ...
+    def start_editing(self, event: Gdk.Event | None = None) -> None: ...
 
 class CellEditableIface(GObject.GPointer):
     """
@@ -4591,9 +4568,7 @@ class CellEditableIface(GObject.GPointer):
     g_iface: GObject.TypeInterface = ...
     editing_done: typing.Callable[[CellEditable], None] = ...
     remove_widget: typing.Callable[[CellEditable], None] = ...
-    start_editing: typing.Callable[
-        [CellEditable, typing.Optional[Gdk.Event]], None
-    ] = ...
+    start_editing: typing.Callable[[CellEditable, Gdk.Event | None], None] = ...
 
 class CellLayout(GObject.GInterface):
     """
@@ -4607,7 +4582,7 @@ class CellLayout(GObject.GInterface):
     ) -> None: ...
     def clear(self) -> None: ...
     def clear_attributes(self, cell: CellRenderer) -> None: ...
-    def get_area(self) -> typing.Optional[CellArea]: ...
+    def get_area(self) -> CellArea | None: ...
     def get_cells(self) -> list[CellRenderer]: ...
     def pack_end(self, cell: CellRenderer, expand: bool) -> None: ...
     def pack_start(self, cell: CellRenderer, expand: bool) -> None: ...
@@ -4615,7 +4590,7 @@ class CellLayout(GObject.GInterface):
     def set_cell_data_func(
         self,
         cell: CellRenderer,
-        func: typing.Optional[typing.Callable[..., None]] = None,
+        func: typing.Callable[..., None] | None = None,
         *func_data: typing.Any,
     ) -> None: ...
 
@@ -4637,7 +4612,7 @@ class CellLayoutIface(GObject.GPointer):
     clear_attributes: typing.Callable[[CellLayout, CellRenderer], None] = ...
     reorder: typing.Callable[[CellLayout, CellRenderer, int], None] = ...
     get_cells: typing.Callable[[CellLayout], list[CellRenderer]] = ...
-    get_area: typing.Callable[[CellLayout], typing.Optional[CellArea]] = ...
+    get_area: typing.Callable[[CellLayout], CellArea | None] = ...
 
 class CellRenderer(GObject.InitiallyUnowned):
     """
@@ -4752,13 +4727,13 @@ class CellRenderer(GObject.InitiallyUnowned):
     ) -> None: ...
     def do_start_editing(
         self,
-        event: typing.Optional[Gdk.Event],
+        event: Gdk.Event | None,
         widget: Widget,
         path: str,
         background_area: Gdk.Rectangle,
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
-    ) -> typing.Optional[CellEditable]: ...
+    ) -> CellEditable | None: ...
     def get_aligned_area(
         self, widget: Widget, flags: CellRendererState, cell_area: Gdk.Rectangle
     ) -> Gdk.Rectangle: ...
@@ -4781,7 +4756,7 @@ class CellRenderer(GObject.InitiallyUnowned):
     def get_request_mode(self) -> SizeRequestMode: ...
     def get_sensitive(self) -> bool: ...
     def get_state(
-        self, widget: typing.Optional[Widget], cell_state: CellRendererState
+        self, widget: Widget | None, cell_state: CellRendererState
     ) -> StateFlags: ...
     def get_visible(self) -> bool: ...
     def is_activatable(self) -> bool: ...
@@ -4802,13 +4777,13 @@ class CellRenderer(GObject.InitiallyUnowned):
     ) -> None: ...
     def start_editing(
         self,
-        event: typing.Optional[Gdk.Event],
+        event: Gdk.Event | None,
         widget: Widget,
         path: str,
         background_area: Gdk.Rectangle,
         cell_area: Gdk.Rectangle,
         flags: CellRendererState,
-    ) -> typing.Optional[CellEditable]: ...
+    ) -> CellEditable | None: ...
     def stop_editing(self, canceled: bool) -> None: ...
 
 class CellRendererAccel(CellRendererText):
@@ -5097,14 +5072,14 @@ class CellRendererClass(GObject.GPointer):
     start_editing: typing.Callable[
         [
             CellRenderer,
-            typing.Optional[Gdk.Event],
+            Gdk.Event | None,
             Widget,
             str,
             Gdk.Rectangle,
             Gdk.Rectangle,
             CellRendererState,
         ],
-        typing.Optional[CellEditable],
+        CellEditable | None,
     ] = ...
     editing_canceled: typing.Callable[[CellRenderer], None] = ...
     editing_started: typing.Callable[[CellRenderer, CellEditable, str], None] = ...
@@ -6256,12 +6231,12 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         cell_area_context: CellAreaContext
         draw_sensitive: bool
         fit_model: bool
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6271,7 +6246,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -6280,13 +6255,13 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6302,12 +6277,12 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         cell_area_context: CellAreaContext = ...,
         draw_sensitive: bool = ...,
         fit_model: bool = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -6315,7 +6290,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -6326,8 +6301,8 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -6336,10 +6311,10 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
         accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
     ) -> None: ...
-    def get_displayed_row(self) -> typing.Optional[TreePath]: ...
+    def get_displayed_row(self) -> TreePath | None: ...
     def get_draw_sensitive(self) -> bool: ...
     def get_fit_model(self) -> bool: ...
-    def get_model(self) -> typing.Optional[TreeModel]: ...
+    def get_model(self) -> TreeModel | None: ...
     @classmethod
     def new(cls) -> CellView: ...
     @classmethod
@@ -6350,10 +6325,10 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
     def new_with_text(cls, text: str) -> CellView: ...
     @classmethod
     def new_with_texture(cls, texture: Gdk.Texture) -> CellView: ...
-    def set_displayed_row(self, path: typing.Optional[TreePath] = None) -> None: ...
+    def set_displayed_row(self, path: TreePath | None = None) -> None: ...
     def set_draw_sensitive(self, draw_sensitive: bool) -> None: ...
     def set_fit_model(self, fit_model: bool) -> None: ...
-    def set_model(self, model: typing.Optional[TreeModel] = None) -> None: ...
+    def set_model(self, model: TreeModel | None = None) -> None: ...
 
 class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     """
@@ -6430,15 +6405,15 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     """
     class Props(Widget.Props):
         baseline_position: BaselinePosition
-        center_widget: typing.Optional[Widget]
-        end_widget: typing.Optional[Widget]
+        center_widget: Widget | None
+        end_widget: Widget | None
         shrink_center_last: bool
-        start_widget: typing.Optional[Widget]
+        start_widget: Widget | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6448,7 +6423,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -6457,13 +6432,13 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6476,15 +6451,15 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
-        center_widget: typing.Optional[Widget] = ...,
-        end_widget: typing.Optional[Widget] = ...,
+        center_widget: Widget | None = ...,
+        end_widget: Widget | None = ...,
         shrink_center_last: bool = ...,
-        start_widget: typing.Optional[Widget] = ...,
+        start_widget: Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -6492,7 +6467,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -6503,8 +6478,8 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -6514,17 +6489,17 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         orientation: Orientation = ...,
     ) -> None: ...
     def get_baseline_position(self) -> BaselinePosition: ...
-    def get_center_widget(self) -> typing.Optional[Widget]: ...
-    def get_end_widget(self) -> typing.Optional[Widget]: ...
+    def get_center_widget(self) -> Widget | None: ...
+    def get_end_widget(self) -> Widget | None: ...
     def get_shrink_center_last(self) -> bool: ...
-    def get_start_widget(self) -> typing.Optional[Widget]: ...
+    def get_start_widget(self) -> Widget | None: ...
     @classmethod
     def new(cls) -> CenterBox: ...
     def set_baseline_position(self, position: BaselinePosition) -> None: ...
-    def set_center_widget(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_end_widget(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_center_widget(self, child: Widget | None = None) -> None: ...
+    def set_end_widget(self, child: Widget | None = None) -> None: ...
     def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
-    def set_start_widget(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_start_widget(self, child: Widget | None = None) -> None: ...
 
 class CenterBoxClass(GObject.GPointer): ...
 
@@ -6551,19 +6526,19 @@ class CenterLayout(LayoutManager):
     props: Props = ...
     def __init__(self, shrink_center_last: bool = ...) -> None: ...
     def get_baseline_position(self) -> BaselinePosition: ...
-    def get_center_widget(self) -> typing.Optional[Widget]: ...
-    def get_end_widget(self) -> typing.Optional[Widget]: ...
+    def get_center_widget(self) -> Widget | None: ...
+    def get_end_widget(self) -> Widget | None: ...
     def get_orientation(self) -> Orientation: ...
     def get_shrink_center_last(self) -> bool: ...
-    def get_start_widget(self) -> typing.Optional[Widget]: ...
+    def get_start_widget(self) -> Widget | None: ...
     @classmethod
     def new(cls) -> CenterLayout: ...
     def set_baseline_position(self, baseline_position: BaselinePosition) -> None: ...
-    def set_center_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
-    def set_end_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_center_widget(self, widget: Widget | None = None) -> None: ...
+    def set_end_widget(self, widget: Widget | None = None) -> None: ...
     def set_orientation(self, orientation: Orientation) -> None: ...
     def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
-    def set_start_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_start_widget(self, widget: Widget | None = None) -> None: ...
 
 class CenterLayoutClass(GObject.GPointer):
     """
@@ -6658,15 +6633,15 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         active: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         inconsistent: bool
-        label: typing.Optional[str]
+        label: str | None
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6676,7 +6651,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -6685,38 +6660,38 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
-        group: typing.Optional[CheckButton]
+        group: CheckButton | None
 
     props: Props = ...
     parent_instance: Widget = ...
     def __init__(
         self,
         active: bool = ...,
-        child: typing.Optional[Widget] = ...,
-        group: typing.Optional[CheckButton] = ...,
+        child: Widget | None = ...,
+        group: CheckButton | None = ...,
         inconsistent: bool = ...,
-        label: typing.Optional[str] = ...,
+        label: str | None = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -6724,7 +6699,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -6735,35 +6710,35 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_toggled(self) -> None: ...
     def get_active(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_inconsistent(self) -> bool: ...
-    def get_label(self) -> typing.Optional[str]: ...
+    def get_label(self) -> str | None: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
     def new(cls) -> CheckButton: ...
     @classmethod
-    def new_with_label(cls, label: typing.Optional[str] = None) -> CheckButton: ...
+    def new_with_label(cls, label: str | None = None) -> CheckButton: ...
     @classmethod
-    def new_with_mnemonic(cls, label: typing.Optional[str] = None) -> CheckButton: ...
+    def new_with_mnemonic(cls, label: str | None = None) -> CheckButton: ...
     def set_active(self, setting: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_group(self, group: typing.Optional[CheckButton] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_group(self, group: CheckButton | None = None) -> None: ...
     def set_inconsistent(self, inconsistent: bool) -> None: ...
-    def set_label(self, label: typing.Optional[str] = None) -> None: ...
+    def set_label(self, label: str | None = None) -> None: ...
     def set_use_underline(self, setting: bool) -> None: ...
 
 class CheckButtonClass(GObject.GPointer):
@@ -6794,7 +6769,7 @@ class ClosureExpression(Expression):
         cls,
         value_type: typing.Type[typing.Any],
         closure: typing.Callable[..., typing.Any],
-        params: typing.Optional[typing.Sequence[Expression]] = None,
+        params: typing.Sequence[Expression] | None = None,
     ) -> ClosureExpression: ...
 
 class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget):
@@ -6884,7 +6859,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -6894,7 +6869,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -6903,13 +6878,13 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -6929,7 +6904,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -6937,7 +6912,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -6948,8 +6923,8 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -6979,7 +6954,7 @@ class ColorChooser(GObject.GInterface):
         self,
         orientation: Orientation,
         colors_per_line: int,
-        colors: typing.Optional[typing.Sequence[Gdk.RGBA]] = None,
+        colors: typing.Sequence[Gdk.RGBA] | None = None,
     ) -> None: ...
     def get_rgba(self) -> Gdk.RGBA: ...
     def get_use_alpha(self) -> bool: ...
@@ -7112,36 +7087,36 @@ class ColorChooserDialog(
     class Props(Dialog.Props):
         show_editor: bool
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7151,7 +7126,7 @@ class ColorChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -7160,13 +7135,13 @@ class ColorChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7182,35 +7157,35 @@ class ColorChooserDialog(
         self,
         show_editor: bool = ...,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -7218,7 +7193,7 @@ class ColorChooserDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -7229,8 +7204,8 @@ class ColorChooserDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -7242,7 +7217,7 @@ class ColorChooserDialog(
     ) -> None: ...
     @classmethod
     def new(
-        cls, title: typing.Optional[str] = None, parent: typing.Optional[Window] = None
+        cls, title: str | None = None, parent: Window | None = None
     ) -> ColorChooserDialog: ...
 
 class ColorChooserInterface(GObject.GPointer):
@@ -7258,7 +7233,7 @@ class ColorChooserInterface(GObject.GPointer):
     get_rgba: typing.Callable[[ColorChooser], Gdk.RGBA] = ...
     set_rgba: typing.Callable[[ColorChooser, Gdk.RGBA], None] = ...
     add_palette: typing.Callable[
-        [ColorChooser, Orientation, int, typing.Optional[typing.Sequence[Gdk.RGBA]]],
+        [ColorChooser, Orientation, int, typing.Sequence[Gdk.RGBA] | None],
         None,
     ] = ...
     color_activated: typing.Callable[[ColorChooser, Gdk.RGBA], None] = ...
@@ -7342,7 +7317,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7352,7 +7327,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -7361,13 +7336,13 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7385,7 +7360,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -7393,7 +7368,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -7404,8 +7379,8 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -7448,10 +7423,10 @@ class ColorDialog(GObject.Object):
     ) -> None: ...
     def choose_rgba(
         self,
-        parent: typing.Optional[Window] = None,
-        initial_color: typing.Optional[Gdk.RGBA] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        initial_color: Gdk.RGBA | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_rgba_finish(self, result: Gio.AsyncResult) -> Gdk.RGBA: ...
@@ -7538,13 +7513,13 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        dialog: typing.Optional[ColorDialog]
+        dialog: ColorDialog | None
         rgba: Gdk.RGBA
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7554,7 +7529,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -7563,13 +7538,13 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -7586,7 +7561,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -7594,7 +7569,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -7605,8 +7580,8 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -7614,10 +7589,10 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_dialog(self) -> typing.Optional[ColorDialog]: ...
+    def get_dialog(self) -> ColorDialog | None: ...
     def get_rgba(self) -> Gdk.RGBA: ...
     @classmethod
-    def new(cls, dialog: typing.Optional[ColorDialog] = None) -> ColorDialogButton: ...
+    def new(cls, dialog: ColorDialog | None = None) -> ColorDialogButton: ...
     def set_dialog(self, dialog: ColorDialog) -> None: ...
     def set_rgba(self, color: Gdk.RGBA) -> None: ...
 
@@ -7728,20 +7703,20 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     class Props(Widget.Props):
         columns: Gio.ListModel
         enable_rubberband: bool
-        header_factory: typing.Optional[ListItemFactory]
-        model: typing.Optional[SelectionModel]
+        header_factory: ListItemFactory | None
+        model: SelectionModel | None
         reorderable: bool
-        row_factory: typing.Optional[ListItemFactory]
+        row_factory: ListItemFactory | None
         show_column_separators: bool
         show_row_separators: bool
         single_click_activate: bool
-        sorter: typing.Optional[Sorter]
+        sorter: Sorter | None
         tab_behavior: ListTabBehavior
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -7751,7 +7726,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -7760,32 +7735,32 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     def __init__(
         self,
         enable_rubberband: bool = ...,
-        header_factory: typing.Optional[ListItemFactory] = ...,
-        model: typing.Optional[SelectionModel] = ...,
+        header_factory: ListItemFactory | None = ...,
+        model: SelectionModel | None = ...,
         reorderable: bool = ...,
-        row_factory: typing.Optional[ListItemFactory] = ...,
+        row_factory: ListItemFactory | None = ...,
         show_column_separators: bool = ...,
         show_row_separators: bool = ...,
         single_click_activate: bool = ...,
@@ -7794,7 +7769,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -7802,7 +7777,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -7813,57 +7788,53 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def append_column(self, column: ColumnViewColumn) -> None: ...
     def get_columns(self) -> Gio.ListModel: ...
     def get_enable_rubberband(self) -> bool: ...
-    def get_header_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_model(self) -> typing.Optional[SelectionModel]: ...
+    def get_header_factory(self) -> ListItemFactory | None: ...
+    def get_model(self) -> SelectionModel | None: ...
     def get_reorderable(self) -> bool: ...
-    def get_row_factory(self) -> typing.Optional[ListItemFactory]: ...
+    def get_row_factory(self) -> ListItemFactory | None: ...
     def get_show_column_separators(self) -> bool: ...
     def get_show_row_separators(self) -> bool: ...
     def get_single_click_activate(self) -> bool: ...
-    def get_sorter(self) -> typing.Optional[Sorter]: ...
+    def get_sorter(self) -> Sorter | None: ...
     def get_tab_behavior(self) -> ListTabBehavior: ...
     def insert_column(self, position: int, column: ColumnViewColumn) -> None: ...
     @classmethod
-    def new(cls, model: typing.Optional[SelectionModel] = None) -> ColumnView: ...
+    def new(cls, model: SelectionModel | None = None) -> ColumnView: ...
     def remove_column(self, column: ColumnViewColumn) -> None: ...
     def scroll_to(
         self,
         pos: int,
-        column: typing.Optional[ColumnViewColumn],
+        column: ColumnViewColumn | None,
         flags: ListScrollFlags,
-        scroll: typing.Optional[ScrollInfo] = None,
+        scroll: ScrollInfo | None = None,
     ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
-    def set_header_factory(
-        self, factory: typing.Optional[ListItemFactory] = None
-    ) -> None: ...
-    def set_model(self, model: typing.Optional[SelectionModel] = None) -> None: ...
+    def set_header_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_model(self, model: SelectionModel | None = None) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
-    def set_row_factory(
-        self, factory: typing.Optional[ListItemFactory] = None
-    ) -> None: ...
+    def set_row_factory(self, factory: ListItemFactory | None = None) -> None: ...
     def set_show_column_separators(self, show_column_separators: bool) -> None: ...
     def set_show_row_separators(self, show_row_separators: bool) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
     def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
     def sort_by_column(
-        self, column: typing.Optional[ColumnViewColumn], direction: SortType
+        self, column: ColumnViewColumn | None, direction: SortType
     ) -> None: ...
 
 class ColumnViewCell(ListItem):
@@ -7898,9 +7869,9 @@ class ColumnViewCell(ListItem):
       notify (GParam)
     """
     class Props(ListItem.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         focusable: bool
-        item: typing.Optional[GObject.Object]
+        item: GObject.Object | None
         position: int
         selected: bool
         accessible_description: str
@@ -7911,19 +7882,19 @@ class ColumnViewCell(ListItem):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         focusable: bool = ...,
         accessible_description: str = ...,
         accessible_label: str = ...,
         activatable: bool = ...,
         selectable: bool = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_focusable(self) -> bool: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_item(self) -> GObject.Object | None: ...
     def get_position(self) -> int: ...
     def get_selected(self) -> bool: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_focusable(self, focusable: bool) -> None: ...
 
 class ColumnViewCellClass(GObject.GPointer): ...
@@ -7956,54 +7927,54 @@ class ColumnViewColumn(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        column_view: typing.Optional[ColumnView]
+        column_view: ColumnView | None
         expand: bool
-        factory: typing.Optional[ListItemFactory]
+        factory: ListItemFactory | None
         fixed_width: int
-        header_menu: typing.Optional[Gio.MenuModel]
-        id: typing.Optional[str]
+        header_menu: Gio.MenuModel | None
+        id: str | None
         resizable: bool
-        sorter: typing.Optional[Sorter]
-        title: typing.Optional[str]
+        sorter: Sorter | None
+        title: str | None
         visible: bool
 
     props: Props = ...
     def __init__(
         self,
         expand: bool = ...,
-        factory: typing.Optional[ListItemFactory] = ...,
+        factory: ListItemFactory | None = ...,
         fixed_width: int = ...,
-        header_menu: typing.Optional[Gio.MenuModel] = ...,
-        id: typing.Optional[str] = ...,
+        header_menu: Gio.MenuModel | None = ...,
+        id: str | None = ...,
         resizable: bool = ...,
-        sorter: typing.Optional[Sorter] = ...,
-        title: typing.Optional[str] = ...,
+        sorter: Sorter | None = ...,
+        title: str | None = ...,
         visible: bool = ...,
     ) -> None: ...
-    def get_column_view(self) -> typing.Optional[ColumnView]: ...
+    def get_column_view(self) -> ColumnView | None: ...
     def get_expand(self) -> bool: ...
-    def get_factory(self) -> typing.Optional[ListItemFactory]: ...
+    def get_factory(self) -> ListItemFactory | None: ...
     def get_fixed_width(self) -> int: ...
-    def get_header_menu(self) -> typing.Optional[Gio.MenuModel]: ...
-    def get_id(self) -> typing.Optional[str]: ...
+    def get_header_menu(self) -> Gio.MenuModel | None: ...
+    def get_id(self) -> str | None: ...
     def get_resizable(self) -> bool: ...
-    def get_sorter(self) -> typing.Optional[Sorter]: ...
-    def get_title(self) -> typing.Optional[str]: ...
+    def get_sorter(self) -> Sorter | None: ...
+    def get_title(self) -> str | None: ...
     def get_visible(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        title: typing.Optional[str] = None,
-        factory: typing.Optional[ListItemFactory] = None,
+        title: str | None = None,
+        factory: ListItemFactory | None = None,
     ) -> ColumnViewColumn: ...
     def set_expand(self, expand: bool) -> None: ...
-    def set_factory(self, factory: typing.Optional[ListItemFactory] = None) -> None: ...
+    def set_factory(self, factory: ListItemFactory | None = None) -> None: ...
     def set_fixed_width(self, fixed_width: int) -> None: ...
-    def set_header_menu(self, menu: typing.Optional[Gio.MenuModel] = None) -> None: ...
-    def set_id(self, id: typing.Optional[str] = None) -> None: ...
+    def set_header_menu(self, menu: Gio.MenuModel | None = None) -> None: ...
+    def set_id(self, id: str | None = None) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
-    def set_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
-    def set_title(self, title: typing.Optional[str] = None) -> None: ...
+    def set_sorter(self, sorter: Sorter | None = None) -> None: ...
+    def set_title(self, title: str | None = None) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
 class ColumnViewColumnClass(GObject.GPointer): ...
@@ -8036,7 +8007,7 @@ class ColumnViewRow(GObject.Object):
         accessible_label: str
         activatable: bool
         focusable: bool
-        item: typing.Optional[GObject.Object]
+        item: GObject.Object | None
         position: int
         selectable: bool
         selected: bool
@@ -8054,7 +8025,7 @@ class ColumnViewRow(GObject.Object):
     def get_accessible_label(self) -> str: ...
     def get_activatable(self) -> bool: ...
     def get_focusable(self) -> bool: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_item(self) -> GObject.Object | None: ...
     def get_position(self) -> int: ...
     def get_selectable(self) -> bool: ...
     def get_selected(self) -> bool: ...
@@ -8087,15 +8058,15 @@ class ColumnViewSorter(Sorter):
       notify (GParam)
     """
     class Props(Sorter.Props):
-        primary_sort_column: typing.Optional[ColumnViewColumn]
+        primary_sort_column: ColumnViewColumn | None
         primary_sort_order: SortType
 
     props: Props = ...
     def get_n_sort_columns(self) -> int: ...
     def get_nth_sort_column(
         self, position: int
-    ) -> typing.Tuple[typing.Optional[ColumnViewColumn], SortType]: ...
-    def get_primary_sort_column(self) -> typing.Optional[ColumnViewColumn]: ...
+    ) -> typing.Tuple[ColumnViewColumn | None, SortType]: ...
+    def get_primary_sort_column(self) -> ColumnViewColumn | None: ...
     def get_primary_sort_order(self) -> SortType: ...
 
 class ColumnViewSorterClass(GObject.GPointer):
@@ -8207,21 +8178,21 @@ class ComboBox(
     """
     class Props(Widget.Props):
         active: int
-        active_id: typing.Optional[str]
+        active_id: str | None
         button_sensitivity: SensitivityType
-        child: typing.Optional[Widget]
+        child: Widget | None
         entry_text_column: int
         has_entry: bool
         has_frame: bool
         id_column: int
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         popup_fixed_width: bool
         popup_shown: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8231,7 +8202,7 @@ class ComboBox(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -8240,13 +8211,13 @@ class ComboBox(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8260,20 +8231,20 @@ class ComboBox(
     def __init__(
         self,
         active: int = ...,
-        active_id: typing.Optional[str] = ...,
+        active_id: str | None = ...,
         button_sensitivity: SensitivityType = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         entry_text_column: int = ...,
         has_entry: bool = ...,
         has_frame: bool = ...,
         id_column: int = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -8281,7 +8252,7 @@ class ComboBox(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -8292,8 +8263,8 @@ class ComboBox(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -8306,16 +8277,16 @@ class ComboBox(
     def do_changed(self) -> None: ...
     def do_format_entry_text(self, path: str) -> str: ...
     def get_active(self) -> int: ...
-    def get_active_id(self) -> typing.Optional[str]: ...
+    def get_active_id(self) -> str | None: ...
     def get_active_iter(
         self,
-    ) -> typing.Optional[TreeIter]: ...  # CHECK Wrapped function
+    ) -> TreeIter | None: ...  # CHECK Wrapped function
     def get_button_sensitivity(self) -> SensitivityType: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_entry_text_column(self) -> int: ...
     def get_has_entry(self) -> bool: ...
     def get_id_column(self) -> int: ...
-    def get_model(self) -> typing.Optional[TreeModel]: ...
+    def get_model(self) -> TreeModel | None: ...
     def get_popup_fixed_width(self) -> bool: ...
     @classmethod
     def new(cls) -> ComboBox: ...
@@ -8329,17 +8300,17 @@ class ComboBox(
     def popup(self) -> None: ...
     def popup_for_device(self, device: Gdk.Device) -> None: ...
     def set_active(self, index_: int) -> None: ...
-    def set_active_id(self, active_id: typing.Optional[str] = None) -> bool: ...
-    def set_active_iter(self, iter: typing.Optional[TreeIter] = None) -> None: ...
+    def set_active_id(self, active_id: str | None = None) -> bool: ...
+    def set_active_iter(self, iter: TreeIter | None = None) -> None: ...
     def set_button_sensitivity(self, sensitivity: SensitivityType) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_entry_text_column(self, text_column: int) -> None: ...
     def set_id_column(self, id_column: int) -> None: ...
-    def set_model(self, model: typing.Optional[TreeModel] = None) -> None: ...
+    def set_model(self, model: TreeModel | None = None) -> None: ...
     def set_popup_fixed_width(self, fixed: bool) -> None: ...
     def set_row_separator_func(
         self,
-        func: typing.Optional[typing.Callable[..., bool]] = None,
+        func: typing.Callable[..., bool] | None = None,
         *data: typing.Any,
     ) -> None: ...
 
@@ -8458,21 +8429,21 @@ class ComboBoxText(
     """
     class Props(ComboBox.Props):
         active: int
-        active_id: typing.Optional[str]
+        active_id: str | None
         button_sensitivity: SensitivityType
-        child: typing.Optional[Widget]
+        child: Widget | None
         entry_text_column: int
         has_entry: bool
         has_frame: bool
         id_column: int
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         popup_fixed_width: bool
         popup_shown: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -8482,7 +8453,7 @@ class ComboBoxText(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -8491,13 +8462,13 @@ class ComboBoxText(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -8510,20 +8481,20 @@ class ComboBoxText(
     def __init__(
         self,
         active: int = ...,
-        active_id: typing.Optional[str] = ...,
+        active_id: str | None = ...,
         button_sensitivity: SensitivityType = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         entry_text_column: int = ...,
         has_entry: bool = ...,
         has_frame: bool = ...,
         id_column: int = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -8531,7 +8502,7 @@ class ComboBoxText(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -8542,8 +8513,8 @@ class ComboBoxText(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -8552,16 +8523,16 @@ class ComboBoxText(
         accessible_role: AccessibleRole = ...,
         editing_canceled: bool = ...,
     ) -> None: ...
-    def append(self, id: typing.Optional[str], text: str) -> None: ...
+    def append(self, id: str | None, text: str) -> None: ...
     def append_text(self, text: str) -> None: ...
-    def get_active_text(self) -> typing.Optional[str]: ...
-    def insert(self, position: int, id: typing.Optional[str], text: str) -> None: ...
+    def get_active_text(self) -> str | None: ...
+    def insert(self, position: int, id: str | None, text: str) -> None: ...
     def insert_text(self, position: int, text: str) -> None: ...
     @classmethod
     def new(cls) -> ComboBoxText: ...
     @classmethod
     def new_with_entry(cls) -> ComboBoxText: ...
-    def prepend(self, id: typing.Optional[str], text: str) -> None: ...
+    def prepend(self, id: str | None, text: str) -> None: ...
     def prepend_text(self, text: str) -> None: ...
     def remove(self, position: int) -> None: ...
     def remove_all(self) -> None: ...
@@ -8608,10 +8579,10 @@ class Constraint(GObject.Object):
         constant: float
         multiplier: float
         relation: ConstraintRelation
-        source: typing.Optional[ConstraintTarget]
+        source: ConstraintTarget | None
         source_attribute: ConstraintAttribute
         strength: int
-        target: typing.Optional[ConstraintTarget]
+        target: ConstraintTarget | None
         target_attribute: ConstraintAttribute
 
     props: Props = ...
@@ -8629,10 +8600,10 @@ class Constraint(GObject.Object):
     def get_constant(self) -> float: ...
     def get_multiplier(self) -> float: ...
     def get_relation(self) -> ConstraintRelation: ...
-    def get_source(self) -> typing.Optional[ConstraintTarget]: ...
+    def get_source(self) -> ConstraintTarget | None: ...
     def get_source_attribute(self) -> ConstraintAttribute: ...
     def get_strength(self) -> int: ...
-    def get_target(self) -> typing.Optional[ConstraintTarget]: ...
+    def get_target(self) -> ConstraintTarget | None: ...
     def get_target_attribute(self) -> ConstraintAttribute: ...
     def is_attached(self) -> bool: ...
     def is_constant(self) -> bool: ...
@@ -8640,10 +8611,10 @@ class Constraint(GObject.Object):
     @classmethod
     def new(
         cls,
-        target: typing.Optional[ConstraintTarget],
+        target: ConstraintTarget | None,
         target_attribute: ConstraintAttribute,
         relation: ConstraintRelation,
-        source: typing.Optional[ConstraintTarget],
+        source: ConstraintTarget | None,
         source_attribute: ConstraintAttribute,
         multiplier: float,
         constant: float,
@@ -8652,7 +8623,7 @@ class Constraint(GObject.Object):
     @classmethod
     def new_constant(
         cls,
-        target: typing.Optional[ConstraintTarget],
+        target: ConstraintTarget | None,
         target_attribute: ConstraintAttribute,
         relation: ConstraintRelation,
         constant: float,
@@ -8699,7 +8670,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
         max_width: int
         min_height: int
         min_width: int
-        name: typing.Optional[str]
+        name: str | None
         nat_height: int
         nat_width: int
         strength: ConstraintStrength
@@ -8711,21 +8682,21 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
         max_width: int = ...,
         min_height: int = ...,
         min_width: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         nat_height: int = ...,
         nat_width: int = ...,
         strength: ConstraintStrength = ...,
     ) -> None: ...
     def get_max_size(self) -> typing.Tuple[int, int]: ...
     def get_min_size(self) -> typing.Tuple[int, int]: ...
-    def get_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> str | None: ...
     def get_nat_size(self) -> typing.Tuple[int, int]: ...
     def get_strength(self) -> ConstraintStrength: ...
     @classmethod
     def new(cls) -> ConstraintGuide: ...
     def set_max_size(self, width: int, height: int) -> None: ...
     def set_min_size(self, width: int, height: int) -> None: ...
-    def set_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: str | None = None) -> None: ...
     def set_nat_size(self, width: int, height: int) -> None: ...
     def set_strength(self, strength: ConstraintStrength) -> None: ...
 
@@ -8880,7 +8851,7 @@ class CssProvider(GObject.Object, StyleProvider):
     def load_from_path(self, path: str) -> None: ...
     def load_from_resource(self, resource_path: str) -> None: ...
     def load_from_string(self, string: str) -> None: ...
-    def load_named(self, name: str, variant: typing.Optional[str] = None) -> None: ...
+    def load_named(self, name: str, variant: str | None = None) -> None: ...
     @classmethod
     def new(cls) -> CssProvider: ...
     def to_string(self) -> str: ...
@@ -8897,20 +8868,20 @@ class CssSection(GObject.GBoxed):
         new(file:Gio.File=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
         new_with_bytes(file:Gio.File=None, bytes:GLib.Bytes=None, start:Gtk.CssLocation, end:Gtk.CssLocation) -> Gtk.CssSection
     """
-    def get_bytes(self) -> typing.Optional[GLib.Bytes]: ...
+    def get_bytes(self) -> GLib.Bytes | None: ...
     def get_end_location(self) -> CssLocation: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
-    def get_parent(self) -> typing.Optional[CssSection]: ...
+    def get_file(self) -> Gio.File | None: ...
+    def get_parent(self) -> CssSection | None: ...
     def get_start_location(self) -> CssLocation: ...
     @classmethod
     def new(
-        cls, file: typing.Optional[Gio.File], start: CssLocation, end: CssLocation
+        cls, file: Gio.File | None, start: CssLocation, end: CssLocation
     ) -> CssSection: ...
     @classmethod
     def new_with_bytes(
         cls,
-        file: typing.Optional[Gio.File],
-        bytes: typing.Optional[GLib.Bytes],
+        file: Gio.File | None,
+        bytes: GLib.Bytes | None,
         start: CssLocation,
         end: CssLocation,
     ) -> CssSection: ...
@@ -8941,12 +8912,12 @@ class CustomFilter(Filter):
     @classmethod
     def new(
         cls,
-        match_func: typing.Optional[typing.Callable[..., bool]] = None,
+        match_func: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> CustomFilter: ...
     def set_filter_func(
         self,
-        match_func: typing.Optional[typing.Callable[..., bool]] = None,
+        match_func: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
 
@@ -8978,7 +8949,7 @@ class CustomLayout(LayoutManager):
     @classmethod
     def new(
         cls,
-        request_mode: typing.Optional[typing.Callable[[Widget], SizeRequestMode]],
+        request_mode: typing.Callable[[Widget], SizeRequestMode] | None,
         measure: typing.Callable[
             [Widget, Orientation, int], typing.Tuple[int, int, int, int]
         ],
@@ -9017,17 +8988,15 @@ class CustomSorter(Sorter):
     @classmethod
     def new(
         cls,
-        sort_func: typing.Optional[
-            typing.Callable[[typing.Any, typing.Any, typing.Any], int]
-        ] = None,
+        sort_func: typing.Callable[[typing.Any, typing.Any, typing.Any], int]
+        | None = None,
         user_data: typing.Any = None,
     ) -> CustomSorter: ...
     # override
     def set_sort_func(
         self,
-        sort_func: typing.Optional[
-            typing.Callable[[typing.Any, typing.Any, typing.Any], int]
-        ] = None,
+        sort_func: typing.Callable[[typing.Any, typing.Any, typing.Any], int]
+        | None = None,
         user_data: typing.Any = None,
     ) -> None: ...
 
@@ -9154,36 +9123,36 @@ class Dialog(
     """
     class Props(Window.Props):
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9193,7 +9162,7 @@ class Dialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -9202,13 +9171,13 @@ class Dialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9222,35 +9191,35 @@ class Dialog(
     def __init__(
         self,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -9258,7 +9227,7 @@ class Dialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -9269,8 +9238,8 @@ class Dialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -9299,7 +9268,7 @@ class Dialog(
     def get_content_area(self) -> Box: ...
     def get_header_bar(self) -> HeaderBar: ...
     def get_response_for_widget(self, widget: Widget) -> int: ...
-    def get_widget_for_response(self, response_id: int) -> typing.Optional[Widget]: ...
+    def get_widget_for_response(self, response_id: int) -> Widget | None: ...
     @classmethod
     def new(cls) -> Dialog: ...
     def response(self, response_id: int) -> None: ...
@@ -9348,9 +9317,9 @@ class DirectoryList(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        attributes: typing.Optional[str]
-        error: typing.Optional[GLib.Error]
-        file: typing.Optional[Gio.File]
+        attributes: str | None
+        error: GLib.Error | None
+        file: Gio.File | None
         io_priority: int
         item_type: typing.Type[typing.Any]
         loading: bool
@@ -9360,25 +9329,25 @@ class DirectoryList(GObject.Object, Gio.ListModel):
     props: Props = ...
     def __init__(
         self,
-        attributes: typing.Optional[str] = ...,
-        file: typing.Optional[Gio.File] = ...,
+        attributes: str | None = ...,
+        file: Gio.File | None = ...,
         io_priority: int = ...,
         monitored: bool = ...,
     ) -> None: ...
-    def get_attributes(self) -> typing.Optional[str]: ...
-    def get_error(self) -> typing.Optional[GLib.Error]: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
+    def get_attributes(self) -> str | None: ...
+    def get_error(self) -> GLib.Error | None: ...
+    def get_file(self) -> Gio.File | None: ...
     def get_io_priority(self) -> int: ...
     def get_monitored(self) -> bool: ...
     def is_loading(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        attributes: typing.Optional[str] = None,
-        file: typing.Optional[Gio.File] = None,
+        attributes: str | None = None,
+        file: Gio.File | None = None,
     ) -> DirectoryList: ...
-    def set_attributes(self, attributes: typing.Optional[str] = None) -> None: ...
-    def set_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
+    def set_attributes(self, attributes: str | None = None) -> None: ...
+    def set_file(self, file: Gio.File | None = None) -> None: ...
     def set_io_priority(self, io_priority: int) -> None: ...
     def set_monitored(self, monitored: bool) -> None: ...
 
@@ -9463,12 +9432,12 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9478,7 +9447,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -9487,13 +9456,13 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9504,12 +9473,12 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -9517,7 +9486,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -9528,8 +9497,8 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -9538,11 +9507,11 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     @staticmethod
-    def create_widget_for_value(value: typing.Any) -> typing.Optional[Widget]: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def create_widget_for_value(value: typing.Any) -> Widget | None: ...
+    def get_child(self) -> Widget | None: ...
     @classmethod
     def get_for_drag(cls, drag: Gdk.Drag) -> DragIcon: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     @staticmethod
     def set_from_paintable(
         drag: Gdk.Drag, paintable: Gdk.Paintable, hot_x: int, hot_y: int
@@ -9606,41 +9575,39 @@ class DragSource(GestureSingle):
     """
     class Props(GestureSingle.Props):
         actions: Gdk.DragAction
-        content: typing.Optional[Gdk.ContentProvider]
+        content: Gdk.ContentProvider | None
         button: int
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         actions: Gdk.DragAction = ...,
-        content: typing.Optional[Gdk.ContentProvider] = ...,
+        content: Gdk.ContentProvider | None = ...,
         button: int = ...,
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def drag_cancel(self) -> None: ...
     def get_actions(self) -> Gdk.DragAction: ...
-    def get_content(self) -> typing.Optional[Gdk.ContentProvider]: ...
-    def get_drag(self) -> typing.Optional[Gdk.Drag]: ...
+    def get_content(self) -> Gdk.ContentProvider | None: ...
+    def get_drag(self) -> Gdk.Drag | None: ...
     @classmethod
     def new(cls) -> DragSource: ...
     def set_actions(self, actions: Gdk.DragAction) -> None: ...
-    def set_content(
-        self, content: typing.Optional[Gdk.ContentProvider] = None
-    ) -> None: ...
+    def set_content(self, content: Gdk.ContentProvider | None = None) -> None: ...
     def set_icon(
-        self, paintable: typing.Optional[Gdk.Paintable], hot_x: int, hot_y: int
+        self, paintable: Gdk.Paintable | None, hot_x: int, hot_y: int
     ) -> None: ...
 
 class DragSourceClass(GObject.GPointer): ...
@@ -9725,7 +9692,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9735,7 +9702,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -9744,13 +9711,13 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -9768,7 +9735,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -9776,7 +9743,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -9787,8 +9754,8 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -9805,7 +9772,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
     def set_content_width(self, width: int) -> None: ...
     def set_draw_func(
         self,
-        draw_func: typing.Optional[typing.Callable[..., None]] = None,
+        draw_func: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
 
@@ -9854,22 +9821,22 @@ class DropControllerMotion(EventController):
     """
     class Props(EventController.Props):
         contains_pointer: bool
-        drop: typing.Optional[Gdk.Drop]
+        drop: Gdk.Drop | None
         is_pointer: bool
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def contains_pointer(self) -> bool: ...
-    def get_drop(self) -> typing.Optional[Gdk.Drop]: ...
+    def get_drop(self) -> Gdk.Drop | None: ...
     def is_pointer(self) -> bool: ...
     @classmethod
     def new(cls) -> DropControllerMotion: ...
@@ -9961,20 +9928,20 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     # override
     class Props(Widget.Props):
         enable_search: bool
-        expression: typing.Optional[Expression]
-        factory: typing.Optional[ListItemFactory]
-        header_factory: typing.Optional[ListItemFactory]
-        list_factory: typing.Optional[ListItemFactory]
-        model: typing.Optional[Gio.ListModel]
+        expression: Expression | None
+        factory: ListItemFactory | None
+        header_factory: ListItemFactory | None
+        list_factory: ListItemFactory | None
+        model: Gio.ListModel | None
         search_match_mode: StringFilterMatchMode
         selected: int
-        selected_item: typing.Optional[GObject.Object]
+        selected_item: GObject.Object | None
         show_arrow: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -9984,7 +9951,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -9993,13 +9960,13 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10012,11 +9979,11 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def __init__(
         self,
         enable_search: bool = ...,
-        expression: typing.Optional[Expression] = ...,
-        factory: typing.Optional[ListItemFactory] = ...,
-        header_factory: typing.Optional[ListItemFactory] = ...,
-        list_factory: typing.Optional[ListItemFactory] = ...,
-        model: typing.Optional[Gio.ListModel] = ...,
+        expression: Expression | None = ...,
+        factory: ListItemFactory | None = ...,
+        header_factory: ListItemFactory | None = ...,
+        list_factory: ListItemFactory | None = ...,
+        model: Gio.ListModel | None = ...,
         search_match_mode: StringFilterMatchMode = ...,
         selected: int = ...,
         show_arrow: bool = ...,
@@ -10024,7 +9991,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -10032,7 +9999,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -10043,8 +10010,8 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -10053,35 +10020,29 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_enable_search(self) -> bool: ...
-    def get_expression(self) -> typing.Optional[Expression]: ...
-    def get_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_header_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_list_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_expression(self) -> Expression | None: ...
+    def get_factory(self) -> ListItemFactory | None: ...
+    def get_header_factory(self) -> ListItemFactory | None: ...
+    def get_list_factory(self) -> ListItemFactory | None: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def get_search_match_mode(self) -> StringFilterMatchMode: ...
     def get_selected(self) -> int: ...
-    def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_selected_item(self) -> GObject.Object | None: ...
     def get_show_arrow(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel] = None,
-        expression: typing.Optional[Expression] = None,
+        model: Gio.ListModel | None = None,
+        expression: Expression | None = None,
     ) -> DropDown: ...
     @classmethod
     def new_from_strings(cls, strings: typing.Sequence[str]) -> DropDown: ...
     def set_enable_search(self, enable_search: bool) -> None: ...
-    def set_expression(
-        self, expression: typing.Optional[Expression] = None
-    ) -> None: ...
-    def set_factory(self, factory: typing.Optional[ListItemFactory] = None) -> None: ...
-    def set_header_factory(
-        self, factory: typing.Optional[ListItemFactory] = None
-    ) -> None: ...
-    def set_list_factory(
-        self, factory: typing.Optional[ListItemFactory] = None
-    ) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_expression(self, expression: Expression | None = None) -> None: ...
+    def set_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_header_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_list_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_search_match_mode(
         self, search_match_mode: StringFilterMatchMode
     ) -> None: ...
@@ -10136,15 +10097,15 @@ class DropTarget(EventController):
     """
     class Props(EventController.Props):
         actions: Gdk.DragAction
-        current_drop: typing.Optional[Gdk.Drop]
-        drop: typing.Optional[Gdk.Drop]
-        formats: typing.Optional[Gdk.ContentFormats]
+        current_drop: Gdk.Drop | None
+        drop: Gdk.Drop | None
+        formats: Gdk.ContentFormats | None
         preload: bool
-        value: typing.Optional[typing.Any]
-        name: typing.Optional[str]
+        value: typing.Any | None
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -10152,17 +10113,17 @@ class DropTarget(EventController):
         actions: Gdk.DragAction = ...,
         formats: Gdk.ContentFormats = ...,
         preload: bool = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def get_actions(self) -> Gdk.DragAction: ...
-    def get_current_drop(self) -> typing.Optional[Gdk.Drop]: ...
-    def get_drop(self) -> typing.Optional[Gdk.Drop]: ...
-    def get_formats(self) -> typing.Optional[Gdk.ContentFormats]: ...
-    def get_gtypes(self) -> typing.Optional[list[typing.Type[typing.Any]]]: ...
+    def get_current_drop(self) -> Gdk.Drop | None: ...
+    def get_drop(self) -> Gdk.Drop | None: ...
+    def get_formats(self) -> Gdk.ContentFormats | None: ...
+    def get_gtypes(self) -> list[typing.Type[typing.Any]] | None: ...
     def get_preload(self) -> bool: ...
-    def get_value(self) -> typing.Optional[typing.Any]: ...
+    def get_value(self) -> typing.Any | None: ...
     # override
     @classmethod
     def new(
@@ -10171,7 +10132,7 @@ class DropTarget(EventController):
     def reject(self) -> None: ...
     def set_actions(self, actions: Gdk.DragAction) -> None: ...
     def set_gtypes(
-        self, types: typing.Optional[typing.Sequence[typing.Type[typing.Any]]] = None
+        self, types: typing.Sequence[typing.Type[typing.Any]] | None = None
     ) -> None: ...
     def set_preload(self, preload: bool) -> None: ...
 
@@ -10208,32 +10169,30 @@ class DropTargetAsync(EventController):
     """
     class Props(EventController.Props):
         actions: Gdk.DragAction
-        formats: typing.Optional[Gdk.ContentFormats]
-        name: typing.Optional[str]
+        formats: Gdk.ContentFormats | None
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         actions: Gdk.DragAction = ...,
-        formats: typing.Optional[Gdk.ContentFormats] = ...,
-        name: typing.Optional[str] = ...,
+        formats: Gdk.ContentFormats | None = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def get_actions(self) -> Gdk.DragAction: ...
-    def get_formats(self) -> typing.Optional[Gdk.ContentFormats]: ...
+    def get_formats(self) -> Gdk.ContentFormats | None: ...
     @classmethod
     def new(
-        cls, formats: typing.Optional[Gdk.ContentFormats], actions: Gdk.DragAction
+        cls, formats: Gdk.ContentFormats | None, actions: Gdk.DragAction
     ) -> DropTargetAsync: ...
     def reject_drop(self, drop: Gdk.Drop) -> None: ...
     def set_actions(self, actions: Gdk.DragAction) -> None: ...
-    def set_formats(
-        self, formats: typing.Optional[Gdk.ContentFormats] = None
-    ) -> None: ...
+    def set_formats(self, formats: Gdk.ContentFormats | None = None) -> None: ...
 
 class DropTargetAsyncClass(GObject.GPointer): ...
 class DropTargetClass(GObject.GPointer): ...
@@ -10267,7 +10226,7 @@ class Editable(GObject.GInterface):
     def finish_delegate(self) -> None: ...
     def get_alignment(self) -> float: ...
     def get_chars(self, start_pos: int, end_pos: int) -> str: ...
-    def get_delegate(self) -> typing.Optional[Editable]: ...
+    def get_delegate(self) -> Editable | None: ...
     def get_editable(self) -> bool: ...
     def get_enable_undo(self) -> bool: ...
     def get_max_width_chars(self) -> int: ...
@@ -10314,7 +10273,7 @@ class EditableInterface(GObject.GPointer):
         [Editable], typing.Tuple[bool, int, int]
     ] = ...
     set_selection_bounds: typing.Callable[[Editable, int, int], None] = ...
-    get_delegate: typing.Callable[[Editable], typing.Optional[Editable]] = ...
+    get_delegate: typing.Callable[[Editable], Editable | None] = ...
 
 class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     """
@@ -10396,7 +10355,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10406,7 +10365,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -10415,13 +10374,13 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10445,7 +10404,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -10453,7 +10412,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -10464,8 +10423,8 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -10584,8 +10543,8 @@ class EmojiChooser(
     class Props(Popover.Props):
         autohide: bool
         cascade_popdown: bool
-        child: typing.Optional[Widget]
-        default_widget: typing.Optional[Widget]
+        child: Widget | None
+        default_widget: Widget | None
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -10594,7 +10553,7 @@ class EmojiChooser(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10604,7 +10563,7 @@ class EmojiChooser(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -10613,13 +10572,13 @@ class EmojiChooser(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10632,17 +10591,17 @@ class EmojiChooser(
         self,
         autohide: bool = ...,
         cascade_popdown: bool = ...,
-        child: typing.Optional[Widget] = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
+        default_widget: Widget | None = ...,
         has_arrow: bool = ...,
         mnemonics_visible: bool = ...,
-        pointing_to: typing.Optional[Gdk.Rectangle] = ...,
+        pointing_to: Gdk.Rectangle | None = ...,
         position: PositionType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -10650,7 +10609,7 @@ class EmojiChooser(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -10661,8 +10620,8 @@ class EmojiChooser(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -10801,11 +10760,11 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     """
     class Props(Widget.Props):
         activates_default: bool
-        attributes: typing.Optional[Pango.AttrList]
+        attributes: Pango.AttrList | None
         buffer: EntryBuffer
-        completion: typing.Optional[EntryCompletion]
+        completion: EntryCompletion | None
         enable_emoji_completion: bool
-        extra_menu: typing.Optional[Gio.MenuModel]
+        extra_menu: Gio.MenuModel | None
         has_frame: bool
         im_module: str
         input_hints: InputHints
@@ -10816,7 +10775,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         menu_entry_icon_primary_text: str
         menu_entry_icon_secondary_text: str
         overwrite_mode: bool
-        placeholder_text: typing.Optional[str]
+        placeholder_text: str | None
         primary_icon_activatable: bool
         primary_icon_gicon: Gio.Icon
         primary_icon_name: str
@@ -10837,7 +10796,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         secondary_icon_tooltip_markup: str
         secondary_icon_tooltip_text: str
         show_emoji_icon: bool
-        tabs: typing.Optional[Pango.TabArray]
+        tabs: Pango.TabArray | None
         text_length: int
         truncate_multiline: bool
         visibility: bool
@@ -10845,7 +10804,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -10855,7 +10814,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -10864,13 +10823,13 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -10894,9 +10853,9 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         activates_default: bool = ...,
         attributes: Pango.AttrList = ...,
         buffer: EntryBuffer = ...,
-        completion: typing.Optional[EntryCompletion] = ...,
+        completion: EntryCompletion | None = ...,
         enable_emoji_completion: bool = ...,
-        extra_menu: typing.Optional[Gio.MenuModel] = ...,
+        extra_menu: Gio.MenuModel | None = ...,
         has_frame: bool = ...,
         im_module: str = ...,
         input_hints: InputHints = ...,
@@ -10907,7 +10866,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         menu_entry_icon_primary_text: str = ...,
         menu_entry_icon_secondary_text: str = ...,
         overwrite_mode: bool = ...,
-        placeholder_text: typing.Optional[str] = ...,
+        placeholder_text: str | None = ...,
         primary_icon_activatable: bool = ...,
         primary_icon_gicon: Gio.Icon = ...,
         primary_icon_name: str = ...,
@@ -10925,14 +10884,14 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         secondary_icon_tooltip_markup: str = ...,
         secondary_icon_tooltip_text: str = ...,
         show_emoji_icon: bool = ...,
-        tabs: typing.Optional[Pango.TabArray] = ...,
+        tabs: Pango.TabArray | None = ...,
         truncate_multiline: bool = ...,
         visibility: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -10940,7 +10899,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -10951,8 +10910,8 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -10970,42 +10929,34 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     def do_activate(self) -> None: ...
     def get_activates_default(self) -> bool: ...
     def get_alignment(self) -> float: ...
-    def get_attributes(self) -> typing.Optional[Pango.AttrList]: ...
+    def get_attributes(self) -> Pango.AttrList | None: ...
     def get_buffer(self) -> EntryBuffer: ...
-    def get_completion(self) -> typing.Optional[EntryCompletion]: ...
+    def get_completion(self) -> EntryCompletion | None: ...
     def get_current_icon_drag_source(self) -> int: ...
-    def get_extra_menu(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_extra_menu(self) -> Gio.MenuModel | None: ...
     def get_has_frame(self) -> bool: ...
     def get_icon_activatable(self, icon_pos: EntryIconPosition) -> bool: ...
     def get_icon_area(self, icon_pos: EntryIconPosition) -> Gdk.Rectangle: ...
     def get_icon_at_pos(self, x: int, y: int) -> int: ...
-    def get_icon_gicon(
-        self, icon_pos: EntryIconPosition
-    ) -> typing.Optional[Gio.Icon]: ...
-    def get_icon_name(self, icon_pos: EntryIconPosition) -> typing.Optional[str]: ...
+    def get_icon_gicon(self, icon_pos: EntryIconPosition) -> Gio.Icon | None: ...
+    def get_icon_name(self, icon_pos: EntryIconPosition) -> str | None: ...
     def get_icon_paintable(
         self, icon_pos: EntryIconPosition
-    ) -> typing.Optional[Gdk.Paintable]: ...
+    ) -> Gdk.Paintable | None: ...
     def get_icon_sensitive(self, icon_pos: EntryIconPosition) -> bool: ...
     def get_icon_storage_type(self, icon_pos: EntryIconPosition) -> ImageType: ...
-    def get_icon_tooltip_markup(
-        self, icon_pos: EntryIconPosition
-    ) -> typing.Optional[str]: ...
-    def get_icon_tooltip_text(
-        self, icon_pos: EntryIconPosition
-    ) -> typing.Optional[str]: ...
+    def get_icon_tooltip_markup(self, icon_pos: EntryIconPosition) -> str | None: ...
+    def get_icon_tooltip_text(self, icon_pos: EntryIconPosition) -> str | None: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
     def get_invisible_char(self) -> str: ...
     def get_max_length(self) -> int: ...
-    def get_menu_entry_icon_text(
-        self, icon_pos: EntryIconPosition
-    ) -> typing.Optional[str]: ...
+    def get_menu_entry_icon_text(self, icon_pos: EntryIconPosition) -> str | None: ...
     def get_overwrite_mode(self) -> bool: ...
-    def get_placeholder_text(self) -> typing.Optional[str]: ...
+    def get_placeholder_text(self) -> str | None: ...
     def get_progress_fraction(self) -> float: ...
     def get_progress_pulse_step(self) -> float: ...
-    def get_tabs(self) -> typing.Optional[Pango.TabArray]: ...
+    def get_tabs(self) -> Pango.TabArray | None: ...
     def get_text_length(self) -> int: ...
     def get_visibility(self) -> bool: ...
     def grab_focus_without_selecting(self) -> bool: ...
@@ -11019,10 +10970,8 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
     def set_alignment(self, xalign: float) -> None: ...
     def set_attributes(self, attrs: Pango.AttrList) -> None: ...
     def set_buffer(self, buffer: EntryBuffer) -> None: ...
-    def set_completion(
-        self, completion: typing.Optional[EntryCompletion] = None
-    ) -> None: ...
-    def set_extra_menu(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_completion(self, completion: EntryCompletion | None = None) -> None: ...
+    def set_extra_menu(self, model: Gio.MenuModel | None = None) -> None: ...
     def set_has_frame(self, setting: bool) -> None: ...
     def set_icon_activatable(
         self, icon_pos: EntryIconPosition, activatable: bool
@@ -11034,24 +10983,24 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         actions: Gdk.DragAction,
     ) -> None: ...
     def set_icon_from_gicon(
-        self, icon_pos: EntryIconPosition, icon: typing.Optional[Gio.Icon] = None
+        self, icon_pos: EntryIconPosition, icon: Gio.Icon | None = None
     ) -> None: ...
     def set_icon_from_icon_name(
-        self, icon_pos: EntryIconPosition, icon_name: typing.Optional[str] = None
+        self, icon_pos: EntryIconPosition, icon_name: str | None = None
     ) -> None: ...
     def set_icon_from_paintable(
         self,
         icon_pos: EntryIconPosition,
-        paintable: typing.Optional[Gdk.Paintable] = None,
+        paintable: Gdk.Paintable | None = None,
     ) -> None: ...
     def set_icon_sensitive(
         self, icon_pos: EntryIconPosition, sensitive: bool
     ) -> None: ...
     def set_icon_tooltip_markup(
-        self, icon_pos: EntryIconPosition, tooltip: typing.Optional[str] = None
+        self, icon_pos: EntryIconPosition, tooltip: str | None = None
     ) -> None: ...
     def set_icon_tooltip_text(
-        self, icon_pos: EntryIconPosition, tooltip: typing.Optional[str] = None
+        self, icon_pos: EntryIconPosition, tooltip: str | None = None
     ) -> None: ...
     def set_input_hints(self, hints: InputHints) -> None: ...
     def set_input_purpose(self, purpose: InputPurpose) -> None: ...
@@ -11061,10 +11010,10 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
         self, icon_pos: EntryIconPosition, text: str
     ) -> None: ...
     def set_overwrite_mode(self, overwrite: bool) -> None: ...
-    def set_placeholder_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_placeholder_text(self, text: str | None = None) -> None: ...
     def set_progress_fraction(self, fraction: float) -> None: ...
     def set_progress_pulse_step(self, fraction: float) -> None: ...
-    def set_tabs(self, tabs: typing.Optional[Pango.TabArray] = None) -> None: ...
+    def set_tabs(self, tabs: Pango.TabArray | None = None) -> None: ...
     def set_visibility(self, visible: bool) -> None: ...
     def unset_invisible_char(self) -> None: ...
 
@@ -11114,9 +11063,7 @@ class EntryBuffer(GObject.Object):
     def get_text(self) -> str: ...
     def insert_text(self, position: int, chars: str, n_chars: int) -> int: ...
     @classmethod
-    def new(
-        cls, initial_chars: typing.Optional[str], n_initial_chars: int
-    ) -> EntryBuffer: ...
+    def new(cls, initial_chars: str | None, n_initial_chars: int) -> EntryBuffer: ...
     def set_max_length(self, max_length: int) -> None: ...
     def set_text(self, chars: str, n_chars: int) -> None: ...
 
@@ -11187,7 +11134,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         popup_completion: bool
         popup_set_width: bool
         popup_single_match: bool
@@ -11200,20 +11147,20 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         inline_completion: bool = ...,
         inline_selection: bool = ...,
         minimum_key_length: int = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         popup_completion: bool = ...,
         popup_set_width: bool = ...,
         popup_single_match: bool = ...,
         text_column: int = ...,
     ) -> None: ...
     def complete(self) -> None: ...
-    def compute_prefix(self, key: str) -> typing.Optional[str]: ...
-    def get_completion_prefix(self) -> typing.Optional[str]: ...
+    def compute_prefix(self, key: str) -> str | None: ...
+    def get_completion_prefix(self) -> str | None: ...
     def get_entry(self) -> Widget: ...
     def get_inline_completion(self) -> bool: ...
     def get_inline_selection(self) -> bool: ...
     def get_minimum_key_length(self) -> int: ...
-    def get_model(self) -> typing.Optional[TreeModel]: ...
+    def get_model(self) -> TreeModel | None: ...
     def get_popup_completion(self) -> bool: ...
     def get_popup_set_width(self) -> bool: ...
     def get_popup_single_match(self) -> bool: ...
@@ -11229,7 +11176,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         self, func: typing.Callable[..., bool], *func_data: typing.Any
     ) -> None: ...
     def set_minimum_key_length(self, length: int) -> None: ...
-    def set_model(self, model: typing.Optional[TreeModel] = None) -> None: ...
+    def set_model(self, model: TreeModel | None = None) -> None: ...
     def set_popup_completion(self, popup_completion: bool) -> None: ...
     def set_popup_set_width(self, popup_set_width: bool) -> None: ...
     def set_popup_single_match(self, popup_single_match: bool) -> None: ...
@@ -11255,31 +11202,31 @@ class EventController(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
-    def get_current_event(self) -> typing.Optional[Gdk.Event]: ...
-    def get_current_event_device(self) -> typing.Optional[Gdk.Device]: ...
+    def get_current_event(self) -> Gdk.Event | None: ...
+    def get_current_event_device(self) -> Gdk.Device | None: ...
     def get_current_event_state(self) -> Gdk.ModifierType: ...
     def get_current_event_time(self) -> int: ...
-    def get_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> str | None: ...
     def get_propagation_limit(self) -> PropagationLimit: ...
     def get_propagation_phase(self) -> PropagationPhase: ...
-    def get_widget(self) -> typing.Optional[Widget]: ...
+    def get_widget(self) -> Widget | None: ...
     def reset(self) -> None: ...
-    def set_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: str | None = None) -> None: ...
     def set_propagation_limit(self, limit: PropagationLimit) -> None: ...
     def set_propagation_phase(self, phase: PropagationPhase) -> None: ...
-    def set_static_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_static_name(self, name: str | None = None) -> None: ...
 
 class EventControllerClass(GObject.GPointer): ...
 
@@ -11314,15 +11261,15 @@ class EventControllerFocus(EventController):
     class Props(EventController.Props):
         contains_focus: bool
         is_focus: bool
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -11360,24 +11307,24 @@ class EventControllerKey(EventController):
       notify (GParam)
     """
     class Props(EventController.Props):
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def forward(self, widget: Widget) -> bool: ...
     def get_group(self) -> int: ...
-    def get_im_context(self) -> typing.Optional[IMContext]: ...
+    def get_im_context(self) -> IMContext | None: ...
     @classmethod
     def new(cls) -> EventControllerKey: ...
-    def set_im_context(self, im_context: typing.Optional[IMContext] = None) -> None: ...
+    def set_im_context(self, im_context: IMContext | None = None) -> None: ...
 
 class EventControllerKeyClass(GObject.GPointer): ...
 
@@ -11405,15 +11352,15 @@ class EventControllerLegacy(EventController):
       notify (GParam)
     """
     class Props(EventController.Props):
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -11454,15 +11401,15 @@ class EventControllerMotion(EventController):
     class Props(EventController.Props):
         contains_pointer: bool
         is_pointer: bool
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -11504,16 +11451,16 @@ class EventControllerScroll(EventController):
     """
     class Props(EventController.Props):
         flags: EventControllerScrollFlags
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         flags: EventControllerScrollFlags = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -11642,10 +11589,10 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         expanded: bool
-        label: typing.Optional[str]
-        label_widget: typing.Optional[Widget]
+        label: str | None
+        label_widget: Widget | None
         resize_toplevel: bool
         use_markup: bool
         use_underline: bool
@@ -11653,7 +11600,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11663,7 +11610,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -11672,13 +11619,13 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -11689,10 +11636,10 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         expanded: bool = ...,
-        label: typing.Optional[str] = ...,
-        label_widget: typing.Optional[Widget] = ...,
+        label: str | None = ...,
+        label_widget: Widget | None = ...,
         resize_toplevel: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
@@ -11700,7 +11647,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -11708,7 +11655,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -11719,8 +11666,8 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -11728,23 +11675,21 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_expanded(self) -> bool: ...
-    def get_label(self) -> typing.Optional[str]: ...
-    def get_label_widget(self) -> typing.Optional[Widget]: ...
+    def get_label(self) -> str | None: ...
+    def get_label_widget(self) -> Widget | None: ...
     def get_resize_toplevel(self) -> bool: ...
     def get_use_markup(self) -> bool: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
-    def new(cls, label: typing.Optional[str] = None) -> Expander: ...
+    def new(cls, label: str | None = None) -> Expander: ...
     @classmethod
-    def new_with_mnemonic(cls, label: typing.Optional[str] = None) -> Expander: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def new_with_mnemonic(cls, label: str | None = None) -> Expander: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_expanded(self, expanded: bool) -> None: ...
-    def set_label(self, label: typing.Optional[str] = None) -> None: ...
-    def set_label_widget(
-        self, label_widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_label(self, label: str | None = None) -> None: ...
+    def set_label_widget(self, label_widget: Widget | None = None) -> None: ...
     def set_resize_toplevel(self, resize_toplevel: bool) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
@@ -11761,18 +11706,16 @@ class Expression(_gi.Fundamental):
         self,
         target: GObject.Object,
         property: str,
-        this_: typing.Optional[GObject.Object] = None,
+        this_: GObject.Object | None = None,
     ) -> ExpressionWatch: ...
-    def evaluate(
-        self, this_: typing.Optional[GObject.Object], value: typing.Any
-    ) -> bool: ...
+    def evaluate(self, this_: GObject.Object | None, value: typing.Any) -> bool: ...
     def get_value_type(self) -> typing.Type[typing.Any]: ...
     def is_static(self) -> bool: ...
     def ref(self) -> Expression: ...
     def unref(self) -> None: ...
     def watch(
         self,
-        this_: typing.Optional[GObject.Object],
+        this_: GObject.Object | None,
         notify: typing.Callable[..., None],
         *user_data: typing.Any,
     ) -> ExpressionWatch: ...
@@ -11794,19 +11737,19 @@ class FileChooser(GObject.GInterface):
         self,
         id: str,
         label: str,
-        options: typing.Optional[typing.Sequence[str]] = None,
-        option_labels: typing.Optional[typing.Sequence[str]] = None,
+        options: typing.Sequence[str] | None = None,
+        option_labels: typing.Sequence[str] | None = None,
     ) -> None: ...
     def add_filter(self, filter: FileFilter) -> None: ...
     def add_shortcut_folder(self, folder: Gio.File) -> bool: ...
     def get_action(self) -> FileChooserAction: ...
-    def get_choice(self, id: str) -> typing.Optional[str]: ...
+    def get_choice(self, id: str) -> str | None: ...
     def get_create_folders(self) -> bool: ...
-    def get_current_folder(self) -> typing.Optional[Gio.File]: ...
-    def get_current_name(self) -> typing.Optional[str]: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
+    def get_current_folder(self) -> Gio.File | None: ...
+    def get_current_name(self) -> str | None: ...
+    def get_file(self) -> Gio.File | None: ...
     def get_files(self) -> Gio.ListModel: ...
-    def get_filter(self) -> typing.Optional[FileFilter]: ...
+    def get_filter(self) -> FileFilter | None: ...
     # override
     def get_filters(self) -> Gio.ListModel[FileFilter]: ...
     def get_select_multiple(self) -> bool: ...
@@ -11817,7 +11760,7 @@ class FileChooser(GObject.GInterface):
     def set_action(self, action: FileChooserAction) -> None: ...
     def set_choice(self, id: str, option: str) -> None: ...
     def set_create_folders(self, create_folders: bool) -> None: ...
-    def set_current_folder(self, file: typing.Optional[Gio.File] = None) -> bool: ...
+    def set_current_folder(self, file: Gio.File | None = None) -> bool: ...
     def set_current_name(self, name: str) -> None: ...
     def set_file(self, file: Gio.File) -> bool: ...
     def set_filter(self, filter: FileFilter) -> None: ...
@@ -11942,36 +11885,36 @@ class FileChooserDialog(
     # override
     class Props(Dialog.Props):
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -11981,7 +11924,7 @@ class FileChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -11990,13 +11933,13 @@ class FileChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12005,7 +11948,7 @@ class FileChooserDialog(
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
-        filter: typing.Optional[FileFilter]
+        filter: FileFilter | None
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
         shortcut_folders: Gio.ListModel
@@ -12015,35 +11958,35 @@ class FileChooserDialog(
     def __init__(
         self,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -12051,7 +11994,7 @@ class FileChooserDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -12062,8 +12005,8 @@ class FileChooserDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -12105,15 +12048,15 @@ class FileChooserNative(NativeDialog, FileChooser):
     """
     # override
     class Props(NativeDialog.Props):
-        accept_label: typing.Optional[str]
-        cancel_label: typing.Optional[str]
+        accept_label: str | None
+        cancel_label: str | None
         modal: bool
-        title: typing.Optional[str]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        transient_for: Window | None
         visible: bool
         action: FileChooserAction
         create_folders: bool
-        filter: typing.Optional[FileFilter]
+        filter: FileFilter | None
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
         shortcut_folders: Gio.ListModel
@@ -12121,30 +12064,30 @@ class FileChooserNative(NativeDialog, FileChooser):
     props: Props = ...
     def __init__(
         self,
-        accept_label: typing.Optional[str] = ...,
-        cancel_label: typing.Optional[str] = ...,
+        accept_label: str | None = ...,
+        cancel_label: str | None = ...,
         modal: bool = ...,
         title: str = ...,
-        transient_for: typing.Optional[Window] = ...,
+        transient_for: Window | None = ...,
         visible: bool = ...,
         action: FileChooserAction = ...,
         create_folders: bool = ...,
         filter: FileFilter = ...,
         select_multiple: bool = ...,
     ) -> None: ...
-    def get_accept_label(self) -> typing.Optional[str]: ...
-    def get_cancel_label(self) -> typing.Optional[str]: ...
+    def get_accept_label(self) -> str | None: ...
+    def get_cancel_label(self) -> str | None: ...
     @classmethod
     def new(
         cls,
-        title: typing.Optional[str],
-        parent: typing.Optional[Window],
+        title: str | None,
+        parent: Window | None,
         action: FileChooserAction,
-        accept_label: typing.Optional[str] = None,
-        cancel_label: typing.Optional[str] = None,
+        accept_label: str | None = None,
+        cancel_label: str | None = None,
     ) -> FileChooserNative: ...
-    def set_accept_label(self, accept_label: typing.Optional[str] = None) -> None: ...
-    def set_cancel_label(self, cancel_label: typing.Optional[str] = None) -> None: ...
+    def set_accept_label(self, accept_label: str | None = None) -> None: ...
+    def set_cancel_label(self, cancel_label: str | None = None) -> None: ...
 
 class FileChooserNativeClass(GObject.GPointer):
     """
@@ -12251,7 +12194,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12261,7 +12204,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -12270,13 +12213,13 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12285,7 +12228,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
-        filter: typing.Optional[FileFilter]
+        filter: FileFilter | None
         filters: Gio.ListModel[FileFilter]
         select_multiple: bool
         shortcut_folders: Gio.ListModel
@@ -12298,7 +12241,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -12306,7 +12249,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -12317,8 +12260,8 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -12359,12 +12302,12 @@ class FileDialog(GObject.Object):
     """
     # override
     class Props(GObject.Object.Props):
-        accept_label: typing.Optional[str]
-        default_filter: typing.Optional[FileFilter]
-        filters: typing.Optional[Gio.ListModel[FileFilter]]
-        initial_file: typing.Optional[Gio.File]
-        initial_folder: typing.Optional[Gio.File]
-        initial_name: typing.Optional[str]
+        accept_label: str | None
+        default_filter: FileFilter | None
+        filters: Gio.ListModel[FileFilter] | None
+        initial_file: Gio.File | None
+        initial_folder: Gio.File | None
+        initial_name: str | None
         modal: bool
         title: str
 
@@ -12372,47 +12315,47 @@ class FileDialog(GObject.Object):
     # override
     def __init__(
         self,
-        accept_label: typing.Optional[str] = ...,
-        default_filter: typing.Optional[FileFilter] = ...,
-        filters: typing.Optional[Gio.ListModel[FileFilter]] = ...,
-        initial_file: typing.Optional[Gio.File] = ...,
-        initial_folder: typing.Optional[Gio.File] = ...,
-        initial_name: typing.Optional[str] = ...,
+        accept_label: str | None = ...,
+        default_filter: FileFilter | None = ...,
+        filters: Gio.ListModel[FileFilter] | None = ...,
+        initial_file: Gio.File | None = ...,
+        initial_folder: Gio.File | None = ...,
+        initial_name: str | None = ...,
         modal: bool = ...,
         title: str = ...,
     ) -> None: ...
-    def get_accept_label(self) -> typing.Optional[str]: ...
-    def get_default_filter(self) -> typing.Optional[FileFilter]: ...
+    def get_accept_label(self) -> str | None: ...
+    def get_default_filter(self) -> FileFilter | None: ...
     # override
-    def get_filters(self) -> typing.Optional[Gio.ListModel[FileFilter]]: ...
-    def get_initial_file(self) -> typing.Optional[Gio.File]: ...
-    def get_initial_folder(self) -> typing.Optional[Gio.File]: ...
-    def get_initial_name(self) -> typing.Optional[str]: ...
+    def get_filters(self) -> Gio.ListModel[FileFilter] | None: ...
+    def get_initial_file(self) -> Gio.File | None: ...
+    def get_initial_folder(self) -> Gio.File | None: ...
+    def get_initial_name(self) -> str | None: ...
     def get_modal(self) -> bool: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> FileDialog: ...
     def open(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def open_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
     def open_multiple(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def open_multiple_finish(self, result: Gio.AsyncResult) -> Gio.ListModel: ...
     def open_multiple_text_files(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def open_multiple_text_files_finish(
@@ -12420,9 +12363,9 @@ class FileDialog(GObject.Object):
     ) -> typing.Tuple[Gio.ListModel, str]: ...
     def open_text_file(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def open_text_file_finish(
@@ -12430,17 +12373,17 @@ class FileDialog(GObject.Object):
     ) -> typing.Tuple[Gio.File, str]: ...
     def save(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def save_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
     def save_text_file(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def save_text_file_finish(
@@ -12448,33 +12391,29 @@ class FileDialog(GObject.Object):
     ) -> typing.Tuple[Gio.File, str, str]: ...
     def select_folder(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def select_folder_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
     def select_multiple_folders(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def select_multiple_folders_finish(
         self, result: Gio.AsyncResult
     ) -> Gio.ListModel: ...
-    def set_accept_label(self, accept_label: typing.Optional[str] = None) -> None: ...
-    def set_default_filter(
-        self, filter: typing.Optional[FileFilter] = None
-    ) -> None: ...
+    def set_accept_label(self, accept_label: str | None = None) -> None: ...
+    def set_default_filter(self, filter: FileFilter | None = None) -> None: ...
     # override
-    def set_filters(
-        self, filters: typing.Optional[Gio.ListModel[FileFilter]] = None
-    ) -> None: ...
-    def set_initial_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
-    def set_initial_folder(self, folder: typing.Optional[Gio.File] = None) -> None: ...
-    def set_initial_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_filters(self, filters: Gio.ListModel[FileFilter] | None = None) -> None: ...
+    def set_initial_file(self, file: Gio.File | None = None) -> None: ...
+    def set_initial_folder(self, folder: Gio.File | None = None) -> None: ...
+    def set_initial_name(self, name: str | None = None) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
@@ -12514,7 +12453,7 @@ class FileFilter(Filter, Buildable):
       notify (GParam)
     """
     class Props(Filter.Props):
-        name: typing.Optional[str]
+        name: str | None
         mime_types: list[str]
         patterns: list[str]
         suffixes: list[str]
@@ -12523,7 +12462,7 @@ class FileFilter(Filter, Buildable):
     def __init__(
         self,
         mime_types: typing.Sequence[str] = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         patterns: typing.Sequence[str] = ...,
         suffixes: typing.Sequence[str] = ...,
     ) -> None: ...
@@ -12532,12 +12471,12 @@ class FileFilter(Filter, Buildable):
     def add_pixbuf_formats(self) -> None: ...
     def add_suffix(self, suffix: str) -> None: ...
     def get_attributes(self) -> list[str]: ...
-    def get_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> str | None: ...
     @classmethod
     def new(cls) -> FileFilter: ...
     @classmethod
     def new_from_gvariant(cls, variant: GLib.Variant) -> FileFilter: ...
-    def set_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_name(self, name: str | None = None) -> None: ...
     def to_gvariant(self) -> GLib.Variant: ...
 
 class FileLauncher(GObject.Object):
@@ -12561,39 +12500,39 @@ class FileLauncher(GObject.Object):
     """
     class Props(GObject.Object.Props):
         always_ask: bool
-        file: typing.Optional[Gio.File]
+        file: Gio.File | None
         writable: bool
 
     props: Props = ...
     def __init__(
         self,
         always_ask: bool = ...,
-        file: typing.Optional[Gio.File] = ...,
+        file: Gio.File | None = ...,
         writable: bool = ...,
     ) -> None: ...
     def get_always_ask(self) -> bool: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
+    def get_file(self) -> Gio.File | None: ...
     def get_writable(self) -> bool: ...
     def launch(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
     @classmethod
-    def new(cls, file: typing.Optional[Gio.File] = None) -> FileLauncher: ...
+    def new(cls, file: Gio.File | None = None) -> FileLauncher: ...
     def open_containing_folder(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def open_containing_folder_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_always_ask(self, always_ask: bool) -> None: ...
-    def set_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
+    def set_file(self, file: Gio.File | None = None) -> None: ...
     def set_writable(self, writable: bool) -> None: ...
 
 class FileLauncherClass(GObject.GPointer):
@@ -12627,7 +12566,7 @@ class Filter(GObject.Object):
     parent_instance: GObject.Object = ...
     def changed(self, change: FilterChange) -> None: ...
     def do_get_strictness(self) -> FilterMatch: ...
-    def do_match(self, item: typing.Optional[GObject.Object] = None) -> bool: ...
+    def do_match(self, item: GObject.Object | None = None) -> bool: ...
     def get_strictness(self) -> FilterMatch: ...
     def match(self, item: GObject.Object) -> bool: ...
 
@@ -12641,7 +12580,7 @@ class FilterClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    match: typing.Callable[[Filter, typing.Optional[GObject.Object]], bool] = ...
+    match: typing.Callable[[Filter, GObject.Object | None], bool] = ...
     get_strictness: typing.Callable[[Filter], FilterMatch] = ...
 
 class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
@@ -12674,10 +12613,10 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        filter: typing.Optional[Filter]
+        filter: Filter | None
         incremental: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
         pending: int
         watch_items: bool
@@ -12685,25 +12624,25 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     props: Props = ...
     def __init__(
         self,
-        filter: typing.Optional[Filter] = ...,
+        filter: Filter | None = ...,
         incremental: bool = ...,
-        model: typing.Optional[Gio.ListModel] = ...,
+        model: Gio.ListModel | None = ...,
         watch_items: bool = ...,
     ) -> None: ...
-    def get_filter(self) -> typing.Optional[Filter]: ...
+    def get_filter(self) -> Filter | None: ...
     def get_incremental(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def get_pending(self) -> int: ...
     def get_watch_items(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel] = None,
-        filter: typing.Optional[Filter] = None,
+        model: Gio.ListModel | None = None,
+        filter: Filter | None = None,
     ) -> FilterListModel: ...
-    def set_filter(self, filter: typing.Optional[Filter] = None) -> None: ...
+    def set_filter(self, filter: Filter | None = None) -> None: ...
     def set_incremental(self, incremental: bool) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_watch_items(self, watch_items: bool) -> None: ...
 
 class FilterListModelClass(GObject.GPointer):
@@ -12788,7 +12727,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -12798,7 +12737,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -12807,13 +12746,13 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -12829,7 +12768,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -12837,7 +12776,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -12848,8 +12787,8 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -12858,14 +12797,14 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child_position(self, widget: Widget) -> typing.Tuple[float, float]: ...
-    def get_child_transform(self, widget: Widget) -> typing.Optional[Gsk.Transform]: ...
+    def get_child_transform(self, widget: Widget) -> Gsk.Transform | None: ...
     def move(self, widget: Widget, x: float, y: float) -> None: ...
     @classmethod
     def new(cls) -> Fixed: ...
     def put(self, widget: Widget, x: float, y: float) -> None: ...
     def remove(self, widget: Widget) -> None: ...
     def set_child_transform(
-        self, widget: Widget, transform: typing.Optional[Gsk.Transform] = None
+        self, widget: Widget, transform: Gsk.Transform | None = None
     ) -> None: ...
 
 class FixedClass(GObject.GPointer):
@@ -12918,7 +12857,7 @@ class FixedLayoutChild(LayoutChild):
       notify (GParam)
     """
     class Props(LayoutChild.Props):
-        transform: typing.Optional[Gsk.Transform]
+        transform: Gsk.Transform | None
         child_widget: Widget
         layout_manager: LayoutManager
 
@@ -12929,7 +12868,7 @@ class FixedLayoutChild(LayoutChild):
         child_widget: Widget = ...,
         layout_manager: LayoutManager = ...,
     ) -> None: ...
-    def get_transform(self) -> typing.Optional[Gsk.Transform]: ...
+    def get_transform(self) -> Gsk.Transform | None: ...
     def set_transform(self, transform: Gsk.Transform) -> None: ...
 
 class FixedLayoutChildClass(GObject.GPointer):
@@ -12981,16 +12920,16 @@ class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
 
     props: Props = ...
-    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
-    def get_model_for_item(self, position: int) -> typing.Optional[Gio.ListModel]: ...
+    def __init__(self, *, model: Gio.ListModel | None = ...) -> None: ...
+    def get_model(self) -> Gio.ListModel | None: ...
+    def get_model_for_item(self, position: int) -> Gio.ListModel | None: ...
     @classmethod
-    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> FlattenListModel: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def new(cls, model: Gio.ListModel | None = None) -> FlattenListModel: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
 class FlattenListModelClass(GObject.GPointer):
     """
@@ -13101,7 +13040,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13111,7 +13050,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -13120,13 +13059,13 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13150,7 +13089,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -13158,7 +13097,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -13169,8 +13108,8 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -13182,13 +13121,13 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def append(self, child: Widget) -> None: ...
     def bind_model(
         self,
-        model: typing.Optional[Gio.ListModel],
+        model: Gio.ListModel | None,
         create_widget_func: typing.Callable[..., Widget],
         *user_data: typing.Any,
     ) -> None: ...
     def get_activate_on_single_click(self) -> bool: ...
-    def get_child_at_index(self, idx: int) -> typing.Optional[FlowBoxChild]: ...
-    def get_child_at_pos(self, x: int, y: int) -> typing.Optional[FlowBoxChild]: ...
+    def get_child_at_index(self, idx: int) -> FlowBoxChild | None: ...
+    def get_child_at_pos(self, x: int, y: int) -> FlowBoxChild | None: ...
     def get_column_spacing(self) -> int: ...
     def get_homogeneous(self) -> bool: ...
     def get_max_children_per_line(self) -> int: ...
@@ -13213,7 +13152,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_column_spacing(self, spacing: int) -> None: ...
     def set_filter_func(
         self,
-        filter_func: typing.Optional[typing.Callable[..., bool]] = None,
+        filter_func: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_hadjustment(self, adjustment: Adjustment) -> None: ...
@@ -13224,7 +13163,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_selection_mode(self, mode: SelectionMode) -> None: ...
     def set_sort_func(
         self,
-        sort_func: typing.Optional[typing.Callable[..., int]] = None,
+        sort_func: typing.Callable[..., int] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_vadjustment(self, adjustment: Adjustment) -> None: ...
@@ -13304,12 +13243,12 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13319,7 +13258,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -13328,13 +13267,13 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -13346,12 +13285,12 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
     parent_instance: Widget = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -13359,7 +13298,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -13370,8 +13309,8 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -13381,12 +13320,12 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
     ) -> None: ...
     def changed(self) -> None: ...
     def do_activate(self) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_index(self) -> int: ...
     def is_selected(self) -> bool: ...
     @classmethod
     def new(cls) -> FlowBoxChild: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
 
 class FlowBoxChildClass(GObject.GPointer):
     """
@@ -13490,7 +13429,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13500,7 +13439,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -13509,21 +13448,21 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: typing.Optional[str]
-        font_desc: typing.Optional[Pango.FontDescription]
+        font: str | None
+        font_desc: Pango.FontDescription | None
         font_features: str
         language: str
         level: FontChooserLevel
@@ -13541,7 +13480,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -13549,7 +13488,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -13560,8 +13499,8 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -13595,12 +13534,12 @@ class FontChooser(GObject.GInterface):
     Signals from GObject:
       notify (GParam)
     """
-    def get_font(self) -> typing.Optional[str]: ...
-    def get_font_desc(self) -> typing.Optional[Pango.FontDescription]: ...
-    def get_font_face(self) -> typing.Optional[Pango.FontFace]: ...
-    def get_font_family(self) -> typing.Optional[Pango.FontFamily]: ...
+    def get_font(self) -> str | None: ...
+    def get_font_desc(self) -> Pango.FontDescription | None: ...
+    def get_font_face(self) -> Pango.FontFace | None: ...
+    def get_font_family(self) -> Pango.FontFamily | None: ...
     def get_font_features(self) -> str: ...
-    def get_font_map(self) -> typing.Optional[Pango.FontMap]: ...
+    def get_font_map(self) -> Pango.FontMap | None: ...
     def get_font_size(self) -> int: ...
     def get_language(self) -> str: ...
     def get_level(self) -> FontChooserLevel: ...
@@ -13608,12 +13547,12 @@ class FontChooser(GObject.GInterface):
     def get_show_preview_entry(self) -> bool: ...
     def set_filter_func(
         self,
-        filter: typing.Optional[typing.Callable[..., bool]] = None,
+        filter: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_font(self, fontname: str) -> None: ...
     def set_font_desc(self, font_desc: Pango.FontDescription) -> None: ...
-    def set_font_map(self, fontmap: typing.Optional[Pango.FontMap] = None) -> None: ...
+    def set_font_map(self, fontmap: Pango.FontMap | None = None) -> None: ...
     def set_language(self, language: str) -> None: ...
     def set_level(self, level: FontChooserLevel) -> None: ...
     def set_preview_text(self, text: str) -> None: ...
@@ -13741,36 +13680,36 @@ class FontChooserDialog(
     """
     class Props(Dialog.Props):
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13780,7 +13719,7 @@ class FontChooserDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -13789,21 +13728,21 @@ class FontChooserDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: typing.Optional[str]
-        font_desc: typing.Optional[Pango.FontDescription]
+        font: str | None
+        font_desc: Pango.FontDescription | None
         font_features: str
         language: str
         level: FontChooserLevel
@@ -13815,35 +13754,35 @@ class FontChooserDialog(
     def __init__(
         self,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -13851,7 +13790,7 @@ class FontChooserDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -13862,8 +13801,8 @@ class FontChooserDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -13879,7 +13818,7 @@ class FontChooserDialog(
     ) -> None: ...
     @classmethod
     def new(
-        cls, title: typing.Optional[str] = None, parent: typing.Optional[Window] = None
+        cls, title: str | None = None, parent: Window | None = None
     ) -> FontChooserDialog: ...
 
 class FontChooserIface(GObject.GPointer):
@@ -13892,17 +13831,13 @@ class FontChooserIface(GObject.GPointer):
     """
 
     base_iface: GObject.TypeInterface = ...
-    get_font_family: typing.Callable[
-        [FontChooser], typing.Optional[Pango.FontFamily]
-    ] = ...
-    get_font_face: typing.Callable[[FontChooser], typing.Optional[Pango.FontFace]] = ...
+    get_font_family: typing.Callable[[FontChooser], Pango.FontFamily | None] = ...
+    get_font_face: typing.Callable[[FontChooser], Pango.FontFace | None] = ...
     get_font_size: typing.Callable[[FontChooser], int] = ...
     set_filter_func: typing.Callable[..., None] = ...
     font_activated: typing.Callable[[FontChooser, str], None] = ...
-    set_font_map: typing.Callable[
-        [FontChooser, typing.Optional[Pango.FontMap]], None
-    ] = ...
-    get_font_map: typing.Callable[[FontChooser], typing.Optional[Pango.FontMap]] = ...
+    set_font_map: typing.Callable[[FontChooser, Pango.FontMap | None], None] = ...
+    get_font_map: typing.Callable[[FontChooser], Pango.FontMap | None] = ...
     padding: list[None] = ...
 
 class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
@@ -13983,7 +13918,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -13993,7 +13928,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -14002,21 +13937,21 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        font: typing.Optional[str]
-        font_desc: typing.Optional[Pango.FontDescription]
+        font: str | None
+        font_desc: Pango.FontDescription | None
         font_features: str
         language: str
         level: FontChooserLevel
@@ -14030,7 +13965,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -14038,7 +13973,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -14049,8 +13984,8 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -14089,68 +14024,68 @@ class FontDialog(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        filter: typing.Optional[Filter]
-        font_map: typing.Optional[Pango.FontMap]
-        language: typing.Optional[Pango.Language]
+        filter: Filter | None
+        font_map: Pango.FontMap | None
+        language: Pango.Language | None
         modal: bool
         title: str
 
     props: Props = ...
     def __init__(
         self,
-        filter: typing.Optional[Filter] = ...,
-        font_map: typing.Optional[Pango.FontMap] = ...,
+        filter: Filter | None = ...,
+        font_map: Pango.FontMap | None = ...,
         language: Pango.Language = ...,
         modal: bool = ...,
         title: str = ...,
     ) -> None: ...
     def choose_face(
         self,
-        parent: typing.Optional[Window] = None,
-        initial_value: typing.Optional[Pango.FontFace] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        initial_value: Pango.FontFace | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_face_finish(self, result: Gio.AsyncResult) -> Pango.FontFace: ...
     def choose_family(
         self,
-        parent: typing.Optional[Window] = None,
-        initial_value: typing.Optional[Pango.FontFamily] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        initial_value: Pango.FontFamily | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_family_finish(self, result: Gio.AsyncResult) -> Pango.FontFamily: ...
     def choose_font(
         self,
-        parent: typing.Optional[Window] = None,
-        initial_value: typing.Optional[Pango.FontDescription] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        initial_value: Pango.FontDescription | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_font_and_features(
         self,
-        parent: typing.Optional[Window] = None,
-        initial_value: typing.Optional[Pango.FontDescription] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        initial_value: Pango.FontDescription | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def choose_font_and_features_finish(
         self, result: Gio.AsyncResult
     ) -> typing.Tuple[bool, Pango.FontDescription, str, Pango.Language]: ...
     def choose_font_finish(self, result: Gio.AsyncResult) -> Pango.FontDescription: ...
-    def get_filter(self) -> typing.Optional[Filter]: ...
-    def get_font_map(self) -> typing.Optional[Pango.FontMap]: ...
-    def get_language(self) -> typing.Optional[Pango.Language]: ...
+    def get_filter(self) -> Filter | None: ...
+    def get_font_map(self) -> Pango.FontMap | None: ...
+    def get_language(self) -> Pango.Language | None: ...
     def get_modal(self) -> bool: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> FontDialog: ...
-    def set_filter(self, filter: typing.Optional[Filter] = None) -> None: ...
-    def set_font_map(self, fontmap: typing.Optional[Pango.FontMap] = None) -> None: ...
+    def set_filter(self, filter: Filter | None = None) -> None: ...
+    def set_font_map(self, fontmap: Pango.FontMap | None = None) -> None: ...
     def set_language(self, language: Pango.Language) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
@@ -14234,10 +14169,10 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        dialog: typing.Optional[FontDialog]
-        font_desc: typing.Optional[Pango.FontDescription]
-        font_features: typing.Optional[str]
-        language: typing.Optional[Pango.Language]
+        dialog: FontDialog | None
+        font_desc: Pango.FontDescription | None
+        font_features: str | None
+        language: Pango.Language | None
         level: FontLevel
         use_font: bool
         use_size: bool
@@ -14245,7 +14180,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14255,7 +14190,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -14264,13 +14199,13 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14283,8 +14218,8 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         self,
         dialog: FontDialog = ...,
         font_desc: Pango.FontDescription = ...,
-        font_features: typing.Optional[str] = ...,
-        language: typing.Optional[Pango.Language] = ...,
+        font_features: str | None = ...,
+        language: Pango.Language | None = ...,
         level: FontLevel = ...,
         use_font: bool = ...,
         use_size: bool = ...,
@@ -14292,7 +14227,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -14300,7 +14235,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -14311,8 +14246,8 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -14320,21 +14255,19 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_dialog(self) -> typing.Optional[FontDialog]: ...
-    def get_font_desc(self) -> typing.Optional[Pango.FontDescription]: ...
-    def get_font_features(self) -> typing.Optional[str]: ...
-    def get_language(self) -> typing.Optional[Pango.Language]: ...
+    def get_dialog(self) -> FontDialog | None: ...
+    def get_font_desc(self) -> Pango.FontDescription | None: ...
+    def get_font_features(self) -> str | None: ...
+    def get_language(self) -> Pango.Language | None: ...
     def get_level(self) -> FontLevel: ...
     def get_use_font(self) -> bool: ...
     def get_use_size(self) -> bool: ...
     @classmethod
-    def new(cls, dialog: typing.Optional[FontDialog] = None) -> FontDialogButton: ...
+    def new(cls, dialog: FontDialog | None = None) -> FontDialogButton: ...
     def set_dialog(self, dialog: FontDialog) -> None: ...
     def set_font_desc(self, font_desc: Pango.FontDescription) -> None: ...
-    def set_font_features(self, font_features: typing.Optional[str] = None) -> None: ...
-    def set_language(
-        self, language: typing.Optional[Pango.Language] = None
-    ) -> None: ...
+    def set_font_features(self, font_features: str | None = None) -> None: ...
+    def set_language(self, language: Pango.Language | None = None) -> None: ...
     def set_level(self, level: FontLevel) -> None: ...
     def set_use_font(self, use_font: bool) -> None: ...
     def set_use_size(self, use_size: bool) -> None: ...
@@ -14434,15 +14367,15 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
-        label: typing.Optional[str]
-        label_widget: typing.Optional[Widget]
+        child: Widget | None
+        label: str | None
+        label_widget: Widget | None
         label_xalign: float
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14452,7 +14385,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -14461,13 +14394,13 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14479,15 +14412,15 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
     parent_instance: Widget = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
-        label: typing.Optional[str] = ...,
-        label_widget: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
+        label: str | None = ...,
+        label_widget: Widget | None = ...,
         label_xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -14495,7 +14428,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -14506,8 +14439,8 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -14516,18 +14449,16 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def do_compute_child_allocation(self, allocation: Gdk.Rectangle) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
-    def get_label(self) -> typing.Optional[str]: ...
+    def get_child(self) -> Widget | None: ...
+    def get_label(self) -> str | None: ...
     def get_label_align(self) -> float: ...
-    def get_label_widget(self) -> typing.Optional[Widget]: ...
+    def get_label_widget(self) -> Widget | None: ...
     @classmethod
-    def new(cls, label: typing.Optional[str] = None) -> Frame: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_label(self, label: typing.Optional[str] = None) -> None: ...
+    def new(cls, label: str | None = None) -> Frame: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_label(self, label: str | None = None) -> None: ...
     def set_label_align(self, xalign: float) -> None: ...
-    def set_label_widget(
-        self, label_widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_label_widget(self, label_widget: Widget | None = None) -> None: ...
 
 class FrameClass(GObject.GPointer):
     """
@@ -14626,7 +14557,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         allowed_apis: Gdk.GLAPI
         api: Gdk.GLAPI
         auto_render: bool
-        context: typing.Optional[Gdk.GLContext]
+        context: Gdk.GLContext | None
         has_depth_buffer: bool
         has_stencil_buffer: bool
         use_es: bool
@@ -14634,7 +14565,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -14644,7 +14575,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -14653,13 +14584,13 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -14680,7 +14611,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -14688,7 +14619,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -14699,8 +14630,8 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -14714,8 +14645,8 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     def get_allowed_apis(self) -> Gdk.GLAPI: ...
     def get_api(self) -> Gdk.GLAPI: ...
     def get_auto_render(self) -> bool: ...
-    def get_context(self) -> typing.Optional[Gdk.GLContext]: ...
-    def get_error(self) -> typing.Optional[GLib.Error]: ...
+    def get_context(self) -> Gdk.GLContext | None: ...
+    def get_error(self) -> GLib.Error | None: ...
     def get_has_depth_buffer(self) -> bool: ...
     def get_has_stencil_buffer(self) -> bool: ...
     def get_required_version(self) -> typing.Tuple[int, int]: ...
@@ -14726,7 +14657,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     def queue_render(self) -> None: ...
     def set_allowed_apis(self, apis: Gdk.GLAPI) -> None: ...
     def set_auto_render(self, auto_render: bool) -> None: ...
-    def set_error(self, error: typing.Optional[GLib.Error] = None) -> None: ...
+    def set_error(self, error: GLib.Error | None = None) -> None: ...
     def set_has_depth_buffer(self, has_depth_buffer: bool) -> None: ...
     def set_has_stencil_buffer(self, has_stencil_buffer: bool) -> None: ...
     def set_required_version(self, major: int, minor: int) -> None: ...
@@ -14777,36 +14708,34 @@ class Gesture(EventController):
     """
     class Props(EventController.Props):
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def get_bounding_box(self) -> typing.Tuple[bool, Gdk.Rectangle]: ...
     def get_bounding_box_center(self) -> typing.Tuple[bool, float, float]: ...
-    def get_device(self) -> typing.Optional[Gdk.Device]: ...
+    def get_device(self) -> Gdk.Device | None: ...
     def get_group(self) -> list[Gesture]: ...
     def get_last_event(
-        self, sequence: typing.Optional[Gdk.EventSequence] = None
-    ) -> typing.Optional[Gdk.Event]: ...
-    def get_last_updated_sequence(self) -> typing.Optional[Gdk.EventSequence]: ...
+        self, sequence: Gdk.EventSequence | None = None
+    ) -> Gdk.Event | None: ...
+    def get_last_updated_sequence(self) -> Gdk.EventSequence | None: ...
     def get_point(
-        self, sequence: typing.Optional[Gdk.EventSequence] = None
+        self, sequence: Gdk.EventSequence | None = None
     ) -> typing.Tuple[bool, float, float]: ...
     def get_sequence_state(self, sequence: Gdk.EventSequence) -> EventSequenceState: ...
     def get_sequences(self) -> list[Gdk.EventSequence]: ...
     def group(self, gesture: Gesture) -> None: ...
-    def handles_sequence(
-        self, sequence: typing.Optional[Gdk.EventSequence] = None
-    ) -> bool: ...
+    def handles_sequence(self, sequence: Gdk.EventSequence | None = None) -> bool: ...
     def is_active(self) -> bool: ...
     def is_grouped_with(self, other: Gesture) -> bool: ...
     def is_recognized(self) -> bool: ...
@@ -14864,10 +14793,10 @@ class GestureClick(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -14876,7 +14805,7 @@ class GestureClick(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -14930,10 +14859,10 @@ class GestureDrag(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -14942,7 +14871,7 @@ class GestureDrag(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15001,10 +14930,10 @@ class GestureLongPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -15014,7 +14943,7 @@ class GestureLongPress(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15077,10 +15006,10 @@ class GesturePan(GestureDrag):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -15090,7 +15019,7 @@ class GesturePan(GestureDrag):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15136,16 +15065,16 @@ class GestureRotate(Gesture):
     """
     class Props(Gesture.Props):
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15194,10 +15123,10 @@ class GestureSingle(Gesture):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -15206,13 +15135,13 @@ class GestureSingle(Gesture):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     def get_button(self) -> int: ...
     def get_current_button(self) -> int: ...
-    def get_current_sequence(self) -> typing.Optional[Gdk.EventSequence]: ...
+    def get_current_sequence(self) -> Gdk.EventSequence | None: ...
     def get_exclusive(self) -> bool: ...
     def get_touch_only(self) -> bool: ...
     def set_button(self, button: int) -> None: ...
@@ -15271,10 +15200,10 @@ class GestureStylus(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -15284,7 +15213,7 @@ class GestureStylus(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15293,7 +15222,7 @@ class GestureStylus(GestureSingle):
     ) -> typing.Tuple[bool, list[float]]: ...
     def get_axis(self, axis: Gdk.AxisUse) -> typing.Tuple[bool, float]: ...
     def get_backlog(self) -> typing.Tuple[bool, list[Gdk.TimeCoord]]: ...
-    def get_device_tool(self) -> typing.Optional[Gdk.DeviceTool]: ...
+    def get_device_tool(self) -> Gdk.DeviceTool | None: ...
     def get_stylus_only(self) -> bool: ...
     @classmethod
     def new(cls) -> GestureStylus: ...
@@ -15344,10 +15273,10 @@ class GestureSwipe(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
@@ -15356,7 +15285,7 @@ class GestureSwipe(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15401,16 +15330,16 @@ class GestureZoom(Gesture):
     """
     class Props(Gesture.Props):
         n_points: int
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         n_points: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -15493,13 +15422,13 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         black_background: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         enabled: GraphicsOffloadEnabled
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15509,7 +15438,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -15518,13 +15447,13 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15536,13 +15465,13 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     def __init__(
         self,
         black_background: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         enabled: GraphicsOffloadEnabled = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -15550,7 +15479,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -15561,8 +15490,8 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -15571,12 +15500,12 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_black_background(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_enabled(self) -> GraphicsOffloadEnabled: ...
     @classmethod
-    def new(cls, child: typing.Optional[Widget] = None) -> GraphicsOffload: ...
+    def new(cls, child: Widget | None = None) -> GraphicsOffload: ...
     def set_black_background(self, value: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_enabled(self, enabled: GraphicsOffloadEnabled) -> None: ...
 
 class GraphicsOffloadClass(GObject.GPointer):
@@ -15673,7 +15602,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -15683,7 +15612,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -15692,13 +15621,13 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -15720,7 +15649,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -15728,7 +15657,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -15739,8 +15668,8 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -15755,13 +15684,13 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def attach_next_to(
         self,
         child: Widget,
-        sibling: typing.Optional[Widget],
+        sibling: Widget | None,
         side: PositionType,
         width: int,
         height: int,
     ) -> None: ...
     def get_baseline_row(self) -> int: ...
-    def get_child_at(self, column: int, row: int) -> typing.Optional[Widget]: ...
+    def get_child_at(self, column: int, row: int) -> Widget | None: ...
     def get_column_homogeneous(self) -> bool: ...
     def get_column_spacing(self) -> int: ...
     def get_row_baseline_position(self, row: int) -> BaselinePosition: ...
@@ -16004,10 +15933,10 @@ class GridView(
     """
     class Props(ListBase.Props):
         enable_rubberband: bool
-        factory: typing.Optional[ListItemFactory]
+        factory: ListItemFactory | None
         max_columns: int
         min_columns: int
-        model: typing.Optional[SelectionModel]
+        model: SelectionModel | None
         single_click_activate: bool
         tab_behavior: ListTabBehavior
         orientation: Orientation
@@ -16015,7 +15944,7 @@ class GridView(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16025,7 +15954,7 @@ class GridView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -16034,32 +15963,32 @@ class GridView(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     def __init__(
         self,
         enable_rubberband: bool = ...,
-        factory: typing.Optional[ListItemFactory] = ...,
+        factory: ListItemFactory | None = ...,
         max_columns: int = ...,
         min_columns: int = ...,
-        model: typing.Optional[SelectionModel] = ...,
+        model: SelectionModel | None = ...,
         single_click_activate: bool = ...,
         tab_behavior: ListTabBehavior = ...,
         orientation: Orientation = ...,
@@ -16067,7 +15996,7 @@ class GridView(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -16075,7 +16004,7 @@ class GridView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -16086,43 +16015,43 @@ class GridView(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_enable_rubberband(self) -> bool: ...
-    def get_factory(self) -> typing.Optional[ListItemFactory]: ...
+    def get_factory(self) -> ListItemFactory | None: ...
     def get_max_columns(self) -> int: ...
     def get_min_columns(self) -> int: ...
-    def get_model(self) -> typing.Optional[SelectionModel]: ...
+    def get_model(self) -> SelectionModel | None: ...
     def get_single_click_activate(self) -> bool: ...
     def get_tab_behavior(self) -> ListTabBehavior: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[SelectionModel] = None,
-        factory: typing.Optional[ListItemFactory] = None,
+        model: SelectionModel | None = None,
+        factory: ListItemFactory | None = None,
     ) -> GridView: ...
     def scroll_to(
         self,
         pos: int,
         flags: ListScrollFlags,
-        scroll: typing.Optional[ScrollInfo] = None,
+        scroll: ScrollInfo | None = None,
     ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
-    def set_factory(self, factory: typing.Optional[ListItemFactory] = None) -> None: ...
+    def set_factory(self, factory: ListItemFactory | None = None) -> None: ...
     def set_max_columns(self, max_columns: int) -> None: ...
     def set_min_columns(self, min_columns: int) -> None: ...
-    def set_model(self, model: typing.Optional[SelectionModel] = None) -> None: ...
+    def set_model(self, model: SelectionModel | None = None) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
     def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
 
@@ -16201,15 +16130,15 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        decoration_layout: typing.Optional[str]
+        decoration_layout: str | None
         show_title_buttons: bool
-        title_widget: typing.Optional[Widget]
+        title_widget: Widget | None
         use_native_controls: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16219,7 +16148,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -16228,13 +16157,13 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -16245,15 +16174,15 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        decoration_layout: typing.Optional[str] = ...,
+        decoration_layout: str | None = ...,
         show_title_buttons: bool = ...,
-        title_widget: typing.Optional[Widget] = ...,
+        title_widget: Widget | None = ...,
         use_native_controls: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -16261,7 +16190,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -16272,8 +16201,8 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -16281,20 +16210,18 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_decoration_layout(self) -> typing.Optional[str]: ...
+    def get_decoration_layout(self) -> str | None: ...
     def get_show_title_buttons(self) -> bool: ...
-    def get_title_widget(self) -> typing.Optional[Widget]: ...
+    def get_title_widget(self) -> Widget | None: ...
     def get_use_native_controls(self) -> bool: ...
     @classmethod
     def new(cls) -> HeaderBar: ...
     def pack_end(self, child: Widget) -> None: ...
     def pack_start(self, child: Widget) -> None: ...
     def remove(self, child: Widget) -> None: ...
-    def set_decoration_layout(self, layout: typing.Optional[str] = None) -> None: ...
+    def set_decoration_layout(self, layout: str | None = None) -> None: ...
     def set_show_title_buttons(self, setting: bool) -> None: ...
-    def set_title_widget(
-        self, title_widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_title_widget(self, title_widget: Widget | None = None) -> None: ...
     def set_use_native_controls(self, setting: bool) -> None: ...
 
 class IMContext(GObject.Object):
@@ -16331,7 +16258,7 @@ class IMContext(GObject.Object):
     def __init__(
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ) -> None: ...
-    def activate_osk(self, event: typing.Optional[Gdk.Event] = None) -> bool: ...
+    def activate_osk(self, event: Gdk.Event | None = None) -> bool: ...
     def delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
     def do_activate_osk(self) -> None: ...
     def do_activate_osk_with_event(self, event: Gdk.Event) -> bool: ...
@@ -16350,7 +16277,7 @@ class IMContext(GObject.Object):
     def do_preedit_start(self) -> None: ...
     def do_reset(self) -> None: ...
     def do_retrieve_surrounding(self) -> bool: ...
-    def do_set_client_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def do_set_client_widget(self, widget: Widget | None = None) -> None: ...
     def do_set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
     def do_set_surrounding(self, text: str, len: int, cursor_index: int) -> None: ...
     def do_set_surrounding_with_selection(
@@ -16373,10 +16300,10 @@ class IMContext(GObject.Object):
     def get_preedit_string(self) -> typing.Tuple[str, Pango.AttrList, int]: ...
     def get_surrounding(
         self,
-    ) -> typing.Optional[typing.Tuple[str, int]]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[str, int] | None: ...  # CHECK Wrapped function
     def get_surrounding_with_selection(self) -> typing.Tuple[bool, str, int, int]: ...
     def reset(self) -> None: ...
-    def set_client_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_client_widget(self, widget: Widget | None = None) -> None: ...
     def set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
     def set_surrounding(self, text: str, len: int, cursor_index: int) -> None: ...
     def set_surrounding_with_selection(
@@ -16400,7 +16327,7 @@ class IMContextClass(GObject.GPointer):
     commit: typing.Callable[[IMContext, str], None] = ...
     retrieve_surrounding: typing.Callable[[IMContext], bool] = ...
     delete_surrounding: typing.Callable[[IMContext, int, int], bool] = ...
-    set_client_widget: typing.Callable[[IMContext, typing.Optional[Widget]], None] = ...
+    set_client_widget: typing.Callable[[IMContext, Widget | None], None] = ...
     get_preedit_string: typing.Callable[
         [IMContext], typing.Tuple[str, Pango.AttrList, int]
     ] = ...
@@ -16513,7 +16440,7 @@ class IMMulticontext(IMContext):
     def get_context_id(self) -> str: ...
     @classmethod
     def new(cls) -> IMMulticontext: ...
-    def set_context_id(self, context_id: typing.Optional[str] = None) -> None: ...
+    def set_context_id(self, context_id: str | None = None) -> None: ...
 
 class IMMulticontextClass(GObject.GPointer):
     """
@@ -16554,8 +16481,8 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        file: typing.Optional[Gio.File]
-        icon_name: typing.Optional[str]
+        file: Gio.File | None
+        icon_name: str | None
         is_symbolic: bool
         scale: int
         size: int
@@ -16569,8 +16496,8 @@ class IconPaintable(GObject.Object, Gdk.Paintable, SymbolicPaintable):
         scale: int = ...,
         size: int = ...,
     ) -> None: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_file(self) -> Gio.File | None: ...
+    def get_icon_name(self) -> str | None: ...
     def is_symbolic(self) -> bool: ...
     @classmethod
     def new_for_file(cls, file: Gio.File, size: int, scale: int) -> IconPaintable: ...
@@ -16611,29 +16538,29 @@ class IconTheme(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        display: typing.Optional[Gdk.Display]
+        display: Gdk.Display | None
         icon_names: list[str]
-        resource_path: typing.Optional[list[str]]
-        search_path: typing.Optional[list[str]]
+        resource_path: list[str] | None
+        search_path: list[str] | None
         theme_name: str
 
     props: Props = ...
     def __init__(
         self,
         display: Gdk.Display = ...,
-        resource_path: typing.Optional[typing.Sequence[str]] = ...,
-        search_path: typing.Optional[typing.Sequence[str]] = ...,
-        theme_name: typing.Optional[str] = ...,
+        resource_path: typing.Sequence[str] | None = ...,
+        search_path: typing.Sequence[str] | None = ...,
+        theme_name: str | None = ...,
     ) -> None: ...
     def add_resource_path(self, path: str) -> None: ...
     def add_search_path(self, path: str) -> None: ...
-    def get_display(self) -> typing.Optional[Gdk.Display]: ...
+    def get_display(self) -> Gdk.Display | None: ...
     @staticmethod
     def get_for_display(display: Gdk.Display) -> IconTheme: ...
     def get_icon_names(self) -> list[str]: ...
     def get_icon_sizes(self, icon_name: str) -> list[int]: ...
-    def get_resource_path(self) -> typing.Optional[list[str]]: ...
-    def get_search_path(self) -> typing.Optional[list[str]]: ...
+    def get_resource_path(self) -> list[str] | None: ...
+    def get_search_path(self) -> list[str] | None: ...
     def get_theme_name(self) -> str: ...
     def has_gicon(self, gicon: Gio.Icon) -> bool: ...
     def has_icon(self, icon_name: str) -> bool: ...
@@ -16648,7 +16575,7 @@ class IconTheme(GObject.Object):
     def lookup_icon(
         self,
         icon_name: str,
-        fallbacks: typing.Optional[typing.Sequence[str]],
+        fallbacks: typing.Sequence[str] | None,
         size: int,
         scale: int,
         direction: TextDirection,
@@ -16656,13 +16583,9 @@ class IconTheme(GObject.Object):
     ) -> IconPaintable: ...
     @classmethod
     def new(cls) -> IconTheme: ...
-    def set_resource_path(
-        self, path: typing.Optional[typing.Sequence[str]] = None
-    ) -> None: ...
-    def set_search_path(
-        self, path: typing.Optional[typing.Sequence[str]] = None
-    ) -> None: ...
-    def set_theme_name(self, theme_name: typing.Optional[str] = None) -> None: ...
+    def set_resource_path(self, path: typing.Sequence[str] | None = None) -> None: ...
+    def set_search_path(self, path: typing.Sequence[str] | None = None) -> None: ...
+    def set_theme_name(self, theme_name: str | None = None) -> None: ...
 
 class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scrollable):
     """
@@ -16771,7 +16694,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         item_width: int
         margin: int
         markup_column: int
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         pixbuf_column: int
         reorderable: bool
         row_spacing: int
@@ -16783,7 +16706,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -16793,7 +16716,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -16802,22 +16725,22 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
@@ -16832,7 +16755,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         item_width: int = ...,
         margin: int = ...,
         markup_column: int = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         pixbuf_column: int = ...,
         reorderable: bool = ...,
         row_spacing: int = ...,
@@ -16844,7 +16767,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -16852,7 +16775,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -16863,20 +16786,20 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
-    def create_drag_icon(self, path: TreePath) -> typing.Optional[Gdk.Paintable]: ...
+    def create_drag_icon(self, path: TreePath) -> Gdk.Paintable | None: ...
     def enable_model_drag_dest(
         self, formats: Gdk.ContentFormats, actions: Gdk.DragAction
     ) -> None: ...
@@ -16888,22 +16811,20 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     ) -> None: ...
     def get_activate_on_single_click(self) -> bool: ...
     def get_cell_rect(
-        self, path: TreePath, cell: typing.Optional[CellRenderer] = None
+        self, path: TreePath, cell: CellRenderer | None = None
     ) -> typing.Tuple[bool, Gdk.Rectangle]: ...
     def get_column_spacing(self) -> int: ...
     def get_columns(self) -> int: ...
     def get_cursor(self) -> typing.Tuple[bool, TreePath, CellRenderer]: ...
     def get_dest_item_at_pos(
         self, drag_x: int, drag_y: int
-    ) -> typing.Optional[
-        typing.Tuple[TreePath, IconViewDropPosition]
-    ]: ...  # CHECK Wrapped function
+    ) -> (
+        typing.Tuple[TreePath, IconViewDropPosition] | None
+    ): ...  # CHECK Wrapped function
     def get_drag_dest_item(self) -> typing.Tuple[TreePath, IconViewDropPosition]: ...
     def get_item_at_pos(
         self, x: int, y: int
-    ) -> typing.Optional[
-        typing.Tuple[TreePath, CellRenderer]
-    ]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[TreePath, CellRenderer] | None: ...  # CHECK Wrapped function
     def get_item_column(self, path: TreePath) -> int: ...
     def get_item_orientation(self) -> Orientation: ...
     def get_item_padding(self) -> int: ...
@@ -16911,8 +16832,8 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     def get_item_width(self) -> int: ...
     def get_margin(self) -> int: ...
     def get_markup_column(self) -> int: ...
-    def get_model(self) -> typing.Optional[TreeModel]: ...
-    def get_path_at_pos(self, x: int, y: int) -> typing.Optional[TreePath]: ...
+    def get_model(self) -> TreeModel | None: ...
+    def get_path_at_pos(self, x: int, y: int) -> TreePath | None: ...
     def get_pixbuf_column(self) -> int: ...
     def get_reorderable(self) -> bool: ...
     def get_row_spacing(self) -> int: ...
@@ -16926,9 +16847,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     ) -> typing.Tuple[bool, TreeModel, TreePath, TreeIter]: ...
     def get_visible_range(
         self,
-    ) -> typing.Optional[
-        typing.Tuple[TreePath, TreePath]
-    ]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[TreePath, TreePath] | None: ...  # CHECK Wrapped function
     def item_activated(self, path: TreePath) -> None: ...
     @classmethod
     def new(cls) -> IconView: ...
@@ -16949,17 +16868,17 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     def set_column_spacing(self, column_spacing: int) -> None: ...
     def set_columns(self, columns: int) -> None: ...
     def set_cursor(
-        self, path: TreePath, cell: typing.Optional[CellRenderer], start_editing: bool
+        self, path: TreePath, cell: CellRenderer | None, start_editing: bool
     ) -> None: ...
     def set_drag_dest_item(
-        self, path: typing.Optional[TreePath], pos: IconViewDropPosition
+        self, path: TreePath | None, pos: IconViewDropPosition
     ) -> None: ...
     def set_item_orientation(self, orientation: Orientation) -> None: ...
     def set_item_padding(self, item_padding: int) -> None: ...
     def set_item_width(self, item_width: int) -> None: ...
     def set_margin(self, margin: int) -> None: ...
     def set_markup_column(self, column: int) -> None: ...
-    def set_model(self, model: typing.Optional[TreeModel] = None) -> None: ...
+    def set_model(self, model: TreeModel | None = None) -> None: ...
     def set_pixbuf_column(self, column: int) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
     def set_row_spacing(self, row_spacing: int) -> None: ...
@@ -16970,7 +16889,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
         self,
         tooltip: Tooltip,
         path: TreePath,
-        cell: typing.Optional[CellRenderer] = None,
+        cell: CellRenderer | None = None,
     ) -> None: ...
     def set_tooltip_column(self, column: int) -> None: ...
     def set_tooltip_item(self, tooltip: Tooltip, path: TreePath) -> None: ...
@@ -17064,10 +16983,10 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         file: str
-        gicon: typing.Optional[Gio.Icon]
-        icon_name: typing.Optional[str]
+        gicon: Gio.Icon | None
+        icon_name: str | None
         icon_size: IconSize
-        paintable: typing.Optional[Gdk.Paintable]
+        paintable: Gdk.Paintable | None
         pixel_size: int
         resource: str
         storage_type: ImageType
@@ -17076,7 +16995,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17086,7 +17005,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -17095,13 +17014,13 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -17114,9 +17033,9 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         self,
         file: str = ...,
         gicon: Gio.Icon = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         icon_size: IconSize = ...,
-        paintable: typing.Optional[Gdk.Paintable] = ...,
+        paintable: Gdk.Paintable | None = ...,
         pixel_size: int = ...,
         resource: str = ...,
         use_fallback: bool = ...,
@@ -17124,7 +17043,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -17132,7 +17051,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -17143,8 +17062,8 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -17153,10 +17072,10 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def clear(self) -> None: ...
-    def get_gicon(self) -> typing.Optional[Gio.Icon]: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_gicon(self) -> Gio.Icon | None: ...
+    def get_icon_name(self) -> str | None: ...
     def get_icon_size(self) -> IconSize: ...
-    def get_paintable(self) -> typing.Optional[Gdk.Paintable]: ...
+    def get_paintable(self) -> Gdk.Paintable | None: ...
     def get_pixel_size(self) -> int: ...
     def get_storage_type(self) -> ImageType: ...
     @classmethod
@@ -17166,27 +17085,19 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     @classmethod
     def new_from_gicon(cls, icon: Gio.Icon) -> Image: ...
     @classmethod
-    def new_from_icon_name(cls, icon_name: typing.Optional[str] = None) -> Image: ...
+    def new_from_icon_name(cls, icon_name: str | None = None) -> Image: ...
     @classmethod
-    def new_from_paintable(
-        cls, paintable: typing.Optional[Gdk.Paintable] = None
-    ) -> Image: ...
+    def new_from_paintable(cls, paintable: Gdk.Paintable | None = None) -> Image: ...
     @classmethod
-    def new_from_pixbuf(
-        cls, pixbuf: typing.Optional[GdkPixbuf.Pixbuf] = None
-    ) -> Image: ...
+    def new_from_pixbuf(cls, pixbuf: GdkPixbuf.Pixbuf | None = None) -> Image: ...
     @classmethod
     def new_from_resource(cls, resource_path: str) -> Image: ...
-    def set_from_file(self, filename: typing.Optional[str] = None) -> None: ...
+    def set_from_file(self, filename: str | None = None) -> None: ...
     def set_from_gicon(self, icon: Gio.Icon) -> None: ...
-    def set_from_icon_name(self, icon_name: typing.Optional[str] = None) -> None: ...
-    def set_from_paintable(
-        self, paintable: typing.Optional[Gdk.Paintable] = None
-    ) -> None: ...
-    def set_from_pixbuf(
-        self, pixbuf: typing.Optional[GdkPixbuf.Pixbuf] = None
-    ) -> None: ...
-    def set_from_resource(self, resource_path: typing.Optional[str] = None) -> None: ...
+    def set_from_icon_name(self, icon_name: str | None = None) -> None: ...
+    def set_from_paintable(self, paintable: Gdk.Paintable | None = None) -> None: ...
+    def set_from_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf | None = None) -> None: ...
+    def set_from_resource(self, resource_path: str | None = None) -> None: ...
     def set_icon_size(self, icon_size: IconSize) -> None: ...
     def set_pixel_size(self, pixel_size: int) -> None: ...
 
@@ -17273,7 +17184,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17283,7 +17194,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -17292,13 +17203,13 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -17316,7 +17227,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -17324,7 +17235,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -17335,8 +17246,8 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -17441,12 +17352,12 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
       notify (GParam)
     """
     class Props(Widget.Props):
-        attributes: typing.Optional[Pango.AttrList]
+        attributes: Pango.AttrList | None
         min_chars: int
         min_lines: int
         nat_chars: int
         nat_lines: int
-        text: typing.Optional[str]
+        text: str | None
         text_overflow: InscriptionOverflow
         wrap_mode: Pango.WrapMode
         xalign: float
@@ -17455,7 +17366,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17465,7 +17376,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -17474,31 +17385,31 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        markup: typing.Optional[str]
+        markup: str | None
 
     props: Props = ...
     def __init__(
         self,
-        attributes: typing.Optional[Pango.AttrList] = ...,
-        markup: typing.Optional[str] = ...,
+        attributes: Pango.AttrList | None = ...,
+        markup: str | None = ...,
         min_chars: int = ...,
         min_lines: int = ...,
         nat_chars: int = ...,
         nat_lines: int = ...,
-        text: typing.Optional[str] = ...,
+        text: str | None = ...,
         text_overflow: InscriptionOverflow = ...,
         wrap_mode: Pango.WrapMode = ...,
         xalign: float = ...,
@@ -17507,7 +17418,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -17515,7 +17426,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -17526,8 +17437,8 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -17535,25 +17446,25 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_attributes(self) -> typing.Optional[Pango.AttrList]: ...
+    def get_attributes(self) -> Pango.AttrList | None: ...
     def get_min_chars(self) -> int: ...
     def get_min_lines(self) -> int: ...
     def get_nat_chars(self) -> int: ...
     def get_nat_lines(self) -> int: ...
-    def get_text(self) -> typing.Optional[str]: ...
+    def get_text(self) -> str | None: ...
     def get_text_overflow(self) -> InscriptionOverflow: ...
     def get_wrap_mode(self) -> Pango.WrapMode: ...
     def get_xalign(self) -> float: ...
     def get_yalign(self) -> float: ...
     @classmethod
-    def new(cls, text: typing.Optional[str] = None) -> Inscription: ...
-    def set_attributes(self, attrs: typing.Optional[Pango.AttrList] = None) -> None: ...
-    def set_markup(self, markup: typing.Optional[str] = None) -> None: ...
+    def new(cls, text: str | None = None) -> Inscription: ...
+    def set_attributes(self, attrs: Pango.AttrList | None = None) -> None: ...
+    def set_markup(self, markup: str | None = None) -> None: ...
     def set_min_chars(self, min_chars: int) -> None: ...
     def set_min_lines(self, min_lines: int) -> None: ...
     def set_nat_chars(self, nat_chars: int) -> None: ...
     def set_nat_lines(self, nat_lines: int) -> None: ...
-    def set_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_text(self, text: str | None = None) -> None: ...
     def set_text_overflow(self, overflow: InscriptionOverflow) -> None: ...
     def set_wrap_mode(self, wrap_mode: Pango.WrapMode) -> None: ...
     def set_xalign(self, xalign: float) -> None: ...
@@ -17699,19 +17610,19 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        attributes: typing.Optional[Pango.AttrList]
+        attributes: Pango.AttrList | None
         ellipsize: Pango.EllipsizeMode
-        extra_menu: typing.Optional[Gio.MenuModel]
+        extra_menu: Gio.MenuModel | None
         justify: Justification
         label: str
         lines: int
         max_width_chars: int
         mnemonic_keyval: int
-        mnemonic_widget: typing.Optional[Widget]
+        mnemonic_widget: Widget | None
         natural_wrap_mode: NaturalWrapMode
         selectable: bool
         single_line_mode: bool
-        tabs: typing.Optional[Pango.TabArray]
+        tabs: Pango.TabArray | None
         use_markup: bool
         use_underline: bool
         width_chars: int
@@ -17723,7 +17634,7 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -17733,7 +17644,7 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -17742,13 +17653,13 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -17759,18 +17670,18 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        attributes: typing.Optional[Pango.AttrList] = ...,
+        attributes: Pango.AttrList | None = ...,
         ellipsize: Pango.EllipsizeMode = ...,
-        extra_menu: typing.Optional[Gio.MenuModel] = ...,
+        extra_menu: Gio.MenuModel | None = ...,
         justify: Justification = ...,
         label: str = ...,
         lines: int = ...,
         max_width_chars: int = ...,
-        mnemonic_widget: typing.Optional[Widget] = ...,
+        mnemonic_widget: Widget | None = ...,
         natural_wrap_mode: NaturalWrapMode = ...,
         selectable: bool = ...,
         single_line_mode: bool = ...,
-        tabs: typing.Optional[Pango.TabArray] = ...,
+        tabs: Pango.TabArray | None = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
         width_chars: int = ...,
@@ -17782,7 +17693,7 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -17790,7 +17701,7 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -17801,8 +17712,8 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -17810,10 +17721,10 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_attributes(self) -> typing.Optional[Pango.AttrList]: ...
-    def get_current_uri(self) -> typing.Optional[str]: ...
+    def get_attributes(self) -> Pango.AttrList | None: ...
+    def get_current_uri(self) -> str | None: ...
     def get_ellipsize(self) -> Pango.EllipsizeMode: ...
-    def get_extra_menu(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_extra_menu(self) -> Gio.MenuModel | None: ...
     def get_justify(self) -> Justification: ...
     def get_label(self) -> str: ...
     def get_layout(self) -> Pango.Layout: ...
@@ -17821,12 +17732,12 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
     def get_lines(self) -> int: ...
     def get_max_width_chars(self) -> int: ...
     def get_mnemonic_keyval(self) -> int: ...
-    def get_mnemonic_widget(self) -> typing.Optional[Widget]: ...
+    def get_mnemonic_widget(self) -> Widget | None: ...
     def get_natural_wrap_mode(self) -> NaturalWrapMode: ...
     def get_selectable(self) -> bool: ...
     def get_selection_bounds(self) -> typing.Tuple[bool, int, int]: ...
     def get_single_line_mode(self) -> bool: ...
-    def get_tabs(self) -> typing.Optional[Pango.TabArray]: ...
+    def get_tabs(self) -> Pango.TabArray | None: ...
     def get_text(self) -> str: ...
     def get_use_markup(self) -> bool: ...
     def get_use_underline(self) -> bool: ...
@@ -17836,24 +17747,24 @@ class Label(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
     def get_xalign(self) -> float: ...
     def get_yalign(self) -> float: ...
     @classmethod
-    def new(cls, str: typing.Optional[str] = None) -> Label: ...
+    def new(cls, str: str | None = None) -> Label: ...
     @classmethod
-    def new_with_mnemonic(cls, str: typing.Optional[str] = None) -> Label: ...
+    def new_with_mnemonic(cls, str: str | None = None) -> Label: ...
     def select_region(self, start_offset: int, end_offset: int) -> None: ...
-    def set_attributes(self, attrs: typing.Optional[Pango.AttrList] = None) -> None: ...
+    def set_attributes(self, attrs: Pango.AttrList | None = None) -> None: ...
     def set_ellipsize(self, mode: Pango.EllipsizeMode) -> None: ...
-    def set_extra_menu(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_extra_menu(self, model: Gio.MenuModel | None = None) -> None: ...
     def set_justify(self, jtype: Justification) -> None: ...
     def set_label(self, str: str) -> None: ...
     def set_lines(self, lines: int) -> None: ...
     def set_markup(self, str: str) -> None: ...
     def set_markup_with_mnemonic(self, str: str) -> None: ...
     def set_max_width_chars(self, n_chars: int) -> None: ...
-    def set_mnemonic_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_mnemonic_widget(self, widget: Widget | None = None) -> None: ...
     def set_natural_wrap_mode(self, wrap_mode: NaturalWrapMode) -> None: ...
     def set_selectable(self, setting: bool) -> None: ...
     def set_single_line_mode(self, single_line_mode: bool) -> None: ...
-    def set_tabs(self, tabs: typing.Optional[Pango.TabArray] = None) -> None: ...
+    def set_tabs(self, tabs: Pango.TabArray | None = None) -> None: ...
     def set_text(self, str: str) -> None: ...
     def set_text_with_mnemonic(self, str: str) -> None: ...
     def set_use_markup(self, setting: bool) -> None: ...
@@ -17936,7 +17847,7 @@ class LayoutManager(GObject.Object):
     def do_unroot(self) -> None: ...
     def get_layout_child(self, child: Widget) -> LayoutChild: ...
     def get_request_mode(self) -> SizeRequestMode: ...
-    def get_widget(self) -> typing.Optional[Widget]: ...
+    def get_widget(self) -> Widget | None: ...
     def layout_changed(self) -> None: ...
     def measure(
         self, widget: Widget, orientation: Orientation, for_size: int
@@ -18053,7 +17964,7 @@ class LevelBar(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18063,7 +17974,7 @@ class LevelBar(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -18072,13 +17983,13 @@ class LevelBar(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -18099,7 +18010,7 @@ class LevelBar(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -18107,7 +18018,7 @@ class LevelBar(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -18118,8 +18029,8 @@ class LevelBar(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -18134,14 +18045,14 @@ class LevelBar(
     def get_min_value(self) -> float: ...
     def get_mode(self) -> LevelBarMode: ...
     def get_offset_value(
-        self, name: typing.Optional[str] = None
+        self, name: str | None = None
     ) -> typing.Tuple[bool, float]: ...
     def get_value(self) -> float: ...
     @classmethod
     def new(cls) -> LevelBar: ...
     @classmethod
     def new_for_interval(cls, min_value: float, max_value: float) -> LevelBar: ...
-    def remove_offset_value(self, name: typing.Optional[str] = None) -> None: ...
+    def remove_offset_value(self, name: str | None = None) -> None: ...
     def set_inverted(self, inverted: bool) -> None: ...
     def set_max_value(self, value: float) -> None: ...
     def set_min_value(self, value: float) -> None: ...
@@ -18238,16 +18149,16 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         uri: str
         visited: bool
         can_shrink: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         has_frame: bool
-        icon_name: typing.Optional[str]
-        label: typing.Optional[str]
+        icon_name: str | None
+        label: str | None
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18257,7 +18168,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -18266,20 +18177,20 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
 
     props: Props = ...
@@ -18288,7 +18199,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         uri: str = ...,
         visited: bool = ...,
         can_shrink: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
         label: str = ...,
@@ -18297,7 +18208,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -18305,7 +18216,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -18316,15 +18227,15 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_uri(self) -> str: ...
@@ -18332,9 +18243,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     @classmethod
     def new(cls, uri: str) -> LinkButton: ...
     @classmethod
-    def new_with_label(
-        cls, uri: str, label: typing.Optional[str] = None
-    ) -> LinkButton: ...
+    def new_with_label(cls, uri: str, label: str | None = None) -> LinkButton: ...
     def set_uri(self, uri: str) -> None: ...
     def set_visited(self, visited: bool) -> None: ...
 
@@ -18412,7 +18321,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18422,7 +18331,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -18431,22 +18340,22 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
@@ -18457,7 +18366,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -18465,7 +18374,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -18476,17 +18385,17 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
 
@@ -18585,7 +18494,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18595,7 +18504,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -18604,13 +18513,13 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -18630,7 +18539,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -18638,7 +18547,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -18649,8 +18558,8 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -18661,17 +18570,17 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     def append(self, child: Widget) -> None: ...
     def bind_model(
         self,
-        model: typing.Optional[Gio.ListModel] = None,
-        create_widget_func: typing.Optional[typing.Callable[..., Widget]] = None,
+        model: Gio.ListModel | None = None,
+        create_widget_func: typing.Callable[..., Widget] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def drag_highlight_row(self, row: ListBoxRow) -> None: ...
     def drag_unhighlight_row(self) -> None: ...
     def get_activate_on_single_click(self) -> bool: ...
-    def get_adjustment(self) -> typing.Optional[Adjustment]: ...
-    def get_row_at_index(self, index_: int) -> typing.Optional[ListBoxRow]: ...
-    def get_row_at_y(self, y: int) -> typing.Optional[ListBoxRow]: ...
-    def get_selected_row(self) -> typing.Optional[ListBoxRow]: ...
+    def get_adjustment(self) -> Adjustment | None: ...
+    def get_row_at_index(self, index_: int) -> ListBoxRow | None: ...
+    def get_row_at_y(self, y: int) -> ListBoxRow | None: ...
+    def get_selected_row(self) -> ListBoxRow | None: ...
     def get_selected_rows(self) -> list[ListBoxRow]: ...
     def get_selection_mode(self) -> SelectionMode: ...
     def get_show_separators(self) -> bool: ...
@@ -18686,30 +18595,28 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     def remove(self, child: Widget) -> None: ...
     def remove_all(self) -> None: ...
     def select_all(self) -> None: ...
-    def select_row(self, row: typing.Optional[ListBoxRow] = None) -> None: ...
+    def select_row(self, row: ListBoxRow | None = None) -> None: ...
     def selected_foreach(
         self, func: typing.Callable[..., None], *data: typing.Any
     ) -> None: ...
     def set_activate_on_single_click(self, single: bool) -> None: ...
-    def set_adjustment(
-        self, adjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_adjustment(self, adjustment: Adjustment | None = None) -> None: ...
     def set_filter_func(
         self,
-        filter_func: typing.Optional[typing.Callable[..., bool]] = None,
+        filter_func: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_header_func(
         self,
-        update_header: typing.Optional[typing.Callable[..., None]] = None,
+        update_header: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def set_placeholder(self, placeholder: typing.Optional[Widget] = None) -> None: ...
+    def set_placeholder(self, placeholder: Widget | None = None) -> None: ...
     def set_selection_mode(self, mode: SelectionMode) -> None: ...
     def set_show_separators(self, show_separators: bool) -> None: ...
     def set_sort_func(
         self,
-        sort_func: typing.Optional[typing.Callable[..., int]] = None,
+        sort_func: typing.Callable[..., int] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_tab_behavior(self, behavior: ListTabBehavior) -> None: ...
@@ -18792,13 +18699,13 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         activatable: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -18808,7 +18715,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -18817,20 +18724,20 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
 
     props: Props = ...
@@ -18838,13 +18745,13 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def __init__(
         self,
         activatable: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -18852,7 +18759,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -18863,30 +18770,30 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def changed(self) -> None: ...
     def do_activate(self) -> None: ...
     def get_activatable(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
-    def get_header(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
+    def get_header(self) -> Widget | None: ...
     def get_index(self) -> int: ...
     def get_selectable(self) -> bool: ...
     def is_selected(self) -> bool: ...
     @classmethod
     def new(cls) -> ListBoxRow: ...
     def set_activatable(self, activatable: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_header(self, header: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_header(self, header: Widget | None = None) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
 class ListBoxRowClass(GObject.GPointer):
@@ -18923,20 +18830,20 @@ class ListHeader(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         end: int
-        item: typing.Optional[GObject.Object]
+        item: GObject.Object | None
         n_items: int
         start: int
 
     props: Props = ...
-    def __init__(self, child: typing.Optional[Widget] = ...) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def __init__(self, child: Widget | None = ...) -> None: ...
+    def get_child(self) -> Widget | None: ...
     def get_end(self) -> int: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_item(self) -> GObject.Object | None: ...
     def get_n_items(self) -> int: ...
     def get_start(self) -> int: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
 
 class ListHeaderClass(GObject.GPointer): ...
 
@@ -18968,9 +18875,9 @@ class ListItem(GObject.Object):
         accessible_description: str
         accessible_label: str
         activatable: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         focusable: bool
-        item: typing.Optional[GObject.Object]
+        item: GObject.Object | None
         position: int
         selectable: bool
         selected: bool
@@ -18981,23 +18888,23 @@ class ListItem(GObject.Object):
         accessible_description: str = ...,
         accessible_label: str = ...,
         activatable: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         focusable: bool = ...,
         selectable: bool = ...,
     ) -> None: ...
     def get_accessible_description(self) -> str: ...
     def get_accessible_label(self) -> str: ...
     def get_activatable(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_focusable(self) -> bool: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_item(self) -> GObject.Object | None: ...
     def get_position(self) -> int: ...
     def get_selectable(self) -> bool: ...
     def get_selected(self) -> bool: ...
     def set_accessible_description(self, description: str) -> None: ...
     def set_accessible_label(self, label: str) -> None: ...
     def set_activatable(self, activatable: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_focusable(self, focusable: bool) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
@@ -19039,23 +18946,23 @@ class ListStore(
     def __init__(self, *args: typing.Any) -> None: ...
     def append(
         self,
-        row: typing.Union[list[typing.Any], typing.Tuple[typing.Any, ...], None] = None,
+        row: list[typing.Any] | typing.Tuple[typing.Any, ...] | None = None,
     ) -> TreeIter: ...
     def clear(self) -> None: ...
     def insert(
         self,
         position: int,
-        row: typing.Union[list[typing.Any], typing.Tuple[typing.Any, ...], None] = None,
+        row: list[typing.Any] | typing.Tuple[typing.Any, ...] | None = None,
     ) -> TreeIter: ...
     def insert_after(
         self,
         sibling: TreeIter,
-        row: typing.Union[list[typing.Any], typing.Tuple[typing.Any, ...], None] = None,
+        row: list[typing.Any] | typing.Tuple[typing.Any, ...] | None = None,
     ) -> TreeIter: ...
     def insert_before(
         self,
         sibling: TreeIter,
-        row: typing.Union[list[typing.Any], typing.Tuple[typing.Any, ...], None] = None,
+        row: list[typing.Any] | typing.Tuple[typing.Any, ...] | None = None,
     ) -> TreeIter: ...
     def insert_with_values(
         self,
@@ -19070,17 +18977,13 @@ class ListStore(
         values: typing.Sequence[typing.Any],
     ) -> TreeIter: ...
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
-    def move_after(
-        self, iter: TreeIter, position: typing.Optional[TreeIter] = None
-    ) -> None: ...
-    def move_before(
-        self, iter: TreeIter, position: typing.Optional[TreeIter] = None
-    ) -> None: ...
+    def move_after(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
+    def move_before(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
     @classmethod
     def new(cls, types: typing.Sequence[typing.Type[typing.Any]]) -> ListStore: ...
     def prepend(
         self,
-        row: typing.Union[list[typing.Any], typing.Tuple[typing.Any, ...], None] = None,
+        row: list[typing.Any] | typing.Tuple[typing.Any, ...] | None = None,
     ) -> TreeIter: ...
     def remove(self, iter: TreeIter) -> bool: ...
     def reorder(self, new_order: typing.Sequence[int]) -> None: ...
@@ -19190,9 +19093,9 @@ class ListView(
     """
     class Props(ListBase.Props):
         enable_rubberband: bool
-        factory: typing.Optional[ListItemFactory]
-        header_factory: typing.Optional[ListItemFactory]
-        model: typing.Optional[SelectionModel]
+        factory: ListItemFactory | None
+        header_factory: ListItemFactory | None
+        model: SelectionModel | None
         show_separators: bool
         single_click_activate: bool
         tab_behavior: ListTabBehavior
@@ -19201,7 +19104,7 @@ class ListView(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -19211,7 +19114,7 @@ class ListView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -19220,31 +19123,31 @@ class ListView(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     def __init__(
         self,
         enable_rubberband: bool = ...,
-        factory: typing.Optional[ListItemFactory] = ...,
-        header_factory: typing.Optional[ListItemFactory] = ...,
-        model: typing.Optional[SelectionModel] = ...,
+        factory: ListItemFactory | None = ...,
+        header_factory: ListItemFactory | None = ...,
+        model: SelectionModel | None = ...,
         show_separators: bool = ...,
         single_click_activate: bool = ...,
         tab_behavior: ListTabBehavior = ...,
@@ -19253,7 +19156,7 @@ class ListView(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -19261,7 +19164,7 @@ class ListView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -19272,44 +19175,42 @@ class ListView(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_enable_rubberband(self) -> bool: ...
-    def get_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_header_factory(self) -> typing.Optional[ListItemFactory]: ...
-    def get_model(self) -> typing.Optional[SelectionModel]: ...
+    def get_factory(self) -> ListItemFactory | None: ...
+    def get_header_factory(self) -> ListItemFactory | None: ...
+    def get_model(self) -> SelectionModel | None: ...
     def get_show_separators(self) -> bool: ...
     def get_single_click_activate(self) -> bool: ...
     def get_tab_behavior(self) -> ListTabBehavior: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[SelectionModel] = None,
-        factory: typing.Optional[ListItemFactory] = None,
+        model: SelectionModel | None = None,
+        factory: ListItemFactory | None = None,
     ) -> ListView: ...
     def scroll_to(
         self,
         pos: int,
         flags: ListScrollFlags,
-        scroll: typing.Optional[ScrollInfo] = None,
+        scroll: ScrollInfo | None = None,
     ) -> None: ...
     def set_enable_rubberband(self, enable_rubberband: bool) -> None: ...
-    def set_factory(self, factory: typing.Optional[ListItemFactory] = None) -> None: ...
-    def set_header_factory(
-        self, factory: typing.Optional[ListItemFactory] = None
-    ) -> None: ...
-    def set_model(self, model: typing.Optional[SelectionModel] = None) -> None: ...
+    def set_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_header_factory(self, factory: ListItemFactory | None = None) -> None: ...
+    def set_model(self, model: SelectionModel | None = None) -> None: ...
     def set_show_separators(self, show_separators: bool) -> None: ...
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
     def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
@@ -19403,23 +19304,23 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Button.Props):
-        permission: typing.Optional[Gio.Permission]
+        permission: Gio.Permission | None
         text_lock: str
         text_unlock: str
         tooltip_lock: str
         tooltip_not_authorized: str
         tooltip_unlock: str
         can_shrink: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         has_frame: bool
-        icon_name: typing.Optional[str]
-        label: typing.Optional[str]
+        icon_name: str | None
+        label: str | None
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -19429,7 +19330,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -19438,33 +19339,33 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
 
     props: Props = ...
     def __init__(
         self,
-        permission: typing.Optional[Gio.Permission] = ...,
+        permission: Gio.Permission | None = ...,
         text_lock: str = ...,
         text_unlock: str = ...,
         tooltip_lock: str = ...,
         tooltip_not_authorized: str = ...,
         tooltip_unlock: str = ...,
         can_shrink: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
         label: str = ...,
@@ -19473,7 +19374,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -19481,7 +19382,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -19492,23 +19393,21 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
-    def get_permission(self) -> typing.Optional[Gio.Permission]: ...
+    def get_permission(self) -> Gio.Permission | None: ...
     @classmethod
-    def new(cls, permission: typing.Optional[Gio.Permission] = None) -> LockButton: ...
-    def set_permission(
-        self, permission: typing.Optional[Gio.Permission] = None
-    ) -> None: ...
+    def new(cls, permission: Gio.Permission | None = None) -> LockButton: ...
+    def set_permission(self, permission: Gio.Permission | None = None) -> None: ...
 
 class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
@@ -19539,26 +19438,26 @@ class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     class Props(GObject.Object.Props):
         has_map: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
 
     props: Props = ...
-    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def __init__(self, *, model: Gio.ListModel | None = ...) -> None: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def has_map(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel] = None,
-        map_func: typing.Optional[typing.Callable[..., GObject.Object]] = None,
+        model: Gio.ListModel | None = None,
+        map_func: typing.Callable[..., GObject.Object] | None = None,
         *user_data: typing.Any,
     ) -> MapListModel: ...
     def set_map_func(
         self,
-        map_func: typing.Optional[typing.Callable[..., GObject.Object]] = None,
+        map_func: typing.Callable[..., GObject.Object] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
 class MapListModelClass(GObject.GPointer):
     """
@@ -19641,12 +19540,12 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        media_stream: typing.Optional[MediaStream]
+        media_stream: MediaStream | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -19656,7 +19555,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -19665,13 +19564,13 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -19682,12 +19581,12 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        media_stream: typing.Optional[MediaStream] = ...,
+        media_stream: MediaStream | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -19695,7 +19594,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -19706,8 +19605,8 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -19715,10 +19614,10 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_media_stream(self) -> typing.Optional[MediaStream]: ...
+    def get_media_stream(self) -> MediaStream | None: ...
     @classmethod
-    def new(cls, stream: typing.Optional[MediaStream] = None) -> MediaControls: ...
-    def set_media_stream(self, stream: typing.Optional[MediaStream] = None) -> None: ...
+    def new(cls, stream: MediaStream | None = None) -> MediaControls: ...
+    def set_media_stream(self, stream: MediaStream | None = None) -> None: ...
 
 class MediaControlsClass(GObject.GPointer):
     """
@@ -19777,11 +19676,11 @@ class MediaFile(MediaStream, Gdk.Paintable):
       notify (GParam)
     """
     class Props(MediaStream.Props):
-        file: typing.Optional[Gio.File]
-        input_stream: typing.Optional[Gio.InputStream]
+        file: Gio.File | None
+        input_stream: Gio.InputStream | None
         duration: int
         ended: bool
-        error: typing.Optional[GLib.Error]
+        error: GLib.Error | None
         has_audio: bool
         has_video: bool
         loop: bool
@@ -19797,8 +19696,8 @@ class MediaFile(MediaStream, Gdk.Paintable):
     parent_instance: MediaStream = ...
     def __init__(
         self,
-        file: typing.Optional[Gio.File] = ...,
-        input_stream: typing.Optional[Gio.InputStream] = ...,
+        file: Gio.File | None = ...,
+        input_stream: Gio.InputStream | None = ...,
         loop: bool = ...,
         muted: bool = ...,
         playing: bool = ...,
@@ -19807,8 +19706,8 @@ class MediaFile(MediaStream, Gdk.Paintable):
     def clear(self) -> None: ...
     def do_close(self) -> None: ...
     def do_open(self) -> None: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
-    def get_input_stream(self) -> typing.Optional[Gio.InputStream]: ...
+    def get_file(self) -> Gio.File | None: ...
+    def get_input_stream(self) -> Gio.InputStream | None: ...
     @classmethod
     def new(cls) -> MediaFile: ...
     @classmethod
@@ -19819,12 +19718,10 @@ class MediaFile(MediaStream, Gdk.Paintable):
     def new_for_input_stream(cls, stream: Gio.InputStream) -> MediaFile: ...
     @classmethod
     def new_for_resource(cls, resource_path: str) -> MediaFile: ...
-    def set_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
-    def set_filename(self, filename: typing.Optional[str] = None) -> None: ...
-    def set_input_stream(
-        self, stream: typing.Optional[Gio.InputStream] = None
-    ) -> None: ...
-    def set_resource(self, resource_path: typing.Optional[str] = None) -> None: ...
+    def set_file(self, file: Gio.File | None = None) -> None: ...
+    def set_filename(self, filename: str | None = None) -> None: ...
+    def set_input_stream(self, stream: Gio.InputStream | None = None) -> None: ...
+    def set_resource(self, resource_path: str | None = None) -> None: ...
 
 class MediaFileClass(GObject.GPointer):
     """
@@ -19874,7 +19771,7 @@ class MediaStream(GObject.Object, Gdk.Paintable):
     class Props(GObject.Object.Props):
         duration: int
         ended: bool
-        error: typing.Optional[GLib.Error]
+        error: GLib.Error | None
         has_audio: bool
         has_video: bool
         loop: bool
@@ -19904,7 +19801,7 @@ class MediaStream(GObject.Object, Gdk.Paintable):
     def gerror(self, error: GLib.Error) -> None: ...
     def get_duration(self) -> int: ...
     def get_ended(self) -> bool: ...
-    def get_error(self) -> typing.Optional[GLib.Error]: ...
+    def get_error(self) -> GLib.Error | None: ...
     def get_loop(self) -> bool: ...
     def get_muted(self) -> bool: ...
     def get_playing(self) -> bool: ...
@@ -20037,20 +19934,20 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         active: bool
         always_show_arrow: bool
         can_shrink: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         direction: ArrowType
         has_frame: bool
-        icon_name: typing.Optional[str]
-        label: typing.Optional[str]
-        menu_model: typing.Optional[Gio.MenuModel]
-        popover: typing.Optional[Popover]
+        icon_name: str | None
+        label: str | None
+        menu_model: Gio.MenuModel | None
+        popover: Popover | None
         primary: bool
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -20060,7 +19957,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -20069,13 +19966,13 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -20089,20 +19986,20 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         active: bool = ...,
         always_show_arrow: bool = ...,
         can_shrink: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         direction: ArrowType = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
         label: str = ...,
-        menu_model: typing.Optional[Gio.MenuModel] = ...,
-        popover: typing.Optional[Popover] = ...,
+        menu_model: Gio.MenuModel | None = ...,
+        popover: Popover | None = ...,
         primary: bool = ...,
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -20110,7 +20007,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -20121,8 +20018,8 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -20133,13 +20030,13 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def get_active(self) -> bool: ...
     def get_always_show_arrow(self) -> bool: ...
     def get_can_shrink(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_direction(self) -> ArrowType: ...
     def get_has_frame(self) -> bool: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
-    def get_label(self) -> typing.Optional[str]: ...
-    def get_menu_model(self) -> typing.Optional[Gio.MenuModel]: ...
-    def get_popover(self) -> typing.Optional[Popover]: ...
+    def get_icon_name(self) -> str | None: ...
+    def get_label(self) -> str | None: ...
+    def get_menu_model(self) -> Gio.MenuModel | None: ...
+    def get_popover(self) -> Popover | None: ...
     def get_primary(self) -> bool: ...
     def get_use_underline(self) -> bool: ...
     @classmethod
@@ -20149,20 +20046,18 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def set_active(self, active: bool) -> None: ...
     def set_always_show_arrow(self, always_show_arrow: bool) -> None: ...
     def set_can_shrink(self, can_shrink: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_create_popup_func(
         self,
-        func: typing.Optional[typing.Callable[..., None]] = None,
+        func: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_direction(self, direction: ArrowType) -> None: ...
     def set_has_frame(self, has_frame: bool) -> None: ...
     def set_icon_name(self, icon_name: str) -> None: ...
     def set_label(self, label: str) -> None: ...
-    def set_menu_model(
-        self, menu_model: typing.Optional[Gio.MenuModel] = None
-    ) -> None: ...
-    def set_popover(self, popover: typing.Optional[Popover] = None) -> None: ...
+    def set_menu_model(self, menu_model: Gio.MenuModel | None = None) -> None: ...
+    def set_popover(self, popover: Popover | None = None) -> None: ...
     def set_primary(self, primary: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
@@ -20292,36 +20187,36 @@ class MessageDialog(
         text: str
         use_markup: bool
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -20331,7 +20226,7 @@ class MessageDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -20340,13 +20235,13 @@ class MessageDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -20367,35 +20262,35 @@ class MessageDialog(
         text: str = ...,
         use_markup: bool = ...,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -20403,7 +20298,7 @@ class MessageDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -20414,8 +20309,8 @@ class MessageDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -20515,16 +20410,16 @@ class MountOperation(Gio.MountOperation):
     class Props(Gio.MountOperation.Props):
         display: Gdk.Display
         is_showing: bool
-        parent: typing.Optional[Window]
+        parent: Window | None
         anonymous: bool
         choice: int
-        domain: typing.Optional[str]
+        domain: str | None
         is_tcrypt_hidden_volume: bool
         is_tcrypt_system_volume: bool
-        password: typing.Optional[str]
+        password: str | None
         password_save: Gio.PasswordSave
         pim: int
-        username: typing.Optional[str]
+        username: str | None
 
     props: Props = ...
     parent_instance: Gio.MountOperation = ...
@@ -20532,24 +20427,24 @@ class MountOperation(Gio.MountOperation):
     def __init__(
         self,
         display: Gdk.Display = ...,
-        parent: typing.Optional[Window] = ...,
+        parent: Window | None = ...,
         anonymous: bool = ...,
         choice: int = ...,
-        domain: typing.Optional[str] = ...,
+        domain: str | None = ...,
         is_tcrypt_hidden_volume: bool = ...,
         is_tcrypt_system_volume: bool = ...,
-        password: typing.Optional[str] = ...,
+        password: str | None = ...,
         password_save: Gio.PasswordSave = ...,
         pim: int = ...,
-        username: typing.Optional[str] = ...,
+        username: str | None = ...,
     ) -> None: ...
     def get_display(self) -> Gdk.Display: ...
-    def get_parent(self) -> typing.Optional[Window]: ...
+    def get_parent(self) -> Window | None: ...
     def is_showing(self) -> bool: ...
     @classmethod
-    def new(cls, parent: typing.Optional[Window] = None) -> MountOperation: ...
+    def new(cls, parent: Window | None = None) -> MountOperation: ...
     def set_display(self, display: Gdk.Display) -> None: ...
-    def set_parent(self, parent: typing.Optional[Window] = None) -> None: ...
+    def set_parent(self, parent: Window | None = None) -> None: ...
 
 class MountOperationClass(GObject.GPointer):
     """
@@ -20627,15 +20522,15 @@ class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
 
     props: Props = ...
-    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def __init__(self, *, model: Gio.ListModel | None = ...) -> None: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     @classmethod
-    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> MultiSelection: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def new(cls, model: Gio.ListModel | None = None) -> MultiSelection: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
 class MultiSelectionClass(GObject.GPointer):
     """
@@ -20729,9 +20624,9 @@ class Native(GObject.GInterface):
       notify (GParam)
     """
     @staticmethod
-    def get_for_surface(surface: Gdk.Surface) -> typing.Optional[Native]: ...
-    def get_renderer(self) -> typing.Optional[Gsk.Renderer]: ...
-    def get_surface(self) -> typing.Optional[Gdk.Surface]: ...
+    def get_for_surface(surface: Gdk.Surface) -> Native | None: ...
+    def get_renderer(self) -> Gsk.Renderer | None: ...
+    def get_surface(self) -> Gdk.Surface | None: ...
     def get_surface_transform(self) -> typing.Tuple[float, float]: ...
     def realize(self) -> None: ...
     def unrealize(self) -> None: ...
@@ -20760,8 +20655,8 @@ class NativeDialog(GObject.Object):
     """
     class Props(GObject.Object.Props):
         modal: bool
-        title: typing.Optional[str]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        transient_for: Window | None
         visible: bool
 
     props: Props = ...
@@ -20770,7 +20665,7 @@ class NativeDialog(GObject.Object):
         self,
         modal: bool = ...,
         title: str = ...,
-        transient_for: typing.Optional[Window] = ...,
+        transient_for: Window | None = ...,
         visible: bool = ...,
     ) -> None: ...
     def destroy(self) -> None: ...
@@ -20778,13 +20673,13 @@ class NativeDialog(GObject.Object):
     def do_response(self, response_id: int) -> None: ...
     def do_show(self) -> None: ...
     def get_modal(self) -> bool: ...
-    def get_title(self) -> typing.Optional[str]: ...
-    def get_transient_for(self) -> typing.Optional[Window]: ...
+    def get_title(self) -> str | None: ...
+    def get_transient_for(self) -> Window | None: ...
     def get_visible(self) -> bool: ...
     def hide(self) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
-    def set_transient_for(self, parent: typing.Optional[Window] = None) -> None: ...
+    def set_transient_for(self, parent: Window | None = None) -> None: ...
     def show(self) -> None: ...
 
 class NativeDialogClass(GObject.GPointer):
@@ -20851,15 +20746,15 @@ class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
 
     props: Props = ...
-    def __init__(self, *, model: typing.Optional[Gio.ListModel] = ...) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def __init__(self, *, model: Gio.ListModel | None = ...) -> None: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     @classmethod
-    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> NoSelection: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def new(cls, model: Gio.ListModel | None = None) -> NoSelection: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
 class NoSelectionClass(GObject.GPointer):
     """
@@ -20962,7 +20857,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         enable_popup: bool
-        group_name: typing.Optional[str]
+        group_name: str | None
         page: int
         pages: Gio.ListModel
         scrollable: bool
@@ -20973,7 +20868,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -20983,7 +20878,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -20992,13 +20887,13 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -21010,7 +20905,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     def __init__(
         self,
         enable_popup: bool = ...,
-        group_name: typing.Optional[str] = ...,
+        group_name: str | None = ...,
         page: int = ...,
         scrollable: bool = ...,
         show_border: bool = ...,
@@ -21020,7 +20915,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -21028,7 +20923,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -21039,8 +20934,8 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -21048,41 +20943,39 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def append_page(
-        self, child: Widget, tab_label: typing.Optional[Widget] = None
-    ) -> int: ...
+    def append_page(self, child: Widget, tab_label: Widget | None = None) -> int: ...
     def append_page_menu(
         self,
         child: Widget,
-        tab_label: typing.Optional[Widget] = None,
-        menu_label: typing.Optional[Widget] = None,
+        tab_label: Widget | None = None,
+        menu_label: Widget | None = None,
     ) -> int: ...
     def detach_tab(self, child: Widget) -> None: ...
-    def get_action_widget(self, pack_type: PackType) -> typing.Optional[Widget]: ...
+    def get_action_widget(self, pack_type: PackType) -> Widget | None: ...
     def get_current_page(self) -> int: ...
-    def get_group_name(self) -> typing.Optional[str]: ...
-    def get_menu_label(self, child: Widget) -> typing.Optional[Widget]: ...
-    def get_menu_label_text(self, child: Widget) -> typing.Optional[str]: ...
+    def get_group_name(self) -> str | None: ...
+    def get_menu_label(self, child: Widget) -> Widget | None: ...
+    def get_menu_label_text(self, child: Widget) -> str | None: ...
     def get_n_pages(self) -> int: ...
-    def get_nth_page(self, page_num: int) -> typing.Optional[Widget]: ...
+    def get_nth_page(self, page_num: int) -> Widget | None: ...
     def get_page(self, child: Widget) -> NotebookPage: ...
     def get_pages(self) -> Gio.ListModel: ...
     def get_scrollable(self) -> bool: ...
     def get_show_border(self) -> bool: ...
     def get_show_tabs(self) -> bool: ...
     def get_tab_detachable(self, child: Widget) -> bool: ...
-    def get_tab_label(self, child: Widget) -> typing.Optional[Widget]: ...
-    def get_tab_label_text(self, child: Widget) -> typing.Optional[str]: ...
+    def get_tab_label(self, child: Widget) -> Widget | None: ...
+    def get_tab_label_text(self, child: Widget) -> str | None: ...
     def get_tab_pos(self) -> PositionType: ...
     def get_tab_reorderable(self, child: Widget) -> bool: ...
     def insert_page(
-        self, child: Widget, tab_label: typing.Optional[Widget], position: int
+        self, child: Widget, tab_label: Widget | None, position: int
     ) -> int: ...
     def insert_page_menu(
         self,
         child: Widget,
-        tab_label: typing.Optional[Widget],
-        menu_label: typing.Optional[Widget],
+        tab_label: Widget | None,
+        menu_label: Widget | None,
         position: int,
     ) -> int: ...
     @classmethod
@@ -21091,32 +20984,28 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
     def page_num(self, child: Widget) -> int: ...
     def popup_disable(self) -> None: ...
     def popup_enable(self) -> None: ...
-    def prepend_page(
-        self, child: Widget, tab_label: typing.Optional[Widget] = None
-    ) -> int: ...
+    def prepend_page(self, child: Widget, tab_label: Widget | None = None) -> int: ...
     def prepend_page_menu(
         self,
         child: Widget,
-        tab_label: typing.Optional[Widget] = None,
-        menu_label: typing.Optional[Widget] = None,
+        tab_label: Widget | None = None,
+        menu_label: Widget | None = None,
     ) -> int: ...
     def prev_page(self) -> None: ...
     def remove_page(self, page_num: int) -> None: ...
     def reorder_child(self, child: Widget, position: int) -> None: ...
     def set_action_widget(self, widget: Widget, pack_type: PackType) -> None: ...
     def set_current_page(self, page_num: int) -> None: ...
-    def set_group_name(self, group_name: typing.Optional[str] = None) -> None: ...
+    def set_group_name(self, group_name: str | None = None) -> None: ...
     def set_menu_label(
-        self, child: Widget, menu_label: typing.Optional[Widget] = None
+        self, child: Widget, menu_label: Widget | None = None
     ) -> None: ...
     def set_menu_label_text(self, child: Widget, menu_text: str) -> None: ...
     def set_scrollable(self, scrollable: bool) -> None: ...
     def set_show_border(self, show_border: bool) -> None: ...
     def set_show_tabs(self, show_tabs: bool) -> None: ...
     def set_tab_detachable(self, child: Widget, detachable: bool) -> None: ...
-    def set_tab_label(
-        self, child: Widget, tab_label: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_tab_label(self, child: Widget, tab_label: Widget | None = None) -> None: ...
     def set_tab_label_text(self, child: Widget, tab_text: str) -> None: ...
     def set_tab_pos(self, pos: PositionType) -> None: ...
     def set_tab_reorderable(self, child: Widget, reorderable: bool) -> None: ...
@@ -21214,20 +21103,18 @@ class NumericSorter(Sorter):
       notify (GParam)
     """
     class Props(Sorter.Props):
-        expression: typing.Optional[Expression]
+        expression: Expression | None
         sort_order: SortType
 
     props: Props = ...
     def __init__(
-        self, expression: typing.Optional[Expression] = ..., sort_order: SortType = ...
+        self, expression: Expression | None = ..., sort_order: SortType = ...
     ) -> None: ...
-    def get_expression(self) -> typing.Optional[Expression]: ...
+    def get_expression(self) -> Expression | None: ...
     def get_sort_order(self) -> SortType: ...
     @classmethod
-    def new(cls, expression: typing.Optional[Expression] = None) -> NumericSorter: ...
-    def set_expression(
-        self, expression: typing.Optional[Expression] = None
-    ) -> None: ...
+    def new(cls, expression: Expression | None = None) -> NumericSorter: ...
+    def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_sort_order(self, sort_order: SortType) -> None: ...
 
 class NumericSorterClass(GObject.GPointer):
@@ -21250,7 +21137,7 @@ class ObjectExpression(Expression):
         ObjectExpression(**properties)
         new(object:GObject.Object) -> Gtk.ObjectExpression
     """
-    def get_object(self) -> typing.Optional[GObject.Object]: ...
+    def get_object(self) -> GObject.Object | None: ...
     @classmethod
     def new(cls, object: GObject.Object) -> ObjectExpression: ...
 
@@ -21348,12 +21235,12 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -21363,7 +21250,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -21372,13 +21259,13 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -21389,12 +21276,12 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -21402,7 +21289,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -21413,8 +21300,8 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -21423,13 +21310,13 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_overlay(self, widget: Widget) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_clip_overlay(self, widget: Widget) -> bool: ...
     def get_measure_overlay(self, widget: Widget) -> bool: ...
     @classmethod
     def new(cls) -> Overlay: ...
     def remove_overlay(self, widget: Widget) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_clip_overlay(self, widget: Widget, clip_overlay: bool) -> None: ...
     def set_measure_overlay(self, widget: Widget, measure: bool) -> None: ...
 
@@ -21554,23 +21441,23 @@ class PadController(EventController):
     class Props(EventController.Props):
         action_group: Gio.ActionGroup
         pad: Gdk.Device
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
     def __init__(
         self,
         action_group: Gio.ActionGroup = ...,
         pad: Gdk.Device = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
     @classmethod
     def new(
-        cls, group: Gio.ActionGroup, pad: typing.Optional[Gdk.Device] = None
+        cls, group: Gio.ActionGroup, pad: Gdk.Device | None = None
     ) -> PadController: ...
     def set_action(
         self, type: PadActionType, index: int, mode: int, label: str, action_name: str
@@ -21621,7 +21508,7 @@ class PageSetup(GObject.Object):
     def get_top_margin(self, unit: Unit) -> float: ...
     def load_file(self, file_name: str) -> bool: ...
     def load_key_file(
-        self, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        self, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> bool: ...
     @classmethod
     def new(cls) -> PageSetup: ...
@@ -21631,7 +21518,7 @@ class PageSetup(GObject.Object):
     def new_from_gvariant(cls, variant: GLib.Variant) -> PageSetup: ...
     @classmethod
     def new_from_key_file(
-        cls, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        cls, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> PageSetup: ...
     def set_bottom_margin(self, margin: float, unit: Unit) -> None: ...
     def set_left_margin(self, margin: float, unit: Unit) -> None: ...
@@ -21643,7 +21530,7 @@ class PageSetup(GObject.Object):
     def to_file(self, file_name: str) -> bool: ...
     def to_gvariant(self) -> GLib.Variant: ...
     def to_key_file(
-        self, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        self, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> None: ...
 
 class PageSetupUnixDialog(
@@ -21758,36 +21645,36 @@ class PageSetupUnixDialog(
     """
     class Props(Dialog.Props):
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -21797,7 +21684,7 @@ class PageSetupUnixDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -21806,13 +21693,13 @@ class PageSetupUnixDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -21825,35 +21712,35 @@ class PageSetupUnixDialog(
     def __init__(
         self,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -21861,7 +21748,7 @@ class PageSetupUnixDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -21872,8 +21759,8 @@ class PageSetupUnixDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -21882,14 +21769,14 @@ class PageSetupUnixDialog(
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_page_setup(self) -> PageSetup: ...
-    def get_print_settings(self) -> typing.Optional[PrintSettings]: ...
+    def get_print_settings(self) -> PrintSettings | None: ...
     @classmethod
     def new(
-        cls, title: typing.Optional[str] = None, parent: typing.Optional[Window] = None
+        cls, title: str | None = None, parent: Window | None = None
     ) -> PageSetupUnixDialog: ...
     def set_page_setup(self, page_setup: PageSetup) -> None: ...
     def set_print_settings(
-        self, print_settings: typing.Optional[PrintSettings] = None
+        self, print_settings: PrintSettings | None = None
     ) -> None: ...
 
 class Paned(
@@ -21982,7 +21869,7 @@ class Paned(
       notify (GParam)
     """
     class Props(Widget.Props):
-        end_child: typing.Optional[Widget]
+        end_child: Widget | None
         max_position: int
         min_position: int
         position: int
@@ -21991,13 +21878,13 @@ class Paned(
         resize_start_child: bool
         shrink_end_child: bool
         shrink_start_child: bool
-        start_child: typing.Optional[Widget]
+        start_child: Widget | None
         wide_handle: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -22007,7 +21894,7 @@ class Paned(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -22016,13 +21903,13 @@ class Paned(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -22034,20 +21921,20 @@ class Paned(
     props: Props = ...
     def __init__(
         self,
-        end_child: typing.Optional[Widget] = ...,
+        end_child: Widget | None = ...,
         position: int = ...,
         position_set: bool = ...,
         resize_end_child: bool = ...,
         resize_start_child: bool = ...,
         shrink_end_child: bool = ...,
         shrink_start_child: bool = ...,
-        start_child: typing.Optional[Widget] = ...,
+        start_child: Widget | None = ...,
         wide_handle: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -22055,7 +21942,7 @@ class Paned(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -22066,8 +21953,8 @@ class Paned(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -22076,23 +21963,23 @@ class Paned(
         accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
     ) -> None: ...
-    def get_end_child(self) -> typing.Optional[Widget]: ...
+    def get_end_child(self) -> Widget | None: ...
     def get_position(self) -> int: ...
     def get_resize_end_child(self) -> bool: ...
     def get_resize_start_child(self) -> bool: ...
     def get_shrink_end_child(self) -> bool: ...
     def get_shrink_start_child(self) -> bool: ...
-    def get_start_child(self) -> typing.Optional[Widget]: ...
+    def get_start_child(self) -> Widget | None: ...
     def get_wide_handle(self) -> bool: ...
     @classmethod
     def new(cls, orientation: Orientation) -> Paned: ...
-    def set_end_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_end_child(self, child: Widget | None = None) -> None: ...
     def set_position(self, position: int) -> None: ...
     def set_resize_end_child(self, resize: bool) -> None: ...
     def set_resize_start_child(self, resize: bool) -> None: ...
     def set_shrink_end_child(self, resize: bool) -> None: ...
     def set_shrink_start_child(self, resize: bool) -> None: ...
-    def set_start_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_start_child(self, child: Widget | None = None) -> None: ...
     def set_wide_handle(self, wide: bool) -> None: ...
 
 class PaperSize(GObject.GBoxed):
@@ -22127,7 +22014,7 @@ class PaperSize(GObject.GBoxed):
     def is_equal(self, size2: PaperSize) -> bool: ...
     def is_ipp(self) -> bool: ...
     @classmethod
-    def new(cls, name: typing.Optional[str] = None) -> PaperSize: ...
+    def new(cls, name: str | None = None) -> PaperSize: ...
     @classmethod
     def new_custom(
         cls, name: str, display_name: str, width: float, height: float, unit: Unit
@@ -22138,7 +22025,7 @@ class PaperSize(GObject.GBoxed):
     def new_from_ipp(cls, ipp_name: str, width: float, height: float) -> PaperSize: ...
     @classmethod
     def new_from_key_file(
-        cls, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        cls, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> PaperSize: ...
     @classmethod
     def new_from_ppd(
@@ -22241,14 +22128,14 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     """
     class Props(Widget.Props):
         activates_default: bool
-        extra_menu: typing.Optional[Gio.MenuModel]
+        extra_menu: Gio.MenuModel | None
         placeholder_text: str
         show_peek_icon: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -22258,7 +22145,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -22267,13 +22154,13 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -22293,14 +22180,14 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     def __init__(
         self,
         activates_default: bool = ...,
-        extra_menu: typing.Optional[Gio.MenuModel] = ...,
+        extra_menu: Gio.MenuModel | None = ...,
         placeholder_text: str = ...,
         show_peek_icon: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -22308,7 +22195,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -22319,8 +22206,8 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -22334,11 +22221,11 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         width_chars: int = ...,
         xalign: float = ...,
     ) -> None: ...
-    def get_extra_menu(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_extra_menu(self) -> Gio.MenuModel | None: ...
     def get_show_peek_icon(self) -> bool: ...
     @classmethod
     def new(cls) -> PasswordEntry: ...
-    def set_extra_menu(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_extra_menu(self, model: Gio.MenuModel | None = None) -> None: ...
     def set_show_peek_icon(self, show_peek_icon: bool) -> None: ...
 
 class PasswordEntryBuffer(EntryBuffer):
@@ -22467,17 +22354,17 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        alternative_text: typing.Optional[str]
+        alternative_text: str | None
         can_shrink: bool
         content_fit: ContentFit
-        file: typing.Optional[Gio.File]
+        file: Gio.File | None
         keep_aspect_ratio: bool
-        paintable: typing.Optional[Gdk.Paintable]
+        paintable: Gdk.Paintable | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -22487,7 +22374,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -22496,13 +22383,13 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -22513,17 +22400,17 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        alternative_text: typing.Optional[str] = ...,
+        alternative_text: str | None = ...,
         can_shrink: bool = ...,
         content_fit: ContentFit = ...,
-        file: typing.Optional[Gio.File] = ...,
+        file: Gio.File | None = ...,
         keep_aspect_ratio: bool = ...,
-        paintable: typing.Optional[Gdk.Paintable] = ...,
+        paintable: Gdk.Paintable | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -22531,7 +22418,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -22542,8 +22429,8 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -22551,43 +22438,33 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_alternative_text(self) -> typing.Optional[str]: ...
+    def get_alternative_text(self) -> str | None: ...
     def get_can_shrink(self) -> bool: ...
     def get_content_fit(self) -> ContentFit: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
+    def get_file(self) -> Gio.File | None: ...
     def get_keep_aspect_ratio(self) -> bool: ...
-    def get_paintable(self) -> typing.Optional[Gdk.Paintable]: ...
+    def get_paintable(self) -> Gdk.Paintable | None: ...
     @classmethod
     def new(cls) -> Picture: ...
     @classmethod
-    def new_for_file(cls, file: typing.Optional[Gio.File] = None) -> Picture: ...
+    def new_for_file(cls, file: Gio.File | None = None) -> Picture: ...
     @classmethod
-    def new_for_filename(cls, filename: typing.Optional[str] = None) -> Picture: ...
+    def new_for_filename(cls, filename: str | None = None) -> Picture: ...
     @classmethod
-    def new_for_paintable(
-        cls, paintable: typing.Optional[Gdk.Paintable] = None
-    ) -> Picture: ...
+    def new_for_paintable(cls, paintable: Gdk.Paintable | None = None) -> Picture: ...
     @classmethod
-    def new_for_pixbuf(
-        cls, pixbuf: typing.Optional[GdkPixbuf.Pixbuf] = None
-    ) -> Picture: ...
+    def new_for_pixbuf(cls, pixbuf: GdkPixbuf.Pixbuf | None = None) -> Picture: ...
     @classmethod
-    def new_for_resource(
-        cls, resource_path: typing.Optional[str] = None
-    ) -> Picture: ...
-    def set_alternative_text(
-        self, alternative_text: typing.Optional[str] = None
-    ) -> None: ...
+    def new_for_resource(cls, resource_path: str | None = None) -> Picture: ...
+    def set_alternative_text(self, alternative_text: str | None = None) -> None: ...
     def set_can_shrink(self, can_shrink: bool) -> None: ...
     def set_content_fit(self, content_fit: ContentFit) -> None: ...
-    def set_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
-    def set_filename(self, filename: typing.Optional[str] = None) -> None: ...
+    def set_file(self, file: Gio.File | None = None) -> None: ...
+    def set_filename(self, filename: str | None = None) -> None: ...
     def set_keep_aspect_ratio(self, keep_aspect_ratio: bool) -> None: ...
-    def set_paintable(
-        self, paintable: typing.Optional[Gdk.Paintable] = None
-    ) -> None: ...
-    def set_pixbuf(self, pixbuf: typing.Optional[GdkPixbuf.Pixbuf] = None) -> None: ...
-    def set_resource(self, resource_path: typing.Optional[str] = None) -> None: ...
+    def set_paintable(self, paintable: Gdk.Paintable | None = None) -> None: ...
+    def set_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf | None = None) -> None: ...
+    def set_resource(self, resource_path: str | None = None) -> None: ...
 
 class PictureClass(GObject.GPointer):
     """
@@ -22683,8 +22560,8 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     class Props(Widget.Props):
         autohide: bool
         cascade_popdown: bool
-        child: typing.Optional[Widget]
-        default_widget: typing.Optional[Widget]
+        child: Widget | None
+        default_widget: Widget | None
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -22693,7 +22570,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -22703,7 +22580,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -22712,13 +22589,13 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -22732,17 +22609,17 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         self,
         autohide: bool = ...,
         cascade_popdown: bool = ...,
-        child: typing.Optional[Widget] = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
+        default_widget: Widget | None = ...,
         has_arrow: bool = ...,
         mnemonics_visible: bool = ...,
-        pointing_to: typing.Optional[Gdk.Rectangle] = ...,
+        pointing_to: Gdk.Rectangle | None = ...,
         position: PositionType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -22750,7 +22627,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -22761,8 +22638,8 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -22774,7 +22651,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     def do_closed(self) -> None: ...
     def get_autohide(self) -> bool: ...
     def get_cascade_popdown(self) -> bool: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_has_arrow(self) -> bool: ...
     def get_mnemonics_visible(self) -> bool: ...
     def get_offset(self) -> typing.Tuple[int, int]: ...
@@ -22787,12 +22664,12 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     def present(self) -> None: ...
     def set_autohide(self, autohide: bool) -> None: ...
     def set_cascade_popdown(self, cascade_popdown: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_default_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_default_widget(self, widget: Widget | None = None) -> None: ...
     def set_has_arrow(self, has_arrow: bool) -> None: ...
     def set_mnemonics_visible(self, mnemonics_visible: bool) -> None: ...
     def set_offset(self, x_offset: int, y_offset: int) -> None: ...
-    def set_pointing_to(self, rect: typing.Optional[Gdk.Rectangle] = None) -> None: ...
+    def set_pointing_to(self, rect: Gdk.Rectangle | None = None) -> None: ...
     def set_position(self, position: PositionType) -> None: ...
 
 class PopoverClass(GObject.GPointer):
@@ -22899,12 +22776,12 @@ class PopoverMenu(
     """
     class Props(Popover.Props):
         flags: PopoverMenuFlags
-        menu_model: typing.Optional[Gio.MenuModel]
+        menu_model: Gio.MenuModel | None
         visible_submenu: str
         autohide: bool
         cascade_popdown: bool
-        child: typing.Optional[Widget]
-        default_widget: typing.Optional[Widget]
+        child: Widget | None
+        default_widget: Widget | None
         has_arrow: bool
         mnemonics_visible: bool
         pointing_to: Gdk.Rectangle
@@ -22913,7 +22790,7 @@ class PopoverMenu(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -22923,7 +22800,7 @@ class PopoverMenu(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -22932,13 +22809,13 @@ class PopoverMenu(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -22950,21 +22827,21 @@ class PopoverMenu(
     def __init__(
         self,
         flags: PopoverMenuFlags = ...,
-        menu_model: typing.Optional[Gio.MenuModel] = ...,
+        menu_model: Gio.MenuModel | None = ...,
         visible_submenu: str = ...,
         autohide: bool = ...,
         cascade_popdown: bool = ...,
-        child: typing.Optional[Widget] = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
+        default_widget: Widget | None = ...,
         has_arrow: bool = ...,
         mnemonics_visible: bool = ...,
-        pointing_to: typing.Optional[Gdk.Rectangle] = ...,
+        pointing_to: Gdk.Rectangle | None = ...,
         position: PositionType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -22972,7 +22849,7 @@ class PopoverMenu(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -22983,8 +22860,8 @@ class PopoverMenu(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -22994,18 +22871,16 @@ class PopoverMenu(
     ) -> None: ...
     def add_child(self, child: Widget, id: str) -> bool: ...
     def get_flags(self) -> PopoverMenuFlags: ...
-    def get_menu_model(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_menu_model(self) -> Gio.MenuModel | None: ...
     @classmethod
-    def new_from_model(
-        cls, model: typing.Optional[Gio.MenuModel] = None
-    ) -> PopoverMenu: ...
+    def new_from_model(cls, model: Gio.MenuModel | None = None) -> PopoverMenu: ...
     @classmethod
     def new_from_model_full(
         cls, model: Gio.MenuModel, flags: PopoverMenuFlags
     ) -> PopoverMenu: ...
     def remove_child(self, child: Widget) -> bool: ...
     def set_flags(self, flags: PopoverMenuFlags) -> None: ...
-    def set_menu_model(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_menu_model(self, model: Gio.MenuModel | None = None) -> None: ...
 
 class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -23077,12 +22952,12 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        menu_model: typing.Optional[Gio.MenuModel]
+        menu_model: Gio.MenuModel | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -23092,7 +22967,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -23101,13 +22976,13 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -23118,12 +22993,12 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        menu_model: typing.Optional[Gio.MenuModel] = ...,
+        menu_model: Gio.MenuModel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -23131,7 +23006,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -23142,8 +23017,8 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -23152,13 +23027,11 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_child(self, child: Widget, id: str) -> bool: ...
-    def get_menu_model(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_menu_model(self) -> Gio.MenuModel | None: ...
     @classmethod
-    def new_from_model(
-        cls, model: typing.Optional[Gio.MenuModel] = None
-    ) -> PopoverMenuBar: ...
+    def new_from_model(cls, model: Gio.MenuModel | None = None) -> PopoverMenuBar: ...
     def remove_child(self, child: Widget) -> bool: ...
-    def set_menu_model(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_menu_model(self, model: Gio.MenuModel | None = None) -> None: ...
 
 class PrintBackend(GObject.GPointer): ...
 
@@ -23213,8 +23086,8 @@ class PrintDialog(GObject.Object):
     class Props(GObject.Object.Props):
         accept_label: str
         modal: bool
-        page_setup: typing.Optional[PageSetup]
-        print_settings: typing.Optional[PrintSettings]
+        page_setup: PageSetup | None
+        print_settings: PrintSettings | None
         title: str
 
     props: Props = ...
@@ -23228,26 +23101,26 @@ class PrintDialog(GObject.Object):
     ) -> None: ...
     def get_accept_label(self) -> str: ...
     def get_modal(self) -> bool: ...
-    def get_page_setup(self) -> typing.Optional[PageSetup]: ...
-    def get_print_settings(self) -> typing.Optional[PrintSettings]: ...
+    def get_page_setup(self) -> PageSetup | None: ...
+    def get_print_settings(self) -> PrintSettings | None: ...
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> PrintDialog: ...
     def print_(
         self,
-        parent: typing.Optional[Window] = None,
-        setup: typing.Optional[PrintSetup] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        setup: PrintSetup | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def print_file(
         self,
-        parent: typing.Optional[Window],
-        setup: typing.Optional[PrintSetup],
+        parent: Window | None,
+        setup: PrintSetup | None,
         file: Gio.File,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def print_file_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -23259,9 +23132,9 @@ class PrintDialog(GObject.Object):
     def set_title(self, title: str) -> None: ...
     def setup(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def setup_finish(self, result: Gio.AsyncResult) -> PrintSetup: ...
@@ -23412,7 +23285,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     class Props(GObject.Object.Props):
         allow_async: bool
         current_page: int
-        custom_tab_label: typing.Optional[str]
+        custom_tab_label: str | None
         default_page_setup: PageSetup
         embed_page_setup: bool
         export_filename: str
@@ -23420,7 +23293,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         job_name: str
         n_pages: int
         n_pages_to_print: int
-        print_settings: typing.Optional[PrintSettings]
+        print_settings: PrintSettings | None
         show_progress: bool
         status: PrintStatus
         status_string: str
@@ -23436,14 +23309,14 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         self,
         allow_async: bool = ...,
         current_page: int = ...,
-        custom_tab_label: typing.Optional[str] = ...,
-        default_page_setup: typing.Optional[PageSetup] = ...,
+        custom_tab_label: str | None = ...,
+        default_page_setup: PageSetup | None = ...,
         embed_page_setup: bool = ...,
         export_filename: str = ...,
         has_selection: bool = ...,
         job_name: str = ...,
         n_pages: int = ...,
-        print_settings: typing.Optional[PrintSettings] = ...,
+        print_settings: PrintSettings | None = ...,
         show_progress: bool = ...,
         support_selection: bool = ...,
         track_print_status: bool = ...,
@@ -23473,7 +23346,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     def get_error(self) -> None: ...
     def get_has_selection(self) -> bool: ...
     def get_n_pages_to_print(self) -> int: ...
-    def get_print_settings(self) -> typing.Optional[PrintSettings]: ...
+    def get_print_settings(self) -> PrintSettings | None: ...
     def get_status(self) -> PrintStatus: ...
     def get_status_string(self) -> str: ...
     def get_support_selection(self) -> bool: ...
@@ -23481,13 +23354,13 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     @classmethod
     def new(cls) -> PrintOperation: ...
     def run(
-        self, action: PrintOperationAction, parent: typing.Optional[Window] = None
+        self, action: PrintOperationAction, parent: Window | None = None
     ) -> PrintOperationResult: ...
     def set_allow_async(self, allow_async: bool) -> None: ...
     def set_current_page(self, current_page: int) -> None: ...
-    def set_custom_tab_label(self, label: typing.Optional[str] = None) -> None: ...
+    def set_custom_tab_label(self, label: str | None = None) -> None: ...
     def set_default_page_setup(
-        self, default_page_setup: typing.Optional[PageSetup] = None
+        self, default_page_setup: PageSetup | None = None
     ) -> None: ...
     def set_defer_drawing(self) -> None: ...
     def set_embed_page_setup(self, embed: bool) -> None: ...
@@ -23496,7 +23369,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     def set_job_name(self, job_name: str) -> None: ...
     def set_n_pages(self, n_pages: int) -> None: ...
     def set_print_settings(
-        self, print_settings: typing.Optional[PrintSettings] = None
+        self, print_settings: PrintSettings | None = None
     ) -> None: ...
     def set_show_progress(self, show_progress: bool) -> None: ...
     def set_support_selection(self, support_selection: bool) -> None: ...
@@ -23585,31 +23458,31 @@ class PrintSettings(GObject.Object):
     def foreach(
         self, func: typing.Callable[..., None], *user_data: typing.Any
     ) -> None: ...
-    def get(self, key: str) -> typing.Optional[str]: ...
+    def get(self, key: str) -> str | None: ...
     def get_bool(self, key: str) -> bool: ...
     def get_collate(self) -> bool: ...
-    def get_default_source(self) -> typing.Optional[str]: ...
-    def get_dither(self) -> typing.Optional[str]: ...
+    def get_default_source(self) -> str | None: ...
+    def get_dither(self) -> str | None: ...
     def get_double(self, key: str) -> float: ...
     def get_double_with_default(self, key: str, def_: float) -> float: ...
     def get_duplex(self) -> PrintDuplex: ...
-    def get_finishings(self) -> typing.Optional[str]: ...
+    def get_finishings(self) -> str | None: ...
     def get_int(self, key: str) -> int: ...
     def get_int_with_default(self, key: str, def_: int) -> int: ...
     def get_length(self, key: str, unit: Unit) -> float: ...
-    def get_media_type(self) -> typing.Optional[str]: ...
+    def get_media_type(self) -> str | None: ...
     def get_n_copies(self) -> int: ...
     def get_number_up(self) -> int: ...
     def get_number_up_layout(self) -> NumberUpLayout: ...
     def get_orientation(self) -> PageOrientation: ...
-    def get_output_bin(self) -> typing.Optional[str]: ...
+    def get_output_bin(self) -> str | None: ...
     def get_page_ranges(self) -> list[PageRange]: ...
     def get_page_set(self) -> PageSet: ...
     def get_paper_height(self, unit: Unit) -> float: ...
-    def get_paper_size(self) -> typing.Optional[PaperSize]: ...
+    def get_paper_size(self) -> PaperSize | None: ...
     def get_paper_width(self, unit: Unit) -> float: ...
     def get_print_pages(self) -> PrintPages: ...
-    def get_printer(self) -> typing.Optional[str]: ...
+    def get_printer(self) -> str | None: ...
     def get_printer_lpi(self) -> float: ...
     def get_quality(self) -> PrintQuality: ...
     def get_resolution(self) -> int: ...
@@ -23621,7 +23494,7 @@ class PrintSettings(GObject.Object):
     def has_key(self, key: str) -> bool: ...
     def load_file(self, file_name: str) -> bool: ...
     def load_key_file(
-        self, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        self, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> bool: ...
     @classmethod
     def new(cls) -> PrintSettings: ...
@@ -23631,9 +23504,9 @@ class PrintSettings(GObject.Object):
     def new_from_gvariant(cls, variant: GLib.Variant) -> PrintSettings: ...
     @classmethod
     def new_from_key_file(
-        cls, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        cls, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> PrintSettings: ...
-    def set(self, key: str, value: typing.Optional[str] = None) -> None: ...
+    def set(self, key: str, value: str | None = None) -> None: ...
     def set_bool(self, key: str, value: bool) -> None: ...
     def set_collate(self, collate: bool) -> None: ...
     def set_default_source(self, default_source: str) -> None: ...
@@ -23666,7 +23539,7 @@ class PrintSettings(GObject.Object):
     def to_file(self, file_name: str) -> bool: ...
     def to_gvariant(self) -> GLib.Variant: ...
     def to_key_file(
-        self, key_file: GLib.KeyFile, group_name: typing.Optional[str] = None
+        self, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> None: ...
     def unset(self, key: str) -> None: ...
 
@@ -23803,39 +23676,39 @@ class PrintUnixDialog(
         manual_capabilities: PrintCapabilities
         page_setup: PageSetup
         print_settings: PrintSettings
-        selected_printer: typing.Optional[Printer]
+        selected_printer: Printer | None
         support_selection: bool
         use_header_bar: int
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -23845,7 +23718,7 @@ class PrintUnixDialog(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -23854,13 +23727,13 @@ class PrintUnixDialog(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -23877,38 +23750,38 @@ class PrintUnixDialog(
         has_selection: bool = ...,
         manual_capabilities: PrintCapabilities = ...,
         page_setup: PageSetup = ...,
-        print_settings: typing.Optional[PrintSettings] = ...,
+        print_settings: PrintSettings | None = ...,
         support_selection: bool = ...,
         use_header_bar: int = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -23916,7 +23789,7 @@ class PrintUnixDialog(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -23927,8 +23800,8 @@ class PrintUnixDialog(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -23943,19 +23816,19 @@ class PrintUnixDialog(
     def get_manual_capabilities(self) -> PrintCapabilities: ...
     def get_page_setup(self) -> PageSetup: ...
     def get_page_setup_set(self) -> bool: ...
-    def get_selected_printer(self) -> typing.Optional[Printer]: ...
+    def get_selected_printer(self) -> Printer | None: ...
     def get_settings(self) -> PrintSettings: ...
     def get_support_selection(self) -> bool: ...
     @classmethod
     def new(
-        cls, title: typing.Optional[str] = None, parent: typing.Optional[Window] = None
+        cls, title: str | None = None, parent: Window | None = None
     ) -> PrintUnixDialog: ...
     def set_current_page(self, current_page: int) -> None: ...
     def set_embed_page_setup(self, embed: bool) -> None: ...
     def set_has_selection(self, has_selection: bool) -> None: ...
     def set_manual_capabilities(self, capabilities: PrintCapabilities) -> None: ...
     def set_page_setup(self, page_setup: PageSetup) -> None: ...
-    def set_settings(self, settings: typing.Optional[PrintSettings] = None) -> None: ...
+    def set_settings(self, settings: PrintSettings | None = None) -> None: ...
     def set_support_selection(self, support_selection: bool) -> None: ...
 
 class Printer(GObject.Object):
@@ -24117,12 +23990,12 @@ class ProgressBar(
         inverted: bool
         pulse_step: float
         show_text: bool
-        text: typing.Optional[str]
+        text: str | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -24132,7 +24005,7 @@ class ProgressBar(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -24141,13 +24014,13 @@ class ProgressBar(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -24164,12 +24037,12 @@ class ProgressBar(
         inverted: bool = ...,
         pulse_step: float = ...,
         show_text: bool = ...,
-        text: typing.Optional[str] = ...,
+        text: str | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -24177,7 +24050,7 @@ class ProgressBar(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -24188,8 +24061,8 @@ class ProgressBar(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -24203,7 +24076,7 @@ class ProgressBar(
     def get_inverted(self) -> bool: ...
     def get_pulse_step(self) -> float: ...
     def get_show_text(self) -> bool: ...
-    def get_text(self) -> typing.Optional[str]: ...
+    def get_text(self) -> str | None: ...
     @classmethod
     def new(cls) -> ProgressBar: ...
     def pulse(self) -> None: ...
@@ -24212,7 +24085,7 @@ class ProgressBar(
     def set_inverted(self, inverted: bool) -> None: ...
     def set_pulse_step(self, fraction: float) -> None: ...
     def set_show_text(self, show_text: bool) -> None: ...
-    def set_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_text(self, text: str | None = None) -> None: ...
 
 class PropertyExpression(Expression):
     """
@@ -24224,18 +24097,18 @@ class PropertyExpression(Expression):
         new(this_type:GType, expression:Gtk.Expression=None, property_name:str) -> Gtk.PropertyExpression
         new_for_pspec(expression:Gtk.Expression=None, pspec:GObject.ParamSpec) -> Gtk.PropertyExpression
     """
-    def get_expression(self) -> typing.Optional[Expression]: ...
+    def get_expression(self) -> Expression | None: ...
     def get_pspec(self) -> GObject.ParamSpec: ...
     @classmethod
     def new(
         cls,
         this_type: typing.Type[typing.Any],
-        expression: typing.Optional[Expression],
+        expression: Expression | None,
         property_name: str,
     ) -> PropertyExpression: ...
     @classmethod
     def new_for_pspec(
-        cls, expression: typing.Optional[Expression], pspec: GObject.ParamSpec
+        cls, expression: Expression | None, pspec: GObject.ParamSpec
     ) -> PropertyExpression: ...
 
 class PyGTKDeprecationWarning(_gi.PyGIDeprecationWarning): ...
@@ -24332,7 +24205,7 @@ class Range(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -24342,7 +24215,7 @@ class Range(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -24351,13 +24224,13 @@ class Range(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -24380,7 +24253,7 @@ class Range(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -24388,7 +24261,7 @@ class Range(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -24399,8 +24272,8 @@ class Range(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -24472,28 +24345,24 @@ class RecentData(GObject.GPointer):
     is_private: bool = ...
 
 class RecentInfo(GObject.GBoxed):
-    def create_app_info(
-        self, app_name: typing.Optional[str] = None
-    ) -> typing.Optional[Gio.AppInfo]: ...
+    def create_app_info(self, app_name: str | None = None) -> Gio.AppInfo | None: ...
     def exists(self) -> bool: ...
     def get_added(self) -> GLib.DateTime: ...
     def get_age(self) -> int: ...
     def get_application_info(
         self, app_name: str
-    ) -> typing.Optional[
-        typing.Tuple[str, int, GLib.DateTime]
-    ]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[str, int, GLib.DateTime] | None: ...  # CHECK Wrapped function
     def get_applications(self) -> list[str]: ...
     def get_description(self) -> str: ...
     def get_display_name(self) -> str: ...
-    def get_gicon(self) -> typing.Optional[Gio.Icon]: ...
+    def get_gicon(self) -> Gio.Icon | None: ...
     def get_groups(self) -> list[str]: ...
     def get_mime_type(self) -> str: ...
     def get_modified(self) -> GLib.DateTime: ...
     def get_private_hint(self) -> bool: ...
     def get_short_name(self) -> str: ...
     def get_uri(self) -> str: ...
-    def get_uri_display(self) -> typing.Optional[str]: ...
+    def get_uri_display(self) -> str | None: ...
     def get_visited(self) -> GLib.DateTime: ...
     def has_application(self, app_name: str) -> bool: ...
     def has_group(self, group_name: str) -> bool: ...
@@ -24539,8 +24408,8 @@ class RecentManager(GObject.Object):
     def get_default() -> RecentManager: ...
     def get_items(self) -> list[RecentInfo]: ...
     def has_item(self, uri: str) -> bool: ...
-    def lookup_item(self, uri: str) -> typing.Optional[RecentInfo]: ...
-    def move_item(self, uri: str, new_uri: typing.Optional[str] = None) -> bool: ...
+    def lookup_item(self, uri: str) -> RecentInfo | None: ...
+    def move_item(self, uri: str, new_uri: str | None = None) -> bool: ...
     @classmethod
     def new(cls) -> RecentManager: ...
     def purge_items(self) -> int: ...
@@ -24664,7 +24533,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         child_revealed: bool
         reveal_child: bool
         transition_duration: int
@@ -24673,7 +24542,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -24683,7 +24552,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -24692,13 +24561,13 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -24709,7 +24578,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         reveal_child: bool = ...,
         transition_duration: int = ...,
         transition_type: RevealerTransitionType = ...,
@@ -24717,7 +24586,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -24725,7 +24594,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -24736,8 +24605,8 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -24745,14 +24614,14 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_child_revealed(self) -> bool: ...
     def get_reveal_child(self) -> bool: ...
     def get_transition_duration(self) -> int: ...
     def get_transition_type(self) -> RevealerTransitionType: ...
     @classmethod
     def new(cls) -> Revealer: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_reveal_child(self, reveal_child: bool) -> None: ...
     def set_transition_duration(self, duration: int) -> None: ...
     def set_transition_type(self, transition: RevealerTransitionType) -> None: ...
@@ -24765,8 +24634,8 @@ class Root(GObject.GInterface):
       notify (GParam)
     """
     def get_display(self) -> Gdk.Display: ...
-    def get_focus(self) -> typing.Optional[Widget]: ...
-    def set_focus(self, focus: typing.Optional[Widget] = None) -> None: ...
+    def get_focus(self) -> Widget | None: ...
+    def set_focus(self, focus: Widget | None = None) -> None: ...
 
 class RootInterface(GObject.GPointer): ...
 
@@ -24874,7 +24743,7 @@ class Scale(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -24884,7 +24753,7 @@ class Scale(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -24893,13 +24762,13 @@ class Scale(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -24926,7 +24795,7 @@ class Scale(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -24934,7 +24803,7 @@ class Scale(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -24945,8 +24814,8 @@ class Scale(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -24956,19 +24825,19 @@ class Scale(
         orientation: Orientation = ...,
     ) -> None: ...
     def add_mark(
-        self, value: float, position: PositionType, markup: typing.Optional[str] = None
+        self, value: float, position: PositionType, markup: str | None = None
     ) -> None: ...
     def clear_marks(self) -> None: ...
     def do_get_layout_offsets(self) -> typing.Tuple[int, int]: ...
     def get_digits(self) -> int: ...
     def get_draw_value(self) -> bool: ...
     def get_has_origin(self) -> bool: ...
-    def get_layout(self) -> typing.Optional[Pango.Layout]: ...
+    def get_layout(self) -> Pango.Layout | None: ...
     def get_layout_offsets(self) -> typing.Tuple[int, int]: ...
     def get_value_pos(self) -> PositionType: ...
     @classmethod
     def new(
-        cls, orientation: Orientation, adjustment: typing.Optional[Adjustment] = None
+        cls, orientation: Orientation, adjustment: Adjustment | None = None
     ) -> Scale: ...
     @classmethod
     def new_with_range(
@@ -24978,7 +24847,7 @@ class Scale(
     def set_draw_value(self, draw_value: bool) -> None: ...
     def set_format_value_func(
         self,
-        func: typing.Optional[typing.Callable[..., str]] = None,
+        func: typing.Callable[..., str] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_has_origin(self, has_origin: bool) -> None: ...
@@ -25074,7 +24943,7 @@ class ScaleButton(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -25084,7 +24953,7 @@ class ScaleButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -25093,13 +24962,13 @@ class ScaleButton(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -25120,7 +24989,7 @@ class ScaleButton(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -25128,7 +24997,7 @@ class ScaleButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -25139,8 +25008,8 @@ class ScaleButton(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -25163,7 +25032,7 @@ class ScaleButton(
         min: float,
         max: float,
         step: float,
-        icons: typing.Optional[typing.Sequence[str]] = None,
+        icons: typing.Sequence[str] | None = None,
     ) -> ScaleButton: ...
     def set_adjustment(self, adjustment: Adjustment) -> None: ...
     def set_has_frame(self, has_frame: bool) -> None: ...
@@ -25221,17 +25090,13 @@ class Scrollable(GObject.GInterface):
       notify (GParam)
     """
     def get_border(self) -> typing.Tuple[bool, Border]: ...
-    def get_hadjustment(self) -> typing.Optional[Adjustment]: ...
+    def get_hadjustment(self) -> Adjustment | None: ...
     def get_hscroll_policy(self) -> ScrollablePolicy: ...
-    def get_vadjustment(self) -> typing.Optional[Adjustment]: ...
+    def get_vadjustment(self) -> Adjustment | None: ...
     def get_vscroll_policy(self) -> ScrollablePolicy: ...
-    def set_hadjustment(
-        self, hadjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_hadjustment(self, hadjustment: Adjustment | None = None) -> None: ...
     def set_hscroll_policy(self, policy: ScrollablePolicy) -> None: ...
-    def set_vadjustment(
-        self, vadjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
     def set_vscroll_policy(self, policy: ScrollablePolicy) -> None: ...
 
 class ScrollableInterface(GObject.GPointer):
@@ -25323,7 +25188,7 @@ class Scrollbar(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -25333,7 +25198,7 @@ class Scrollbar(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -25342,13 +25207,13 @@ class Scrollbar(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -25360,12 +25225,12 @@ class Scrollbar(
     props: Props = ...
     def __init__(
         self,
-        adjustment: typing.Optional[Adjustment] = ...,
+        adjustment: Adjustment | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -25373,7 +25238,7 @@ class Scrollbar(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -25384,8 +25249,8 @@ class Scrollbar(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -25397,11 +25262,9 @@ class Scrollbar(
     def get_adjustment(self) -> Adjustment: ...
     @classmethod
     def new(
-        cls, orientation: Orientation, adjustment: typing.Optional[Adjustment] = None
+        cls, orientation: Orientation, adjustment: Adjustment | None = None
     ) -> Scrollbar: ...
-    def set_adjustment(
-        self, adjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_adjustment(self, adjustment: Adjustment | None = None) -> None: ...
 
 class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -25493,7 +25356,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         hadjustment: Adjustment
         has_frame: bool
         hscrollbar_policy: PolicyType
@@ -25512,7 +25375,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -25522,7 +25385,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -25531,13 +25394,13 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -25548,8 +25411,8 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        child: Widget | None = ...,
+        hadjustment: Adjustment | None = ...,
         has_frame: bool = ...,
         hscrollbar_policy: PolicyType = ...,
         kinetic_scrolling: bool = ...,
@@ -25560,14 +25423,14 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         overlay_scrolling: bool = ...,
         propagate_natural_height: bool = ...,
         propagate_natural_width: bool = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscrollbar_policy: PolicyType = ...,
         window_placement: CornerType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -25575,7 +25438,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -25586,8 +25449,8 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -25595,7 +25458,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_hadjustment(self) -> Adjustment: ...
     def get_has_frame(self) -> bool: ...
     def get_hscrollbar(self) -> Widget: ...
@@ -25613,10 +25476,8 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     def get_vscrollbar(self) -> Widget: ...
     @classmethod
     def new(cls) -> ScrolledWindow: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_hadjustment(
-        self, hadjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_hadjustment(self, hadjustment: Adjustment | None = None) -> None: ...
     def set_has_frame(self, has_frame: bool) -> None: ...
     def set_kinetic_scrolling(self, kinetic_scrolling: bool) -> None: ...
     def set_max_content_height(self, height: int) -> None: ...
@@ -25630,9 +25491,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     ) -> None: ...
     def set_propagate_natural_height(self, propagate: bool) -> None: ...
     def set_propagate_natural_width(self, propagate: bool) -> None: ...
-    def set_vadjustment(
-        self, vadjustment: typing.Optional[Adjustment] = None
-    ) -> None: ...
+    def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
     def unset_placement(self) -> None: ...
 
 class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
@@ -25708,15 +25567,15 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
-        key_capture_widget: typing.Optional[Widget]
+        child: Widget | None
+        key_capture_widget: Widget | None
         search_mode_enabled: bool
         show_close_button: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -25726,7 +25585,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -25735,13 +25594,13 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -25752,15 +25611,15 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
-        key_capture_widget: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
+        key_capture_widget: Widget | None = ...,
         search_mode_enabled: bool = ...,
         show_close_button: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -25768,7 +25627,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -25779,8 +25638,8 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -25789,16 +25648,14 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def connect_entry(self, entry: Editable) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
-    def get_key_capture_widget(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
+    def get_key_capture_widget(self) -> Widget | None: ...
     def get_search_mode(self) -> bool: ...
     def get_show_close_button(self) -> bool: ...
     @classmethod
     def new(cls) -> SearchBar: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
-    def set_key_capture_widget(
-        self, widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
+    def set_key_capture_widget(self, widget: Widget | None = None) -> None: ...
     def set_search_mode(self, search_mode: bool) -> None: ...
     def set_show_close_button(self, visible: bool) -> None: ...
 
@@ -25892,13 +25749,13 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         activates_default: bool
         input_hints: InputHints
         input_purpose: InputPurpose
-        placeholder_text: typing.Optional[str]
+        placeholder_text: str | None
         search_delay: int
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -25908,7 +25765,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -25917,13 +25774,13 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -25945,13 +25802,13 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         activates_default: bool = ...,
         input_hints: InputHints = ...,
         input_purpose: InputPurpose = ...,
-        placeholder_text: typing.Optional[str] = ...,
+        placeholder_text: str | None = ...,
         search_delay: int = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -25959,7 +25816,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -25970,8 +25827,8 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -25987,17 +25844,15 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     ) -> None: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
-    def get_key_capture_widget(self) -> typing.Optional[Widget]: ...
-    def get_placeholder_text(self) -> typing.Optional[str]: ...
+    def get_key_capture_widget(self) -> Widget | None: ...
+    def get_placeholder_text(self) -> str | None: ...
     def get_search_delay(self) -> int: ...
     @classmethod
     def new(cls) -> SearchEntry: ...
     def set_input_hints(self, hints: InputHints) -> None: ...
     def set_input_purpose(self, purpose: InputPurpose) -> None: ...
-    def set_key_capture_widget(
-        self, widget: typing.Optional[Widget] = None
-    ) -> None: ...
-    def set_placeholder_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_key_capture_widget(self, widget: Widget | None = None) -> None: ...
+    def set_placeholder_text(self, text: str | None = None) -> None: ...
     def set_search_delay(self, delay: int) -> None: ...
 
 class SectionModel(GObject.GInterface):
@@ -26046,17 +25901,15 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[SelectionModel]
+        model: SelectionModel | None
         n_items: int
 
     props: Props = ...
-    def __init__(self, model: typing.Optional[SelectionModel] = ...) -> None: ...
-    def get_model(self) -> typing.Optional[SelectionModel]: ...
+    def __init__(self, model: SelectionModel | None = ...) -> None: ...
+    def get_model(self) -> SelectionModel | None: ...
     @classmethod
-    def new(
-        cls, model: typing.Optional[SelectionModel] = None
-    ) -> SelectionFilterModel: ...
-    def set_model(self, model: typing.Optional[SelectionModel] = None) -> None: ...
+    def new(cls, model: SelectionModel | None = None) -> SelectionFilterModel: ...
+    def set_model(self, model: SelectionModel | None = None) -> None: ...
 
 class SelectionFilterModelClass(GObject.GPointer):
     """
@@ -26181,7 +26034,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -26191,7 +26044,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -26200,13 +26053,13 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -26222,7 +26075,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -26230,7 +26083,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -26241,8 +26094,8 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -26441,7 +26294,7 @@ class Settings(GObject.Object, StyleProvider):
         gtk_xft_rgba: str = ...,
     ) -> None: ...
     @staticmethod
-    def get_default() -> typing.Optional[Settings]: ...
+    def get_default() -> Settings | None: ...
     @staticmethod
     def get_for_display(display: Gdk.Display) -> Settings: ...
     def reset_property(self, name: str) -> None: ...
@@ -26466,29 +26319,29 @@ class Shortcut(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        action: typing.Optional[ShortcutAction]
-        arguments: typing.Optional[GLib.Variant]
-        trigger: typing.Optional[ShortcutTrigger]
+        action: ShortcutAction | None
+        arguments: GLib.Variant | None
+        trigger: ShortcutTrigger | None
 
     props: Props = ...
     def __init__(
         self,
-        action: typing.Optional[ShortcutAction] = ...,
-        arguments: typing.Optional[GLib.Variant] = ...,
-        trigger: typing.Optional[ShortcutTrigger] = ...,
+        action: ShortcutAction | None = ...,
+        arguments: GLib.Variant | None = ...,
+        trigger: ShortcutTrigger | None = ...,
     ) -> None: ...
-    def get_action(self) -> typing.Optional[ShortcutAction]: ...
-    def get_arguments(self) -> typing.Optional[GLib.Variant]: ...
-    def get_trigger(self) -> typing.Optional[ShortcutTrigger]: ...
+    def get_action(self) -> ShortcutAction | None: ...
+    def get_arguments(self) -> GLib.Variant | None: ...
+    def get_trigger(self) -> ShortcutTrigger | None: ...
     @classmethod
     def new(
         cls,
-        trigger: typing.Optional[ShortcutTrigger] = None,
-        action: typing.Optional[ShortcutAction] = None,
+        trigger: ShortcutTrigger | None = None,
+        action: ShortcutAction | None = None,
     ) -> Shortcut: ...
-    def set_action(self, action: typing.Optional[ShortcutAction] = None) -> None: ...
-    def set_arguments(self, args: typing.Optional[GLib.Variant] = None) -> None: ...
-    def set_trigger(self, trigger: typing.Optional[ShortcutTrigger] = None) -> None: ...
+    def set_action(self, action: ShortcutAction | None = None) -> None: ...
+    def set_arguments(self, args: GLib.Variant | None = None) -> None: ...
+    def set_trigger(self, trigger: ShortcutTrigger | None = None) -> None: ...
 
 class ShortcutAction(GObject.Object):
     """
@@ -26508,10 +26361,10 @@ class ShortcutAction(GObject.Object):
         self,
         flags: ShortcutActionFlags,
         widget: Widget,
-        args: typing.Optional[GLib.Variant] = None,
+        args: GLib.Variant | None = None,
     ) -> bool: ...
     @classmethod
-    def parse_string(cls, string: str) -> typing.Optional[ShortcutAction]: ...
+    def parse_string(cls, string: str) -> ShortcutAction | None: ...
     def print_(self, string: GLib.String) -> None: ...
     def to_string(self) -> str: ...
 
@@ -26564,10 +26417,10 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
         mnemonic_modifiers: Gdk.ModifierType
         n_items: int
         scope: ShortcutScope
-        name: typing.Optional[str]
+        name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: typing.Optional[Widget]
+        widget: Widget | None
         model: Gio.ListModel
 
     props: Props = ...
@@ -26576,7 +26429,7 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
         mnemonic_modifiers: Gdk.ModifierType = ...,
         model: Gio.ListModel = ...,
         scope: ShortcutScope = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         propagation_limit: PropagationLimit = ...,
         propagation_phase: PropagationPhase = ...,
     ) -> None: ...
@@ -26664,13 +26517,13 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        accelerator: typing.Optional[str]
-        disabled_text: typing.Optional[str]
+        accelerator: str | None
+        disabled_text: str | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -26680,7 +26533,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -26689,13 +26542,13 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -26712,7 +26565,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -26720,7 +26573,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -26731,8 +26584,8 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -26740,8 +26593,8 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_accelerator(self) -> typing.Optional[str]: ...
-    def get_disabled_text(self) -> typing.Optional[str]: ...
+    def get_accelerator(self) -> str | None: ...
+    def get_disabled_text(self) -> str | None: ...
     @classmethod
     def new(cls, accelerator: str) -> ShortcutLabel: ...
     def set_accelerator(self, accelerator: str) -> None: ...
@@ -26783,7 +26636,7 @@ class ShortcutTrigger(GObject.Object):
     def equal(self, trigger2: ShortcutTrigger) -> bool: ...
     def hash(self) -> int: ...
     @classmethod
-    def parse_string(cls, string: str) -> typing.Optional[ShortcutTrigger]: ...
+    def parse_string(cls, string: str) -> ShortcutTrigger | None: ...
     def print_(self, string: GLib.String) -> None: ...
     def print_label(self, display: Gdk.Display, string: GLib.String) -> bool: ...
     def to_label(self, display: Gdk.Display) -> str: ...
@@ -26882,7 +26735,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -26892,7 +26745,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -26901,13 +26754,13 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -26933,7 +26786,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -26941,7 +26794,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -26952,8 +26805,8 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -27059,7 +26912,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -27069,7 +26922,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -27078,13 +26931,13 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -27108,7 +26961,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -27116,7 +26969,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -27127,8 +26980,8 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -27233,7 +27086,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -27243,7 +27096,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -27252,13 +27105,13 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -27286,7 +27139,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -27294,7 +27147,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -27305,8 +27158,8 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -27430,36 +27283,36 @@ class ShortcutsWindow(
     class Props(Window.Props):
         section_name: str
         view_name: str
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -27469,7 +27322,7 @@ class ShortcutsWindow(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -27478,13 +27331,13 @@ class ShortcutsWindow(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -27498,35 +27351,35 @@ class ShortcutsWindow(
         self,
         section_name: str = ...,
         view_name: str = ...,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -27534,7 +27387,7 @@ class ShortcutsWindow(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -27545,8 +27398,8 @@ class ShortcutsWindow(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -27645,29 +27498,29 @@ class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionMode
         autoselect: bool
         can_unselect: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
         selected: int
-        selected_item: typing.Optional[GObject.Object]
+        selected_item: GObject.Object | None
 
     props: Props = ...
     def __init__(
         self,
         autoselect: bool = ...,
         can_unselect: bool = ...,
-        model: typing.Optional[Gio.ListModel] = ...,
+        model: Gio.ListModel | None = ...,
         selected: int = ...,
     ) -> None: ...
     def get_autoselect(self) -> bool: ...
     def get_can_unselect(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def get_selected(self) -> int: ...
-    def get_selected_item(self) -> typing.Optional[GObject.Object]: ...
+    def get_selected_item(self) -> GObject.Object | None: ...
     @classmethod
-    def new(cls, model: typing.Optional[Gio.ListModel] = None) -> SingleSelection: ...
+    def new(cls, model: Gio.ListModel | None = None) -> SingleSelection: ...
     def set_autoselect(self, autoselect: bool) -> None: ...
     def set_can_unselect(self, can_unselect: bool) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_selected(self, position: int) -> None: ...
 
 class SingleSelectionClass(GObject.GPointer):
@@ -27741,7 +27594,7 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
     class Props(GObject.Object.Props):
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
         offset: int
         size: int
@@ -27749,18 +27602,18 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     props: Props = ...
     def __init__(
         self,
-        model: typing.Optional[Gio.ListModel] = ...,
+        model: Gio.ListModel | None = ...,
         offset: int = ...,
         size: int = ...,
     ) -> None: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def get_offset(self) -> int: ...
     def get_size(self) -> int: ...
     @classmethod
     def new(
-        cls, model: typing.Optional[Gio.ListModel], offset: int, size: int
+        cls, model: Gio.ListModel | None, offset: int, size: int
     ) -> SliceListModel: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_offset(self, offset: int) -> None: ...
     def set_size(self, size: int) -> None: ...
 
@@ -27894,7 +27747,7 @@ class Snapshot(Gdk.Snapshot):
     def push_mask(self, mask_mode: Gsk.MaskMode) -> None: ...
     def push_opacity(self, opacity: float) -> None: ...
     def push_repeat(
-        self, bounds: Graphene.Rect, child_bounds: typing.Optional[Graphene.Rect] = None
+        self, bounds: Graphene.Rect, child_bounds: Graphene.Rect | None = None
     ) -> None: ...
     def push_rounded_clip(self, bounds: Gsk.RoundedRect) -> None: ...
     def push_shadow(self, shadow: typing.Sequence[Gsk.Shadow]) -> None: ...
@@ -27926,11 +27779,11 @@ class Snapshot(Gdk.Snapshot):
     def save(self) -> None: ...
     def scale(self, factor_x: float, factor_y: float) -> None: ...
     def scale_3d(self, factor_x: float, factor_y: float, factor_z: float) -> None: ...
-    def to_node(self) -> typing.Optional[Gsk.RenderNode]: ...
+    def to_node(self) -> Gsk.RenderNode | None: ...
     def to_paintable(
-        self, size: typing.Optional[Graphene.Size] = None
-    ) -> typing.Optional[Gdk.Paintable]: ...
-    def transform(self, transform: typing.Optional[Gsk.Transform] = None) -> None: ...
+        self, size: Graphene.Size | None = None
+    ) -> Gdk.Paintable | None: ...
+    def transform(self, transform: Gsk.Transform | None = None) -> None: ...
     def transform_matrix(self, matrix: Graphene.Matrix) -> None: ...
     def translate(self, point: Graphene.Point) -> None: ...
     def translate_3d(self, point: Graphene.Point3D) -> None: ...
@@ -27969,35 +27822,35 @@ class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     class Props(GObject.Object.Props):
         incremental: bool
         item_type: typing.Type[typing.Any]
-        model: typing.Optional[Gio.ListModel]
+        model: Gio.ListModel | None
         n_items: int
         pending: int
-        section_sorter: typing.Optional[Sorter]
-        sorter: typing.Optional[Sorter]
+        section_sorter: Sorter | None
+        sorter: Sorter | None
 
     props: Props = ...
     def __init__(
         self,
         incremental: bool = ...,
-        model: typing.Optional[Gio.ListModel] = ...,
-        section_sorter: typing.Optional[Sorter] = ...,
-        sorter: typing.Optional[Sorter] = ...,
+        model: Gio.ListModel | None = ...,
+        section_sorter: Sorter | None = ...,
+        sorter: Sorter | None = ...,
     ) -> None: ...
     def get_incremental(self) -> bool: ...
-    def get_model(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_model(self) -> Gio.ListModel | None: ...
     def get_pending(self) -> int: ...
-    def get_section_sorter(self) -> typing.Optional[Sorter]: ...
-    def get_sorter(self) -> typing.Optional[Sorter]: ...
+    def get_section_sorter(self) -> Sorter | None: ...
+    def get_sorter(self) -> Sorter | None: ...
     @classmethod
     def new(
         cls,
-        model: typing.Optional[Gio.ListModel] = None,
-        sorter: typing.Optional[Sorter] = None,
+        model: Gio.ListModel | None = None,
+        sorter: Sorter | None = None,
     ) -> SortListModel: ...
     def set_incremental(self, incremental: bool) -> None: ...
-    def set_model(self, model: typing.Optional[Gio.ListModel] = None) -> None: ...
-    def set_section_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
-    def set_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
+    def set_model(self, model: Gio.ListModel | None = None) -> None: ...
+    def set_section_sorter(self, sorter: Sorter | None = None) -> None: ...
+    def set_sorter(self, sorter: Sorter | None = None) -> None: ...
 
 class SortListModelClass(GObject.GPointer):
     """
@@ -28032,8 +27885,8 @@ class Sorter(GObject.Object):
     def compare(self, item1: GObject.Object, item2: GObject.Object) -> Ordering: ...
     def do_compare(
         self,
-        item1: typing.Optional[GObject.Object] = None,
-        item2: typing.Optional[GObject.Object] = None,
+        item1: GObject.Object | None = None,
+        item2: GObject.Object | None = None,
     ) -> Ordering: ...
     def do_get_order(self) -> SorterOrder: ...
     def get_order(self) -> SorterOrder: ...
@@ -28049,7 +27902,7 @@ class SorterClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
     compare: typing.Callable[
-        [Sorter, typing.Optional[GObject.Object], typing.Optional[GObject.Object]],
+        [Sorter, GObject.Object | None, GObject.Object | None],
         Ordering,
     ] = ...
     get_order: typing.Callable[[Sorter], SorterOrder] = ...
@@ -28172,7 +28025,7 @@ class SpinButton(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -28182,7 +28035,7 @@ class SpinButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -28191,13 +28044,13 @@ class SpinButton(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -28231,7 +28084,7 @@ class SpinButton(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -28239,7 +28092,7 @@ class SpinButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -28250,8 +28103,8 @@ class SpinButton(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -28268,7 +28121,7 @@ class SpinButton(
         orientation: Orientation = ...,
     ) -> None: ...
     def configure(
-        self, adjustment: typing.Optional[Adjustment], climb_rate: float, digits: int
+        self, adjustment: Adjustment | None, climb_rate: float, digits: int
     ) -> None: ...
     def get_activates_default(self) -> bool: ...
     def get_adjustment(self) -> Adjustment: ...
@@ -28284,7 +28137,7 @@ class SpinButton(
     def get_wrap(self) -> bool: ...
     @classmethod
     def new(
-        cls, adjustment: typing.Optional[Adjustment], climb_rate: float, digits: int
+        cls, adjustment: Adjustment | None, climb_rate: float, digits: int
     ) -> SpinButton: ...
     @classmethod
     def new_with_range(cls, min: float, max: float, step: float) -> SpinButton: ...
@@ -28377,7 +28230,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -28387,7 +28240,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -28396,13 +28249,13 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -28418,7 +28271,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -28426,7 +28279,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -28437,8 +28290,8 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -28538,13 +28391,13 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         transition_running: bool
         transition_type: StackTransitionType
         vhomogeneous: bool
-        visible_child: typing.Optional[Widget]
-        visible_child_name: typing.Optional[str]
+        visible_child: Widget | None
+        visible_child_name: str | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -28554,7 +28407,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -28563,13 +28416,13 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -28591,7 +28444,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -28599,7 +28452,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -28610,8 +28463,8 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -28620,13 +28473,9 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_child(self, child: Widget) -> StackPage: ...
-    def add_named(
-        self, child: Widget, name: typing.Optional[str] = None
-    ) -> StackPage: ...
-    def add_titled(
-        self, child: Widget, name: typing.Optional[str], title: str
-    ) -> StackPage: ...
-    def get_child_by_name(self, name: str) -> typing.Optional[Widget]: ...
+    def add_named(self, child: Widget, name: str | None = None) -> StackPage: ...
+    def add_titled(self, child: Widget, name: str | None, title: str) -> StackPage: ...
+    def get_child_by_name(self, name: str) -> Widget | None: ...
     def get_hhomogeneous(self) -> bool: ...
     def get_interpolate_size(self) -> bool: ...
     def get_page(self, child: Widget) -> StackPage: ...
@@ -28635,8 +28484,8 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
     def get_transition_running(self) -> bool: ...
     def get_transition_type(self) -> StackTransitionType: ...
     def get_vhomogeneous(self) -> bool: ...
-    def get_visible_child(self) -> typing.Optional[Widget]: ...
-    def get_visible_child_name(self) -> typing.Optional[str]: ...
+    def get_visible_child(self) -> Widget | None: ...
+    def get_visible_child_name(self) -> str | None: ...
     @classmethod
     def new(cls) -> Stack: ...
     def remove(self, child: Widget) -> None: ...
@@ -28675,10 +28524,10 @@ class StackPage(GObject.Object, Accessible):
     """
     class Props(GObject.Object.Props):
         child: Widget
-        icon_name: typing.Optional[str]
-        name: typing.Optional[str]
+        icon_name: str | None
+        name: str | None
         needs_attention: bool
-        title: typing.Optional[str]
+        title: str | None
         use_underline: bool
         visible: bool
         accessible_role: AccessibleRole
@@ -28696,10 +28545,10 @@ class StackPage(GObject.Object, Accessible):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
-    def get_name(self) -> typing.Optional[str]: ...
+    def get_icon_name(self) -> str | None: ...
+    def get_name(self) -> str | None: ...
     def get_needs_attention(self) -> bool: ...
-    def get_title(self) -> typing.Optional[str]: ...
+    def get_title(self) -> str | None: ...
     def get_use_underline(self) -> bool: ...
     def get_visible(self) -> bool: ...
     def set_icon_name(self, setting: str) -> None: ...
@@ -28779,12 +28628,12 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        stack: typing.Optional[Stack]
+        stack: Stack | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -28794,7 +28643,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -28803,13 +28652,13 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -28825,7 +28674,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -28833,7 +28682,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -28844,8 +28693,8 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -28853,7 +28702,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_stack(self) -> typing.Optional[Stack]: ...
+    def get_stack(self) -> Stack | None: ...
     @classmethod
     def new(cls) -> StackSidebar: ...
     def set_stack(self, stack: Stack) -> None: ...
@@ -28928,12 +28777,12 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
       notify (GParam)
     """
     class Props(Widget.Props):
-        stack: typing.Optional[Stack]
+        stack: Stack | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -28943,7 +28792,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -28952,13 +28801,13 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -28970,12 +28819,12 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
     props: Props = ...
     def __init__(
         self,
-        stack: typing.Optional[Stack] = ...,
+        stack: Stack | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -28983,7 +28832,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -28994,8 +28843,8 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -29004,10 +28853,10 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
         accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
     ) -> None: ...
-    def get_stack(self) -> typing.Optional[Stack]: ...
+    def get_stack(self) -> Stack | None: ...
     @classmethod
     def new(cls) -> StackSwitcher: ...
-    def set_stack(self, stack: typing.Optional[Stack] = None) -> None: ...
+    def set_stack(self, stack: Stack | None = None) -> None: ...
 
 class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -29084,7 +28933,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -29094,7 +28943,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -29103,13 +28952,13 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -29124,7 +28973,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -29132,7 +28981,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -29143,8 +28992,8 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -29184,31 +29033,29 @@ class StringFilter(Filter):
       notify (GParam)
     """
     class Props(Filter.Props):
-        expression: typing.Optional[Expression]
+        expression: Expression | None
         ignore_case: bool
         match_mode: StringFilterMatchMode
-        search: typing.Optional[str]
+        search: str | None
 
     props: Props = ...
     def __init__(
         self,
-        expression: typing.Optional[Expression] = ...,
+        expression: Expression | None = ...,
         ignore_case: bool = ...,
         match_mode: StringFilterMatchMode = ...,
-        search: typing.Optional[str] = ...,
+        search: str | None = ...,
     ) -> None: ...
-    def get_expression(self) -> typing.Optional[Expression]: ...
+    def get_expression(self) -> Expression | None: ...
     def get_ignore_case(self) -> bool: ...
     def get_match_mode(self) -> StringFilterMatchMode: ...
-    def get_search(self) -> typing.Optional[str]: ...
+    def get_search(self) -> str | None: ...
     @classmethod
-    def new(cls, expression: typing.Optional[Expression] = None) -> StringFilter: ...
-    def set_expression(
-        self, expression: typing.Optional[Expression] = None
-    ) -> None: ...
+    def new(cls, expression: Expression | None = None) -> StringFilter: ...
+    def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_ignore_case(self, ignore_case: bool) -> None: ...
     def set_match_mode(self, mode: StringFilterMatchMode) -> None: ...
-    def set_search(self, search: typing.Optional[str] = None) -> None: ...
+    def set_search(self, search: str | None = None) -> None: ...
 
 class StringFilterClass(GObject.GPointer):
     """
@@ -29252,17 +29099,15 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
     def __init__(self, strings: typing.Sequence[str] = ...) -> None: ...
     def append(self, string: str) -> None: ...
     def find(self, string: str) -> int: ...
-    def get_string(self, position: int) -> typing.Optional[str]: ...
+    def get_string(self, position: int) -> str | None: ...
     @classmethod
-    def new(
-        cls, strings: typing.Optional[typing.Sequence[str]] = None
-    ) -> StringList: ...
+    def new(cls, strings: typing.Sequence[str] | None = None) -> StringList: ...
     def remove(self, position: int) -> None: ...
     def splice(
         self,
         position: int,
         n_removals: int,
-        additions: typing.Optional[typing.Sequence[str]] = None,
+        additions: typing.Sequence[str] | None = None,
     ) -> None: ...
     def take(self, string: str) -> None: ...
 
@@ -29337,25 +29182,23 @@ class StringSorter(Sorter):
     """
     class Props(Sorter.Props):
         collation: Collation
-        expression: typing.Optional[Expression]
+        expression: Expression | None
         ignore_case: bool
 
     props: Props = ...
     def __init__(
         self,
         collation: Collation = ...,
-        expression: typing.Optional[Expression] = ...,
+        expression: Expression | None = ...,
         ignore_case: bool = ...,
     ) -> None: ...
     def get_collation(self) -> Collation: ...
-    def get_expression(self) -> typing.Optional[Expression]: ...
+    def get_expression(self) -> Expression | None: ...
     def get_ignore_case(self) -> bool: ...
     @classmethod
-    def new(cls, expression: typing.Optional[Expression] = None) -> StringSorter: ...
+    def new(cls, expression: Expression | None = None) -> StringSorter: ...
     def set_collation(self, collation: Collation) -> None: ...
-    def set_expression(
-        self, expression: typing.Optional[Expression] = None
-    ) -> None: ...
+    def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_ignore_case(self, ignore_case: bool) -> None: ...
 
 class StringSorterClass(GObject.GPointer):
@@ -29515,7 +29358,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -29525,7 +29368,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -29534,20 +29377,20 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
 
     props: Props = ...
@@ -29559,7 +29402,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -29567,7 +29410,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -29578,15 +29421,15 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_active(self) -> bool: ...
@@ -29755,10 +29598,10 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
     """
     class Props(Widget.Props):
         activates_default: bool
-        attributes: typing.Optional[Pango.AttrList]
+        attributes: Pango.AttrList | None
         buffer: EntryBuffer
         enable_emoji_completion: bool
-        extra_menu: typing.Optional[Gio.MenuModel]
+        extra_menu: Gio.MenuModel | None
         im_module: str
         input_hints: InputHints
         input_purpose: InputPurpose
@@ -29766,17 +29609,17 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         invisible_char_set: bool
         max_length: int
         overwrite_mode: bool
-        placeholder_text: typing.Optional[str]
+        placeholder_text: str | None
         propagate_text_width: bool
         scroll_offset: int
-        tabs: typing.Optional[Pango.TabArray]
+        tabs: Pango.TabArray | None
         truncate_multiline: bool
         visibility: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -29786,7 +29629,7 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -29795,13 +29638,13 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -29822,10 +29665,10 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
     def __init__(
         self,
         activates_default: bool = ...,
-        attributes: typing.Optional[Pango.AttrList] = ...,
+        attributes: Pango.AttrList | None = ...,
         buffer: EntryBuffer = ...,
         enable_emoji_completion: bool = ...,
-        extra_menu: typing.Optional[Gio.MenuModel] = ...,
+        extra_menu: Gio.MenuModel | None = ...,
         im_module: str = ...,
         input_hints: InputHints = ...,
         input_purpose: InputPurpose = ...,
@@ -29833,16 +29676,16 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         invisible_char_set: bool = ...,
         max_length: int = ...,
         overwrite_mode: bool = ...,
-        placeholder_text: typing.Optional[str] = ...,
+        placeholder_text: str | None = ...,
         propagate_text_width: bool = ...,
-        tabs: typing.Optional[Pango.TabArray] = ...,
+        tabs: Pango.TabArray | None = ...,
         truncate_multiline: bool = ...,
         visibility: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -29850,7 +29693,7 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -29861,8 +29704,8 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -29880,18 +29723,18 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
         self, position: int
     ) -> typing.Tuple[Graphene.Rect, Graphene.Rect]: ...
     def get_activates_default(self) -> bool: ...
-    def get_attributes(self) -> typing.Optional[Pango.AttrList]: ...
+    def get_attributes(self) -> Pango.AttrList | None: ...
     def get_buffer(self) -> EntryBuffer: ...
     def get_enable_emoji_completion(self) -> bool: ...
-    def get_extra_menu(self) -> typing.Optional[Gio.MenuModel]: ...
+    def get_extra_menu(self) -> Gio.MenuModel | None: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
     def get_invisible_char(self) -> str: ...
     def get_max_length(self) -> int: ...
     def get_overwrite_mode(self) -> bool: ...
-    def get_placeholder_text(self) -> typing.Optional[str]: ...
+    def get_placeholder_text(self) -> str | None: ...
     def get_propagate_text_width(self) -> bool: ...
-    def get_tabs(self) -> typing.Optional[Pango.TabArray]: ...
+    def get_tabs(self) -> Pango.TabArray | None: ...
     def get_text_length(self) -> int: ...
     def get_truncate_multiline(self) -> bool: ...
     def get_visibility(self) -> bool: ...
@@ -29901,18 +29744,18 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
     @classmethod
     def new_with_buffer(cls, buffer: EntryBuffer) -> Text: ...
     def set_activates_default(self, activates: bool) -> None: ...
-    def set_attributes(self, attrs: typing.Optional[Pango.AttrList] = None) -> None: ...
+    def set_attributes(self, attrs: Pango.AttrList | None = None) -> None: ...
     def set_buffer(self, buffer: EntryBuffer) -> None: ...
     def set_enable_emoji_completion(self, enable_emoji_completion: bool) -> None: ...
-    def set_extra_menu(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
+    def set_extra_menu(self, model: Gio.MenuModel | None = None) -> None: ...
     def set_input_hints(self, hints: InputHints) -> None: ...
     def set_input_purpose(self, purpose: InputPurpose) -> None: ...
     def set_invisible_char(self, ch: str) -> None: ...
     def set_max_length(self, length: int) -> None: ...
     def set_overwrite_mode(self, overwrite: bool) -> None: ...
-    def set_placeholder_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_placeholder_text(self, text: str | None = None) -> None: ...
     def set_propagate_text_width(self, propagate_text_width: bool) -> None: ...
-    def set_tabs(self, tabs: typing.Optional[Pango.TabArray] = None) -> None: ...
+    def set_tabs(self, tabs: Pango.TabArray | None = None) -> None: ...
     def set_truncate_multiline(self, truncate_multiline: bool) -> None: ...
     def set_visibility(self, visible: bool) -> None: ...
     def unset_invisible_char(self) -> None: ...
@@ -29992,13 +29835,13 @@ class TextBuffer(GObject.Object):
     # override
     def create_mark(
         self,
-        mark_name: typing.Optional[str],
+        mark_name: str | None,
         where: TextIter,
         left_gravity: bool = False,
     ) -> TextMark: ...
     # override
     def create_tag(
-        self, tag_name: typing.Optional[str] = None, **properties: typing.Any
+        self, tag_name: str | None = None, **properties: typing.Any
     ) -> TextTag: ...
     def cut_clipboard(
         self, clipboard: Gdk.Clipboard, default_editable: bool
@@ -30050,7 +29893,7 @@ class TextBuffer(GObject.Object):
     def get_iter_at_mark(self, mark: TextMark) -> TextIter: ...
     def get_iter_at_offset(self, char_offset: int) -> TextIter: ...
     def get_line_count(self) -> int: ...
-    def get_mark(self, name: str) -> typing.Optional[TextMark]: ...
+    def get_mark(self, name: str) -> TextMark | None: ...
     def get_max_undo_levels(self) -> int: ...
     def get_modified(self) -> bool: ...
     def get_selection_bound(self) -> TextMark: ...
@@ -30095,11 +29938,11 @@ class TextBuffer(GObject.Object):
     def move_mark(self, mark: TextMark, where: TextIter) -> None: ...
     def move_mark_by_name(self, name: str, where: TextIter) -> None: ...
     @classmethod
-    def new(cls, table: typing.Optional[TextTagTable] = None) -> TextBuffer: ...
+    def new(cls, table: TextTagTable | None = None) -> TextBuffer: ...
     def paste_clipboard(
         self,
         clipboard: Gdk.Clipboard,
-        override_location: typing.Optional[TextIter],
+        override_location: TextIter | None,
         default_editable: bool,
     ) -> None: ...
     def place_cursor(self, where: TextIter) -> None: ...
@@ -30214,19 +30057,17 @@ class TextIter(GObject.GBoxed):
     def backward_find_char(
         self,
         pred: typing.Callable[..., bool],
-        limit: typing.Optional[TextIter] = None,
+        limit: TextIter | None = None,
         *user_data: typing.Any,
     ) -> bool: ...
     def backward_line(self) -> bool: ...
     def backward_lines(self, count: int) -> bool: ...
     def backward_search(
-        self, str: str, flags: TextSearchFlags, limit: typing.Optional[TextIter] = None
-    ) -> typing.Optional[
-        typing.Tuple[TextIter, TextIter]
-    ]: ...  # CHECK Wrapped function
+        self, str: str, flags: TextSearchFlags, limit: TextIter | None = None
+    ) -> typing.Tuple[TextIter, TextIter] | None: ...  # CHECK Wrapped function
     def backward_sentence_start(self) -> bool: ...
     def backward_sentence_starts(self, count: int) -> bool: ...
-    def backward_to_tag_toggle(self, tag: typing.Optional[TextTag] = None) -> bool: ...
+    def backward_to_tag_toggle(self, tag: TextTag | None = None) -> bool: ...
     def backward_visible_cursor_position(self) -> bool: ...
     def backward_visible_cursor_positions(self, count: int) -> bool: ...
     def backward_visible_line(self) -> bool: ...
@@ -30241,7 +30082,7 @@ class TextIter(GObject.GBoxed):
     def editable(self, default_setting: bool) -> bool: ...
     def ends_line(self) -> bool: ...
     def ends_sentence(self) -> bool: ...
-    def ends_tag(self, tag: typing.Optional[TextTag] = None) -> bool: ...
+    def ends_tag(self, tag: TextTag | None = None) -> bool: ...
     def ends_word(self) -> bool: ...
     def equal(self, rhs: TextIter) -> bool: ...
     def forward_char(self) -> bool: ...
@@ -30251,21 +30092,19 @@ class TextIter(GObject.GBoxed):
     def forward_find_char(
         self,
         pred: typing.Callable[..., bool],
-        limit: typing.Optional[TextIter] = None,
+        limit: TextIter | None = None,
         *user_data: typing.Any,
     ) -> bool: ...
     def forward_line(self) -> bool: ...
     def forward_lines(self, count: int) -> bool: ...
     def forward_search(
-        self, str: str, flags: TextSearchFlags, limit: typing.Optional[TextIter] = None
-    ) -> typing.Optional[
-        typing.Tuple[TextIter, TextIter]
-    ]: ...  # CHECK Wrapped function
+        self, str: str, flags: TextSearchFlags, limit: TextIter | None = None
+    ) -> typing.Tuple[TextIter, TextIter] | None: ...  # CHECK Wrapped function
     def forward_sentence_end(self) -> bool: ...
     def forward_sentence_ends(self, count: int) -> bool: ...
     def forward_to_end(self) -> None: ...
     def forward_to_line_end(self) -> bool: ...
-    def forward_to_tag_toggle(self, tag: typing.Optional[TextTag] = None) -> bool: ...
+    def forward_to_tag_toggle(self, tag: TextTag | None = None) -> bool: ...
     def forward_visible_cursor_position(self) -> bool: ...
     def forward_visible_cursor_positions(self, count: int) -> bool: ...
     def forward_visible_line(self) -> bool: ...
@@ -30279,14 +30118,14 @@ class TextIter(GObject.GBoxed):
     def get_bytes_in_line(self) -> int: ...
     def get_char(self) -> str: ...
     def get_chars_in_line(self) -> int: ...
-    def get_child_anchor(self) -> typing.Optional[TextChildAnchor]: ...
+    def get_child_anchor(self) -> TextChildAnchor | None: ...
     def get_language(self) -> Pango.Language: ...
     def get_line(self) -> int: ...
     def get_line_index(self) -> int: ...
     def get_line_offset(self) -> int: ...
     def get_marks(self) -> list[TextMark]: ...
     def get_offset(self) -> int: ...
-    def get_paintable(self) -> typing.Optional[Gdk.Paintable]: ...
+    def get_paintable(self) -> Gdk.Paintable | None: ...
     def get_slice(self, end: TextIter) -> str: ...
     def get_tags(self) -> list[TextTag]: ...
     def get_text(self, end: TextIter) -> str: ...
@@ -30311,9 +30150,9 @@ class TextIter(GObject.GBoxed):
     def set_visible_line_offset(self, char_on_line: int) -> None: ...
     def starts_line(self) -> bool: ...
     def starts_sentence(self) -> bool: ...
-    def starts_tag(self, tag: typing.Optional[TextTag] = None) -> bool: ...
+    def starts_tag(self, tag: TextTag | None = None) -> bool: ...
     def starts_word(self) -> bool: ...
-    def toggles_tag(self, tag: typing.Optional[TextTag] = None) -> bool: ...
+    def toggles_tag(self, tag: TextTag | None = None) -> bool: ...
 
 class TextMark(GObject.Object):
     """
@@ -30335,19 +30174,19 @@ class TextMark(GObject.Object):
     """
     class Props(GObject.Object.Props):
         left_gravity: bool
-        name: typing.Optional[str]
+        name: str | None
 
     props: Props = ...
     parent_instance: GObject.Object = ...
     segment: None = ...
     def __init__(self, left_gravity: bool = ..., name: str = ...) -> None: ...
-    def get_buffer(self) -> typing.Optional[TextBuffer]: ...
+    def get_buffer(self) -> TextBuffer | None: ...
     def get_deleted(self) -> bool: ...
     def get_left_gravity(self) -> bool: ...
-    def get_name(self) -> typing.Optional[str]: ...
+    def get_name(self) -> str | None: ...
     def get_visible(self) -> bool: ...
     @classmethod
-    def new(cls, name: typing.Optional[str], left_gravity: bool) -> TextMark: ...
+    def new(cls, name: str | None, left_gravity: bool) -> TextMark: ...
     def set_visible(self, setting: bool) -> None: ...
 
 class TextMarkClass(GObject.GPointer):
@@ -30656,7 +30495,7 @@ class TextTag(GObject.Object):
     def changed(self, size_changed: bool) -> None: ...
     def get_priority(self) -> int: ...
     @classmethod
-    def new(cls, name: typing.Optional[str] = None) -> TextTag: ...
+    def new(cls, name: str | None = None) -> TextTag: ...
     def set_priority(self, priority: int) -> None: ...
 
 class TextTagClass(GObject.GPointer):
@@ -30695,7 +30534,7 @@ class TextTagTable(GObject.Object, Buildable):
     def add(self, tag: TextTag) -> bool: ...
     def foreach(self, func: typing.Callable[..., None], *data: typing.Any) -> None: ...
     def get_size(self) -> int: ...
-    def lookup(self, name: str) -> typing.Optional[TextTag]: ...
+    def lookup(self, name: str) -> TextTag | None: ...
     @classmethod
     def new(cls) -> TextTagTable: ...
     def remove(self, tag: TextTag) -> None: ...
@@ -30828,14 +30667,14 @@ class TextView(
         pixels_below_lines: int
         pixels_inside_wrap: int
         right_margin: int
-        tabs: typing.Optional[Pango.TabArray]
+        tabs: Pango.TabArray | None
         top_margin: int
         wrap_mode: WrapMode
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -30845,7 +30684,7 @@ class TextView(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -30854,22 +30693,22 @@ class TextView(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
@@ -30879,10 +30718,10 @@ class TextView(
         self,
         accepts_tab: bool = ...,
         bottom_margin: int = ...,
-        buffer: typing.Optional[TextBuffer] = ...,
+        buffer: TextBuffer | None = ...,
         cursor_visible: bool = ...,
         editable: bool = ...,
-        extra_menu: typing.Optional[Gio.MenuModel] = ...,
+        extra_menu: Gio.MenuModel | None = ...,
         im_module: str = ...,
         indent: int = ...,
         input_hints: InputHints = ...,
@@ -30902,7 +30741,7 @@ class TextView(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -30910,7 +30749,7 @@ class TextView(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -30921,17 +30760,17 @@ class TextView(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def add_child_at_anchor(self, child: Widget, anchor: TextChildAnchor) -> None: ...
@@ -30967,12 +30806,12 @@ class TextView(
     def get_bottom_margin(self) -> int: ...
     def get_buffer(self) -> TextBuffer: ...
     def get_cursor_locations(
-        self, iter: typing.Optional[TextIter] = None
+        self, iter: TextIter | None = None
     ) -> typing.Tuple[Gdk.Rectangle, Gdk.Rectangle]: ...
     def get_cursor_visible(self) -> bool: ...
     def get_editable(self) -> bool: ...
     def get_extra_menu(self) -> Gio.MenuModel: ...
-    def get_gutter(self, win: TextWindowType) -> typing.Optional[Widget]: ...
+    def get_gutter(self, win: TextWindowType) -> Widget | None: ...
     def get_indent(self) -> int: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
@@ -30993,7 +30832,7 @@ class TextView(
     def get_pixels_inside_wrap(self) -> int: ...
     def get_right_margin(self) -> int: ...
     def get_rtl_context(self) -> Pango.Context: ...
-    def get_tabs(self) -> typing.Optional[Pango.TabArray]: ...
+    def get_tabs(self) -> Pango.TabArray | None: ...
     def get_top_margin(self) -> int: ...
     def get_visible_offset(self) -> typing.Tuple[float, float]: ...
     def get_visible_rect(self) -> Gdk.Rectangle: ...
@@ -31029,13 +30868,11 @@ class TextView(
     ) -> None: ...
     def set_accepts_tab(self, accepts_tab: bool) -> None: ...
     def set_bottom_margin(self, bottom_margin: int) -> None: ...
-    def set_buffer(self, buffer: typing.Optional[TextBuffer] = None) -> None: ...
+    def set_buffer(self, buffer: TextBuffer | None = None) -> None: ...
     def set_cursor_visible(self, setting: bool) -> None: ...
     def set_editable(self, setting: bool) -> None: ...
-    def set_extra_menu(self, model: typing.Optional[Gio.MenuModel] = None) -> None: ...
-    def set_gutter(
-        self, win: TextWindowType, widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_extra_menu(self, model: Gio.MenuModel | None = None) -> None: ...
+    def set_gutter(self, win: TextWindowType, widget: Widget | None = None) -> None: ...
     def set_indent(self, indent: int) -> None: ...
     def set_input_hints(self, hints: InputHints) -> None: ...
     def set_input_purpose(self, purpose: InputPurpose) -> None: ...
@@ -31174,16 +31011,16 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     class Props(Button.Props):
         active: bool
         can_shrink: bool
-        child: typing.Optional[Widget]
+        child: Widget | None
         has_frame: bool
-        icon_name: typing.Optional[str]
-        label: typing.Optional[str]
+        icon_name: str | None
+        label: str | None
         use_underline: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -31193,7 +31030,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -31202,31 +31039,31 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        action_name: typing.Optional[str]
+        action_name: str | None
         action_target: GLib.Variant
-        group: typing.Optional[ToggleButton]
+        group: ToggleButton | None
 
     props: Props = ...
     button: Button = ...
     def __init__(
         self,
         active: bool = ...,
-        group: typing.Optional[ToggleButton] = ...,
+        group: ToggleButton | None = ...,
         can_shrink: bool = ...,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         has_frame: bool = ...,
         icon_name: str = ...,
         label: str = ...,
@@ -31235,7 +31072,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -31243,7 +31080,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -31254,15 +31091,15 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        action_name: typing.Optional[str] = ...,
+        action_name: str | None = ...,
         action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_toggled(self) -> None: ...
@@ -31274,7 +31111,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     @classmethod
     def new_with_mnemonic(cls, label: str) -> ToggleButton: ...
     def set_active(self, is_active: bool) -> None: ...
-    def set_group(self, group: typing.Optional[ToggleButton] = None) -> None: ...
+    def set_group(self, group: ToggleButton | None = None) -> None: ...
     def toggled(self) -> None: ...
 
 class ToggleButtonClass(GObject.GPointer):
@@ -31303,14 +31140,12 @@ class Tooltip(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-    def set_custom(self, custom_widget: typing.Optional[Widget] = None) -> None: ...
-    def set_icon(self, paintable: typing.Optional[Gdk.Paintable] = None) -> None: ...
-    def set_icon_from_gicon(self, gicon: typing.Optional[Gio.Icon] = None) -> None: ...
-    def set_icon_from_icon_name(
-        self, icon_name: typing.Optional[str] = None
-    ) -> None: ...
-    def set_markup(self, markup: typing.Optional[str] = None) -> None: ...
-    def set_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_custom(self, custom_widget: Widget | None = None) -> None: ...
+    def set_icon(self, paintable: Gdk.Paintable | None = None) -> None: ...
+    def set_icon_from_gicon(self, gicon: Gio.Icon | None = None) -> None: ...
+    def set_icon_from_icon_name(self, icon_name: str | None = None) -> None: ...
+    def set_markup(self, markup: str | None = None) -> None: ...
+    def set_text(self, text: str | None = None) -> None: ...
     def set_tip_area(self, rect: Gdk.Rectangle) -> None: ...
 
 class TreeDragDest(GObject.GInterface):
@@ -31340,7 +31175,7 @@ class TreeDragSource(GObject.GInterface):
     Interface GtkTreeDragSource
     """
     def drag_data_delete(self, path: TreePath) -> bool: ...
-    def drag_data_get(self, path: TreePath) -> typing.Optional[Gdk.ContentProvider]: ...
+    def drag_data_get(self, path: TreePath) -> Gdk.ContentProvider | None: ...
     def row_draggable(self, path: TreePath) -> bool: ...
 
 class TreeDragSourceIface(GObject.GPointer):
@@ -31355,7 +31190,7 @@ class TreeDragSourceIface(GObject.GPointer):
     g_iface: GObject.TypeInterface = ...
     row_draggable: typing.Callable[[TreeDragSource, TreePath], bool] = ...
     drag_data_get: typing.Callable[
-        [TreeDragSource, TreePath], typing.Optional[Gdk.ContentProvider]
+        [TreeDragSource, TreePath], Gdk.ContentProvider | None
     ] = ...
     drag_data_delete: typing.Callable[[TreeDragSource, TreePath], bool] = ...
 
@@ -31434,17 +31269,17 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         hide_expander: bool
         indent_for_depth: bool
         indent_for_icon: bool
-        item: typing.Optional[GObject.Object]
-        list_row: typing.Optional[TreeListRow]
+        item: GObject.Object | None
+        list_row: TreeListRow | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -31454,7 +31289,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -31463,13 +31298,13 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -31480,16 +31315,16 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         hide_expander: bool = ...,
         indent_for_depth: bool = ...,
         indent_for_icon: bool = ...,
-        list_row: typing.Optional[TreeListRow] = ...,
+        list_row: TreeListRow | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -31497,7 +31332,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -31508,8 +31343,8 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -31517,19 +31352,19 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_hide_expander(self) -> bool: ...
     def get_indent_for_depth(self) -> bool: ...
     def get_indent_for_icon(self) -> bool: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
-    def get_list_row(self) -> typing.Optional[TreeListRow]: ...
+    def get_item(self) -> GObject.Object | None: ...
+    def get_list_row(self) -> TreeListRow | None: ...
     @classmethod
     def new(cls) -> TreeExpander: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_hide_expander(self, hide_expander: bool) -> None: ...
     def set_indent_for_depth(self, indent_for_depth: bool) -> None: ...
     def set_indent_for_icon(self, indent_for_icon: bool) -> None: ...
-    def set_list_row(self, list_row: typing.Optional[TreeListRow] = None) -> None: ...
+    def set_list_row(self, list_row: TreeListRow | None = None) -> None: ...
 
 class TreeExpanderClass(GObject.GPointer):
     """
@@ -31592,17 +31427,17 @@ class TreeListModel(GObject.Object, Gio.ListModel):
     props: Props = ...
     def __init__(self, autoexpand: bool = ..., passthrough: bool = ...) -> None: ...
     def get_autoexpand(self) -> bool: ...
-    def get_child_row(self, position: int) -> typing.Optional[TreeListRow]: ...
+    def get_child_row(self, position: int) -> TreeListRow | None: ...
     def get_model(self) -> Gio.ListModel: ...
     def get_passthrough(self) -> bool: ...
-    def get_row(self, position: int) -> typing.Optional[TreeListRow]: ...
+    def get_row(self, position: int) -> TreeListRow | None: ...
     @classmethod
     def new(
         cls,
         root: Gio.ListModel,
         passthrough: bool,
         autoexpand: bool,
-        create_func: typing.Callable[..., typing.Optional[Gio.ListModel]],
+        create_func: typing.Callable[..., Gio.ListModel | None],
         *user_data: typing.Any,
     ) -> TreeListModel: ...
     def set_autoexpand(self, autoexpand: bool) -> None: ...
@@ -31639,20 +31474,20 @@ class TreeListRow(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        children: typing.Optional[Gio.ListModel]
+        children: Gio.ListModel | None
         depth: int
         expandable: bool
         expanded: bool
-        item: typing.Optional[GObject.Object]
+        item: GObject.Object | None
 
     props: Props = ...
     def __init__(self, expanded: bool = ...) -> None: ...
-    def get_child_row(self, position: int) -> typing.Optional[TreeListRow]: ...
-    def get_children(self) -> typing.Optional[Gio.ListModel]: ...
+    def get_child_row(self, position: int) -> TreeListRow | None: ...
+    def get_children(self) -> Gio.ListModel | None: ...
     def get_depth(self) -> int: ...
     def get_expanded(self) -> bool: ...
-    def get_item(self) -> typing.Optional[GObject.Object]: ...
-    def get_parent(self) -> typing.Optional[TreeListRow]: ...
+    def get_item(self) -> GObject.Object | None: ...
+    def get_parent(self) -> TreeListRow | None: ...
     def get_position(self) -> int: ...
     def is_expandable(self) -> bool: ...
     def set_expanded(self, expanded: bool) -> None: ...
@@ -31689,14 +31524,14 @@ class TreeListRowSorter(Sorter):
       notify (GParam)
     """
     class Props(Sorter.Props):
-        sorter: typing.Optional[Sorter]
+        sorter: Sorter | None
 
     props: Props = ...
-    def __init__(self, sorter: typing.Optional[Sorter] = ...) -> None: ...
-    def get_sorter(self) -> typing.Optional[Sorter]: ...
+    def __init__(self, sorter: Sorter | None = ...) -> None: ...
+    def get_sorter(self) -> Sorter | None: ...
     @classmethod
-    def new(cls, sorter: typing.Optional[Sorter] = None) -> TreeListRowSorter: ...
-    def set_sorter(self, sorter: typing.Optional[Sorter] = None) -> None: ...
+    def new(cls, sorter: Sorter | None = None) -> TreeListRowSorter: ...
+    def set_sorter(self, sorter: Sorter | None = None) -> None: ...
 
 class TreeListRowSorterClass(GObject.GPointer):
     """
@@ -31718,7 +31553,7 @@ class TreeModel(GObject.GInterface):
       notify (GParam)
     """
 
-    def filter_new(self, root: typing.Optional[TreePath] = None) -> TreeModelFilter: ...
+    def filter_new(self, root: TreePath | None = None) -> TreeModelFilter: ...
     def foreach(
         self, func: typing.Callable[..., bool], *user_data: typing.Any
     ) -> None: ...
@@ -31727,39 +31562,33 @@ class TreeModel(GObject.GInterface):
     ) -> typing.Tuple[typing.Any, ...]: ...
     def get_column_type(self, index_: int) -> typing.Type[typing.Any]: ...
     def get_flags(self) -> TreeModelFlags: ...
-    def get_iter(self, path: typing.Union[str, TreePath]) -> TreeIter: ...
-    def get_iter_first(self) -> typing.Optional[TreeIter]: ...
-    def get_iter_from_string(self, path_string: str) -> typing.Optional[TreeIter]: ...
+    def get_iter(self, path: str | TreePath) -> TreeIter: ...
+    def get_iter_first(self) -> TreeIter | None: ...
+    def get_iter_from_string(self, path_string: str) -> TreeIter | None: ...
     def get_n_columns(self) -> int: ...
     def get_path(self, iter: TreeIter) -> TreePath: ...
-    def get_string_from_iter(self, iter: TreeIter) -> typing.Optional[str]: ...
+    def get_string_from_iter(self, iter: TreeIter) -> str | None: ...
     def get_value(self, iter: TreeIter, column: int) -> typing.Any: ...
-    def iter_children(
-        self, parent: typing.Optional[TreeIter] = None
-    ) -> typing.Optional[TreeIter]: ...
+    def iter_children(self, parent: TreeIter | None = None) -> TreeIter | None: ...
     def iter_has_child(self, iter: TreeIter) -> bool: ...
-    def iter_n_children(self, iter: typing.Optional[TreeIter] = None) -> int: ...
-    def iter_next(self, aiter: TreeIter) -> typing.Optional[TreeIter]: ...
-    def iter_nth_child(
-        self, parent: typing.Optional[TreeIter], n: int
-    ) -> typing.Optional[TreeIter]: ...
-    def iter_parent(self, child: TreeIter) -> typing.Optional[TreeIter]: ...
-    def iter_previous(self, aiter: TreeIter) -> typing.Optional[TreeIter]: ...
+    def iter_n_children(self, iter: TreeIter | None = None) -> int: ...
+    def iter_next(self, aiter: TreeIter) -> TreeIter | None: ...
+    def iter_nth_child(self, parent: TreeIter | None, n: int) -> TreeIter | None: ...
+    def iter_parent(self, child: TreeIter) -> TreeIter | None: ...
+    def iter_previous(self, aiter: TreeIter) -> TreeIter | None: ...
     def ref_node(self, iter: TreeIter) -> None: ...
     def row_changed(self, path: TreePath, iter: TreeIter) -> None: ...
     def row_deleted(self, path: TreePath) -> None: ...
     def row_has_child_toggled(self, path: TreePath, iter: TreeIter) -> None: ...
     def row_inserted(self, path: TreePath, iter: TreeIter) -> None: ...
     def rows_reordered(
-        self, path: TreePath, iter: typing.Optional[TreeIter], new_order: list[str]
+        self, path: TreePath, iter: TreeIter | None, new_order: list[str]
     ) -> None: ...
     def set_row(self, treeiter: TreeIter, row: list[typing.Any]) -> None: ...
     def sort_new_with_model(self) -> None: ...
     def unref_node(self, iter: TreeIter) -> None: ...
-    def __getitem__(
-        self, item: typing.Union[TreeIter, TreePath, str, int]
-    ) -> TreeModelRow: ...
-    def __delitem__(self, item: typing.Union[TreeIter, TreePath, str, int]) -> None: ...
+    def __getitem__(self, item: TreeIter | TreePath | str | int) -> TreeModelRow: ...
+    def __delitem__(self, item: TreeIter | TreePath | str | int) -> None: ...
     def __iter__(self) -> TreeModelRowIter: ...
     def __len__(self) -> int: ...
 
@@ -31801,13 +31630,9 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     def convert_child_iter_to_iter(
         self, child_iter: TreeIter
     ) -> typing.Tuple[bool, TreeIter]: ...
-    def convert_child_path_to_path(
-        self, child_path: TreePath
-    ) -> typing.Optional[TreePath]: ...
+    def convert_child_path_to_path(self, child_path: TreePath) -> TreePath | None: ...
     def convert_iter_to_child_iter(self, filter_iter: TreeIter) -> TreeIter: ...
-    def convert_path_to_child_path(
-        self, filter_path: TreePath
-    ) -> typing.Optional[TreePath]: ...
+    def convert_path_to_child_path(self, filter_path: TreePath) -> TreePath | None: ...
     def do_modify(
         self, child_model: TreeModel, iter: TreeIter, value: typing.Any, column: int
     ) -> None: ...
@@ -31828,7 +31653,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     def set_visible_func(
         self,
         func: typing.Callable[[TreeModelFilter, TreeIter, typing.Any], bool],
-        data: typing.Optional[typing.Any] = ...,
+        data: typing.Any | None = ...,
     ) -> None: ...
 
 class TreeModelFilterClass(GObject.GPointer):
@@ -31873,12 +31698,12 @@ class TreeModelIface(GObject.GPointer):
     iter_next: typing.Callable[[TreeModel, TreeIter], bool] = ...
     iter_previous: typing.Callable[[TreeModel, TreeIter], bool] = ...
     iter_children: typing.Callable[
-        [TreeModel, typing.Optional[TreeIter]], typing.Tuple[bool, TreeIter]
+        [TreeModel, TreeIter | None], typing.Tuple[bool, TreeIter]
     ] = ...
     iter_has_child: typing.Callable[[TreeModel, TreeIter], bool] = ...
-    iter_n_children: typing.Callable[[TreeModel, typing.Optional[TreeIter]], int] = ...
+    iter_n_children: typing.Callable[[TreeModel, TreeIter | None], int] = ...
     iter_nth_child: typing.Callable[
-        [TreeModel, typing.Optional[TreeIter], int], typing.Tuple[bool, TreeIter]
+        [TreeModel, TreeIter | None, int], typing.Tuple[bool, TreeIter]
     ] = ...
     iter_parent: typing.Callable[
         [TreeModel, TreeIter], typing.Tuple[bool, TreeIter]
@@ -31945,13 +31770,9 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     def convert_child_iter_to_iter(
         self, child_iter: TreeIter
     ) -> typing.Tuple[bool, TreeIter]: ...
-    def convert_child_path_to_path(
-        self, child_path: TreePath
-    ) -> typing.Optional[TreePath]: ...
+    def convert_child_path_to_path(self, child_path: TreePath) -> TreePath | None: ...
     def convert_iter_to_child_iter(self, sorted_iter: TreeIter) -> TreeIter: ...
-    def convert_path_to_child_path(
-        self, sorted_path: TreePath
-    ) -> typing.Optional[TreePath]: ...
+    def convert_path_to_child_path(self, sorted_path: TreePath) -> TreePath | None: ...
     def get_model(self) -> TreeModel: ...
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
     @classmethod
@@ -31992,7 +31813,7 @@ class TreePath(GObject.GBoxed):
     def down(self) -> None: ...
     def free(self) -> None: ...
     def get_depth(self) -> int: ...
-    def get_indices(self) -> typing.Optional[list[int]]: ...
+    def get_indices(self) -> list[int] | None: ...
     def is_ancestor(self, descendant: TreePath) -> bool: ...
     def is_descendant(self, ancestor: TreePath) -> bool: ...
     @classmethod
@@ -32002,11 +31823,11 @@ class TreePath(GObject.GBoxed):
     @classmethod
     def new_from_indices(cls, indices: typing.Sequence[int]) -> TreePath: ...
     @classmethod
-    def new_from_string(cls, path: str) -> typing.Optional[TreePath]: ...
+    def new_from_string(cls, path: str) -> TreePath | None: ...
     def next(self) -> None: ...
     def prepend_index(self, index_: int) -> None: ...
     def prev(self) -> bool: ...
-    def to_string(self) -> typing.Optional[str]: ...
+    def to_string(self) -> str | None: ...
     def up(self) -> bool: ...
 
 class TreeRowData(GObject.GBoxed): ...
@@ -32028,17 +31849,15 @@ class TreeRowReference(GObject.GBoxed):
     def deleted(proxy: GObject.Object, path: TreePath) -> None: ...
     def free(self) -> None: ...
     def get_model(self) -> TreeModel: ...
-    def get_path(self) -> typing.Optional[TreePath]: ...
+    def get_path(self) -> TreePath | None: ...
     @staticmethod
     def inserted(proxy: GObject.Object, path: TreePath) -> None: ...
     @classmethod
-    def new(
-        cls, model: TreeModel, path: TreePath
-    ) -> typing.Optional[TreeRowReference]: ...
+    def new(cls, model: TreeModel, path: TreePath) -> TreeRowReference | None: ...
     @classmethod
     def new_proxy(
         cls, proxy: GObject.Object, model: TreeModel, path: TreePath
-    ) -> typing.Optional[TreeRowReference]: ...
+    ) -> TreeRowReference | None: ...
     def valid(self) -> bool: ...
 
 class TreeSelection(GObject.Object):
@@ -32068,11 +31887,11 @@ class TreeSelection(GObject.Object):
     def count_selected_rows(self) -> int: ...
     def get_mode(self) -> SelectionMode: ...
     # override
-    def get_selected(self) -> typing.Tuple[TreeModel, typing.Optional[TreeIter]]: ...
+    def get_selected(self) -> typing.Tuple[TreeModel, TreeIter | None]: ...
     # override
     def get_selected_rows(
         self,
-    ) -> typing.Optional[typing.Tuple[TreeModel, list[TreePath]]]: ...
+    ) -> typing.Tuple[TreeModel, list[TreePath]] | None: ...
     def get_tree_view(self) -> TreeView: ...
     def iter_is_selected(self, iter: TreeIter) -> bool: ...
     def path_is_selected(self, path: TreePath) -> bool: ...
@@ -32087,7 +31906,7 @@ class TreeSelection(GObject.Object):
     def set_mode(self, type: SelectionMode) -> None: ...
     def set_select_function(
         self,
-        func: typing.Optional[typing.Callable[..., bool]] = None,
+        func: typing.Callable[..., bool] | None = None,
         *data: typing.Any,
     ) -> None: ...
     def unselect_all(self) -> None: ...
@@ -32119,7 +31938,7 @@ class TreeSortable(GObject.GInterface):
         sort_func: typing.Callable[
             [TreeModel, TreeIter, TreeIter, typing.Any], typing.Any
         ],
-        user_data: typing.Optional[typing.Any] = None,
+        user_data: typing.Any | None = None,
     ) -> None: ...
     def sort_column_changed(self) -> None: ...
 
@@ -32176,8 +31995,8 @@ class TreeStore(
     def __init__(self, *column_types: typing.Any) -> None: ...
     def append(
         self,
-        parent: typing.Optional[TreeIter],
-        row: typing.Optional[list[typing.Any]] = None,
+        parent: TreeIter | None,
+        row: list[typing.Any] | None = None,
     ) -> TreeIter: ...
     def clear(self) -> None: ...
     def insert(self, parent, position, row=None): ...
@@ -32185,7 +32004,7 @@ class TreeStore(
     def insert_before(self, parent, sibling, row=None): ...
     def insert_with_values(
         self,
-        parent: typing.Optional[TreeIter],
+        parent: TreeIter | None,
         position: int,
         columns: typing.Sequence[int],
         values: typing.Sequence[typing.Any],
@@ -32193,12 +32012,8 @@ class TreeStore(
     def is_ancestor(self, iter: TreeIter, descendant: TreeIter) -> bool: ...
     def iter_depth(self, iter: TreeIter) -> int: ...
     def iter_is_valid(self, iter: TreeIter) -> bool: ...
-    def move_after(
-        self, iter: TreeIter, position: typing.Optional[TreeIter] = None
-    ) -> None: ...
-    def move_before(
-        self, iter: TreeIter, position: typing.Optional[TreeIter] = None
-    ) -> None: ...
+    def move_after(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
+    def move_before(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
     @classmethod
     def new(cls, types: typing.Sequence[typing.Type[typing.Any]]) -> TreeStore: ...
     def prepend(self, parent, row=None): ...
@@ -32332,14 +32147,14 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         enable_grid_lines: TreeViewGridLines
         enable_search: bool
         enable_tree_lines: bool
-        expander_column: typing.Optional[TreeViewColumn]
+        expander_column: TreeViewColumn | None
         fixed_height_mode: bool
         headers_clickable: bool
         headers_visible: bool
         hover_expand: bool
         hover_selection: bool
         level_indentation: int
-        model: typing.Optional[TreeModel]
+        model: TreeModel | None
         reorderable: bool
         rubber_banding: bool
         search_column: int
@@ -32349,7 +32164,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -32359,7 +32174,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -32368,22 +32183,22 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
@@ -32394,14 +32209,14 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         enable_grid_lines: TreeViewGridLines = ...,
         enable_search: bool = ...,
         enable_tree_lines: bool = ...,
-        expander_column: typing.Optional[TreeViewColumn] = ...,
+        expander_column: TreeViewColumn | None = ...,
         fixed_height_mode: bool = ...,
         headers_clickable: bool = ...,
         headers_visible: bool = ...,
         hover_expand: bool = ...,
         hover_selection: bool = ...,
         level_indentation: int = ...,
-        model: typing.Optional[TreeModel] = ...,
+        model: TreeModel | None = ...,
         reorderable: bool = ...,
         rubber_banding: bool = ...,
         search_column: int = ...,
@@ -32411,7 +32226,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -32419,7 +32234,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -32430,17 +32245,17 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def append_column(self, column: TreeViewColumn) -> int: ...
@@ -32465,9 +32280,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def convert_widget_to_tree_coords(
         self, wx: int, wy: int
     ) -> typing.Tuple[int, int]: ...
-    def create_row_drag_icon(
-        self, path: TreePath
-    ) -> typing.Optional[Gdk.Paintable]: ...
+    def create_row_drag_icon(self, path: TreePath) -> Gdk.Paintable | None: ...
     def do_columns_changed(self) -> None: ...
     def do_cursor_changed(self) -> None: ...
     def do_expand_collapse_cursor_row(
@@ -32477,7 +32290,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         self, step: MovementStep, count: int, extend: bool, modify: bool
     ) -> bool: ...
     def do_row_activated(
-        self, path: TreePath, column: typing.Optional[TreeViewColumn] = None
+        self, path: TreePath, column: TreeViewColumn | None = None
     ) -> None: ...
     def do_row_collapsed(self, iter: TreeIter, path: TreePath) -> None: ...
     def do_row_expanded(self, iter: TreeIter, path: TreePath) -> None: ...
@@ -32504,24 +32317,24 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def get_activate_on_single_click(self) -> bool: ...
     def get_background_area(
         self,
-        path: typing.Optional[TreePath] = None,
-        column: typing.Optional[TreeViewColumn] = None,
+        path: TreePath | None = None,
+        column: TreeViewColumn | None = None,
     ) -> Gdk.Rectangle: ...
     def get_cell_area(
         self, path, column=None
     ): ...  # FIXME: Override is missing typing annotation
-    def get_column(self, n: int) -> typing.Optional[TreeViewColumn]: ...
+    def get_column(self, n: int) -> TreeViewColumn | None: ...
     def get_columns(self) -> list[TreeViewColumn]: ...
     def get_cursor(self) -> typing.Tuple[TreePath, TreeViewColumn]: ...
     def get_dest_row_at_pos(
         self, drag_x: int, drag_y: int
-    ) -> typing.Optional[
-        typing.Tuple[TreePath, TreeViewDropPosition]
-    ]: ...  # CHECK Wrapped function
+    ) -> (
+        typing.Tuple[TreePath, TreeViewDropPosition] | None
+    ): ...  # CHECK Wrapped function
     def get_drag_dest_row(self) -> typing.Tuple[TreePath, TreeViewDropPosition]: ...
     def get_enable_search(self) -> bool: ...
     def get_enable_tree_lines(self) -> bool: ...
-    def get_expander_column(self) -> typing.Optional[TreeViewColumn]: ...
+    def get_expander_column(self) -> TreeViewColumn | None: ...
     def get_fixed_height_mode(self) -> bool: ...
     def get_grid_lines(self) -> TreeViewGridLines: ...
     def get_headers_clickable(self) -> bool: ...
@@ -32529,20 +32342,16 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def get_hover_expand(self) -> bool: ...
     def get_hover_selection(self) -> bool: ...
     def get_level_indentation(self) -> int: ...
-    def get_model(self) -> typing.Optional[TreeModel]: ...
+    def get_model(self) -> TreeModel | None: ...
     def get_n_columns(self) -> int: ...
     # override
     def get_path_at_pos(
         self, x: int, y: int
-    ) -> typing.Optional[
-        typing.Tuple[
-            typing.Optional[TreePath], typing.Optional[TreeViewColumn], int, int
-        ]
-    ]: ...
+    ) -> typing.Tuple[TreePath | None, TreeViewColumn | None, int, int] | None: ...
     def get_reorderable(self) -> bool: ...
     def get_rubber_banding(self) -> bool: ...
     def get_search_column(self) -> int: ...
-    def get_search_entry(self) -> typing.Optional[Editable]: ...
+    def get_search_entry(self) -> Editable | None: ...
     def get_selection(self) -> TreeSelection: ...
     def get_show_expanders(self) -> bool: ...
     def get_tooltip_column(self) -> int: ...
@@ -32551,9 +32360,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     ) -> typing.Tuple[bool, TreeModel, TreePath, TreeIter]: ...
     def get_visible_range(
         self,
-    ) -> typing.Optional[
-        typing.Tuple[TreePath, TreePath]
-    ]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[TreePath, TreePath] | None: ...  # CHECK Wrapped function
     def get_visible_rect(self) -> Gdk.Rectangle: ...
     def insert_column(self, column: TreeViewColumn, position: int) -> int: ...
     # override
@@ -32578,7 +32385,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def move_column_after(
         self,
         column: TreeViewColumn,
-        base_column: typing.Optional[TreeViewColumn] = None,
+        base_column: TreeViewColumn | None = None,
     ) -> None: ...
     @classmethod
     def new(cls) -> TreeView: ...
@@ -32586,14 +32393,14 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def new_with_model(cls, model: TreeModel) -> TreeView: ...
     def remove_column(self, column: TreeViewColumn) -> int: ...
     def row_activated(
-        self, path: TreePath, column: typing.Optional[TreeViewColumn] = None
+        self, path: TreePath, column: TreeViewColumn | None = None
     ) -> None: ...
     def row_expanded(self, path: TreePath) -> bool: ...
     # override
     def scroll_to_cell(
         self,
-        path: typing.Optional[TreePath],
-        column: typing.Optional[TreeViewColumn] = None,
+        path: TreePath | None,
+        column: TreeViewColumn | None = None,
         use_align: bool = False,
         row_align: float = 0.0,
         col_align: float = 0.0,
@@ -32602,31 +32409,29 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def set_activate_on_single_click(self, single: bool) -> None: ...
     def set_column_drag_function(
         self,
-        func: typing.Optional[typing.Callable[..., bool]] = None,
+        func: typing.Callable[..., bool] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     # override
     def set_cursor(
         self,
         path: TreePath,
-        column: typing.Optional[TreeViewColumn] = None,
+        column: TreeViewColumn | None = None,
         start_editing: bool = False,
     ) -> None: ...
     def set_cursor_on_cell(
         self,
         path: TreePath,
-        focus_column: typing.Optional[TreeViewColumn],
-        focus_cell: typing.Optional[CellRenderer],
+        focus_column: TreeViewColumn | None,
+        focus_cell: CellRenderer | None,
         start_editing: bool,
     ) -> None: ...
     def set_drag_dest_row(
-        self, path: typing.Optional[TreePath], pos: TreeViewDropPosition
+        self, path: TreePath | None, pos: TreeViewDropPosition
     ) -> None: ...
     def set_enable_search(self, enable_search: bool) -> None: ...
     def set_enable_tree_lines(self, enabled: bool) -> None: ...
-    def set_expander_column(
-        self, column: typing.Optional[TreeViewColumn] = None
-    ) -> None: ...
+    def set_expander_column(self, column: TreeViewColumn | None = None) -> None: ...
     def set_fixed_height_mode(self, enable: bool) -> None: ...
     def set_grid_lines(self, grid_lines: TreeViewGridLines) -> None: ...
     def set_headers_clickable(self, setting: bool) -> None: ...
@@ -32634,16 +32439,16 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def set_hover_expand(self, expand: bool) -> None: ...
     def set_hover_selection(self, hover: bool) -> None: ...
     def set_level_indentation(self, indentation: int) -> None: ...
-    def set_model(self, model: typing.Optional[TreeModel] = None) -> None: ...
+    def set_model(self, model: TreeModel | None = None) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
     def set_row_separator_func(
         self,
-        func: typing.Optional[typing.Callable[..., bool]] = None,
+        func: typing.Callable[..., bool] | None = None,
         *data: typing.Any,
     ) -> None: ...
     def set_rubber_banding(self, enable: bool) -> None: ...
     def set_search_column(self, column: int) -> None: ...
-    def set_search_entry(self, entry: typing.Optional[Editable] = None) -> None: ...
+    def set_search_entry(self, entry: Editable | None = None) -> None: ...
     def set_search_equal_func(
         self,
         search_equal_func: typing.Callable[..., bool],
@@ -32653,9 +32458,9 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def set_tooltip_cell(
         self,
         tooltip: Tooltip,
-        path: typing.Optional[TreePath] = None,
-        column: typing.Optional[TreeViewColumn] = None,
-        cell: typing.Optional[CellRenderer] = None,
+        path: TreePath | None = None,
+        column: TreeViewColumn | None = None,
+        cell: CellRenderer | None = None,
     ) -> None: ...
     def set_tooltip_column(self, column: int) -> None: ...
     def set_tooltip_row(self, tooltip: Tooltip, path: TreePath) -> None: ...
@@ -32673,7 +32478,7 @@ class TreeViewClass(GObject.GPointer):
 
     parent_class: WidgetClass = ...
     row_activated: typing.Callable[
-        [TreeView, TreePath, typing.Optional[TreeViewColumn]], None
+        [TreeView, TreePath, TreeViewColumn | None], None
     ] = ...
     test_expand_row: typing.Callable[[TreeView, TreeIter, TreePath], bool] = ...
     test_collapse_row: typing.Callable[[TreeView, TreeIter, TreePath], bool] = ...
@@ -32750,7 +32555,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         spacing: int
         title: str
         visible: bool
-        widget: typing.Optional[Widget]
+        widget: Widget | None
         width: int
         x_offset: int
 
@@ -32759,7 +32564,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def __init__(
         self,
         title: str = ...,
-        cell_renderer: typing.Optional[CellRenderer] = None,
+        cell_renderer: CellRenderer | None = None,
         **attributes: typing.Any,
     ) -> None: ...
     def add_attribute(
@@ -32767,7 +32572,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     ) -> None: ...
     def cell_get_position(
         self, cell_renderer: CellRenderer
-    ) -> typing.Optional[typing.Tuple[int, int]]: ...
+    ) -> typing.Tuple[int, int] | None: ...
     def cell_get_size(self) -> typing.Tuple[int, int, int, int]: ...
     def cell_is_visible(self) -> bool: ...
     def cell_set_cell_data(
@@ -32796,9 +32601,9 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def get_sort_order(self) -> SortType: ...
     def get_spacing(self) -> int: ...
     def get_title(self) -> str: ...
-    def get_tree_view(self) -> typing.Optional[Widget]: ...
+    def get_tree_view(self) -> Widget | None: ...
     def get_visible(self) -> bool: ...
-    def get_widget(self) -> typing.Optional[Widget]: ...
+    def get_widget(self) -> Widget | None: ...
     def get_width(self) -> int: ...
     def get_x_offset(self) -> int: ...
     @classmethod
@@ -32818,7 +32623,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         func: typing.Callable[
             [TreeViewColumn, CellRendererT, TreeModel, TreeIter, typing.Any], typing.Any
         ],
-        func_data: typing.Optional[object] = None,
+        func_data: object | None = None,
     ) -> None: ...
     def set_clickable(self, clickable: bool) -> None: ...
     def set_expand(self, expand: bool) -> None: ...
@@ -32834,7 +32639,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def set_spacing(self, spacing: int) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
-    def set_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def set_widget(self, widget: Widget | None = None) -> None: ...
 
 class UriLauncher(GObject.Object):
     """
@@ -32854,23 +32659,23 @@ class UriLauncher(GObject.Object):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        uri: typing.Optional[str]
+        uri: str | None
 
     props: Props = ...
-    def __init__(self, uri: typing.Optional[str] = ...) -> None: ...
-    def can_launch(self, parent: typing.Optional[Window] = None) -> bool: ...
-    def get_uri(self) -> typing.Optional[str]: ...
+    def __init__(self, uri: str | None = ...) -> None: ...
+    def can_launch(self, parent: Window | None = None) -> bool: ...
+    def get_uri(self) -> str | None: ...
     def launch(
         self,
-        parent: typing.Optional[Window] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        parent: Window | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
     @classmethod
-    def new(cls, uri: typing.Optional[str] = None) -> UriLauncher: ...
-    def set_uri(self, uri: typing.Optional[str] = None) -> None: ...
+    def new(cls, uri: str | None = None) -> UriLauncher: ...
+    def set_uri(self, uri: str | None = None) -> None: ...
 
 class UriLauncherClass(GObject.GPointer):
     """
@@ -32962,15 +32767,15 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
     """
     class Props(Widget.Props):
         autoplay: bool
-        file: typing.Optional[Gio.File]
+        file: Gio.File | None
         graphics_offload: GraphicsOffloadEnabled
         loop: bool
-        media_stream: typing.Optional[MediaStream]
+        media_stream: MediaStream | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -32980,7 +32785,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -32989,13 +32794,13 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -33007,15 +32812,15 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
     def __init__(
         self,
         autoplay: bool = ...,
-        file: typing.Optional[Gio.File] = ...,
+        file: Gio.File | None = ...,
         graphics_offload: GraphicsOffloadEnabled = ...,
         loop: bool = ...,
-        media_stream: typing.Optional[MediaStream] = ...,
+        media_stream: MediaStream | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -33023,7 +32828,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -33034,8 +32839,8 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -33044,29 +32849,27 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_autoplay(self) -> bool: ...
-    def get_file(self) -> typing.Optional[Gio.File]: ...
+    def get_file(self) -> Gio.File | None: ...
     def get_graphics_offload(self) -> GraphicsOffloadEnabled: ...
     def get_loop(self) -> bool: ...
-    def get_media_stream(self) -> typing.Optional[MediaStream]: ...
+    def get_media_stream(self) -> MediaStream | None: ...
     @classmethod
     def new(cls) -> Video: ...
     @classmethod
-    def new_for_file(cls, file: typing.Optional[Gio.File] = None) -> Video: ...
+    def new_for_file(cls, file: Gio.File | None = None) -> Video: ...
     @classmethod
-    def new_for_filename(cls, filename: typing.Optional[str] = None) -> Video: ...
+    def new_for_filename(cls, filename: str | None = None) -> Video: ...
     @classmethod
-    def new_for_media_stream(
-        cls, stream: typing.Optional[MediaStream] = None
-    ) -> Video: ...
+    def new_for_media_stream(cls, stream: MediaStream | None = None) -> Video: ...
     @classmethod
-    def new_for_resource(cls, resource_path: typing.Optional[str] = None) -> Video: ...
+    def new_for_resource(cls, resource_path: str | None = None) -> Video: ...
     def set_autoplay(self, autoplay: bool) -> None: ...
-    def set_file(self, file: typing.Optional[Gio.File] = None) -> None: ...
-    def set_filename(self, filename: typing.Optional[str] = None) -> None: ...
+    def set_file(self, file: Gio.File | None = None) -> None: ...
+    def set_filename(self, filename: str | None = None) -> None: ...
     def set_graphics_offload(self, enabled: GraphicsOffloadEnabled) -> None: ...
     def set_loop(self, loop: bool) -> None: ...
-    def set_media_stream(self, stream: typing.Optional[MediaStream] = None) -> None: ...
-    def set_resource(self, resource_path: typing.Optional[str] = None) -> None: ...
+    def set_media_stream(self, stream: MediaStream | None = None) -> None: ...
+    def set_resource(self, resource_path: str | None = None) -> None: ...
 
 class VideoClass(GObject.GPointer):
     """
@@ -33150,13 +32953,13 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         scroll_to_focus: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -33166,7 +32969,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -33175,34 +32978,34 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
         accessible_role: AccessibleRole
-        hadjustment: typing.Optional[Adjustment]
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: typing.Optional[Adjustment]
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
 
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         scroll_to_focus: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -33210,7 +33013,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -33221,31 +33024,31 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
-        hadjustment: typing.Optional[Adjustment] = ...,
+        hadjustment: Adjustment | None = ...,
         hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: typing.Optional[Adjustment] = ...,
+        vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     def get_scroll_to_focus(self) -> bool: ...
     @classmethod
     def new(
         cls,
-        hadjustment: typing.Optional[Adjustment] = None,
-        vadjustment: typing.Optional[Adjustment] = None,
+        hadjustment: Adjustment | None = None,
+        vadjustment: Adjustment | None = None,
     ) -> Viewport: ...
     def scroll_to(
-        self, descendant: Widget, scroll: typing.Optional[ScrollInfo] = None
+        self, descendant: Widget, scroll: ScrollInfo | None = None
     ) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_scroll_to_focus(self, scroll_to_focus: bool) -> None: ...
 
 class VolumeButton(
@@ -33342,7 +33145,7 @@ class VolumeButton(
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -33352,7 +33155,7 @@ class VolumeButton(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -33361,13 +33164,13 @@ class VolumeButton(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -33389,7 +33192,7 @@ class VolumeButton(
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -33397,7 +33200,7 @@ class VolumeButton(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -33408,8 +33211,8 @@ class VolumeButton(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -33491,7 +33294,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -33501,7 +33304,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -33510,13 +33313,13 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -33533,7 +33336,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -33541,7 +33344,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -33552,8 +33355,8 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -33564,9 +33367,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def action_set_enabled(self, action_name: str, enabled: bool) -> None: ...
     def activate(self) -> bool: ...
-    def activate_action(
-        self, name: str, args: typing.Optional[GLib.Variant] = None
-    ) -> bool: ...
+    def activate_action(self, name: str, args: GLib.Variant | None = None) -> bool: ...
     def activate_default(self) -> None: ...
     def add_controller(self, controller: EventController) -> None: ...
     def add_css_class(self, css_class: str) -> None: ...
@@ -33582,7 +33383,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         width: int,
         height: int,
         baseline: int,
-        transform: typing.Optional[Gsk.Transform] = None,
+        transform: Gsk.Transform | None = None,
     ) -> None: ...
     # override
     @classmethod
@@ -33605,9 +33406,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     ) -> typing.Tuple[bool, Graphene.Matrix]: ...
     def contains(self, x: float, y: float) -> bool: ...
     def create_pango_context(self) -> Pango.Context: ...
-    def create_pango_layout(
-        self, text: typing.Optional[str] = None
-    ) -> Pango.Layout: ...
+    def create_pango_layout(self, text: str | None = None) -> Pango.Layout: ...
     def dispose_template(self, widget_type: typing.Type[typing.Any]) -> None: ...
     def do_compute_expand(self, hexpand_p: bool, vexpand_p: bool) -> None: ...
     def do_contains(self, x: float, y: float) -> bool: ...
@@ -33629,7 +33428,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     ) -> bool: ...
     def do_realize(self) -> None: ...
     def do_root(self) -> None: ...
-    def do_set_focus_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def do_set_focus_child(self, child: Widget | None = None) -> None: ...
     def do_show(self) -> None: ...
     def do_size_allocate(self, width: int, height: int, baseline: int) -> None: ...
     def do_snapshot(self, snapshot: Snapshot) -> None: ...
@@ -33650,9 +33449,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def get_allocated_width(self) -> int: ...
     def get_allocation(self) -> Gdk.Rectangle: ...
     # override
-    def get_ancestor(
-        self, widget_type: typing.Type[WidgetT]
-    ) -> typing.Optional[WidgetT]: ...
+    def get_ancestor(self, widget_type: typing.Type[WidgetT]) -> WidgetT | None: ...
     def get_baseline(self) -> int: ...
     def get_can_focus(self) -> bool: ...
     def get_can_target(self) -> bool: ...
@@ -33663,26 +33460,26 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     # override
     @classmethod
     def get_css_name(cls) -> str: ...
-    def get_cursor(self) -> typing.Optional[Gdk.Cursor]: ...
+    def get_cursor(self) -> Gdk.Cursor | None: ...
     # override
     @classmethod
     def get_default_direction(cls) -> TextDirection: ...
     def get_direction(self) -> TextDirection: ...
     def get_display(self) -> Gdk.Display: ...
-    def get_first_child(self) -> typing.Optional[Widget]: ...
-    def get_focus_child(self) -> typing.Optional[Widget]: ...
+    def get_first_child(self) -> Widget | None: ...
+    def get_focus_child(self) -> Widget | None: ...
     def get_focus_on_click(self) -> bool: ...
     def get_focusable(self) -> bool: ...
-    def get_font_map(self) -> typing.Optional[Pango.FontMap]: ...
-    def get_font_options(self) -> typing.Optional[cairo.FontOptions]: ...
-    def get_frame_clock(self) -> typing.Optional[Gdk.FrameClock]: ...
+    def get_font_map(self) -> Pango.FontMap | None: ...
+    def get_font_options(self) -> cairo.FontOptions | None: ...
+    def get_frame_clock(self) -> Gdk.FrameClock | None: ...
     def get_halign(self) -> Align: ...
     def get_has_tooltip(self) -> bool: ...
     def get_height(self) -> int: ...
     def get_hexpand(self) -> bool: ...
     def get_hexpand_set(self) -> bool: ...
-    def get_last_child(self) -> typing.Optional[Widget]: ...
-    def get_layout_manager(self) -> typing.Optional[LayoutManager]: ...
+    def get_last_child(self) -> Widget | None: ...
+    def get_layout_manager(self) -> LayoutManager | None: ...
     # override
     def get_layout_manager_type(self) -> typing.Type[typing.Any]: ...
     def get_limit_events(self) -> bool: ...
@@ -33692,19 +33489,19 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def get_margin_start(self) -> int: ...
     def get_margin_top(self) -> int: ...
     def get_name(self) -> str: ...
-    def get_native(self) -> typing.Optional[Native]: ...
-    def get_next_sibling(self) -> typing.Optional[Widget]: ...
+    def get_native(self) -> Native | None: ...
+    def get_next_sibling(self) -> Widget | None: ...
     def get_opacity(self) -> float: ...
     def get_overflow(self) -> Overflow: ...
     def get_pango_context(self) -> Pango.Context: ...
-    def get_parent(self) -> typing.Optional[Widget]: ...
+    def get_parent(self) -> Widget | None: ...
     def get_preferred_size(self) -> typing.Tuple[Requisition, Requisition]: ...
-    def get_prev_sibling(self) -> typing.Optional[Widget]: ...
+    def get_prev_sibling(self) -> Widget | None: ...
     def get_primary_clipboard(self) -> Gdk.Clipboard: ...
     def get_realized(self) -> bool: ...
     def get_receives_default(self) -> bool: ...
     def get_request_mode(self) -> SizeRequestMode: ...
-    def get_root(self) -> typing.Optional[Root]: ...
+    def get_root(self) -> Root | None: ...
     def get_scale_factor(self) -> int: ...
     def get_sensitive(self) -> bool: ...
     def get_settings(self) -> Settings: ...
@@ -33715,8 +33512,8 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def get_template_child(
         self, widget_type: typing.Type[typing.Any], name: str
     ) -> GObject.Object: ...
-    def get_tooltip_markup(self) -> typing.Optional[str]: ...
-    def get_tooltip_text(self) -> typing.Optional[str]: ...
+    def get_tooltip_markup(self) -> str | None: ...
+    def get_tooltip_text(self) -> str | None: ...
     def get_valign(self) -> Align: ...
     def get_vexpand(self) -> bool: ...
     def get_vexpand_set(self) -> bool: ...
@@ -33731,21 +33528,21 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def in_destruction(self) -> bool: ...
     def init_template(self) -> None: ...
     def insert_action_group(
-        self, name: str, group: typing.Optional[Gio.ActionGroup] = None
+        self, name: str, group: Gio.ActionGroup | None = None
     ) -> None: ...
     def insert_after(
-        self, parent: Widget, previous_sibling: typing.Optional[Widget] = None
+        self, parent: Widget, previous_sibling: Widget | None = None
     ) -> None: ...
     def insert_before(
-        self, parent: Widget, next_sibling: typing.Optional[Widget] = None
+        self, parent: Widget, next_sibling: Widget | None = None
     ) -> None: ...
     # override
     @classmethod
     def install_action(
         cls,
         action_name: str,
-        parameter_type: typing.Optional[str],
-        activate: typing.Callable[[Widget, str, typing.Optional[GLib.Variant]], None],
+        parameter_type: str | None,
+        activate: typing.Callable[[Widget, str, GLib.Variant | None], None],
     ) -> None: ...
     # override
     @classmethod
@@ -33764,7 +33561,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def mnemonic_activate(self, group_cycling: bool) -> bool: ...
     def observe_children(self) -> Gio.ListModel: ...
     def observe_controllers(self) -> Gio.ListModel: ...
-    def pick(self, x: float, y: float, flags: PickFlags) -> typing.Optional[Widget]: ...
+    def pick(self, x: float, y: float, flags: PickFlags) -> Widget | None: ...
     # override
     @classmethod
     def query_action(
@@ -33794,19 +33591,17 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     # override
     @classmethod
     def set_css_name(cls, name: str) -> None: ...
-    def set_cursor(self, cursor: typing.Optional[Gdk.Cursor] = None) -> None: ...
-    def set_cursor_from_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_cursor(self, cursor: Gdk.Cursor | None = None) -> None: ...
+    def set_cursor_from_name(self, name: str | None = None) -> None: ...
     # override
     @classmethod
     def set_default_direction(cls, dir: TextDirection) -> None: ...
     def set_direction(self, dir: TextDirection) -> None: ...
-    def set_focus_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_focus_child(self, child: Widget | None = None) -> None: ...
     def set_focus_on_click(self, focus_on_click: bool) -> None: ...
     def set_focusable(self, focusable: bool) -> None: ...
-    def set_font_map(self, font_map: typing.Optional[Pango.FontMap] = None) -> None: ...
-    def set_font_options(
-        self, options: typing.Optional[cairo.FontOptions] = None
-    ) -> None: ...
+    def set_font_map(self, font_map: Pango.FontMap | None = None) -> None: ...
+    def set_font_options(self, options: cairo.FontOptions | None = None) -> None: ...
     def set_halign(self, align: Align) -> None: ...
     def set_has_tooltip(self, has_tooltip: bool) -> None: ...
     def set_hexpand(self, expand: bool) -> None: ...
@@ -33814,7 +33609,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     # override
     @classmethod
     def set_layout_manager(
-        cls, layout_manager: typing.Optional[LayoutManager] = None
+        cls, layout_manager: LayoutManager | None = None
     ) -> None: ...
     # override
     def set_layout_manager_type(self, type: typing.Type[typing.Any]) -> None: ...
@@ -33840,8 +33635,8 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     # override
     @classmethod
     def set_template_scope(cls, scope: BuilderScope) -> None: ...
-    def set_tooltip_markup(self, markup: typing.Optional[str] = None) -> None: ...
-    def set_tooltip_text(self, text: typing.Optional[str] = None) -> None: ...
+    def set_tooltip_markup(self, markup: str | None = None) -> None: ...
+    def set_tooltip_text(self, text: str | None = None) -> None: ...
     def set_valign(self, align: Align) -> None: ...
     def set_vexpand(self, expand: bool) -> None: ...
     def set_vexpand_set(self, set: bool) -> None: ...
@@ -33852,7 +33647,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def snapshot_child(self, child: Widget, snapshot: Snapshot) -> None: ...
     def translate_coordinates(
         self, dest_widget: Widget, src_x: float, src_y: float
-    ) -> typing.Optional[typing.Tuple[float, float]]: ...  # CHECK Wrapped function
+    ) -> typing.Tuple[float, float] | None: ...  # CHECK Wrapped function
     def trigger_tooltip_query(self) -> None: ...
     def unmap(self) -> None: ...
     def unparent(self) -> None: ...
@@ -33887,7 +33682,7 @@ class WidgetClass(GObject.GPointer):
     mnemonic_activate: typing.Callable[[Widget, bool], bool] = ...
     grab_focus: typing.Callable[[Widget], bool] = ...
     focus: typing.Callable[[Widget, DirectionType], bool] = ...
-    set_focus_child: typing.Callable[[Widget, typing.Optional[Widget]], None] = ...
+    set_focus_child: typing.Callable[[Widget, Widget | None], None] = ...
     move_focus: typing.Callable[[Widget, DirectionType], None] = ...
     keynav_failed: typing.Callable[[Widget, DirectionType], bool] = ...
     query_tooltip: typing.Callable[[Widget, int, int, bool, Tooltip], bool] = ...
@@ -33916,8 +33711,8 @@ class WidgetClass(GObject.GPointer):
     def install_action(
         self,
         action_name: str,
-        parameter_type: typing.Optional[str],
-        activate: typing.Callable[[Widget, str, typing.Optional[GLib.Variant]], None],
+        parameter_type: str | None,
+        activate: typing.Callable[[Widget, str, GLib.Variant | None], None],
     ) -> None: ...
     def install_property_action(self, action_name: str, property_name: str) -> None: ...
     def query_action(
@@ -33956,14 +33751,14 @@ class WidgetPaintable(GObject.Object, Gdk.Paintable):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        widget: typing.Optional[Widget]
+        widget: Widget | None
 
     props: Props = ...
-    def __init__(self, widget: typing.Optional[Widget] = ...) -> None: ...
-    def get_widget(self) -> typing.Optional[Widget]: ...
+    def __init__(self, widget: Widget | None = ...) -> None: ...
+    def get_widget(self) -> Widget | None: ...
     @classmethod
-    def new(cls, widget: typing.Optional[Widget] = None) -> WidgetPaintable: ...
-    def set_widget(self, widget: typing.Optional[Widget] = None) -> None: ...
+    def new(cls, widget: Widget | None = None) -> WidgetPaintable: ...
+    def set_widget(self, widget: Widget | None = None) -> None: ...
 
 class WidgetPaintableClass(GObject.GPointer):
     """
@@ -34082,36 +33877,36 @@ class Window(
       notify (GParam)
     """
     class Props(Widget.Props):
-        application: typing.Optional[Application]
-        child: typing.Optional[Widget]
+        application: Application | None
+        child: Widget | None
         decorated: bool
         default_height: int
-        default_widget: typing.Optional[Widget]
+        default_widget: Widget | None
         default_width: int
         deletable: bool
         destroy_with_parent: bool
         display: Gdk.Display
         focus_visible: bool
-        focus_widget: typing.Optional[Widget]
+        focus_widget: Widget | None
         fullscreened: bool
         gravity: WindowGravity
         handle_menubar_accel: bool
         hide_on_close: bool
-        icon_name: typing.Optional[str]
+        icon_name: str | None
         is_active: bool
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
         suspended: bool
-        title: typing.Optional[str]
-        titlebar: typing.Optional[Widget]
-        transient_for: typing.Optional[Window]
+        title: str | None
+        titlebar: Widget | None
+        transient_for: Window | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -34121,7 +33916,7 @@ class Window(
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -34130,13 +33925,13 @@ class Window(
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -34149,35 +33944,35 @@ class Window(
     parent_instance: Widget = ...
     def __init__(
         self,
-        application: typing.Optional[Application] = ...,
-        child: typing.Optional[Widget] = ...,
+        application: Application | None = ...,
+        child: Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
-        default_widget: typing.Optional[Widget] = ...,
+        default_widget: Widget | None = ...,
         default_width: int = ...,
         deletable: bool = ...,
         destroy_with_parent: bool = ...,
         display: Gdk.Display = ...,
         focus_visible: bool = ...,
-        focus_widget: typing.Optional[Widget] = ...,
+        focus_widget: Widget | None = ...,
         fullscreened: bool = ...,
         gravity: WindowGravity = ...,
         handle_menubar_accel: bool = ...,
         hide_on_close: bool = ...,
-        icon_name: typing.Optional[str] = ...,
+        icon_name: str | None = ...,
         maximized: bool = ...,
         mnemonics_visible: bool = ...,
         modal: bool = ...,
         resizable: bool = ...,
         startup_id: str = ...,
-        title: typing.Optional[str] = ...,
-        titlebar: typing.Optional[Widget] = ...,
-        transient_for: typing.Optional[Window] = ...,
+        title: str | None = ...,
+        titlebar: Widget | None = ...,
+        transient_for: Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -34185,7 +33980,7 @@ class Window(
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -34196,8 +33991,8 @@ class Window(
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -34214,31 +34009,31 @@ class Window(
     def do_keys_changed(self) -> None: ...
     def fullscreen(self) -> None: ...
     def fullscreen_on_monitor(self, monitor: Gdk.Monitor) -> None: ...
-    def get_application(self) -> typing.Optional[Application]: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_application(self) -> Application | None: ...
+    def get_child(self) -> Widget | None: ...
     def get_decorated(self) -> bool: ...
     @staticmethod
-    def get_default_icon_name() -> typing.Optional[str]: ...
+    def get_default_icon_name() -> str | None: ...
     def get_default_size(self) -> typing.Tuple[int, int]: ...
-    def get_default_widget(self) -> typing.Optional[Widget]: ...
+    def get_default_widget(self) -> Widget | None: ...
     def get_deletable(self) -> bool: ...
     def get_destroy_with_parent(self) -> bool: ...
-    def get_focus(self) -> typing.Optional[Widget]: ...
+    def get_focus(self) -> Widget | None: ...
     def get_focus_visible(self) -> bool: ...
     def get_gravity(self) -> WindowGravity: ...
     def get_group(self) -> WindowGroup: ...
     def get_handle_menubar_accel(self) -> bool: ...
     def get_hide_on_close(self) -> bool: ...
-    def get_icon_name(self) -> typing.Optional[str]: ...
+    def get_icon_name(self) -> str | None: ...
     def get_mnemonics_visible(self) -> bool: ...
     def get_modal(self) -> bool: ...
     def get_resizable(self) -> bool: ...
-    def get_title(self) -> typing.Optional[str]: ...
-    def get_titlebar(self) -> typing.Optional[Widget]: ...
+    def get_title(self) -> str | None: ...
+    def get_titlebar(self) -> Widget | None: ...
     # override
     @staticmethod
     def get_toplevels() -> Gio.ListModel: ...
-    def get_transient_for(self) -> typing.Optional[Window]: ...
+    def get_transient_for(self) -> Window | None: ...
     def has_group(self) -> bool: ...
     def is_active(self) -> bool: ...
     def is_fullscreen(self) -> bool: ...
@@ -34252,37 +34047,33 @@ class Window(
     def new(cls) -> Window: ...
     def present(self) -> None: ...
     def present_with_time(self, timestamp: int) -> None: ...
-    def set_application(
-        self, application: typing.Optional[Application] = None
-    ) -> None: ...
+    def set_application(self, application: Application | None = None) -> None: ...
     @staticmethod
     def set_auto_startup_notification(setting: bool) -> None: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
     def set_decorated(self, setting: bool) -> None: ...
     @staticmethod
     def set_default_icon_name(name: str) -> None: ...
     def set_default_size(self, width: int, height: int) -> None: ...
-    def set_default_widget(
-        self, default_widget: typing.Optional[Widget] = None
-    ) -> None: ...
+    def set_default_widget(self, default_widget: Widget | None = None) -> None: ...
     def set_deletable(self, setting: bool) -> None: ...
     def set_destroy_with_parent(self, setting: bool) -> None: ...
     def set_display(self, display: Gdk.Display) -> None: ...
-    def set_focus(self, focus: typing.Optional[Widget] = None) -> None: ...
+    def set_focus(self, focus: Widget | None = None) -> None: ...
     def set_focus_visible(self, setting: bool) -> None: ...
     def set_gravity(self, gravity: WindowGravity) -> None: ...
     def set_handle_menubar_accel(self, handle_menubar_accel: bool) -> None: ...
     def set_hide_on_close(self, setting: bool) -> None: ...
-    def set_icon_name(self, name: typing.Optional[str] = None) -> None: ...
+    def set_icon_name(self, name: str | None = None) -> None: ...
     @staticmethod
     def set_interactive_debugging(enable: bool) -> None: ...
     def set_mnemonics_visible(self, setting: bool) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
     def set_startup_id(self, startup_id: str) -> None: ...
-    def set_title(self, title: typing.Optional[str] = None) -> None: ...
-    def set_titlebar(self, titlebar: typing.Optional[Widget] = None) -> None: ...
-    def set_transient_for(self, parent: typing.Optional[Window] = None) -> None: ...
+    def set_title(self, title: str | None = None) -> None: ...
+    def set_titlebar(self, titlebar: Widget | None = None) -> None: ...
+    def set_transient_for(self, parent: Window | None = None) -> None: ...
     def unfullscreen(self) -> None: ...
     def unmaximize(self) -> None: ...
     def unminimize(self) -> None: ...
@@ -34377,7 +34168,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        decoration_layout: typing.Optional[str]
+        decoration_layout: str | None
         empty: bool
         side: PackType
         use_native_controls: bool
@@ -34385,7 +34176,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -34395,7 +34186,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -34404,13 +34195,13 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -34421,14 +34212,14 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        decoration_layout: typing.Optional[str] = ...,
+        decoration_layout: str | None = ...,
         side: PackType = ...,
         use_native_controls: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -34436,7 +34227,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -34447,8 +34238,8 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -34456,13 +34247,13 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_decoration_layout(self) -> typing.Optional[str]: ...
+    def get_decoration_layout(self) -> str | None: ...
     def get_empty(self) -> bool: ...
     def get_side(self) -> PackType: ...
     def get_use_native_controls(self) -> bool: ...
     @classmethod
     def new(cls, side: PackType) -> WindowControls: ...
-    def set_decoration_layout(self, layout: typing.Optional[str] = None) -> None: ...
+    def set_decoration_layout(self, layout: str | None = None) -> None: ...
     def set_side(self, side: PackType) -> None: ...
     def set_use_native_controls(self, setting: bool) -> None: ...
 
@@ -34583,12 +34374,12 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
       notify (GParam)
     """
     class Props(Widget.Props):
-        child: typing.Optional[Widget]
+        child: Widget | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
@@ -34598,7 +34389,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[LayoutManager]
+        layout_manager: LayoutManager | None
         limit_events: bool
         margin_bottom: int
         margin_end: int
@@ -34607,13 +34398,13 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: typing.Optional[Widget]
+        parent: Widget | None
         receives_default: bool
-        root: typing.Optional[Root]
+        root: Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Align
         vexpand: bool
         vexpand_set: bool
@@ -34624,12 +34415,12 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Widget] = ...,
+        child: Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Align = ...,
@@ -34637,7 +34428,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[LayoutManager] = ...,
+        layout_manager: LayoutManager | None = ...,
         limit_events: bool = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
@@ -34648,8 +34439,8 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         overflow: Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -34657,10 +34448,10 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
-    def get_child(self) -> typing.Optional[Widget]: ...
+    def get_child(self) -> Widget | None: ...
     @classmethod
     def new(cls) -> WindowHandle: ...
-    def set_child(self, child: typing.Optional[Widget] = None) -> None: ...
+    def set_child(self, child: Widget | None = None) -> None: ...
 
 class WindowHandleClass(GObject.GPointer):
     """

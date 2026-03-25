@@ -45,7 +45,7 @@ def network_error_quark() -> int: ...
 def policy_error_quark() -> int: ...
 def print_error_quark() -> int: ...
 def snapshot_error_quark() -> int: ...
-def uri_for_display(uri: str) -> Optional[str]: ...
+def uri_for_display(uri: str) -> str | None: ...
 def user_content_filter_error_quark() -> int: ...
 def user_media_permission_is_for_audio_device(
     request: UserMediaPermissionRequest,
@@ -94,7 +94,7 @@ class AuthenticationRequest(GObject.Object):
       notify (GParam)
     """
 
-    def authenticate(self, credential: Optional[Credential] = None) -> None: ...
+    def authenticate(self, credential: Credential | None = None) -> None: ...
     def can_save_credentials(self) -> bool: ...
     def cancel(self) -> None: ...
     def get_certificate_pin_flags(self) -> Gio.TlsPasswordFlags: ...
@@ -177,15 +177,15 @@ class BackForwardList(GObject.Object):
       notify (GParam)
     """
 
-    def get_back_item(self) -> Optional[BackForwardListItem]: ...
+    def get_back_item(self) -> BackForwardListItem | None: ...
     def get_back_list(self) -> list[BackForwardListItem]: ...
     def get_back_list_with_limit(self, limit: int) -> list[BackForwardListItem]: ...
-    def get_current_item(self) -> Optional[BackForwardListItem]: ...
-    def get_forward_item(self) -> Optional[BackForwardListItem]: ...
+    def get_current_item(self) -> BackForwardListItem | None: ...
+    def get_forward_item(self) -> BackForwardListItem | None: ...
     def get_forward_list(self) -> list[BackForwardListItem]: ...
     def get_forward_list_with_limit(self, limit: int) -> list[BackForwardListItem]: ...
     def get_length(self) -> int: ...
-    def get_nth_item(self, index: int) -> Optional[BackForwardListItem]: ...
+    def get_nth_item(self, index: int) -> BackForwardListItem | None: ...
 
 class BackForwardListClass(GObject.GPointer):
     """
@@ -353,7 +353,7 @@ class ContextMenuItem(GObject.InitiallyUnowned):
     def is_separator(self) -> bool: ...
     @classmethod
     def new_from_gaction(
-        cls, action: Gio.Action, label: str, target: Optional[GLib.Variant] = None
+        cls, action: Gio.Action, label: str, target: GLib.Variant | None = None
     ) -> ContextMenuItem: ...
     @classmethod
     def new_from_stock_action(cls, action: ContextMenuAction) -> ContextMenuItem: ...
@@ -365,7 +365,7 @@ class ContextMenuItem(GObject.InitiallyUnowned):
     def new_separator(cls) -> ContextMenuItem: ...
     @classmethod
     def new_with_submenu(cls, label: str, submenu: ContextMenu) -> ContextMenuItem: ...
-    def set_submenu(self, submenu: Optional[ContextMenu] = None) -> None: ...
+    def set_submenu(self, submenu: ContextMenu | None = None) -> None: ...
 
 class ContextMenuItemClass(GObject.GPointer):
     """
@@ -398,23 +398,23 @@ class CookieManager(GObject.Object):
     def add_cookie(
         self,
         cookie: Soup.Cookie,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def add_cookie_finish(self, result: Gio.AsyncResult) -> bool: ...
     def delete_cookie(
         self,
         cookie: Soup.Cookie,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def delete_cookie_finish(self, result: Gio.AsyncResult) -> bool: ...
     def get_accept_policy(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_accept_policy_finish(
@@ -422,24 +422,24 @@ class CookieManager(GObject.Object):
     ) -> CookieAcceptPolicy: ...
     def get_all_cookies(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_all_cookies_finish(self, result: Gio.AsyncResult) -> list[Soup.Cookie]: ...
     def get_cookies(
         self,
         uri: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_cookies_finish(self, result: Gio.AsyncResult) -> list[Soup.Cookie]: ...
     def replace_cookies(
         self,
         cookies: list[Soup.Cookie],
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def replace_cookies_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -484,7 +484,7 @@ class Credential(GObject.GBoxed):
     @classmethod
     def new_for_certificate(
         cls,
-        certificate: Optional[Gio.TlsCertificate],
+        certificate: Gio.TlsCertificate | None,
         persistence: CredentialPersistence,
     ) -> Credential: ...
     @classmethod
@@ -534,7 +534,7 @@ class Download(GObject.Object):
 
     class Props:
         allow_overwrite: bool
-        destination: Optional[str]
+        destination: str | None
         estimated_progress: float
         response: URIResponse
 
@@ -542,7 +542,7 @@ class Download(GObject.Object):
     def __init__(self, allow_overwrite: bool = ...): ...
     def cancel(self) -> None: ...
     def get_allow_overwrite(self) -> bool: ...
-    def get_destination(self) -> Optional[str]: ...
+    def get_destination(self) -> str | None: ...
     def get_elapsed_time(self) -> float: ...
     def get_estimated_progress(self) -> float: ...
     def get_received_data_length(self) -> int: ...
@@ -623,8 +623,8 @@ class FaviconDatabase(GObject.Object):
     def get_favicon(
         self,
         page_uri: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_favicon_finish(self, result: Gio.AsyncResult) -> Gdk.Texture: ...
@@ -644,9 +644,9 @@ class FaviconDatabaseClass(GObject.GPointer):
 class Feature(GObject.GBoxed):
     def get_category(self) -> str: ...
     def get_default_value(self) -> bool: ...
-    def get_details(self) -> Optional[str]: ...
+    def get_details(self) -> str | None: ...
     def get_identifier(self) -> str: ...
-    def get_name(self) -> Optional[str]: ...
+    def get_name(self) -> str | None: ...
     def get_status(self) -> FeatureStatus: ...
     def ref(self) -> Feature: ...
     def unref(self) -> None: ...
@@ -1063,7 +1063,7 @@ class InputMethodUnderline(GObject.GBoxed):
     def free(self) -> None: ...
     @classmethod
     def new(cls, start_offset: int, end_offset: int) -> InputMethodUnderline: ...
-    def set_color(self, rgba: Optional[Gdk.RGBA] = None) -> None: ...
+    def set_color(self, rgba: Gdk.RGBA | None = None) -> None: ...
 
 class MediaKeySystemPermissionRequest(GObject.Object, PermissionRequest): ...
 
@@ -1105,7 +1105,7 @@ class MemoryPressureSettings(GObject.GBoxed):
 class NavigationAction(GObject.GBoxed):
     def copy(self) -> NavigationAction: ...
     def free(self) -> None: ...
-    def get_frame_name(self) -> Optional[str]: ...
+    def get_frame_name(self) -> str | None: ...
     def get_modifiers(self) -> int: ...
     def get_mouse_button(self) -> int: ...
     def get_navigation_type(self) -> NavigationType: ...
@@ -1162,8 +1162,8 @@ class NetworkProxySettings(GObject.GBoxed):
     @classmethod
     def new(
         cls,
-        default_proxy_uri: Optional[str] = None,
-        ignore_hosts: Optional[Sequence[str]] = None,
+        default_proxy_uri: str | None = None,
+        ignore_hosts: Sequence[str] | None = None,
     ) -> NetworkProxySettings: ...
 
 class NetworkSession(GObject.Object):
@@ -1212,8 +1212,8 @@ class NetworkSession(GObject.Object):
     def get_itp_enabled(self) -> bool: ...
     def get_itp_summary(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_itp_summary_finish(
@@ -1225,7 +1225,7 @@ class NetworkSession(GObject.Object):
     def is_ephemeral(self) -> bool: ...
     @classmethod
     def new(
-        cls, data_directory: Optional[str] = None, cache_directory: Optional[str] = None
+        cls, data_directory: str | None = None, cache_directory: str | None = None
     ) -> NetworkSession: ...
     @classmethod
     def new_ephemeral(cls) -> NetworkSession: ...
@@ -1237,7 +1237,7 @@ class NetworkSession(GObject.Object):
     def set_proxy_settings(
         self,
         proxy_mode: NetworkProxyMode,
-        proxy_settings: Optional[NetworkProxySettings] = None,
+        proxy_settings: NetworkProxySettings | None = None,
     ) -> None: ...
     def set_tls_errors_policy(self, policy: TLSErrorsPolicy) -> None: ...
 
@@ -1279,7 +1279,7 @@ class Notification(GObject.Object):
     class Props:
         body: str
         id: int
-        tag: Optional[str]
+        tag: str | None
         title: str
 
     props: Props = ...
@@ -1287,7 +1287,7 @@ class Notification(GObject.Object):
     def close(self) -> None: ...
     def get_body(self) -> str: ...
     def get_id(self) -> int: ...
-    def get_tag(self) -> Optional[str]: ...
+    def get_tag(self) -> str | None: ...
     def get_title(self) -> str: ...
 
 class NotificationClass(GObject.GPointer):
@@ -1487,7 +1487,7 @@ class PrintOperation(GObject.Object):
     def new(cls, web_view: WebView) -> PrintOperation: ...
     def print_(self) -> None: ...
     def run_dialog(
-        self, parent: Optional[Gtk.Window] = None
+        self, parent: Gtk.Window | None = None
     ) -> PrintOperationResponse: ...
     def set_page_setup(self, page_setup: Gtk.PageSetup) -> None: ...
     def set_print_settings(self, print_settings: Gtk.PrintSettings) -> None: ...
@@ -1606,15 +1606,15 @@ class SecurityOrigin(GObject.GBoxed):
         new_for_uri(uri:str) -> WebKit.SecurityOrigin
     """
 
-    def get_host(self) -> Optional[str]: ...
+    def get_host(self) -> str | None: ...
     def get_port(self) -> int: ...
-    def get_protocol(self) -> Optional[str]: ...
+    def get_protocol(self) -> str | None: ...
     @classmethod
     def new(cls, protocol: str, host: str, port: int) -> SecurityOrigin: ...
     @classmethod
     def new_for_uri(cls, uri: str) -> SecurityOrigin: ...
     def ref(self) -> SecurityOrigin: ...
-    def to_string(self) -> Optional[str]: ...
+    def to_string(self) -> str | None: ...
     def unref(self) -> None: ...
 
 class Settings(GObject.Object):
@@ -1848,7 +1848,7 @@ class Settings(GObject.Object):
         javascript_can_access_clipboard: bool = ...,
         javascript_can_open_windows_automatically: bool = ...,
         load_icons_ignoring_image_load_setting: bool = ...,
-        media_content_types_requiring_hardware_support: Optional[str] = ...,
+        media_content_types_requiring_hardware_support: str | None = ...,
         media_playback_allows_inline: bool = ...,
         media_playback_requires_user_gesture: bool = ...,
         minimum_font_size: int = ...,
@@ -1857,7 +1857,7 @@ class Settings(GObject.Object):
         print_backgrounds: bool = ...,
         sans_serif_font_family: str = ...,
         serif_font_family: str = ...,
-        user_agent: Optional[str] = ...,
+        user_agent: str | None = ...,
         zoom_text_only: bool = ...,
     ): ...
     @staticmethod
@@ -1976,7 +1976,7 @@ class Settings(GObject.Object):
     def set_javascript_can_open_windows_automatically(self, enabled: bool) -> None: ...
     def set_load_icons_ignoring_image_load_setting(self, enabled: bool) -> None: ...
     def set_media_content_types_requiring_hardware_support(
-        self, content_types: Optional[str] = None
+        self, content_types: str | None = None
     ) -> None: ...
     def set_media_playback_allows_inline(self, enabled: bool) -> None: ...
     def set_media_playback_requires_user_gesture(self, enabled: bool) -> None: ...
@@ -1986,11 +1986,11 @@ class Settings(GObject.Object):
     def set_print_backgrounds(self, print_backgrounds: bool) -> None: ...
     def set_sans_serif_font_family(self, sans_serif_font_family: str) -> None: ...
     def set_serif_font_family(self, serif_font_family: str) -> None: ...
-    def set_user_agent(self, user_agent: Optional[str] = None) -> None: ...
+    def set_user_agent(self, user_agent: str | None = None) -> None: ...
     def set_user_agent_with_application_details(
         self,
-        application_name: Optional[str] = None,
-        application_version: Optional[str] = None,
+        application_name: str | None = None,
+        application_version: str | None = None,
     ) -> None: ...
     def set_zoom_text_only(self, zoom_text_only: bool) -> None: ...
 
@@ -2113,7 +2113,7 @@ class URISchemeRequest(GObject.Object):
         self,
         stream: Gio.InputStream,
         stream_length: int,
-        content_type: Optional[str] = None,
+        content_type: str | None = None,
     ) -> None: ...
     def finish_error(self, error: GLib.Error) -> None: ...
     def finish_with_response(self, response: URISchemeResponse) -> None: ...
@@ -2168,7 +2168,7 @@ class URISchemeResponse(GObject.Object):
     def set_content_type(self, content_type: str) -> None: ...
     def set_http_headers(self, headers: Soup.MessageHeaders) -> None: ...
     def set_status(
-        self, status_code: int, reason_phrase: Optional[str] = None
+        self, status_code: int, reason_phrase: str | None = None
     ) -> None: ...
 
 class URISchemeResponseClass(GObject.GPointer):
@@ -2212,8 +2212,8 @@ class UserContentFilterStore(GObject.Object):
     def __init__(self, path: str = ...): ...
     def fetch_identifiers(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def fetch_identifiers_finish(self, result: Gio.AsyncResult) -> list[str]: ...
@@ -2221,8 +2221,8 @@ class UserContentFilterStore(GObject.Object):
     def load(
         self,
         identifier: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def load_finish(self, result: Gio.AsyncResult) -> UserContentFilter: ...
@@ -2231,8 +2231,8 @@ class UserContentFilterStore(GObject.Object):
     def remove(
         self,
         identifier: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def remove_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2240,8 +2240,8 @@ class UserContentFilterStore(GObject.Object):
         self,
         identifier: str,
         source: GLib.Bytes,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def save_finish(self, result: Gio.AsyncResult) -> UserContentFilter: ...
@@ -2249,8 +2249,8 @@ class UserContentFilterStore(GObject.Object):
         self,
         identifier: str,
         file: Gio.File,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def save_from_file_finish(self, result: Gio.AsyncResult) -> UserContentFilter: ...
@@ -2291,7 +2291,7 @@ class UserContentManager(GObject.Object):
     @classmethod
     def new(cls) -> UserContentManager: ...
     def register_script_message_handler(
-        self, name: str, world_name: Optional[str] = None
+        self, name: str, world_name: str | None = None
     ) -> bool: ...
     def register_script_message_handler_with_reply(
         self, name: str, world_name: str
@@ -2304,7 +2304,7 @@ class UserContentManager(GObject.Object):
     def remove_script(self, script: UserScript) -> None: ...
     def remove_style_sheet(self, stylesheet: UserStyleSheet) -> None: ...
     def unregister_script_message_handler(
-        self, name: str, world_name: Optional[str] = None
+        self, name: str, world_name: str | None = None
     ) -> None: ...
 
 class UserContentManagerClass(GObject.GPointer):
@@ -2375,9 +2375,9 @@ class UserMessage(GObject.InitiallyUnowned):
     """
 
     class Props:
-        fd_list: Optional[Gio.UnixFDList]
+        fd_list: Gio.UnixFDList | None
         name: str
-        parameters: Optional[GLib.Variant]
+        parameters: GLib.Variant | None
 
     props: Props = ...
     def __init__(
@@ -2386,19 +2386,17 @@ class UserMessage(GObject.InitiallyUnowned):
         name: str = ...,
         parameters: GLib.Variant = ...,
     ): ...
-    def get_fd_list(self) -> Optional[Gio.UnixFDList]: ...
+    def get_fd_list(self) -> Gio.UnixFDList | None: ...
     def get_name(self) -> str: ...
-    def get_parameters(self) -> Optional[GLib.Variant]: ...
+    def get_parameters(self) -> GLib.Variant | None: ...
     @classmethod
-    def new(
-        cls, name: str, parameters: Optional[GLib.Variant] = None
-    ) -> UserMessage: ...
+    def new(cls, name: str, parameters: GLib.Variant | None = None) -> UserMessage: ...
     @classmethod
     def new_with_fd_list(
         cls,
         name: str,
-        parameters: Optional[GLib.Variant] = None,
-        fd_list: Optional[Gio.UnixFDList] = None,
+        parameters: GLib.Variant | None = None,
+        fd_list: Gio.UnixFDList | None = None,
     ) -> UserMessage: ...
     def send_reply(self, reply: UserMessage) -> None: ...
 
@@ -2429,8 +2427,8 @@ class UserScript(GObject.GBoxed):
         source: str,
         injected_frames: UserContentInjectedFrames,
         injection_time: UserScriptInjectionTime,
-        allow_list: Optional[Sequence[str]] = None,
-        block_list: Optional[Sequence[str]] = None,
+        allow_list: Sequence[str] | None = None,
+        block_list: Sequence[str] | None = None,
     ) -> UserScript: ...
     @classmethod
     def new_for_world(
@@ -2439,8 +2437,8 @@ class UserScript(GObject.GBoxed):
         injected_frames: UserContentInjectedFrames,
         injection_time: UserScriptInjectionTime,
         world_name: str,
-        allow_list: Optional[Sequence[str]] = None,
-        block_list: Optional[Sequence[str]] = None,
+        allow_list: Sequence[str] | None = None,
+        block_list: Sequence[str] | None = None,
     ) -> UserScript: ...
     def ref(self) -> UserScript: ...
     def unref(self) -> None: ...
@@ -2461,8 +2459,8 @@ class UserStyleSheet(GObject.GBoxed):
         source: str,
         injected_frames: UserContentInjectedFrames,
         level: UserStyleLevel,
-        allow_list: Optional[Sequence[str]] = None,
-        block_list: Optional[Sequence[str]] = None,
+        allow_list: Sequence[str] | None = None,
+        block_list: Sequence[str] | None = None,
     ) -> UserStyleSheet: ...
     @classmethod
     def new_for_world(
@@ -2471,8 +2469,8 @@ class UserStyleSheet(GObject.GBoxed):
         injected_frames: UserContentInjectedFrames,
         level: UserStyleLevel,
         world_name: str,
-        allow_list: Optional[Sequence[str]] = None,
-        block_list: Optional[Sequence[str]] = None,
+        allow_list: Sequence[str] | None = None,
+        block_list: Sequence[str] | None = None,
     ) -> UserStyleSheet: ...
     def ref(self) -> UserStyleSheet: ...
     def unref(self) -> None: ...
@@ -2517,7 +2515,7 @@ class WebContext(GObject.Object):
     @staticmethod
     def get_default() -> WebContext: ...
     def get_geolocation_manager(self) -> GeolocationManager: ...
-    def get_network_session_for_automation(self) -> Optional[NetworkSession]: ...
+    def get_network_session_for_automation(self) -> NetworkSession | None: ...
     def get_security_manager(self) -> SecurityManager: ...
     def get_spell_checking_enabled(self) -> bool: ...
     def get_spell_checking_languages(self) -> list[str]: ...
@@ -2537,7 +2535,7 @@ class WebContext(GObject.Object):
     def set_automation_allowed(self, allowed: bool) -> None: ...
     def set_cache_model(self, cache_model: CacheModel) -> None: ...
     def set_preferred_languages(
-        self, languages: Optional[Sequence[str]] = None
+        self, languages: Sequence[str] | None = None
     ) -> None: ...
     def set_spell_checking_enabled(self, enabled: bool) -> None: ...
     def set_spell_checking_languages(self, languages: Sequence[str]) -> None: ...
@@ -2641,8 +2639,8 @@ class WebResource(GObject.Object):
     props: Props = ...
     def get_data(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_data_finish(self, result: Gio.AsyncResult) -> bytes: ...
@@ -2784,7 +2782,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     class Props:
         automation_presentation_type: AutomationBrowsingContextPresentation
         camera_capture_state: MediaCaptureState
-        default_content_security_policy: Optional[str]
+        default_content_security_policy: str | None
         display_capture_state: MediaCaptureState
         editable: bool
         estimated_load_progress: float
@@ -2808,7 +2806,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2818,7 +2816,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2826,13 +2824,13 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2867,7 +2865,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2875,7 +2873,7 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2885,8 +2883,8 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2898,11 +2896,11 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         body: str,
         length: int,
-        arguments: Optional[GLib.Variant] = None,
-        world_name: Optional[str] = None,
-        source_uri: Optional[str] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        arguments: GLib.Variant | None = None,
+        world_name: str | None = None,
+        source_uri: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_async_javascript_function_finish(
@@ -2911,8 +2909,8 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def can_execute_editing_command(
         self,
         command: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def can_execute_editing_command_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -2970,10 +2968,10 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         script: str,
         length: int,
-        world_name: Optional[str] = None,
-        source_uri: Optional[str] = None,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        world_name: str | None = None,
+        source_uri: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def evaluate_javascript_finish(
@@ -2991,13 +2989,13 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def get_camera_capture_state(self) -> MediaCaptureState: ...
     def get_context(self) -> WebContext: ...
     def get_custom_charset(self) -> str: ...
-    def get_default_content_security_policy(self) -> Optional[str]: ...
+    def get_default_content_security_policy(self) -> str | None: ...
     def get_display_capture_state(self) -> MediaCaptureState: ...
     def get_editor_state(self) -> EditorState: ...
     def get_estimated_load_progress(self) -> float: ...
     def get_favicon(self) -> Gdk.Texture: ...
     def get_find_controller(self) -> FindController: ...
-    def get_input_method_context(self) -> Optional[InputMethodContext]: ...
+    def get_input_method_context(self) -> InputMethodContext | None: ...
     def get_inspector(self) -> WebInspector: ...
     def get_is_muted(self) -> bool: ...
     def get_is_web_process_responsive(self) -> bool: ...
@@ -3011,8 +3009,8 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         region: SnapshotRegion,
         options: SnapshotOptions,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_snapshot_finish(self, result: Gio.AsyncResult) -> Gdk.Texture: ...
@@ -3034,16 +3032,16 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def is_loading(self) -> bool: ...
     def is_playing_audio(self) -> bool: ...
     def load_alternate_html(
-        self, content: str, content_uri: str, base_uri: Optional[str] = None
+        self, content: str, content_uri: str, base_uri: str | None = None
     ) -> None: ...
     def load_bytes(
         self,
         bytes: GLib.Bytes,
-        mime_type: Optional[str] = None,
-        encoding: Optional[str] = None,
-        base_uri: Optional[str] = None,
+        mime_type: str | None = None,
+        encoding: str | None = None,
+        base_uri: str | None = None,
     ) -> None: ...
-    def load_html(self, content: str, base_uri: Optional[str] = None) -> None: ...
+    def load_html(self, content: str, base_uri: str | None = None) -> None: ...
     def load_plain_text(self, plain_text: str) -> None: ...
     def load_request(self, request: URIRequest) -> None: ...
     def load_uri(self, uri: str) -> None: ...
@@ -3055,8 +3053,8 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def save(
         self,
         save_mode: SaveMode,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def save_finish(self, result: Gio.AsyncResult) -> Gio.InputStream: ...
@@ -3064,27 +3062,27 @@ class WebView(WebViewBase, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         file: Gio.File,
         save_mode: SaveMode,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def save_to_file_finish(self, result: Gio.AsyncResult) -> bool: ...
     def send_message_to_page(
         self,
         message: UserMessage,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def send_message_to_page_finish(self, result: Gio.AsyncResult) -> UserMessage: ...
     def set_background_color(self, rgba: Gdk.RGBA) -> None: ...
     def set_camera_capture_state(self, state: MediaCaptureState) -> None: ...
-    def set_cors_allowlist(self, allowlist: Optional[Sequence[str]] = None) -> None: ...
-    def set_custom_charset(self, charset: Optional[str] = None) -> None: ...
+    def set_cors_allowlist(self, allowlist: Sequence[str] | None = None) -> None: ...
+    def set_custom_charset(self, charset: str | None = None) -> None: ...
     def set_display_capture_state(self, state: MediaCaptureState) -> None: ...
     def set_editable(self, editable: bool) -> None: ...
     def set_input_method_context(
-        self, context: Optional[InputMethodContext] = None
+        self, context: InputMethodContext | None = None
     ) -> None: ...
     def set_is_muted(self, muted: bool) -> None: ...
     def set_microphone_capture_state(self, state: MediaCaptureState) -> None: ...
@@ -3164,7 +3162,7 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -3174,7 +3172,7 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -3182,13 +3180,13 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: Optional[str]
-        tooltip_text: Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -3205,7 +3203,7 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
         css_name: str = ...,
-        cursor: Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -3213,7 +3211,7 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -3223,8 +3221,8 @@ class WebViewBase(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: Optional[str] = ...,
-        tooltip_text: Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -3396,8 +3394,8 @@ class WebsiteDataManager(GObject.Object):
     """
 
     class Props:
-        base_cache_directory: Optional[str]
-        base_data_directory: Optional[str]
+        base_cache_directory: str | None
+        base_data_directory: str | None
         is_ephemeral: bool
         origin_storage_ratio: float
         total_storage_ratio: float
@@ -3415,27 +3413,27 @@ class WebsiteDataManager(GObject.Object):
         self,
         types: WebsiteDataTypes,
         timespan: int,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def clear_finish(self, result: Gio.AsyncResult) -> bool: ...
     def fetch(
         self,
         types: WebsiteDataTypes,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def fetch_finish(self, result: Gio.AsyncResult) -> list[WebsiteData]: ...
-    def get_base_cache_directory(self) -> Optional[str]: ...
-    def get_base_data_directory(self) -> Optional[str]: ...
-    def get_favicon_database(self) -> Optional[FaviconDatabase]: ...
+    def get_base_cache_directory(self) -> str | None: ...
+    def get_base_data_directory(self) -> str | None: ...
+    def get_favicon_database(self) -> FaviconDatabase | None: ...
     def get_favicons_enabled(self) -> bool: ...
     def get_itp_summary(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def get_itp_summary_finish(
@@ -3446,8 +3444,8 @@ class WebsiteDataManager(GObject.Object):
         self,
         types: WebsiteDataTypes,
         website_data: list[WebsiteData],
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def remove_finish(self, result: Gio.AsyncResult) -> bool: ...
