@@ -67,7 +67,7 @@ exclude = [
   ".venv",
 ]
 
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
@@ -83,3 +83,6 @@ ignore = [
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
   "PYI016",  # Duplicate union member `None`
 ]
+
+[tool.pyright]
+pythonVersion = "3.10"

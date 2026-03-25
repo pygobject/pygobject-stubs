@@ -1,9 +1,43 @@
-from typing import Optional
+from typing import cast
+from typing import TypeAlias
 
 import ast
 import re
+from dataclasses import dataclass
 
-ParseResult = dict[str, str]
+
+@dataclass(slots=True)
+class Import:
+    module: str
+    import_as: str | None = None
+
+    @property
+    def symbol(self) -> str:
+        return self.import_as or self.module
+
+    def __str__(self) -> str:
+        suffix = "" if self.import_as is None else f" as {self.import_as}"
+        return f"import {self.module}{suffix}"
+
+
+@dataclass(slots=True)
+class FromImport:
+    module: str
+    name: str
+    import_as: str | None = None
+
+    @property
+    def symbol(self) -> str:
+        return self.import_as or self.name
+
+    def __str__(self) -> str:
+        suffix = "" if self.import_as is None else f" as {self.import_as}"
+        return f"from {self.module} import {self.name}{suffix}"
+
+
+Overrides: TypeAlias = dict[str, str]
+Imports: TypeAlias = list[Import | FromImport]
+ParseResult: TypeAlias = tuple[Overrides, Imports]
 
 OVERRIDE_PATTERN = r"^.*#\s*override.*$"
 CLASS_PATTERN = r"^\s*class\s(?P<symbol>\w*)\s*(\(|:)"
@@ -27,7 +61,7 @@ def _search_overridden_symbols(input: str) -> list[str]:
     symbols: list[str] = []
     parents: list[str] = []
 
-    last_class: Optional[str] = None
+    last_class: str | None = None
     last_indentation_level: int = 0
 
     is_override: bool = False
@@ -99,7 +133,7 @@ def _generate_result_node(
     parents: list[str],
     node: OverridableSymbols,
     overridden_symbols: list[str],
-    result: ParseResult,
+    result: Overrides,
 ) -> None:
     parents = parents[:]
     if isinstance(node, ast.FunctionDef | ast.ClassDef):
@@ -151,17 +185,25 @@ def _generate_result_node(
 
 
 def _generate_result(root: ast.Module, overridden_symbols: list[str]) -> ParseResult:
-    result: ParseResult = {}
+    result: Overrides = {}
+    imports: Imports = []
     parents: list[str] = []
     body = root.body
 
     for child in body:
+        if isinstance(child, ast.Import):
+            imports.extend(Import(module.name, module.asname) for module in child.names)
+        if isinstance(child, ast.ImportFrom):
+            imports.extend(
+                FromImport(cast("str", child.module), alias.name, alias.asname)
+                for alias in child.names
+            )
         if not isinstance(child, OverridableSymbols):
             print(f"Skipped root.{child}")
             continue
         _generate_result_node(parents, child, overridden_symbols, result)
 
-    return result
+    return result, imports
 
 
 def parse(input: str) -> ParseResult:
