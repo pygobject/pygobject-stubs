@@ -31,7 +31,7 @@ _version: str = "1.0"
 
 def file_cache_error_quark() -> int: ...
 def get_user_agent() -> str: ...
-def set_user_agent(new_user_agent: typing.Optional[str] = None) -> None: ...
+def set_user_agent(new_user_agent: str | None = None) -> None: ...
 def style_error_quark() -> int: ...
 def tile_downloader_error_quark() -> int: ...
 
@@ -106,12 +106,12 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
 
     class Props:
-        viewport: typing.Optional[Viewport]
+        viewport: Viewport | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -121,7 +121,7 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -129,13 +129,13 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -146,12 +146,12 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     props: Props = ...
     def __init__(
         self,
-        viewport: typing.Optional[Viewport] = ...,
+        viewport: Viewport | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -159,7 +159,7 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -169,8 +169,8 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -178,10 +178,10 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
-    def get_viewport(self) -> typing.Optional[Viewport]: ...
+    def get_viewport(self) -> Viewport | None: ...
     @classmethod
-    def new(cls, viewport: typing.Optional[Viewport] = None) -> Compass: ...
-    def set_viewport(self, viewport: typing.Optional[Viewport] = None) -> None: ...
+    def new(cls, viewport: Viewport | None = None) -> Compass: ...
+    def set_viewport(self, viewport: Viewport | None = None) -> None: ...
 
 class CompassClass(GObject.GPointer):
     """
@@ -271,8 +271,8 @@ class DataSource(GObject.Object):
         x: int,
         y: int,
         zoom_level: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def do_get_tile_data_finish(self, result: Gio.AsyncResult) -> GLib.Bytes: ...
@@ -281,7 +281,7 @@ class DataSource(GObject.Object):
         x: int,
         y: int,
         zoom_level: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> DataSourceRequest: ...
     def get_max_zoom_level(self) -> int: ...
     def get_min_zoom_level(self) -> int: ...
@@ -290,8 +290,8 @@ class DataSource(GObject.Object):
         x: int,
         y: int,
         zoom_level: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_tile_data_finish(self, result: Gio.AsyncResult) -> GLib.Bytes: ...
@@ -302,7 +302,7 @@ class DataSource(GObject.Object):
         x: int,
         y: int,
         zoom_level: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> DataSourceRequest: ...
 
 class DataSourceClass(GObject.GPointer):
@@ -320,7 +320,7 @@ class DataSourceClass(GObject.GPointer):
         [DataSource, Gio.AsyncResult], GLib.Bytes
     ] = ...
     start_request: typing.Callable[
-        [DataSource, int, int, int, typing.Optional[Gio.Cancellable]], DataSourceRequest
+        [DataSource, int, int, int, Gio.Cancellable | None], DataSourceRequest
     ] = ...
     padding: list[None] = ...
 
@@ -355,8 +355,8 @@ class DataSourceRequest(GObject.Object):
 
     class Props:
         completed: bool
-        data: typing.Optional[GLib.Bytes]
-        error: typing.Optional[GLib.Error]
+        data: GLib.Bytes | None
+        error: GLib.Error | None
         x: int
         y: int
         zoom_level: int
@@ -367,8 +367,8 @@ class DataSourceRequest(GObject.Object):
     def complete(self) -> None: ...
     def emit_data(self, data: GLib.Bytes, complete: bool) -> None: ...
     def emit_error(self, error: GLib.Error) -> None: ...
-    def get_data(self) -> typing.Optional[GLib.Bytes]: ...
-    def get_error(self) -> typing.Optional[GLib.Error]: ...
+    def get_data(self) -> GLib.Bytes | None: ...
+    def get_error(self) -> GLib.Error | None: ...
     def get_x(self) -> int: ...
     def get_y(self) -> int: ...
     def get_zoom_level(self) -> int: ...
@@ -428,8 +428,8 @@ class FileCache(GObject.Object):
         x: int,
         y: int,
         zoom_level: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_tile_finish(
@@ -438,12 +438,12 @@ class FileCache(GObject.Object):
     def mark_up_to_date(self, x: int, y: int, zoom_level: int) -> None: ...
     @classmethod
     def new_full(
-        cls, size_limit: int, cache_key: str, cache_dir: typing.Optional[str] = None
+        cls, size_limit: int, cache_key: str, cache_dir: str | None = None
     ) -> FileCache: ...
     def purge_cache_async(
         self,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def purge_cache_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -454,9 +454,9 @@ class FileCache(GObject.Object):
         y: int,
         zoom_level: int,
         bytes: GLib.Bytes,
-        etag: typing.Optional[str] = None,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        etag: str | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def store_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -547,7 +547,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -557,7 +557,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -565,13 +565,13 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -588,7 +588,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -596,7 +596,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -606,8 +606,8 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -615,7 +615,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         width_request: int = ...,
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
-    def do_get_debug_text(self) -> typing.Optional[str]: ...
+    def do_get_debug_text(self) -> str | None: ...
     def get_viewport(self) -> Viewport: ...
 
 class LayerClass(GObject.GPointer):
@@ -628,7 +628,7 @@ class LayerClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    get_debug_text: typing.Callable[[Layer], typing.Optional[str]] = ...
+    get_debug_text: typing.Callable[[Layer], str | None] = ...
     padding: list[None] = ...
 
 class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
@@ -710,7 +710,7 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -720,7 +720,7 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -728,13 +728,13 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -751,7 +751,7 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -759,7 +759,7 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -769,8 +769,8 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -918,7 +918,7 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -928,7 +928,7 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -936,13 +936,13 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -960,7 +960,7 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -968,7 +968,7 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -978,8 +978,8 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1002,10 +1002,10 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self, latitude: float, longitude: float, zoom_level: float, duration_ms: int
     ) -> None: ...
     def insert_layer_above(
-        self, layer: Layer, next_sibling: typing.Optional[Layer] = None
+        self, layer: Layer, next_sibling: Layer | None = None
     ) -> None: ...
     def insert_layer_behind(
-        self, layer: Layer, next_sibling: typing.Optional[Layer] = None
+        self, layer: Layer, next_sibling: Layer | None = None
     ) -> None: ...
     @classmethod
     def new(cls) -> Map: ...
@@ -1115,7 +1115,7 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1125,7 +1125,7 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1133,13 +1133,13 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1156,7 +1156,7 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1164,7 +1164,7 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1174,8 +1174,8 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1255,16 +1255,16 @@ class MapSource(GObject.Object):
     def do_fill_tile_async(
         self,
         tile: Tile,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def do_fill_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
     def fill_tile_async(
         self,
         tile: Tile,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def fill_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
@@ -1329,7 +1329,7 @@ class MapSourceRegistry(GObject.Object, Gio.ListModel):
     """
 
     def add(self, map_source: MapSource) -> None: ...
-    def get_by_id(self, id: str) -> typing.Optional[MapSource]: ...
+    def get_by_id(self, id: str) -> MapSource | None: ...
     @classmethod
     def new(cls) -> MapSourceRegistry: ...
     @classmethod
@@ -1421,13 +1421,13 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
     """
 
     class Props:
-        child: typing.Optional[Gtk.Widget]
+        child: Gtk.Widget | None
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1437,7 +1437,7 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1445,13 +1445,13 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1465,13 +1465,13 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
     parent_instance: Gtk.Widget = ...
     def __init__(
         self,
-        child: typing.Optional[Gtk.Widget] = ...,
+        child: Gtk.Widget | None = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1479,7 +1479,7 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1489,8 +1489,8 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1504,13 +1504,13 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
     def animate_in_with_delay(self, delay: int) -> None: ...
     def animate_out(self) -> None: ...
     def animate_out_with_delay(self, delay: int) -> None: ...
-    def get_child(self) -> typing.Optional[Gtk.Widget]: ...
+    def get_child(self) -> Gtk.Widget | None: ...
     def get_draggable(self) -> bool: ...
     def get_selectable(self) -> bool: ...
     def is_selected(self) -> bool: ...
     @classmethod
     def new(cls) -> Marker: ...
-    def set_child(self, child: typing.Optional[Gtk.Widget] = None) -> None: ...
+    def set_child(self, child: Gtk.Widget | None = None) -> None: ...
     def set_draggable(self, value: bool) -> None: ...
     def set_selectable(self, value: bool) -> None: ...
 
@@ -1612,7 +1612,7 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1622,7 +1622,7 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1630,13 +1630,13 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1653,7 +1653,7 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1661,7 +1661,7 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1671,8 +1671,8 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1809,7 +1809,7 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -1819,7 +1819,7 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -1827,13 +1827,13 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -1846,18 +1846,18 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         closed: bool = ...,
         fill: bool = ...,
-        fill_color: typing.Optional[Gdk.RGBA] = ...,
-        outline_color: typing.Optional[Gdk.RGBA] = ...,
+        fill_color: Gdk.RGBA | None = ...,
+        outline_color: Gdk.RGBA | None = ...,
         outline_width: float = ...,
         stroke: bool = ...,
-        stroke_color: typing.Optional[Gdk.RGBA] = ...,
+        stroke_color: Gdk.RGBA | None = ...,
         stroke_width: float = ...,
         viewport: Viewport = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -1865,7 +1865,7 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -1875,8 +1875,8 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -1903,11 +1903,11 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def set_closed(self, value: bool) -> None: ...
     def set_dash(self, dash_pattern: list[int]) -> None: ...
     def set_fill(self, value: bool) -> None: ...
-    def set_fill_color(self, color: typing.Optional[Gdk.RGBA] = None) -> None: ...
-    def set_outline_color(self, color: typing.Optional[Gdk.RGBA] = None) -> None: ...
+    def set_fill_color(self, color: Gdk.RGBA | None = None) -> None: ...
+    def set_outline_color(self, color: Gdk.RGBA | None = None) -> None: ...
     def set_outline_width(self, value: float) -> None: ...
     def set_stroke(self, value: bool) -> None: ...
-    def set_stroke_color(self, color: typing.Optional[Gdk.RGBA] = None) -> None: ...
+    def set_stroke_color(self, color: Gdk.RGBA | None = None) -> None: ...
     def set_stroke_width(self, value: float) -> None: ...
 
 class PathLayerClass(GObject.GPointer):
@@ -1994,13 +1994,13 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
     """
 
     class Props:
-        child: typing.Optional[Gtk.Widget]
+        child: Gtk.Widget | None
         selectable: bool
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2010,7 +2010,7 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2018,13 +2018,13 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2037,13 +2037,13 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
     props: Props = ...
     def __init__(
         self,
-        child: typing.Optional[Gtk.Widget] = ...,
+        child: Gtk.Widget | None = ...,
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2051,7 +2051,7 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2061,8 +2061,8 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2269,12 +2269,12 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     class Props:
         max_width: int
         unit: Unit
-        viewport: typing.Optional[Viewport]
+        viewport: Viewport | None
         can_focus: bool
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2284,7 +2284,7 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2292,13 +2292,13 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2311,12 +2311,12 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         max_width: int = ...,
         unit: Unit = ...,
-        viewport: typing.Optional[Viewport] = ...,
+        viewport: Viewport | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2324,7 +2324,7 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2334,8 +2334,8 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2345,12 +2345,12 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     ) -> None: ...
     def get_max_width(self) -> int: ...
     def get_unit(self) -> Unit: ...
-    def get_viewport(self) -> typing.Optional[Viewport]: ...
+    def get_viewport(self) -> Viewport | None: ...
     @classmethod
-    def new(cls, viewport: typing.Optional[Viewport] = None) -> Scale: ...
+    def new(cls, viewport: Viewport | None = None) -> Scale: ...
     def set_max_width(self, value: int) -> None: ...
     def set_unit(self, unit: Unit) -> None: ...
-    def set_viewport(self, viewport: typing.Optional[Viewport] = None) -> None: ...
+    def set_viewport(self, viewport: Viewport | None = None) -> None: ...
 
 class ScaleClass(GObject.GPointer):
     """
@@ -2460,7 +2460,7 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         can_target: bool
         css_classes: list[str]
         css_name: str
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Gtk.Align
@@ -2470,7 +2470,7 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int
         hexpand: bool
         hexpand_set: bool
-        layout_manager: typing.Optional[Gtk.LayoutManager]
+        layout_manager: Gtk.LayoutManager | None
         margin_bottom: int
         margin_end: int
         margin_start: int
@@ -2478,13 +2478,13 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         name: str
         opacity: float
         overflow: Gtk.Overflow
-        parent: typing.Optional[Gtk.Widget]
+        parent: Gtk.Widget | None
         receives_default: bool
-        root: typing.Optional[Gtk.Root]
+        root: Gtk.Root | None
         scale_factor: int
         sensitive: bool
-        tooltip_markup: typing.Optional[str]
-        tooltip_text: typing.Optional[str]
+        tooltip_markup: str | None
+        tooltip_text: str | None
         valign: Gtk.Align
         vexpand: bool
         vexpand_set: bool
@@ -2495,13 +2495,13 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     props: Props = ...
     def __init__(
         self,
-        map_source: typing.Optional[MapSource] = ...,
+        map_source: MapSource | None = ...,
         show_zoom_buttons: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: typing.Sequence[str] = ...,
         css_name: str = ...,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
         focusable: bool = ...,
         halign: Gtk.Align = ...,
@@ -2509,7 +2509,7 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         height_request: int = ...,
         hexpand: bool = ...,
         hexpand_set: bool = ...,
-        layout_manager: typing.Optional[Gtk.LayoutManager] = ...,
+        layout_manager: Gtk.LayoutManager | None = ...,
         margin_bottom: int = ...,
         margin_end: int = ...,
         margin_start: int = ...,
@@ -2519,8 +2519,8 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         overflow: Gtk.Overflow = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        tooltip_markup: typing.Optional[str] = ...,
-        tooltip_text: typing.Optional[str] = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
         valign: Gtk.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
@@ -2540,7 +2540,7 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
     @classmethod
     def new(cls) -> SimpleMap: ...
     def remove_overlay_layer(self, layer: Layer) -> None: ...
-    def set_map_source(self, map_source: typing.Optional[MapSource] = None) -> None: ...
+    def set_map_source(self, map_source: MapSource | None = None) -> None: ...
     def set_show_zoom_buttons(self, show_zoom_buttons: bool) -> None: ...
 
 class SimpleMapClass(GObject.GPointer):
@@ -2638,7 +2638,7 @@ class Tile(GObject.Object):
 
     class Props:
         fade_in: bool
-        paintable: typing.Optional[Gdk.Paintable]
+        paintable: Gdk.Paintable | None
         scale_factor: float
         size: int
         state: State
@@ -2659,7 +2659,7 @@ class Tile(GObject.Object):
         zoom_level: int = ...,
     ) -> None: ...
     def get_fade_in(self) -> bool: ...
-    def get_paintable(self) -> typing.Optional[Gdk.Paintable]: ...
+    def get_paintable(self) -> Gdk.Paintable | None: ...
     def get_scale_factor(self) -> float: ...
     def get_size(self) -> int: ...
     def get_state(self) -> State: ...
@@ -2947,7 +2947,7 @@ class VectorSprite(GObject.Object, Gdk.Paintable, Gtk.SymbolicPaintable):
         height: int
         scale_factor: float
         source_paintable: Gdk.Paintable
-        source_rect: typing.Optional[Gdk.Rectangle]
+        source_rect: Gdk.Rectangle | None
         width: int
 
     props: Props = ...
@@ -2962,7 +2962,7 @@ class VectorSprite(GObject.Object, Gdk.Paintable, Gtk.SymbolicPaintable):
     def get_height(self) -> int: ...
     def get_scale_factor(self) -> float: ...
     def get_source_paintable(self) -> Gdk.Paintable: ...
-    def get_source_rect(self) -> typing.Optional[Gdk.Rectangle]: ...
+    def get_source_rect(self) -> Gdk.Rectangle | None: ...
     def get_width(self) -> int: ...
     @classmethod
     def new(cls, source_paintable: Gdk.Paintable) -> VectorSprite: ...
@@ -2973,7 +2973,7 @@ class VectorSprite(GObject.Object, Gdk.Paintable, Gtk.SymbolicPaintable):
         width: int,
         height: int,
         scale_factor: float,
-        source_rect: typing.Optional[Gdk.Rectangle] = None,
+        source_rect: Gdk.Rectangle | None = None,
     ) -> VectorSprite: ...
 
 class VectorSpriteClass(GObject.GPointer):
@@ -3006,14 +3006,12 @@ class VectorSpriteSheet(GObject.Object):
         self, texture: Gdk.Texture, json: str, default_scale: float
     ) -> bool: ...
     def add_sprite(self, name: str, sprite: VectorSprite) -> None: ...
-    def get_sprite(self, name: str, scale: float) -> typing.Optional[VectorSprite]: ...
+    def get_sprite(self, name: str, scale: float) -> VectorSprite | None: ...
     @classmethod
     def new(cls) -> VectorSpriteSheet: ...
     def set_fallback(
         self,
-        fallback: typing.Optional[
-            typing.Callable[..., typing.Optional[VectorSprite]]
-        ] = None,
+        fallback: typing.Callable[..., VectorSprite | None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
 
@@ -3058,7 +3056,7 @@ class Viewport(GObject.Object, Location):
     class Props:
         max_zoom_level: int
         min_zoom_level: int
-        reference_map_source: typing.Optional[MapSource]
+        reference_map_source: MapSource | None
         rotation: float
         zoom_level: float
         latitude: float
@@ -3069,7 +3067,7 @@ class Viewport(GObject.Object, Location):
         self,
         max_zoom_level: int = ...,
         min_zoom_level: int = ...,
-        reference_map_source: typing.Optional[MapSource] = ...,
+        reference_map_source: MapSource | None = ...,
         rotation: float = ...,
         zoom_level: float = ...,
         latitude: float = ...,
@@ -3077,7 +3075,7 @@ class Viewport(GObject.Object, Location):
     ) -> None: ...
     def get_max_zoom_level(self) -> int: ...
     def get_min_zoom_level(self) -> int: ...
-    def get_reference_map_source(self) -> typing.Optional[MapSource]: ...
+    def get_reference_map_source(self) -> MapSource | None: ...
     def get_rotation(self) -> float: ...
     def get_zoom_level(self) -> float: ...
     def location_to_widget_coords(
@@ -3087,9 +3085,7 @@ class Viewport(GObject.Object, Location):
     def new(cls) -> Viewport: ...
     def set_max_zoom_level(self, max_zoom_level: int) -> None: ...
     def set_min_zoom_level(self, min_zoom_level: int) -> None: ...
-    def set_reference_map_source(
-        self, map_source: typing.Optional[MapSource] = None
-    ) -> None: ...
+    def set_reference_map_source(self, map_source: MapSource | None = None) -> None: ...
     def set_rotation(self, rotation: float) -> None: ...
     def set_zoom_level(self, zoom_level: float) -> None: ...
     def widget_coords_to_location(

@@ -52,7 +52,7 @@ META_TAG_DSD_PLANE_OFFSETS_STR: str = "dsdplaneoffsets"
 
 def audio_buffer_clip(
     buffer: Gst.Buffer, segment: Gst.Segment, rate: int, bpf: int
-) -> typing.Optional[Gst.Buffer]: ...
+) -> Gst.Buffer | None: ...
 def audio_buffer_map(
     info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst.MapFlags
 ) -> typing.Tuple[bool, AudioBuffer]: ...
@@ -112,7 +112,7 @@ def audio_info_init() -> AudioInfo: ...
 def audio_level_meta_api_get_type() -> typing.Type[typing.Any]: ...
 def audio_level_meta_get_info() -> Gst.MetaInfo: ...
 def audio_make_raw_caps(
-    formats: typing.Optional[typing.Sequence[AudioFormat]], layout: AudioLayout
+    formats: typing.Sequence[AudioFormat] | None, layout: AudioLayout
 ) -> Gst.Caps: ...
 def audio_meta_api_get_type() -> typing.Type[typing.Any]: ...
 def audio_meta_get_info() -> Gst.MetaInfo: ...
@@ -152,25 +152,25 @@ def buffer_add_audio_downmix_meta(
 ) -> AudioDownmixMeta: ...
 def buffer_add_audio_level_meta(
     buffer: Gst.Buffer, level: int, voice_activity: bool
-) -> typing.Optional[AudioLevelMeta]: ...
+) -> AudioLevelMeta | None: ...
 def buffer_add_audio_meta(
     buffer: Gst.Buffer,
     info: AudioInfo,
     samples: int,
-    offsets: typing.Optional[int] = None,
+    offsets: int | None = None,
 ) -> AudioMeta: ...
 def buffer_add_dsd_plane_offset_meta(
     buffer: Gst.Buffer,
     num_channels: int,
     num_bytes_per_channel: int,
-    offsets: typing.Optional[int] = None,
+    offsets: int | None = None,
 ) -> DsdPlaneOffsetMeta: ...
 def buffer_get_audio_downmix_meta_for_channels(
     buffer: Gst.Buffer, to_position: typing.Sequence[AudioChannelPosition]
 ) -> AudioDownmixMeta: ...
 def buffer_get_audio_level_meta(
     buffer: Gst.Buffer,
-) -> typing.Optional[AudioLevelMeta]: ...
+) -> AudioLevelMeta | None: ...
 def dsd_convert(
     input_data: int,
     output_data: int,
@@ -263,8 +263,8 @@ class AudioAggregator(GstBase.Aggregator):
         min_upstream_latency: int
         start_time: int
         start_time_selection: GstBase.AggregatorStartTimeSelection
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     parent: GstBase.Aggregator = ...
@@ -284,7 +284,7 @@ class AudioAggregator(GstBase.Aggregator):
         min_upstream_latency: int = ...,
         start_time: int = ...,
         start_time_selection: GstBase.AggregatorStartTimeSelection = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def do_aggregate_one_buffer(
@@ -374,8 +374,8 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
         direction: Gst.PadDirection
         offset: int
         template: Gst.PadTemplate
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     parent: AudioAggregatorPad = ...
@@ -389,7 +389,7 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
         direction: Gst.PadDirection = ...,
         offset: int = ...,
         template: Gst.PadTemplate = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
 
@@ -460,8 +460,8 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
         direction: Gst.PadDirection
         offset: int
         template: Gst.PadTemplate
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     parent: GstBase.AggregatorPad = ...
@@ -475,7 +475,7 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
         direction: Gst.PadDirection = ...,
         offset: int = ...,
         template: Gst.PadTemplate = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def do_convert_buffer(
@@ -585,7 +585,7 @@ class AudioBaseSink(GstBase.BaseSink):
         slave_method: AudioBaseSinkSlaveMethod
         blocksize: int
         enable_last_sample: bool
-        last_sample: typing.Optional[Gst.Sample]
+        last_sample: Gst.Sample | None
         max_bitrate: int
         max_lateness: int
         processing_deadline: int
@@ -595,8 +595,8 @@ class AudioBaseSink(GstBase.BaseSink):
         sync: bool
         throttle_time: int
         ts_offset: int
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: GstBase.BaseSink = ...
@@ -628,11 +628,11 @@ class AudioBaseSink(GstBase.BaseSink):
         sync: bool = ...,
         throttle_time: int = ...,
         ts_offset: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
-    def create_ringbuffer(self) -> typing.Optional[AudioRingBuffer]: ...
-    def do_create_ringbuffer(self) -> typing.Optional[AudioRingBuffer]: ...
+    def create_ringbuffer(self) -> AudioRingBuffer | None: ...
+    def do_create_ringbuffer(self) -> AudioRingBuffer | None: ...
     def do_payload(self, buffer: Gst.Buffer) -> Gst.Buffer: ...
     def get_alignment_threshold(self) -> int: ...
     def get_discont_wait(self) -> int: ...
@@ -659,9 +659,7 @@ class AudioBaseSinkClass(GObject.GPointer):
     """
 
     parent_class: GstBase.BaseSinkClass = ...
-    create_ringbuffer: typing.Callable[
-        [AudioBaseSink], typing.Optional[AudioRingBuffer]
-    ] = ...
+    create_ringbuffer: typing.Callable[[AudioBaseSink], AudioRingBuffer | None] = ...
     payload: typing.Callable[[AudioBaseSink, Gst.Buffer], Gst.Buffer] = ...
 
 class AudioBaseSinkPrivate(GObject.GPointer): ...
@@ -731,8 +729,8 @@ class AudioBaseSrc(GstBase.PushSrc):
         do_timestamp: bool
         num_buffers: int
         typefind: bool
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: GstBase.PushSrc = ...
@@ -754,11 +752,11 @@ class AudioBaseSrc(GstBase.PushSrc):
         do_timestamp: bool = ...,
         num_buffers: int = ...,
         typefind: bool = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
-    def create_ringbuffer(self) -> typing.Optional[AudioRingBuffer]: ...
-    def do_create_ringbuffer(self) -> typing.Optional[AudioRingBuffer]: ...
+    def create_ringbuffer(self) -> AudioRingBuffer | None: ...
+    def do_create_ringbuffer(self) -> AudioRingBuffer | None: ...
     def get_provide_clock(self) -> bool: ...
     def get_slave_method(self) -> AudioBaseSrcSlaveMethod: ...
     def set_provide_clock(self, provide: bool) -> None: ...
@@ -774,9 +772,7 @@ class AudioBaseSrcClass(GObject.GPointer):
     """
 
     parent_class: GstBase.PushSrcClass = ...
-    create_ringbuffer: typing.Callable[
-        [AudioBaseSrc], typing.Optional[AudioRingBuffer]
-    ] = ...
+    create_ringbuffer: typing.Callable[[AudioBaseSrc], AudioRingBuffer | None] = ...
 
 class AudioBaseSrcPrivate(GObject.GPointer): ...
 
@@ -800,7 +796,7 @@ class AudioBuffer(GObject.GPointer):
     @staticmethod
     def clip(
         buffer: Gst.Buffer, segment: Gst.Segment, rate: int, bpf: int
-    ) -> typing.Optional[Gst.Buffer]: ...
+    ) -> Gst.Buffer | None: ...
     @staticmethod
     def map(
         info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst.MapFlags
@@ -874,8 +870,8 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
         do_timestamp: bool
         num_buffers: int
         typefind: bool
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     pushsrc: GstBase.PushSrc = ...
@@ -892,7 +888,7 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
         do_timestamp: bool = ...,
         num_buffers: int = ...,
         typefind: bool = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def add_track(self, track: AudioCdSrcTrack) -> bool: ...
@@ -995,8 +991,8 @@ class AudioClock(Gst.SystemClock):
         timeout: int
         window_size: int
         window_threshold: int
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     clock: Gst.SystemClock = ...
@@ -1012,7 +1008,7 @@ class AudioClock(Gst.SystemClock):
         timeout: int = ...,
         window_size: int = ...,
         window_threshold: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def adjust(self, time: int) -> int: ...
@@ -1049,7 +1045,7 @@ class AudioConverter(GObject.GBoxed):
         flags: AudioConverterFlags,
         in_info: AudioInfo,
         out_info: AudioInfo,
-        config: typing.Optional[Gst.Structure] = None,
+        config: Gst.Structure | None = None,
     ) -> Self: ...
     def convert(
         self, flags: AudioConverterFlags, in_: typing.Sequence[int]
@@ -1066,8 +1062,8 @@ class AudioConverter(GObject.GBoxed):
         flags: AudioConverterFlags,
         in_info: AudioInfo,
         out_info: AudioInfo,
-        config: typing.Optional[Gst.Structure] = None,
-    ) -> typing.Optional[AudioConverter]: ...
+        config: Gst.Structure | None = None,
+    ) -> AudioConverter | None: ...
     def reset(self) -> None: ...
     def samples(
         self,
@@ -1079,7 +1075,7 @@ class AudioConverter(GObject.GBoxed):
     ) -> bool: ...
     def supports_inplace(self) -> bool: ...
     def update_config(
-        self, in_rate: int, out_rate: int, config: typing.Optional[Gst.Structure] = None
+        self, in_rate: int, out_rate: int, config: Gst.Structure | None = None
     ) -> bool: ...
 
 class AudioDecoder(Gst.Element):
@@ -1124,8 +1120,8 @@ class AudioDecoder(Gst.Element):
         min_latency: int
         plc: bool
         tolerance: int
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: Gst.Element = ...
@@ -1142,7 +1138,7 @@ class AudioDecoder(Gst.Element):
         min_latency: int = ...,
         plc: bool = ...,
         tolerance: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def allocate_output_buffer(self, size: int) -> Gst.Buffer: ...
@@ -1168,12 +1164,8 @@ class AudioDecoder(Gst.Element):
     def do_transform_meta(
         self, outbuf: Gst.Buffer, meta: Gst.Meta, inbuf: Gst.Buffer
     ) -> bool: ...
-    def finish_frame(
-        self, buf: typing.Optional[Gst.Buffer], frames: int
-    ) -> Gst.FlowReturn: ...
-    def finish_subframe(
-        self, buf: typing.Optional[Gst.Buffer] = None
-    ) -> Gst.FlowReturn: ...
+    def finish_frame(self, buf: Gst.Buffer | None, frames: int) -> Gst.FlowReturn: ...
+    def finish_subframe(self, buf: Gst.Buffer | None = None) -> Gst.FlowReturn: ...
     def get_allocator(self) -> typing.Tuple[Gst.Allocator, Gst.AllocationParams]: ...
     def get_audio_info(self) -> AudioInfo: ...
     def get_delay(self) -> int: ...
@@ -1187,18 +1179,14 @@ class AudioDecoder(Gst.Element):
     def get_plc(self) -> bool: ...
     def get_plc_aware(self) -> int: ...
     def get_tolerance(self) -> int: ...
-    def merge_tags(
-        self, tags: typing.Optional[Gst.TagList], mode: Gst.TagMergeMode
-    ) -> None: ...
+    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self,
-        caps: typing.Optional[Gst.Caps] = None,
-        filter: typing.Optional[Gst.Caps] = None,
+        caps: Gst.Caps | None = None,
+        filter: Gst.Caps | None = None,
     ) -> Gst.Caps: ...
-    def set_allocation_caps(
-        self, allocation_caps: typing.Optional[Gst.Caps] = None
-    ) -> None: ...
+    def set_allocation_caps(self, allocation_caps: Gst.Caps | None = None) -> None: ...
     def set_drainable(self, enabled: bool) -> None: ...
     def set_estimate_rate(self, enabled: bool) -> None: ...
     def set_latency(self, min: int, max: int) -> None: ...
@@ -1307,8 +1295,8 @@ class AudioEncoder(Gst.Element, Gst.Preset):
         mark_granule: bool
         perfect_timestamp: bool
         tolerance: int
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: Gst.Element = ...
@@ -1324,7 +1312,7 @@ class AudioEncoder(Gst.Element, Gst.Preset):
         hard_resync: bool = ...,
         perfect_timestamp: bool = ...,
         tolerance: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def allocate_output_buffer(self, size: int) -> Gst.Buffer: ...
@@ -1348,7 +1336,7 @@ class AudioEncoder(Gst.Element, Gst.Preset):
         self, outbuf: Gst.Buffer, meta: Gst.Meta, inbuf: Gst.Buffer
     ) -> bool: ...
     def finish_frame(
-        self, buffer: typing.Optional[Gst.Buffer], samples: int
+        self, buffer: Gst.Buffer | None, samples: int
     ) -> Gst.FlowReturn: ...
     def get_allocator(self) -> typing.Tuple[Gst.Allocator, Gst.AllocationParams]: ...
     def get_audio_info(self) -> AudioInfo: ...
@@ -1363,18 +1351,14 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     def get_mark_granule(self) -> bool: ...
     def get_perfect_timestamp(self) -> bool: ...
     def get_tolerance(self) -> int: ...
-    def merge_tags(
-        self, tags: typing.Optional[Gst.TagList], mode: Gst.TagMergeMode
-    ) -> None: ...
+    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self,
-        caps: typing.Optional[Gst.Caps] = None,
-        filter: typing.Optional[Gst.Caps] = None,
+        caps: Gst.Caps | None = None,
+        filter: Gst.Caps | None = None,
     ) -> Gst.Caps: ...
-    def set_allocation_caps(
-        self, allocation_caps: typing.Optional[Gst.Caps] = None
-    ) -> None: ...
+    def set_allocation_caps(self, allocation_caps: Gst.Caps | None = None) -> None: ...
     def set_drainable(self, enabled: bool) -> None: ...
     def set_frame_max(self, num: int) -> None: ...
     def set_frame_samples_max(self, num: int) -> None: ...
@@ -1454,8 +1438,8 @@ class AudioFilter(GstBase.BaseTransform):
     """
     class Props(GstBase.BaseTransform.Props):
         qos: bool
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     basetransform: GstBase.BaseTransform = ...
@@ -1464,7 +1448,7 @@ class AudioFilter(GstBase.BaseTransform):
         self,
         *,
         qos: bool = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def add_pad_templates(self, allowed_caps: Gst.Caps) -> None: ...
@@ -1555,13 +1539,13 @@ class AudioInfo(GObject.GBoxed):
     @classmethod
     def new(cls) -> AudioInfo: ...
     @classmethod
-    def new_from_caps(cls, caps: Gst.Caps) -> typing.Optional[AudioInfo]: ...
+    def new_from_caps(cls, caps: Gst.Caps) -> AudioInfo | None: ...
     def set_format(
         self,
         format: AudioFormat,
         rate: int,
         channels: int,
-        position: typing.Optional[typing.Sequence[AudioChannelPosition]] = None,
+        position: typing.Sequence[AudioChannelPosition] | None = None,
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 
@@ -1654,8 +1638,8 @@ class AudioRingBuffer(Gst.Object):
       notify (GParam)
     """
     class Props(Gst.Object.Props):
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     object: Gst.Object = ...
@@ -1681,9 +1665,7 @@ class AudioRingBuffer(Gst.Object):
     active: bool = ...
     cb_data_notify: typing.Callable[[None], None] = ...
     priv: AudioRingBufferPrivate = ...
-    def __init__(
-        self, *, name: typing.Optional[str] = ..., parent: Gst.Object = ...
-    ) -> None: ...
+    def __init__(self, *, name: str | None = ..., parent: Gst.Object = ...) -> None: ...
     def acquire(self, spec: AudioRingBufferSpec) -> bool: ...
     def activate(self, active: bool) -> bool: ...
     def advance(self, advance: int) -> None: ...
@@ -1733,7 +1715,7 @@ class AudioRingBuffer(Gst.Object):
     def samples_done(self) -> int: ...
     def set_callback(
         self,
-        cb: typing.Optional[typing.Callable[..., None]] = None,
+        cb: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_channel_positions(
@@ -1876,7 +1858,7 @@ class AudioSink(AudioBaseSink):
         slave_method: AudioBaseSinkSlaveMethod
         blocksize: int
         enable_last_sample: bool
-        last_sample: typing.Optional[Gst.Sample]
+        last_sample: Gst.Sample | None
         max_bitrate: int
         max_lateness: int
         processing_deadline: int
@@ -1886,8 +1868,8 @@ class AudioSink(AudioBaseSink):
         sync: bool
         throttle_time: int
         ts_offset: int
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: AudioBaseSink = ...
@@ -1913,7 +1895,7 @@ class AudioSink(AudioBaseSink):
         sync: bool = ...,
         throttle_time: int = ...,
         ts_offset: int = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def do_close(self) -> bool: ...
@@ -2025,8 +2007,8 @@ class AudioSrc(AudioBaseSrc):
         do_timestamp: bool
         num_buffers: int
         typefind: bool
-        name: typing.Optional[str]
-        parent: typing.Optional[Gst.Object]
+        name: str | None
+        parent: Gst.Object | None
 
     props: Props = ...
     element: AudioBaseSrc = ...
@@ -2043,7 +2025,7 @@ class AudioSrc(AudioBaseSrc):
         do_timestamp: bool = ...,
         num_buffers: int = ...,
         typefind: bool = ...,
-        name: typing.Optional[str] = ...,
+        name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
     def do_close(self) -> bool: ...
@@ -2141,7 +2123,7 @@ class DsdInfo(GObject.GBoxed):
         format: DsdFormat,
         rate: int,
         channels: int,
-        positions: typing.Optional[typing.Sequence[AudioChannelPosition]] = None,
+        positions: typing.Sequence[AudioChannelPosition] | None = None,
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 

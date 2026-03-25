@@ -26,22 +26,20 @@ def manager_override_properties(
 class Client(GObject.Object):
     def call_start(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_start_finish(self, res: Gio.AsyncResult) -> bool: ...
-    def call_start_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
-    ) -> bool: ...
+    def call_start_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def call_stop(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_stop_finish(self, res: Gio.AsyncResult) -> bool: ...
-    def call_stop_sync(self, cancellable: Optional[Gio.Cancellable] = None) -> bool: ...
+    def call_stop_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def complete_start(self, invocation: Gio.DBusMethodInvocation) -> None: ...
     def complete_stop(self, invocation: Gio.DBusMethodInvocation) -> None: ...
     def emit_location_updated(self, arg_old: str, arg_new: str) -> None: ...
@@ -57,9 +55,9 @@ class ClientIface(GObject.GPointer):
     handle_start: Callable[[Client, Gio.DBusMethodInvocation], bool] = ...
     handle_stop: Callable[[Client, Gio.DBusMethodInvocation], bool] = ...
     get_active: Callable[[Client], bool] = ...
-    get_desktop_id: Callable[[Client], Optional[str]] = ...
+    get_desktop_id: Callable[[Client], str | None] = ...
     get_distance_threshold: Callable[[Client], int] = ...
-    get_location: Callable[[Client], Optional[str]] = ...
+    get_location: Callable[[Client], str | None] = ...
     get_requested_accuracy_level: Callable[[Client], int] = ...
     get_time_threshold: Callable[[Client], int] = ...
     location_updated: Callable[[Client, str, str], None] = ...
@@ -108,8 +106,8 @@ class ClientProxy(
     def create(
         desktop_id: str,
         accuracy_level: AccuracyLevel,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @staticmethod
@@ -119,8 +117,8 @@ class ClientProxy(
         desktop_id: str,
         accuracy_level: AccuracyLevel,
         flags: ClientProxyCreateFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @staticmethod
@@ -130,22 +128,22 @@ class ClientProxy(
         desktop_id: str,
         accuracy_level: AccuracyLevel,
         flags: ClientProxyCreateFlags,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ClientProxy: ...
     @staticmethod
     def create_sync(
         desktop_id: str,
         accuracy_level: AccuracyLevel,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ClientProxy: ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -156,8 +154,8 @@ class ClientProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -169,16 +167,16 @@ class ClientProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ClientProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ClientProxy: ...
 
 class ClientProxyClass(GObject.GPointer):
@@ -229,12 +227,12 @@ class LocationIface(GObject.GPointer):
     parent_iface: GObject.TypeInterface = ...
     get_accuracy: Callable[[Location], float] = ...
     get_altitude: Callable[[Location], float] = ...
-    get_description: Callable[[Location], Optional[str]] = ...
+    get_description: Callable[[Location], str | None] = ...
     get_heading: Callable[[Location], float] = ...
     get_latitude: Callable[[Location], float] = ...
     get_longitude: Callable[[Location], float] = ...
     get_speed: Callable[[Location], float] = ...
-    get_timestamp: Callable[[Location], Optional[GLib.Variant]] = ...
+    get_timestamp: Callable[[Location], GLib.Variant | None] = ...
 
 class LocationProxy(
     Gio.DBusProxy, Location, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
@@ -284,10 +282,10 @@ class LocationProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -298,8 +296,8 @@ class LocationProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -311,16 +309,16 @@ class LocationProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> LocationProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> LocationProxy: ...
 
 class LocationProxyClass(GObject.GPointer):
@@ -367,44 +365,44 @@ class Manager(GObject.Object):
     def call_add_agent(
         self,
         arg_id: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_add_agent_finish(self, res: Gio.AsyncResult) -> bool: ...
     def call_add_agent_sync(
-        self, arg_id: str, cancellable: Optional[Gio.Cancellable] = None
+        self, arg_id: str, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     def call_create_client(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_create_client_finish(self, res: Gio.AsyncResult) -> Tuple[bool, str]: ...
     def call_create_client_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, str]: ...
     def call_delete_client(
         self,
         arg_client: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_delete_client_finish(self, res: Gio.AsyncResult) -> bool: ...
     def call_delete_client_sync(
-        self, arg_client: str, cancellable: Optional[Gio.Cancellable] = None
+        self, arg_client: str, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
     def call_get_client(
         self,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     def call_get_client_finish(self, res: Gio.AsyncResult) -> Tuple[bool, str]: ...
     def call_get_client_sync(
-        self, cancellable: Optional[Gio.Cancellable] = None
+        self, cancellable: Gio.Cancellable | None = None
     ) -> Tuple[bool, str]: ...
     def complete_add_agent(self, invocation: Gio.DBusMethodInvocation) -> None: ...
     def complete_create_client(
@@ -466,10 +464,10 @@ class ManagerProxy(
     def new(
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -480,8 +478,8 @@ class ManagerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -493,16 +491,16 @@ class ManagerProxy(
         flags: Gio.DBusProxyFlags,
         name: str,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ManagerProxy: ...
     @classmethod
     def new_sync(
         cls,
         connection: Gio.DBusConnection,
         flags: Gio.DBusProxyFlags,
-        name: Optional[str],
+        name: str | None,
         object_path: str,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> ManagerProxy: ...
 
 class ManagerProxyClass(GObject.GPointer):
@@ -553,14 +551,14 @@ class Simple(GObject.Object, Gio.AsyncInitable):
     parent: GObject.Object = ...
     priv: SimplePrivate = ...
     # override
-    def get_client(self) -> Optional[ClientProxy]: ...
+    def get_client(self) -> ClientProxy | None: ...
     def get_location(self) -> Location: ...
     @staticmethod
     def new(
         desktop_id: str,
         accuracy_level: AccuracyLevel,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -570,7 +568,7 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         cls,
         desktop_id: str,
         accuracy_level: AccuracyLevel,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Simple: ...
     @staticmethod
     def new_with_thresholds(
@@ -578,8 +576,8 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         accuracy_level: AccuracyLevel,
         time_threshold: int,
         distance_threshold: int,
-        cancellable: Optional[Gio.Cancellable] = None,
-        callback: Optional[Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: Callable[..., None] | None = None,
         *user_data: Any,
     ) -> None: ...
     @classmethod
@@ -591,7 +589,7 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         accuracy_level: AccuracyLevel,
         time_threshold: int,
         distance_threshold: int,
-        cancellable: Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Simple: ...
 
 class SimpleClass(GObject.GPointer):

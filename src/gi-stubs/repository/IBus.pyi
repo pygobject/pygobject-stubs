@@ -4430,8 +4430,8 @@ class Bus(Object):
         self,
         rule: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def add_match_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4440,8 +4440,8 @@ class Bus(Object):
         self,
         client_name: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def create_input_context_async_finish(
@@ -4451,8 +4451,8 @@ class Bus(Object):
     def current_input_context_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def current_input_context_async_finish(self, res: Gio.AsyncResult) -> str: ...
@@ -4461,8 +4461,8 @@ class Bus(Object):
         self,
         restart: bool,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def exit_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4473,8 +4473,8 @@ class Bus(Object):
     def get_global_engine_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_global_engine_async_finish(self, res: Gio.AsyncResult) -> EngineDesc: ...
@@ -4483,8 +4483,8 @@ class Bus(Object):
         self,
         property_name: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_ibus_property_async_finish(self, res: Gio.AsyncResult) -> GLib.Variant: ...
@@ -4493,8 +4493,8 @@ class Bus(Object):
         self,
         name: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_name_owner_async_finish(self, res: Gio.AsyncResult) -> str: ...
@@ -4503,8 +4503,8 @@ class Bus(Object):
     def get_use_global_engine_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_use_global_engine_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4512,8 +4512,8 @@ class Bus(Object):
     def get_use_sys_layout_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_use_sys_layout_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4523,8 +4523,8 @@ class Bus(Object):
     def is_global_engine_enabled_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def is_global_engine_enabled_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4532,8 +4532,8 @@ class Bus(Object):
     def list_active_engines_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def list_active_engines_async_finish(
@@ -4543,8 +4543,8 @@ class Bus(Object):
     def list_engines_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def list_engines_async_finish(self, res: Gio.AsyncResult) -> list[EngineDesc]: ...
@@ -4555,8 +4555,8 @@ class Bus(Object):
         self,
         name: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def name_has_owner_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4571,8 +4571,8 @@ class Bus(Object):
         self,
         names: typing.Sequence[str],
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def preload_engines_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4581,8 +4581,8 @@ class Bus(Object):
         self,
         component: Component,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def register_component_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4591,8 +4591,8 @@ class Bus(Object):
         self,
         name: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def release_name_async_finish(self, res: Gio.AsyncResult) -> int: ...
@@ -4601,8 +4601,8 @@ class Bus(Object):
         self,
         rule: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def remove_match_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4612,8 +4612,8 @@ class Bus(Object):
         name: str,
         flags: int,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def request_name_async_finish(self, res: Gio.AsyncResult) -> int: ...
@@ -4622,8 +4622,8 @@ class Bus(Object):
         self,
         global_engine: str,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_global_engine_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4635,8 +4635,8 @@ class Bus(Object):
         gtype: BusGlobalBindingType,
         keys: typing.Sequence[ProcessKeyEventData],
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_global_shortcut_keys_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4646,8 +4646,8 @@ class Bus(Object):
         property_name: str,
         value: GLib.Variant,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_ibus_property_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -4843,8 +4843,8 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         section: str,
         name: str,
         timeout_ms: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_value_async_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
@@ -4853,8 +4853,8 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         self,
         section: str,
         timeout_ms: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_values_async_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
@@ -4862,13 +4862,13 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
     def new(
         cls,
         connection: Gio.DBusConnection,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> Config: ...
     @staticmethod
     def new_async(
         connection: Gio.DBusConnection,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     @classmethod
@@ -4880,18 +4880,14 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         name: str,
         value: GLib.Variant,
         timeout_ms: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def set_value_async_finish(self, result: Gio.AsyncResult) -> bool: ...
     def unset(self, section: str, name: str) -> bool: ...
-    def unwatch(
-        self, section: typing.Optional[str] = None, name: typing.Optional[str] = None
-    ) -> bool: ...
-    def watch(
-        self, section: typing.Optional[str] = None, name: typing.Optional[str] = None
-    ) -> bool: ...
+    def unwatch(self, section: str | None = None, name: str | None = None) -> bool: ...
+    def watch(self, section: str | None = None, name: str | None = None) -> bool: ...
 
 class ConfigClass(GObject.GPointer):
     """
@@ -5428,7 +5424,7 @@ class EngineSimple(Engine):
     def add_table(
         self, data: typing.Sequence[int], max_seq_len: int, n_seqs: int
     ) -> None: ...
-    def add_table_by_locale(self, locale: typing.Optional[str] = None) -> bool: ...
+    def add_table_by_locale(self, locale: str | None = None) -> bool: ...
 
 class EngineSimpleClass(GObject.GPointer):
     """
@@ -5710,8 +5706,8 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
     def get_engine_async(
         self,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def get_engine_async_finish(self, res: Gio.AsyncResult) -> EngineDesc: ...
@@ -5723,8 +5719,8 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
     def get_input_context_async(
         path: str,
         connection: Gio.DBusConnection,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     @staticmethod
@@ -5735,14 +5731,14 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         cls,
         path: str,
         connection: Gio.DBusConnection,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
+        cancellable: Gio.Cancellable | None = None,
     ) -> InputContext: ...
     @staticmethod
     def new_async(
         path: str,
         connection: Gio.DBusConnection,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     @classmethod
@@ -5758,8 +5754,8 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         keycode: int,
         state: int,
         timeout_msec: int,
-        cancellable: typing.Optional[Gio.Cancellable] = None,
-        callback: typing.Optional[typing.Callable[..., None]] = None,
+        cancellable: Gio.Cancellable | None = None,
+        callback: typing.Callable[..., None] | None = None,
         *user_data: typing.Any,
     ) -> None: ...
     def process_key_event_async_finish(self, res: Gio.AsyncResult) -> bool: ...
@@ -6284,12 +6280,12 @@ class Property(Serializable):
         key: str,
         type: PropType,
         label: Text,
-        icon: typing.Optional[str],
+        icon: str | None,
         tooltip: Text,
         sensitive: bool,
         visible: bool,
         state: PropState,
-        prop_list: typing.Optional[PropList] = None,
+        prop_list: PropList | None = None,
     ) -> Property: ...
     def set_icon(self, icon: str) -> None: ...
     def set_label(self, label: Text) -> None: ...
@@ -6544,7 +6540,7 @@ class Service(Object):
         object_path: str,
         interface_name: str,
         property_name: str,
-    ) -> typing.Optional[GLib.Variant]: ...
+    ) -> GLib.Variant | None: ...
     def do_service_method_call(
         self,
         connection: Gio.DBusConnection,
@@ -6603,7 +6599,7 @@ class ServiceClass(GObject.GPointer):
         None,
     ] = ...
     service_get_property: typing.Callable[
-        [Service, Gio.DBusConnection, str, str, str, str], typing.Optional[GLib.Variant]
+        [Service, Gio.DBusConnection, str, str, str, str], GLib.Variant | None
     ] = ...
     service_set_property: typing.Callable[
         [Service, Gio.DBusConnection, str, str, str, str, GLib.Variant], bool
@@ -6763,14 +6759,12 @@ class UnicodeData(Serializable):
     def get_code(self) -> str: ...
     def get_name(self) -> str: ...
     @staticmethod
-    def load(
-        path: str, object: typing.Optional[GObject.Object] = None
-    ) -> list[UnicodeData]: ...
+    def load(path: str, object: GObject.Object | None = None) -> list[UnicodeData]: ...
     @staticmethod
     def load_async(
         path: str,
-        object: typing.Optional[GObject.Object],
-        cancellable: typing.Optional[Gio.Cancellable],
+        object: GObject.Object | None,
+        cancellable: Gio.Cancellable | None,
         callback: typing.Callable[..., None],
         *user_data: typing.Any,
     ) -> None: ...

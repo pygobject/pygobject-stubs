@@ -15,14 +15,14 @@ _version: str = "4.0"
 def x11_device_get_id(device: X11DeviceXI2) -> int: ...
 def x11_device_manager_lookup(
     device_manager: X11DeviceManagerXI2, device_id: int
-) -> typing.Optional[X11DeviceXI2]: ...
+) -> X11DeviceXI2 | None: ...
 def x11_free_compound_text(ctext: int) -> None: ...
 def x11_free_text_list(list: str) -> None: ...
 def x11_get_server_time(surface: X11Surface) -> int: ...
 def x11_get_xatom_by_name_for_display(display: X11Display, atom_name: str) -> int: ...
 def x11_get_xatom_name_for_display(display: X11Display, xatom: int) -> str: ...
 def x11_lookup_xdisplay(xdisplay: xlib.Display) -> X11Display: ...
-def x11_set_sm_client_id(sm_client_id: typing.Optional[str] = None) -> None: ...
+def x11_set_sm_client_id(sm_client_id: str | None = None) -> None: ...
 
 class X11AppLaunchContext(Gdk.AppLaunchContext):
     """
@@ -137,18 +137,18 @@ class X11DeviceXI2(Gdk.Device):
         display: Gdk.Display
         has_bidi_layouts: bool
         has_cursor: bool
-        layout_names: typing.Optional[list[str]]
+        layout_names: list[str] | None
         modifier_state: Gdk.ModifierType
         n_axes: int
         name: str
         num_lock_state: bool
         num_touches: int
-        product_id: typing.Optional[str]
+        product_id: str | None
         scroll_lock_state: bool
         seat: Gdk.Seat
         source: Gdk.InputSource
-        tool: typing.Optional[Gdk.DeviceTool]
-        vendor_id: typing.Optional[str]
+        tool: Gdk.DeviceTool | None
+        vendor_id: str | None
 
     props: Props = ...
     def __init__(
@@ -222,9 +222,9 @@ class X11Display(Gdk.Display):
     def grab(self) -> None: ...
     @staticmethod
     def open(
-        display_name: typing.Optional[str] = None,
-    ) -> typing.Optional[Gdk.Display]: ...
-    def set_cursor_theme(self, theme: typing.Optional[str], size: int) -> None: ...
+        display_name: str | None = None,
+    ) -> Gdk.Display | None: ...
+    def set_cursor_theme(self, theme: str | None, size: int) -> None: ...
     @staticmethod
     def set_program_class(display: Gdk.Display, program_class: str) -> None: ...
     def set_startup_notification_id(self, startup_id: str) -> None: ...
@@ -316,9 +316,9 @@ class X11GLContext(Gdk.GLContext):
     class Props(Gdk.GLContext.Props):
         allowed_apis: Gdk.GLAPI
         api: Gdk.GLAPI
-        shared_context: typing.Optional[Gdk.GLContext]
-        display: typing.Optional[Gdk.Display]
-        surface: typing.Optional[Gdk.Surface]
+        shared_context: Gdk.GLContext | None
+        display: Gdk.Display | None
+        surface: Gdk.Surface | None
 
     props: Props = ...
     def __init__(
@@ -363,13 +363,13 @@ class X11Monitor(Gdk.Monitor):
       notify (GParam)
     """
     class Props(Gdk.Monitor.Props):
-        connector: typing.Optional[str]
-        description: typing.Optional[str]
+        connector: str | None
+        description: str | None
         display: Gdk.Display
         geometry: Gdk.Rectangle
         height_mm: int
-        manufacturer: typing.Optional[str]
-        model: typing.Optional[str]
+        manufacturer: str | None
+        model: str | None
         refresh_rate: int
         scale: float
         scale_factor: int
@@ -441,7 +441,7 @@ class X11Surface(Gdk.Surface):
       notify (GParam)
     """
     class Props(Gdk.Surface.Props):
-        cursor: typing.Optional[Gdk.Cursor]
+        cursor: Gdk.Cursor | None
         display: Gdk.Display
         frame_clock: Gdk.FrameClock
         height: int
@@ -453,12 +453,12 @@ class X11Surface(Gdk.Surface):
     props: Props = ...
     def __init__(
         self,
-        cursor: typing.Optional[Gdk.Cursor] = ...,
+        cursor: Gdk.Cursor | None = ...,
         display: Gdk.Display = ...,
         frame_clock: Gdk.FrameClock = ...,
     ) -> None: ...
     def get_desktop(self) -> int: ...
-    def get_group(self) -> typing.Optional[Gdk.Surface]: ...
+    def get_group(self) -> Gdk.Surface | None: ...
     def get_xid(self) -> int: ...
     @staticmethod
     def lookup_for_display(display: X11Display, window: int) -> X11Surface: ...
@@ -471,9 +471,7 @@ class X11Surface(Gdk.Surface):
     def set_theme_variant(self, variant: str) -> None: ...
     def set_urgency_hint(self, urgent: bool) -> None: ...
     def set_user_time(self, timestamp: int) -> None: ...
-    def set_utf8_property(
-        self, name: str, value: typing.Optional[str] = None
-    ) -> None: ...
+    def set_utf8_property(self, name: str, value: str | None = None) -> None: ...
 
 class X11SurfaceClass(GObject.GPointer): ...
 

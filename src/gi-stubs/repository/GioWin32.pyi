@@ -10,7 +10,7 @@ _namespace: str = "GioWin32"
 _version: str = "2.0"
 
 def registry_settings_backend_new(
-    registry_key: typing.Optional[str] = None,
+    registry_key: str | None = None,
 ) -> Gio.SettingsBackend: ...
 
 class InputStream(Gio.InputStream):

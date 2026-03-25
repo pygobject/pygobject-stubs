@@ -52,7 +52,7 @@ DEFAULT_STUB_CONFIG = [
 
 
 def _get_settings_stub_config(
-    config_settings: Optional[dict[str, str]],
+    config_settings: dict[str, str] | None,
 ) -> list[LibVersion]:
     libs = []
     if config_settings is None:
@@ -109,8 +109,8 @@ def prepare_metadata_for_build_editable(
 
 def build_editable(
     wheel_directory: str,
-    config_settings: Optional[dict[str, str]] = None,
-    metadata_directory: Optional[str] = None,
+    config_settings: dict[str, str] | None = None,
+    metadata_directory: str | None = None,
 ) -> str:
     return _orig.build_editable(wheel_directory, config_settings, metadata_directory)
 
@@ -133,8 +133,8 @@ def prepare_metadata_for_build_wheel(*args: Any, **kwargs: Any) -> str:
 
 def build_wheel(
     wheel_directory: str,
-    config_settings: Optional[dict[str, str]] = None,
-    metadata_directory: Optional[str] = None,
+    config_settings: dict[str, str] | None = None,
+    metadata_directory: str | None = None,
 ) -> str:
     stub_config = _get_settings_stub_config(config_settings)
     if not stub_config:
