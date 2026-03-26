@@ -1,8 +1,8 @@
 from typing import Any
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
+from enum import IntEnum
 
 from gi.repository import Gio
 from gi.repository import GObject
@@ -97,7 +97,7 @@ class Context(GObject.Object, Gio.Initable):
 
 class ContextClass(GObject.GPointer): ...
 
-class Error(GObject.GEnum):
+class Error(IntEnum):
     ACCESS = -13
     CANCELED = -11
     CORRUPT = -7

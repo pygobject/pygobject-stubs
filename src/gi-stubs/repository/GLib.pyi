@@ -5,6 +5,8 @@ from typing_extensions import Self
 from collections.abc import Callable
 from collections.abc import Iterable
 from collections.abc import Sequence as _Sequence
+from enum import IntEnum
+from enum import IntFlag
 
 from gi.repository import GObject
 
@@ -3969,7 +3971,7 @@ class VariantType(GObject.GBoxed):
     def string_scan(string: str, limit: str | None = None) -> tuple[bool, str]: ...
     def value(self) -> VariantType: ...
 
-class AsciiType(GObject.GFlags):
+class AsciiType(IntFlag):
     ALNUM = 1
     ALPHA = 2
     CNTRL = 4
@@ -3982,20 +3984,20 @@ class AsciiType(GObject.GFlags):
     UPPER = 512
     XDIGIT = 1024
 
-class FileSetContentsFlags(GObject.GFlags):
+class FileSetContentsFlags(IntFlag):
     CONSISTENT = 1
     DURABLE = 2
     NONE = 0
     ONLY_EXISTING = 4
 
-class FileTest(GObject.GFlags):
+class FileTest(IntFlag):
     EXISTS = 16
     IS_DIR = 4
     IS_EXECUTABLE = 8
     IS_REGULAR = 1
     IS_SYMLINK = 2
 
-class FormatSizeFlags(GObject.GFlags):
+class FormatSizeFlags(IntFlag):
     BITS = 4
     DEFAULT = 0
     IEC_UNITS = 2
@@ -4003,7 +4005,7 @@ class FormatSizeFlags(GObject.GFlags):
     ONLY_UNIT = 16
     ONLY_VALUE = 8
 
-class HookFlagMask(GObject.GFlags):
+class HookFlagMask(IntFlag):
     ACTIVE = 1
     IN_CALL = 2
     MASK = 15
@@ -4016,7 +4018,7 @@ class IOCondition(GObject.GFlags):
     OUT = 4
     PRI = 2
 
-class IOFlags(GObject.GFlags):
+class IOFlags(IntFlag):
     APPEND = 1
     GET_MASK = 31
     IS_READABLE = 4
@@ -4028,12 +4030,12 @@ class IOFlags(GObject.GFlags):
     NONE = 0
     SET_MASK = 3
 
-class KeyFileFlags(GObject.GFlags):
+class KeyFileFlags(IntFlag):
     KEEP_COMMENTS = 1
     KEEP_TRANSLATIONS = 2
     NONE = 0
 
-class LogLevelFlags(GObject.GFlags):
+class LogLevelFlags(IntFlag):
     FLAG_FATAL = 2
     FLAG_RECURSION = 1
     LEVEL_CRITICAL = 8
@@ -4044,11 +4046,11 @@ class LogLevelFlags(GObject.GFlags):
     LEVEL_MESSAGE = 32
     LEVEL_WARNING = 16
 
-class MainContextFlags(GObject.GFlags):
+class MainContextFlags(IntFlag):
     NONE = 0
     OWNERLESS_POLLING = 1
 
-class MarkupCollectType(GObject.GFlags):
+class MarkupCollectType(IntFlag):
     BOOLEAN = 3
     INVALID = 0
     OPTIONAL = 65536
@@ -4056,14 +4058,14 @@ class MarkupCollectType(GObject.GFlags):
     STRING = 1
     TRISTATE = 4
 
-class MarkupParseFlags(GObject.GFlags):
+class MarkupParseFlags(IntFlag):
     DEFAULT_FLAGS = 0
     DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1
     IGNORE_QUALIFIED = 8
     PREFIX_ERROR_POSITION = 4
     TREAT_CDATA_AS_TEXT = 2
 
-class OptionFlags(GObject.GFlags):
+class OptionFlags(IntFlag):
     DEPRECATED = 128
     FILENAME = 16
     HIDDEN = 1
@@ -4074,7 +4076,7 @@ class OptionFlags(GObject.GFlags):
     OPTIONAL_ARG = 32
     REVERSE = 4
 
-class RegexCompileFlags(GObject.GFlags):
+class RegexCompileFlags(IntFlag):
     ANCHORED = 16
     BSR_ANYCRLF = 8388608
     CASELESS = 1
@@ -4095,7 +4097,7 @@ class RegexCompileFlags(GObject.GFlags):
     RAW = 2048
     UNGREEDY = 512
 
-class RegexMatchFlags(GObject.GFlags):
+class RegexMatchFlags(IntFlag):
     ANCHORED = 16
     BSR_ANY = 16777216
     BSR_ANYCRLF = 8388608
@@ -4113,7 +4115,7 @@ class RegexMatchFlags(GObject.GFlags):
     PARTIAL_HARD = 134217728
     PARTIAL_SOFT = 32768
 
-class SpawnFlags(GObject.GFlags):
+class SpawnFlags(IntFlag):
     CHILD_INHERITS_STDERR = 1024
     CHILD_INHERITS_STDIN = 32
     CHILD_INHERITS_STDOUT = 512
@@ -4128,19 +4130,19 @@ class SpawnFlags(GObject.GFlags):
     STDIN_FROM_DEV_NULL = 2048
     STDOUT_TO_DEV_NULL = 8
 
-class TestSubprocessFlags(GObject.GFlags):
+class TestSubprocessFlags(IntFlag):
     DEFAULT = 0
     INHERIT_STDERR = 4
     INHERIT_STDIN = 1
     INHERIT_STDOUT = 2
 
-class TestTrapFlags(GObject.GFlags):
+class TestTrapFlags(IntFlag):
     DEFAULT = 0
     INHERIT_STDIN = 512
     SILENCE_STDERR = 256
     SILENCE_STDOUT = 128
 
-class TraverseFlags(GObject.GFlags):
+class TraverseFlags(IntFlag):
     ALL = 3
     LEAFS = 1
     LEAVES = 1
@@ -4148,7 +4150,7 @@ class TraverseFlags(GObject.GFlags):
     NON_LEAFS = 2
     NON_LEAVES = 2
 
-class UriFlags(GObject.GFlags):
+class UriFlags(IntFlag):
     ENCODED = 8
     ENCODED_FRAGMENT = 128
     ENCODED_PATH = 64
@@ -4160,7 +4162,7 @@ class UriFlags(GObject.GFlags):
     PARSE_RELAXED = 1
     SCHEME_NORMALIZE = 256
 
-class UriHideFlags(GObject.GFlags):
+class UriHideFlags(IntFlag):
     AUTH_PARAMS = 4
     FRAGMENT = 16
     NONE = 0
@@ -4168,13 +4170,13 @@ class UriHideFlags(GObject.GFlags):
     QUERY = 8
     USERINFO = 1
 
-class UriParamsFlags(GObject.GFlags):
+class UriParamsFlags(IntFlag):
     CASE_INSENSITIVE = 1
     NONE = 0
     PARSE_RELAXED = 4
     WWW_FORM = 2
 
-class BookmarkFileError(GObject.GEnum):
+class BookmarkFileError(IntEnum):
     APP_NOT_REGISTERED = 2
     FILE_NOT_FOUND = 7
     INVALID_URI = 0
@@ -4184,14 +4186,14 @@ class BookmarkFileError(GObject.GEnum):
     URI_NOT_FOUND = 3
     WRITE = 6
 
-class ChecksumType(GObject.GEnum):
+class ChecksumType(IntEnum):
     MD5 = 0
     SHA1 = 1
     SHA256 = 2
     SHA384 = 4
     SHA512 = 3
 
-class ConvertError(GObject.GEnum):
+class ConvertError(IntEnum):
     BAD_URI = 4
     EMBEDDED_NUL = 7
     FAILED = 2
@@ -4201,12 +4203,12 @@ class ConvertError(GObject.GEnum):
     NO_MEMORY = 6
     PARTIAL_INPUT = 3
 
-class DateDMY(GObject.GEnum):
+class DateDMY(IntEnum):
     DAY = 0
     MONTH = 1
     YEAR = 2
 
-class DateMonth(GObject.GEnum):
+class DateMonth(IntEnum):
     APRIL = 4
     AUGUST = 8
     BAD_MONTH = 0
@@ -4221,7 +4223,7 @@ class DateMonth(GObject.GEnum):
     OCTOBER = 10
     SEPTEMBER = 9
 
-class DateWeekday(GObject.GEnum):
+class DateWeekday(IntEnum):
     BAD_WEEKDAY = 0
     FRIDAY = 5
     MONDAY = 1
@@ -4231,7 +4233,7 @@ class DateWeekday(GObject.GEnum):
     TUESDAY = 2
     WEDNESDAY = 3
 
-class ErrorType(GObject.GEnum):
+class ErrorType(IntEnum):
     DIGIT_RADIX = 5
     FLOAT_MALFORMED = 7
     FLOAT_RADIX = 6
@@ -4241,7 +4243,7 @@ class ErrorType(GObject.GEnum):
     UNEXP_EOF_IN_STRING = 2
     UNKNOWN = 0
 
-class FileError(GObject.GEnum):
+class FileError(IntEnum):
     ACCES = 2
     AGAIN = 19
     BADF = 16
@@ -4268,7 +4270,7 @@ class FileError(GObject.GEnum):
     ROFS = 8
     TXTBSY = 9
 
-class IOChannelError(GObject.GEnum):
+class IOChannelError(IntEnum):
     FAILED = 8
     FBIG = 0
     INVAL = 1
@@ -4279,19 +4281,19 @@ class IOChannelError(GObject.GEnum):
     OVERFLOW = 6
     PIPE = 7
 
-class IOError(GObject.GEnum):
+class IOError(IntEnum):
     AGAIN = 1
     INVAL = 2
     NONE = 0
     UNKNOWN = 3
 
-class IOStatus(GObject.GEnum):
+class IOStatus(IntEnum):
     AGAIN = 3
     EOF = 2
     ERROR = 0
     NORMAL = 1
 
-class KeyFileError(GObject.GEnum):
+class KeyFileError(IntEnum):
     GROUP_NOT_FOUND = 4
     INVALID_VALUE = 5
     KEY_NOT_FOUND = 3
@@ -4299,11 +4301,11 @@ class KeyFileError(GObject.GEnum):
     PARSE = 1
     UNKNOWN_ENCODING = 0
 
-class LogWriterOutput(GObject.GEnum):
+class LogWriterOutput(IntEnum):
     HANDLED = 1
     UNHANDLED = 0
 
-class MarkupError(GObject.GEnum):
+class MarkupError(IntEnum):
     BAD_UTF8 = 0
     EMPTY = 1
     INVALID_CONTENT = 5
@@ -4322,16 +4324,16 @@ class NormalizeMode(GObject.GEnum):
     NFKC = 3
     NFKD = 2
 
-class NumberParserError(GObject.GEnum):
+class NumberParserError(IntEnum):
     INVALID = 0
     OUT_OF_BOUNDS = 1
 
-class OnceStatus(GObject.GEnum):
+class OnceStatus(IntEnum):
     NOTCALLED = 0
     PROGRESS = 1
     READY = 2
 
-class OptionArg(GObject.GEnum):
+class OptionArg(IntEnum):
     CALLBACK = 3
     DOUBLE = 7
     FILENAME = 4
@@ -4342,12 +4344,12 @@ class OptionArg(GObject.GEnum):
     STRING = 1
     STRING_ARRAY = 5
 
-class OptionError(GObject.GEnum):
+class OptionError(IntEnum):
     BAD_VALUE = 1
     FAILED = 2
     UNKNOWN_OPTION = 0
 
-class RegexError(GObject.GEnum):
+class RegexError(IntEnum):
     ASSERTION_EXPECTED = 128
     BACKTRACKING_CONTROL_VERB_ARGUMENT_FORBIDDEN = 159
     BACKTRACKING_CONTROL_VERB_ARGUMENT_REQUIRED = 166
@@ -4406,17 +4408,17 @@ class RegexError(GObject.GEnum):
     UNTERMINATED_COMMENT = 118
     VARIABLE_LENGTH_LOOKBEHIND = 125
 
-class SeekType(GObject.GEnum):
+class SeekType(IntEnum):
     CUR = 0
     END = 2
     SET = 1
 
-class ShellError(GObject.GEnum):
+class ShellError(IntEnum):
     BAD_QUOTING = 0
     EMPTY_STRING = 1
     FAILED = 2
 
-class SliceConfig(GObject.GEnum):
+class SliceConfig(IntEnum):
     ALWAYS_MALLOC = 1
     BYPASS_MAGAZINES = 2
     CHUNK_SIZES = 5
@@ -4424,7 +4426,7 @@ class SliceConfig(GObject.GEnum):
     CONTENTION_COUNTER = 6
     WORKING_SET_MSECS = 3
 
-class SpawnError(GObject.GEnum):
+class SpawnError(IntEnum):
     ACCES = 3
     CHDIR = 2
     FAILED = 19
@@ -4446,11 +4448,11 @@ class SpawnError(GObject.GEnum):
     TOO_BIG = 5
     TXTBUSY = 12
 
-class TestFileType(GObject.GEnum):
+class TestFileType(IntEnum):
     BUILT = 1
     DIST = 0
 
-class TestLogType(GObject.GEnum):
+class TestLogType(IntEnum):
     ERROR = 1
     LIST_CASE = 3
     MAX_RESULT = 8
@@ -4464,21 +4466,21 @@ class TestLogType(GObject.GEnum):
     STOP_CASE = 6
     STOP_SUITE = 11
 
-class TestResult(GObject.GEnum):
+class TestResult(IntEnum):
     FAILURE = 2
     INCOMPLETE = 3
     SKIPPED = 1
     SUCCESS = 0
 
-class ThreadError(GObject.GEnum):
+class ThreadError(IntEnum):
     THREAD_ERROR_AGAIN = 0
 
-class TimeType(GObject.GEnum):
+class TimeType(IntEnum):
     DAYLIGHT = 1
     STANDARD = 0
     UNIVERSAL = 2
 
-class TokenType(GObject.GEnum):
+class TokenType(IntEnum):
     BINARY = 259
     CHAR = 258
     COMMA = 44
@@ -4503,7 +4505,7 @@ class TokenType(GObject.GEnum):
     STRING = 264
     SYMBOL = 265
 
-class TraverseType(GObject.GEnum):
+class TraverseType(IntEnum):
     IN_ORDER = 0
     LEVEL_ORDER = 3
     POST_ORDER = 2
@@ -4771,11 +4773,11 @@ class UnicodeType(GObject.GEnum):
     UNASSIGNED = 2
     UPPERCASE_LETTER = 9
 
-class UnixPipeEnd(GObject.GEnum):
+class UnixPipeEnd(IntEnum):
     READ = 0
     WRITE = 1
 
-class UriError(GObject.GEnum):
+class UriError(IntEnum):
     BAD_AUTH_PARAMS = 4
     BAD_FRAGMENT = 9
     BAD_HOST = 5
@@ -4787,7 +4789,7 @@ class UriError(GObject.GEnum):
     BAD_USER = 2
     FAILED = 0
 
-class UserDirectory(GObject.GEnum):
+class UserDirectory(IntEnum):
     DIRECTORY_DESKTOP = 0
     DIRECTORY_DOCUMENTS = 1
     DIRECTORY_DOWNLOAD = 2
@@ -4798,7 +4800,7 @@ class UserDirectory(GObject.GEnum):
     DIRECTORY_VIDEOS = 7
     N_DIRECTORIES = 8
 
-class VariantClass(GObject.GEnum):
+class VariantClass(IntEnum):
     ARRAY = 97
     BOOLEAN = 98
     BYTE = 121
@@ -4818,7 +4820,7 @@ class VariantClass(GObject.GEnum):
     UINT64 = 116
     VARIANT = 118
 
-class VariantParseError(GObject.GEnum):
+class VariantParseError(IntEnum):
     BASIC_TYPE_EXPECTED = 1
     CANNOT_INFER_TYPE = 2
     DEFINITE_TYPE_EXPECTED = 3

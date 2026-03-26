@@ -4,6 +4,7 @@ from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
+from builtins import property as _property
 from builtins import Warning as _Warning
 from collections.abc import Callable
 from collections.abc import Iterable
@@ -12,6 +13,7 @@ from contextlib import AbstractContextManager
 from enum import IntEnum
 from enum import IntFlag
 
+from gi import _gi
 from gi.repository import GLib
 
 T = TypeVar("T")
@@ -154,9 +156,7 @@ def add_emission_hook(
 def boxed_copy(boxed_type: type[Any], src_boxed: None) -> None: ...
 def boxed_free(boxed_type: type[Any], boxed: None) -> None: ...
 def boxed_type_register_static(
-    name: str,
-    boxed_copy: Callable[[None], None],
-    boxed_free: Callable[[None], None],
+    name: str, boxed_copy: Callable[[None], None], boxed_free: Callable[[None], None]
 ) -> type[Any]: ...
 def cclosure_marshal_BOOLEAN__BOXED_BOXED(
     closure: Callable[..., Any],
@@ -380,9 +380,7 @@ def get_current_time() -> float: ...
 def get_prgname() -> str | None: ...
 def gtype_get_type() -> type[Any]: ...
 def idle_add(
-    function: Callable[..., bool | None],
-    *user_data: Any,
-    priority: int = 200,
+    function: Callable[..., bool | None], *user_data: Any, priority: int = 200
 ) -> int: ...
 def io_add_watch(*args, **kwargs) -> int:
     """
@@ -502,10 +500,7 @@ def param_spec_param(
     flags: ParamFlags,
 ) -> ParamSpec: ...
 def param_spec_pointer(
-    name: str,
-    nick: str | None,
-    blurb: str | None,
-    flags: ParamFlags,
+    name: str, nick: str | None, blurb: str | None, flags: ParamFlags
 ) -> ParamSpec: ...
 def param_spec_string(
     name: str,
@@ -569,10 +564,7 @@ def param_type_register_static(
     name: str, pspec_info: ParamSpecTypeInfo
 ) -> type[Any]: ...
 def param_value_convert(
-    pspec: ParamSpec,
-    src_value: Any,
-    dest_value: Any,
-    strict_validation: bool,
+    pspec: ParamSpec, src_value: Any, dest_value: Any, strict_validation: bool
 ) -> bool: ...
 def param_value_defaults(pspec: ParamSpec, value: Any) -> bool: ...
 def param_value_is_valid(pspec: ParamSpec, value: Any) -> bool: ...
@@ -590,19 +582,13 @@ def signal_accumulator_true_handled(
     ihint, return_accu, handler_return, user_data=None
 ): ...  # FIXME: Override is missing typing annotation
 def signal_add_emission_hook(
-    signal_id: int,
-    detail: int,
-    hook_func: Callable[..., bool],
-    *hook_data: Any,
+    signal_id: int, detail: int, hook_func: Callable[..., bool], *hook_data: Any
 ) -> int: ...
 def signal_chain_from_overridden(
     instance_and_params: Sequence[Any], return_value: Any
 ) -> None: ...
 def signal_connect_closure(
-    instance: Object,
-    detailed_signal: str,
-    closure: Callable[..., Any],
-    after: bool,
+    instance: Object, detailed_signal: str, closure: Callable[..., Any], after: bool
 ) -> int: ...
 def signal_connect_closure_by_id(
     instance: Object,
@@ -614,9 +600,7 @@ def signal_connect_closure_by_id(
 def signal_emitv(
     instance_and_params: Sequence[Any], signal_id: int, detail: int
 ) -> Any: ...
-def signal_get_invocation_hint(
-    instance: Object,
-) -> SignalInvocationHint | None: ...
+def signal_get_invocation_hint(instance: Object) -> SignalInvocationHint | None: ...
 def signal_handler_block(obj: Object, handler_id: int) -> AbstractContextManager[None]:
     """
     Blocks the signal handler from being invoked until
@@ -698,14 +682,10 @@ def signal_lookup(name: str, type_: GType | Object) -> int: ...
 def signal_name(signal_id: int) -> str | None: ...
 def signal_new(*args, **kwargs): ...  # FIXME: Override is missing typing annotation
 def signal_override_class_closure(
-    signal_id: int,
-    instance_type: type[Any],
-    class_closure: Callable[..., Any],
+    signal_id: int, instance_type: type[Any], class_closure: Callable[..., Any]
 ) -> None: ...
 def signal_override_class_handler(
-    signal_name: str,
-    instance_type: type[Any],
-    class_handler: Callable[[], None],
+    signal_name: str, instance_type: type[Any], class_handler: Callable[[], None]
 ) -> None: ...
 def signal_parse_name(
     detailed_signal: str, itype: GType | Object, force_detail_quark: bool
@@ -734,15 +714,19 @@ def signal_type_cclosure_new(
 def source_remove(tag: int) -> bool: ...
 def source_set_closure(source: GLib.Source, closure: Callable[..., Any]) -> None: ...
 def source_set_dummy_callback(source: GLib.Source) -> None: ...
-def spawn_async(*args, **kwargs):
+def spawn_async(
+    argv,
+    envp=None,
+    working_directory=None,
+    flags=0,
+    child_setup=None,
+    user_data=None,
+    standard_input=False,
+    standard_output=False,
+    standard_error=False,
+):
     """
-    spawn_async(argv, envp=None, working_directory=None,
-                flags=0, child_setup=None, user_data=None,
-                standard_input=None, standard_output=None,
-                standard_error=None) -> (pid, stdin, stdout, stderr)
-
-    Execute a child program asynchronously within a glib.MainLoop()
-    See the reference manual for a complete reference.
+    spawn_async_with_pipes(working_directory:str=None, argv:list, envp:list=None, flags:GLib.SpawnFlags, child_setup:GLib.SpawnChildSetupFunc=None, user_data=None) -> bool, child_pid:int, standard_input:int, standard_output:int, standard_error:int
     """  # FIXME: Override is missing typing annotation
 
 def strdup_value_contents(value: Any) -> str: ...
@@ -762,14 +746,10 @@ def timeout_add_seconds(
 def type_add_class_private(class_type: type[Any], private_size: int) -> None: ...
 def type_add_instance_private(class_type: type[Any], private_size: int) -> int: ...
 def type_add_interface_dynamic(
-    instance_type: type[Any],
-    interface_type: type[Any],
-    plugin: TypePlugin,
+    instance_type: type[Any], interface_type: type[Any], plugin: TypePlugin
 ) -> None: ...
 def type_add_interface_static(
-    instance_type: type[Any],
-    interface_type: type[Any],
-    info: InterfaceInfo,
+    instance_type: type[Any], interface_type: type[Any], info: InterfaceInfo
 ) -> None: ...
 def type_check_class_is_a(g_class: TypeClass, is_a_type: type[Any]) -> bool: ...
 def type_check_instance(instance: TypeInstance) -> bool: ...
@@ -786,9 +766,7 @@ def type_class_adjust_private_offset(
 ) -> None: ...
 def type_class_get(type: type[Any]) -> TypeClass: ...
 def type_class_peek(type: type[Any]) -> TypeClass | None: ...
-def type_class_peek_static(
-    type: type[Any],
-) -> TypeClass | None: ...
+def type_class_peek_static(type: type[Any]) -> TypeClass | None: ...
 def type_class_ref(type: type[Any]) -> TypeClass: ...
 def type_default_interface_get(g_type: type[Any]) -> TypeInterface: ...
 def type_default_interface_peek(g_type: type[Any]) -> TypeInterface: ...
@@ -818,9 +796,7 @@ def type_interface_instantiatable_prerequisite(
 def type_interface_peek(
     instance_class: TypeClass, iface_type: type[Any]
 ) -> TypeInterface | None: ...
-def type_interface_prerequisites(
-    interface_type: type[Any],
-) -> list[type[Any]]: ...
+def type_interface_prerequisites(interface_type: type[Any]) -> list[type[Any]]: ...
 def type_interfaces(type: type[Any]) -> list[type[Any]]: ...
 def type_is_a(type: type[Any], is_a_type: type[Any]) -> bool: ...
 def type_name(type: type[Any]) -> str | None: ...
@@ -832,10 +808,7 @@ def type_qname(type: type[Any]) -> int: ...
 def type_query(type: type[Any]) -> TypeQuery: ...
 def type_register(*args, **kwargs): ...  # FIXME: Override is missing typing annotation
 def type_register_dynamic(
-    parent_type: type[Any],
-    type_name: str,
-    plugin: TypePlugin,
-    flags: TypeFlags,
+    parent_type: type[Any], type_name: str, plugin: TypePlugin, flags: TypeFlags
 ) -> type[Any]: ...
 def type_register_fundamental(
     type_id: type[Any],
@@ -845,10 +818,7 @@ def type_register_fundamental(
     flags: TypeFlags,
 ) -> type[Any]: ...
 def type_register_static(
-    parent_type: type[Any],
-    type_name: str,
-    info: TypeInfo,
-    flags: TypeFlags,
+    parent_type: type[Any], type_name: str, info: TypeInfo, flags: TypeFlags
 ) -> type[Any]: ...
 def type_set_qdata(type: type[Any], quark: int, data: None) -> None: ...
 def type_test_flags(type: type[Any], flags: int) -> bool: ...
@@ -1194,10 +1164,7 @@ class Closure(GBoxed):
     derivative_flag: int = ...
     in_marshal: int = ...
     is_invalid: int = ...
-    marshal: Callable[
-        [Callable[..., Any], Any, int, Any, None, None],
-        None,
-    ] = ...
+    marshal: Callable[[Callable[..., Any], Any, int, Any, None, None], None] = ...
     data: None = ...
     notifiers: ClosureNotifyData = ...
     def invalidate(self) -> None: ...
@@ -1349,16 +1316,10 @@ class GInterface(Protocol):
     def chain(self, *args, **kwargs): ...
     def compat_control(self, *args, **kargs): ...
     def connect(
-        self,
-        detailed_signal: str | Signal,
-        handler: Callable[..., Any],
-        *args: Any,
+        self, detailed_signal: str | Signal, handler: Callable[..., Any], *args: Any
     ) -> int: ...
     def connect_after(
-        self,
-        detailed_signal: str | Signal,
-        handler: Callable[..., Any],
-        *args: Any,
+        self, detailed_signal: str | Signal, handler: Callable[..., Any], *args: Any
     ) -> int: ...
     def connect_data(self, detailed_signal, handler, *data, **kwargs): ...
     def connect_object(self, *args, **kwargs): ...
@@ -1390,9 +1351,7 @@ class GInterface(Protocol):
     def list_properties(self) -> list[ParamSpec]: ...
     @classmethod
     def newv(
-        cls,
-        object_type: type[Any],
-        parameters: Sequence[Parameter],
+        cls, object_type: type[Any], parameters: Sequence[Parameter]
     ) -> Object: ...
     def notify(self, property_name: str) -> None: ...
     def notify_by_pspec(self, *args, **kargs): ...
@@ -1423,7 +1382,7 @@ class GObjectWeakRef:
     """
     def unref(self, /): ...  # FIXME: Override is missing typing annotation
 
-class GParamSpec:
+class GParamSpec(_gi.Fundamental):
     """
     :Constructors:
 
@@ -1763,7 +1722,7 @@ class Object:
     ::
 
         Object(**properties)
-        newv(object_type:GType, parameters:list) -> GObject.Object
+        newv(object_type:GType, parameters:list) -> Object
 
     Object GObject
 
@@ -1793,16 +1752,10 @@ class Object:
     def chain(self, *args, **kwargs): ...
     def compat_control(self, *args, **kargs): ...
     def connect(
-        self,
-        detailed_signal: str | Signal,
-        handler: Callable[..., Any],
-        *args: Any,
+        self, detailed_signal: str | Signal, handler: Callable[..., Any], *args: Any
     ) -> int: ...
     def connect_after(
-        self,
-        detailed_signal: str | Signal,
-        handler: Callable[..., Any],
-        *args: Any,
+        self, detailed_signal: str | Signal, handler: Callable[..., Any], *args: Any
     ) -> int: ...
     def connect_data(self, detailed_signal, handler, *data, **kwargs): ...
     def connect_object(self, *args, **kwargs): ...
@@ -1901,9 +1854,7 @@ class ObjectConstructParam(GPointer):
 class OptionContext(GPointer):
     def add_group(self, group: GLib.OptionGroup) -> None: ...
     def add_main_entries(
-        self,
-        entries: Sequence[GLib.OptionEntry],
-        translation_domain: str | None = None,
+        self, entries: Sequence[GLib.OptionEntry], translation_domain: str | None = None
     ) -> None: ...
     def free(self) -> None: ...
     def get_description(self) -> str: ...
@@ -1963,7 +1914,7 @@ class OptionGroup(GBoxed):
     def set_translation_domain(self, domain: str) -> None: ...
     def unref(self) -> None: ...
 
-class ParamSpec:
+class ParamSpec(_gi.Fundamental):
     """
     :Constructors:
 
@@ -2382,12 +2333,10 @@ class Parameter(GPointer):
 
 class PatternSpec(GBoxed): ...
 
-class Pid(int):
-    def __new__(*args, **kwargs):
-        """
-        Create and return a new object.  See help(type) for accurate signature.
-        """  # FIXME: Override is missing typing annotation
-    def close(self, /): ...  # FIXME: Override is missing typing annotation
+class Pid:
+    def __init__(self, pid): ...  # FIXME: Override is missing typing annotation
+    def __int__(self): ...  # FIXME: Override is missing typing annotation
+    def close(self): ...  # FIXME: Override is missing typing annotation
 
 class PollFD(GBoxed):
     """
@@ -2489,17 +2438,11 @@ class SignalGroup(Object):
 
     props: Props = ...
     def __init__(
-        self,
-        *,
-        target: Object | None = ...,
-        target_type: type[Any] = ...,
+        self, *, target: Object | None = ..., target_type: type[Any] = ...
     ) -> None: ...
     def block(self) -> None: ...
     def connect_closure(
-        self,
-        detailed_signal: str,
-        closure: Callable[..., Any],
-        after: bool,
+        self, detailed_signal: str, closure: Callable[..., Any], after: bool
     ) -> None: ...
     def connect_data(
         self,
@@ -2509,10 +2452,7 @@ class SignalGroup(Object):
         *data: Any,
     ) -> None: ...
     def connect_swapped(
-        self,
-        detailed_signal: str,
-        c_handler: Callable[..., None],
-        *data: Any,
+        self, detailed_signal: str, c_handler: Callable[..., None], *data: Any
     ) -> None: ...
     def dup_target(self) -> Object | None: ...
     @classmethod
@@ -2735,26 +2675,21 @@ class TypeInterface(GPointer):
     g_instance_type: type[Any] = ...
     @staticmethod
     def add_prerequisite(
-        interface_type: type[Any],
-        prerequisite_type: type[Any],
+        interface_type: type[Any], prerequisite_type: type[Any]
     ) -> None: ...
     @staticmethod
     def get_plugin(
         instance_type: type[Any], interface_type: type[Any]
     ) -> TypePlugin: ...
     @staticmethod
-    def instantiatable_prerequisite(
-        interface_type: type[Any],
-    ) -> type[Any]: ...
+    def instantiatable_prerequisite(interface_type: type[Any]) -> type[Any]: ...
     @staticmethod
     def peek(
         instance_class: TypeClass, iface_type: type[Any]
     ) -> TypeInterface | None: ...
     def peek_parent(self) -> TypeInterface | None: ...
     @staticmethod
-    def prerequisites(
-        interface_type: type[Any],
-    ) -> list[type[Any]]: ...
+    def prerequisites(interface_type: type[Any]) -> list[type[Any]]: ...
 
 # override
 class TypeModule(TypePlugin):
@@ -2811,16 +2746,10 @@ class TypePlugin(Object):
     Interface GTypePlugin
     """
     def complete_interface_info(
-        self,
-        instance_type: type[Any],
-        interface_type: type[Any],
-        info: InterfaceInfo,
+        self, instance_type: type[Any], interface_type: type[Any], info: InterfaceInfo
     ) -> None: ...
     def complete_type_info(
-        self,
-        g_type: type[Any],
-        info: TypeInfo,
-        value_table: TypeValueTable,
+        self, g_type: type[Any], info: TypeInfo, value_table: TypeValueTable
     ) -> None: ...
     def unuse(self) -> None: ...
     def use(self) -> None: ...
@@ -2841,8 +2770,7 @@ class TypePluginClass(GPointer):
         [TypePlugin, type[Any], TypeInfo, TypeValueTable], None
     ] = ...
     complete_interface_info: Callable[
-        [TypePlugin, type[Any], type[Any], InterfaceInfo],
-        None,
+        [TypePlugin, type[Any], type[Any], InterfaceInfo], None
     ] = ...
 
 class TypeQuery(GPointer):
@@ -3090,7 +3018,7 @@ class BindingFlags(GFlags):
     INVERT_BOOLEAN = 4
     SYNC_CREATE = 2
 
-class ConnectFlags(GFlags):
+class ConnectFlags(IntFlag):
     AFTER = 1
     DEFAULT = 0
     SWAPPED = 2
@@ -3098,10 +3026,15 @@ class ConnectFlags(GFlags):
 # override
 class GFlags(IntFlag):
     __gtype__: GType
-    first_value_name: str
-    first_value_nick: str
-    value_names: list[str]
-    value_nicks: list[str]
+
+    @_property
+    def first_value_name(self) -> str: ...
+    @_property
+    def first_value_nick(self) -> str: ...
+    @_property
+    def value_names(self) -> list[str]: ...
+    @_property
+    def value_nicks(self) -> list[str]: ...
 
 class IOCondition(GFlags):
     ERR = 8
@@ -3111,7 +3044,7 @@ class IOCondition(GFlags):
     OUT = 4
     PRI = 2
 
-class ParamFlags(GFlags):
+class ParamFlags(IntFlag):
     CONSTRUCT = 4
     CONSTRUCT_ONLY = 8
     DEPRECATED = 2147483648
@@ -3125,7 +3058,7 @@ class ParamFlags(GFlags):
     STATIC_NICK = 64
     WRITABLE = 2
 
-class SignalFlags(GFlags):
+class SignalFlags(IntFlag):
     ACCUMULATOR_FIRST_RUN = 131072
     ACTION = 32
     DEPRECATED = 256
@@ -3137,7 +3070,7 @@ class SignalFlags(GFlags):
     RUN_FIRST = 1
     RUN_LAST = 2
 
-class SignalMatchType(GFlags):
+class SignalMatchType(IntFlag):
     CLOSURE = 4
     DATA = 16
     DETAIL = 2
@@ -3145,21 +3078,21 @@ class SignalMatchType(GFlags):
     ID = 1
     UNBLOCKED = 32
 
-class TypeDebugFlags(GFlags):
+class TypeDebugFlags(IntFlag):
     INSTANCE_COUNT = 4
     MASK = 7
     NONE = 0
     OBJECTS = 1
     SIGNALS = 2
 
-class TypeFlags(GFlags):
+class TypeFlags(IntFlag):
     ABSTRACT = 16
     DEPRECATED = 128
     FINAL = 64
     NONE = 0
     VALUE_ABSTRACT = 32
 
-class TypeFundamentalFlags(GFlags):
+class TypeFundamentalFlags(IntFlag):
     CLASSED = 1
     DEEP_DERIVABLE = 8
     DERIVABLE = 4
@@ -3168,5 +3101,8 @@ class TypeFundamentalFlags(GFlags):
 # override
 class GEnum(IntEnum):
     __gtype__: GType
-    value_name: str
-    value_nick: str
+
+    @_property
+    def value_name(self) -> str: ...
+    @_property
+    def value_nick(self) -> str: ...

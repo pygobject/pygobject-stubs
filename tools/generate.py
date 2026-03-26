@@ -22,6 +22,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from dataclasses import field
 from dataclasses import InitVar
+from enum import IntEnum
+from enum import IntFlag
 from types import ModuleType
 
 import gi
@@ -814,9 +816,9 @@ def _gi_build_stub_parts(
             continue
 
         if inspect.isclass(obj):
-            if GObject.GFlags in obj.__mro__ or str(obj).startswith("<flag"):
+            if issubclass(obj, IntFlag):
                 flags[name] = obj
-            elif GObject.GEnum in obj.__mro__ or str(obj).startswith("<enum"):
+            elif issubclass(obj, IntEnum):
                 enums[name] = obj
             else:
                 classes[name] = obj
@@ -1114,7 +1116,7 @@ def _gi_build_stub_parts(
         full_name = _generate_full_name(prefix_name, name)
         flag_base = (
             stub.get_namespace_member("GObject", "GFlags")
-            if (stub.namespace != "GObject" or name != "GFlags")
+            if issubclass(obj, GObject.GFlags)
             else stub.get_import("enum", "IntFlag")
         )
 
@@ -1154,7 +1156,7 @@ def _gi_build_stub_parts(
         full_name = _generate_full_name(prefix_name, name)
         enum_base = (
             stub.get_namespace_member("GObject", "GEnum")
-            if (stub.namespace != "GObject" or name != "GEnum")
+            if issubclass(obj, GObject.GEnum)
             else stub.get_import("enum", "IntEnum")
         )
 

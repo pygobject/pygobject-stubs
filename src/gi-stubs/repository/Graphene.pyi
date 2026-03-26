@@ -1,6 +1,7 @@
 from typing import TypeVar
 
 from collections.abc import Sequence
+from enum import IntEnum
 
 from gi.repository import GObject
 
@@ -781,7 +782,7 @@ class Vec4(GObject.GBoxed):
     @staticmethod
     def zero() -> Vec4: ...
 
-class EulerOrder(GObject.GEnum):
+class EulerOrder(IntEnum):
     DEFAULT = -1
     RXYX = 19
     RXYZ = 28
@@ -814,7 +815,7 @@ class EulerOrder(GObject.GEnum):
     ZXY = 2
     ZYX = 5
 
-class RayIntersectionKind(GObject.GEnum):
+class RayIntersectionKind(IntEnum):
     ENTER = 1
     LEAVE = 2
     NONE = 0

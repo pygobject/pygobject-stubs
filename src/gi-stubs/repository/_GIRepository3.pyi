@@ -2,6 +2,8 @@ from typing import Any
 from typing import TypeVar
 
 from collections.abc import Sequence
+from enum import IntEnum
+from enum import IntFlag
 
 from gi import _gi
 from gi.repository import GLib
@@ -484,12 +486,12 @@ class ValueInfo(BaseInfo):
     """
     def get_value(self) -> int: ...
 
-class FieldInfoFlags(GObject.GFlags):
+class FieldInfoFlags(IntFlag):
     INFO_FLAGS_NONE = 0
     IS_READABLE = 1
     IS_WRITABLE = 2
 
-class FunctionInfoFlags(GObject.GFlags):
+class FunctionInfoFlags(IntFlag):
     INFO_FLAGS_NONE = 0
     IS_ASYNC = 32
     IS_CONSTRUCTOR = 2
@@ -498,51 +500,51 @@ class FunctionInfoFlags(GObject.GFlags):
     IS_SETTER = 8
     WRAPS_VFUNC = 16
 
-class RepositoryLoadFlags(GObject.GFlags):
+class RepositoryLoadFlags(IntFlag):
     LAZY = 1
     NONE = 0
 
-class VFuncInfoFlags(GObject.GFlags):
+class VFuncInfoFlags(IntFlag):
     INFO_FLAGS_NONE = 0
     MUST_CHAIN_UP = 1
     MUST_NOT_OVERRIDE = 4
     MUST_OVERRIDE = 2
 
-class ArrayType(GObject.GEnum):
+class ArrayType(IntEnum):
     ARRAY = 1
     BYTE_ARRAY = 3
     C = 0
     PTR_ARRAY = 2
 
-class Direction(GObject.GEnum):
+class Direction(IntEnum):
     IN = 0
     INOUT = 2
     OUT = 1
 
-class InvokeError(GObject.GEnum):
+class InvokeError(IntEnum):
     ARGUMENT_MISMATCH = 2
     FAILED = 0
     SYMBOL_NOT_FOUND = 1
 
-class RepositoryError(GObject.GEnum):
+class RepositoryError(IntEnum):
     LIBRARY_NOT_FOUND = 3
     NAMESPACE_MISMATCH = 1
     NAMESPACE_VERSION_CONFLICT = 2
     TYPELIB_NOT_FOUND = 0
 
-class ScopeType(GObject.GEnum):
+class ScopeType(IntEnum):
     ASYNC = 2
     CALL = 1
     FOREVER = 4
     INVALID = 0
     NOTIFIED = 3
 
-class Transfer(GObject.GEnum):
+class Transfer(IntEnum):
     CONTAINER = 1
     EVERYTHING = 2
     NOTHING = 0
 
-class TypeTag(GObject.GEnum):
+class TypeTag(IntEnum):
     ARRAY = 15
     BOOLEAN = 1
     DOUBLE = 11

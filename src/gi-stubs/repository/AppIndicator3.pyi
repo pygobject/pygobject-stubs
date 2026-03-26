@@ -1,7 +1,7 @@
 from typing import Any
-from typing import Optional
 
 from collections.abc import Callable
+from enum import IntEnum
 
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -183,14 +183,14 @@ class IndicatorClass(GObject.GPointer):
 
 class IndicatorPrivate(GObject.GPointer): ...
 
-class IndicatorCategory(GObject.GEnum):
+class IndicatorCategory(IntEnum):
     APPLICATION_STATUS = 0
     COMMUNICATIONS = 1
     HARDWARE = 3
     OTHER = 4
     SYSTEM_SERVICES = 2
 
-class IndicatorStatus(GObject.GEnum):
+class IndicatorStatus(IntEnum):
     ACTIVE = 1
     ATTENTION = 2
     PASSIVE = 0

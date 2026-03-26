@@ -1,5 +1,6 @@
 from typing import TypeVar
-from typing_extensions import Self
+
+from enum import IntEnum
 
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -471,7 +472,7 @@ class X11Surface(Gdk.Surface):
 
 class X11SurfaceClass(GObject.GPointer): ...
 
-class X11DeviceType(GObject.GEnum):
+class X11DeviceType(IntEnum):
     FLOATING = 2
     LOGICAL = 0
     PHYSICAL = 1

@@ -2,6 +2,8 @@ from typing import Any
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntEnum
+from enum import IntFlag
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -491,16 +493,16 @@ class WeakValueClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class ValuePropertyFlags(GObject.GFlags):
+class ValuePropertyFlags(IntFlag):
     CONFIGURABLE = 1
     ENUMERABLE = 2
     WRITABLE = 4
 
-class CheckSyntaxMode(GObject.GEnum):
+class CheckSyntaxMode(IntEnum):
     MODULE = 1
     SCRIPT = 0
 
-class CheckSyntaxResult(GObject.GEnum):
+class CheckSyntaxResult(IntEnum):
     IRRECOVERABLE_ERROR = 2
     OUT_OF_MEMORY_ERROR = 4
     RECOVERABLE_ERROR = 1
@@ -508,7 +510,7 @@ class CheckSyntaxResult(GObject.GEnum):
     SUCCESS = 0
     UNTERMINATED_LITERAL_ERROR = 3
 
-class OptionType(GObject.GEnum):
+class OptionType(IntEnum):
     BOOLEAN = 0
     DOUBLE = 4
     INT = 1
@@ -517,7 +519,7 @@ class OptionType(GObject.GEnum):
     STRING = 5
     UINT = 2
 
-class TypedArrayType(GObject.GEnum):
+class TypedArrayType(IntEnum):
     FLOAT32 = 10
     FLOAT64 = 11
     INT16 = 2

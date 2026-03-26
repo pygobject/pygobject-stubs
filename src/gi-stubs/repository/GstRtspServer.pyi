@@ -4,6 +4,8 @@ from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntEnum
+from enum import IntFlag
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -2121,7 +2123,7 @@ class SDPInfo(GObject.GPointer):
     is_ipv6: bool = ...
     server_ip: str = ...
 
-class RTSPAddressFlags(GObject.GFlags):
+class RTSPAddressFlags(IntFlag):
     EVEN_PORT = 4
     IPV4 = 1
     IPV6 = 2
@@ -2133,19 +2135,19 @@ class RTSPTransportMode(GObject.GFlags):
     PLAY = 1
     RECORD = 2
 
-class RTSPAddressPoolResult(GObject.GEnum):
+class RTSPAddressPoolResult(IntEnum):
     EINVAL = -1
     ELAST = -4
     ERANGE = -3
     ERESERVED = -2
     OK = 0
 
-class RTSPFilterResult(GObject.GEnum):
+class RTSPFilterResult(IntEnum):
     KEEP = 1
     REF = 2
     REMOVE = 0
 
-class RTSPMediaStatus(GObject.GEnum):
+class RTSPMediaStatus(IntEnum):
     ERROR = 5
     PREPARED = 3
     PREPARING = 2
@@ -2163,6 +2165,6 @@ class RTSPSuspendMode(GObject.GEnum):
     PAUSE = 1
     RESET = 2
 
-class RTSPThreadType(GObject.GEnum):
+class RTSPThreadType(IntEnum):
     CLIENT = 0
     MEDIA = 1

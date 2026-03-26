@@ -3,6 +3,7 @@ from typing import TypeVar
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntEnum
 
 import cairo
 from gi.repository import GdkPixbuf
@@ -176,7 +177,7 @@ class Error(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
-class Unit(GObject.GEnum):
+class Unit(IntEnum):
     CM = 5
     EM = 2
     EX = 3
