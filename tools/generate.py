@@ -577,9 +577,8 @@ class Stub:
             (
                 _import.module,
                 (
-                    _import.import_as
+                    _import.import_as or _import.name
                     if _import.module == "gi.repository"
-                    and _import.import_as is not None
                     else _import.name
                 )
                 if isinstance(_import, FromImport)

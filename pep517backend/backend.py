@@ -5,7 +5,6 @@ from typing import Any
 import itertools
 import logging
 import os
-import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -88,10 +87,9 @@ def _install_stubs(stub_config: list[LibVersion]) -> None:
             DEFAULT_STUB_CONFIG.remove(lib)
 
     for lib in itertools.chain(stub_config, DEFAULT_STUB_CONFIG):
-        stub_path = GI_REPOSITORY_DIR / f"_{lib}.pyi"
         new_stub_path = GI_REPOSITORY_DIR / f"{lib.name}.pyi"
         log.info("Install %s", lib)
-        shutil.copy(stub_path, new_stub_path)
+        new_stub_path.write_text(f"from ._{lib} import *")
 
 
 def get_requires_for_build_editable(config_settings: Any | None = None) -> list[str]:

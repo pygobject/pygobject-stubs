@@ -5,13 +5,13 @@ from collections.abc import Callable
 from collections.abc import Sequence
 
 import cairo
+from gi.repository import _Gdk3
+from gi.repository import _Gtk3
 from gi.repository import Atk
-from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
-from gi.repository import Gtk
 
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
@@ -22,11 +22,13 @@ _version: str = "1.0"
 def get_tmp_dir() -> str: ...
 def pango_font_string_to_css(pango_font_string: str) -> str: ...
 def set_window_icon_from_file(
-    window: Gtk.Window, file_name: str | None = None
+    window: _Gtk3.Window, file_name: str | None = None
 ) -> None: ...
-def set_window_icon_name(window: Gtk.Window, icon_name: str | None = None) -> None: ...
-def set_window_progress(window: Gtk.Window, progress: int) -> None: ...
-def set_window_progress_pulse(window: Gtk.Window, pulse: bool) -> None: ...
+def set_window_icon_name(
+    window: _Gtk3.Window, icon_name: str | None = None
+) -> None: ...
+def set_window_progress(window: _Gtk3.Window, progress: int) -> None: ...
+def set_window_progress_pulse(window: _Gtk3.Window, pulse: bool) -> None: ...
 def set_xid_icon_from_file(xid: int, file_name: str | None = None) -> None: ...
 def set_xid_icon_name(xid: int, icon_name: str | None = None) -> None: ...
 def set_xid_progress(xid: int, progress: int) -> None: ...
@@ -104,10 +106,10 @@ class Favorites(GObject.Object):
     """
 
     def add(self, uri: str) -> None: ...
-    def create_actions(self, mimetypes: str | None = None) -> list[Gtk.Action]: ...
+    def create_actions(self, mimetypes: str | None = None) -> list[_Gtk3.Action]: ...
     def create_menu(
         self, mimetypes: str | None, callback: Callable[..., None], *user_data: Any
-    ) -> Gtk.Widget: ...
+    ) -> _Gtk3.Widget: ...
     def find_by_display_name(self, display_name: str) -> FavoriteInfo: ...
     def find_by_uri(self, uri: str) -> FavoriteInfo: ...
     @staticmethod
@@ -185,7 +187,7 @@ class GpuOffloadHelperClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
 
-class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
+class GtkWindow(_Gtk3.Window, Atk.ImplementorIface, _Gtk3.Buildable):
     """
     :Constructors:
 
@@ -442,8 +444,8 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
 
     class Props:
         accept_focus: bool
-        application: Gtk.Application | None
-        attached_to: Gtk.Widget | None
+        application: _Gtk3.Application | None
+        attached_to: _Gtk3.Widget | None
         decorated: bool
         default_height: int
         default_width: int
@@ -451,7 +453,7 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -464,26 +466,26 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
-        transient_for: Gtk.Window | None
-        type: Gtk.WindowType
-        type_hint: Gdk.WindowTypeHint
+        transient_for: _Gtk3.Window | None
+        type: _Gtk3.WindowType
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
-        window_position: Gtk.WindowPosition
+        window_position: _Gtk3.WindowPosition
         border_width: int
-        resize_mode: Gtk.ResizeMode
+        resize_mode: _Gtk3.ResizeMode
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
-        halign: Gtk.Align
+        halign: _Gtk3.Align
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -501,29 +503,29 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Gtk.Container | None
+        parent: _Gtk3.Container | None
         receives_default: bool
         scale_factor: int
         sensitive: bool
-        style: Gtk.Style
+        style: _Gtk3.Style
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Gtk.Align
+        valign: _Gtk3.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
-        child: Gtk.Widget
+        child: _Gtk3.Widget
 
     props: Props = ...
-    parent_instance: Gtk.Window = ...
+    parent_instance: _Gtk3.Window = ...
     def __init__(
         self,
         accept_focus: bool = ...,
-        application: Gtk.Application | None = ...,
-        attached_to: Gtk.Widget | None = ...,
+        application: _Gtk3.Application | None = ...,
+        attached_to: _Gtk3.Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
         default_width: int = ...,
@@ -531,7 +533,7 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -540,27 +542,27 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
-        transient_for: Gtk.Window | None = ...,
-        type: Gtk.WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        transient_for: _Gtk3.Window | None = ...,
+        type: _Gtk3.WindowType = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
-        window_position: Gtk.WindowPosition = ...,
+        window_position: _Gtk3.WindowPosition = ...,
         border_width: int = ...,
-        child: Gtk.Widget = ...,
-        resize_mode: Gtk.ResizeMode = ...,
+        child: _Gtk3.Widget = ...,
+        resize_mode: _Gtk3.ResizeMode = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Gtk.Align = ...,
+        halign: _Gtk3.Align = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -578,20 +580,20 @@ class GtkWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         name: str = ...,
         no_show_all: bool = ...,
         opacity: float = ...,
-        parent: Gtk.Container = ...,
+        parent: _Gtk3.Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Gtk.Style | None = ...,
+        style: _Gtk3.Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Gtk.Align = ...,
+        valign: _Gtk3.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ): ...
     @classmethod
-    def new(cls, type: Gtk.WindowType) -> GtkWindow: ...
+    def new(cls, type: _Gtk3.WindowType) -> GtkWindow: ...
     def set_icon_from_file(self, file_name: str | None = None) -> None: ...
     def set_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_progress(self, progress: int) -> None: ...
@@ -606,11 +608,15 @@ class GtkWindowClass(GObject.GPointer):
         GtkWindowClass()
     """
 
-    parent_class: Gtk.WindowClass = ...
+    parent_class: _Gtk3.WindowClass = ...
     padding: list[None] = ...
 
 class IconChooserButton(
-    Gtk.Button, Atk.ImplementorIface, Gtk.Actionable, Gtk.Activatable, Gtk.Buildable
+    _Gtk3.Button,
+    Atk.ImplementorIface,
+    _Gtk3.Actionable,
+    _Gtk3.Activatable,
+    _Gtk3.Buildable,
 ):
     """
     :Constructors:
@@ -831,27 +837,27 @@ class IconChooserButton(
     class Props:
         category: str
         icon: str
-        icon_size: Gtk.IconSize
+        icon_size: _Gtk3.IconSize
         always_show_image: bool
-        image: Gtk.Widget | None
-        image_position: Gtk.PositionType
+        image: _Gtk3.Widget | None
+        image_position: _Gtk3.PositionType
         label: str
-        relief: Gtk.ReliefStyle
+        relief: _Gtk3.ReliefStyle
         use_stock: bool
         use_underline: bool
         xalign: float
         yalign: float
         border_width: int
-        resize_mode: Gtk.ResizeMode
+        resize_mode: _Gtk3.ResizeMode
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
-        halign: Gtk.Align
+        halign: _Gtk3.Align
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -869,51 +875,51 @@ class IconChooserButton(
         name: str
         no_show_all: bool
         opacity: float
-        parent: Gtk.Container | None
+        parent: _Gtk3.Container | None
         receives_default: bool
         scale_factor: int
         sensitive: bool
-        style: Gtk.Style
+        style: _Gtk3.Style
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Gtk.Align
+        valign: _Gtk3.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
-        related_action: Gtk.Action
+        related_action: _Gtk3.Action
         use_action_appearance: bool
-        child: Gtk.Widget
+        child: _Gtk3.Widget
 
     props: Props = ...
     def __init__(
         self,
         category: str = ...,
         icon: str | None = ...,
-        icon_size: Gtk.IconSize = ...,
+        icon_size: _Gtk3.IconSize = ...,
         always_show_image: bool = ...,
-        image: Gtk.Widget | None = ...,
-        image_position: Gtk.PositionType = ...,
+        image: _Gtk3.Widget | None = ...,
+        image_position: _Gtk3.PositionType = ...,
         label: str = ...,
-        relief: Gtk.ReliefStyle = ...,
+        relief: _Gtk3.ReliefStyle = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Gtk.Widget = ...,
-        resize_mode: Gtk.ResizeMode = ...,
+        child: _Gtk3.Widget = ...,
+        resize_mode: _Gtk3.ResizeMode = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Gtk.Align = ...,
+        halign: _Gtk3.Align = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -931,20 +937,20 @@ class IconChooserButton(
         name: str = ...,
         no_show_all: bool = ...,
         opacity: float = ...,
-        parent: Gtk.Container = ...,
+        parent: _Gtk3.Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Gtk.Style | None = ...,
+        style: _Gtk3.Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Gtk.Align = ...,
+        valign: _Gtk3.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
         action_name: str | None = ...,
         action_target: GLib.Variant = ...,
-        related_action: Gtk.Action = ...,
+        related_action: _Gtk3.Action = ...,
         use_action_appearance: bool = ...,
     ): ...
     def get_dialog(self) -> IconChooserDialog: ...
@@ -952,10 +958,10 @@ class IconChooserButton(
     @classmethod
     def new(cls) -> IconChooserButton: ...
     @classmethod
-    def new_with_size(cls, icon_size: Gtk.IconSize) -> IconChooserButton: ...
+    def new_with_size(cls, icon_size: _Gtk3.IconSize) -> IconChooserButton: ...
     def set_default_category(self, category: str | None = None) -> None: ...
     def set_icon(self, icon: str | None = None) -> None: ...
-    def set_icon_size(self, icon_size: Gtk.IconSize) -> None: ...
+    def set_icon_size(self, icon_size: _Gtk3.IconSize) -> None: ...
 
 class IconChooserButtonClass(GObject.GPointer):
     """
@@ -966,9 +972,9 @@ class IconChooserButtonClass(GObject.GPointer):
         IconChooserButtonClass()
     """
 
-    parent_class: Gtk.ButtonClass = ...
+    parent_class: _Gtk3.ButtonClass = ...
 
-class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
+class IconChooserDialog(GtkWindow, Atk.ImplementorIface, _Gtk3.Buildable):
     """
     :Constructors:
 
@@ -1240,8 +1246,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         default_icon: str
         icon_size: IconSize
         accept_focus: bool
-        application: Gtk.Application | None
-        attached_to: Gtk.Widget | None
+        application: _Gtk3.Application | None
+        attached_to: _Gtk3.Widget | None
         decorated: bool
         default_height: int
         default_width: int
@@ -1249,7 +1255,7 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -1262,26 +1268,26 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
-        transient_for: Gtk.Window | None
-        type: Gtk.WindowType
-        type_hint: Gdk.WindowTypeHint
+        transient_for: _Gtk3.Window | None
+        type: _Gtk3.WindowType
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
-        window_position: Gtk.WindowPosition
+        window_position: _Gtk3.WindowPosition
         border_width: int
-        resize_mode: Gtk.ResizeMode
+        resize_mode: _Gtk3.ResizeMode
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
-        halign: Gtk.Align
+        halign: _Gtk3.Align
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -1299,21 +1305,21 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Gtk.Container | None
+        parent: _Gtk3.Container | None
         receives_default: bool
         scale_factor: int
         sensitive: bool
-        style: Gtk.Style
+        style: _Gtk3.Style
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Gtk.Align
+        valign: _Gtk3.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
-        child: Gtk.Widget
+        child: _Gtk3.Widget
 
     props: Props = ...
     def __init__(
@@ -1322,8 +1328,8 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         default_icon: str = ...,
         icon_size: IconSize = ...,
         accept_focus: bool = ...,
-        application: Gtk.Application | None = ...,
-        attached_to: Gtk.Widget | None = ...,
+        application: _Gtk3.Application | None = ...,
+        attached_to: _Gtk3.Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
         default_width: int = ...,
@@ -1331,7 +1337,7 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -1340,27 +1346,27 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
-        transient_for: Gtk.Window | None = ...,
-        type: Gtk.WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        transient_for: _Gtk3.Window | None = ...,
+        type: _Gtk3.WindowType = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
-        window_position: Gtk.WindowPosition = ...,
+        window_position: _Gtk3.WindowPosition = ...,
         border_width: int = ...,
-        child: Gtk.Widget = ...,
-        resize_mode: Gtk.ResizeMode = ...,
+        child: _Gtk3.Widget = ...,
+        resize_mode: _Gtk3.ResizeMode = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Gtk.Align = ...,
+        halign: _Gtk3.Align = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -1378,20 +1384,23 @@ class IconChooserDialog(GtkWindow, Atk.ImplementorIface, Gtk.Buildable):
         name: str = ...,
         no_show_all: bool = ...,
         opacity: float = ...,
-        parent: Gtk.Container = ...,
+        parent: _Gtk3.Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Gtk.Style | None = ...,
+        style: _Gtk3.Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Gtk.Align = ...,
+        valign: _Gtk3.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ): ...
     def add_button(
-        self, button: Gtk.Widget, packing: Gtk.PackType, response_id: Gtk.ResponseType
+        self,
+        button: _Gtk3.Widget,
+        packing: _Gtk3.PackType,
+        response_id: _Gtk3.ResponseType,
     ) -> None: ...
     def add_custom_category(self, name: str, icons: list[str]) -> None: ...
     def get_default_icon(self) -> str: ...
@@ -1499,7 +1508,7 @@ class MonitorBlanker(GObject.Object):
     """
 
     def are_monitors_blanked(self) -> bool: ...
-    def blank_other_monitors(self, window: Gtk.Window) -> None: ...
+    def blank_other_monitors(self, window: _Gtk3.Window) -> None: ...
     @classmethod
     def new(cls) -> MonitorBlanker: ...
     def unblank_monitors(self) -> None: ...
@@ -1798,7 +1807,7 @@ class ObjectSkeletonClass(GObject.GPointer):
 
 class ObjectSkeletonPrivate(GObject.GPointer): ...
 
-class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
+class PreferencesWindow(_Gtk3.Window, Atk.ImplementorIface, _Gtk3.Buildable):
     """
     :Constructors:
 
@@ -2058,8 +2067,8 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
 
     class Props:
         accept_focus: bool
-        application: Gtk.Application | None
-        attached_to: Gtk.Widget | None
+        application: _Gtk3.Application | None
+        attached_to: _Gtk3.Widget | None
         decorated: bool
         default_height: int
         default_width: int
@@ -2067,7 +2076,7 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -2080,26 +2089,26 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
-        transient_for: Gtk.Window | None
-        type: Gtk.WindowType
-        type_hint: Gdk.WindowTypeHint
+        transient_for: _Gtk3.Window | None
+        type: _Gtk3.WindowType
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
-        window_position: Gtk.WindowPosition
+        window_position: _Gtk3.WindowPosition
         border_width: int
-        resize_mode: Gtk.ResizeMode
+        resize_mode: _Gtk3.ResizeMode
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
-        halign: Gtk.Align
+        halign: _Gtk3.Align
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -2117,29 +2126,29 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Gtk.Container | None
+        parent: _Gtk3.Container | None
         receives_default: bool
         scale_factor: int
         sensitive: bool
-        style: Gtk.Style
+        style: _Gtk3.Style
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Gtk.Align
+        valign: _Gtk3.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
-        child: Gtk.Widget
+        child: _Gtk3.Widget
 
     props: Props = ...
-    parent_instance: Gtk.Window = ...
+    parent_instance: _Gtk3.Window = ...
     def __init__(
         self,
         accept_focus: bool = ...,
-        application: Gtk.Application | None = ...,
-        attached_to: Gtk.Widget | None = ...,
+        application: _Gtk3.Application | None = ...,
+        attached_to: _Gtk3.Widget | None = ...,
         decorated: bool = ...,
         default_height: int = ...,
         default_width: int = ...,
@@ -2147,7 +2156,7 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -2156,27 +2165,27 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
-        transient_for: Gtk.Window | None = ...,
-        type: Gtk.WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        transient_for: _Gtk3.Window | None = ...,
+        type: _Gtk3.WindowType = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
-        window_position: Gtk.WindowPosition = ...,
+        window_position: _Gtk3.WindowPosition = ...,
         border_width: int = ...,
-        child: Gtk.Widget = ...,
-        resize_mode: Gtk.ResizeMode = ...,
+        child: _Gtk3.Widget = ...,
+        resize_mode: _Gtk3.ResizeMode = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Gtk.Align = ...,
+        halign: _Gtk3.Align = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -2194,20 +2203,20 @@ class PreferencesWindow(Gtk.Window, Atk.ImplementorIface, Gtk.Buildable):
         name: str = ...,
         no_show_all: bool = ...,
         opacity: float = ...,
-        parent: Gtk.Container = ...,
+        parent: _Gtk3.Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Gtk.Style | None = ...,
+        style: _Gtk3.Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Gtk.Align = ...,
+        valign: _Gtk3.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ): ...
-    def add_button(self, button: Gtk.Widget, pack_type: Gtk.PackType) -> None: ...
-    def add_page(self, widget: Gtk.Widget, name: str, title: str) -> None: ...
+    def add_button(self, button: _Gtk3.Widget, pack_type: _Gtk3.PackType) -> None: ...
+    def add_page(self, widget: _Gtk3.Widget, name: str, title: str) -> None: ...
     def do_close(self) -> None: ...
     @classmethod
     def new(cls) -> PreferencesWindow: ...
@@ -2221,10 +2230,10 @@ class PreferencesWindowClass(GObject.GPointer):
         PreferencesWindowClass()
     """
 
-    parent_class: Gtk.WindowClass = ...
+    parent_class: _Gtk3.WindowClass = ...
     close: Callable[[PreferencesWindow], None] = ...
 
-class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
+class StackSidebar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
     :Constructors:
 
@@ -2409,18 +2418,18 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
     """
 
     class Props:
-        stack: Gtk.Stack | None
+        stack: _Gtk3.Stack | None
         border_width: int
-        resize_mode: Gtk.ResizeMode
+        resize_mode: _Gtk3.ResizeMode
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
-        halign: Gtk.Align
+        halign: _Gtk3.Align
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -2438,36 +2447,36 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Gtk.Container | None
+        parent: _Gtk3.Container | None
         receives_default: bool
         scale_factor: int
         sensitive: bool
-        style: Gtk.Style
+        style: _Gtk3.Style
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Gtk.Align
+        valign: _Gtk3.Align
         vexpand: bool
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
-        child: Gtk.Widget
+        window: _Gdk3.Window | None
+        child: _Gtk3.Widget
 
     props: Props = ...
     def __init__(
         self,
-        stack: Gtk.Stack = ...,
+        stack: _Gtk3.Stack = ...,
         border_width: int = ...,
-        child: Gtk.Widget = ...,
-        resize_mode: Gtk.ResizeMode = ...,
+        child: _Gtk3.Widget = ...,
+        resize_mode: _Gtk3.ResizeMode = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Gtk.Align = ...,
+        halign: _Gtk3.Align = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -2485,22 +2494,22 @@ class StackSidebar(Gtk.Bin, Atk.ImplementorIface, Gtk.Buildable):
         name: str = ...,
         no_show_all: bool = ...,
         opacity: float = ...,
-        parent: Gtk.Container = ...,
+        parent: _Gtk3.Container = ...,
         receives_default: bool = ...,
         sensitive: bool = ...,
-        style: Gtk.Style | None = ...,
+        style: _Gtk3.Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Gtk.Align = ...,
+        valign: _Gtk3.Align = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ): ...
-    def get_stack(self) -> Gtk.Stack | None: ...
+    def get_stack(self) -> _Gtk3.Stack | None: ...
     @classmethod
     def new(cls) -> StackSidebar: ...
-    def set_stack(self, stack: Gtk.Stack) -> None: ...
+    def set_stack(self, stack: _Gtk3.Stack) -> None: ...
 
 class StackSidebarClass(GObject.GPointer):
     """
@@ -2511,7 +2520,7 @@ class StackSidebarClass(GObject.GPointer):
         StackSidebarClass()
     """
 
-    parent_class: Gtk.BinClass = ...
+    parent_class: _Gtk3.BinClass = ...
 
 class StatusIcon(GObject.Object):
     """
@@ -2548,22 +2557,22 @@ class StatusIcon(GObject.Object):
     class Props:
         icon_size: int
         name: str
-        primary_menu: Gtk.Widget
-        secondary_menu: Gtk.Widget
+        primary_menu: _Gtk3.Widget
+        secondary_menu: _Gtk3.Widget
 
     props: Props = ...
     def __init__(
         self,
         icon_size: int = ...,
         name: str = ...,
-        primary_menu: Gtk.Widget | None = ...,
-        secondary_menu: Gtk.Widget | None = ...,
+        primary_menu: _Gtk3.Widget | None = ...,
+        secondary_menu: _Gtk3.Widget | None = ...,
     ): ...
     @staticmethod
     def any_monitors() -> bool: ...
     def get_icon_size(self) -> int: ...
-    def get_primary_menu(self) -> Gtk.Widget: ...
-    def get_secondary_menu(self) -> Gtk.Widget: ...
+    def get_primary_menu(self) -> _Gtk3.Widget: ...
+    def get_secondary_menu(self) -> _Gtk3.Widget: ...
     def get_state(self) -> StatusIconState: ...
     def get_visible(self) -> bool: ...
     @classmethod
@@ -2572,7 +2581,7 @@ class StatusIcon(GObject.Object):
     def new_with_name(cls, name: str) -> StatusIcon: ...
     def popup_menu(
         self,
-        menu: Gtk.Menu | None,
+        menu: _Gtk3.Menu | None,
         x: int,
         y: int,
         button: int,
@@ -2583,8 +2592,8 @@ class StatusIcon(GObject.Object):
     def set_label(self, label: str) -> None: ...
     def set_metadata(self, metadata: str | None = None) -> None: ...
     def set_name(self, name: str) -> None: ...
-    def set_primary_menu(self, menu: Gtk.Menu | None = None) -> None: ...
-    def set_secondary_menu(self, menu: Gtk.Menu | None = None) -> None: ...
+    def set_primary_menu(self, menu: _Gtk3.Menu | None = None) -> None: ...
+    def set_secondary_menu(self, menu: _Gtk3.Menu | None = None) -> None: ...
     def set_tooltip_text(self, tooltip_text: str) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
@@ -2984,17 +2993,17 @@ class StyleManager(GObject.Object):
     """
 
     class Props:
-        widget: Gtk.Widget
+        widget: _Gtk3.Widget
 
     props: Props = ...
-    def __init__(self, widget: Gtk.Widget = ...): ...
-    def get_widget(self) -> Gtk.Widget: ...
+    def __init__(self, widget: _Gtk3.Widget = ...): ...
+    def get_widget(self) -> _Gtk3.Widget: ...
     @classmethod
     def new(cls) -> StyleManager: ...
     def remove_style_property(self, name: str) -> None: ...
     def set_from_pango_font_string(self, desc_string: str) -> None: ...
     def set_style_property(self, name: str, value: str) -> None: ...
-    def set_widget(self, widget: Gtk.Widget) -> None: ...
+    def set_widget(self, widget: _Gtk3.Widget) -> None: ...
 
 class StyleManagerClass(GObject.GPointer):
     """
@@ -3233,22 +3242,22 @@ class VisibilityGroup(GObject.GBoxed):
         new(visible:bool, sensitive:bool, widgets:list=None) -> XApp.VisibilityGroup
     """
 
-    widgets: list[Gtk.Widget] = ...
+    widgets: list[_Gtk3.Widget] = ...
     visible: bool = ...
     sensitive: bool = ...
-    def add_widget(self, widget: Gtk.Widget) -> None: ...
+    def add_widget(self, widget: _Gtk3.Widget) -> None: ...
     def get_sensitive(self) -> bool: ...
     def get_visible(self) -> bool: ...
-    def get_widgets(self) -> list[Gtk.Widget]: ...
+    def get_widgets(self) -> list[_Gtk3.Widget]: ...
     def hide(self) -> None: ...
     @classmethod
     def new(
-        cls, visible: bool, sensitive: bool, widgets: list[Gtk.Widget] | None = None
+        cls, visible: bool, sensitive: bool, widgets: list[_Gtk3.Widget] | None = None
     ) -> VisibilityGroup: ...
-    def remove_widget(self, widget: Gtk.Widget) -> bool: ...
+    def remove_widget(self, widget: _Gtk3.Widget) -> bool: ...
     def set_sensitive(self, sensitive: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
-    def set_widgets(self, widgets: list[Gtk.Widget] | None = None) -> None: ...
+    def set_widgets(self, widgets: list[_Gtk3.Widget] | None = None) -> None: ...
     def show(self) -> None: ...
 
 # override

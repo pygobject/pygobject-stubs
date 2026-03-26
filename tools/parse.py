@@ -1,5 +1,7 @@
 from typing import cast
+from typing import Final
 from typing import TypeAlias
+from typing_extensions import Self
 
 import ast
 import re
@@ -20,19 +22,36 @@ class Import:
         return f"import {self.module}{suffix}"
 
 
+_versioned_import_re: Final = re.compile(r"^_(?P<name>\w+)\d+$")
+
+
 @dataclass(slots=True)
 class FromImport:
     module: str
     name: str
     import_as: str | None = None
+    versioned_import: str | None = None
 
     @property
     def symbol(self) -> str:
-        return self.import_as or self.name
+        return self.versioned_import or self.import_as or self.name
 
     def __str__(self) -> str:
         suffix = "" if self.import_as is None else f" as {self.import_as}"
-        return f"from {self.module} import {self.name}{suffix}"
+        return f"from {self.module} import {self.versioned_import or self.name}{suffix}"
+
+    @classmethod
+    def from_ast(cls, node: ast.ImportFrom, alias: ast.alias, /) -> Self:
+        name = alias.name
+        pyi_import: str | None = None
+
+        if node.module == "gi.repository" and (
+            match := _versioned_import_re.match(name)
+        ):
+            pyi_import = alias.name
+            name = match.group("name")
+
+        return cls(cast("str", node.module), name, alias.asname, pyi_import)
 
 
 Overrides: TypeAlias = dict[str, str]
@@ -194,10 +213,7 @@ def _generate_result(root: ast.Module, overridden_symbols: list[str]) -> ParseRe
         if isinstance(child, ast.Import):
             imports.extend(Import(module.name, module.asname) for module in child.names)
         if isinstance(child, ast.ImportFrom):
-            imports.extend(
-                FromImport(cast("str", child.module), alias.name, alias.asname)
-                for alias in child.names
-            )
+            imports.extend(FromImport.from_ast(child, alias) for alias in child.names)
         if not isinstance(child, OverridableSymbols):
             print(f"Skipped root.{child}")
             continue

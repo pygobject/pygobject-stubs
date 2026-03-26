@@ -3,13 +3,13 @@ from typing import TypeVar
 
 from collections.abc import Callable
 
-from gi.repository import Gdk
+from gi.repository import _Gdk4
 from gi.repository import GObject
 from gi.repository import Pango
 
 T = TypeVar("T")
 
-class WaylandDevice(Gdk.Device):
+class WaylandDevice(_Gdk4.Device):
     """
     :Constructors:
 
@@ -46,36 +46,36 @@ class WaylandDevice(Gdk.Device):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.Device.Props):
+    class Props(_Gdk4.Device.Props):
         active_layout_index: int
         caps_lock_state: bool
         direction: Pango.Direction
-        display: Gdk.Display
+        display: _Gdk4.Display
         has_bidi_layouts: bool
         has_cursor: bool
         layout_names: list[str] | None
-        modifier_state: Gdk.ModifierType
+        modifier_state: _Gdk4.ModifierType
         n_axes: int
         name: str
         num_lock_state: bool
         num_touches: int
         product_id: str | None
         scroll_lock_state: bool
-        seat: Gdk.Seat
-        source: Gdk.InputSource
-        tool: Gdk.DeviceTool | None
+        seat: _Gdk4.Seat
+        source: _Gdk4.InputSource
+        tool: _Gdk4.DeviceTool | None
         vendor_id: str | None
 
     props: Props = ...
     def __init__(
         self,
-        display: Gdk.Display = ...,
+        display: _Gdk4.Display = ...,
         has_cursor: bool = ...,
         name: str = ...,
         num_touches: int = ...,
         product_id: str = ...,
-        seat: Gdk.Seat = ...,
-        source: Gdk.InputSource = ...,
+        seat: _Gdk4.Seat = ...,
+        source: _Gdk4.InputSource = ...,
         vendor_id: str = ...,
     ) -> None: ...
     def get_node_path(self) -> str | None: ...
@@ -83,7 +83,7 @@ class WaylandDevice(Gdk.Device):
 
 class WaylandDeviceClass(GObject.GPointer): ...
 
-class WaylandDisplay(Gdk.Display):
+class WaylandDisplay(_Gdk4.Display):
     """
     :Constructors:
 
@@ -110,9 +110,9 @@ class WaylandDisplay(Gdk.Display):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.Display.Props):
+    class Props(_Gdk4.Display.Props):
         composited: bool
-        dmabuf_formats: Gdk.DmabufFormats
+        dmabuf_formats: _Gdk4.DmabufFormats
         input_shapes: bool
         rgba: bool
         shadow_width: bool
@@ -126,7 +126,7 @@ class WaylandDisplay(Gdk.Display):
 
 class WaylandDisplayClass(GObject.GPointer): ...
 
-class WaylandGLContext(Gdk.GLContext):
+class WaylandGLContext(_Gdk4.GLContext):
     """
     :Constructors:
 
@@ -148,25 +148,25 @@ class WaylandGLContext(Gdk.GLContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.GLContext.Props):
-        allowed_apis: Gdk.GLAPI
-        api: Gdk.GLAPI
-        shared_context: Gdk.GLContext | None
-        display: Gdk.Display | None
-        surface: Gdk.Surface | None
+    class Props(_Gdk4.GLContext.Props):
+        allowed_apis: _Gdk4.GLAPI
+        api: _Gdk4.GLAPI
+        shared_context: _Gdk4.GLContext | None
+        display: _Gdk4.Display | None
+        surface: _Gdk4.Surface | None
 
     props: Props = ...
     def __init__(
         self,
-        allowed_apis: Gdk.GLAPI = ...,
-        shared_context: Gdk.GLContext = ...,
-        display: Gdk.Display = ...,
-        surface: Gdk.Surface = ...,
+        allowed_apis: _Gdk4.GLAPI = ...,
+        shared_context: _Gdk4.GLContext = ...,
+        display: _Gdk4.Display = ...,
+        surface: _Gdk4.Surface = ...,
     ) -> None: ...
 
 class WaylandGLContextClass(GObject.GPointer): ...
 
-class WaylandMonitor(Gdk.Monitor):
+class WaylandMonitor(_Gdk4.Monitor):
     """
     :Constructors:
 
@@ -197,27 +197,27 @@ class WaylandMonitor(Gdk.Monitor):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.Monitor.Props):
+    class Props(_Gdk4.Monitor.Props):
         connector: str | None
         description: str | None
-        display: Gdk.Display
-        geometry: Gdk.Rectangle
+        display: _Gdk4.Display
+        geometry: _Gdk4.Rectangle
         height_mm: int
         manufacturer: str | None
         model: str | None
         refresh_rate: int
         scale: float
         scale_factor: int
-        subpixel_layout: Gdk.SubpixelLayout
+        subpixel_layout: _Gdk4.SubpixelLayout
         valid: bool
         width_mm: int
 
     props: Props = ...
-    def __init__(self, display: Gdk.Display = ...) -> None: ...
+    def __init__(self, display: _Gdk4.Display = ...) -> None: ...
 
 class WaylandMonitorClass(GObject.GPointer): ...
 
-class WaylandPopup(WaylandSurface, Gdk.Popup):
+class WaylandPopup(WaylandSurface, _Gdk4.Popup):
     """
     :Constructors:
 
@@ -248,28 +248,28 @@ class WaylandPopup(WaylandSurface, Gdk.Popup):
       notify (GParam)
     """
     class Props(WaylandSurface.Props):
-        cursor: Gdk.Cursor | None
-        display: Gdk.Display
-        frame_clock: Gdk.FrameClock
+        cursor: _Gdk4.Cursor | None
+        display: _Gdk4.Display
+        frame_clock: _Gdk4.FrameClock
         height: int
         mapped: bool
         scale: float
         scale_factor: int
         width: int
         autohide: bool
-        parent: Gdk.Surface | None
+        parent: _Gdk4.Surface | None
 
     props: Props = ...
     def __init__(
         self,
-        cursor: Gdk.Cursor | None = ...,
-        display: Gdk.Display = ...,
-        frame_clock: Gdk.FrameClock = ...,
+        cursor: _Gdk4.Cursor | None = ...,
+        display: _Gdk4.Display = ...,
+        frame_clock: _Gdk4.FrameClock = ...,
         autohide: bool = ...,
-        parent: Gdk.Surface = ...,
+        parent: _Gdk4.Surface = ...,
     ) -> None: ...
 
-class WaylandSeat(Gdk.Seat):
+class WaylandSeat(_Gdk4.Seat):
     """
     :Constructors:
 
@@ -291,15 +291,15 @@ class WaylandSeat(Gdk.Seat):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.Seat.Props):
-        display: Gdk.Display
+    class Props(_Gdk4.Seat.Props):
+        display: _Gdk4.Display
 
     props: Props = ...
-    def __init__(self, display: Gdk.Display = ...) -> None: ...
+    def __init__(self, display: _Gdk4.Display = ...) -> None: ...
 
 class WaylandSeatClass(GObject.GPointer): ...
 
-class WaylandSurface(Gdk.Surface):
+class WaylandSurface(_Gdk4.Surface):
     """
     :Constructors:
 
@@ -329,10 +329,10 @@ class WaylandSurface(Gdk.Surface):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gdk.Surface.Props):
-        cursor: Gdk.Cursor | None
-        display: Gdk.Display
-        frame_clock: Gdk.FrameClock
+    class Props(_Gdk4.Surface.Props):
+        cursor: _Gdk4.Cursor | None
+        display: _Gdk4.Display
+        frame_clock: _Gdk4.FrameClock
         height: int
         mapped: bool
         scale: float
@@ -342,13 +342,13 @@ class WaylandSurface(Gdk.Surface):
     props: Props = ...
     def __init__(
         self,
-        cursor: Gdk.Cursor | None = ...,
-        display: Gdk.Display = ...,
-        frame_clock: Gdk.FrameClock = ...,
+        cursor: _Gdk4.Cursor | None = ...,
+        display: _Gdk4.Display = ...,
+        frame_clock: _Gdk4.FrameClock = ...,
     ) -> None: ...
     def force_next_commit(self) -> None: ...
 
-class WaylandToplevel(WaylandSurface, Gdk.Toplevel):
+class WaylandToplevel(WaylandSurface, _Gdk4.Toplevel):
     """
     :Constructors:
 
@@ -382,42 +382,42 @@ class WaylandToplevel(WaylandSurface, Gdk.Toplevel):
       notify (GParam)
     """
     class Props(WaylandSurface.Props):
-        cursor: Gdk.Cursor | None
-        display: Gdk.Display
-        frame_clock: Gdk.FrameClock
+        cursor: _Gdk4.Cursor | None
+        display: _Gdk4.Display
+        frame_clock: _Gdk4.FrameClock
         height: int
         mapped: bool
         scale: float
         scale_factor: int
         width: int
-        capabilities: Gdk.ToplevelCapabilities
+        capabilities: _Gdk4.ToplevelCapabilities
         decorated: bool
         deletable: bool
-        fullscreen_mode: Gdk.FullscreenMode
-        gravity: Gdk.Gravity
+        fullscreen_mode: _Gdk4.FullscreenMode
+        gravity: _Gdk4.Gravity
         icon_list: None
         modal: bool
         shortcuts_inhibited: bool
         startup_id: str
-        state: Gdk.ToplevelState
+        state: _Gdk4.ToplevelState
         title: str
-        transient_for: Gdk.Surface
+        transient_for: _Gdk4.Surface
 
     props: Props = ...
     def __init__(
         self,
-        cursor: Gdk.Cursor | None = ...,
-        display: Gdk.Display = ...,
-        frame_clock: Gdk.FrameClock = ...,
+        cursor: _Gdk4.Cursor | None = ...,
+        display: _Gdk4.Display = ...,
+        frame_clock: _Gdk4.FrameClock = ...,
         decorated: bool = ...,
         deletable: bool = ...,
-        fullscreen_mode: Gdk.FullscreenMode = ...,
-        gravity: Gdk.Gravity = ...,
+        fullscreen_mode: _Gdk4.FullscreenMode = ...,
+        gravity: _Gdk4.Gravity = ...,
         icon_list: None = ...,
         modal: bool = ...,
         startup_id: str = ...,
         title: str = ...,
-        transient_for: Gdk.Surface = ...,
+        transient_for: _Gdk4.Surface = ...,
     ) -> None: ...
     def drop_exported_handle(self, handle: str) -> None: ...
     def export_handle(self, callback: Callable[..., None], *user_data: Any) -> bool: ...

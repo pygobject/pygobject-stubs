@@ -8,8 +8,8 @@ from collections.abc import Iterator
 from collections.abc import Sequence
 
 import cairo
+from gi.repository import _Gdk3
 from gi.repository import Atk
-from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import GLib
@@ -297,99 +297,103 @@ _overrides_module = ...  # FIXME Constant
 _version: str = "3.0"
 
 def accel_groups_activate(
-    object: GObject.Object, accel_key: int, accel_mods: Gdk.ModifierType
+    object: GObject.Object, accel_key: int, accel_mods: _Gdk3.ModifierType
 ) -> bool: ...
 def accel_groups_from_object(object: GObject.Object) -> list[AccelGroup]: ...
-def accelerator_get_default_mod_mask() -> Gdk.ModifierType: ...
+def accelerator_get_default_mod_mask() -> _Gdk3.ModifierType: ...
 def accelerator_get_label(
-    accelerator_key: int, accelerator_mods: Gdk.ModifierType
+    accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
 ) -> str: ...
 def accelerator_get_label_with_keycode(
-    display: Gdk.Display | None,
+    display: _Gdk3.Display | None,
     accelerator_key: int,
     keycode: int,
-    accelerator_mods: Gdk.ModifierType,
+    accelerator_mods: _Gdk3.ModifierType,
 ) -> str: ...
 def accelerator_name(
-    accelerator_key: int, accelerator_mods: Gdk.ModifierType
+    accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
 ) -> str: ...
 def accelerator_name_with_keycode(
-    display: Gdk.Display | None,
+    display: _Gdk3.Display | None,
     accelerator_key: int,
     keycode: int,
-    accelerator_mods: Gdk.ModifierType,
+    accelerator_mods: _Gdk3.ModifierType,
 ) -> str: ...
-def accelerator_parse(accelerator: str) -> tuple[int, Gdk.ModifierType]: ...
+def accelerator_parse(accelerator: str) -> tuple[int, _Gdk3.ModifierType]: ...
 def accelerator_parse_with_keycode(
     accelerator: str,
-) -> tuple[int, list[int], Gdk.ModifierType]: ...
-def accelerator_set_default_mod_mask(default_mod_mask: Gdk.ModifierType) -> None: ...
-def accelerator_valid(keyval: int, modifiers: Gdk.ModifierType) -> bool: ...
-def alternative_dialog_button_order(screen: Gdk.Screen | None = None) -> bool: ...
+) -> tuple[int, list[int], _Gdk3.ModifierType]: ...
+def accelerator_set_default_mod_mask(default_mod_mask: _Gdk3.ModifierType) -> None: ...
+def accelerator_valid(keyval: int, modifiers: _Gdk3.ModifierType) -> bool: ...
+def alternative_dialog_button_order(screen: _Gdk3.Screen | None = None) -> bool: ...
 def binding_entry_add_signal_from_string(
     binding_set: BindingSet, signal_desc: str
 ) -> GLib.TokenType: ...
 def binding_entry_add_signall(
     binding_set: BindingSet,
     keyval: int,
-    modifiers: Gdk.ModifierType,
+    modifiers: _Gdk3.ModifierType,
     signal_name: str,
     binding_args: list[BindingArg],
 ) -> None: ...
 def binding_entry_remove(
-    binding_set: BindingSet, keyval: int, modifiers: Gdk.ModifierType
+    binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
 ) -> None: ...
 def binding_entry_skip(
-    binding_set: BindingSet, keyval: int, modifiers: Gdk.ModifierType
+    binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
 ) -> None: ...
 def binding_set_find(set_name: str) -> BindingSet | None: ...
 def bindings_activate(
-    object: GObject.Object, keyval: int, modifiers: Gdk.ModifierType
+    object: GObject.Object, keyval: int, modifiers: _Gdk3.ModifierType
 ) -> bool: ...
-def bindings_activate_event(object: GObject.Object, event: Gdk.EventKey) -> bool: ...
+def bindings_activate_event(object: GObject.Object, event: _Gdk3.EventKey) -> bool: ...
 def builder_error_quark() -> int: ...
 def cairo_should_draw_window(
-    cr: cairo.Context[_SomeSurface], window: Gdk.Window
+    cr: cairo.Context[_SomeSurface], window: _Gdk3.Window
 ) -> bool: ...
 def cairo_transform_to_window(
-    cr: cairo.Context[_SomeSurface], widget: Widget, window: Gdk.Window
+    cr: cairo.Context[_SomeSurface], widget: Widget, window: _Gdk3.Window
 ) -> None: ...
 def check_version(
     required_major: int, required_minor: int, required_micro: int
 ) -> str | None: ...
 def css_provider_error_quark() -> int: ...
-def device_grab_add(widget: Widget, device: Gdk.Device, block_others: bool) -> None: ...
-def device_grab_remove(widget: Widget, device: Gdk.Device) -> None: ...
+def device_grab_add(
+    widget: Widget, device: _Gdk3.Device, block_others: bool
+) -> None: ...
+def device_grab_remove(widget: Widget, device: _Gdk3.Device) -> None: ...
 def disable_setlocale() -> None: ...
 def distribute_natural_allocation(
     extra_space: int, n_requested_sizes: int, sizes: RequestedSize
 ) -> int: ...
-def drag_cancel(context: Gdk.DragContext) -> None: ...
+def drag_cancel(context: _Gdk3.DragContext) -> None: ...
 def drag_finish(
-    context: Gdk.DragContext, success: bool, del_: bool, time_: int
+    context: _Gdk3.DragContext, success: bool, del_: bool, time_: int
 ) -> None: ...
-def drag_get_source_widget(context: Gdk.DragContext) -> Widget | None: ...
-def drag_set_icon_default(context: Gdk.DragContext) -> None: ...
+def drag_get_source_widget(context: _Gdk3.DragContext) -> Widget | None: ...
+def drag_set_icon_default(context: _Gdk3.DragContext) -> None: ...
 def drag_set_icon_gicon(
-    context: Gdk.DragContext, icon: Gio.Icon, hot_x: int, hot_y: int
+    context: _Gdk3.DragContext, icon: Gio.Icon, hot_x: int, hot_y: int
 ) -> None: ...
 def drag_set_icon_name(
-    context: Gdk.DragContext, icon_name: str, hot_x: int, hot_y: int
+    context: _Gdk3.DragContext, icon_name: str, hot_x: int, hot_y: int
 ) -> None: ...
 def drag_set_icon_pixbuf(
-    context: Gdk.DragContext, pixbuf: GdkPixbuf.Pixbuf, hot_x: int, hot_y: int
+    context: _Gdk3.DragContext, pixbuf: GdkPixbuf.Pixbuf, hot_x: int, hot_y: int
 ) -> None: ...
 def drag_set_icon_stock(
-    context: Gdk.DragContext, stock_id: str, hot_x: int, hot_y: int
+    context: _Gdk3.DragContext, stock_id: str, hot_x: int, hot_y: int
 ) -> None: ...
-def drag_set_icon_surface(context: Gdk.DragContext, surface: cairo.Surface) -> None: ...
+def drag_set_icon_surface(
+    context: _Gdk3.DragContext, surface: cairo.Surface
+) -> None: ...
 def drag_set_icon_widget(
-    context: Gdk.DragContext, widget: Widget, hot_x: int, hot_y: int
+    context: _Gdk3.DragContext, widget: Widget, hot_x: int, hot_y: int
 ) -> None: ...
 def draw_insertion_cursor(
     widget: Widget,
     cr: cairo.Context[_SomeSurface],
-    location: Gdk.Rectangle,
+    location: _Gdk3.Rectangle,
     is_primary: bool,
     direction: TextDirection,
     draw_arrow: bool,
@@ -398,13 +402,13 @@ def events_pending() -> bool: ...
 def false() -> bool: ...
 def file_chooser_error_quark() -> int: ...
 def get_binary_age() -> int: ...
-def get_current_event() -> Gdk.Event | None: ...
-def get_current_event_device() -> Gdk.Device | None: ...
-def get_current_event_state() -> tuple[bool, Gdk.ModifierType]: ...
+def get_current_event() -> _Gdk3.Event | None: ...
+def get_current_event_device() -> _Gdk3.Device | None: ...
+def get_current_event_state() -> tuple[bool, _Gdk3.ModifierType]: ...
 def get_current_event_time() -> int: ...
 def get_debug_flags() -> int: ...
 def get_default_language() -> Pango.Language: ...
-def get_event_widget(event: Gdk.Event) -> Widget | None: ...
+def get_event_widget(event: _Gdk3.Event) -> Widget | None: ...
 def get_interface_age() -> int: ...
 def get_locale_direction() -> TextDirection: ...
 def get_major_version() -> int: ...
@@ -432,7 +436,7 @@ def key_snooper_remove(snooper_handler_id: int) -> None: ...
 
 # override
 def main() -> None: ...
-def main_do_event(event: Gdk.Event) -> None: ...
+def main_do_event(event: _Gdk3.Event) -> None: ...
 def main_iteration() -> bool: ...
 def main_iteration_do(blocking: bool) -> bool: ...
 def main_level() -> int: ...
@@ -602,7 +606,7 @@ def paint_resize_grip(
     state_type: StateType,
     widget: Widget | None,
     detail: str | None,
-    edge: Gdk.WindowEdge,
+    edge: _Gdk3.WindowEdge,
     x: int,
     y: int,
     width: int,
@@ -696,7 +700,7 @@ def print_run_page_setup_dialog_async(
     done_cb: Callable[..., None],
     *data: Any,
 ) -> None: ...
-def propagate_event(widget: Widget, event: Gdk.Event) -> None: ...
+def propagate_event(widget: Widget, event: _Gdk3.Event) -> None: ...
 def rc_add_default_file(filename: str) -> None: ...
 def rc_find_module_in_path(module_file: str) -> str: ...
 def rc_find_pixmap_in_path(
@@ -715,10 +719,10 @@ def rc_get_style_by_paths(
 ) -> Style | None: ...
 def rc_get_theme_dir() -> str: ...
 def rc_parse(filename: str) -> None: ...
-def rc_parse_color(scanner: GLib.Scanner) -> tuple[int, Gdk.Color]: ...
+def rc_parse_color(scanner: GLib.Scanner) -> tuple[int, _Gdk3.Color]: ...
 def rc_parse_color_full(
     scanner: GLib.Scanner, style: RcStyle | None = None
-) -> tuple[int, Gdk.Color]: ...
+) -> tuple[int, _Gdk3.Color]: ...
 def rc_parse_priority(scanner: GLib.Scanner, priority: PathPriorityType) -> int: ...
 def rc_parse_state(scanner: GLib.Scanner) -> tuple[int, StateType]: ...
 def rc_parse_string(rc_string: str) -> None: ...
@@ -769,7 +773,7 @@ def render_background(
 ) -> None: ...
 def render_background_get_clip(
     context: StyleContext, x: float, y: float, width: float, height: float
-) -> Gdk.Rectangle: ...
+) -> _Gdk3.Rectangle: ...
 def render_check(
     context: StyleContext,
     cr: cairo.Context[_SomeSurface],
@@ -890,24 +894,24 @@ def render_slider(
 ) -> None: ...
 def rgb_to_hsv(r: float, g: float, b: float) -> tuple[float, float, float]: ...
 def selection_add_target(
-    widget: Widget, selection: Gdk.Atom, target: Gdk.Atom, info: int
+    widget: Widget, selection: _Gdk3.Atom, target: _Gdk3.Atom, info: int
 ) -> None: ...
 def selection_add_targets(
-    widget: Widget, selection: Gdk.Atom, targets: Sequence[TargetEntry]
+    widget: Widget, selection: _Gdk3.Atom, targets: Sequence[TargetEntry]
 ) -> None: ...
-def selection_clear_targets(widget: Widget, selection: Gdk.Atom) -> None: ...
+def selection_clear_targets(widget: Widget, selection: _Gdk3.Atom) -> None: ...
 def selection_convert(
-    widget: Widget, selection: Gdk.Atom, target: Gdk.Atom, time_: int
+    widget: Widget, selection: _Gdk3.Atom, target: _Gdk3.Atom, time_: int
 ) -> bool: ...
 def selection_owner_set(
-    widget: Widget | None, selection: Gdk.Atom, time_: int
+    widget: Widget | None, selection: _Gdk3.Atom, time_: int
 ) -> bool: ...
 def selection_owner_set_for_display(
-    display: Gdk.Display, widget: Widget | None, selection: Gdk.Atom, time_: int
+    display: _Gdk3.Display, widget: Widget | None, selection: _Gdk3.Atom, time_: int
 ) -> bool: ...
 def selection_remove_all(widget: Widget) -> None: ...
 def set_debug_flags(flags: int) -> None: ...
-def show_uri(screen: Gdk.Screen | None, uri: str, timestamp: int) -> bool: ...
+def show_uri(screen: _Gdk3.Screen | None, uri: str, timestamp: int) -> bool: ...
 def show_uri_on_window(parent: Window | None, uri: str, timestamp: int) -> bool: ...
 def stock_add(items: Sequence[StockItem]) -> None: ...
 def stock_add_static(items: Sequence[StockItem]) -> None: ...
@@ -918,12 +922,12 @@ def stock_set_translate_func(
 ) -> None: ...
 def target_table_free(targets: Sequence[TargetEntry]) -> None: ...
 def target_table_new_from_list(list: TargetList) -> list[TargetEntry]: ...
-def targets_include_image(targets: Sequence[Gdk.Atom], writable: bool) -> bool: ...
+def targets_include_image(targets: Sequence[_Gdk3.Atom], writable: bool) -> bool: ...
 def targets_include_rich_text(
-    targets: Sequence[Gdk.Atom], buffer: TextBuffer
+    targets: Sequence[_Gdk3.Atom], buffer: TextBuffer
 ) -> bool: ...
-def targets_include_text(targets: Sequence[Gdk.Atom]) -> bool: ...
-def targets_include_uri(targets: Sequence[Gdk.Atom]) -> bool: ...
+def targets_include_text(targets: Sequence[_Gdk3.Atom]) -> bool: ...
+def targets_include_uri(targets: Sequence[_Gdk3.Atom]) -> bool: ...
 def test_create_simple_window(window_title: str, dialog_text: str) -> Widget: ...
 def test_find_label(widget: Widget, label_pattern: str) -> Widget: ...
 def test_find_sibling(base_widget: Widget, widget_type: type) -> Widget: ...
@@ -938,10 +942,10 @@ def test_spin_button_click(spinner: SpinButton, button: int, upwards: bool) -> b
 def test_text_get(widget: Widget) -> str: ...
 def test_text_set(widget: Widget, string: str) -> None: ...
 def test_widget_click(
-    widget: Widget, button: int, modifiers: Gdk.ModifierType
+    widget: Widget, button: int, modifiers: _Gdk3.ModifierType
 ) -> bool: ...
 def test_widget_send_key(
-    widget: Widget, keyval: int, modifiers: Gdk.ModifierType
+    widget: Widget, keyval: int, modifiers: _Gdk3.ModifierType
 ) -> bool: ...
 def test_widget_wait_for_draw(widget: Widget) -> None: ...
 def tree_get_row_drag_data(
@@ -1279,7 +1283,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -1292,13 +1296,13 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -1308,7 +1312,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -1341,7 +1345,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -1376,7 +1380,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -1385,14 +1389,14 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -1402,7 +1406,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -1515,7 +1519,7 @@ class AccelGroup(GObject.Object):
 
     class Props:
         is_locked: bool
-        modifier_mask: Gdk.ModifierType
+        modifier_mask: _Gdk3.ModifierType
 
     props: Props = ...
     parent: GObject.Object = ...
@@ -1525,31 +1529,36 @@ class AccelGroup(GObject.Object):
         accel_quark: int,
         acceleratable: GObject.Object,
         accel_key: int,
-        accel_mods: Gdk.ModifierType,
+        accel_mods: _Gdk3.ModifierType,
     ) -> bool: ...
     def connect(
         self,
         accel_key: int,
-        accel_mods: Gdk.ModifierType,
+        accel_mods: _Gdk3.ModifierType,
         accel_flags: AccelFlags,
         closure: Callable[..., Any],
     ) -> None: ...
     def connect_by_path(self, accel_path: str, closure: Callable[..., Any]) -> None: ...
     def disconnect(self, closure: Callable[..., Any] | None = None) -> bool: ...
-    def disconnect_key(self, accel_key: int, accel_mods: Gdk.ModifierType) -> bool: ...
+    def disconnect_key(
+        self, accel_key: int, accel_mods: _Gdk3.ModifierType
+    ) -> bool: ...
     def do_accel_changed(
-        self, keyval: int, modifier: Gdk.ModifierType, accel_closure: Callable[..., Any]
+        self,
+        keyval: int,
+        modifier: _Gdk3.ModifierType,
+        accel_closure: Callable[..., Any],
     ) -> None: ...
     def find(self, find_func: Callable[..., bool], *data: Any) -> AccelKey: ...
     @staticmethod
     def from_accel_closure(closure: Callable[..., Any]) -> AccelGroup | None: ...
     def get_is_locked(self) -> bool: ...
-    def get_modifier_mask(self) -> Gdk.ModifierType: ...
+    def get_modifier_mask(self) -> _Gdk3.ModifierType: ...
     def lock(self) -> None: ...
     @classmethod
     def new(cls) -> AccelGroup: ...
     def query(
-        self, accel_key: int, accel_mods: Gdk.ModifierType
+        self, accel_key: int, accel_mods: _Gdk3.ModifierType
     ) -> list[AccelGroupEntry] | None: ...
     def unlock(self) -> None: ...
 
@@ -1564,7 +1573,7 @@ class AccelGroupClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass = ...
     accel_changed: Callable[
-        [AccelGroup, int, Gdk.ModifierType, Callable[..., Any]], None
+        [AccelGroup, int, _Gdk3.ModifierType, Callable[..., Any]], None
     ] = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
@@ -1596,7 +1605,7 @@ class AccelKey(GObject.GPointer):
     """
 
     accel_key: int = ...
-    accel_mods: Gdk.ModifierType = ...
+    accel_mods: _Gdk3.ModifierType = ...
     accel_flags: int = ...
 
 class AccelLabel(Label, Atk.ImplementorIface, Buildable):
@@ -1865,7 +1874,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -1898,7 +1907,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         pattern: str
 
     props: Props = ...
@@ -1933,7 +1942,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -1966,14 +1975,14 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
-    def get_accel(self) -> tuple[int, Gdk.ModifierType]: ...
+    def get_accel(self) -> tuple[int, _Gdk3.ModifierType]: ...
     def get_accel_widget(self) -> Widget | None: ...
     def get_accel_width(self) -> int: ...
     @classmethod
     def new(cls, string: str) -> AccelLabel: ...
     def refetch(self) -> bool: ...
     def set_accel(
-        self, accelerator_key: int, accelerator_mods: Gdk.ModifierType
+        self, accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
     ) -> None: ...
     def set_accel_closure(
         self, accel_closure: Callable[..., Any] | None = None
@@ -2022,23 +2031,23 @@ class AccelMap(GObject.Object):
 
     @staticmethod
     def add_entry(
-        accel_path: str, accel_key: int, accel_mods: Gdk.ModifierType
+        accel_path: str, accel_key: int, accel_mods: _Gdk3.ModifierType
     ) -> None: ...
     @staticmethod
     def add_filter(filter_pattern: str) -> None: ...
     @staticmethod
     def change_entry(
-        accel_path: str, accel_key: int, accel_mods: Gdk.ModifierType, replace: bool
+        accel_path: str, accel_key: int, accel_mods: _Gdk3.ModifierType, replace: bool
     ) -> bool: ...
     @staticmethod
     def foreach(
         data: None,
-        foreach_func: Callable[[None, str, int, Gdk.ModifierType, bool], None],
+        foreach_func: Callable[[None, str, int, _Gdk3.ModifierType, bool], None],
     ) -> None: ...
     @staticmethod
     def foreach_unfiltered(
         data: None,
-        foreach_func: Callable[[None, str, int, Gdk.ModifierType, bool], None],
+        foreach_func: Callable[[None, str, int, _Gdk3.ModifierType, bool], None],
     ) -> None: ...
     @staticmethod
     def get() -> AccelMap: ...
@@ -2519,7 +2528,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -2552,7 +2561,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -2566,7 +2575,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -3137,7 +3146,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -3170,7 +3179,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -3193,7 +3202,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -3540,7 +3549,7 @@ class AppChooserButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -3573,7 +3582,7 @@ class AppChooserButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         content_type: str
         editing_canceled: bool
         child: Widget
@@ -3608,7 +3617,7 @@ class AppChooserButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -3955,7 +3964,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -3968,13 +3977,13 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -3984,7 +3993,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -4017,7 +4026,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         content_type: str
         startup_id: str
         child: Widget
@@ -4040,7 +4049,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -4049,14 +4058,14 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -4066,7 +4075,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -4350,7 +4359,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -4383,7 +4392,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         content_type: str
         orientation: Orientation
         child: Widget
@@ -4409,7 +4418,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -4915,7 +4924,7 @@ class ApplicationWindow(
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -4928,13 +4937,13 @@ class ApplicationWindow(
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -4944,7 +4953,7 @@ class ApplicationWindow(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -4977,7 +4986,7 @@ class ApplicationWindow(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -4997,7 +5006,7 @@ class ApplicationWindow(
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -5006,14 +5015,14 @@ class ApplicationWindow(
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -5023,7 +5032,7 @@ class ApplicationWindow(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -5272,7 +5281,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -5305,7 +5314,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     misc: Misc = ...
@@ -5322,7 +5331,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -5712,7 +5721,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -5745,7 +5754,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -5769,7 +5778,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -6110,7 +6119,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -6123,13 +6132,13 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -6139,7 +6148,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -6172,7 +6181,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -6192,7 +6201,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -6201,14 +6210,14 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -6218,7 +6227,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -6500,7 +6509,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -6533,7 +6542,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -6548,7 +6557,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -6621,7 +6630,7 @@ class BindingEntry(GObject.GPointer):
     """
 
     keyval: int = ...
-    modifiers: Gdk.ModifierType = ...
+    modifiers: _Gdk3.ModifierType = ...
     binding_set: BindingSet = ...
     destroyed: int = ...
     in_emission: int = ...
@@ -6637,17 +6646,17 @@ class BindingEntry(GObject.GPointer):
     def add_signall(
         binding_set: BindingSet,
         keyval: int,
-        modifiers: Gdk.ModifierType,
+        modifiers: _Gdk3.ModifierType,
         signal_name: str,
         binding_args: list[BindingArg],
     ) -> None: ...
     @staticmethod
     def remove(
-        binding_set: BindingSet, keyval: int, modifiers: Gdk.ModifierType
+        binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
     ) -> None: ...
     @staticmethod
     def skip(
-        binding_set: BindingSet, keyval: int, modifiers: Gdk.ModifierType
+        binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
     ) -> None: ...
 
 class BindingSet(GObject.GPointer):
@@ -6668,7 +6677,7 @@ class BindingSet(GObject.GPointer):
     current: BindingEntry = ...
     parsed: int = ...
     def activate(
-        self, keyval: int, modifiers: Gdk.ModifierType, object: GObject.Object
+        self, keyval: int, modifiers: _Gdk3.ModifierType, object: GObject.Object
     ) -> bool: ...
     def add_path(
         self, path_type: PathType, path_pattern: str, priority: PathPriorityType
@@ -7036,7 +7045,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -7069,7 +7078,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -7088,7 +7097,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -7555,7 +7564,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -7588,7 +7597,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -7616,7 +7625,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -7663,7 +7672,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
     def enter(self) -> None: ...
     def get_alignment(self) -> tuple[float, float]: ...
     def get_always_show_image(self) -> bool: ...
-    def get_event_window(self) -> Gdk.Window: ...
+    def get_event_window(self) -> _Gdk3.Window: ...
     def get_focus_on_click(self, *args, **kwargs): ...  # FIXME Function
     def get_image(self) -> Widget | None: ...
     def get_image_position(self) -> PositionType: ...
@@ -8018,7 +8027,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -8051,7 +8060,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -8071,7 +8080,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -8369,7 +8378,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -8402,7 +8411,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     widget: Widget = ...
@@ -8423,7 +8432,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -8626,7 +8635,7 @@ class CellAccessibleParent(GObject.GInterface):
     def activate(self, cell: CellAccessible) -> None: ...
     def edit(self, cell: CellAccessible) -> None: ...
     def expand_collapse(self, cell: CellAccessible) -> None: ...
-    def get_cell_area(self, cell: CellAccessible) -> Gdk.Rectangle: ...
+    def get_cell_area(self, cell: CellAccessible) -> _Gdk3.Rectangle: ...
     def get_cell_extents(
         self, cell: CellAccessible, coord_type: Atk.CoordType
     ) -> tuple[int, int, int, int]: ...
@@ -8653,7 +8662,9 @@ class CellAccessibleParentIface(GObject.GPointer):
     get_cell_extents: Callable[
         [CellAccessibleParent, CellAccessible, Atk.CoordType], tuple[int, int, int, int]
     ] = ...
-    get_cell_area: Callable[[CellAccessibleParent, CellAccessible], Gdk.Rectangle] = ...
+    get_cell_area: Callable[
+        [CellAccessibleParent, CellAccessible], _Gdk3.Rectangle
+    ] = ...
     grab_focus: Callable[[CellAccessibleParent, CellAccessible], bool] = ...
     get_child_index: Callable[[CellAccessibleParent, CellAccessible], int] = ...
     get_renderer_state: Callable[
@@ -8718,7 +8729,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        cell_area: Gdk.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
         edit_only: bool,
     ) -> bool: ...
@@ -8726,8 +8737,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         widget: Widget,
         renderer: CellRenderer,
-        event: Gdk.Event,
-        cell_area: Gdk.Rectangle,
+        event: _Gdk3.Event,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> bool: ...
     def add(self, renderer: CellRenderer) -> None: ...
@@ -8758,7 +8769,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        cell_area: Gdk.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
         edit_only: bool,
     ) -> bool: ...
@@ -8776,8 +8787,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        event: Gdk.Event,
-        cell_area: Gdk.Rectangle,
+        event: _Gdk3.Event,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> int: ...
     def do_focus(self, direction: DirectionType) -> bool: ...
@@ -8788,8 +8799,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        cell_area: Gdk.Rectangle,
-        background_area: Gdk.Rectangle,
+        cell_area: _Gdk3.Rectangle,
+        background_area: _Gdk3.Rectangle,
         callback: Callable[..., bool],
         *callback_data: Any,
     ) -> None: ...
@@ -8820,8 +8831,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         context: CellAreaContext,
         widget: Widget,
         cr: cairo.Context[_SomeSurface],
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
         paint_focus: bool,
     ) -> None: ...
@@ -8836,8 +8847,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        event: Gdk.Event,
-        cell_area: Gdk.Rectangle,
+        event: _Gdk3.Event,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> int: ...
     def find_cell_property(self, property_name: str) -> GObject.ParamSpec: ...
@@ -8847,8 +8858,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         context: CellAreaContext,
         widget: Widget,
-        cell_area: Gdk.Rectangle,
-        background_area: Gdk.Rectangle,
+        cell_area: _Gdk3.Rectangle,
+        background_area: _Gdk3.Rectangle,
         callback: Callable[..., bool],
         *callback_data: Any,
     ) -> None: ...
@@ -8857,16 +8868,16 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         context: CellAreaContext,
         widget: Widget,
         renderer: CellRenderer,
-        cell_area: Gdk.Rectangle,
-    ) -> Gdk.Rectangle: ...
+        cell_area: _Gdk3.Rectangle,
+    ) -> _Gdk3.Rectangle: ...
     def get_cell_at_position(
         self,
         context: CellAreaContext,
         widget: Widget,
-        cell_area: Gdk.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         x: int,
         y: int,
-    ) -> tuple[CellRenderer, Gdk.Rectangle]: ...
+    ) -> tuple[CellRenderer, _Gdk3.Rectangle]: ...
     def get_current_path_string(self) -> str: ...
     def get_edit_widget(self) -> CellEditable: ...
     def get_edited_cell(self) -> CellRenderer: ...
@@ -8888,8 +8899,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     def get_request_mode(self) -> SizeRequestMode: ...
     def has_renderer(self, renderer: CellRenderer) -> bool: ...
     def inner_cell_area(
-        self, widget: Widget, cell_area: Gdk.Rectangle
-    ) -> Gdk.Rectangle: ...
+        self, widget: Widget, cell_area: _Gdk3.Rectangle
+    ) -> _Gdk3.Rectangle: ...
     def install_cell_property(
         self, property_id: int, pspec: GObject.ParamSpec
     ) -> None: ...
@@ -8907,8 +8918,8 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         context: CellAreaContext,
         widget: Widget,
         cr: cairo.Context[_SomeSurface],
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
         paint_focus: bool,
     ) -> None: ...
@@ -9018,8 +9029,8 @@ class CellAreaClass(GObject.GPointer):
             CellArea,
             CellAreaContext,
             Widget,
-            Gdk.Event,
-            Gdk.Rectangle,
+            _Gdk3.Event,
+            _Gdk3.Rectangle,
             CellRendererState,
         ],
         int,
@@ -9030,8 +9041,8 @@ class CellAreaClass(GObject.GPointer):
             CellAreaContext,
             Widget,
             cairo.Context[_SomeSurface],
-            Gdk.Rectangle,
-            Gdk.Rectangle,
+            _Gdk3.Rectangle,
+            _Gdk3.Rectangle,
             CellRendererState,
             bool,
         ],
@@ -9062,7 +9073,7 @@ class CellAreaClass(GObject.GPointer):
     focus: Callable[[CellArea, DirectionType], bool] = ...
     is_activatable: Callable[[CellArea], bool] = ...
     activate: Callable[
-        [CellArea, CellAreaContext, Widget, Gdk.Rectangle, CellRendererState, bool],
+        [CellArea, CellAreaContext, Widget, _Gdk3.Rectangle, CellRendererState, bool],
         bool,
     ] = ...
     _gtk_reserved1: None = ...
@@ -9171,7 +9182,7 @@ class CellEditable(GObject.GInterface):
 
     def editing_done(self) -> None: ...
     def remove_widget(self) -> None: ...
-    def start_editing(self, event: Gdk.Event | None = None) -> None: ...
+    def start_editing(self, event: _Gdk3.Event | None = None) -> None: ...
 
 class CellEditableIface(GObject.GPointer):
     """
@@ -9185,7 +9196,7 @@ class CellEditableIface(GObject.GPointer):
     g_iface: GObject.TypeInterface = ...
     editing_done: Callable[[CellEditable], None] = ...
     remove_widget: Callable[[CellEditable], None] = ...
-    start_editing: Callable[[CellEditable, Gdk.Event | None], None] = ...
+    start_editing: Callable[[CellEditable, _Gdk3.Event | None], None] = ...
 
 class CellLayout(GObject.GInterface):
     """
@@ -9285,8 +9296,8 @@ class CellRenderer(GObject.InitiallyUnowned):
     """
 
     class Props:
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -9308,8 +9319,8 @@ class CellRenderer(GObject.InitiallyUnowned):
     def __init__(
         self,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -9325,27 +9336,27 @@ class CellRenderer(GObject.InitiallyUnowned):
     ): ...
     def activate(
         self,
-        event: Gdk.Event,
+        event: _Gdk3.Event,
         widget: Widget,
         path: str,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> bool: ...
     def do_activate(
         self,
-        event: Gdk.Event,
+        event: _Gdk3.Event,
         widget: Widget,
         path: str,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> bool: ...
     def do_editing_canceled(self) -> None: ...
     def do_editing_started(self, editable: CellEditable, path: str) -> None: ...
     def do_get_aligned_area(
-        self, widget: Widget, flags: CellRendererState, cell_area: Gdk.Rectangle
-    ) -> Gdk.Rectangle: ...
+        self, widget: Widget, flags: CellRendererState, cell_area: _Gdk3.Rectangle
+    ) -> _Gdk3.Rectangle: ...
     def do_get_preferred_height(self, widget: Widget) -> tuple[int, int]: ...
     def do_get_preferred_height_for_width(
         self, widget: Widget, width: int
@@ -9356,28 +9367,28 @@ class CellRenderer(GObject.InitiallyUnowned):
     ) -> tuple[int, int]: ...
     def do_get_request_mode(self) -> SizeRequestMode: ...
     def do_get_size(
-        self, widget: Widget, cell_area: Gdk.Rectangle | None = None
+        self, widget: Widget, cell_area: _Gdk3.Rectangle | None = None
     ) -> tuple[int, int, int, int]: ...
     def do_render(
         self,
         cr: cairo.Context[_SomeSurface],
         widget: Widget,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> None: ...
     def do_start_editing(
         self,
-        event: Gdk.Event | None,
+        event: _Gdk3.Event | None,
         widget: Widget,
         path: str,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> CellEditable | None: ...
     def get_aligned_area(
-        self, widget: Widget, flags: CellRendererState, cell_area: Gdk.Rectangle
-    ) -> Gdk.Rectangle: ...
+        self, widget: Widget, flags: CellRendererState, cell_area: _Gdk3.Rectangle
+    ) -> _Gdk3.Rectangle: ...
     def get_alignment(self) -> tuple[float, float]: ...
     def get_fixed_size(self) -> tuple[int, int]: ...
     def get_padding(self) -> tuple[int, int]: ...
@@ -9393,7 +9404,7 @@ class CellRenderer(GObject.InitiallyUnowned):
     def get_request_mode(self) -> SizeRequestMode: ...
     def get_sensitive(self) -> bool: ...
     def get_size(
-        self, widget: Widget, cell_area: Gdk.Rectangle | None = None
+        self, widget: Widget, cell_area: _Gdk3.Rectangle | None = None
     ) -> tuple[int, int, int, int]: ...
     def get_state(
         self, widget: Widget | None, cell_state: CellRendererState
@@ -9404,8 +9415,8 @@ class CellRenderer(GObject.InitiallyUnowned):
         self,
         cr: cairo.Context[_SomeSurface],
         widget: Widget,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> None: ...
     def set_accessible_type(self, type: type) -> None: ...
@@ -9416,11 +9427,11 @@ class CellRenderer(GObject.InitiallyUnowned):
     def set_visible(self, visible: bool) -> None: ...
     def start_editing(
         self,
-        event: Gdk.Event | None,
+        event: _Gdk3.Event | None,
         widget: Widget,
         path: str,
-        background_area: Gdk.Rectangle,
-        cell_area: Gdk.Rectangle,
+        background_area: _Gdk3.Rectangle,
+        cell_area: _Gdk3.Rectangle,
         flags: CellRendererState,
     ) -> CellEditable | None: ...
     def stop_editing(self, canceled: bool) -> None: ...
@@ -9596,13 +9607,13 @@ class CellRendererAccel(CellRendererText):
     class Props:
         accel_key: int
         accel_mode: CellRendererAccelMode
-        accel_mods: Gdk.ModifierType
+        accel_mods: _Gdk3.ModifierType
         keycode: int
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         editable: bool
         editable_set: bool
@@ -9612,8 +9623,8 @@ class CellRendererAccel(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground_gdk: Gdk.Color
-        foreground_rgba: Gdk.RGBA
+        foreground_gdk: _Gdk3.Color
+        foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         language: str
         language_set: bool
@@ -9643,8 +9654,8 @@ class CellRendererAccel(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -9670,14 +9681,14 @@ class CellRendererAccel(CellRendererText):
         self,
         accel_key: int = ...,
         accel_mode: CellRendererAccelMode = ...,
-        accel_mods: Gdk.ModifierType = ...,
+        accel_mods: _Gdk3.ModifierType = ...,
         keycode: int = ...,
         align_set: bool = ...,
         alignment: Pango.Alignment = ...,
         attributes: Pango.AttrList = ...,
         background: str = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
@@ -9688,8 +9699,8 @@ class CellRendererAccel(CellRendererText):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         foreground: str = ...,
-        foreground_gdk: Gdk.Color = ...,
-        foreground_rgba: Gdk.RGBA = ...,
+        foreground_gdk: _Gdk3.Color = ...,
+        foreground_rgba: _Gdk3.RGBA = ...,
         foreground_set: bool = ...,
         language: str = ...,
         language_set: bool = ...,
@@ -9721,8 +9732,8 @@ class CellRendererAccel(CellRendererText):
         wrap_mode: Pango.WrapMode = ...,
         wrap_width: int = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -9741,7 +9752,7 @@ class CellRendererAccel(CellRendererText):
         self,
         path_string: str,
         accel_key: int,
-        accel_mods: Gdk.ModifierType,
+        accel_mods: _Gdk3.ModifierType,
         hardware_keycode: int,
     ) -> None: ...
     @classmethod
@@ -9758,7 +9769,7 @@ class CellRendererAccelClass(GObject.GPointer):
 
     parent_class: CellRendererTextClass = ...
     accel_edited: Callable[
-        [CellRendererAccel, str, int, Gdk.ModifierType, int], None
+        [CellRendererAccel, str, int, _Gdk3.ModifierType, int], None
     ] = ...
     accel_cleared: Callable[[CellRendererAccel, str], None] = ...
     _gtk_reserved0: None = ...
@@ -9789,18 +9800,18 @@ class CellRendererClass(GObject.GPointer):
         [CellRenderer, Widget, int], tuple[int, int]
     ] = ...
     get_aligned_area: Callable[
-        [CellRenderer, Widget, CellRendererState, Gdk.Rectangle], Gdk.Rectangle
+        [CellRenderer, Widget, CellRendererState, _Gdk3.Rectangle], _Gdk3.Rectangle
     ] = ...
     get_size: Callable[
-        [CellRenderer, Widget, Gdk.Rectangle | None], tuple[int, int, int, int]
+        [CellRenderer, Widget, _Gdk3.Rectangle | None], tuple[int, int, int, int]
     ] = ...
     render: Callable[
         [
             CellRenderer,
             cairo.Context[_SomeSurface],
             Widget,
-            Gdk.Rectangle,
-            Gdk.Rectangle,
+            _Gdk3.Rectangle,
+            _Gdk3.Rectangle,
             CellRendererState,
         ],
         None,
@@ -9808,11 +9819,11 @@ class CellRendererClass(GObject.GPointer):
     activate: Callable[
         [
             CellRenderer,
-            Gdk.Event,
+            _Gdk3.Event,
             Widget,
             str,
-            Gdk.Rectangle,
-            Gdk.Rectangle,
+            _Gdk3.Rectangle,
+            _Gdk3.Rectangle,
             CellRendererState,
         ],
         bool,
@@ -9820,11 +9831,11 @@ class CellRendererClass(GObject.GPointer):
     start_editing: Callable[
         [
             CellRenderer,
-            Gdk.Event | None,
+            _Gdk3.Event | None,
             Widget,
             str,
-            Gdk.Rectangle,
-            Gdk.Rectangle,
+            _Gdk3.Rectangle,
+            _Gdk3.Rectangle,
             CellRendererState,
         ],
         CellEditable | None,
@@ -10011,8 +10022,8 @@ class CellRendererCombo(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         editable: bool
         editable_set: bool
@@ -10022,8 +10033,8 @@ class CellRendererCombo(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground_gdk: Gdk.Color
-        foreground_rgba: Gdk.RGBA
+        foreground_gdk: _Gdk3.Color
+        foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         language: str
         language_set: bool
@@ -10053,8 +10064,8 @@ class CellRendererCombo(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -10085,8 +10096,8 @@ class CellRendererCombo(CellRendererText):
         alignment: Pango.Alignment = ...,
         attributes: Pango.AttrList = ...,
         background: str = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
@@ -10097,8 +10108,8 @@ class CellRendererCombo(CellRendererText):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         foreground: str = ...,
-        foreground_gdk: Gdk.Color = ...,
-        foreground_rgba: Gdk.RGBA = ...,
+        foreground_gdk: _Gdk3.Color = ...,
+        foreground_rgba: _Gdk3.RGBA = ...,
         foreground_set: bool = ...,
         language: str = ...,
         language_set: bool = ...,
@@ -10130,8 +10141,8 @@ class CellRendererCombo(CellRendererText):
         wrap_mode: Pango.WrapMode = ...,
         wrap_width: int = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -10251,8 +10262,8 @@ class CellRendererPixbuf(CellRenderer):
         stock_id: str
         stock_size: int
         surface: cairo.Surface
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -10284,8 +10295,8 @@ class CellRendererPixbuf(CellRenderer):
         stock_size: int = ...,
         surface: cairo.Surface = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -10394,8 +10405,8 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float
         text_yalign: float
         value: int
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -10424,8 +10435,8 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_yalign: float = ...,
         value: int = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -10629,8 +10640,8 @@ class CellRendererSpin(CellRendererText):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         editable: bool
         editable_set: bool
@@ -10640,8 +10651,8 @@ class CellRendererSpin(CellRendererText):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground_gdk: Gdk.Color
-        foreground_rgba: Gdk.RGBA
+        foreground_gdk: _Gdk3.Color
+        foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         language: str
         language_set: bool
@@ -10671,8 +10682,8 @@ class CellRendererSpin(CellRendererText):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -10703,8 +10714,8 @@ class CellRendererSpin(CellRendererText):
         alignment: Pango.Alignment = ...,
         attributes: Pango.AttrList = ...,
         background: str = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
@@ -10715,8 +10726,8 @@ class CellRendererSpin(CellRendererText):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         foreground: str = ...,
-        foreground_gdk: Gdk.Color = ...,
-        foreground_rgba: Gdk.RGBA = ...,
+        foreground_gdk: _Gdk3.Color = ...,
+        foreground_rgba: _Gdk3.RGBA = ...,
         foreground_set: bool = ...,
         language: str = ...,
         language_set: bool = ...,
@@ -10748,8 +10759,8 @@ class CellRendererSpin(CellRendererText):
         wrap_mode: Pango.WrapMode = ...,
         wrap_width: int = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -10848,8 +10859,8 @@ class CellRendererSpinner(CellRenderer):
         active: bool
         pulse: int
         size: IconSize
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -10874,8 +10885,8 @@ class CellRendererSpinner(CellRenderer):
         pulse: int = ...,
         size: IconSize = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -11067,8 +11078,8 @@ class CellRendererText(CellRenderer):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         editable: bool
         editable_set: bool
@@ -11078,8 +11089,8 @@ class CellRendererText(CellRenderer):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
-        foreground_gdk: Gdk.Color
-        foreground_rgba: Gdk.RGBA
+        foreground_gdk: _Gdk3.Color
+        foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         language: str
         language_set: bool
@@ -11109,8 +11120,8 @@ class CellRendererText(CellRenderer):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -11138,8 +11149,8 @@ class CellRendererText(CellRenderer):
         alignment: Pango.Alignment = ...,
         attributes: Pango.AttrList = ...,
         background: str = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
@@ -11150,8 +11161,8 @@ class CellRendererText(CellRenderer):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         foreground: str = ...,
-        foreground_gdk: Gdk.Color = ...,
-        foreground_rgba: Gdk.RGBA = ...,
+        foreground_gdk: _Gdk3.Color = ...,
+        foreground_rgba: _Gdk3.RGBA = ...,
         foreground_set: bool = ...,
         language: str = ...,
         language_set: bool = ...,
@@ -11183,8 +11194,8 @@ class CellRendererText(CellRenderer):
         wrap_mode: Pango.WrapMode = ...,
         wrap_width: int = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -11295,8 +11306,8 @@ class CellRendererToggle(CellRenderer):
         inconsistent: bool
         indicator_size: int
         radio: bool
-        cell_background_gdk: Gdk.Color
-        cell_background_rgba: Gdk.RGBA
+        cell_background_gdk: _Gdk3.Color
+        cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
         editing: bool
         height: int
@@ -11323,8 +11334,8 @@ class CellRendererToggle(CellRenderer):
         indicator_size: int = ...,
         radio: bool = ...,
         cell_background: str = ...,
-        cell_background_gdk: Gdk.Color = ...,
-        cell_background_rgba: Gdk.RGBA = ...,
+        cell_background_gdk: _Gdk3.Color = ...,
+        cell_background_rgba: _Gdk3.RGBA = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
@@ -11557,8 +11568,8 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
     """
 
     class Props:
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         cell_area: CellArea
         cell_area_context: CellAreaContext
@@ -11570,7 +11581,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -11603,7 +11614,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         background: str
 
@@ -11613,8 +11624,8 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
     def __init__(
         self,
         background: str = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         cell_area: CellArea = ...,
         cell_area_context: CellAreaContext = ...,
@@ -11625,7 +11636,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -11674,8 +11685,8 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
     def new_with_pixbuf(cls, pixbuf: GdkPixbuf.Pixbuf) -> CellView: ...
     @classmethod
     def new_with_text(cls, text: str) -> CellView: ...
-    def set_background_color(self, color: Gdk.Color) -> None: ...
-    def set_background_rgba(self, rgba: Gdk.RGBA) -> None: ...
+    def set_background_color(self, color: _Gdk3.Color) -> None: ...
+    def set_background_rgba(self, rgba: _Gdk3.RGBA) -> None: ...
     def set_displayed_row(self, path: TreePath | None = None) -> None: ...
     def set_draw_sensitive(self, draw_sensitive: bool) -> None: ...
     def set_fit_model(self, fit_model: bool) -> None: ...
@@ -11941,7 +11952,7 @@ class CheckButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -11974,7 +11985,7 @@ class CheckButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -12004,7 +12015,7 @@ class CheckButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -12294,7 +12305,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -12327,7 +12338,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -12354,7 +12365,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -12576,16 +12587,16 @@ class Clipboard(GObject.Object):
 
     def clear(self) -> None: ...
     @staticmethod
-    def get(selection: Gdk.Atom) -> Clipboard: ...
+    def get(selection: _Gdk3.Atom) -> Clipboard: ...
     @staticmethod
-    def get_default(display: Gdk.Display) -> Clipboard: ...
-    def get_display(self) -> Gdk.Display: ...
+    def get_default(display: _Gdk3.Display) -> Clipboard: ...
+    def get_display(self) -> _Gdk3.Display: ...
     @staticmethod
-    def get_for_display(display: Gdk.Display, selection: Gdk.Atom) -> Clipboard: ...
+    def get_for_display(display: _Gdk3.Display, selection: _Gdk3.Atom) -> Clipboard: ...
     def get_owner(self) -> GObject.Object | None: ...
-    def get_selection(self) -> Gdk.Atom: ...
+    def get_selection(self) -> _Gdk3.Atom: ...
     def request_contents(
-        self, target: Gdk.Atom, callback: Callable[..., None], *user_data: Any
+        self, target: _Gdk3.Atom, callback: Callable[..., None], *user_data: Any
     ) -> None: ...
     def request_image(self, callback: Callable[..., None], *user_data: Any) -> None: ...
     def request_rich_text(
@@ -12600,17 +12611,17 @@ class Clipboard(GObject.Object):
     def set_image(self, pixbuf: GdkPixbuf.Pixbuf) -> None: ...
     def set_text(self, text: str, len: int) -> None: ...
     def store(self) -> None: ...
-    def wait_for_contents(self, target: Gdk.Atom) -> SelectionData | None: ...
+    def wait_for_contents(self, target: _Gdk3.Atom) -> SelectionData | None: ...
     def wait_for_image(self) -> GdkPixbuf.Pixbuf | None: ...
     def wait_for_rich_text(
         self, buffer: TextBuffer
-    ) -> tuple[bytes | None, Gdk.Atom]: ...
-    def wait_for_targets(self) -> tuple[bool, list[Gdk.Atom]]: ...
+    ) -> tuple[bytes | None, _Gdk3.Atom]: ...
+    def wait_for_targets(self) -> tuple[bool, list[_Gdk3.Atom]]: ...
     def wait_for_text(self) -> str | None: ...
     def wait_for_uris(self) -> list[str] | None: ...
     def wait_is_image_available(self) -> bool: ...
     def wait_is_rich_text_available(self, buffer: TextBuffer) -> bool: ...
-    def wait_is_target_available(self, target: Gdk.Atom) -> bool: ...
+    def wait_is_target_available(self, target: _Gdk3.Atom) -> bool: ...
     def wait_is_text_available(self) -> bool: ...
     def wait_is_uris_available(self) -> bool: ...
 
@@ -12848,8 +12859,8 @@ class ColorButton(
 
     class Props:
         alpha: int
-        color: Gdk.Color
-        rgba: Gdk.RGBA
+        color: _Gdk3.Color
+        rgba: _Gdk3.RGBA
         show_editor: bool
         title: str
         use_alpha: bool
@@ -12869,7 +12880,7 @@ class ColorButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -12902,7 +12913,7 @@ class ColorButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -12915,8 +12926,8 @@ class ColorButton(
     def __init__(
         self,
         alpha: int = ...,
-        color: Gdk.Color = ...,
-        rgba: Gdk.RGBA = ...,
+        color: _Gdk3.Color = ...,
+        rgba: _Gdk3.RGBA = ...,
         show_editor: bool = ...,
         title: str = ...,
         use_alpha: bool = ...,
@@ -12936,7 +12947,7 @@ class ColorButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -12975,17 +12986,17 @@ class ColorButton(
     ): ...
     def do_color_set(self) -> None: ...
     def get_alpha(self) -> int: ...
-    def get_color(self) -> Gdk.Color: ...
+    def get_color(self) -> _Gdk3.Color: ...
     def get_title(self) -> str: ...
     def get_use_alpha(self) -> bool: ...
     @classmethod
     def new(cls) -> ColorButton: ...
     @classmethod
-    def new_with_color(cls, color: Gdk.Color) -> ColorButton: ...
+    def new_with_color(cls, color: _Gdk3.Color) -> ColorButton: ...
     @classmethod
-    def new_with_rgba(cls, rgba: Gdk.RGBA) -> ColorButton: ...
+    def new_with_rgba(cls, rgba: _Gdk3.RGBA) -> ColorButton: ...
     def set_alpha(self, alpha: int) -> None: ...
-    def set_color(self, color: Gdk.Color) -> None: ...
+    def set_color(self, color: _Gdk3.Color) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_use_alpha(self, use_alpha: bool) -> None: ...
 
@@ -13019,11 +13030,11 @@ class ColorChooser(GObject.GInterface):
         self,
         orientation: Orientation,
         colors_per_line: int,
-        colors: Sequence[Gdk.RGBA] | None = None,
+        colors: Sequence[_Gdk3.RGBA] | None = None,
     ) -> None: ...
-    def get_rgba(self) -> Gdk.RGBA: ...
+    def get_rgba(self) -> _Gdk3.RGBA: ...
     def get_use_alpha(self) -> bool: ...
-    def set_rgba(self, color: Gdk.RGBA) -> None: ...
+    def set_rgba(self, color: _Gdk3.RGBA) -> None: ...
     def set_use_alpha(self, use_alpha: bool) -> None: ...
 
 class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
@@ -13309,7 +13320,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -13322,13 +13333,13 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -13338,7 +13349,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -13371,8 +13382,8 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
-        rgba: Gdk.RGBA
+        window: _Gdk3.Window | None
+        rgba: _Gdk3.RGBA
         use_alpha: bool
         startup_id: str
         child: Widget
@@ -13394,7 +13405,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -13403,14 +13414,14 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -13420,7 +13431,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -13452,7 +13463,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        rgba: Gdk.RGBA = ...,
+        rgba: _Gdk3.RGBA = ...,
         use_alpha: bool = ...,
     ): ...
     @classmethod
@@ -13487,12 +13498,12 @@ class ColorChooserInterface(GObject.GPointer):
     """
 
     base_interface: GObject.TypeInterface = ...
-    get_rgba: Callable[[ColorChooser], Gdk.RGBA] = ...
-    set_rgba: Callable[[ColorChooser, Gdk.RGBA], None] = ...
+    get_rgba: Callable[[ColorChooser], _Gdk3.RGBA] = ...
+    set_rgba: Callable[[ColorChooser, _Gdk3.RGBA], None] = ...
     add_palette: Callable[
-        [ColorChooser, Orientation, int, Sequence[Gdk.RGBA] | None], None
+        [ColorChooser, Orientation, int, Sequence[_Gdk3.RGBA] | None], None
     ] = ...
-    color_activated: Callable[[ColorChooser, Gdk.RGBA], None] = ...
+    color_activated: Callable[[ColorChooser, _Gdk3.RGBA], None] = ...
     padding: list[None] = ...
 
 class ColorChooserWidget(
@@ -13704,7 +13715,7 @@ class ColorChooserWidget(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -13737,8 +13748,8 @@ class ColorChooserWidget(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
-        rgba: Gdk.RGBA
+        window: _Gdk3.Window | None
+        rgba: _Gdk3.RGBA
         use_alpha: bool
         orientation: Orientation
         child: Widget
@@ -13759,7 +13770,7 @@ class ColorChooserWidget(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -13791,7 +13802,7 @@ class ColorChooserWidget(
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        rgba: Gdk.RGBA = ...,
+        rgba: _Gdk3.RGBA = ...,
         use_alpha: bool = ...,
         orientation: Orientation = ...,
     ): ...
@@ -14024,8 +14035,8 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
 
     class Props:
         current_alpha: int
-        current_color: Gdk.Color
-        current_rgba: Gdk.RGBA
+        current_color: _Gdk3.Color
+        current_rgba: _Gdk3.RGBA
         has_opacity_control: bool
         has_palette: bool
         baseline_position: BaselinePosition
@@ -14038,7 +14049,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -14071,7 +14082,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -14081,8 +14092,8 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
     def __init__(
         self,
         current_alpha: int = ...,
-        current_color: Gdk.Color = ...,
-        current_rgba: Gdk.RGBA = ...,
+        current_color: _Gdk3.Color = ...,
+        current_rgba: _Gdk3.RGBA = ...,
         has_opacity_control: bool = ...,
         has_palette: bool = ...,
         baseline_position: BaselinePosition = ...,
@@ -14095,7 +14106,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -14131,28 +14142,28 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
     ): ...
     def do_color_changed(self) -> None: ...
     def get_current_alpha(self) -> int: ...
-    def get_current_color(self) -> Gdk.Color: ...
-    def get_current_rgba(self) -> Gdk.RGBA: ...
+    def get_current_color(self) -> _Gdk3.Color: ...
+    def get_current_rgba(self) -> _Gdk3.RGBA: ...
     def get_has_opacity_control(self) -> bool: ...
     def get_has_palette(self) -> bool: ...
     def get_previous_alpha(self) -> int: ...
-    def get_previous_color(self) -> Gdk.Color: ...
-    def get_previous_rgba(self) -> Gdk.RGBA: ...
+    def get_previous_color(self) -> _Gdk3.Color: ...
+    def get_previous_rgba(self) -> _Gdk3.RGBA: ...
     def is_adjusting(self) -> bool: ...
     @classmethod
     def new(cls) -> ColorSelection: ...
     @staticmethod
-    def palette_from_string(str: str) -> tuple[bool, list[Gdk.Color]]: ...
+    def palette_from_string(str: str) -> tuple[bool, list[_Gdk3.Color]]: ...
     @staticmethod
-    def palette_to_string(colors: Sequence[Gdk.Color]) -> str: ...
+    def palette_to_string(colors: Sequence[_Gdk3.Color]) -> str: ...
     def set_current_alpha(self, alpha: int) -> None: ...
-    def set_current_color(self, color: Gdk.Color) -> None: ...
-    def set_current_rgba(self, rgba: Gdk.RGBA) -> None: ...
+    def set_current_color(self, color: _Gdk3.Color) -> None: ...
+    def set_current_rgba(self, rgba: _Gdk3.RGBA) -> None: ...
     def set_has_opacity_control(self, has_opacity: bool) -> None: ...
     def set_has_palette(self, has_palette: bool) -> None: ...
     def set_previous_alpha(self, alpha: int) -> None: ...
-    def set_previous_color(self, color: Gdk.Color) -> None: ...
-    def set_previous_rgba(self, rgba: Gdk.RGBA) -> None: ...
+    def set_previous_color(self, color: _Gdk3.Color) -> None: ...
+    def set_previous_rgba(self, rgba: _Gdk3.RGBA) -> None: ...
 
 class ColorSelectionClass(GObject.GPointer):
     """
@@ -14459,7 +14470,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -14472,13 +14483,13 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -14488,7 +14499,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -14521,7 +14532,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -14541,7 +14552,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -14550,14 +14561,14 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -14567,7 +14578,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -14876,7 +14887,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -14909,7 +14920,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         editing_canceled: bool
         child: Widget
 
@@ -14940,7 +14951,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -15006,7 +15017,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
     def new_with_model_and_entry(cls, model: TreeModel) -> ComboBox: ...
     def popdown(self) -> None: ...
     def popup(self) -> None: ...
-    def popup_for_device(self, device: Gdk.Device) -> None: ...
+    def popup_for_device(self, device: _Gdk3.Device) -> None: ...
     def set_active(self, index_: int) -> None: ...
     def set_active_id(self, active_id: str | None = None) -> bool: ...
     def set_active_iter(self, iter: TreeIter | None = None) -> None: ...
@@ -15418,7 +15429,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -15451,7 +15462,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         editing_canceled: bool
         child: Widget
 
@@ -15482,7 +15493,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -15735,7 +15746,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -15768,7 +15779,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -15783,7 +15794,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -16506,7 +16517,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -16519,13 +16530,13 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -16535,7 +16546,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -16568,7 +16579,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -16588,7 +16599,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -16597,14 +16608,14 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -16614,7 +16625,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -16862,7 +16873,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -16895,7 +16906,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     widget: Widget = ...
@@ -16906,7 +16917,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -17352,7 +17363,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -17385,7 +17396,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         editing_canceled: bool
 
     props: Props = ...
@@ -17442,7 +17453,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -17502,7 +17513,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
     def get_cursor_hadjustment(self) -> Adjustment | None: ...
     def get_has_frame(self) -> bool: ...
     def get_icon_activatable(self, icon_pos: EntryIconPosition) -> bool: ...
-    def get_icon_area(self, icon_pos: EntryIconPosition) -> Gdk.Rectangle: ...
+    def get_icon_area(self, icon_pos: EntryIconPosition) -> _Gdk3.Rectangle: ...
     def get_icon_at_pos(self, x: int, y: int) -> int: ...
     def get_icon_gicon(self, icon_pos: EntryIconPosition) -> Gio.Icon | None: ...
     def get_icon_name(self, icon_pos: EntryIconPosition) -> str | None: ...
@@ -17528,12 +17539,12 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
     def get_progress_pulse_step(self) -> float: ...
     def get_tabs(self) -> Pango.TabArray | None: ...
     def get_text(self) -> str: ...
-    def get_text_area(self) -> Gdk.Rectangle: ...
+    def get_text_area(self) -> _Gdk3.Rectangle: ...
     def get_text_length(self) -> int: ...
     def get_visibility(self) -> bool: ...
     def get_width_chars(self) -> int: ...
     def grab_focus_without_selecting(self) -> None: ...
-    def im_context_filter_keypress(self, event: Gdk.EventKey) -> bool: ...
+    def im_context_filter_keypress(self, event: _Gdk3.EventKey) -> bool: ...
     def layout_index_to_text_index(self, layout_index: int) -> int: ...
     @classmethod
     def new(cls) -> Entry: ...
@@ -17555,7 +17566,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         self,
         icon_pos: EntryIconPosition,
         target_list: TargetList,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def set_icon_from_gicon(
         self, icon_pos: EntryIconPosition, icon: Gio.Icon | None = None
@@ -18250,7 +18261,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -18283,7 +18294,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -18300,7 +18311,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -18387,7 +18398,7 @@ class EventController(GObject.Object):
     ): ...
     def get_propagation_phase(self) -> PropagationPhase: ...
     def get_widget(self) -> Widget: ...
-    def handle_event(self, event: Gdk.Event) -> bool: ...
+    def handle_event(self, event: _Gdk3.Event) -> bool: ...
     def reset(self) -> None: ...
     def set_propagation_phase(self, phase: PropagationPhase) -> None: ...
 
@@ -18748,7 +18759,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -18781,7 +18792,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -18804,7 +18815,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -19297,7 +19308,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -19330,7 +19341,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -19364,7 +19375,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -19720,7 +19731,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -19733,13 +19744,13 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -19749,7 +19760,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -19782,7 +19793,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -19813,7 +19824,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -19822,14 +19833,14 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -19839,7 +19850,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -20239,7 +20250,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -20272,7 +20283,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -20303,7 +20314,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -20723,7 +20734,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -20756,7 +20767,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -20771,7 +20782,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -21059,7 +21070,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -21092,7 +21103,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -21114,7 +21125,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -21511,7 +21522,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -21544,7 +21555,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -21558,7 +21569,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -22007,7 +22018,7 @@ class FontButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -22040,7 +22051,7 @@ class FontButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -22081,7 +22092,7 @@ class FontButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -22468,7 +22479,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -22481,13 +22492,13 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -22497,7 +22508,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -22530,7 +22541,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         font: str | None
         font_desc: Pango.FontDescription | None
         font_features: str
@@ -22557,7 +22568,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -22566,14 +22577,14 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -22583,7 +22594,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -22870,7 +22881,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -22903,7 +22914,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         font: str | None
         font_desc: Pango.FontDescription | None
         font_features: str
@@ -22929,7 +22940,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -23200,7 +23211,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -23233,7 +23244,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -23254,7 +23265,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -23593,7 +23604,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -23606,13 +23617,13 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -23622,7 +23633,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -23655,7 +23666,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -23675,7 +23686,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -23684,14 +23695,14 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -23701,7 +23712,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -23967,7 +23978,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -24000,7 +24011,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -24020,7 +24031,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -24053,7 +24064,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
-    def do_compute_child_allocation(self, allocation: Gdk.Rectangle) -> None: ...
+    def do_compute_child_allocation(self, allocation: _Gdk3.Rectangle) -> None: ...
     def get_label(self) -> str | None: ...
     def get_label_align(self) -> tuple[float, float]: ...
     def get_label_widget(self) -> Widget | None: ...
@@ -24195,7 +24206,7 @@ class FrameClass(GObject.GPointer):
     """
 
     parent_class: BinClass = ...
-    compute_child_allocation: Callable[[Frame, Gdk.Rectangle], None] = ...
+    compute_child_allocation: Callable[[Frame, _Gdk3.Rectangle], None] = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
@@ -24390,7 +24401,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
 
     class Props:
         auto_render: bool
-        context: Gdk.GLContext
+        context: _Gdk3.GLContext
         has_alpha: bool
         has_depth_buffer: bool
         has_stencil_buffer: bool
@@ -24400,7 +24411,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -24433,7 +24444,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -24448,7 +24459,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -24482,10 +24493,10 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         width_request: int = ...,
     ): ...
     def attach_buffers(self) -> None: ...
-    def do_render(self, context: Gdk.GLContext) -> bool: ...
+    def do_render(self, context: _Gdk3.GLContext) -> bool: ...
     def do_resize(self, width: int, height: int) -> None: ...
     def get_auto_render(self) -> bool: ...
-    def get_context(self) -> Gdk.GLContext: ...
+    def get_context(self) -> _Gdk3.GLContext: ...
     def get_error(self) -> GLib.Error | None: ...
     def get_has_alpha(self) -> bool: ...
     def get_has_depth_buffer(self) -> bool: ...
@@ -24514,7 +24525,7 @@ class GLAreaClass(GObject.GPointer):
     """
 
     parent_class: WidgetClass = ...
-    render: Callable[[GLArea, Gdk.GLContext], bool] = ...
+    render: Callable[[GLArea, _Gdk3.GLContext], bool] = ...
     resize: Callable[[GLArea, int, int], None] = ...
     create_context: None = ...
     _padding: list[None] = ...
@@ -24554,7 +24565,7 @@ class Gesture(EventController):
 
     class Props:
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24562,34 +24573,36 @@ class Gesture(EventController):
     def __init__(
         self,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
-    def get_bounding_box(self) -> tuple[bool, Gdk.Rectangle]: ...
+    def get_bounding_box(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_bounding_box_center(self) -> tuple[bool, float, float]: ...
-    def get_device(self) -> Gdk.Device | None: ...
+    def get_device(self) -> _Gdk3.Device | None: ...
     def get_group(self) -> list[Gesture]: ...
     def get_last_event(
-        self, sequence: Gdk.EventSequence | None = None
-    ) -> Gdk.Event | None: ...
-    def get_last_updated_sequence(self) -> Gdk.EventSequence | None: ...
+        self, sequence: _Gdk3.EventSequence | None = None
+    ) -> _Gdk3.Event | None: ...
+    def get_last_updated_sequence(self) -> _Gdk3.EventSequence | None: ...
     def get_point(
-        self, sequence: Gdk.EventSequence | None = None
+        self, sequence: _Gdk3.EventSequence | None = None
     ) -> tuple[bool, float, float]: ...
-    def get_sequence_state(self, sequence: Gdk.EventSequence) -> EventSequenceState: ...
-    def get_sequences(self) -> list[Gdk.EventSequence]: ...
-    def get_window(self) -> Gdk.Window | None: ...
+    def get_sequence_state(
+        self, sequence: _Gdk3.EventSequence
+    ) -> EventSequenceState: ...
+    def get_sequences(self) -> list[_Gdk3.EventSequence]: ...
+    def get_window(self) -> _Gdk3.Window | None: ...
     def group(self, gesture: Gesture) -> None: ...
-    def handles_sequence(self, sequence: Gdk.EventSequence | None = None) -> bool: ...
+    def handles_sequence(self, sequence: _Gdk3.EventSequence | None = None) -> bool: ...
     def is_active(self) -> bool: ...
     def is_grouped_with(self, other: Gesture) -> bool: ...
     def is_recognized(self) -> bool: ...
     def set_sequence_state(
-        self, sequence: Gdk.EventSequence, state: EventSequenceState
+        self, sequence: _Gdk3.EventSequence, state: EventSequenceState
     ) -> bool: ...
     def set_state(self, state: EventSequenceState) -> bool: ...
-    def set_window(self, window: Gdk.Window | None = None) -> None: ...
+    def set_window(self, window: _Gdk3.Window | None = None) -> None: ...
     def ungroup(self) -> None: ...
 
 class GestureClass(GObject.GPointer): ...
@@ -24646,7 +24659,7 @@ class GestureDrag(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24657,7 +24670,7 @@ class GestureDrag(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -24724,7 +24737,7 @@ class GestureLongPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24736,7 +24749,7 @@ class GestureLongPress(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -24797,7 +24810,7 @@ class GestureMultiPress(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24808,14 +24821,14 @@ class GestureMultiPress(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
-    def get_area(self) -> tuple[bool, Gdk.Rectangle]: ...
+    def get_area(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     @classmethod
     def new(cls, widget: Widget) -> GestureMultiPress: ...
-    def set_area(self, rect: Gdk.Rectangle | None = None) -> None: ...
+    def set_area(self, rect: _Gdk3.Rectangle | None = None) -> None: ...
 
 class GestureMultiPressClass(GObject.GPointer): ...
 
@@ -24879,7 +24892,7 @@ class GesturePan(GestureDrag):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24891,7 +24904,7 @@ class GesturePan(GestureDrag):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -24941,7 +24954,7 @@ class GestureRotate(Gesture):
 
     class Props:
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -24949,7 +24962,7 @@ class GestureRotate(Gesture):
     def __init__(
         self,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -25005,7 +25018,7 @@ class GestureSingle(Gesture):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -25016,13 +25029,13 @@ class GestureSingle(Gesture):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
     def get_button(self) -> int: ...
     def get_current_button(self) -> int: ...
-    def get_current_sequence(self) -> Gdk.EventSequence | None: ...
+    def get_current_sequence(self) -> _Gdk3.EventSequence | None: ...
     def get_exclusive(self) -> bool: ...
     def get_touch_only(self) -> bool: ...
     def set_button(self, button: int) -> None: ...
@@ -25084,7 +25097,7 @@ class GestureStylus(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -25095,13 +25108,13 @@ class GestureStylus(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
-    def get_axes(self, axes: Sequence[Gdk.AxisUse]) -> tuple[bool, list[float]]: ...
-    def get_axis(self, axis: Gdk.AxisUse) -> tuple[bool, float]: ...
-    def get_device_tool(self) -> Gdk.DeviceTool | None: ...
+    def get_axes(self, axes: Sequence[_Gdk3.AxisUse]) -> tuple[bool, list[float]]: ...
+    def get_axis(self, axis: _Gdk3.AxisUse) -> tuple[bool, float]: ...
+    def get_device_tool(self) -> _Gdk3.DeviceTool | None: ...
     @classmethod
     def new(cls, widget: Widget) -> GestureStylus: ...
 
@@ -25157,7 +25170,7 @@ class GestureSwipe(GestureSingle):
         exclusive: bool
         touch_only: bool
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -25168,7 +25181,7 @@ class GestureSwipe(GestureSingle):
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -25217,7 +25230,7 @@ class GestureZoom(Gesture):
 
     class Props:
         n_points: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -25225,7 +25238,7 @@ class GestureZoom(Gesture):
     def __init__(
         self,
         n_points: int = ...,
-        window: Gdk.Window | None = ...,
+        window: _Gdk3.Window | None = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
@@ -25463,7 +25476,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -25496,7 +25509,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -25517,7 +25530,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -25803,7 +25816,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -25836,7 +25849,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -25854,7 +25867,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -26106,7 +26119,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -26139,7 +26152,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -26158,7 +26171,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -26419,7 +26432,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -26452,7 +26465,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -26470,7 +26483,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -26694,7 +26707,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -26727,7 +26740,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     parent_instance: Widget = ...
@@ -26738,7 +26751,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -27024,7 +27037,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -27057,7 +27070,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -27080,7 +27093,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -27334,7 +27347,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -27367,7 +27380,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -27386,7 +27399,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -27606,7 +27619,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -27639,7 +27652,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -27650,7 +27663,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -27907,7 +27920,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -27940,7 +27953,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -27959,7 +27972,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -28237,7 +28250,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -28270,7 +28283,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -28292,7 +28305,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -28518,7 +28531,7 @@ class IMContext(GObject.Object):
     def delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
     def do_commit(self, str: str) -> None: ...
     def do_delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
-    def do_filter_keypress(self, event: Gdk.EventKey) -> bool: ...
+    def do_filter_keypress(self, event: _Gdk3.EventKey) -> bool: ...
     def do_focus_in(self) -> None: ...
     def do_focus_out(self) -> None: ...
     def do_get_preedit_string(self) -> tuple[str, Pango.AttrList, int]: ...
@@ -28528,11 +28541,11 @@ class IMContext(GObject.Object):
     def do_preedit_start(self) -> None: ...
     def do_reset(self) -> None: ...
     def do_retrieve_surrounding(self) -> bool: ...
-    def do_set_client_window(self, window: Gdk.Window | None = None) -> None: ...
-    def do_set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
+    def do_set_client_window(self, window: _Gdk3.Window | None = None) -> None: ...
+    def do_set_cursor_location(self, area: _Gdk3.Rectangle) -> None: ...
     def do_set_surrounding(self, text: str, len: int, cursor_index: int) -> None: ...
     def do_set_use_preedit(self, use_preedit: bool) -> None: ...
-    def filter_keypress(self, event: Gdk.EventKey) -> bool: ...
+    def filter_keypress(self, event: _Gdk3.EventKey) -> bool: ...
     def focus_in(self) -> None: ...
     def focus_out(self) -> None: ...
     def get_preedit_string(self) -> tuple[str, Pango.AttrList, int]: ...
@@ -28540,8 +28553,8 @@ class IMContext(GObject.Object):
         self,
     ) -> tuple[str, int] | None: ...  # CHECK Wrapped function
     def reset(self) -> None: ...
-    def set_client_window(self, window: Gdk.Window | None = None) -> None: ...
-    def set_cursor_location(self, area: Gdk.Rectangle) -> None: ...
+    def set_client_window(self, window: _Gdk3.Window | None = None) -> None: ...
+    def set_cursor_location(self, area: _Gdk3.Rectangle) -> None: ...
     def set_surrounding(self, text: str, len: int, cursor_index: int) -> None: ...
     def set_use_preedit(self, use_preedit: bool) -> None: ...
 
@@ -28561,13 +28574,13 @@ class IMContextClass(GObject.GPointer):
     commit: Callable[[IMContext, str], None] = ...
     retrieve_surrounding: Callable[[IMContext], bool] = ...
     delete_surrounding: Callable[[IMContext, int, int], bool] = ...
-    set_client_window: Callable[[IMContext, Gdk.Window | None], None] = ...
+    set_client_window: Callable[[IMContext, _Gdk3.Window | None], None] = ...
     get_preedit_string: Callable[[IMContext], tuple[str, Pango.AttrList, int]] = ...
-    filter_keypress: Callable[[IMContext, Gdk.EventKey], bool] = ...
+    filter_keypress: Callable[[IMContext, _Gdk3.EventKey], bool] = ...
     focus_in: Callable[[IMContext], None] = ...
     focus_out: Callable[[IMContext], None] = ...
     reset: Callable[[IMContext], None] = ...
-    set_cursor_location: Callable[[IMContext, Gdk.Rectangle], None] = ...
+    set_cursor_location: Callable[[IMContext, _Gdk3.Rectangle], None] = ...
     set_use_preedit: Callable[[IMContext, bool], None] = ...
     set_surrounding: Callable[[IMContext, str, int, int], None] = ...
     get_surrounding: Callable[[IMContext], tuple[bool, str, int]] = ...
@@ -28769,12 +28782,12 @@ class IconInfo(GObject.Object):
       notify (GParam)
     """
 
-    def get_attach_points(self) -> tuple[bool, list[Gdk.Point]]: ...
+    def get_attach_points(self) -> tuple[bool, list[_Gdk3.Point]]: ...
     def get_base_scale(self) -> int: ...
     def get_base_size(self) -> int: ...
     def get_builtin_pixbuf(self) -> GdkPixbuf.Pixbuf | None: ...
     def get_display_name(self) -> str: ...
-    def get_embedded_rect(self) -> tuple[bool, Gdk.Rectangle]: ...
+    def get_embedded_rect(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_filename(self) -> str | None: ...
     def is_symbolic(self) -> bool: ...
     def load_icon(self) -> GdkPixbuf.Pixbuf: ...
@@ -28787,21 +28800,21 @@ class IconInfo(GObject.Object):
     def load_icon_finish(self, res: Gio.AsyncResult) -> GdkPixbuf.Pixbuf: ...
     # override
     def load_surface(
-        self, for_window: Gdk.Window | None = None
+        self, for_window: _Gdk3.Window | None = None
     ) -> cairo.ImageSurface: ...
     def load_symbolic(
         self,
-        fg: Gdk.RGBA,
-        success_color: Gdk.RGBA | None = None,
-        warning_color: Gdk.RGBA | None = None,
-        error_color: Gdk.RGBA | None = None,
+        fg: _Gdk3.RGBA,
+        success_color: _Gdk3.RGBA | None = None,
+        warning_color: _Gdk3.RGBA | None = None,
+        error_color: _Gdk3.RGBA | None = None,
     ) -> tuple[GdkPixbuf.Pixbuf, bool]: ...
     def load_symbolic_async(
         self,
-        fg: Gdk.RGBA,
-        success_color: Gdk.RGBA | None = None,
-        warning_color: Gdk.RGBA | None = None,
-        error_color: Gdk.RGBA | None = None,
+        fg: _Gdk3.RGBA,
+        success_color: _Gdk3.RGBA | None = None,
+        warning_color: _Gdk3.RGBA | None = None,
+        error_color: _Gdk3.RGBA | None = None,
         cancellable: Gio.Cancellable | None = None,
         callback: Callable[..., None] | None = None,
         *user_data: Any,
@@ -28868,7 +28881,7 @@ class IconSet(GObject.GBoxed):
         context: StyleContext,
         size: int,
         scale: int,
-        for_window: Gdk.Window | None = None,
+        for_window: _Gdk3.Window | None = None,
     ) -> cairo.Surface: ...
     def unref(self) -> None: ...
 
@@ -28941,7 +28954,7 @@ class IconTheme(GObject.Object):
     def get_default() -> IconTheme: ...
     def get_example_icon_name(self) -> str | None: ...
     @staticmethod
-    def get_for_screen(screen: Gdk.Screen) -> IconTheme: ...
+    def get_for_screen(screen: _Gdk3.Screen) -> IconTheme: ...
     def get_icon_sizes(self, icon_name: str) -> list[int]: ...
     def get_search_path(self) -> list[str]: ...
     def has_icon(self, icon_name: str) -> bool: ...
@@ -28959,7 +28972,7 @@ class IconTheme(GObject.Object):
         icon_name: str,
         size: int,
         scale: int,
-        for_window: Gdk.Window | None,
+        for_window: _Gdk3.Window | None,
         flags: IconLookupFlags,
     ) -> cairo.ImageSurface | None: ...
     def lookup_by_gicon(
@@ -28979,7 +28992,7 @@ class IconTheme(GObject.Object):
     def prepend_search_path(self, path: str) -> None: ...
     def rescan_if_needed(self) -> bool: ...
     def set_custom_theme(self, theme_name: str | None = None) -> None: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
     def set_search_path(self, path: Sequence[str]) -> None: ...
 
 class IconThemeClass(GObject.GPointer):
@@ -29253,7 +29266,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -29285,7 +29298,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
@@ -29321,7 +29334,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -29370,18 +29383,18 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
     def do_toggle_cursor_item(self) -> None: ...
     def do_unselect_all(self) -> None: ...
     def enable_model_drag_dest(
-        self, targets: Sequence[TargetEntry], actions: Gdk.DragAction
+        self, targets: Sequence[TargetEntry], actions: _Gdk3.DragAction
     ) -> None: ...
     def enable_model_drag_source(
         self,
-        start_button_mask: Gdk.ModifierType,
+        start_button_mask: _Gdk3.ModifierType,
         targets: Sequence[TargetEntry],
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def get_activate_on_single_click(self) -> bool: ...
     def get_cell_rect(
         self, path: TreePath, cell: CellRenderer | None = None
-    ) -> tuple[bool, Gdk.Rectangle]: ...
+    ) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_column_spacing(self) -> int: ...
     def get_columns(self) -> int: ...
     def get_cursor(self) -> tuple[bool, TreePath, CellRenderer]: ...
@@ -29844,7 +29857,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -29877,7 +29890,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     misc: Misc = ...
@@ -29904,7 +29917,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -30466,7 +30479,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -30499,7 +30512,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -30528,7 +30541,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -30815,7 +30828,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -30848,7 +30861,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -30870,7 +30883,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -31113,13 +31126,13 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
     """
 
     class Props:
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         app_paintable: bool
         can_default: bool
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -31152,19 +31165,19 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     widget: Widget = ...
     priv: InvisiblePrivate = ...
     def __init__(
         self,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -31197,12 +31210,12 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
         visible: bool = ...,
         width_request: int = ...,
     ): ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     @classmethod
     def new(cls) -> Invisible: ...
     @classmethod
-    def new_for_screen(cls, screen: Gdk.Screen) -> Invisible: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def new_for_screen(cls, screen: _Gdk3.Screen) -> Invisible: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
 
 class InvisibleClass(GObject.GPointer):
     """
@@ -31480,7 +31493,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -31513,7 +31526,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         pattern: str
 
     props: Props = ...
@@ -31546,7 +31559,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -31988,7 +32001,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -32021,7 +32034,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
@@ -32042,7 +32055,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -32079,7 +32092,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
-    def get_bin_window(self) -> Gdk.Window: ...
+    def get_bin_window(self) -> _Gdk3.Window: ...
     def get_hadjustment(self) -> Adjustment: ...
     def get_size(self) -> tuple[int, int]: ...
     def get_vadjustment(self) -> Adjustment: ...
@@ -32305,7 +32318,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -32338,7 +32351,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -32355,7 +32368,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -32780,7 +32793,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -32813,7 +32826,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -32843,7 +32856,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -33239,7 +33252,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -33272,7 +33285,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -33288,7 +33301,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -33715,7 +33728,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -33748,7 +33761,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         child: Widget
@@ -33766,7 +33779,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -34270,7 +34283,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -34303,7 +34316,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -34337,7 +34350,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -34752,9 +34765,9 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         accel_group: AccelGroup
         accel_path: str
         active: int
-        anchor_hints: Gdk.AnchorHints
+        anchor_hints: _Gdk3.AnchorHints
         attach_widget: Widget
-        menu_type_hint: Gdk.WindowTypeHint
+        menu_type_hint: _Gdk3.WindowTypeHint
         monitor: int
         rect_anchor_dx: int
         rect_anchor_dy: int
@@ -34769,7 +34782,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -34802,7 +34815,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -34813,9 +34826,9 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         accel_group: AccelGroup | None = ...,
         accel_path: str | None = ...,
         active: int = ...,
-        anchor_hints: Gdk.AnchorHints = ...,
+        anchor_hints: _Gdk3.AnchorHints = ...,
         attach_widget: Widget = ...,
-        menu_type_hint: Gdk.WindowTypeHint = ...,
+        menu_type_hint: _Gdk3.WindowTypeHint = ...,
         monitor: int = ...,
         rect_anchor_dx: int = ...,
         rect_anchor_dy: int = ...,
@@ -34830,7 +34843,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -34891,7 +34904,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
     def new(cls) -> Menu: ...
     @classmethod
     def new_from_model(cls, model: Gio.MenuModel) -> Menu: ...
-    def place_on_monitor(self, monitor: Gdk.Monitor) -> None: ...
+    def place_on_monitor(self, monitor: _Gdk3.Monitor) -> None: ...
     def popdown(self) -> None: ...
     # override
     def popup(
@@ -34903,25 +34916,25 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         button: int,
         activate_time: int,
     ) -> None: ...
-    def popup_at_pointer(self, trigger_event: Gdk.Event | None = None) -> None: ...
+    def popup_at_pointer(self, trigger_event: _Gdk3.Event | None = None) -> None: ...
     def popup_at_rect(
         self,
-        rect_window: Gdk.Window,
-        rect: Gdk.Rectangle,
-        rect_anchor: Gdk.Gravity,
-        menu_anchor: Gdk.Gravity,
-        trigger_event: Gdk.Event | None = None,
+        rect_window: _Gdk3.Window,
+        rect: _Gdk3.Rectangle,
+        rect_anchor: _Gdk3.Gravity,
+        menu_anchor: _Gdk3.Gravity,
+        trigger_event: _Gdk3.Event | None = None,
     ) -> None: ...
     def popup_at_widget(
         self,
         widget: Widget,
-        widget_anchor: Gdk.Gravity,
-        menu_anchor: Gdk.Gravity,
-        trigger_event: Gdk.Event | None = None,
+        widget_anchor: _Gdk3.Gravity,
+        menu_anchor: _Gdk3.Gravity,
+        trigger_event: _Gdk3.Event | None = None,
     ) -> None: ...
     def popup_for_device(
         self,
-        device: Gdk.Device | None,
+        device: _Gdk3.Device | None,
         parent_menu_shell: Widget | None,
         parent_menu_item: Widget | None,
         func: Callable[..., tuple[int, int, bool]] | None,
@@ -34936,7 +34949,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
     def set_active(self, index: int) -> None: ...
     def set_monitor(self, monitor_num: int) -> None: ...
     def set_reserve_toggle_size(self, reserve_toggle_size: bool) -> None: ...
-    def set_screen(self, screen: Gdk.Screen | None = None) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen | None = None) -> None: ...
     def set_tearoff_state(self, torn_off: bool) -> None: ...
     def set_title(self, title: str | None = None) -> None: ...
 
@@ -35281,7 +35294,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -35314,7 +35327,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -35332,7 +35345,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -35652,7 +35665,7 @@ class MenuButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -35685,7 +35698,7 @@ class MenuButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -35722,7 +35735,7 @@ class MenuButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -36149,7 +36162,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -36182,7 +36195,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -36206,7 +36219,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -36627,7 +36640,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -36660,7 +36673,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -36676,7 +36689,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -37125,7 +37138,7 @@ class MenuToolButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -37158,7 +37171,7 @@ class MenuToolButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -37187,7 +37200,7 @@ class MenuToolButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -37553,7 +37566,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -37566,13 +37579,13 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -37582,7 +37595,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -37615,7 +37628,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         buttons: ButtonsType
         startup_id: str
         child: Widget
@@ -37643,7 +37656,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -37652,14 +37665,14 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -37669,7 +37682,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -37913,7 +37926,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -37946,7 +37959,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     widget: Widget = ...
@@ -37961,7 +37974,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -38270,7 +38283,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -38303,7 +38316,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -38338,7 +38351,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -38432,7 +38445,7 @@ class MountOperation(Gio.MountOperation):
     class Props:
         is_showing: bool
         parent: Window
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         anonymous: bool
         choice: int
         domain: str | None
@@ -38449,7 +38462,7 @@ class MountOperation(Gio.MountOperation):
     def __init__(
         self,
         parent: Window | None = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         anonymous: bool = ...,
         choice: int = ...,
         domain: str | None = ...,
@@ -38461,12 +38474,12 @@ class MountOperation(Gio.MountOperation):
         username: str | None = ...,
     ): ...
     def get_parent(self) -> Window: ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     def is_showing(self) -> bool: ...
     @classmethod
     def new(cls, parent: Window | None = None) -> MountOperation: ...
     def set_parent(self, parent: Window | None = None) -> None: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
 
 class MountOperationClass(GObject.GPointer):
     """
@@ -38783,7 +38796,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -38816,7 +38829,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -38838,7 +38851,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -39565,7 +39578,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -39578,13 +39591,13 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -39594,7 +39607,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -39627,7 +39640,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -39645,7 +39658,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -39654,14 +39667,14 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -39671,7 +39684,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -39937,7 +39950,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -39970,7 +39983,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -39985,7 +39998,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -40020,7 +40033,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
     ): ...
     def add_overlay(self, widget: Widget) -> None: ...
     def do_get_child_position(
-        self, widget: Widget, allocation: Gdk.Rectangle
+        self, widget: Widget, allocation: _Gdk3.Rectangle
     ) -> bool: ...
     def get_overlay_pass_through(self, widget: Widget) -> bool: ...
     @classmethod
@@ -40038,7 +40051,7 @@ class OverlayClass(GObject.GPointer):
     """
 
     parent_class: BinClass = ...
-    get_child_position: Callable[[Overlay, Widget, Gdk.Rectangle], bool] = ...
+    get_child_position: Callable[[Overlay, Widget, _Gdk3.Rectangle], bool] = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
@@ -40094,7 +40107,7 @@ class PadController(EventController):
 
     class Props:
         action_group: Gio.ActionGroup
-        pad: Gdk.Device
+        pad: _Gdk3.Device
         propagation_phase: PropagationPhase
         widget: Widget
 
@@ -40102,13 +40115,13 @@ class PadController(EventController):
     def __init__(
         self,
         action_group: Gio.ActionGroup = ...,
-        pad: Gdk.Device = ...,
+        pad: _Gdk3.Device = ...,
         propagation_phase: PropagationPhase = ...,
         widget: Widget = ...,
     ): ...
     @classmethod
     def new(
-        cls, window: Window, group: Gio.ActionGroup, pad: Gdk.Device | None = None
+        cls, window: Window, group: Gio.ActionGroup, pad: _Gdk3.Device | None = None
     ) -> PadController: ...
     def set_action(
         self, type: PadActionType, index: int, mode: int, label: str, action_name: str
@@ -40398,7 +40411,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -40431,7 +40444,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -40450,7 +40463,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -40494,7 +40507,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
     def do_toggle_handle_focus(self) -> bool: ...
     def get_child1(self) -> Widget | None: ...
     def get_child2(self) -> Widget | None: ...
-    def get_handle_window(self) -> Gdk.Window: ...
+    def get_handle_window(self) -> _Gdk3.Window: ...
     def get_position(self) -> int: ...
     def get_wide_handle(self) -> bool: ...
     @classmethod
@@ -40997,7 +41010,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -41030,7 +41043,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -41069,7 +41082,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -41119,7 +41132,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
     def new(cls) -> PlacesSidebar: ...
     def remove_shortcut(self, location: Gio.File) -> None: ...
     def set_drop_targets_visible(
-        self, visible: bool, context: Gdk.DragContext
+        self, visible: bool, context: _Gdk3.DragContext
     ) -> None: ...
     def set_local_only(self, local_only: bool) -> None: ...
     def set_location(self, location: Gio.File | None = None) -> None: ...
@@ -41401,7 +41414,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
 
     class Props:
         embedded: bool
-        socket_window: Gdk.Window | None
+        socket_window: _Gdk3.Window | None
         accept_focus: bool
         application: Application | None
         attached_to: Widget | None
@@ -41412,7 +41425,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -41425,13 +41438,13 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -41441,7 +41454,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -41474,7 +41487,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -41493,7 +41506,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -41502,14 +41515,14 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -41519,7 +41532,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -41553,15 +41566,15 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         width_request: int = ...,
     ): ...
     def construct(self, socket_id: int) -> None: ...
-    def construct_for_display(self, display: Gdk.Display, socket_id: int) -> None: ...
+    def construct_for_display(self, display: _Gdk3.Display, socket_id: int) -> None: ...
     def do_embedded(self) -> None: ...
     def get_embedded(self) -> bool: ...
     def get_id(self) -> int: ...
-    def get_socket_window(self) -> Gdk.Window | None: ...
+    def get_socket_window(self) -> _Gdk3.Window | None: ...
     @classmethod
     def new(cls, socket_id: int) -> Plug: ...
     @classmethod
-    def new_for_display(cls, display: Gdk.Display, socket_id: int) -> Plug: ...
+    def new_for_display(cls, display: _Gdk3.Display, socket_id: int) -> Plug: ...
 
 class PlugAccessible(WindowAccessible, Atk.Component, Atk.Window):
     """
@@ -41928,7 +41941,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
     class Props:
         constrain_to: PopoverConstraint
         modal: bool
-        pointing_to: Gdk.Rectangle
+        pointing_to: _Gdk3.Rectangle
         position: PositionType
         relative_to: Widget
         transitions_enabled: bool
@@ -41939,7 +41952,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -41972,7 +41985,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -41982,7 +41995,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         self,
         constrain_to: PopoverConstraint = ...,
         modal: bool = ...,
-        pointing_to: Gdk.Rectangle = ...,
+        pointing_to: _Gdk3.Rectangle = ...,
         position: PositionType = ...,
         relative_to: Widget | None = ...,
         transitions_enabled: bool = ...,
@@ -41993,7 +42006,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -42035,7 +42048,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
     def get_constrain_to(self) -> PopoverConstraint: ...
     def get_default_widget(self) -> Widget | None: ...
     def get_modal(self) -> bool: ...
-    def get_pointing_to(self) -> tuple[bool, Gdk.Rectangle]: ...
+    def get_pointing_to(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_position(self) -> PositionType: ...
     def get_relative_to(self) -> Widget: ...
     def get_transitions_enabled(self) -> bool: ...
@@ -42050,7 +42063,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
     def set_constrain_to(self, constraint: PopoverConstraint) -> None: ...
     def set_default_widget(self, widget: Widget | None = None) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
-    def set_pointing_to(self, rect: Gdk.Rectangle) -> None: ...
+    def set_pointing_to(self, rect: _Gdk3.Rectangle) -> None: ...
     def set_position(self, position: PositionType) -> None: ...
     def set_relative_to(self, relative_to: Widget | None = None) -> None: ...
     def set_transitions_enabled(self, transitions_enabled: bool) -> None: ...
@@ -42390,7 +42403,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         visible_submenu: str
         constrain_to: PopoverConstraint
         modal: bool
-        pointing_to: Gdk.Rectangle
+        pointing_to: _Gdk3.Rectangle
         position: PositionType
         relative_to: Widget
         transitions_enabled: bool
@@ -42401,7 +42414,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -42434,7 +42447,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -42443,7 +42456,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         visible_submenu: str = ...,
         constrain_to: PopoverConstraint = ...,
         modal: bool = ...,
-        pointing_to: Gdk.Rectangle = ...,
+        pointing_to: _Gdk3.Rectangle = ...,
         position: PositionType = ...,
         relative_to: Widget | None = ...,
         transitions_enabled: bool = ...,
@@ -42454,7 +42467,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -43071,7 +43084,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -43104,7 +43117,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -43122,7 +43135,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -43740,7 +43753,7 @@ class RadioButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -43773,7 +43786,7 @@ class RadioButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -43806,7 +43819,7 @@ class RadioButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -44257,7 +44270,7 @@ class RadioMenuItem(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -44290,7 +44303,7 @@ class RadioMenuItem(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -44319,7 +44332,7 @@ class RadioMenuItem(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -44779,7 +44792,7 @@ class RadioToolButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -44812,7 +44825,7 @@ class RadioToolButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -44842,7 +44855,7 @@ class RadioToolButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -45114,7 +45127,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -45147,7 +45160,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -45167,7 +45180,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -45215,7 +45228,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
     def get_inverted(self) -> bool: ...
     def get_lower_stepper_sensitivity(self) -> SensitivityType: ...
     def get_min_slider_size(self) -> int: ...
-    def get_range_rect(self) -> Gdk.Rectangle: ...
+    def get_range_rect(self) -> _Gdk3.Rectangle: ...
     def get_restrict_to_fill_level(self) -> bool: ...
     def get_round_digits(self) -> int: ...
     def get_show_fill_level(self) -> bool: ...
@@ -45437,10 +45450,10 @@ class RcStyle(GObject.Object):
     bg_pixmap_name: list[str] = ...
     font_desc: Pango.FontDescription = ...
     color_flags: list[RcFlags] = ...
-    fg: list[Gdk.Color] = ...
-    bg: list[Gdk.Color] = ...
-    text: list[Gdk.Color] = ...
-    base: list[Gdk.Color] = ...
+    fg: list[_Gdk3.Color] = ...
+    bg: list[_Gdk3.Color] = ...
+    text: list[_Gdk3.Color] = ...
+    base: list[_Gdk3.Color] = ...
     xthickness: int = ...
     ythickness: int = ...
     rc_properties: list[None] = ...
@@ -45950,7 +45963,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -45963,13 +45976,13 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -45979,7 +45992,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -46012,7 +46025,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         filter: RecentFilter
         limit: int
         local_only: bool
@@ -46042,7 +46055,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -46051,14 +46064,14 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -46068,7 +46081,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -46394,9 +46407,9 @@ class RecentChooserMenu(
         accel_group: AccelGroup
         accel_path: str
         active: int
-        anchor_hints: Gdk.AnchorHints
+        anchor_hints: _Gdk3.AnchorHints
         attach_widget: Widget
-        menu_type_hint: Gdk.WindowTypeHint
+        menu_type_hint: _Gdk3.WindowTypeHint
         monitor: int
         rect_anchor_dx: int
         rect_anchor_dy: int
@@ -46411,7 +46424,7 @@ class RecentChooserMenu(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -46444,7 +46457,7 @@ class RecentChooserMenu(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
         filter: RecentFilter
@@ -46468,9 +46481,9 @@ class RecentChooserMenu(
         accel_group: AccelGroup | None = ...,
         accel_path: str | None = ...,
         active: int = ...,
-        anchor_hints: Gdk.AnchorHints = ...,
+        anchor_hints: _Gdk3.AnchorHints = ...,
         attach_widget: Widget = ...,
-        menu_type_hint: Gdk.WindowTypeHint = ...,
+        menu_type_hint: _Gdk3.WindowTypeHint = ...,
         monitor: int = ...,
         rect_anchor_dx: int = ...,
         rect_anchor_dy: int = ...,
@@ -46485,7 +46498,7 @@ class RecentChooserMenu(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -46760,7 +46773,7 @@ class RecentChooserWidget(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -46793,7 +46806,7 @@ class RecentChooserWidget(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         filter: RecentFilter
         limit: int
@@ -46822,7 +46835,7 @@ class RecentChooserWidget(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -47404,7 +47417,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -47437,7 +47450,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -47454,7 +47467,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -47730,7 +47743,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -47763,7 +47776,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -47787,7 +47800,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -48219,7 +48232,7 @@ class ScaleButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -48252,7 +48265,7 @@ class ScaleButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -48285,7 +48298,7 @@ class ScaleButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -48742,7 +48755,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -48775,7 +48788,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -48794,7 +48807,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -49089,7 +49102,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -49122,7 +49135,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -49152,7 +49165,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -49564,7 +49577,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -49597,7 +49610,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -49613,7 +49626,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -49649,7 +49662,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
     def connect_entry(self, entry: Entry) -> None: ...
     def get_search_mode(self) -> bool: ...
     def get_show_close_button(self) -> bool: ...
-    def handle_event(self, event: Gdk.Event) -> bool: ...
+    def handle_event(self, event: _Gdk3.Event) -> bool: ...
     @classmethod
     def new(cls) -> SearchBar: ...
     def set_search_mode(self, search_mode: bool) -> None: ...
@@ -50037,7 +50050,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -50070,7 +50083,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         editing_canceled: bool
 
     props: Props = ...
@@ -50126,7 +50139,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -50164,7 +50177,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
     def do_previous_match(self) -> None: ...
     def do_search_changed(self) -> None: ...
     def do_stop_search(self) -> None: ...
-    def handle_event(self, event: Gdk.Event) -> bool: ...
+    def handle_event(self, event: _Gdk3.Event) -> bool: ...
     @classmethod
     def new(cls) -> SearchEntry: ...
 
@@ -50187,17 +50200,17 @@ class SelectionData(GObject.GBoxed):
     def copy(self) -> SelectionData: ...
     def free(self) -> None: ...
     def get_data(self) -> bytes: ...
-    def get_data_type(self) -> Gdk.Atom: ...
-    def get_display(self) -> Gdk.Display: ...
+    def get_data_type(self) -> _Gdk3.Atom: ...
+    def get_display(self) -> _Gdk3.Display: ...
     def get_format(self) -> int: ...
     def get_length(self) -> int: ...
     def get_pixbuf(self) -> GdkPixbuf.Pixbuf | None: ...
-    def get_selection(self) -> Gdk.Atom: ...
-    def get_target(self) -> Gdk.Atom: ...
-    def get_targets(self) -> tuple[bool, list[Gdk.Atom]]: ...
+    def get_selection(self) -> _Gdk3.Atom: ...
+    def get_target(self) -> _Gdk3.Atom: ...
+    def get_targets(self) -> tuple[bool, list[_Gdk3.Atom]]: ...
     def get_text(self) -> str | None: ...
     def get_uris(self) -> list[str]: ...
-    def set(self, type: Gdk.Atom, format: int, data: Sequence[int]) -> None: ...
+    def set(self, type: _Gdk3.Atom, format: int, data: Sequence[int]) -> None: ...
     def set_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> bool: ...
     def set_text(self, str: str, len: int) -> bool: ...
     def set_uris(self, uris: Sequence[str]) -> bool: ...
@@ -50378,7 +50391,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -50411,7 +50424,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -50423,7 +50436,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -50690,7 +50703,7 @@ class SeparatorMenuItem(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -50723,7 +50736,7 @@ class SeparatorMenuItem(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -50746,7 +50759,7 @@ class SeparatorMenuItem(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -51011,7 +51024,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -51044,7 +51057,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
         child: Widget
@@ -51065,7 +51078,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -51312,7 +51325,7 @@ class Settings(GObject.Object, StyleProvider):
     """
 
     class Props:
-        color_hash: dict[str, Gdk.Color]
+        color_hash: dict[str, _Gdk3.Color]
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
         gtk_application_prefer_dark_theme: bool
@@ -51491,7 +51504,7 @@ class Settings(GObject.Object, StyleProvider):
     @staticmethod
     def get_default() -> Settings | None: ...
     @staticmethod
-    def get_for_screen(screen: Gdk.Screen) -> Settings: ...
+    def get_for_screen(screen: _Gdk3.Screen) -> Settings: ...
     @staticmethod
     def install_property(pspec: GObject.ParamSpec) -> None: ...
     @staticmethod
@@ -51741,7 +51754,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -51774,7 +51787,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -51793,7 +51806,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -52049,7 +52062,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -52082,7 +52095,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
@@ -52105,7 +52118,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -52357,7 +52370,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -52390,7 +52403,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -52411,7 +52424,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -52679,7 +52692,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -52712,7 +52725,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         accel_size_group: SizeGroup
         title_size_group: SizeGroup
@@ -52742,7 +52755,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -53056,7 +53069,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -53069,13 +53082,13 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -53085,7 +53098,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -53118,7 +53131,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -53138,7 +53151,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -53147,14 +53160,14 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -53164,7 +53177,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -53461,7 +53474,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -53494,7 +53507,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -53509,7 +53522,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -53546,7 +53559,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
     def do_plug_added(self) -> None: ...
     def do_plug_removed(self) -> bool: ...
     def get_id(self) -> int: ...
-    def get_plug_window(self) -> Gdk.Window | None: ...
+    def get_plug_window(self) -> _Gdk3.Window | None: ...
     @classmethod
     def new(cls) -> Socket: ...
 
@@ -54087,7 +54100,7 @@ class SpinButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -54120,7 +54133,7 @@ class SpinButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         editing_canceled: bool
         orientation: Orientation
 
@@ -54186,7 +54199,7 @@ class SpinButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -54597,7 +54610,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -54630,7 +54643,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     parent: Widget = ...
@@ -54642,7 +54655,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -55031,7 +55044,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -55064,7 +55077,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -55086,7 +55099,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -55506,7 +55519,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -55539,7 +55552,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -55554,7 +55567,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -55816,7 +55829,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -55849,7 +55862,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -55869,7 +55882,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -55991,7 +56004,7 @@ class StatusIcon(GObject.Object):
         icon_name: str | None
         orientation: Orientation
         pixbuf: GdkPixbuf.Pixbuf | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         size: int
         stock: str | None
         storage_type: ImageType
@@ -56011,7 +56024,7 @@ class StatusIcon(GObject.Object):
         has_tooltip: bool = ...,
         icon_name: str = ...,
         pixbuf: GdkPixbuf.Pixbuf = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         stock: str = ...,
         title: str = ...,
         tooltip_markup: str | None = ...,
@@ -56019,20 +56032,22 @@ class StatusIcon(GObject.Object):
         visible: bool = ...,
     ): ...
     def do_activate(self) -> None: ...
-    def do_button_press_event(self, event: Gdk.EventButton) -> bool: ...
-    def do_button_release_event(self, event: Gdk.EventButton) -> bool: ...
+    def do_button_press_event(self, event: _Gdk3.EventButton) -> bool: ...
+    def do_button_release_event(self, event: _Gdk3.EventButton) -> bool: ...
     def do_popup_menu(self, button: int, activate_time: int) -> None: ...
     def do_query_tooltip(
         self, x: int, y: int, keyboard_mode: bool, tooltip: Tooltip
     ) -> bool: ...
-    def do_scroll_event(self, event: Gdk.EventScroll) -> bool: ...
+    def do_scroll_event(self, event: _Gdk3.EventScroll) -> bool: ...
     def do_size_changed(self, size: int) -> bool: ...
-    def get_geometry(self) -> tuple[bool, Gdk.Screen, Gdk.Rectangle, Orientation]: ...
+    def get_geometry(
+        self,
+    ) -> tuple[bool, _Gdk3.Screen, _Gdk3.Rectangle, Orientation]: ...
     def get_gicon(self) -> Gio.Icon | None: ...
     def get_has_tooltip(self) -> bool: ...
     def get_icon_name(self) -> str | None: ...
     def get_pixbuf(self) -> GdkPixbuf.Pixbuf | None: ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     def get_size(self) -> int: ...
     def get_stock(self) -> str | None: ...
     def get_storage_type(self) -> ImageType: ...
@@ -56063,7 +56078,7 @@ class StatusIcon(GObject.Object):
     def set_from_stock(self, stock_id: str) -> None: ...
     def set_has_tooltip(self, has_tooltip: bool) -> None: ...
     def set_name(self, name: str) -> None: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_tooltip_markup(self, markup: str | None = None) -> None: ...
     def set_tooltip_text(self, text: str) -> None: ...
@@ -56082,9 +56097,9 @@ class StatusIconClass(GObject.GPointer):
     activate: Callable[[StatusIcon], None] = ...
     popup_menu: Callable[[StatusIcon, int, int], None] = ...
     size_changed: Callable[[StatusIcon, int], bool] = ...
-    button_press_event: Callable[[StatusIcon, Gdk.EventButton], bool] = ...
-    button_release_event: Callable[[StatusIcon, Gdk.EventButton], bool] = ...
-    scroll_event: Callable[[StatusIcon, Gdk.EventScroll], bool] = ...
+    button_press_event: Callable[[StatusIcon, _Gdk3.EventButton], bool] = ...
+    button_release_event: Callable[[StatusIcon, _Gdk3.EventButton], bool] = ...
+    scroll_event: Callable[[StatusIcon, _Gdk3.EventScroll], bool] = ...
     query_tooltip: Callable[[StatusIcon, int, int, bool, Tooltip], bool] = ...
     __gtk_reserved1: None = ...
     __gtk_reserved2: None = ...
@@ -56296,7 +56311,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -56329,7 +56344,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -56348,7 +56363,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -56544,7 +56559,7 @@ class StockItem(GObject.GPointer):
 
     stock_id: str = ...
     label: str = ...
-    modifier: Gdk.ModifierType = ...
+    modifier: _Gdk3.ModifierType = ...
     keyval: int = ...
     translation_domain: str = ...
     def free(self) -> None: ...
@@ -56577,22 +56592,22 @@ class Style(GObject.Object):
 
     props: Props = ...
     parent_instance: GObject.Object = ...
-    fg: list[Gdk.Color] = ...
-    bg: list[Gdk.Color] = ...
-    light: list[Gdk.Color] = ...
-    dark: list[Gdk.Color] = ...
-    mid: list[Gdk.Color] = ...
-    text: list[Gdk.Color] = ...
-    base: list[Gdk.Color] = ...
-    text_aa: list[Gdk.Color] = ...
-    black: Gdk.Color = ...
-    white: Gdk.Color = ...
+    fg: list[_Gdk3.Color] = ...
+    bg: list[_Gdk3.Color] = ...
+    light: list[_Gdk3.Color] = ...
+    dark: list[_Gdk3.Color] = ...
+    mid: list[_Gdk3.Color] = ...
+    text: list[_Gdk3.Color] = ...
+    base: list[_Gdk3.Color] = ...
+    text_aa: list[_Gdk3.Color] = ...
+    black: _Gdk3.Color = ...
+    white: _Gdk3.Color = ...
     font_desc: Pango.FontDescription = ...
     xthickness: int = ...
     ythickness: int = ...
     background: list[cairo.Pattern] = ...
     attach_count: int = ...
-    visual: Gdk.Visual = ...
+    visual: _Gdk3.Visual = ...
     private_font_desc: Pango.FontDescription = ...
     rc_style: RcStyle = ...
     styles: list[None] = ...
@@ -56602,7 +56617,7 @@ class Style(GObject.Object):
     def apply_default_background(
         self,
         cr: cairo.Context[_SomeSurface],
-        window: Gdk.Window,
+        window: _Gdk3.Window,
         state_type: StateType,
         x: int,
         y: int,
@@ -56775,7 +56790,7 @@ class Style(GObject.Object):
         state_type: StateType,
         widget: Widget,
         detail: str,
-        edge: Gdk.WindowEdge,
+        edge: _Gdk3.WindowEdge,
         x: int,
         y: int,
         width: int,
@@ -56866,11 +56881,13 @@ class Style(GObject.Object):
         widget: Widget | None = None,
         detail: str | None = None,
     ) -> GdkPixbuf.Pixbuf: ...
-    def do_set_background(self, window: Gdk.Window, state_type: StateType) -> None: ...
+    def do_set_background(
+        self, window: _Gdk3.Window, state_type: StateType
+    ) -> None: ...
     def do_unrealize(self) -> None: ...
     def get_style_property(self, widget_type: type, property_name: str) -> Any: ...
     def has_context(self) -> bool: ...
-    def lookup_color(self, color_name: str) -> tuple[bool, Gdk.Color]: ...
+    def lookup_color(self, color_name: str) -> tuple[bool, _Gdk3.Color]: ...
     def lookup_icon_set(self, stock_id: str) -> IconSet: ...
     @classmethod
     def new(cls) -> Style: ...
@@ -56883,7 +56900,7 @@ class Style(GObject.Object):
         widget: Widget | None = None,
         detail: str | None = None,
     ) -> GdkPixbuf.Pixbuf: ...
-    def set_background(self, window: Gdk.Window, state_type: StateType) -> None: ...
+    def set_background(self, window: _Gdk3.Window, state_type: StateType) -> None: ...
 
 class StyleClass(GObject.GPointer):
     """
@@ -56900,7 +56917,7 @@ class StyleClass(GObject.GPointer):
     copy: Callable[[Style, Style], None] = ...
     clone: None = ...
     init_from_rc: Callable[[Style, RcStyle], None] = ...
-    set_background: Callable[[Style, Gdk.Window, StateType], None] = ...
+    set_background: Callable[[Style, _Gdk3.Window, StateType], None] = ...
     render_icon: Callable[
         [
             Style,
@@ -57175,7 +57192,7 @@ class StyleClass(GObject.GPointer):
             StateType,
             Widget,
             str,
-            Gdk.WindowEdge,
+            _Gdk3.WindowEdge,
             int,
             int,
             int,
@@ -57240,9 +57257,9 @@ class StyleContext(GObject.Object):
 
     class Props:
         direction: TextDirection
-        paint_clock: Gdk.FrameClock
+        paint_clock: _Gdk3.FrameClock
         parent: StyleContext | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
 
     props: Props = ...
     parent_object: GObject.Object = ...
@@ -57250,26 +57267,26 @@ class StyleContext(GObject.Object):
     def __init__(
         self,
         direction: TextDirection = ...,
-        paint_clock: Gdk.FrameClock = ...,
+        paint_clock: _Gdk3.FrameClock = ...,
         parent: StyleContext | None = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
     ): ...
     def add_class(self, class_name: str) -> None: ...
     def add_provider(self, provider: StyleProvider, priority: int) -> None: ...
     @staticmethod
     def add_provider_for_screen(
-        screen: Gdk.Screen, provider: StyleProvider, priority: int
+        screen: _Gdk3.Screen, provider: StyleProvider, priority: int
     ) -> None: ...
     def add_region(self, region_name: str, flags: RegionFlags) -> None: ...
     def cancel_animations(self, region_id: None) -> None: ...
     def do_changed(self) -> None: ...
-    def get_background_color(self, state: StateFlags) -> Gdk.RGBA: ...
+    def get_background_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
     def get_border(self, state: StateFlags) -> Border: ...
-    def get_border_color(self, state: StateFlags) -> Gdk.RGBA: ...
-    def get_color(self, state: StateFlags) -> Gdk.RGBA: ...
+    def get_border_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
+    def get_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
     def get_direction(self) -> TextDirection: ...
     def get_font(self, state: StateFlags) -> Pango.FontDescription: ...
-    def get_frame_clock(self) -> Gdk.FrameClock | None: ...
+    def get_frame_clock(self) -> _Gdk3.FrameClock | None: ...
     def get_junction_sides(self) -> JunctionSides: ...
     def get_margin(self, state: StateFlags) -> Border: ...
     def get_padding(self, state: StateFlags) -> Border: ...
@@ -57277,7 +57294,7 @@ class StyleContext(GObject.Object):
     def get_path(self) -> WidgetPath: ...
     def get_property(self, property: str, state: StateFlags) -> Any: ...
     def get_scale(self) -> int: ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     def get_section(self, property: str) -> CssSection | None: ...
     def get_state(self) -> StateFlags: ...
     def get_style_property(self, property_name: str, value: Any) -> None: ...
@@ -57286,12 +57303,12 @@ class StyleContext(GObject.Object):
     def invalidate(self) -> None: ...
     def list_classes(self) -> list[str]: ...
     def list_regions(self) -> list[str]: ...
-    def lookup_color(self, color_name: str) -> tuple[bool, Gdk.RGBA]: ...
+    def lookup_color(self, color_name: str) -> tuple[bool, _Gdk3.RGBA]: ...
     def lookup_icon_set(self, stock_id: str) -> IconSet | None: ...
     @classmethod
     def new(cls) -> StyleContext: ...
     def notify_state_change(
-        self, window: Gdk.Window, region_id: None, state: StateType, state_value: bool
+        self, window: _Gdk3.Window, region_id: None, state: StateType, state_value: bool
     ) -> None: ...
     def pop_animatable_region(self) -> None: ...
     def push_animatable_region(self, region_id: None) -> None: ...
@@ -57299,22 +57316,22 @@ class StyleContext(GObject.Object):
     def remove_provider(self, provider: StyleProvider) -> None: ...
     @staticmethod
     def remove_provider_for_screen(
-        screen: Gdk.Screen, provider: StyleProvider
+        screen: _Gdk3.Screen, provider: StyleProvider
     ) -> None: ...
     def remove_region(self, region_name: str) -> None: ...
     @staticmethod
-    def reset_widgets(screen: Gdk.Screen) -> None: ...
+    def reset_widgets(screen: _Gdk3.Screen) -> None: ...
     def restore(self) -> None: ...
     def save(self) -> None: ...
-    def scroll_animations(self, window: Gdk.Window, dx: int, dy: int) -> None: ...
-    def set_background(self, window: Gdk.Window) -> None: ...
+    def scroll_animations(self, window: _Gdk3.Window, dx: int, dy: int) -> None: ...
+    def set_background(self, window: _Gdk3.Window) -> None: ...
     def set_direction(self, direction: TextDirection) -> None: ...
-    def set_frame_clock(self, frame_clock: Gdk.FrameClock) -> None: ...
+    def set_frame_clock(self, frame_clock: _Gdk3.FrameClock) -> None: ...
     def set_junction_sides(self, sides: JunctionSides) -> None: ...
     def set_parent(self, parent: StyleContext | None = None) -> None: ...
     def set_path(self, path: WidgetPath) -> None: ...
     def set_scale(self, scale: int) -> None: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
     def set_state(self, flags: StateFlags) -> None: ...
     def state_is_running(self, state: StateType) -> tuple[bool, float]: ...
     def to_string(self, flags: StyleContextPrintFlags) -> str: ...
@@ -57595,7 +57612,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -57628,7 +57645,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -57645,7 +57662,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -57845,7 +57862,7 @@ class SymbolicColor(GObject.GBoxed):
     @classmethod
     def new_alpha(cls, color: SymbolicColor, factor: float) -> SymbolicColor: ...
     @classmethod
-    def new_literal(cls, color: Gdk.RGBA) -> SymbolicColor: ...
+    def new_literal(cls, color: _Gdk3.RGBA) -> SymbolicColor: ...
     @classmethod
     def new_mix(
         cls, color1: SymbolicColor, color2: SymbolicColor, factor: float
@@ -57859,7 +57876,7 @@ class SymbolicColor(GObject.GBoxed):
     def ref(self) -> SymbolicColor: ...
     def resolve(
         self, props: StyleProperties | None = None
-    ) -> tuple[bool, Gdk.RGBA]: ...
+    ) -> tuple[bool, _Gdk3.RGBA]: ...
     def to_string(self) -> str: ...
     def unref(self) -> None: ...
 
@@ -58068,7 +58085,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -58101,7 +58118,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -58121,7 +58138,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -58275,7 +58292,7 @@ class TargetList(GObject.GBoxed):
         new(targets:list=None) -> Gtk.TargetList
     """
 
-    def add(self, target: Gdk.Atom, flags: int, info: int) -> None: ...
+    def add(self, target: _Gdk3.Atom, flags: int, info: int) -> None: ...
     def add_image_targets(self, info: int, writable: bool) -> None: ...
     def add_rich_text_targets(
         self, info: int, deserializable: bool, buffer: TextBuffer
@@ -58283,11 +58300,11 @@ class TargetList(GObject.GBoxed):
     def add_table(self, targets: Sequence[TargetEntry]) -> None: ...
     def add_text_targets(self, info: int) -> None: ...
     def add_uri_targets(self, info: int) -> None: ...
-    def find(self, target: Gdk.Atom) -> tuple[bool, int]: ...
+    def find(self, target: _Gdk3.Atom) -> tuple[bool, int]: ...
     @classmethod
     def new(cls, targets: Sequence[TargetEntry] | None = None) -> TargetList: ...
     def ref(self) -> TargetList: ...
-    def remove(self, target: Gdk.Atom) -> None: ...
+    def remove(self, target: _Gdk3.Atom) -> None: ...
     def unref(self) -> None: ...
 
 class TargetPair(GObject.GPointer):
@@ -58299,7 +58316,7 @@ class TargetPair(GObject.GPointer):
         TargetPair()
     """
 
-    target: Gdk.Atom = ...
+    target: _Gdk3.Atom = ...
     flags: int = ...
     info: int = ...
 
@@ -58518,7 +58535,7 @@ class TearoffMenuItem(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -58551,7 +58568,7 @@ class TearoffMenuItem(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -58575,7 +58592,7 @@ class TearoffMenuItem(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -58660,8 +58677,8 @@ class TextAppearance(GObject.GPointer):
         TextAppearance()
     """
 
-    bg_color: Gdk.Color = ...
-    fg_color: Gdk.Color = ...
+    bg_color: _Gdk3.Color = ...
+    fg_color: _Gdk3.Color = ...
     rise: int = ...
     underline: int = ...
     strikethrough: int = ...
@@ -58694,12 +58711,12 @@ class TextAttributes(GObject.GBoxed):
     tabs: Pango.TabArray = ...
     wrap_mode: WrapMode = ...
     language: Pango.Language = ...
-    pg_bg_color: Gdk.Color = ...
+    pg_bg_color: _Gdk3.Color = ...
     invisible: int = ...
     bg_full_height: int = ...
     editable: int = ...
     no_fallback: int = ...
-    pg_bg_rgba: Gdk.RGBA = ...
+    pg_bg_rgba: _Gdk3.RGBA = ...
     letter_spacing: int = ...
     def copy(self) -> TextAttributes: ...
     def copy_values(self, dest: TextAttributes) -> None: ...
@@ -58793,13 +58810,13 @@ class TextBuffer(GObject.Object):
     def deserialize(
         self,
         content_buffer: TextBuffer,
-        format: Gdk.Atom,
+        format: _Gdk3.Atom,
         iter: TextIter,
         data: Sequence[int],
     ) -> bool: ...
-    def deserialize_get_can_create_tags(self, format: Gdk.Atom) -> bool: ...
+    def deserialize_get_can_create_tags(self, format: _Gdk3.Atom) -> bool: ...
     def deserialize_set_can_create_tags(
-        self, format: Gdk.Atom, can_create_tags: bool
+        self, format: _Gdk3.Atom, can_create_tags: bool
     ) -> None: ...
     def do_apply_tag(self, tag: TextTag, start: TextIter, end: TextIter) -> None: ...
     def do_begin_user_action(self) -> None: ...
@@ -58822,7 +58839,7 @@ class TextBuffer(GObject.Object):
     def get_bounds(self) -> tuple[TextIter, TextIter]: ...
     def get_char_count(self) -> int: ...
     def get_copy_target_list(self) -> TargetList: ...
-    def get_deserialize_formats(self) -> list[Gdk.Atom]: ...
+    def get_deserialize_formats(self) -> list[_Gdk3.Atom]: ...
     def get_end_iter(self) -> TextIter: ...
     def get_has_selection(self) -> bool: ...
     def get_insert(self) -> TextMark: ...
@@ -58841,7 +58858,7 @@ class TextBuffer(GObject.Object):
     def get_selection_bound(self) -> TextMark: ...
     # override
     def get_selection_bounds(self) -> tuple[TextIter, TextIter] | None: ...
-    def get_serialize_formats(self) -> list[Gdk.Atom]: ...
+    def get_serialize_formats(self) -> list[_Gdk3.Atom]: ...
     def get_slice(
         self, start: TextIter, end: TextIter, include_hidden_chars: bool
     ) -> str: ...
@@ -58885,14 +58902,16 @@ class TextBuffer(GObject.Object):
     def place_cursor(self, where: TextIter) -> None: ...
     def register_deserialize_format(
         self, mime_type: str, function: Callable[..., bool], *user_data: Any
-    ) -> Gdk.Atom: ...
+    ) -> _Gdk3.Atom: ...
     def register_deserialize_tagset(
         self, tagset_name: str | None = None
-    ) -> Gdk.Atom: ...
+    ) -> _Gdk3.Atom: ...
     def register_serialize_format(
         self, mime_type: str, function: Callable[..., bytes | None], *user_data: Any
-    ) -> Gdk.Atom: ...
-    def register_serialize_tagset(self, tagset_name: str | None = None) -> Gdk.Atom: ...
+    ) -> _Gdk3.Atom: ...
+    def register_serialize_tagset(
+        self, tagset_name: str | None = None
+    ) -> _Gdk3.Atom: ...
     def remove_all_tags(self, start: TextIter, end: TextIter) -> None: ...
     def remove_selection_clipboard(self, clipboard: Clipboard) -> None: ...
     def remove_tag(self, tag: TextTag, start: TextIter, end: TextIter) -> None: ...
@@ -58901,15 +58920,15 @@ class TextBuffer(GObject.Object):
     def serialize(
         self,
         content_buffer: TextBuffer,
-        format: Gdk.Atom,
+        format: _Gdk3.Atom,
         start: TextIter,
         end: TextIter,
     ) -> bytes: ...
     def set_modified(self, setting: bool) -> None: ...
     # override
     def set_text(self, text: str, length: int = -1) -> None: ...
-    def unregister_deserialize_format(self, format: Gdk.Atom) -> None: ...
-    def unregister_serialize_format(self, format: Gdk.Atom) -> None: ...
+    def unregister_deserialize_format(self, format: _Gdk3.Atom) -> None: ...
+    def unregister_serialize_format(self, format: _Gdk3.Atom) -> None: ...
 
 class TextBufferClass(GObject.GPointer):
     """
@@ -59469,8 +59488,8 @@ class TextTag(GObject.Object):
         accumulative_margin: bool
         background_full_height: bool
         background_full_height_set: bool
-        background_gdk: Gdk.Color
-        background_rgba: Gdk.RGBA
+        background_gdk: _Gdk3.Color
+        background_rgba: _Gdk3.RGBA
         background_set: bool
         direction: TextDirection
         editable: bool
@@ -59483,8 +59502,8 @@ class TextTag(GObject.Object):
         font_desc: Pango.FontDescription
         font_features: str
         font_features_set: bool
-        foreground_gdk: Gdk.Color
-        foreground_rgba: Gdk.RGBA
+        foreground_gdk: _Gdk3.Color
+        foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         indent: int
         indent_set: bool
@@ -59499,8 +59518,8 @@ class TextTag(GObject.Object):
         letter_spacing: int
         letter_spacing_set: bool
         name: str
-        paragraph_background_gdk: Gdk.Color
-        paragraph_background_rgba: Gdk.RGBA
+        paragraph_background_gdk: _Gdk3.Color
+        paragraph_background_rgba: _Gdk3.RGBA
         paragraph_background_set: bool
         pixels_above_lines: int
         pixels_above_lines_set: bool
@@ -59520,7 +59539,7 @@ class TextTag(GObject.Object):
         stretch: Pango.Stretch
         stretch_set: bool
         strikethrough: bool
-        strikethrough_rgba: Gdk.RGBA
+        strikethrough_rgba: _Gdk3.RGBA
         strikethrough_rgba_set: bool
         strikethrough_set: bool
         style: Pango.Style
@@ -59528,7 +59547,7 @@ class TextTag(GObject.Object):
         tabs: Pango.TabArray
         tabs_set: bool
         underline: Pango.Underline
-        underline_rgba: Gdk.RGBA
+        underline_rgba: _Gdk3.RGBA
         underline_rgba_set: bool
         underline_set: bool
         variant: Pango.Variant
@@ -59550,8 +59569,8 @@ class TextTag(GObject.Object):
         background: str = ...,
         background_full_height: bool = ...,
         background_full_height_set: bool = ...,
-        background_gdk: Gdk.Color = ...,
-        background_rgba: Gdk.RGBA = ...,
+        background_gdk: _Gdk3.Color = ...,
+        background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
         direction: TextDirection = ...,
         editable: bool = ...,
@@ -59565,8 +59584,8 @@ class TextTag(GObject.Object):
         font_features: str = ...,
         font_features_set: bool = ...,
         foreground: str = ...,
-        foreground_gdk: Gdk.Color = ...,
-        foreground_rgba: Gdk.RGBA = ...,
+        foreground_gdk: _Gdk3.Color = ...,
+        foreground_rgba: _Gdk3.RGBA = ...,
         foreground_set: bool = ...,
         indent: int = ...,
         indent_set: bool = ...,
@@ -59582,8 +59601,8 @@ class TextTag(GObject.Object):
         letter_spacing_set: bool = ...,
         name: str = ...,
         paragraph_background: str = ...,
-        paragraph_background_gdk: Gdk.Color = ...,
-        paragraph_background_rgba: Gdk.RGBA = ...,
+        paragraph_background_gdk: _Gdk3.Color = ...,
+        paragraph_background_rgba: _Gdk3.RGBA = ...,
         paragraph_background_set: bool = ...,
         pixels_above_lines: int = ...,
         pixels_above_lines_set: bool = ...,
@@ -59603,7 +59622,7 @@ class TextTag(GObject.Object):
         stretch: Pango.Stretch = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
-        strikethrough_rgba: Gdk.RGBA = ...,
+        strikethrough_rgba: _Gdk3.RGBA = ...,
         strikethrough_rgba_set: bool = ...,
         strikethrough_set: bool = ...,
         style: Pango.Style = ...,
@@ -59611,7 +59630,7 @@ class TextTag(GObject.Object):
         tabs: Pango.TabArray = ...,
         tabs_set: bool = ...,
         underline: Pango.Underline = ...,
-        underline_rgba: Gdk.RGBA = ...,
+        underline_rgba: _Gdk3.RGBA = ...,
         underline_rgba_set: bool = ...,
         underline_set: bool = ...,
         variant: Pango.Variant = ...,
@@ -59623,10 +59642,10 @@ class TextTag(GObject.Object):
     ): ...
     def changed(self, size_changed: bool) -> None: ...
     def do_event(
-        self, event_object: GObject.Object, event: Gdk.Event, iter: TextIter
+        self, event_object: GObject.Object, event: _Gdk3.Event, iter: TextIter
     ) -> bool: ...
     def event(
-        self, event_object: GObject.Object, event: Gdk.Event, iter: TextIter
+        self, event_object: GObject.Object, event: _Gdk3.Event, iter: TextIter
     ) -> bool: ...
     def get_priority(self) -> int: ...
     @classmethod
@@ -59643,7 +59662,7 @@ class TextTagClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    event: Callable[[TextTag, GObject.Object, Gdk.Event, TextIter], bool] = ...
+    event: Callable[[TextTag, GObject.Object, _Gdk3.Event, TextIter], bool] = ...
     _gtk_reserved1: None = ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
@@ -59976,7 +59995,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -60009,7 +60028,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
@@ -60049,7 +60068,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -60126,7 +60145,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def get_buffer(self) -> TextBuffer: ...
     def get_cursor_locations(
         self, iter: TextIter | None = None
-    ) -> tuple[Gdk.Rectangle, Gdk.Rectangle]: ...
+    ) -> tuple[_Gdk3.Rectangle, _Gdk3.Rectangle]: ...
     def get_cursor_visible(self) -> bool: ...
     def get_default_attributes(self) -> TextAttributes: ...
     def get_editable(self) -> bool: ...
@@ -60136,7 +60155,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def get_input_purpose(self) -> InputPurpose: ...
     def get_iter_at_location(self, x: int, y: int) -> tuple[bool, TextIter]: ...
     def get_iter_at_position(self, x: int, y: int) -> tuple[bool, TextIter, int]: ...
-    def get_iter_location(self, iter: TextIter) -> Gdk.Rectangle: ...
+    def get_iter_location(self, iter: TextIter) -> _Gdk3.Rectangle: ...
     def get_justification(self) -> Justification: ...
     def get_left_margin(self) -> int: ...
     def get_line_at_y(self, y: int) -> tuple[TextIter, int]: ...
@@ -60150,11 +60169,11 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def get_tabs(self) -> Pango.TabArray | None: ...
     def get_top_margin(self) -> int: ...
     def get_vadjustment(self) -> Adjustment: ...
-    def get_visible_rect(self) -> Gdk.Rectangle: ...
-    def get_window(self, win: TextWindowType) -> Gdk.Window | None: ...
-    def get_window_type(self, window: Gdk.Window) -> TextWindowType: ...
+    def get_visible_rect(self) -> _Gdk3.Rectangle: ...
+    def get_window(self, win: TextWindowType) -> _Gdk3.Window | None: ...
+    def get_window_type(self, window: _Gdk3.Window) -> TextWindowType: ...
     def get_wrap_mode(self) -> WrapMode: ...
-    def im_context_filter_keypress(self, event: Gdk.EventKey) -> bool: ...
+    def im_context_filter_keypress(self, event: _Gdk3.EventKey) -> bool: ...
     def move_child(self, child: Widget, xpos: int, ypos: int) -> None: ...
     def move_mark_onscreen(self, mark: TextMark) -> bool: ...
     def move_visually(self, iter: TextIter, count: int) -> bool: ...
@@ -60528,10 +60547,10 @@ class ThemingEngine(GObject.Object):
         height: float,
         orientation: Orientation,
     ) -> None: ...
-    def get_background_color(self, state: StateFlags) -> Gdk.RGBA: ...
+    def get_background_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
     def get_border(self, state: StateFlags) -> Border: ...
-    def get_border_color(self, state: StateFlags) -> Gdk.RGBA: ...
-    def get_color(self, state: StateFlags) -> Gdk.RGBA: ...
+    def get_border_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
+    def get_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
     def get_direction(self) -> TextDirection: ...
     def get_font(self, state: StateFlags) -> Pango.FontDescription: ...
     def get_junction_sides(self) -> JunctionSides: ...
@@ -60539,14 +60558,14 @@ class ThemingEngine(GObject.Object):
     def get_padding(self, state: StateFlags) -> Border: ...
     def get_path(self) -> WidgetPath: ...
     def get_property(self, property: str, state: StateFlags) -> Any: ...
-    def get_screen(self) -> Gdk.Screen | None: ...
+    def get_screen(self) -> _Gdk3.Screen | None: ...
     def get_state(self) -> StateFlags: ...
     def get_style_property(self, property_name: str) -> Any: ...
     def has_class(self, style_class: str) -> bool: ...
     def has_region(self, style_region: str) -> tuple[bool, RegionFlags]: ...
     @staticmethod
     def load(name: str) -> ThemingEngine | None: ...
-    def lookup_color(self, color_name: str) -> tuple[bool, Gdk.RGBA]: ...
+    def lookup_color(self, color_name: str) -> tuple[bool, _Gdk3.RGBA]: ...
     def state_is_running(self, state: StateType) -> tuple[bool, float]: ...
 
 class ThemingEngineClass(GObject.GPointer):
@@ -61038,7 +61057,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -61071,7 +61090,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -61102,7 +61121,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -61532,7 +61551,7 @@ class ToggleToolButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -61565,7 +61584,7 @@ class ToggleToolButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -61594,7 +61613,7 @@ class ToggleToolButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -61884,7 +61903,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -61917,7 +61936,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -61945,7 +61964,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -62224,7 +62243,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -62257,7 +62276,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
         child: Widget
@@ -62277,7 +62296,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -62568,7 +62587,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -62601,7 +62620,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         child: Widget
 
     props: Props = ...
@@ -62621,7 +62640,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -62890,7 +62909,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -62923,7 +62942,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
@@ -62946,7 +62965,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -62989,7 +63008,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         widget: Widget,
         flags: DestDefaults,
         targets: ToolPaletteDragTargets,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def get_drag_item(self, selection: SelectionData) -> Widget: ...
     @staticmethod
@@ -63279,7 +63298,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -63312,7 +63331,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -63332,7 +63351,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -63430,9 +63449,9 @@ class Tooltip(GObject.Object):
     def set_icon_from_stock(self, stock_id: str | None, size: int) -> None: ...
     def set_markup(self, markup: str | None = None) -> None: ...
     def set_text(self, text: str | None = None) -> None: ...
-    def set_tip_area(self, rect: Gdk.Rectangle) -> None: ...
+    def set_tip_area(self, rect: _Gdk3.Rectangle) -> None: ...
     @staticmethod
-    def trigger_tooltip_query(display: Gdk.Display) -> None: ...
+    def trigger_tooltip_query(display: _Gdk3.Display) -> None: ...
 
 class ToplevelAccessible(Atk.Object):
     """
@@ -64361,7 +64380,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -64394,7 +64413,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
@@ -64432,7 +64451,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -64506,13 +64525,13 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def do_toggle_cursor_row(self) -> bool: ...
     def do_unselect_all(self) -> bool: ...
     def enable_model_drag_dest(
-        self, targets: list[TargetEntry], actions: Gdk.DragAction
+        self, targets: list[TargetEntry], actions: _Gdk3.DragAction
     ) -> None: ...
     def enable_model_drag_source(
         self,
-        start_button_mask: Gdk.ModifierType,
+        start_button_mask: _Gdk3.ModifierType,
         targets: list[TargetEntry],
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def expand_all(self) -> None: ...
     def expand_row(self, path: TreePath, open_all: bool) -> bool: ...
@@ -64520,11 +64539,11 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     def get_activate_on_single_click(self) -> bool: ...
     def get_background_area(
         self, path: TreePath | None = None, column: TreeViewColumn | None = None
-    ) -> Gdk.Rectangle: ...
-    def get_bin_window(self) -> Gdk.Window | None: ...
+    ) -> _Gdk3.Rectangle: ...
+    def get_bin_window(self) -> _Gdk3.Window | None: ...
     def get_cell_area(
         self, path: TreePath | None, column: TreeViewColumn | None
-    ) -> Gdk.Rectangle: ...
+    ) -> _Gdk3.Rectangle: ...
     def get_column(self, n: int) -> TreeViewColumn | None: ...
     def get_columns(self) -> list[TreeViewColumn]: ...
     def get_cursor(self) -> tuple[TreePath, TreeViewColumn]: ...
@@ -64561,7 +64580,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
     ) -> tuple[bool, int, int, TreeModel | None, TreePath, TreeIter]: ...
     def get_vadjustment(self) -> Adjustment: ...
     def get_visible_range(self, *args, **kwargs): ...
-    def get_visible_rect(self) -> Gdk.Rectangle: ...
+    def get_visible_rect(self) -> _Gdk3.Rectangle: ...
     def insert_column(self, column: TreeViewColumn, position: int) -> int: ...
     def insert_column_with_attributes(
         self, position: int, title: str, cell: CellRenderer, **kwargs: Any
@@ -64926,7 +64945,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         self, cell_renderer: CellRenderer
     ) -> tuple[int, int] | None: ...  # CHECK Wrapped function
     def cell_get_size(
-        self, cell_area: Gdk.Rectangle | None = None
+        self, cell_area: _Gdk3.Rectangle | None = None
     ) -> tuple[int, int, int, int]: ...
     def cell_is_visible(self) -> bool: ...
     def cell_set_cell_data(
@@ -65309,7 +65328,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -65342,7 +65361,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -65360,7 +65379,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -65612,7 +65631,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -65645,7 +65664,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -65664,7 +65683,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -65925,7 +65944,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -65958,7 +65977,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
         child: Widget
 
@@ -65976,7 +65995,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -66246,7 +66265,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -66279,7 +66298,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -66302,7 +66321,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -66556,7 +66575,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -66589,7 +66608,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -66608,7 +66627,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -66828,7 +66847,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -66861,7 +66880,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         orientation: Orientation
 
     props: Props = ...
@@ -66872,7 +66891,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -67113,7 +67132,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -67146,7 +67165,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         hadjustment: Adjustment
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment
@@ -67166,7 +67185,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -67203,11 +67222,11 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         vadjustment: Adjustment | None = ...,
         vscroll_policy: ScrollablePolicy = ...,
     ): ...
-    def get_bin_window(self) -> Gdk.Window: ...
+    def get_bin_window(self) -> _Gdk3.Window: ...
     def get_hadjustment(self) -> Adjustment: ...
     def get_shadow_type(self) -> ShadowType: ...
     def get_vadjustment(self) -> Adjustment: ...
-    def get_view_window(self) -> Gdk.Window: ...
+    def get_view_window(self) -> _Gdk3.Window: ...
     @classmethod
     def new(
         cls,
@@ -67486,7 +67505,7 @@ class VolumeButton(
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -67519,7 +67538,7 @@ class VolumeButton(
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -67552,7 +67571,7 @@ class VolumeButton(
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -67779,7 +67798,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -67812,7 +67831,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
 
     props: Props = ...
     parent_instance: GObject.InitiallyUnowned = ...
@@ -67823,7 +67842,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -67862,10 +67881,12 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         accel_signal: str,
         accel_group: AccelGroup,
         accel_key: int,
-        accel_mods: Gdk.ModifierType,
+        accel_mods: _Gdk3.ModifierType,
         accel_flags: AccelFlags,
     ) -> None: ...
-    def add_device_events(self, device: Gdk.Device, events: Gdk.EventMask) -> None: ...
+    def add_device_events(
+        self, device: _Gdk3.Device, events: _Gdk3.EventMask
+    ) -> None: ...
     def add_events(self, events: int) -> None: ...
     def add_mnemonic_label(self, label: Widget) -> None: ...
     def add_tick_callback(
@@ -67886,7 +67907,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def create_pango_layout(self, text: str | None = None) -> Pango.Layout: ...
     def destroy(self) -> None: ...
     def destroyed(self) -> Widget: ...
-    def device_is_shadowed(self, device: Gdk.Device) -> bool: ...
+    def device_is_shadowed(self, device: _Gdk3.Device) -> bool: ...
     def do_adjust_baseline_allocation(self, baseline: int) -> None: ...
     def do_adjust_baseline_request(
         self, minimum_baseline: int, natural_baseline: int
@@ -67902,33 +67923,33 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_adjust_size_request(
         self, orientation: Orientation, minimum_size: int, natural_size: int
     ) -> None: ...
-    def do_button_press_event(self, event: Gdk.EventButton) -> bool: ...
-    def do_button_release_event(self, event: Gdk.EventButton) -> bool: ...
+    def do_button_press_event(self, event: _Gdk3.EventButton) -> bool: ...
+    def do_button_release_event(self, event: _Gdk3.EventButton) -> bool: ...
     def do_can_activate_accel(self, signal_id: int) -> bool: ...
     def do_child_notify(self, child_property: GObject.ParamSpec) -> None: ...
     def do_composited_changed(self) -> None: ...
     def do_compute_expand(self, hexpand_p: bool, vexpand_p: bool) -> None: ...
-    def do_configure_event(self, event: Gdk.EventConfigure) -> bool: ...
-    def do_damage_event(self, event: Gdk.EventExpose) -> bool: ...
-    def do_delete_event(self, event: Gdk.EventAny) -> bool: ...
+    def do_configure_event(self, event: _Gdk3.EventConfigure) -> bool: ...
+    def do_damage_event(self, event: _Gdk3.EventExpose) -> bool: ...
+    def do_delete_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_destroy(self) -> None: ...
-    def do_destroy_event(self, event: Gdk.EventAny) -> bool: ...
+    def do_destroy_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_direction_changed(self, previous_direction: TextDirection) -> None: ...
     def do_dispatch_child_properties_changed(
         self, n_pspecs: int, pspecs: GObject.ParamSpec
     ) -> None: ...
-    def do_drag_begin(self, context: Gdk.DragContext) -> None: ...
-    def do_drag_data_delete(self, context: Gdk.DragContext) -> None: ...
+    def do_drag_begin(self, context: _Gdk3.DragContext) -> None: ...
+    def do_drag_data_delete(self, context: _Gdk3.DragContext) -> None: ...
     def do_drag_data_get(
         self,
-        context: Gdk.DragContext,
+        context: _Gdk3.DragContext,
         selection_data: SelectionData,
         info: int,
         time_: int,
     ) -> None: ...
     def do_drag_data_received(
         self,
-        context: Gdk.DragContext,
+        context: _Gdk3.DragContext,
         x: int,
         y: int,
         selection_data: SelectionData,
@@ -67936,20 +67957,22 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         time_: int,
     ) -> None: ...
     def do_drag_drop(
-        self, context: Gdk.DragContext, x: int, y: int, time_: int
+        self, context: _Gdk3.DragContext, x: int, y: int, time_: int
     ) -> bool: ...
-    def do_drag_end(self, context: Gdk.DragContext) -> None: ...
-    def do_drag_failed(self, context: Gdk.DragContext, result: DragResult) -> bool: ...
-    def do_drag_leave(self, context: Gdk.DragContext, time_: int) -> None: ...
+    def do_drag_end(self, context: _Gdk3.DragContext) -> None: ...
+    def do_drag_failed(
+        self, context: _Gdk3.DragContext, result: DragResult
+    ) -> bool: ...
+    def do_drag_leave(self, context: _Gdk3.DragContext, time_: int) -> None: ...
     def do_drag_motion(
-        self, context: Gdk.DragContext, x: int, y: int, time_: int
+        self, context: _Gdk3.DragContext, x: int, y: int, time_: int
     ) -> bool: ...
     def do_draw(self, cr: cairo.Context[_SomeSurface]) -> bool: ...
-    def do_enter_notify_event(self, event: Gdk.EventCrossing) -> bool: ...
-    def do_event(self, event: Gdk.Event) -> bool: ...
+    def do_enter_notify_event(self, event: _Gdk3.EventCrossing) -> bool: ...
+    def do_event(self, event: _Gdk3.Event) -> bool: ...
     def do_focus(self, direction: DirectionType) -> bool: ...
-    def do_focus_in_event(self, event: Gdk.EventFocus) -> bool: ...
-    def do_focus_out_event(self, event: Gdk.EventFocus) -> bool: ...
+    def do_focus_in_event(self, event: _Gdk3.EventFocus) -> bool: ...
+    def do_focus_out_event(self, event: _Gdk3.EventFocus) -> bool: ...
     def do_get_accessible(self) -> Atk.Object: ...
     def do_get_preferred_height(self) -> tuple[int, int]: ...
     def do_get_preferred_height_and_baseline_for_width(
@@ -67959,71 +67982,71 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_get_preferred_width(self) -> tuple[int, int]: ...
     def do_get_preferred_width_for_height(self, height: int) -> tuple[int, int]: ...
     def do_get_request_mode(self) -> SizeRequestMode: ...
-    def do_grab_broken_event(self, event: Gdk.EventGrabBroken) -> bool: ...
+    def do_grab_broken_event(self, event: _Gdk3.EventGrabBroken) -> bool: ...
     def do_grab_focus(self) -> None: ...
     def do_grab_notify(self, was_grabbed: bool) -> None: ...
     def do_hide(self) -> None: ...
     def do_hierarchy_changed(self, previous_toplevel: Widget) -> None: ...
-    def do_key_press_event(self, event: Gdk.EventKey) -> bool: ...
-    def do_key_release_event(self, event: Gdk.EventKey) -> bool: ...
+    def do_key_press_event(self, event: _Gdk3.EventKey) -> bool: ...
+    def do_key_release_event(self, event: _Gdk3.EventKey) -> bool: ...
     def do_keynav_failed(self, direction: DirectionType) -> bool: ...
-    def do_leave_notify_event(self, event: Gdk.EventCrossing) -> bool: ...
+    def do_leave_notify_event(self, event: _Gdk3.EventCrossing) -> bool: ...
     def do_map(self) -> None: ...
-    def do_map_event(self, event: Gdk.EventAny) -> bool: ...
+    def do_map_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_mnemonic_activate(self, group_cycling: bool) -> bool: ...
-    def do_motion_notify_event(self, event: Gdk.EventMotion) -> bool: ...
+    def do_motion_notify_event(self, event: _Gdk3.EventMotion) -> bool: ...
     def do_move_focus(self, direction: DirectionType) -> None: ...
     def do_parent_set(self, previous_parent: Widget) -> None: ...
     def do_popup_menu(self) -> bool: ...
-    def do_property_notify_event(self, event: Gdk.EventProperty) -> bool: ...
-    def do_proximity_in_event(self, event: Gdk.EventProximity) -> bool: ...
-    def do_proximity_out_event(self, event: Gdk.EventProximity) -> bool: ...
+    def do_property_notify_event(self, event: _Gdk3.EventProperty) -> bool: ...
+    def do_proximity_in_event(self, event: _Gdk3.EventProximity) -> bool: ...
+    def do_proximity_out_event(self, event: _Gdk3.EventProximity) -> bool: ...
     def do_query_tooltip(
         self, x: int, y: int, keyboard_tooltip: bool, tooltip: Tooltip
     ) -> bool: ...
     def do_queue_draw_region(self, region: cairo.Region) -> None: ...
     def do_realize(self) -> None: ...
-    def do_screen_changed(self, previous_screen: Gdk.Screen) -> None: ...
-    def do_scroll_event(self, event: Gdk.EventScroll) -> bool: ...
-    def do_selection_clear_event(self, event: Gdk.EventSelection) -> bool: ...
+    def do_screen_changed(self, previous_screen: _Gdk3.Screen) -> None: ...
+    def do_scroll_event(self, event: _Gdk3.EventScroll) -> bool: ...
+    def do_selection_clear_event(self, event: _Gdk3.EventSelection) -> bool: ...
     def do_selection_get(
         self, selection_data: SelectionData, info: int, time_: int
     ) -> None: ...
-    def do_selection_notify_event(self, event: Gdk.EventSelection) -> bool: ...
+    def do_selection_notify_event(self, event: _Gdk3.EventSelection) -> bool: ...
     def do_selection_received(
         self, selection_data: SelectionData, time_: int
     ) -> None: ...
-    def do_selection_request_event(self, event: Gdk.EventSelection) -> bool: ...
+    def do_selection_request_event(self, event: _Gdk3.EventSelection) -> bool: ...
     def do_show(self) -> None: ...
     def do_show_all(self) -> None: ...
     def do_show_help(self, help_type: WidgetHelpType) -> bool: ...
-    def do_size_allocate(self, allocation: Gdk.Rectangle) -> None: ...
+    def do_size_allocate(self, allocation: _Gdk3.Rectangle) -> None: ...
     def do_state_changed(self, previous_state: StateType) -> None: ...
     def do_state_flags_changed(self, previous_state_flags: StateFlags) -> None: ...
     def do_style_set(self, previous_style: Style) -> None: ...
     def do_style_updated(self) -> None: ...
-    def do_touch_event(self, event: Gdk.EventTouch) -> bool: ...
+    def do_touch_event(self, event: _Gdk3.EventTouch) -> bool: ...
     def do_unmap(self) -> None: ...
-    def do_unmap_event(self, event: Gdk.EventAny) -> bool: ...
+    def do_unmap_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_unrealize(self) -> None: ...
-    def do_visibility_notify_event(self, event: Gdk.EventVisibility) -> bool: ...
-    def do_window_state_event(self, event: Gdk.EventWindowState) -> bool: ...
+    def do_visibility_notify_event(self, event: _Gdk3.EventVisibility) -> bool: ...
+    def do_window_state_event(self, event: _Gdk3.EventWindowState) -> bool: ...
     def drag_begin(
         self,
         targets: TargetList,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
         button: int,
-        event: Gdk.Event | None = None,
-    ) -> Gdk.DragContext: ...
+        event: _Gdk3.Event | None = None,
+    ) -> _Gdk3.DragContext: ...
     def drag_begin_with_coordinates(
         self,
         targets: TargetList,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
         button: int,
-        event: Gdk.Event | None,
+        event: _Gdk3.Event | None,
         x: int,
         y: int,
-    ) -> Gdk.DragContext: ...
+    ) -> _Gdk3.DragContext: ...
     def drag_check_threshold(
         self, start_x: int, start_y: int, current_x: int, current_y: int
     ) -> bool: ...
@@ -68031,20 +68054,20 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_dest_add_text_targets(self) -> None: ...
     def drag_dest_add_uri_targets(self) -> None: ...
     def drag_dest_find_target(
-        self, context: Gdk.DragContext, target_list: TargetList | None = None
-    ) -> Gdk.Atom: ...
+        self, context: _Gdk3.DragContext, target_list: TargetList | None = None
+    ) -> _Gdk3.Atom: ...
     def drag_dest_get_target_list(self) -> TargetList | None: ...
     def drag_dest_get_track_motion(self) -> bool: ...
     def drag_dest_set(
         self,
         flags: DestDefaults,
         targets: Sequence[TargetEntry] | None,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def drag_dest_set_proxy(
         self,
-        proxy_window: Gdk.Window,
-        protocol: Gdk.DragProtocol,
+        proxy_window: _Gdk3.Window,
+        protocol: _Gdk3.DragProtocol,
         use_coordinates: bool,
     ) -> None: ...
     # override
@@ -68052,7 +68075,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_dest_set_track_motion(self, track_motion: bool) -> None: ...
     def drag_dest_unset(self) -> None: ...
     def drag_get_data(
-        self, context: Gdk.DragContext, target: Gdk.Atom, time_: int
+        self, context: _Gdk3.DragContext, target: _Gdk3.Atom, time_: int
     ) -> None: ...
     def drag_highlight(self) -> None: ...
     def drag_source_add_image_targets(self) -> None: ...
@@ -68061,9 +68084,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_source_get_target_list(self) -> TargetList | None: ...
     def drag_source_set(
         self,
-        start_button_mask: Gdk.ModifierType,
+        start_button_mask: _Gdk3.ModifierType,
         targets: Sequence[TargetEntry] | None,
-        actions: Gdk.DragAction,
+        actions: _Gdk3.DragAction,
     ) -> None: ...
     def drag_source_set_icon_gicon(self, icon: Gio.Icon) -> None: ...
     def drag_source_set_icon_name(self, icon_name: str) -> None: ...
@@ -68075,40 +68098,40 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def draw(self, cr: cairo.Context[_SomeSurface]) -> None: ...
     def ensure_style(self) -> None: ...
     def error_bell(self) -> None: ...
-    def event(self, event: Gdk.Event) -> bool: ...
+    def event(self, event: _Gdk3.Event) -> bool: ...
     def find_style_property(self, property_name: str) -> GObject.ParamSpec: ...
     def freeze_child_notify(self): ...  # FIXME Function
     def get_accessible(self) -> Atk.Object: ...
     def get_action_group(self, prefix: str) -> Gio.ActionGroup | None: ...
     def get_allocated_baseline(self) -> int: ...
     def get_allocated_height(self) -> int: ...
-    def get_allocated_size(self) -> tuple[Gdk.Rectangle, int]: ...
+    def get_allocated_size(self) -> tuple[_Gdk3.Rectangle, int]: ...
     def get_allocated_width(self) -> int: ...
-    def get_allocation(self) -> Gdk.Rectangle: ...
+    def get_allocation(self) -> _Gdk3.Rectangle: ...
     def get_ancestor(self, widget_type: type) -> Widget | None: ...
     def get_app_paintable(self) -> bool: ...
     def get_can_default(self) -> bool: ...
     def get_can_focus(self) -> bool: ...
     def get_child_requisition(self) -> Requisition: ...
     def get_child_visible(self) -> bool: ...
-    def get_clip(self) -> Gdk.Rectangle: ...
-    def get_clipboard(self, selection: Gdk.Atom) -> Clipboard: ...
+    def get_clip(self) -> _Gdk3.Rectangle: ...
+    def get_clipboard(self, selection: _Gdk3.Atom) -> Clipboard: ...
     def get_composite_name(self) -> str: ...
     def get_css_name(self) -> str: ...
     @staticmethod
     def get_default_direction() -> TextDirection: ...
     @staticmethod
     def get_default_style() -> Style: ...
-    def get_device_enabled(self, device: Gdk.Device) -> bool: ...
-    def get_device_events(self, device: Gdk.Device) -> Gdk.EventMask: ...
+    def get_device_enabled(self, device: _Gdk3.Device) -> bool: ...
+    def get_device_events(self, device: _Gdk3.Device) -> _Gdk3.EventMask: ...
     def get_direction(self) -> TextDirection: ...
-    def get_display(self) -> Gdk.Display: ...
+    def get_display(self) -> _Gdk3.Display: ...
     def get_double_buffered(self) -> bool: ...
     def get_events(self) -> int: ...
     def get_focus_on_click(self) -> bool: ...
     def get_font_map(self) -> Pango.FontMap | None: ...
     def get_font_options(self) -> cairo.FontOptions | None: ...
-    def get_frame_clock(self) -> Gdk.FrameClock | None: ...
+    def get_frame_clock(self) -> _Gdk3.FrameClock | None: ...
     def get_halign(self) -> Align: ...
     def get_has_tooltip(self) -> bool: ...
     def get_has_window(self) -> bool: ...
@@ -68121,14 +68144,14 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def get_margin_right(self) -> int: ...
     def get_margin_start(self) -> int: ...
     def get_margin_top(self) -> int: ...
-    def get_modifier_mask(self, intent: Gdk.ModifierIntent) -> Gdk.ModifierType: ...
+    def get_modifier_mask(self, intent: _Gdk3.ModifierIntent) -> _Gdk3.ModifierType: ...
     def get_modifier_style(self) -> RcStyle: ...
     def get_name(self) -> str: ...
     def get_no_show_all(self) -> bool: ...
     def get_opacity(self) -> float: ...
     def get_pango_context(self) -> Pango.Context: ...
     def get_parent(self) -> Widget | None: ...
-    def get_parent_window(self) -> Gdk.Window | None: ...
+    def get_parent_window(self) -> _Gdk3.Window | None: ...
     def get_path(self) -> WidgetPath: ...
     def get_pointer(self) -> tuple[int, int]: ...
     def get_preferred_height(self) -> tuple[int, int]: ...
@@ -68143,9 +68166,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def get_receives_default(self) -> bool: ...
     def get_request_mode(self) -> SizeRequestMode: ...
     def get_requisition(self) -> Requisition: ...
-    def get_root_window(self) -> Gdk.Window: ...
+    def get_root_window(self) -> _Gdk3.Window: ...
     def get_scale_factor(self) -> int: ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     def get_sensitive(self) -> bool: ...
     def get_settings(self) -> Settings: ...
     def get_size_request(self) -> tuple[int, int]: ...
@@ -68164,8 +68187,8 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def get_vexpand(self) -> bool: ...
     def get_vexpand_set(self) -> bool: ...
     def get_visible(self) -> bool: ...
-    def get_visual(self) -> Gdk.Visual: ...
-    def get_window(self) -> Gdk.Window | None: ...
+    def get_visual(self) -> _Gdk3.Visual: ...
+    def get_window(self) -> _Gdk3.Window | None: ...
     def grab_add(self) -> None: ...
     def grab_default(self) -> None: ...
     def grab_focus(self) -> None: ...
@@ -68187,7 +68210,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         self, name: str, group: Gio.ActionGroup | None = None
     ) -> None: ...
     def install_style_property(self, pspec: GObject.ParamSpec) -> None: ...
-    def intersect(self, area: Gdk.Rectangle) -> tuple[bool, Gdk.Rectangle]: ...
+    def intersect(self, area: _Gdk3.Rectangle) -> tuple[bool, _Gdk3.Rectangle]: ...
     def is_ancestor(self, ancestor: Widget) -> bool: ...
     def is_composited(self) -> bool: ...
     def is_drawable(self) -> bool: ...
@@ -68202,29 +68225,33 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def list_style_properties(self) -> list[GObject.ParamSpec]: ...
     def map(self) -> None: ...
     def mnemonic_activate(self, group_cycling: bool) -> bool: ...
-    def modify_base(self, state: StateType, color: Gdk.Color | None = None) -> None: ...
-    def modify_bg(self, state: StateType, color: Gdk.Color | None = None) -> None: ...
-    def modify_cursor(
-        self, primary: Gdk.Color | None = None, secondary: Gdk.Color | None = None
+    def modify_base(
+        self, state: StateType, color: _Gdk3.Color | None = None
     ) -> None: ...
-    def modify_fg(self, state: StateType, color: Gdk.Color | None = None) -> None: ...
+    def modify_bg(self, state: StateType, color: _Gdk3.Color | None = None) -> None: ...
+    def modify_cursor(
+        self, primary: _Gdk3.Color | None = None, secondary: _Gdk3.Color | None = None
+    ) -> None: ...
+    def modify_fg(self, state: StateType, color: _Gdk3.Color | None = None) -> None: ...
     def modify_font(self, font_desc: Pango.FontDescription | None = None) -> None: ...
     def modify_style(self, style: RcStyle) -> None: ...
-    def modify_text(self, state: StateType, color: Gdk.Color | None = None) -> None: ...
+    def modify_text(
+        self, state: StateType, color: _Gdk3.Color | None = None
+    ) -> None: ...
     def override_background_color(
-        self, state: StateFlags, color: Gdk.RGBA | None = None
+        self, state: StateFlags, color: _Gdk3.RGBA | None = None
     ) -> None: ...
     def override_color(
-        self, state: StateFlags, color: Gdk.RGBA | None = None
+        self, state: StateFlags, color: _Gdk3.RGBA | None = None
     ) -> None: ...
     def override_cursor(
         self,
-        cursor: Gdk.RGBA | None = None,
-        secondary_cursor: Gdk.RGBA | None = None,
+        cursor: _Gdk3.RGBA | None = None,
+        secondary_cursor: _Gdk3.RGBA | None = None,
     ) -> None: ...
     def override_font(self, font_desc: Pango.FontDescription | None = None) -> None: ...
     def override_symbolic_color(
-        self, name: str, color: Gdk.RGBA | None = None
+        self, name: str, color: _Gdk3.RGBA | None = None
     ) -> None: ...
     def path(self) -> tuple[int, str, str]: ...
     @staticmethod
@@ -68240,9 +68267,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def queue_resize_no_redraw(self) -> None: ...
     def realize(self) -> None: ...
     def region_intersect(self, region: cairo.Region) -> cairo.Region: ...
-    def register_window(self, window: Gdk.Window) -> None: ...
+    def register_window(self, window: _Gdk3.Window) -> None: ...
     def remove_accelerator(
-        self, accel_group: AccelGroup, accel_key: int, accel_mods: Gdk.ModifierType
+        self, accel_group: AccelGroup, accel_key: int, accel_mods: _Gdk3.ModifierType
     ) -> bool: ...
     def remove_mnemonic_label(self, label: Widget) -> None: ...
     def remove_tick_callback(self, id: int) -> None: ...
@@ -68255,19 +68282,19 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def reparent(self, new_parent: Widget) -> None: ...
     def reset_rc_styles(self) -> None: ...
     def reset_style(self) -> None: ...
-    def send_expose(self, event: Gdk.Event) -> int: ...
-    def send_focus_change(self, event: Gdk.Event) -> bool: ...
+    def send_expose(self, event: _Gdk3.Event) -> int: ...
+    def send_focus_change(self, event: _Gdk3.Event) -> bool: ...
     def set_accel_path(
         self, accel_path: str | None = None, accel_group: AccelGroup | None = None
     ) -> None: ...
     def set_accessible_role(self, role: Atk.Role) -> None: ...
     def set_accessible_type(self, type: type) -> None: ...
-    def set_allocation(self, allocation: Gdk.Rectangle) -> None: ...
+    def set_allocation(self, allocation: _Gdk3.Rectangle) -> None: ...
     def set_app_paintable(self, app_paintable: bool) -> None: ...
     def set_can_default(self, can_default: bool) -> None: ...
     def set_can_focus(self, can_focus: bool) -> None: ...
     def set_child_visible(self, is_visible: bool) -> None: ...
-    def set_clip(self, clip: Gdk.Rectangle) -> None: ...
+    def set_clip(self, clip: _Gdk3.Rectangle) -> None: ...
     def set_composite_name(self, name: str) -> None: ...
     def set_connect_func(
         self, connect_func: Callable[..., None], *connect_data: Any
@@ -68275,8 +68302,10 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_css_name(self, name: str) -> None: ...
     @staticmethod
     def set_default_direction(dir: TextDirection) -> None: ...
-    def set_device_enabled(self, device: Gdk.Device, enabled: bool) -> None: ...
-    def set_device_events(self, device: Gdk.Device, events: Gdk.EventMask) -> None: ...
+    def set_device_enabled(self, device: _Gdk3.Device, enabled: bool) -> None: ...
+    def set_device_events(
+        self, device: _Gdk3.Device, events: _Gdk3.EventMask
+    ) -> None: ...
     def set_direction(self, dir: TextDirection) -> None: ...
     def set_double_buffered(self, double_buffered: bool) -> None: ...
     def set_events(self, events: int) -> None: ...
@@ -68299,7 +68328,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_no_show_all(self, no_show_all: bool) -> None: ...
     def set_opacity(self, opacity: float) -> None: ...
     def set_parent(self, parent: Widget) -> None: ...
-    def set_parent_window(self, parent_window: Gdk.Window) -> None: ...
+    def set_parent_window(self, parent_window: _Gdk3.Window) -> None: ...
     def set_realized(self, realized: bool) -> None: ...
     def set_receives_default(self, receives_default: bool) -> None: ...
     def set_redraw_on_allocate(self, redraw_on_allocate: bool) -> None: ...
@@ -68318,15 +68347,15 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_vexpand(self, expand: bool) -> None: ...
     def set_vexpand_set(self, set: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
-    def set_visual(self, visual: Gdk.Visual | None = None) -> None: ...
-    def set_window(self, window: Gdk.Window) -> None: ...
+    def set_visual(self, visual: _Gdk3.Visual | None = None) -> None: ...
+    def set_window(self, window: _Gdk3.Window) -> None: ...
     def shape_combine_region(self, region: cairo.Region | None = None) -> None: ...
     def show(self) -> None: ...
     def show_all(self) -> None: ...
     def show_now(self) -> None: ...
-    def size_allocate(self, allocation: Gdk.Rectangle) -> None: ...
+    def size_allocate(self, allocation: _Gdk3.Rectangle) -> None: ...
     def size_allocate_with_baseline(
-        self, allocation: Gdk.Rectangle, baseline: int
+        self, allocation: _Gdk3.Rectangle, baseline: int
     ) -> None: ...
     def size_request(self) -> Requisition: ...
     def style_attach(self) -> None: ...
@@ -68339,7 +68368,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def unmap(self) -> None: ...
     def unparent(self) -> None: ...
     def unrealize(self) -> None: ...
-    def unregister_window(self, window: Gdk.Window) -> None: ...
+    def unregister_window(self, window: _Gdk3.Window) -> None: ...
     def unset_state_flags(self, flags: StateFlags) -> None: ...
 
 class WidgetAccessible(Accessible, Atk.Component):
@@ -68479,7 +68508,7 @@ class WidgetClass(GObject.GPointer):
     unmap: Callable[[Widget], None] = ...
     realize: Callable[[Widget], None] = ...
     unrealize: Callable[[Widget], None] = ...
-    size_allocate: Callable[[Widget, Gdk.Rectangle], None] = ...
+    size_allocate: Callable[[Widget, _Gdk3.Rectangle], None] = ...
     state_changed: Callable[[Widget, StateType], None] = ...
     state_flags_changed: Callable[[Widget, StateFlags], None] = ...
     parent_set: Callable[[Widget, Widget], None] = ...
@@ -68499,51 +68528,51 @@ class WidgetClass(GObject.GPointer):
     focus: Callable[[Widget, DirectionType], bool] = ...
     move_focus: Callable[[Widget, DirectionType], None] = ...
     keynav_failed: Callable[[Widget, DirectionType], bool] = ...
-    event: Callable[[Widget, Gdk.Event], bool] = ...
-    button_press_event: Callable[[Widget, Gdk.EventButton], bool] = ...
-    button_release_event: Callable[[Widget, Gdk.EventButton], bool] = ...
-    scroll_event: Callable[[Widget, Gdk.EventScroll], bool] = ...
-    motion_notify_event: Callable[[Widget, Gdk.EventMotion], bool] = ...
-    delete_event: Callable[[Widget, Gdk.EventAny], bool] = ...
-    destroy_event: Callable[[Widget, Gdk.EventAny], bool] = ...
-    key_press_event: Callable[[Widget, Gdk.EventKey], bool] = ...
-    key_release_event: Callable[[Widget, Gdk.EventKey], bool] = ...
-    enter_notify_event: Callable[[Widget, Gdk.EventCrossing], bool] = ...
-    leave_notify_event: Callable[[Widget, Gdk.EventCrossing], bool] = ...
-    configure_event: Callable[[Widget, Gdk.EventConfigure], bool] = ...
-    focus_in_event: Callable[[Widget, Gdk.EventFocus], bool] = ...
-    focus_out_event: Callable[[Widget, Gdk.EventFocus], bool] = ...
-    map_event: Callable[[Widget, Gdk.EventAny], bool] = ...
-    unmap_event: Callable[[Widget, Gdk.EventAny], bool] = ...
-    property_notify_event: Callable[[Widget, Gdk.EventProperty], bool] = ...
-    selection_clear_event: Callable[[Widget, Gdk.EventSelection], bool] = ...
-    selection_request_event: Callable[[Widget, Gdk.EventSelection], bool] = ...
-    selection_notify_event: Callable[[Widget, Gdk.EventSelection], bool] = ...
-    proximity_in_event: Callable[[Widget, Gdk.EventProximity], bool] = ...
-    proximity_out_event: Callable[[Widget, Gdk.EventProximity], bool] = ...
-    visibility_notify_event: Callable[[Widget, Gdk.EventVisibility], bool] = ...
-    window_state_event: Callable[[Widget, Gdk.EventWindowState], bool] = ...
-    damage_event: Callable[[Widget, Gdk.EventExpose], bool] = ...
-    grab_broken_event: Callable[[Widget, Gdk.EventGrabBroken], bool] = ...
+    event: Callable[[Widget, _Gdk3.Event], bool] = ...
+    button_press_event: Callable[[Widget, _Gdk3.EventButton], bool] = ...
+    button_release_event: Callable[[Widget, _Gdk3.EventButton], bool] = ...
+    scroll_event: Callable[[Widget, _Gdk3.EventScroll], bool] = ...
+    motion_notify_event: Callable[[Widget, _Gdk3.EventMotion], bool] = ...
+    delete_event: Callable[[Widget, _Gdk3.EventAny], bool] = ...
+    destroy_event: Callable[[Widget, _Gdk3.EventAny], bool] = ...
+    key_press_event: Callable[[Widget, _Gdk3.EventKey], bool] = ...
+    key_release_event: Callable[[Widget, _Gdk3.EventKey], bool] = ...
+    enter_notify_event: Callable[[Widget, _Gdk3.EventCrossing], bool] = ...
+    leave_notify_event: Callable[[Widget, _Gdk3.EventCrossing], bool] = ...
+    configure_event: Callable[[Widget, _Gdk3.EventConfigure], bool] = ...
+    focus_in_event: Callable[[Widget, _Gdk3.EventFocus], bool] = ...
+    focus_out_event: Callable[[Widget, _Gdk3.EventFocus], bool] = ...
+    map_event: Callable[[Widget, _Gdk3.EventAny], bool] = ...
+    unmap_event: Callable[[Widget, _Gdk3.EventAny], bool] = ...
+    property_notify_event: Callable[[Widget, _Gdk3.EventProperty], bool] = ...
+    selection_clear_event: Callable[[Widget, _Gdk3.EventSelection], bool] = ...
+    selection_request_event: Callable[[Widget, _Gdk3.EventSelection], bool] = ...
+    selection_notify_event: Callable[[Widget, _Gdk3.EventSelection], bool] = ...
+    proximity_in_event: Callable[[Widget, _Gdk3.EventProximity], bool] = ...
+    proximity_out_event: Callable[[Widget, _Gdk3.EventProximity], bool] = ...
+    visibility_notify_event: Callable[[Widget, _Gdk3.EventVisibility], bool] = ...
+    window_state_event: Callable[[Widget, _Gdk3.EventWindowState], bool] = ...
+    damage_event: Callable[[Widget, _Gdk3.EventExpose], bool] = ...
+    grab_broken_event: Callable[[Widget, _Gdk3.EventGrabBroken], bool] = ...
     selection_get: Callable[[Widget, SelectionData, int, int], None] = ...
     selection_received: Callable[[Widget, SelectionData, int], None] = ...
-    drag_begin: Callable[[Widget, Gdk.DragContext], None] = ...
-    drag_end: Callable[[Widget, Gdk.DragContext], None] = ...
+    drag_begin: Callable[[Widget, _Gdk3.DragContext], None] = ...
+    drag_end: Callable[[Widget, _Gdk3.DragContext], None] = ...
     drag_data_get: Callable[
-        [Widget, Gdk.DragContext, SelectionData, int, int], None
+        [Widget, _Gdk3.DragContext, SelectionData, int, int], None
     ] = ...
-    drag_data_delete: Callable[[Widget, Gdk.DragContext], None] = ...
-    drag_leave: Callable[[Widget, Gdk.DragContext, int], None] = ...
-    drag_motion: Callable[[Widget, Gdk.DragContext, int, int, int], bool] = ...
-    drag_drop: Callable[[Widget, Gdk.DragContext, int, int, int], bool] = ...
+    drag_data_delete: Callable[[Widget, _Gdk3.DragContext], None] = ...
+    drag_leave: Callable[[Widget, _Gdk3.DragContext, int], None] = ...
+    drag_motion: Callable[[Widget, _Gdk3.DragContext, int, int, int], bool] = ...
+    drag_drop: Callable[[Widget, _Gdk3.DragContext, int, int, int], bool] = ...
     drag_data_received: Callable[
-        [Widget, Gdk.DragContext, int, int, SelectionData, int, int], None
+        [Widget, _Gdk3.DragContext, int, int, SelectionData, int, int], None
     ] = ...
-    drag_failed: Callable[[Widget, Gdk.DragContext, DragResult], bool] = ...
+    drag_failed: Callable[[Widget, _Gdk3.DragContext, DragResult], bool] = ...
     popup_menu: Callable[[Widget], bool] = ...
     show_help: Callable[[Widget, WidgetHelpType], bool] = ...
     get_accessible: Callable[[Widget], Atk.Object] = ...
-    screen_changed: Callable[[Widget, Gdk.Screen], None] = ...
+    screen_changed: Callable[[Widget, _Gdk3.Screen], None] = ...
     can_activate_accel: Callable[[Widget, int], bool] = ...
     composited_changed: Callable[[Widget], None] = ...
     query_tooltip: Callable[[Widget, int, int, bool, Tooltip], bool] = ...
@@ -68553,7 +68582,7 @@ class WidgetClass(GObject.GPointer):
         [Widget, Orientation, int, int, int, int], None
     ] = ...
     style_updated: Callable[[Widget], None] = ...
-    touch_event: Callable[[Widget, Gdk.EventTouch], bool] = ...
+    touch_event: Callable[[Widget, _Gdk3.EventTouch], bool] = ...
     get_preferred_height_and_baseline_for_width: Callable[
         [Widget, int], tuple[int, int, int, int]
     ] = ...
@@ -68901,7 +68930,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: Gdk.Gravity
+        gravity: _Gdk3.Gravity
         has_resize_grip: bool
         has_toplevel_focus: bool
         hide_titlebar_when_maximized: bool
@@ -68914,13 +68943,13 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         resizable: bool
         resize_grip_visible: bool
         role: str | None
-        screen: Gdk.Screen
+        screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
         title: str | None
         transient_for: Window | None
         type: WindowType
-        type_hint: Gdk.WindowTypeHint
+        type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
         border_width: int
@@ -68930,7 +68959,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         can_focus: bool
         composite_child: bool
         double_buffered: bool
-        events: Gdk.EventMask
+        events: _Gdk3.EventMask
         expand: bool
         focus_on_click: bool
         halign: Align
@@ -68963,7 +68992,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: Gdk.Window | None
+        window: _Gdk3.Window | None
         startup_id: str
         child: Widget
 
@@ -68982,7 +69011,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: Gdk.Gravity = ...,
+        gravity: _Gdk3.Gravity = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -68991,14 +69020,14 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         modal: bool = ...,
         resizable: bool = ...,
         role: str = ...,
-        screen: Gdk.Screen = ...,
+        screen: _Gdk3.Screen = ...,
         skip_pager_hint: bool = ...,
         skip_taskbar_hint: bool = ...,
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
         type: WindowType = ...,
-        type_hint: Gdk.WindowTypeHint = ...,
+        type_hint: _Gdk3.WindowTypeHint = ...,
         urgency_hint: bool = ...,
         window_position: WindowPosition = ...,
         border_width: int = ...,
@@ -69008,7 +69037,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: Gdk.EventMask = ...,
+        events: _Gdk3.EventMask = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
         halign: Align = ...,
@@ -69043,7 +69072,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     ): ...
     def activate_default(self) -> bool: ...
     def activate_focus(self) -> bool: ...
-    def activate_key(self, event: Gdk.EventKey) -> bool: ...
+    def activate_key(self, event: _Gdk3.EventKey) -> bool: ...
     def add_accel_group(self, accel_group: AccelGroup) -> None: ...
     def add_mnemonic(self, keyval: int, target: Widget) -> None: ...
     def begin_move_drag(
@@ -69051,7 +69080,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     ) -> None: ...
     def begin_resize_drag(
         self,
-        edge: Gdk.WindowEdge,
+        edge: _Gdk3.WindowEdge,
         button: int,
         root_x: int,
         root_y: int,
@@ -69065,7 +69094,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     def do_keys_changed(self) -> None: ...
     def do_set_focus(self, focus: Widget | None = None) -> None: ...
     def fullscreen(self) -> None: ...
-    def fullscreen_on_monitor(self, screen: Gdk.Screen, monitor: int) -> None: ...
+    def fullscreen_on_monitor(self, screen: _Gdk3.Screen, monitor: int) -> None: ...
     def get_accept_focus(self) -> bool: ...
     def get_application(self) -> Application | None: ...
     def get_attached_to(self) -> Widget | None: ...
@@ -69081,29 +69110,29 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     def get_focus(self) -> Widget | None: ...
     def get_focus_on_map(self) -> bool: ...
     def get_focus_visible(self) -> bool: ...
-    def get_gravity(self) -> Gdk.Gravity: ...
+    def get_gravity(self) -> _Gdk3.Gravity: ...
     def get_group(self) -> WindowGroup: ...
     def get_has_resize_grip(self) -> bool: ...
     def get_hide_titlebar_when_maximized(self) -> bool: ...
     def get_icon(self) -> GdkPixbuf.Pixbuf | None: ...
     def get_icon_list(self) -> list[GdkPixbuf.Pixbuf]: ...
     def get_icon_name(self) -> str | None: ...
-    def get_mnemonic_modifier(self) -> Gdk.ModifierType: ...
+    def get_mnemonic_modifier(self) -> _Gdk3.ModifierType: ...
     def get_mnemonics_visible(self) -> bool: ...
     def get_modal(self) -> bool: ...
     def get_opacity(self) -> float: ...
     def get_position(self) -> tuple[int, int]: ...
     def get_resizable(self) -> bool: ...
-    def get_resize_grip_area(self) -> tuple[bool, Gdk.Rectangle]: ...
+    def get_resize_grip_area(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_role(self) -> str | None: ...
-    def get_screen(self) -> Gdk.Screen: ...
+    def get_screen(self) -> _Gdk3.Screen: ...
     def get_size(self) -> tuple[int, int]: ...
     def get_skip_pager_hint(self) -> bool: ...
     def get_skip_taskbar_hint(self) -> bool: ...
     def get_title(self) -> str | None: ...
     def get_titlebar(self) -> Widget | None: ...
     def get_transient_for(self) -> Window | None: ...
-    def get_type_hint(self) -> Gdk.WindowTypeHint: ...
+    def get_type_hint(self) -> _Gdk3.WindowTypeHint: ...
     def get_urgency_hint(self) -> bool: ...
     def get_window_type(self) -> WindowType: ...
     def has_group(self) -> bool: ...
@@ -69114,14 +69143,14 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     @staticmethod
     def list_toplevels() -> list[Widget]: ...
     def maximize(self) -> None: ...
-    def mnemonic_activate(self, keyval: int, modifier: Gdk.ModifierType) -> bool: ...
+    def mnemonic_activate(self, keyval: int, modifier: _Gdk3.ModifierType) -> bool: ...
     def move(self, x: int, y: int) -> None: ...
     @classmethod
     def new(cls, type: WindowType) -> Window: ...
     def parse_geometry(self, geometry: str) -> bool: ...
     def present(self) -> None: ...
     def present_with_time(self, timestamp: int) -> None: ...
-    def propagate_key_event(self, event: Gdk.EventKey) -> bool: ...
+    def propagate_key_event(self, event: _Gdk3.EventKey) -> bool: ...
     def remove_accel_group(self, accel_group: AccelGroup) -> None: ...
     def remove_mnemonic(self, keyval: int, target: Widget) -> None: ...
     def reshow_with_initial_size(self) -> None: ...
@@ -69153,10 +69182,10 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     def set_geometry_hints(
         self,
         geometry_widget: Widget | None,
-        geometry: Gdk.Geometry | None,
-        geom_mask: Gdk.WindowHints,
+        geometry: _Gdk3.Geometry | None,
+        geom_mask: _Gdk3.WindowHints,
     ) -> None: ...
-    def set_gravity(self, gravity: Gdk.Gravity) -> None: ...
+    def set_gravity(self, gravity: _Gdk3.Gravity) -> None: ...
     def set_has_resize_grip(self, value: bool) -> None: ...
     def set_has_user_ref_count(self, setting: bool) -> None: ...
     def set_hide_titlebar_when_maximized(self, setting: bool) -> None: ...
@@ -69168,21 +69197,21 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
     def set_interactive_debugging(enable: bool) -> None: ...
     def set_keep_above(self, setting: bool) -> None: ...
     def set_keep_below(self, setting: bool) -> None: ...
-    def set_mnemonic_modifier(self, modifier: Gdk.ModifierType) -> None: ...
+    def set_mnemonic_modifier(self, modifier: _Gdk3.ModifierType) -> None: ...
     def set_mnemonics_visible(self, setting: bool) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_opacity(self, opacity: float) -> None: ...
     def set_position(self, position: WindowPosition) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
     def set_role(self, role: str) -> None: ...
-    def set_screen(self, screen: Gdk.Screen) -> None: ...
+    def set_screen(self, screen: _Gdk3.Screen) -> None: ...
     def set_skip_pager_hint(self, setting: bool) -> None: ...
     def set_skip_taskbar_hint(self, setting: bool) -> None: ...
     def set_startup_id(self, startup_id: str) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_titlebar(self, titlebar: Widget | None = None) -> None: ...
     def set_transient_for(self, parent: Window | None = None) -> None: ...
-    def set_type_hint(self, hint: Gdk.WindowTypeHint) -> None: ...
+    def set_type_hint(self, hint: _Gdk3.WindowTypeHint) -> None: ...
     def set_urgency_hint(self, setting: bool) -> None: ...
     def set_wmclass(self, wmclass_name: str, wmclass_class: str) -> None: ...
     def stick(self) -> None: ...
@@ -69360,7 +69389,7 @@ class WindowGroup(GObject.Object):
     parent_instance: GObject.Object = ...
     priv: WindowGroupPrivate = ...
     def add_window(self, window: Window) -> None: ...
-    def get_current_device_grab(self, device: Gdk.Device) -> Widget | None: ...
+    def get_current_device_grab(self, device: _Gdk3.Device) -> Widget | None: ...
     def get_current_grab(self) -> Widget: ...
     def list_windows(self) -> list[Window]: ...
     @classmethod

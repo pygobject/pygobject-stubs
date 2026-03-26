@@ -4,13 +4,13 @@ from typing import TypeVar
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi.repository import _Soup3
 from gi.repository import Camel
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Json
 from gi.repository import libxml2
-from gi.repository import Soup
 
 T = TypeVar("T")
 
@@ -235,7 +235,7 @@ def secret_store_store_sync(
     permanently: bool,
     cancellable: Gio.Cancellable | None = None,
 ) -> bool: ...
-def soup_ssl_trust_connect(soup_message: Soup.Message, source: Source) -> None: ...
+def soup_ssl_trust_connect(soup_message: _Soup3.Message, source: Source) -> None: ...
 def strftime(string: str, max: int, fmt: str, tm: None) -> int: ...
 def time_format_date_and_time(
     date_tm: None,
@@ -290,7 +290,7 @@ def util_can_use_collection_as_credential_source(
     collection_source: None, child_source: None
 ) -> bool: ...
 def util_change_uri_component(
-    component: Soup.URIComponent, value: str | None = None
+    component: _Soup3.URIComponent, value: str | None = None
 ) -> GLib.Uri: ...
 def util_change_uri_port(port: int) -> GLib.Uri: ...
 def util_copy_object_slist(
@@ -1218,13 +1218,13 @@ class OAuth2Service(GObject.GInterface):
         self, source: Source, authorization_code: str, form: dict[str, str]
     ) -> None: ...
     def prepare_get_token_message(
-        self, source: Source, message: Soup.Message
+        self, source: Source, message: _Soup3.Message
     ) -> None: ...
     def prepare_refresh_token_form(
         self, source: Source, refresh_token: str, form: dict[str, str]
     ) -> None: ...
     def prepare_refresh_token_message(
-        self, source: Source, message: Soup.Message
+        self, source: Source, message: _Soup3.Message
     ) -> None: ...
     def receive_and_store_token_sync(
         self,
@@ -1360,13 +1360,13 @@ class OAuth2ServiceInterface(GObject.GPointer):
         [OAuth2Service, Source, str, dict[str, str]], None
     ] = ...
     prepare_get_token_message: Callable[
-        [OAuth2Service, Source, Soup.Message], None
+        [OAuth2Service, Source, _Soup3.Message], None
     ] = ...
     prepare_refresh_token_form: Callable[
         [OAuth2Service, Source, str, dict[str, str]], None
     ] = ...
     prepare_refresh_token_message: Callable[
-        [OAuth2Service, Source, Soup.Message], None
+        [OAuth2Service, Source, _Soup3.Message], None
     ] = ...
     extract_error_message: Callable[
         [OAuth2Service, Source, str, str, str | None], tuple[bool, str]
@@ -1497,7 +1497,7 @@ class OperationPool(GObject.GPointer):
     def release_opid(self, opid: int) -> None: ...
     def reserve_opid(self) -> int: ...
 
-class SoupAuthBearer(Soup.Auth):
+class SoupAuthBearer(_Soup3.Auth):
     """
     :Constructors:
 
@@ -1524,7 +1524,7 @@ class SoupAuthBearer(Soup.Auth):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Soup.Auth.Props):
+    class Props(_Soup3.Auth.Props):
         authority: str
         is_authenticated: bool
         is_cancelled: bool
@@ -1533,7 +1533,7 @@ class SoupAuthBearer(Soup.Auth):
         scheme_name: str
 
     props: Props = ...
-    parent: Soup.Auth = ...
+    parent: _Soup3.Auth = ...
     priv: SoupAuthBearerPrivate = ...
     def __init__(
         self, authority: str = ..., is_for_proxy: bool = ..., realm: str = ...
@@ -1550,11 +1550,11 @@ class SoupAuthBearerClass(GObject.GPointer):
         SoupAuthBearerClass()
     """
 
-    parent_class: Soup.AuthClass = ...
+    parent_class: _Soup3.AuthClass = ...
 
 class SoupAuthBearerPrivate(GObject.GPointer): ...
 
-class SoupSession(Soup.Session):
+class SoupSession(_Soup3.Session):
     """
     :Constructors:
 
@@ -1603,7 +1603,7 @@ class SoupSession(Soup.Session):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Soup.Session.Props):
+    class Props(_Soup3.Session.Props):
         credentials: NamedParameters | None
         force_http1: bool
         source: Source | None
@@ -1621,7 +1621,7 @@ class SoupSession(Soup.Session):
         user_agent: str | None
 
     props: Props = ...
-    parent: Soup.Session = ...
+    parent: _Soup3.Session = ...
     priv: SoupSessionPrivate = ...
     def __init__(
         self,
@@ -1642,14 +1642,14 @@ class SoupSession(Soup.Session):
         user_agent: str = ...,
     ) -> None: ...
     def check_result(
-        self, message: Soup.Message, read_bytes: None, bytes_length: int
+        self, message: _Soup3.Message, read_bytes: None, bytes_length: int
     ) -> bool: ...
     def dup_credentials(self) -> NamedParameters | None: ...
     @staticmethod
     def error_quark() -> int: ...
     def get_authentication_requires_credentials(self) -> bool: ...
     def get_force_http1(self) -> bool: ...
-    def get_log_level(self) -> Soup.LoggerLogLevel: ...
+    def get_log_level(self) -> _Soup3.LoggerLogLevel: ...
     def get_source(self) -> Source | None: ...
     def get_ssl_error_details(
         self,
@@ -1659,16 +1659,16 @@ class SoupSession(Soup.Session):
     ) -> tuple[SourceAuthenticationResult, str, Gio.TlsCertificateFlags]: ...
     @classmethod
     def new(cls, source: Source) -> SoupSession: ...
-    def new_message(self, method: str, uri_string: str) -> Soup.Message: ...
-    def new_message_from_uri(self, method: str, uri: GLib.Uri) -> Soup.Message: ...
+    def new_message(self, method: str, uri_string: str) -> _Soup3.Message: ...
+    def new_message_from_uri(self, method: str, uri: GLib.Uri) -> _Soup3.Message: ...
     def prepare_message_send_sync(
         self,
-        message: Soup.Message,
+        message: _Soup3.Message,
         cancellable: Gio.Cancellable | None = None,
     ) -> None: ...
     def send_message(
         self,
-        message: Soup.Message,
+        message: _Soup3.Message,
         io_priority: int,
         prepare_data: None,
         cancellable: Gio.Cancellable | None = None,
@@ -1680,12 +1680,12 @@ class SoupSession(Soup.Session):
     ) -> tuple[Gio.InputStream, str, Gio.TlsCertificateFlags]: ...
     def send_message_simple_sync(
         self,
-        message: Soup.Message,
+        message: _Soup3.Message,
         cancellable: Gio.Cancellable | None = None,
     ) -> bytes: ...
     def send_message_sync(
         self,
-        message: Soup.Message,
+        message: _Soup3.Message,
         cancellable: Gio.Cancellable | None = None,
     ) -> Gio.InputStream: ...
     def set_credentials(self, credentials: NamedParameters | None = None) -> None: ...
@@ -1694,23 +1694,23 @@ class SoupSession(Soup.Session):
     @staticmethod
     def util_get_force_http1_supported() -> bool: ...
     @staticmethod
-    def util_get_message_bytes(message: Soup.Message) -> bytes | None: ...
+    def util_get_message_bytes(message: _Soup3.Message) -> bytes | None: ...
     @staticmethod
     def util_normalize_uri_path(uri: GLib.Uri) -> GLib.Uri | None: ...
     @staticmethod
     def util_ref_message_request_body(
-        message: Soup.Message,
+        message: _Soup3.Message,
     ) -> tuple[Gio.InputStream | None, int]: ...
     @staticmethod
     def util_set_message_request_body(
-        message: Soup.Message,
+        message: _Soup3.Message,
         content_type: str | None,
         input_stream: Gio.InputStream,
         length: int,
     ) -> None: ...
     @staticmethod
     def util_set_message_request_body_from_data(
-        message: Soup.Message,
+        message: _Soup3.Message,
         create_copy: bool,
         content_type: str | None,
         data: None,
@@ -1731,7 +1731,7 @@ class SoupSessionClass(GObject.GPointer):
         SoupSessionClass()
     """
 
-    parent_class: Soup.SessionClass = ...
+    parent_class: _Soup3.SessionClass = ...
     reserved: list[None] = ...
 
 class SoupSessionPrivate(GObject.GPointer): ...
@@ -5348,7 +5348,7 @@ class WebDAVSession(SoupSession):
         uri: str,
         depth: str | None = None,
         etag: str | None = None,
-        in_headers: Soup.MessageHeaders | None = None,
+        in_headers: _Soup3.MessageHeaders | None = None,
         cancellable: Gio.Cancellable | None = None,
     ) -> bool: ...
     def ensure_full_uri(self, request_uri: GLib.Uri | None, href: str) -> str: ...
@@ -5374,7 +5374,7 @@ class WebDAVSession(SoupSession):
     ) -> tuple[bool, list[WebDAVPrivilege]]: ...
     def get_data_sync(
         self, uri: str, cancellable: Gio.Cancellable | None = None
-    ) -> tuple[bool, str, str, Soup.MessageHeaders, str, int]: ...
+    ) -> tuple[bool, str, str, _Soup3.MessageHeaders, str, int]: ...
     def get_last_dav_error_code(self) -> str | None: ...
     def get_last_dav_error_is_permission(self) -> bool: ...
     def get_principal_collection_set_sync(
@@ -5389,7 +5389,7 @@ class WebDAVSession(SoupSession):
     ) -> tuple[bool, GLib.Node]: ...
     def get_sync(
         self, uri: str, cancellable: Gio.Cancellable | None = None
-    ) -> tuple[bool, str, str, Soup.MessageHeaders, Gio.OutputStream]: ...
+    ) -> tuple[bool, str, str, _Soup3.MessageHeaders, Gio.OutputStream]: ...
     def getctag_sync(
         self,
         uri: str | None = None,
@@ -5446,7 +5446,7 @@ class WebDAVSession(SoupSession):
     ) -> bool: ...
     @classmethod
     def new(cls, source: Source) -> WebDAVSession: ...
-    def new_message(self, method: str, uri: str | None = None) -> Soup.Message: ...
+    def new_message(self, method: str, uri: str | None = None) -> _Soup3.Message: ...
     def options_sync(
         self,
         uri: str | None = None,
@@ -5458,9 +5458,9 @@ class WebDAVSession(SoupSession):
         data: str,
         data_length: int,
         in_content_type: str | None = None,
-        in_headers: Soup.MessageHeaders | None = None,
+        in_headers: _Soup3.MessageHeaders | None = None,
         cancellable: Gio.Cancellable | None = None,
-    ) -> tuple[bool, str, Soup.MessageHeaders, bytes]: ...
+    ) -> tuple[bool, str, _Soup3.MessageHeaders, bytes]: ...
     def principal_property_search_sync(
         self,
         uri: str | None,
@@ -5490,21 +5490,21 @@ class WebDAVSession(SoupSession):
         uri: str,
         etag: str | None,
         content_type: str,
-        in_headers: Soup.MessageHeaders | None,
+        in_headers: _Soup3.MessageHeaders | None,
         bytes: str,
         length: int,
         cancellable: Gio.Cancellable | None = None,
-    ) -> tuple[bool, str, str, Soup.MessageHeaders]: ...
+    ) -> tuple[bool, str, str, _Soup3.MessageHeaders]: ...
     def put_sync(
         self,
         uri: str,
         etag: str | None,
         content_type: str,
-        in_headers: Soup.MessageHeaders | None,
+        in_headers: _Soup3.MessageHeaders | None,
         stream: Gio.InputStream,
         stream_length: int,
         cancellable: Gio.Cancellable | None = None,
-    ) -> tuple[bool, str, str, Soup.MessageHeaders]: ...
+    ) -> tuple[bool, str, str, _Soup3.MessageHeaders]: ...
     def refresh_lock_sync(
         self,
         uri: str | None,
@@ -5514,7 +5514,7 @@ class WebDAVSession(SoupSession):
     ) -> bool: ...
     def replace_with_detailed_error(
         self,
-        message: Soup.Message,
+        message: _Soup3.Message,
         response_data: Sequence[int] | None,
         ignore_multistatus: bool,
         prefix: str | None = None,
@@ -5538,21 +5538,21 @@ class WebDAVSession(SoupSession):
     ) -> bool: ...
     def traverse_mkcalendar_response(
         self,
-        message: Soup.Message | None,
+        message: _Soup3.Message | None,
         xml_data: Sequence[int],
         func: Callable[..., bool] | None = None,
         *func_user_data: Any,
     ) -> bool: ...
     def traverse_mkcol_response(
         self,
-        message: Soup.Message | None,
+        message: _Soup3.Message | None,
         xml_data: Sequence[int],
         func: Callable[..., bool] | None = None,
         *func_user_data: Any,
     ) -> bool: ...
     def traverse_multistatus_response(
         self,
-        message: Soup.Message | None,
+        message: _Soup3.Message | None,
         xml_data: Sequence[int],
         func: Callable[..., bool] | None = None,
         *func_user_data: Any,
