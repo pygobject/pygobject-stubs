@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import Generic
 from typing import overload
 from typing import TypeVar
@@ -451,58 +452,39 @@ def tls_file_database_new(anchors: str) -> TlsFileDatabase: ...
 def tls_server_connection_new(
     base_io_stream: IOStream, certificate: TlsCertificate | None = None
 ) -> TlsServerConnection: ...
-def unix_is_mount_path_system_internal(mount_path: str) -> bool: ...
-def unix_is_system_device_path(device_path: str) -> bool: ...
-def unix_is_system_fs_type(fs_type: str) -> bool: ...
-def unix_mount_at(
-    mount_path: str,
-) -> tuple[GioUnix.MountEntry | None, int]: ...
-def unix_mount_compare(
-    mount1: GioUnix.MountEntry, mount2: GioUnix.MountEntry
-) -> int: ...
-def unix_mount_copy(mount_entry: GioUnix.MountEntry) -> GioUnix.MountEntry: ...
-def unix_mount_entries_changed_since(time: int) -> bool: ...
-def unix_mount_entries_get() -> tuple[list[GioUnix.MountEntry], int]: ...
-def unix_mount_entries_get_from_file(
-    table_path: str,
-) -> tuple[list[GioUnix.MountEntry] | None, int]: ...
-def unix_mount_entry_at(
-    mount_path: str,
-) -> tuple[GioUnix.MountEntry | None, int]: ...
-def unix_mount_entry_for(
-    file_path: str,
-) -> tuple[GioUnix.MountEntry | None, int]: ...
-def unix_mount_for(
-    file_path: str,
-) -> tuple[GioUnix.MountEntry | None, int]: ...
-def unix_mount_free(mount_entry: GioUnix.MountEntry) -> None: ...
-def unix_mount_get_device_path(mount_entry: GioUnix.MountEntry) -> str: ...
-def unix_mount_get_fs_type(mount_entry: GioUnix.MountEntry) -> str: ...
-def unix_mount_get_mount_path(mount_entry: GioUnix.MountEntry) -> str: ...
-def unix_mount_get_options(mount_entry: GioUnix.MountEntry) -> str | None: ...
-def unix_mount_get_root_path(
-    mount_entry: GioUnix.MountEntry,
-) -> str | None: ...
-def unix_mount_guess_can_eject(mount_entry: GioUnix.MountEntry) -> bool: ...
-def unix_mount_guess_icon(mount_entry: GioUnix.MountEntry) -> Icon: ...
-def unix_mount_guess_name(mount_entry: GioUnix.MountEntry) -> str: ...
-def unix_mount_guess_should_display(mount_entry: GioUnix.MountEntry) -> bool: ...
-def unix_mount_guess_symbolic_icon(mount_entry: GioUnix.MountEntry) -> Icon: ...
-def unix_mount_is_readonly(mount_entry: GioUnix.MountEntry) -> bool: ...
-def unix_mount_is_system_internal(mount_entry: GioUnix.MountEntry) -> bool: ...
-def unix_mount_point_at(
-    mount_path: str,
-) -> tuple[GioUnix.MountPoint | None, int]: ...
-def unix_mount_points_changed_since(time: int) -> bool: ...
-def unix_mount_points_get() -> tuple[list[GioUnix.MountPoint], int]: ...
-def unix_mount_points_get_from_file(
-    table_path: str,
-) -> tuple[list[GioUnix.MountPoint] | None, int]: ...
-def unix_mounts_changed_since(time: int) -> bool: ...
-def unix_mounts_get() -> tuple[list[GioUnix.MountEntry], int]: ...
-def unix_mounts_get_from_file(
-    table_path: str,
-) -> tuple[list[GioUnix.MountEntry] | None, int]: ...
+
+unix_is_mount_path_system_internal: Final = GioUnix.is_mount_path_system_internal
+unix_is_system_device_path: Final = GioUnix.is_system_device_path
+unix_is_system_fs_type: Final = GioUnix.is_system_fs_type
+unix_mount_at: Final = GioUnix.mount_at
+unix_mount_compare: Final = GioUnix.mount_compare
+unix_mount_copy: Final = GioUnix.mount_copy
+unix_mount_entries_changed_since: Final = GioUnix.mount_entries_changed_since
+unix_mount_entries_get: Final = GioUnix.mount_entries_get
+unix_mount_entries_get_from_file: Final = GioUnix.mount_entries_get_from_file
+unix_mount_entry_at: Final = GioUnix.mount_entry_at
+unix_mount_entry_for: Final = GioUnix.mount_entry_for
+unix_mount_for: Final = GioUnix.mount_for
+unix_mount_free: Final = GioUnix.mount_free
+unix_mount_get_device_path: Final = GioUnix.mount_get_device_path
+unix_mount_get_fs_type: Final = GioUnix.mount_get_fs_type
+unix_mount_get_mount_path: Final = GioUnix.mount_get_mount_path
+unix_mount_get_options: Final = GioUnix.mount_get_options
+unix_mount_get_root_path: Final = GioUnix.mount_get_root_path
+unix_mount_guess_can_eject: Final = GioUnix.mount_guess_can_eject
+unix_mount_guess_icon: Final = GioUnix.mount_guess_icon
+unix_mount_guess_name: Final = GioUnix.mount_guess_name
+unix_mount_guess_should_display: Final = GioUnix.mount_guess_should_display
+unix_mount_guess_symbolic_icon: Final = GioUnix.mount_guess_symbolic_icon
+unix_mount_is_readonly: Final = GioUnix.mount_is_readonly
+unix_mount_is_system_internal: Final = GioUnix.mount_is_system_internal
+unix_mount_point_at: Final = GioUnix.mount_point_at
+unix_mount_points_changed_since: Final = GioUnix.mount_points_changed_since
+unix_mount_points_get: Final = GioUnix.mount_points_get
+unix_mount_points_get_from_file: Final = GioUnix.mount_points_get_from_file
+unix_mounts_changed_since: Final = GioUnix.mounts_changed_since
+unix_mounts_get: Final = GioUnix.mounts_get
+unix_mounts_get_from_file: Final = GioUnix.mounts_get_from_file
 
 class Action(GObject.GInterface):
     """
@@ -3459,90 +3441,8 @@ class DebugControllerInterface(GObject.GPointer):
 
     g_iface: GObject.TypeInterface = ...
 
-class DesktopAppInfo(GObject.Object, AppInfo):
-    """
-    :Constructors:
-
-    ::
-
-        DesktopAppInfo(**properties)
-        new(desktop_id:str) -> GioUnix.DesktopAppInfo or None
-        new_from_filename(filename:str) -> GioUnix.DesktopAppInfo or None
-        new_from_keyfile(key_file:GLib.KeyFile) -> GioUnix.DesktopAppInfo or None
-
-    Object GDesktopAppInfo
-
-    Properties from GDesktopAppInfo:
-      filename -> gchararray: filename
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(GObject.Object.Props):
-        filename: str | None
-
-    props: Props = ...
-    def __init__(self, *, filename: str = ...) -> None: ...
-    def get_action_name(self, action_name: str) -> str: ...
-    def get_boolean(self, key: str) -> bool: ...
-    def get_categories(self) -> str | None: ...
-    def get_filename(self) -> str | None: ...
-    def get_generic_name(self) -> str | None: ...
-    @staticmethod
-    def get_implementations(interface: str) -> list[GioUnix.DesktopAppInfo]: ...
-    def get_is_hidden(self) -> bool: ...
-    def get_keywords(self) -> list[str]: ...
-    def get_locale_string(self, key: str) -> str | None: ...
-    def get_nodisplay(self) -> bool: ...
-    def get_show_in(self, desktop_env: str | None = None) -> bool: ...
-    def get_startup_wm_class(self) -> str | None: ...
-    def get_string(self, key: str) -> str | None: ...
-    def get_string_list(self, key: str) -> list[str]: ...
-    def has_key(self, key: str) -> bool: ...
-    def launch_action(
-        self, action_name: str, launch_context: AppLaunchContext | None = None
-    ) -> None: ...
-    def launch_uris_as_manager(
-        self,
-        uris: list[str],
-        launch_context: AppLaunchContext | None,
-        spawn_flags: GLib.SpawnFlags,
-        user_setup: Callable[..., None] | None = None,
-        pid_callback: Callable[..., None] | None = None,
-        *pid_callback_data: Any,
-    ) -> bool: ...
-    def launch_uris_as_manager_with_fds(
-        self,
-        uris: list[str],
-        launch_context: AppLaunchContext | None,
-        spawn_flags: GLib.SpawnFlags,
-        user_setup: Callable[..., None] | None,
-        pid_callback: Callable[..., None] | None,
-        stdin_fd: int,
-        stdout_fd: int,
-        stderr_fd: int,
-        *pid_callback_data: Any,
-    ) -> bool: ...
-    def list_actions(self) -> list[str]: ...
-    @classmethod
-    def new(cls, desktop_id: str) -> DesktopAppInfo: ...
-    @classmethod
-    def new_from_filename(cls, filename: str) -> DesktopAppInfo: ...
-    @classmethod
-    def new_from_keyfile(cls, key_file: GLib.KeyFile) -> DesktopAppInfo: ...
-    @staticmethod
-    def search(search_string: str) -> list[Sequence[str]]: ...
-    @staticmethod
-    def set_desktop_env(desktop_env: str) -> None: ...
-
-class DesktopAppInfoLookup(GObject.GInterface):
-    """
-    Interface GDesktopAppInfoLookup
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    def get_default_for_uri_scheme(self, uri_scheme: str) -> AppInfo | None: ...
+DesktopAppInfo = GioUnix.DesktopAppInfo
+DesktopAppInfoLookup = GioUnix.DesktopAppInfoLookup
 
 class Drive(GObject.GInterface):
     """
@@ -4486,14 +4386,7 @@ class FileAttributeMatcher(GObject.GBoxed):
     def to_string(self) -> str: ...
     def unref(self) -> None: ...
 
-class FileDescriptorBased(GObject.GInterface):
-    """
-    Interface GFileDescriptorBased
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    def get_fd(self) -> int: ...
+FileDescriptorBased = GioUnix.FileDescriptorBased
 
 class FileEnumerator(GObject.Object):
     """
@@ -10721,30 +10614,8 @@ class UnixCredentialsMessageClass(GObject.GPointer):
 
 class UnixCredentialsMessagePrivate(GObject.GPointer): ...
 
-class UnixDesktopAppInfoClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        DesktopAppInfoClass()
-    """
-
-    parent_class: GObject.ObjectClass = ...
-
-class UnixDesktopAppInfoLookupIface(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        DesktopAppInfoLookupIface()
-    """
-
-    g_iface: GObject.TypeInterface = ...
-    get_default_for_uri_scheme: Callable[
-        [GioUnix.DesktopAppInfoLookup, str], AppInfo | None
-    ] = ...
+UnixDesktopAppInfoClass = GioUnix.DesktopAppInfoClass
+UnixDesktopAppInfoLookupIface = GioUnix.DesktopAppInfoLookupIface
 
 class UnixFDList(GObject.Object):
     """
@@ -10787,224 +10658,20 @@ class UnixFDListClass(GObject.GPointer):
 
 class UnixFDListPrivate(GObject.GPointer): ...
 
-class UnixFDMessage(SocketControlMessage):
-    """
-    :Constructors:
-
-    ::
-
-        FDMessage(**properties)
-        new() -> Gio.SocketControlMessage
-        new_with_fd_list(fd_list:Gio.UnixFDList) -> Gio.SocketControlMessage
-
-    Object GUnixFDMessage
-
-    Properties from GUnixFDMessage:
-      fd-list -> GUnixFDList: fd-list
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(SocketControlMessage.Props):
-        fd_list: UnixFDList
-
-    props: Props = ...
-    parent_instance: SocketControlMessage = ...
-    priv: GioUnix.FDMessagePrivate = ...
-    def __init__(self, *, fd_list: UnixFDList = ...) -> None: ...
-    def append_fd(self, fd: int) -> bool: ...
-    def get_fd_list(self) -> UnixFDList: ...
-    @classmethod
-    def new(cls) -> UnixFDMessage: ...
-    @classmethod
-    def new_with_fd_list(cls, fd_list: UnixFDList) -> UnixFDMessage: ...
-    def steal_fds(self) -> list[int]: ...
-
-class UnixFDMessageClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        FDMessageClass()
-    """
-
-    parent_class: SocketControlMessageClass = ...
-
-class UnixFDMessagePrivate(GObject.GPointer): ...
-
-class UnixFileDescriptorBasedIface(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        FileDescriptorBasedIface()
-    """
-
-    g_iface: GObject.TypeInterface = ...
-    get_fd: Callable[[GioUnix.FileDescriptorBased], int] = ...
-
-class UnixInputStream(InputStream, PollableInputStream, GioUnix.FileDescriptorBased):
-    """
-    :Constructors:
-
-    ::
-
-        InputStream(**properties)
-        new(fd:int, close_fd:bool) -> Gio.InputStream
-
-    Object GUnixInputStream
-
-    Properties from GUnixInputStream:
-      fd -> gint: fd
-      close-fd -> gboolean: close-fd
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(InputStream.Props):
-        close_fd: bool
-        fd: int
-
-    props: Props = ...
-    parent_instance: InputStream = ...
-    priv: GioUnix.InputStreamPrivate = ...
-    def __init__(self, *, close_fd: bool = ..., fd: int = ...) -> None: ...
-    def get_close_fd(self) -> bool: ...
-    def get_fd(self) -> int: ...
-    @classmethod
-    def new(cls, fd: int, close_fd: bool) -> InputStream: ...
-    def set_close_fd(self, close_fd: bool) -> None: ...
-
-class UnixInputStreamClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        InputStreamClass()
-    """
-
-    parent_class: InputStreamClass = ...
-
-class UnixInputStreamPrivate(GObject.GPointer): ...
-
-class UnixMountEntry(GObject.GBoxed):
-    @staticmethod
-    def at(
-        mount_path: str,
-    ) -> tuple[GioUnix.MountEntry | None, int]: ...
-    def compare(self, mount2: GioUnix.MountEntry) -> int: ...
-    def copy(self) -> GioUnix.MountEntry: ...
-    @staticmethod
-    def for_(
-        file_path: str,
-    ) -> tuple[GioUnix.MountEntry | None, int]: ...
-    def free(self) -> None: ...
-    def get_device_path(self) -> str: ...
-    def get_fs_type(self) -> str: ...
-    def get_mount_path(self) -> str: ...
-    def get_options(self) -> str | None: ...
-    def get_root_path(self) -> str | None: ...
-    def guess_can_eject(self) -> bool: ...
-    def guess_icon(self) -> Icon: ...
-    def guess_name(self) -> str: ...
-    def guess_should_display(self) -> bool: ...
-    def guess_symbolic_icon(self) -> Icon: ...
-    def is_readonly(self) -> bool: ...
-    def is_system_internal(self) -> bool: ...
-
-class UnixMountMonitor(GObject.Object):
-    """
-    :Constructors:
-
-    ::
-
-        MountMonitor(**properties)
-        new() -> GioUnix.MountMonitor
-
-    Object GUnixMountMonitor
-
-    Signals from GUnixMountMonitor:
-      mounts-changed ()
-      mountpoints-changed ()
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    @staticmethod
-    def get() -> GioUnix.MountMonitor: ...
-    @classmethod
-    def new(cls) -> UnixMountMonitor: ...
-    def set_rate_limit(self, limit_msec: int) -> None: ...
-
-class UnixMountMonitorClass(GObject.GPointer): ...
-
-class UnixMountPoint(GObject.GBoxed):
-    @staticmethod
-    def at(
-        mount_path: str,
-    ) -> tuple[GioUnix.MountPoint | None, int]: ...
-    def compare(self, mount2: GioUnix.MountPoint) -> int: ...
-    def copy(self) -> GioUnix.MountPoint: ...
-    def free(self) -> None: ...
-    def get_device_path(self) -> str: ...
-    def get_fs_type(self) -> str: ...
-    def get_mount_path(self) -> str: ...
-    def get_options(self) -> str | None: ...
-    def guess_can_eject(self) -> bool: ...
-    def guess_icon(self) -> Icon: ...
-    def guess_name(self) -> str: ...
-    def guess_symbolic_icon(self) -> Icon: ...
-    def is_loopback(self) -> bool: ...
-    def is_readonly(self) -> bool: ...
-    def is_user_mountable(self) -> bool: ...
-
-class UnixOutputStream(OutputStream, PollableOutputStream, GioUnix.FileDescriptorBased):
-    """
-    :Constructors:
-
-    ::
-
-        OutputStream(**properties)
-        new(fd:int, close_fd:bool) -> Gio.OutputStream
-
-    Object GUnixOutputStream
-
-    Properties from GUnixOutputStream:
-      fd -> gint: fd
-      close-fd -> gboolean: close-fd
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(OutputStream.Props):
-        close_fd: bool
-        fd: int
-
-    props: Props = ...
-    parent_instance: OutputStream = ...
-    priv: GioUnix.OutputStreamPrivate = ...
-    def __init__(self, *, close_fd: bool = ..., fd: int = ...) -> None: ...
-    def get_close_fd(self) -> bool: ...
-    def get_fd(self) -> int: ...
-    @classmethod
-    def new(cls, fd: int, close_fd: bool) -> OutputStream: ...
-    def set_close_fd(self, close_fd: bool) -> None: ...
-
-class UnixOutputStreamClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        OutputStreamClass()
-    """
-
-    parent_class: OutputStreamClass = ...
-
-class UnixOutputStreamPrivate(GObject.GPointer): ...
+UnixFDMessage = GioUnix.FDMessage
+UnixFDMessageClass = GioUnix.FDMessageClass
+UnixFDMessagePrivate = GioUnix.FDMessagePrivate
+UnixFileDescriptorBasedIface = GioUnix.FileDescriptorBasedIface
+UnixInputStream = GioUnix.InputStream
+UnixInputStreamClass = GioUnix.InputStreamClass
+UnixInputStreamPrivate = GioUnix.InputStreamPrivate
+UnixMountEntry = GioUnix.MountEntry
+UnixMountMonitor = GioUnix.MountMonitor
+UnixMountMonitorClass = GioUnix.MountMonitorClass
+UnixMountPoint = GioUnix.MountPoint
+UnixOutputStream = GioUnix.OutputStream
+UnixOutputStreamClass = GioUnix.OutputStreamClass
+UnixOutputStreamPrivate = GioUnix.OutputStreamPrivate
 
 class UnixSocketAddress(SocketAddress, SocketConnectable):
     """
