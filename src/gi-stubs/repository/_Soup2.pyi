@@ -1,7 +1,8 @@
 from typing import Any
-from typing import Callable
 from typing import Optional
 from typing import overload
+
+from collections.abc import Callable
 
 from gi.repository import Gio
 from gi.repository import GLib

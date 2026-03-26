@@ -1,11 +1,14 @@
-import typing
+from typing import Any
+from typing import TypeVar
+from typing_extensions import Self
+
+from collections.abc import Callable
 
 from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Pango
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 class WaylandDevice(Gdk.Device):
     """
@@ -418,9 +421,7 @@ class WaylandToplevel(WaylandSurface, Gdk.Toplevel):
         transient_for: Gdk.Surface = ...,
     ) -> None: ...
     def drop_exported_handle(self, handle: str) -> None: ...
-    def export_handle(
-        self, callback: typing.Callable[..., None], *user_data: typing.Any
-    ) -> bool: ...
+    def export_handle(self, callback: Callable[..., None], *user_data: Any) -> bool: ...
     def set_application_id(self, application_id: str) -> None: ...
     def set_transient_for_exported(self, parent_handle_str: str) -> bool: ...
     def unexport_handle(self) -> None: ...

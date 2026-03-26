@@ -1,12 +1,10 @@
 from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
 from typing import TypeVar
 
+from collections.abc import Callable
+from collections.abc import Sequence
+
+import cairo
 from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -14,6 +12,8 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
+
+_SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 _lock = ...  # FIXME Constant
 _namespace: str = "XApp"
@@ -1623,7 +1623,7 @@ class ObjectManagerClient(
         object_path: str,
         interface_name: str | None,
         user_data: None,
-    ) -> Type: ...
+    ) -> type: ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,

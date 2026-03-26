@@ -1,12 +1,14 @@
-import typing
+from typing import Any
+from typing import TypeVar
 
 import enum
+from collections.abc import Callable
 
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "Gly"
@@ -74,8 +76,8 @@ class Creator(GObject.Object):
     def create_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def create_finish(self, result: Gio.AsyncResult) -> EncodedImage: ...
     @classmethod
@@ -224,8 +226,8 @@ class Image(GObject.Object):
         self,
         frame_request: FrameRequest,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_specific_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
     def get_transformation_orientation(self) -> int: ...
@@ -234,8 +236,8 @@ class Image(GObject.Object):
     def next_frame_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def next_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
 
@@ -300,8 +302,8 @@ class Loader(GObject.Object):
     @staticmethod
     def get_mime_types_async(
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def get_mime_types_finish(result: Gio.AsyncResult) -> list[str]: ...
@@ -309,8 +311,8 @@ class Loader(GObject.Object):
     def load_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def load_finish(self, result: Gio.AsyncResult) -> Image: ...
     @classmethod

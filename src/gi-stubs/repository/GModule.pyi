@@ -1,9 +1,9 @@
-import typing
-
-from gi.repository import GObject
+from typing import TypeVar
 from typing_extensions import Self
 
-T = typing.TypeVar("T")
+from gi.repository import GObject
+
+T = TypeVar("T")
 
 MODULE_IMPL_AR: int = 7
 MODULE_IMPL_DL: int = 1
@@ -27,7 +27,7 @@ class Module(GObject.GPointer):
     def name(self) -> str: ...
     @staticmethod
     def supported() -> bool: ...
-    def symbol(self, symbol_name: str) -> typing.Tuple[bool, None]: ...
+    def symbol(self, symbol_name: str) -> tuple[bool, None]: ...
 
 class ModuleFlags(GObject.GFlags):
     LAZY = 1

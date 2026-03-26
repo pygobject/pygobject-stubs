@@ -1,4 +1,8 @@
-import typing
+from typing import Any
+from typing import TypeVar
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -7,7 +11,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 MAJOR_VERSION: int = 1
 MAP_SOURCE_MFF_RELIEF: str = "mff-relief"
@@ -149,7 +153,7 @@ class Compass(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -272,8 +276,8 @@ class DataSource(GObject.Object):
         y: int,
         zoom_level: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def do_get_tile_data_finish(self, result: Gio.AsyncResult) -> GLib.Bytes: ...
     def do_start_request(
@@ -291,8 +295,8 @@ class DataSource(GObject.Object):
         y: int,
         zoom_level: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_tile_data_finish(self, result: Gio.AsyncResult) -> GLib.Bytes: ...
     def set_max_zoom_level(self, zoom_level: int) -> None: ...
@@ -315,11 +319,9 @@ class DataSourceClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    get_tile_data_async: typing.Callable[..., None] = ...
-    get_tile_data_finish: typing.Callable[
-        [DataSource, Gio.AsyncResult], GLib.Bytes
-    ] = ...
-    start_request: typing.Callable[
+    get_tile_data_async: Callable[..., None] = ...
+    get_tile_data_finish: Callable[[DataSource, Gio.AsyncResult], GLib.Bytes] = ...
+    start_request: Callable[
         [DataSource, int, int, int, Gio.Cancellable | None], DataSourceRequest
     ] = ...
     padding: list[None] = ...
@@ -429,12 +431,12 @@ class FileCache(GObject.Object):
         y: int,
         zoom_level: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_tile_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[GLib.Bytes, str, GLib.DateTime]: ...
+    ) -> tuple[GLib.Bytes, str, GLib.DateTime]: ...
     def mark_up_to_date(self, x: int, y: int, zoom_level: int) -> None: ...
     @classmethod
     def new_full(
@@ -443,8 +445,8 @@ class FileCache(GObject.Object):
     def purge_cache_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def purge_cache_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_size_limit(self, size_limit: int) -> None: ...
@@ -456,8 +458,8 @@ class FileCache(GObject.Object):
         bytes: GLib.Bytes,
         etag: str | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def store_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
 
@@ -586,7 +588,7 @@ class Layer(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -628,7 +630,7 @@ class LayerClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    get_debug_text: typing.Callable[[Layer], str | None] = ...
+    get_debug_text: Callable[[Layer], str | None] = ...
     padding: list[None] = ...
 
 class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
@@ -749,7 +751,7 @@ class License(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -822,9 +824,9 @@ class LocationInterface(GObject.GPointer):
     """
 
     g_iface: GObject.TypeInterface = ...
-    get_latitude: typing.Callable[[Location], float] = ...
-    get_longitude: typing.Callable[[Location], float] = ...
-    set_location: typing.Callable[[Location, float, float], None] = ...
+    get_latitude: Callable[[Location], float] = ...
+    get_longitude: Callable[[Location], float] = ...
+    set_location: Callable[[Location, float, float], None] = ...
 
 class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     """
@@ -958,7 +960,7 @@ class Map(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         zoom_on_double_click: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1154,7 +1156,7 @@ class MapLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1256,16 +1258,16 @@ class MapSource(GObject.Object):
         self,
         tile: Tile,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def do_fill_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
     def fill_tile_async(
         self,
         tile: Tile,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def fill_tile_finish(self, result: Gio.AsyncResult) -> bool: ...
     def get_column_count(self, zoom_level: int) -> int: ...
@@ -1305,8 +1307,8 @@ class MapSourceClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    fill_tile_async: typing.Callable[..., None] = ...
-    fill_tile_finish: typing.Callable[[MapSource, Gio.AsyncResult], bool] = ...
+    fill_tile_async: Callable[..., None] = ...
+    fill_tile_finish: Callable[[MapSource, Gio.AsyncResult], bool] = ...
     padding: list[None] = ...
 
 class MapSourceRegistry(GObject.Object, Gio.ListModel):
@@ -1469,7 +1471,7 @@ class Marker(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Lo
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1651,7 +1653,7 @@ class MarkerLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1855,7 +1857,7 @@ class PathLayer(Layer, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2041,7 +2043,7 @@ class Point(Marker, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Locatio
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2314,7 +2316,7 @@ class Scale(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         viewport: Viewport | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2499,7 +2501,7 @@ class SimpleMap(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         show_zoom_buttons: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2801,8 +2803,8 @@ class VectorReaderIter(GObject.Object):
     def get_feature_geometry_type(self) -> GeometryType: ...
     def get_feature_id(self) -> int: ...
     def get_feature_keys(self) -> list[str]: ...
-    def get_feature_point(self) -> typing.Tuple[bool, float, float]: ...
-    def get_feature_tag(self, key: str) -> typing.Tuple[bool, typing.Any]: ...
+    def get_feature_point(self) -> tuple[bool, float, float]: ...
+    def get_feature_tag(self, key: str) -> tuple[bool, Any]: ...
     def get_layer_count(self) -> int: ...
     def get_layer_extent(self) -> int: ...
     def get_layer_feature_count(self) -> int: ...
@@ -3011,8 +3013,8 @@ class VectorSpriteSheet(GObject.Object):
     def new(cls) -> VectorSpriteSheet: ...
     def set_fallback(
         self,
-        fallback: typing.Callable[..., VectorSprite | None] | None = None,
-        *user_data: typing.Any,
+        fallback: Callable[..., VectorSprite | None] | None = None,
+        *user_data: Any,
     ) -> None: ...
 
 class VectorSpriteSheetClass(GObject.GPointer):
@@ -3080,7 +3082,7 @@ class Viewport(GObject.Object, Location):
     def get_zoom_level(self) -> float: ...
     def location_to_widget_coords(
         self, widget: Gtk.Widget, latitude: float, longitude: float
-    ) -> typing.Tuple[float, float]: ...
+    ) -> tuple[float, float]: ...
     @classmethod
     def new(cls) -> Viewport: ...
     def set_max_zoom_level(self, max_zoom_level: int) -> None: ...
@@ -3090,7 +3092,7 @@ class Viewport(GObject.Object, Location):
     def set_zoom_level(self, zoom_level: float) -> None: ...
     def widget_coords_to_location(
         self, widget: Gtk.Widget, x: float, y: float
-    ) -> typing.Tuple[float, float]: ...
+    ) -> tuple[float, float]: ...
 
 class ViewportClass(GObject.GPointer):
     """

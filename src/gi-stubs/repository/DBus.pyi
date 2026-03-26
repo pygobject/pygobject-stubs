@@ -1,9 +1,9 @@
-import typing
-
-from gi.repository import GObject
+from typing import TypeVar
 from typing_extensions import Self
 
-T = typing.TypeVar("T")
+from gi.repository import GObject
+
+T = TypeVar("T")
 
 class Connection(GObject.GPointer): ...
 class Error(GObject.GPointer): ...

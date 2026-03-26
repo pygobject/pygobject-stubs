@@ -1,11 +1,6 @@
 from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
-from typing import TypeVar
+
+from collections.abc import Callable
 
 from gi.repository import Atk
 from gi.repository import Gdk
@@ -2684,7 +2679,7 @@ class ComboRow(ActionRow, Atk.ImplementorIface, Gtk.Actionable, Gtk.Buildable):
     def new(cls) -> ComboRow: ...
     def set_for_enum(
         self,
-        enum_type: Type,
+        enum_type: type,
         get_name_func: Callable[..., str] | None = None,
         *user_data: Any,
     ) -> None: ...

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import typing
-
 import argparse
 import subprocess
 import sys
@@ -123,7 +121,7 @@ if __name__ == "__main__":
         output_path = repo_path / f"{lib.output}.pyi"
 
         print(f"Generating {output_path}", file=sys.stderr)
-        cmd: typing.List[str | Path] = [
+        cmd: list[str | Path] = [
             "tools/generate.py",
             lib.name,
             lib.version,

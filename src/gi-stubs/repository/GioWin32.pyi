@@ -1,9 +1,10 @@
-import typing
+from typing import Any
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GObject
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "GioWin32"
@@ -38,9 +39,7 @@ class InputStream(Gio.InputStream):
     def get_close_handle(stream: InputStream) -> bool: ...
     @staticmethod
     def get_handle(stream: InputStream) -> None: ...
-    def new(
-        handle: typing.Any, close_handle: bool
-    ) -> InputStream: ...  # FIXME Function
+    def new(handle: Any, close_handle: bool) -> InputStream: ...  # FIXME Function
     @staticmethod
     def set_close_handle(stream: InputStream, close_handle: bool) -> None: ...
 
@@ -112,9 +111,7 @@ class OutputStream(Gio.OutputStream):
     def get_close_handle(stream: OutputStream) -> bool: ...
     @staticmethod
     def get_handle(stream: OutputStream) -> None: ...
-    def new(
-        handle: typing.Any, close_handle: bool
-    ) -> OutputStream: ...  # FIXME Function
+    def new(handle: Any, close_handle: bool) -> OutputStream: ...  # FIXME Function
     @staticmethod
     def set_close_handle(stream: OutputStream, close_handle: bool) -> None: ...
 

@@ -1,10 +1,12 @@
-import typing
+from typing import Any
+from typing import TypeVar
+
+from collections.abc import Callable
 
 from gi.repository import Gdk
 from gi.repository import GObject
-from gi.repository import win32
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "GdkWin32"
@@ -42,16 +44,16 @@ class Win32Display(Gdk.Display):
 
     def add_filter(
         self,
-        function: typing.Callable[..., Win32MessageFilterReturn],
-        *data: typing.Any,
+        function: Callable[..., Win32MessageFilterReturn],
+        *data: Any,
     ) -> None: ...
     def get_egl_display(self) -> None: ...
     @staticmethod
-    def get_wgl_version(display: Gdk.Display) -> typing.Tuple[bool, int, int]: ...
+    def get_wgl_version(display: Gdk.Display) -> tuple[bool, int, int]: ...
     def remove_filter(
         self,
-        function: typing.Callable[..., Win32MessageFilterReturn],
-        *data: typing.Any,
+        function: Callable[..., Win32MessageFilterReturn],
+        *data: Any,
     ) -> None: ...
     def set_cursor_theme(self, name: str | None, size: int) -> None: ...
 

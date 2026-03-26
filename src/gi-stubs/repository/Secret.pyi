@@ -1,10 +1,13 @@
-import typing
+from typing import Any
+from typing import TypeVar
+
+from collections.abc import Callable
 
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 BACKEND_EXTENSION_POINT_NAME: str = "secret-backend"
 COLLECTION_DEFAULT: str = "default"
@@ -20,8 +23,8 @@ def attributes_validate(schema: Schema, attributes: dict[None, None]) -> bool: .
 def backend_get(
     flags: BackendFlags,
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def backend_get_finish(result: Gio.AsyncResult) -> Backend: ...
 def error_get_quark() -> int: ...
@@ -30,8 +33,8 @@ def password_clear(
     schema: Schema | None,
     attributes: dict[str, str],
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def password_clear_finish(result: Gio.AsyncResult) -> bool: ...
 def password_clear_sync(
@@ -43,8 +46,8 @@ def password_lookup(
     schema: Schema | None,
     attributes: dict[str, str],
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def password_lookup_finish(result: Gio.AsyncResult) -> str: ...
 def password_lookup_sync(
@@ -57,8 +60,8 @@ def password_search(
     attributes: dict[str, str],
     flags: SearchFlags,
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def password_search_finish(result: Gio.AsyncResult) -> list[Retrievable]: ...
 def password_search_sync(
@@ -74,8 +77,8 @@ def password_store(
     label: str,
     password: str,
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def password_store_binary(
     schema: Schema | None,
@@ -84,8 +87,8 @@ def password_store_binary(
     label: str,
     value: Value,
     cancellable: Gio.Cancellable | None = None,
-    callback: typing.Callable[..., None] | None = None,
-    *user_data: typing.Any,
+    callback: Callable[..., None] | None = None,
+    *user_data: Any,
 ) -> None: ...
 def password_store_binary_sync(
     schema: Schema | None,
@@ -118,8 +121,8 @@ class Backend(GObject.GInterface):
     def get(
         flags: BackendFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def get_finish(result: Gio.AsyncResult) -> Backend: ...
@@ -134,15 +137,15 @@ class BackendInterface(GObject.GPointer):
     """
 
     parent_iface: GObject.TypeInterface = ...
-    ensure_for_flags: typing.Callable[..., None] = ...
-    ensure_for_flags_finish: typing.Callable[[Backend, Gio.AsyncResult], bool] = ...
-    store: typing.Callable[..., None] = ...
-    store_finish: typing.Callable[[Backend, Gio.AsyncResult], bool] = ...
-    lookup: typing.Callable[..., None] = ...
-    lookup_finish: typing.Callable[[Backend, Gio.AsyncResult], Value] = ...
-    clear: typing.Callable[..., None] = ...
-    clear_finish: typing.Callable[[Backend, Gio.AsyncResult], bool] = ...
-    search: typing.Callable[..., None] = ...
+    ensure_for_flags: Callable[..., None] = ...
+    ensure_for_flags_finish: Callable[[Backend, Gio.AsyncResult], bool] = ...
+    store: Callable[..., None] = ...
+    store_finish: Callable[[Backend, Gio.AsyncResult], bool] = ...
+    lookup: Callable[..., None] = ...
+    lookup_finish: Callable[[Backend, Gio.AsyncResult], Value] = ...
+    clear: Callable[..., None] = ...
+    clear_finish: Callable[[Backend, Gio.AsyncResult], bool] = ...
+    search: Callable[..., None] = ...
     search_finish: None = ...
 
 class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
@@ -233,8 +236,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         alias: str | None,
         flags: CollectionCreateFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def create_finish(result: Gio.AsyncResult) -> Collection: ...
@@ -249,8 +252,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
     def delete(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def delete_finish(self, result: Gio.AsyncResult) -> bool: ...
     def delete_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
@@ -260,8 +263,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         alias: str,
         flags: CollectionFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def for_alias_finish(result: Gio.AsyncResult) -> Collection: ...
@@ -282,8 +285,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
     def load_items(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def load_items_finish(self, result: Gio.AsyncResult) -> bool: ...
     def load_items_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
@@ -294,8 +297,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         attributes: dict[str, str],
         flags: SearchFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def search_finish(self, result: Gio.AsyncResult) -> list[Item]: ...
     def search_sync(
@@ -309,8 +312,8 @@ class Collection(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initab
         self,
         label: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def set_label_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_label_sync(
@@ -417,8 +420,8 @@ class Item(
         value: Value,
         flags: ItemCreateFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def create_finish(result: Gio.AsyncResult) -> Item: ...
@@ -435,8 +438,8 @@ class Item(
     def delete(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def delete_finish(self, result: Gio.AsyncResult) -> bool: ...
     def delete_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
@@ -452,8 +455,8 @@ class Item(
     def load_secret(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def load_secret_finish(self, result: Gio.AsyncResult) -> bool: ...
     def load_secret_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
@@ -461,8 +464,8 @@ class Item(
     def load_secrets(
         items: list[Item],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def load_secrets_finish(result: Gio.AsyncResult) -> bool: ...
@@ -476,8 +479,8 @@ class Item(
         schema: Schema | None,
         attributes: dict[str, str],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def set_attributes_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_attributes_sync(
@@ -490,8 +493,8 @@ class Item(
         self,
         label: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def set_label_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_label_sync(
@@ -501,8 +504,8 @@ class Item(
         self,
         value: Value,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def set_secret_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_secret_sync(
@@ -582,8 +585,8 @@ class Prompt(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         window_id: str | None,
         return_type: GLib.VariantType,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def perform_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def perform_sync(
@@ -628,8 +631,8 @@ class Retrievable(GObject.GInterface):
     def retrieve_secret(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def retrieve_secret_finish(self, result: Gio.AsyncResult) -> Value: ...
     def retrieve_secret_sync(
@@ -646,8 +649,8 @@ class RetrievableInterface(GObject.GPointer):
     """
 
     parent_iface: GObject.TypeInterface = ...
-    retrieve_secret: typing.Callable[..., None] = ...
-    retrieve_secret_finish: typing.Callable[[Retrievable, Gio.AsyncResult], Value] = ...
+    retrieve_secret: Callable[..., None] = ...
+    retrieve_secret_finish: Callable[[Retrievable, Gio.AsyncResult], Value] = ...
 
 class Schema(GObject.GBoxed):
     """
@@ -759,8 +762,8 @@ class Service(
         schema: Schema | None,
         attributes: dict[str, str],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def clear_finish(self, result: Gio.AsyncResult) -> bool: ...
     def clear_sync(
@@ -780,15 +783,15 @@ class Service(
     def decode_dbus_secret(self, value: GLib.Variant) -> Value: ...
     @staticmethod
     def disconnect() -> None: ...
-    def do_get_collection_gtype(self) -> typing.Type[typing.Any]: ...
-    def do_get_item_gtype(self) -> typing.Type[typing.Any]: ...
+    def do_get_collection_gtype(self) -> type[Any]: ...
+    def do_get_item_gtype(self) -> type[Any]: ...
     def do_prompt_async(
         self,
         prompt: Prompt,
         return_type: GLib.VariantType,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def do_prompt_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def do_prompt_sync(
@@ -801,8 +804,8 @@ class Service(
     def ensure_session(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def ensure_session_finish(self, result: Gio.AsyncResult) -> bool: ...
     def ensure_session_sync(
@@ -812,15 +815,15 @@ class Service(
     def get(
         flags: ServiceFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
-    def get_collection_gtype(self) -> typing.Type[typing.Any]: ...
+    def get_collection_gtype(self) -> type[Any]: ...
     def get_collections(self) -> list[Collection] | None: ...
     @staticmethod
     def get_finish(result: Gio.AsyncResult) -> Service: ...
     def get_flags(self) -> ServiceFlags: ...
-    def get_item_gtype(self) -> typing.Type[typing.Any]: ...
+    def get_item_gtype(self) -> type[Any]: ...
     def get_session_algorithms(self) -> str | None: ...
     def get_session_dbus_path(self) -> str | None: ...
     @staticmethod
@@ -830,8 +833,8 @@ class Service(
     def load_collections(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def load_collections_finish(self, result: Gio.AsyncResult) -> bool: ...
     def load_collections_sync(
@@ -841,24 +844,24 @@ class Service(
         self,
         objects: list[Gio.DBusProxy],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def lock_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[int, list[Gio.DBusProxy]]: ...
+    ) -> tuple[int, list[Gio.DBusProxy]]: ...
     def lock_sync(
         self,
         objects: list[Gio.DBusProxy],
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[int, list[Gio.DBusProxy]]: ...
+    ) -> tuple[int, list[Gio.DBusProxy]]: ...
     def lookup(
         self,
         schema: Schema | None,
         attributes: dict[str, str],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def lookup_finish(self, result: Gio.AsyncResult) -> Value: ...
     def lookup_sync(
@@ -869,18 +872,18 @@ class Service(
     ) -> Value: ...
     @staticmethod
     def open(
-        service_gtype: typing.Type[typing.Any],
+        service_gtype: type[Any],
         service_bus_name: str | None,
         flags: ServiceFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def open_finish(result: Gio.AsyncResult) -> Service: ...
     @staticmethod
     def open_sync(
-        service_gtype: typing.Type[typing.Any],
+        service_gtype: type[Any],
         service_bus_name: str | None,
         flags: ServiceFlags,
         cancellable: Gio.Cancellable | None = None,
@@ -890,8 +893,8 @@ class Service(
         prompt: Prompt,
         return_type: GLib.VariantType | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def prompt_finish(self, result: Gio.AsyncResult) -> GLib.Variant: ...
     def prompt_sync(
@@ -906,8 +909,8 @@ class Service(
         attributes: dict[str, str],
         flags: SearchFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def search_finish(self, result: Gio.AsyncResult) -> list[Item]: ...
     def search_sync(
@@ -922,8 +925,8 @@ class Service(
         alias: str,
         collection: Collection | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def set_alias_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_alias_sync(
@@ -940,8 +943,8 @@ class Service(
         label: str,
         value: Value,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
     def store_sync(
@@ -957,17 +960,17 @@ class Service(
         self,
         objects: list[Gio.DBusProxy],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def unlock_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[int, list[Gio.DBusProxy]]: ...
+    ) -> tuple[int, list[Gio.DBusProxy]]: ...
     def unlock_sync(
         self,
         objects: list[Gio.DBusProxy],
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[int, list[Gio.DBusProxy]]: ...
+    ) -> tuple[int, list[Gio.DBusProxy]]: ...
 
 class ServiceClass(GObject.GPointer):
     """
@@ -979,16 +982,16 @@ class ServiceClass(GObject.GPointer):
     """
 
     parent_class: Gio.DBusProxyClass = ...
-    collection_gtype: typing.Type[typing.Any] = ...
-    item_gtype: typing.Type[typing.Any] = ...
-    prompt_sync: typing.Callable[
+    collection_gtype: type[Any] = ...
+    item_gtype: type[Any] = ...
+    prompt_sync: Callable[
         [Service, Prompt, Gio.Cancellable | None, GLib.VariantType],
         GLib.Variant,
     ] = ...
-    prompt_async: typing.Callable[..., None] = ...
-    prompt_finish: typing.Callable[[Service, Gio.AsyncResult], GLib.Variant] = ...
-    get_collection_gtype: typing.Callable[[Service], typing.Type[typing.Any]] = ...
-    get_item_gtype: typing.Callable[[Service], typing.Type[typing.Any]] = ...
+    prompt_async: Callable[..., None] = ...
+    prompt_finish: Callable[[Service, Gio.AsyncResult], GLib.Variant] = ...
+    get_collection_gtype: Callable[[Service], type[Any]] = ...
+    get_item_gtype: Callable[[Service], type[Any]] = ...
     padding: list[None] = ...
 
 class ServicePrivate(GObject.GPointer): ...
@@ -1014,11 +1017,11 @@ class Value(GObject.GBoxed):
         secret: str,
         length: int,
         content_type: str,
-        destroy: typing.Callable[[None], None],
+        destroy: Callable[[None], None],
     ) -> Value: ...
     def ref(self) -> Value: ...
     def unref(self) -> None: ...
-    def unref_to_password(self) -> typing.Tuple[str, int]: ...
+    def unref_to_password(self) -> tuple[str, int]: ...
 
 class CollectionCreateFlags(GObject.GFlags):
     NONE = 0

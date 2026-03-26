@@ -1,11 +1,7 @@
 from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
-from typing import TypeVar
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -25,14 +21,14 @@ def get_major_version() -> int: ...
 def get_micro_version() -> int: ...
 def get_minor_version() -> int: ...
 def options_foreach(function: Callable[..., bool], *user_data: Any) -> None: ...
-def options_get_boolean(option: str) -> Tuple[bool, bool]: ...
-def options_get_double(option: str) -> Tuple[bool, float]: ...
-def options_get_int(option: str) -> Tuple[bool, int]: ...
+def options_get_boolean(option: str) -> tuple[bool, bool]: ...
+def options_get_double(option: str) -> tuple[bool, float]: ...
+def options_get_int(option: str) -> tuple[bool, int]: ...
 def options_get_option_group() -> GLib.OptionGroup: ...
-def options_get_range_string(option: str) -> Tuple[bool, str]: ...
-def options_get_size(option: str) -> Tuple[bool, int]: ...
-def options_get_string(option: str) -> Tuple[bool, str]: ...
-def options_get_uint(option: str) -> Tuple[bool, int]: ...
+def options_get_range_string(option: str) -> tuple[bool, str]: ...
+def options_get_size(option: str) -> tuple[bool, int]: ...
+def options_get_string(option: str) -> tuple[bool, str]: ...
+def options_get_uint(option: str) -> tuple[bool, int]: ...
 def options_set_boolean(option: str, value: bool) -> bool: ...
 def options_set_double(option: str, value: float) -> bool: ...
 def options_set_int(option: str, value: int) -> bool: ...
@@ -73,36 +69,36 @@ class Class(GObject.Object):
         self,
         name: str | None,
         callback: Callable[..., None],
-        return_type: Type,
-        parameter_types: Sequence[Type] | None = None,
+        return_type: type,
+        parameter_types: Sequence[type] | None = None,
         *user_data: Any,
     ) -> Value: ...
     def add_constructor_variadic(
         self,
         name: str | None,
         callback: Callable[..., None],
-        return_type: Type,
+        return_type: type,
         *user_data: Any,
     ) -> Value: ...
     def add_method(
         self,
         name: str,
         callback: Callable[..., None],
-        return_type: Type,
-        parameter_types: Sequence[Type] | None = None,
+        return_type: type,
+        parameter_types: Sequence[type] | None = None,
         *user_data: Any,
     ) -> None: ...
     def add_method_variadic(
         self,
         name: str,
         callback: Callable[..., None],
-        return_type: Type,
+        return_type: type,
         *user_data: Any,
     ) -> None: ...
     def add_property(
         self,
         name: str,
-        property_type: Type,
+        property_type: type,
         getter: Callable[[], None] | None = None,
         setter: Callable[..., None] | None = None,
         *user_data: Any,
@@ -170,7 +166,7 @@ class Context(GObject.Object):
     def __init__(self, virtual_machine: VirtualMachine = ...): ...
     def check_syntax(
         self, code: str, length: int, mode: CheckSyntaxMode, uri: str, line_number: int
-    ) -> Tuple[CheckSyntaxResult, Exception]: ...
+    ) -> tuple[CheckSyntaxResult, Exception]: ...
     def clear_exception(self) -> None: ...
     def evaluate(self, code: str, length: int) -> Value: ...
     def evaluate_in_object(
@@ -181,7 +177,7 @@ class Context(GObject.Object):
         object_class: Class | None,
         uri: str,
         line_number: int,
-    ) -> Tuple[Value, Value]: ...
+    ) -> tuple[Value, Value]: ...
     def evaluate_with_source_uri(
         self, code: str, length: int, uri: str, line_number: int
     ) -> Value: ...
@@ -339,8 +335,8 @@ class Value(GObject.Object):
         context: Context,
         name: str | None,
         callback: Callable[..., None],
-        return_type: Type,
-        parameter_types: Sequence[Type] | None = None,
+        return_type: type,
+        parameter_types: Sequence[type] | None = None,
         *user_data: Any,
     ) -> Value: ...
     @classmethod
@@ -349,7 +345,7 @@ class Value(GObject.Object):
         context: Context,
         name: str | None,
         callback: Callable[..., None],
-        return_type: Type,
+        return_type: type,
         *user_data: Any,
     ) -> Value: ...
     @classmethod
@@ -379,7 +375,7 @@ class Value(GObject.Object):
         self,
         property_name: str,
         flags: ValuePropertyFlags,
-        property_type: Type,
+        property_type: type,
         getter: Callable[..., None] | None = None,
         setter: Callable[..., None] | None = None,
         *user_data: Any,

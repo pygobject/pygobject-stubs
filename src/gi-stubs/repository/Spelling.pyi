@@ -1,12 +1,11 @@
-import typing
+from typing import TypeVar
 
 from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GtkSource
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "Spelling"

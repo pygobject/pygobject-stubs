@@ -1,7 +1,5 @@
-import typing
-
 __version__: str
-version_info: typing.Tuple[int, int, int]
+version_info: tuple[int, int, int]
 
 def check_version(version: str) -> None: ...
 def require_version(namespace: str, version: str) -> None: ...

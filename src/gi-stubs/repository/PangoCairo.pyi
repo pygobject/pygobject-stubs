@@ -1,12 +1,14 @@
-import typing
+from typing import Any
+from typing import TypeVar
+
+from collections.abc import Callable
 
 import cairo
 from gi.repository import GObject
 from gi.repository import Pango
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
-_SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)
+T = TypeVar("T")
+_SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 _lock = ...  # FIXME Constant
 _namespace: str = "PangoCairo"
@@ -22,8 +24,8 @@ def context_set_font_options(
 def context_set_resolution(context: Pango.Context, dpi: float) -> None: ...
 def context_set_shape_renderer(
     context: Pango.Context,
-    func: typing.Callable[..., None] | None = None,
-    *data: typing.Any,
+    func: Callable[..., None] | None = None,
+    *data: Any,
 ) -> None: ...
 def create_context(cr: cairo.Context[_SomeSurface]) -> Pango.Context: ...
 def create_layout(cr: cairo.Context[_SomeSurface]) -> Pango.Layout: ...

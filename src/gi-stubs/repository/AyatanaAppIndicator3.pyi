@@ -1,6 +1,7 @@
 from typing import Any
-from typing import Callable
 from typing import Optional
+
+from collections.abc import Callable
 
 from gi.repository import Gdk
 from gi.repository import GObject

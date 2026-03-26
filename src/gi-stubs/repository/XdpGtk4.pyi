@@ -1,9 +1,9 @@
-import typing
+from typing import TypeVar
 
 from gi.repository import Gtk
 from gi.repository import Xdp
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "XdpGtk4"
