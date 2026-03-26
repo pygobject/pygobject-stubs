@@ -4,6 +4,7 @@ from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntEnum
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -2394,7 +2395,7 @@ class DsdFormat(GObject.GEnum):
     @staticmethod
     def to_string(format: DsdFormat) -> str: ...
 
-class StreamVolumeFormat(GObject.GEnum):
+class StreamVolumeFormat(IntEnum):
     CUBIC = 1
     DB = 2
     LINEAR = 0

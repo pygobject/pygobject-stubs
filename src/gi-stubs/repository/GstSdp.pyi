@@ -2,6 +2,7 @@ from typing import TypeVar
 from typing_extensions import Self
 
 from collections.abc import Sequence
+from enum import IntEnum
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -536,37 +537,37 @@ class SDPZone(GObject.GPointer):
     def clear(self) -> SDPResult: ...
     def set(self, adj_time: str, typed_time: str) -> SDPResult: ...
 
-class MIKEYCacheType(GObject.GEnum):
+class MIKEYCacheType(IntEnum):
     ALWAYS = 1
     FOR_CSB = 2
     NONE = 0
 
-class MIKEYEncAlg(GObject.GEnum):
+class MIKEYEncAlg(IntEnum):
     AES_CM_128 = 1
     AES_GCM_128 = 6
     AES_KW_128 = 2
     NULL = 0
 
-class MIKEYKVType(GObject.GEnum):
+class MIKEYKVType(IntEnum):
     INTERVAL = 2
     NULL = 0
     SPI = 1
 
-class MIKEYKeyDataType(GObject.GEnum):
+class MIKEYKeyDataType(IntEnum):
     TEK = 2
     TGK = 0
 
-class MIKEYMacAlg(GObject.GEnum):
+class MIKEYMacAlg(IntEnum):
     HMAC_SHA_1_160 = 1
     NULL = 0
 
-class MIKEYMapType(GObject.GEnum):
+class MIKEYMapType(IntEnum):
     MIKEY_MAP_TYPE_SRTP = 0
 
-class MIKEYPRFFunc(GObject.GEnum):
+class MIKEYPRFFunc(IntEnum):
     MIKEY_PRF_MIKEY_1 = 0
 
-class MIKEYPayloadType(GObject.GEnum):
+class MIKEYPayloadType(IntEnum):
     CERT = 7
     CHASH = 8
     DH = 3
@@ -583,10 +584,10 @@ class MIKEYPayloadType(GObject.GEnum):
     T = 5
     V = 9
 
-class MIKEYSecProto(GObject.GEnum):
+class MIKEYSecProto(IntEnum):
     MIKEY_SEC_PROTO_SRTP = 0
 
-class MIKEYSecSRTP(GObject.GEnum):
+class MIKEYSecSRTP(IntEnum):
     AEAD_AUTH_TAG_LEN = 20
     AUTH_ALG = 2
     AUTH_KEY_LEN = 3
@@ -602,12 +603,12 @@ class MIKEYSecSRTP(GObject.GEnum):
     SRTP_ENC = 7
     SRTP_PREFIX_LEN = 12
 
-class MIKEYTSType(GObject.GEnum):
+class MIKEYTSType(IntEnum):
     COUNTER = 2
     NTP = 1
     NTP_UTC = 0
 
-class MIKEYType(GObject.GEnum):
+class MIKEYType(IntEnum):
     DH_INIT = 4
     DH_RESP = 5
     ERROR = 6
@@ -617,6 +618,6 @@ class MIKEYType(GObject.GEnum):
     PSK_INIT = 0
     PSK_VERIFY = 1
 
-class SDPResult(GObject.GEnum):
+class SDPResult(IntEnum):
     EINVAL = -1
     OK = 0

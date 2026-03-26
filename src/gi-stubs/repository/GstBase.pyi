@@ -4,6 +4,7 @@ from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntFlag
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -1487,7 +1488,7 @@ class PushSrcClass(GObject.GPointer):
 
 class TypeFindData(GObject.GPointer): ...
 
-class BaseParseFrameFlags(GObject.GFlags):
+class BaseParseFrameFlags(IntFlag):
     CLIP = 4
     DROP = 8
     NEW_FRAME = 1
@@ -1495,12 +1496,12 @@ class BaseParseFrameFlags(GObject.GFlags):
     NO_FRAME = 2
     QUEUE = 16
 
-class BaseSrcFlags(GObject.GFlags):
+class BaseSrcFlags(IntFlag):
     LAST = 1048576
     STARTED = 32768
     STARTING = 16384
 
-class CollectPadsStateFlags(GObject.GFlags):
+class CollectPadsStateFlags(IntFlag):
     EOS = 1
     FLUSHING = 2
     LOCKED = 16

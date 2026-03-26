@@ -1,5 +1,7 @@
 from typing import TypeVar
-from typing_extensions import Self
+
+from enum import IntEnum
+from enum import IntFlag
 
 from gi.repository import GObject
 
@@ -29,11 +31,11 @@ class Module(GObject.GPointer):
     def supported() -> bool: ...
     def symbol(self, symbol_name: str) -> tuple[bool, None]: ...
 
-class ModuleFlags(GObject.GFlags):
+class ModuleFlags(IntFlag):
     LAZY = 1
     LOCAL = 2
     MASK = 3
 
-class ModuleError(GObject.GEnum):
+class ModuleError(IntEnum):
     CHECK_FAILED = 1
     FAILED = 0

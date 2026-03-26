@@ -5,6 +5,7 @@ import os
 from collections.abc import Callable
 from collections.abc import Iterator
 from collections.abc import Sequence
+from enum import IntEnum
 
 import cairo
 from gi import _gi
@@ -34816,14 +34817,14 @@ class CornerType(GObject.GEnum):
     TOP_LEFT = 0
     TOP_RIGHT = 2
 
-class CssParserError(GObject.GEnum):
+class CssParserError(IntEnum):
     FAILED = 0
     IMPORT = 2
     NAME = 3
     SYNTAX = 1
     UNKNOWN_VALUE = 4
 
-class CssParserWarning(GObject.GEnum):
+class CssParserWarning(IntEnum):
     DEPRECATED = 0
     SYNTAX = 1
     UNIMPLEMENTED = 2

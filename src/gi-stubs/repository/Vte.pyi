@@ -2,6 +2,7 @@ from typing import Any
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntFlag
 
 from gi.repository import Atk
 from gi.repository import Gdk
@@ -520,7 +521,7 @@ class TerminalClass(GObject.GPointer):
 
 class TerminalClassPrivate(GObject.GPointer): ...
 
-class FeatureFlags(GObject.GFlags):
+class FeatureFlags(IntFlag):
     FLAGS_MASK = 18446744073709551615
     FLAG_BIDI = 1
     FLAG_ICU = 2

@@ -2,6 +2,8 @@ from typing import Any
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntEnum
+from enum import IntFlag
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -2096,19 +2098,19 @@ class SysrootWriteDeploymentsOpts(GObject.GPointer):
     unused_ints: list[int] = ...
     unused_ptrs: list[None] = ...
 
-class ChecksumFlags(GObject.GFlags):
+class ChecksumFlags(IntFlag):
     CANONICAL_PERMISSIONS = 2
     IGNORE_XATTRS = 1
     NONE = 0
 
-class DiffFlags(GObject.GFlags):
+class DiffFlags(IntFlag):
     IGNORE_XATTRS = 1
     NONE = 0
 
-class GpgSignatureFormatFlags(GObject.GFlags):
+class GpgSignatureFormatFlags(IntFlag):
     GPG_SIGNATURE_FORMAT_DEFAULT = 0
 
-class RepoCommitModifierFlags(GObject.GFlags):
+class RepoCommitModifierFlags(IntFlag):
     CANONICAL_PERMISSIONS = 4
     CONSUME = 16
     DEVINO_CANONICAL = 32
@@ -2117,34 +2119,34 @@ class RepoCommitModifierFlags(GObject.GFlags):
     NONE = 0
     SKIP_XATTRS = 1
 
-class RepoCommitState(GObject.GFlags):
+class RepoCommitState(IntFlag):
     FSCK_PARTIAL = 2
     NORMAL = 0
     PARTIAL = 1
 
-class RepoCommitTraverseFlags(GObject.GFlags):
+class RepoCommitTraverseFlags(IntFlag):
     COMMIT_ONLY = 2
     NONE = 1
 
-class RepoListObjectsFlags(GObject.GFlags):
+class RepoListObjectsFlags(IntFlag):
     ALL = 4
     LOOSE = 1
     NO_PARENTS = 8
     PACKED = 2
 
-class RepoListRefsExtFlags(GObject.GFlags):
+class RepoListRefsExtFlags(IntFlag):
     ALIASES = 1
     EXCLUDE_MIRRORS = 4
     EXCLUDE_REMOTES = 2
     NONE = 0
 
-class RepoPruneFlags(GObject.GFlags):
+class RepoPruneFlags(IntFlag):
     COMMIT_ONLY = 4
     NONE = 0
     NO_PRUNE = 1
     REFS_ONLY = 2
 
-class RepoPullFlags(GObject.GFlags):
+class RepoPullFlags(IntFlag):
     BAREUSERONLY_FILES = 8
     COMMIT_ONLY = 2
     MIRROR = 1
@@ -2152,21 +2154,21 @@ class RepoPullFlags(GObject.GFlags):
     TRUSTED_HTTP = 16
     UNTRUSTED = 4
 
-class RepoResolveRevExtFlags(GObject.GFlags):
+class RepoResolveRevExtFlags(IntFlag):
     LOCAL_ONLY = 1
     NONE = 0
 
-class RepoVerifyFlags(GObject.GFlags):
+class RepoVerifyFlags(IntFlag):
     NONE = 0
     NO_GPG = 1
     NO_SIGNAPI = 2
 
-class SePolicyRestoreconFlags(GObject.GFlags):
+class SePolicyRestoreconFlags(IntFlag):
     ALLOW_NOLABEL = 1
     KEEP_EXISTING = 2
     NONE = 0
 
-class SysrootSimpleWriteDeploymentFlags(GObject.GFlags):
+class SysrootSimpleWriteDeploymentFlags(IntFlag):
     NONE = 0
     NOT_DEFAULT = 2
     NO_CLEAN = 4
@@ -2178,18 +2180,18 @@ class SysrootUpgraderFlags(GObject.GFlags):
     IGNORE_UNCONFIGURED = 2
     STAGE = 4
 
-class SysrootUpgraderPullFlags(GObject.GFlags):
+class SysrootUpgraderPullFlags(IntFlag):
     ALLOW_OLDER = 1
     NONE = 0
     SYNTHETIC = 2
 
-class DeploymentUnlockedState(GObject.GEnum):
+class DeploymentUnlockedState(IntEnum):
     DEVELOPMENT = 1
     HOTFIX = 2
     NONE = 0
     TRANSIENT = 3
 
-class GpgError(GObject.GEnum):
+class GpgError(IntEnum):
     EXPIRED_KEY = 4
     EXPIRED_SIGNATURE = 3
     INVALID_SIGNATURE = 1
@@ -2197,7 +2199,7 @@ class GpgError(GObject.GEnum):
     NO_SIGNATURE = 0
     REVOKED_KEY = 5
 
-class GpgSignatureAttr(GObject.GEnum):
+class GpgSignatureAttr(IntEnum):
     EXP_TIMESTAMP = 7
     FINGERPRINT = 5
     FINGERPRINT_PRIMARY = 12
@@ -2214,7 +2216,7 @@ class GpgSignatureAttr(GObject.GEnum):
     USER_NAME = 10
     VALID = 0
 
-class ObjectType(GObject.GEnum):
+class ObjectType(IntEnum):
     COMMIT = 4
     COMMIT_META = 6
     DIR_META = 3
@@ -2225,35 +2227,35 @@ class ObjectType(GObject.GEnum):
     PAYLOAD_LINK = 7
     TOMBSTONE_COMMIT = 5
 
-class RepoCheckoutFilterResult(GObject.GEnum):
+class RepoCheckoutFilterResult(IntEnum):
     ALLOW = 0
     SKIP = 1
 
-class RepoCheckoutMode(GObject.GEnum):
+class RepoCheckoutMode(IntEnum):
     NONE = 0
     USER = 1
 
-class RepoCheckoutOverwriteMode(GObject.GEnum):
+class RepoCheckoutOverwriteMode(IntEnum):
     ADD_FILES = 2
     NONE = 0
     UNION_FILES = 1
     UNION_IDENTICAL = 3
 
-class RepoCommitFilterResult(GObject.GEnum):
+class RepoCommitFilterResult(IntEnum):
     ALLOW = 0
     SKIP = 1
 
-class RepoCommitIterResult(GObject.GEnum):
+class RepoCommitIterResult(IntEnum):
     DIR = 3
     END = 1
     ERROR = 0
     FILE = 2
 
-class RepoLockType(GObject.GEnum):
+class RepoLockType(IntEnum):
     EXCLUSIVE = 1
     SHARED = 0
 
-class RepoMode(GObject.GEnum):
+class RepoMode(IntEnum):
     ARCHIVE = 1
     ARCHIVE_Z2 = 1
     BARE = 0
@@ -2261,16 +2263,16 @@ class RepoMode(GObject.GEnum):
     BARE_USER = 2
     BARE_USER_ONLY = 3
 
-class RepoRemoteChange(GObject.GEnum):
+class RepoRemoteChange(IntEnum):
     ADD = 0
     ADD_IF_NOT_EXISTS = 1
     DELETE = 2
     DELETE_IF_EXISTS = 3
     REPLACE = 4
 
-class StaticDeltaGenerateOpt(GObject.GEnum):
+class StaticDeltaGenerateOpt(IntEnum):
     LOWLATENCY = 0
     MAJOR = 1
 
-class StaticDeltaIndexFlags(GObject.GEnum):
+class StaticDeltaIndexFlags(IntEnum):
     STATIC_DELTA_INDEX_FLAGS_NONE = 0

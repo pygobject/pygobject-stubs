@@ -1,9 +1,9 @@
 from typing import Any
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
+from enum import IntFlag
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -645,7 +645,7 @@ class PixbufSimpleAnim(PixbufAnimation):
 class PixbufSimpleAnimClass(GObject.GPointer): ...
 class PixbufSimpleAnimIter(PixbufAnimationIter): ...
 
-class PixbufFormatFlags(GObject.GFlags):
+class PixbufFormatFlags(IntFlag):
     SCALABLE = 2
     THREADSAFE = 4
     WRITABLE = 1
