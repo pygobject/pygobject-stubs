@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 from typing import Final
+from typing import TYPE_CHECKING
 from typing import TypeAlias
 
 import argparse
@@ -35,12 +36,19 @@ from parse import Overrides
 from parse import parse
 
 gi.require_version("GIRepository", "3.0")
-from gi.repository import GIRepository
+
+if TYPE_CHECKING:
+    from gi.repository import _GIRepository3 as GIRepository
+else:
+    from gi.repository import GIRepository
+
 from gi.repository import GObject
 
-_identifier_re = r"^[A-Za-z_]\w*$"
-
 ObjectT: TypeAlias = ModuleType | type[Any]
+
+_identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
+_typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)(?P<suffix>\b)")
+_free_typing_re: Final = re.compile(r"(?P<prefix>\b)(?P<name>Any|Self)(?P<suffix>\b)")
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
@@ -67,52 +75,47 @@ def fix_argument_name(name: str) -> str:
 def _object_get_props(
     repo: GIRepository.Repository,
     obj: GI.ObjectInfo,
-) -> tuple[list[GIRepository.BaseInfo], list[GIRepository.BaseInfo]]:
+) -> tuple[list[GIRepository.PropertyInfo], list[GIRepository.PropertyInfo]]:
     parents: list[GI.ObjectInfo] = []
     parent: GI.ObjectInfo | None = obj.get_parent()
     while parent:
         parents.append(parent)
         parent = parent.get_parent()
 
-    interfaces: list[GI.InterfaceInfo] = list(obj.get_interfaces())
+    interfaces = list(obj.get_interfaces())
 
-    subclasses: list[GI.ObjectInfo | GI.InterfaceInfo] = parents + interfaces
+    subclasses = parents + interfaces
 
-    props: list[GI.PropertyInfo] = list(obj.get_properties())
+    props = list(obj.get_properties())
     for s in subclasses:
         props.extend(s.get_properties())
 
-    readable_props: list[GIRepository.BaseInfo] = []
-    writable_props: list[GIRepository.BaseInfo] = []
+    readable_props: list[GIRepository.PropertyInfo] = []
+    writable_props: list[GIRepository.PropertyInfo] = []
 
     for prop in props:
         namespace = prop.get_namespace()
         container = prop.get_container()
+
         class_info = repo.find_by_name(namespace, container.get_name())
         if class_info is None:
             raise Exception(f"Unable to find {namespace}.{container}")
 
         if isinstance(class_info, GIRepository.ObjectInfo):
-            n_props = GIRepository.ObjectInfo.get_n_properties(class_info)
-            for i in range(n_props):
-                p: GIRepository.BaseInfo = GIRepository.ObjectInfo.get_property(
-                    class_info, i
-                )
+            for i in range(class_info.get_n_properties()):
+                p = class_info.get_property(i)
                 if p.get_name() == prop.get_name():
-                    flags = GIRepository.PropertyInfo.get_flags(p)
+                    flags = p.get_flags()
                     if flags & GObject.ParamFlags.READABLE:
                         readable_props.append(p)
                     if flags & GObject.ParamFlags.WRITABLE:
                         writable_props.append(p)
 
         if isinstance(class_info, GIRepository.InterfaceInfo):
-            n_props = GIRepository.InterfaceInfo.get_n_properties(class_info)
-            for i in range(n_props):
-                p: GIRepository.BaseInfo = GIRepository.InterfaceInfo.get_property(
-                    class_info, i
-                )
+            for i in range(class_info.get_n_properties()):
+                p = class_info.get_property(i)
                 if p.get_name() == prop.get_name():
-                    flags = GIRepository.PropertyInfo.get_flags(p)
+                    flags = p.get_flags()
                     if flags & GObject.ParamFlags.READABLE:
                         readable_props.append(p)
                     if flags & GObject.ParamFlags.WRITABLE:
@@ -217,54 +220,9 @@ def _callable_get_arguments(
     return (names, str_args, return_args)
 
 
-class TypeInfo:
-    # This struct tries to emulate gi.TypeInfo
-
-    def __init__(
-        self,
-        obj: Any,
-        get_tag: Callable[[TypeInfo], int],
-        get_param_type: Callable[[TypeInfo, int], TypeInfo],
-        get_interface: Callable[[TypeInfo], TypeInfo],
-    ):
-        self.obj = obj
-        self._get_tag = get_tag
-        self._get_param_type = get_param_type
-        self._get_interface = get_interface
-
-    def get_tag(self) -> int:
-        return self._get_tag(self.obj)
-
-    def get_param_type(self, n: int) -> TypeInfo:
-        type = self._get_param_type(self.obj, n)
-        return TypeInfo(type, self._get_tag, self._get_param_type, self._get_interface)
-
-    def get_interface(self) -> TypeInfo:
-        type = self._get_interface(self.obj)
-        return TypeInfo(type, self._get_tag, self._get_param_type, self._get_interface)
-
-    def get_name(self) -> str:
-        return self.obj.get_name()
-
-    def get_namespace(self) -> str:
-        return self.obj.get_namespace()
-
-    def get_type_info(self) -> GI.InfoType:
-        return self.obj.get_type_info()
-
-
-def _build_type(type: GIRepository.BaseInfo) -> TypeInfo:
-    return TypeInfo(
-        type,
-        GIRepository.TypeInfo.get_tag,
-        GIRepository.TypeInfo.get_param_type,
-        GIRepository.TypeInfo.get_interface,
-    )
-
-
 def _type_to_python(
     stub: Stub,
-    type: TypeInfo,
+    type: GI.TypeInfo | GIRepository.TypeInfo,
     out_arg: bool = False,
     varargs: bool = False,
 ) -> str:
@@ -273,6 +231,10 @@ def _type_to_python(
 
     if tag == tags.ARRAY:
         array_type = type.get_param_type(0)
+
+        if TYPE_CHECKING:
+            assert array_type is not None
+
         t = _type_to_python(stub, array_type)
         if out_arg:
             # As output argument array of type uint8 are returned as bytes
@@ -285,6 +247,10 @@ def _type_to_python(
 
     if tag in (tags.GLIST, tags.GSLIST):
         array_type = type.get_param_type(0)
+
+        if TYPE_CHECKING:
+            assert array_type is not None
+
         t = _type_to_python(stub, array_type)
         return f"list[{t}]"
 
@@ -300,6 +266,11 @@ def _type_to_python(
     if tag == tags.GHASH:
         key_type = type.get_param_type(0)
         value_type = type.get_param_type(1)
+
+        if TYPE_CHECKING:
+            assert key_type is not None
+            assert value_type is not None
+
         kt = _type_to_python(stub, key_type)
         vt = _type_to_python(stub, value_type)
         return f"dict[{kt}, {vt}]"
@@ -338,11 +309,11 @@ def _type_to_python(
                 return f"{stub.get_import('collections.abc', 'Callable')}[..., {return_type}]"
             else:
                 return f"{stub.get_import('collections.abc', 'Callable')}[[{', '.join(args)}], {return_type}]"
-        else:
+        elif interface is not None:
             namespace = interface.get_namespace()
             name = interface.get_name()
 
-            if not re.match(_identifier_re, name):
+            if name is not None and not _identifier_re.match(name):
                 # Convert Flags and Enums with invalid name to int
                 # Example NM 1.0 library
                 if interface.get_type() in (
@@ -590,10 +561,6 @@ def _replace_union(formatted: str) -> str:
     return formatted
 
 
-_typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)(?P<suffix>\b)")
-_free_typing_re = re.compile(r"(?P<prefix>\b)(?P<name>Any|Self)(?P<suffix>\b)")
-
-
 @dataclass(slots=True)
 class Stub:
     repo: GIRepository.Repository
@@ -807,7 +774,7 @@ def _gi_build_stub_parts(
             continue
 
         # Check if this is a valid name in python
-        if not re.match(_identifier_re, name):
+        if not _identifier_re.match(name):
             continue
 
         try:
@@ -930,8 +897,8 @@ def _gi_build_stub_parts(
             full_name,
         )
 
-        readable_props: list[GIRepository.BaseInfo] = []
-        writable_props: list[GIRepository.BaseInfo] = []
+        readable_props: list[GIRepository.PropertyInfo] = []
+        writable_props: list[GIRepository.PropertyInfo] = []
         parents: list[str] = []
         props_parents: list[str] = []
         object_info = obj.__dict__.get("__info__")
@@ -1033,18 +1000,17 @@ def _gi_build_stub_parts(
                     # Avoid duplicates
                     continue
                 names.append(n)
-                type = _build_type(GIRepository.PropertyInfo.get_type_info(p))
-                t = _type_to_python(stub, type, True)
+                t = _type_to_python(stub, p.get_type_info(), True)
 
                 # Check getter/setter
-                getter = GIRepository.PropertyInfo.get_getter(p)
-                setter = GIRepository.PropertyInfo.get_setter(p)
-                if getter and GIRepository.CallableInfo.may_return_null(getter):
+                getter = p.get_getter()
+                setter = p.get_setter()
+                if getter and getter.may_return_null():
                     s.append(f"{n}: {t} | None")
                 elif setter and not getter:
                     # If is writable only prop check if setter can accept NULL
-                    arg_info = GIRepository.CallableInfo.get_arg(setter, 0)
-                    if GIRepository.ArgInfo.may_be_null(arg_info):
+                    arg_info = setter.get_arg(0)
+                    if arg_info.may_be_null():
                         s.append(f"{n}: {t} | None")
                     else:
                         s.append(f"{n}: {t}")
@@ -1083,12 +1049,11 @@ def _gi_build_stub_parts(
                     # Avoid duplicates
                     continue
                 names.append(n)
-                type = _build_type(GIRepository.PropertyInfo.get_type_info(p))
-                t = _type_to_python(stub, type)
-                setter = GIRepository.PropertyInfo.get_setter(p)
+                t = _type_to_python(stub, p.get_type_info())
+                setter = p.get_setter()
                 if setter:
-                    arg_info = GIRepository.CallableInfo.get_arg(setter, 0)
-                    if GIRepository.ArgInfo.may_be_null(arg_info):
+                    arg_info = setter.get_arg(0)
+                    if arg_info.may_be_null():
                         s.append(f"{n}: {t} | None = ...")
                     else:
                         s.append(f"{n}: {t} = ...")
