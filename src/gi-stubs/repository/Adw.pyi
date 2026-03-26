@@ -1,4 +1,9 @@
-import typing
+from typing import Any
+from typing import TypeVar
+from typing_extensions import Self
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import Gdk
 from gi.repository import Gio
@@ -6,9 +11,8 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 DURATION_INFINITE: int = 4294967295
 MAJOR_VERSION: int = 1
@@ -218,15 +222,15 @@ class AboutDialog(
         self,
         application_icon: str = ...,
         application_name: str = ...,
-        artists: typing.Sequence[str] | None = ...,
+        artists: Sequence[str] | None = ...,
         comments: str = ...,
         copyright: str = ...,
         debug_info: str = ...,
         debug_info_filename: str = ...,
-        designers: typing.Sequence[str] | None = ...,
+        designers: Sequence[str] | None = ...,
         developer_name: str = ...,
-        developers: typing.Sequence[str] | None = ...,
-        documenters: typing.Sequence[str] | None = ...,
+        developers: Sequence[str] | None = ...,
+        documenters: Sequence[str] | None = ...,
         issue_url: str = ...,
         license: str = ...,
         license_type: Gtk.License = ...,
@@ -247,7 +251,7 @@ class AboutDialog(
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -278,11 +282,9 @@ class AboutDialog(
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add_acknowledgement_section(
-        self, name: str | None, people: typing.Sequence[str]
+        self, name: str | None, people: Sequence[str]
     ) -> None: ...
-    def add_credit_section(
-        self, name: str | None, people: typing.Sequence[str]
-    ) -> None: ...
+    def add_credit_section(self, name: str | None, people: Sequence[str]) -> None: ...
     def add_legal_section(
         self,
         title: str,
@@ -320,19 +322,15 @@ class AboutDialog(
     ) -> AboutDialog: ...
     def set_application_icon(self, application_icon: str) -> None: ...
     def set_application_name(self, application_name: str) -> None: ...
-    def set_artists(self, artists: typing.Sequence[str] | None = None) -> None: ...
+    def set_artists(self, artists: Sequence[str] | None = None) -> None: ...
     def set_comments(self, comments: str) -> None: ...
     def set_copyright(self, copyright: str) -> None: ...
     def set_debug_info(self, debug_info: str) -> None: ...
     def set_debug_info_filename(self, filename: str) -> None: ...
-    def set_designers(self, designers: typing.Sequence[str] | None = None) -> None: ...
+    def set_designers(self, designers: Sequence[str] | None = None) -> None: ...
     def set_developer_name(self, developer_name: str) -> None: ...
-    def set_developers(
-        self, developers: typing.Sequence[str] | None = None
-    ) -> None: ...
-    def set_documenters(
-        self, documenters: typing.Sequence[str] | None = None
-    ) -> None: ...
+    def set_developers(self, developers: Sequence[str] | None = None) -> None: ...
+    def set_documenters(self, documenters: Sequence[str] | None = None) -> None: ...
     def set_issue_url(self, issue_url: str) -> None: ...
     def set_license(self, license: str) -> None: ...
     def set_license_type(self, license_type: Gtk.License) -> None: ...
@@ -590,15 +588,15 @@ class AboutWindow(
         self,
         application_icon: str = ...,
         application_name: str = ...,
-        artists: typing.Sequence[str] | None = ...,
+        artists: Sequence[str] | None = ...,
         comments: str = ...,
         copyright: str = ...,
         debug_info: str = ...,
         debug_info_filename: str = ...,
-        designers: typing.Sequence[str] | None = ...,
+        designers: Sequence[str] | None = ...,
         developer_name: str = ...,
-        developers: typing.Sequence[str] | None = ...,
-        documenters: typing.Sequence[str] | None = ...,
+        developers: Sequence[str] | None = ...,
+        documenters: Sequence[str] | None = ...,
         issue_url: str = ...,
         license: str = ...,
         license_type: Gtk.License = ...,
@@ -636,7 +634,7 @@ class AboutWindow(
         transient_for: Gtk.Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -667,11 +665,9 @@ class AboutWindow(
         accessible_role: Gtk.AccessibleRole = ...,
     ) -> None: ...
     def add_acknowledgement_section(
-        self, name: str | None, people: typing.Sequence[str]
+        self, name: str | None, people: Sequence[str]
     ) -> None: ...
-    def add_credit_section(
-        self, name: str | None, people: typing.Sequence[str]
-    ) -> None: ...
+    def add_credit_section(self, name: str | None, people: Sequence[str]) -> None: ...
     def add_legal_section(
         self,
         title: str,
@@ -708,19 +704,15 @@ class AboutWindow(
     ) -> AboutWindow: ...
     def set_application_icon(self, application_icon: str) -> None: ...
     def set_application_name(self, application_name: str) -> None: ...
-    def set_artists(self, artists: typing.Sequence[str] | None = None) -> None: ...
+    def set_artists(self, artists: Sequence[str] | None = None) -> None: ...
     def set_comments(self, comments: str) -> None: ...
     def set_copyright(self, copyright: str) -> None: ...
     def set_debug_info(self, debug_info: str) -> None: ...
     def set_debug_info_filename(self, filename: str) -> None: ...
-    def set_designers(self, designers: typing.Sequence[str] | None = None) -> None: ...
+    def set_designers(self, designers: Sequence[str] | None = None) -> None: ...
     def set_developer_name(self, developer_name: str) -> None: ...
-    def set_developers(
-        self, developers: typing.Sequence[str] | None = None
-    ) -> None: ...
-    def set_documenters(
-        self, documenters: typing.Sequence[str] | None = None
-    ) -> None: ...
+    def set_developers(self, developers: Sequence[str] | None = None) -> None: ...
+    def set_documenters(self, documenters: Sequence[str] | None = None) -> None: ...
     def set_issue_url(self, issue_url: str) -> None: ...
     def set_license(self, license: str) -> None: ...
     def set_license_type(self, license_type: Gtk.License) -> None: ...
@@ -907,7 +899,7 @@ class ActionRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -968,7 +960,7 @@ class ActionRowClass(GObject.GPointer):
     """
 
     parent_class: PreferencesRowClass = ...
-    activate: typing.Callable[[ActionRow], None] = ...
+    activate: Callable[[ActionRow], None] = ...
     padding: list[None] = ...
 
 class AlertDialog(
@@ -1147,7 +1139,7 @@ class AlertDialog(
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1182,8 +1174,8 @@ class AlertDialog(
         self,
         parent: Gtk.Widget | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
@@ -1228,7 +1220,7 @@ class AlertDialogClass(GObject.GPointer):
     """
 
     parent_class: DialogClass = ...
-    response: typing.Callable[[AlertDialog, str], None] = ...
+    response: Callable[[AlertDialog, str], None] = ...
     padding: list[None] = ...
 
 class Animation(GObject.Object):
@@ -1635,7 +1627,7 @@ class ApplicationWindow(
         transient_for: Gtk.Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -1814,7 +1806,7 @@ class Avatar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         text: str | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2002,7 +1994,7 @@ class Banner(
         use_markup: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2173,7 +2165,7 @@ class Bin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         child: Gtk.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2372,7 +2364,7 @@ class BottomSheet(
         show_drag_handle: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2470,13 +2462,13 @@ class Breakpoint(GObject.Object, Gtk.Buildable):
         self,
         object: GObject.Object,
         property: str,
-        value: typing.Any | None = None,
+        value: Any | None = None,
     ) -> None: ...
     def add_setters(
         self,
-        objects: typing.Sequence[GObject.Object],
-        names: typing.Sequence[str],
-        values: typing.Sequence[typing.Any],
+        objects: Sequence[GObject.Object],
+        names: Sequence[str],
+        values: Sequence[Any],
     ) -> None: ...
     def get_condition(self) -> BreakpointCondition | None: ...
     @classmethod
@@ -2600,7 +2592,7 @@ class BreakpointBin(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         child: Gtk.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -2817,7 +2809,7 @@ class ButtonContent(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -3021,7 +3013,7 @@ class ButtonRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -3087,7 +3079,7 @@ class CallbackAnimationTarget(AnimationTarget):
     """
     @classmethod
     def new(
-        cls, callback: typing.Callable[..., None], *user_data: typing.Any
+        cls, callback: Callable[..., None], *user_data: Any
     ) -> CallbackAnimationTarget: ...
 
 class CallbackAnimationTargetClass(GObject.GPointer): ...
@@ -3239,7 +3231,7 @@ class Carousel(
         spacing: int = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -3424,7 +3416,7 @@ class CarouselIndicatorDots(
         carousel: Carousel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -3588,7 +3580,7 @@ class CarouselIndicatorLines(
         carousel: Carousel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -3761,7 +3753,7 @@ class Clamp(
         unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -4002,7 +3994,7 @@ class ClampScrollable(
         unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -4256,7 +4248,7 @@ class ComboRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -4473,7 +4465,7 @@ class Dialog(
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -4543,8 +4535,8 @@ class DialogClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    close_attempt: typing.Callable[[Dialog], None] = ...
-    closed: typing.Callable[[Dialog], None] = ...
+    close_attempt: Callable[[Dialog], None] = ...
+    closed: Callable[[Dialog], None] = ...
     padding: list[None] = ...
 
 class EntryRow(
@@ -4736,7 +4728,7 @@ class EntryRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -4867,14 +4859,14 @@ class EnumListModel(GObject.Object, Gio.ListModel):
       notify (GParam)
     """
     class Props(GObject.Object.Props):
-        enum_type: typing.Type[typing.Any]
+        enum_type: type[Any]
 
     props: Props = ...
-    def __init__(self, enum_type: typing.Type[typing.Any] = ...) -> None: ...
+    def __init__(self, enum_type: type[Any] = ...) -> None: ...
     def find_position(self, value: int) -> int: ...
-    def get_enum_type(self) -> typing.Type[typing.Any]: ...
+    def get_enum_type(self) -> type[Any]: ...
     @classmethod
-    def new(cls, enum_type: typing.Type[typing.Any]) -> EnumListModel: ...
+    def new(cls, enum_type: type[Any]) -> EnumListModel: ...
 
 class EnumListModelClass(GObject.GPointer):
     """
@@ -5052,7 +5044,7 @@ class ExpanderRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -5283,7 +5275,7 @@ class Flap(
         transition_type: FlapTransitionType = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -5490,7 +5482,7 @@ class HeaderBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         title_widget: Gtk.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -5677,7 +5669,7 @@ class InlineViewSwitcher(
         stack: ViewStack | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -5885,7 +5877,7 @@ class LayoutSlot(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         id: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -6085,7 +6077,7 @@ class Leaflet(
         visible_child_name: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -6444,7 +6436,7 @@ class MessageDialog(
         transient_for: Gtk.Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -6478,8 +6470,8 @@ class MessageDialog(
     def choose(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
@@ -6526,7 +6518,7 @@ class MessageDialogClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WindowClass = ...
-    response: typing.Callable[[MessageDialog, str], None] = ...
+    response: Callable[[MessageDialog, str], None] = ...
     padding: list[None] = ...
 
 class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
@@ -6646,7 +6638,7 @@ class MultiLayoutView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         layout_name: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -6830,7 +6822,7 @@ class NavigationPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTa
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -6889,10 +6881,10 @@ class NavigationPageClass(GObject.GPointer):
     """
 
     parent_class: Gtk.WidgetClass = ...
-    showing: typing.Callable[[NavigationPage], None] = ...
-    shown: typing.Callable[[NavigationPage], None] = ...
-    hiding: typing.Callable[[NavigationPage], None] = ...
-    hidden: typing.Callable[[NavigationPage], None] = ...
+    showing: Callable[[NavigationPage], None] = ...
+    shown: Callable[[NavigationPage], None] = ...
+    hiding: Callable[[NavigationPage], None] = ...
+    hidden: Callable[[NavigationPage], None] = ...
     padding: list[None] = ...
 
 class NavigationSplitView(
@@ -7035,7 +7027,7 @@ class NavigationSplitView(
         sidebar_width_unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -7234,7 +7226,7 @@ class NavigationView(
         vhomogeneous: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -7283,8 +7275,8 @@ class NavigationView(
     def push(self, page: NavigationPage) -> None: ...
     def push_by_tag(self, tag: str) -> None: ...
     def remove(self, page: NavigationPage) -> None: ...
-    def replace(self, pages: typing.Sequence[NavigationPage]) -> None: ...
-    def replace_with_tags(self, tags: typing.Sequence[str]) -> None: ...
+    def replace(self, pages: Sequence[NavigationPage]) -> None: ...
+    def replace_with_tags(self, tags: Sequence[str]) -> None: ...
     def set_animate_transitions(self, animate_transitions: bool) -> None: ...
     def set_hhomogeneous(self, hhomogeneous: bool) -> None: ...
     def set_pop_on_escape(self, pop_on_escape: bool) -> None: ...
@@ -7450,7 +7442,7 @@ class OverlaySplitView(
         sidebar_width_unit: LengthUnit = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -7711,7 +7703,7 @@ class PasswordEntryRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -7921,7 +7913,7 @@ class PreferencesDialog(
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -8101,7 +8093,7 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -8135,8 +8127,8 @@ class PreferencesGroup(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.Constraint
     def bind_model(
         self,
         model: Gio.ListModel | None = None,
-        create_row_func: typing.Callable[..., Gtk.Widget] | None = None,
-        *user_data: typing.Any,
+        create_row_func: Callable[..., Gtk.Widget] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_description(self) -> str | None: ...
     def get_header_suffix(self) -> Gtk.Widget | None: ...
@@ -8295,7 +8287,7 @@ class PreferencesPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -8500,7 +8492,7 @@ class PreferencesRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -8786,7 +8778,7 @@ class PreferencesWindow(
         transient_for: Gtk.Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -9003,7 +8995,7 @@ class ShortcutLabel(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
         disabled_text: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -9197,7 +9189,7 @@ class ShortcutsDialog(
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -9562,7 +9554,7 @@ class SpinRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -9751,7 +9743,7 @@ class Spinner(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         self,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -9983,7 +9975,7 @@ class SplitButton(
         use_underline: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -10307,7 +10299,7 @@ class Squeezer(
         yalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -10538,7 +10530,7 @@ class StatusPage(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -10769,11 +10761,11 @@ class SwipeableInterface(GObject.GPointer):
     """
 
     parent: GObject.TypeInterface = ...
-    get_distance: typing.Callable[[Swipeable], float] = ...
-    get_snap_points: typing.Callable[[Swipeable], list[float]] = ...
-    get_progress: typing.Callable[[Swipeable], float] = ...
-    get_cancel_progress: typing.Callable[[Swipeable], float] = ...
-    get_swipe_area: typing.Callable[
+    get_distance: Callable[[Swipeable], float] = ...
+    get_snap_points: Callable[[Swipeable], list[float]] = ...
+    get_progress: Callable[[Swipeable], float] = ...
+    get_cancel_progress: Callable[[Swipeable], float] = ...
+    get_swipe_area: Callable[
         [Swipeable, NavigationDirection, bool], Gdk.Rectangle
     ] = ...
     padding: list[None] = ...
@@ -10947,7 +10939,7 @@ class SwitchRow(
         selectable: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -11137,7 +11129,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         view: TabView | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -11189,7 +11181,7 @@ class TabBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
     def setup_extra_drop_target(
         self,
         actions: Gdk.DragAction,
-        types: typing.Sequence[typing.Type[typing.Any]] | None = None,
+        types: Sequence[type[Any]] | None = None,
     ) -> None: ...
 
 class TabBarClass(GObject.GPointer):
@@ -11325,7 +11317,7 @@ class TabButton(
         view: TabView | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -11523,7 +11515,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         view: TabView | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -11582,7 +11574,7 @@ class TabOverview(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
     def setup_extra_drop_target(
         self,
         actions: Gdk.DragAction,
-        types: typing.Sequence[typing.Type[typing.Any]] | None = None,
+        types: Sequence[type[Any]] | None = None,
     ) -> None: ...
 
 class TabOverviewClass(GObject.GPointer):
@@ -11846,7 +11838,7 @@ class TabView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget):
         shortcuts: TabViewShortcuts = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -12218,7 +12210,7 @@ class ToastOverlay(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         child: Gtk.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -12468,7 +12460,7 @@ class ToggleGroup(
         homogeneous: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -12664,7 +12656,7 @@ class ToolbarView(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         top_bar_style: ToolbarStyle = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -12860,7 +12852,7 @@ class ViewStack(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget)
         visible_child_name: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -13163,7 +13155,7 @@ class ViewSwitcher(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
         stack: ViewStack | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -13317,7 +13309,7 @@ class ViewSwitcherBar(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
         stack: ViewStack | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -13503,7 +13495,7 @@ class ViewSwitcherTitle(
         view_switcher_enabled: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -13773,7 +13765,7 @@ class Window(
         transient_for: Gtk.Window | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -13943,7 +13935,7 @@ class WindowTitle(Gtk.Widget, Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarge
         title: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,
@@ -14144,7 +14136,7 @@ class WrapBox(
         wrap_reverse: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
-        css_classes: typing.Sequence[str] = ...,
+        css_classes: Sequence[str] = ...,
         css_name: str = ...,
         cursor: Gdk.Cursor | None = ...,
         focus_on_click: bool = ...,

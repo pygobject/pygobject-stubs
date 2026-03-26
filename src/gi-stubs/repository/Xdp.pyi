@@ -1,11 +1,7 @@
 from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
-from typing import TypeVar
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import Gio
 from gi.repository import GLib

@@ -1,11 +1,15 @@
-import typing
+from typing import Any
+from typing import TypeVar
+from typing_extensions import Self
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 MAJOR_VERSION: int = 1
 MICRO_VERSION: int = 1
@@ -156,7 +160,7 @@ class Installation(GObject.Object):
         remote_name: str,
         ref: Ref,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, int, int]: ...
+    ) -> tuple[bool, int, int]: ...
     def get_config(
         self, key: str, cancellable: Gio.Cancellable | None = None
     ) -> str: ...
@@ -176,7 +180,7 @@ class Installation(GObject.Object):
         cancellable: Gio.Cancellable | None = None,
     ) -> InstalledRef: ...
     def get_is_user(self) -> bool: ...
-    def get_min_free_space_bytes(self) -> typing.Tuple[bool, int]: ...
+    def get_min_free_space_bytes(self) -> tuple[bool, int]: ...
     def get_no_interaction(self) -> bool: ...
     def get_path(self) -> Gio.File: ...
     def get_priority(self) -> int: ...
@@ -191,16 +195,16 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> InstalledRef: ...
     def install_bundle(
         self,
         file: Gio.File,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> InstalledRef: ...
     def install_full(
         self,
@@ -210,10 +214,10 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        subpaths: typing.Sequence[str] | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        subpaths: Sequence[str] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> InstalledRef: ...
     def install_ref_file(
         self,
@@ -284,7 +288,7 @@ class Installation(GObject.Object):
     ) -> list[Remote]: ...
     def list_remotes_by_type(
         self,
-        types: typing.Sequence[RemoteType],
+        types: Sequence[RemoteType],
         cancellable: Gio.Cancellable | None = None,
     ) -> list[Remote]: ...
     def list_unused_refs(
@@ -343,9 +347,9 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> bool: ...
     def uninstall_full(
         self,
@@ -354,9 +358,9 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> bool: ...
     def update(
         self,
@@ -365,18 +369,18 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> InstalledRef: ...
     def update_appstream_full_sync(
         self,
         remote_name: str,
         arch: str | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        progress: Callable[..., None] | None = None,
         out_changed: bool | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> bool: ...
     def update_appstream_sync(
         self,
@@ -392,10 +396,10 @@ class Installation(GObject.Object):
         name: str,
         arch: str | None = None,
         branch: str | None = None,
-        subpaths: typing.Sequence[str] | None = None,
-        progress: typing.Callable[..., None] | None = None,
+        subpaths: Sequence[str] | None = None,
+        progress: Callable[..., None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *progress_data: typing.Any,
+        *progress_data: Any,
     ) -> InstalledRef: ...
     def update_remote_sync(
         self, name: str, cancellable: Gio.Cancellable | None = None
@@ -508,7 +512,7 @@ class InstalledRef(Ref):
         is_current: bool = ...,
         latest_commit: str = ...,
         origin: str = ...,
-        subpaths: typing.Sequence[str] = ...,
+        subpaths: Sequence[str] = ...,
         arch: str = ...,
         branch: str = ...,
         collection_id: str = ...,
@@ -712,7 +716,7 @@ class RelatedRef(Ref):
         should_autoprune: bool = ...,
         should_delete: bool = ...,
         should_download: bool = ...,
-        subpaths: typing.Sequence[str] = ...,
+        subpaths: Sequence[str] = ...,
         arch: str = ...,
         branch: str = ...,
         collection_id: str = ...,
@@ -956,7 +960,7 @@ class Transaction(GObject.Object, Gio.Initable):
         self,
         remote: str,
         ref: str,
-        subpaths: typing.Sequence[str] | None = None,
+        subpaths: Sequence[str] | None = None,
     ) -> bool: ...
     def add_install_bundle(
         self, file: Gio.File, gpg_data: GLib.Bytes | None = None
@@ -967,7 +971,7 @@ class Transaction(GObject.Object, Gio.Initable):
         remote: str,
         ref: str,
         subpaths: str | None = None,
-        previous_ids: typing.Sequence[str] | None = None,
+        previous_ids: Sequence[str] | None = None,
     ) -> bool: ...
     def add_rebase_and_uninstall(
         self,
@@ -975,14 +979,14 @@ class Transaction(GObject.Object, Gio.Initable):
         new_ref: str,
         old_ref: str,
         subpaths: str | None = None,
-        previous_ids: typing.Sequence[str] | None = None,
+        previous_ids: Sequence[str] | None = None,
     ) -> bool: ...
     def add_sideload_repo(self, path: str) -> None: ...
     def add_uninstall(self, ref: str) -> bool: ...
     def add_update(
         self,
         ref: str,
-        subpaths: typing.Sequence[str] | None = None,
+        subpaths: Sequence[str] | None = None,
         commit: str | None = None,
     ) -> bool: ...
     def complete_basic_auth(
@@ -1070,34 +1074,30 @@ class TransactionClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    new_operation: typing.Callable[
+    new_operation: Callable[
         [Transaction, TransactionOperation, TransactionProgress], None
     ] = ...
-    operation_done: typing.Callable[
+    operation_done: Callable[
         [Transaction, TransactionOperation, str, TransactionResult], None
     ] = ...
-    operation_error: typing.Callable[
+    operation_error: Callable[
         [Transaction, TransactionOperation, GLib.Error, TransactionErrorDetails], bool
     ] = ...
-    choose_remote_for_ref: typing.Callable[[Transaction, str, str, str], int] = ...
-    end_of_lifed: typing.Callable[[Transaction, str, str, str], None] = ...
-    ready: typing.Callable[[Transaction], bool] = ...
-    add_new_remote: typing.Callable[
+    choose_remote_for_ref: Callable[[Transaction, str, str, str], int] = ...
+    end_of_lifed: Callable[[Transaction, str, str, str], None] = ...
+    ready: Callable[[Transaction], bool] = ...
+    add_new_remote: Callable[
         [Transaction, TransactionRemoteReason, str, str, str], bool
     ] = ...
-    run: typing.Callable[[Transaction, Gio.Cancellable | None], bool] = ...
-    end_of_lifed_with_rebase: typing.Callable[
+    run: Callable[[Transaction, Gio.Cancellable | None], bool] = ...
+    end_of_lifed_with_rebase: Callable[
         [Transaction, str, str, str, str, str], bool
     ] = ...
-    webflow_start: typing.Callable[
-        [Transaction, str, str, GLib.Variant, int], bool
-    ] = ...
-    webflow_done: typing.Callable[[Transaction, GLib.Variant, int], None] = ...
-    basic_auth_start: typing.Callable[
-        [Transaction, str, str, GLib.Variant, int], bool
-    ] = ...
-    install_authenticator: typing.Callable[[Transaction, str, str], None] = ...
-    ready_pre_auth: typing.Callable[[Transaction], bool] = ...
+    webflow_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...
+    webflow_done: Callable[[Transaction, GLib.Variant, int], None] = ...
+    basic_auth_start: Callable[[Transaction, str, str, GLib.Variant, int], bool] = ...
+    install_authenticator: Callable[[Transaction, str, str], None] = ...
+    ready_pre_auth: Callable[[Transaction], bool] = ...
     padding: list[None] = ...
 
 class TransactionOperation(GObject.Object):

@@ -1,9 +1,9 @@
-import typing
+from typing import TypeVar
 
 from gi.repository import Gdk
 from gi.repository import Gly
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "GlyGtk4"

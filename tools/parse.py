@@ -45,7 +45,7 @@ CONSTANT_INDEX = 2
 SYMBOLS_PATTERNS = [
     r"^\s*def\s+(?P<symbol>\w*)\s*\(",  # Functions
     CLASS_PATTERN,
-    r"^\s*(?P<symbol>\w*)\s*(:|=)[^,)]*$",  # Constants
+    r"^\s*(?P<symbol>\w*)\s*(:|=).*[^,)\s]\s*$",  # Constants
 ]
 DOCUMENTATION_PATTERN = r'^\s*""".*$'
 INDENTATION_SPACES = 4

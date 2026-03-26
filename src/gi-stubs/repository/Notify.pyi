@@ -1,11 +1,7 @@
 from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Type
-from typing import TypeVar
+
+from collections.abc import Callable
+from collections.abc import Sequence
 
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
@@ -22,7 +18,7 @@ _version: str = "0.7"
 
 def get_app_name() -> str: ...
 def get_server_caps() -> list[str]: ...
-def get_server_info() -> Tuple[bool, str, str, str, str]: ...
+def get_server_info() -> tuple[bool, str, str, str, str]: ...
 def init(app_name: str | None = None) -> bool: ...
 def is_initted() -> bool: ...
 def set_app_name(app_name: str) -> None: ...

@@ -1,13 +1,16 @@
-import typing
+from typing import Any
+from typing import TypeVar
+from typing_extensions import Self
+
+from collections.abc import Callable
 
 from gi.repository import EDataServer
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import ICalGLib
-from typing_extensions import Self
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 BACKEND_PROPERTY_ALARM_EMAIL_ADDRESS: str = "alarm-email-address"
 BACKEND_PROPERTY_CAL_EMAIL_ADDRESS: str = "cal-email-address"
@@ -72,24 +75,24 @@ def recur_describe_recurrence_ex(
     icalcomp: ICalGLib.Component,
     week_start_day: GLib.DateWeekday,
     flags: int,
-    datetime_fmt_func: typing.Callable[[ICalGLib.Time, str, int], None] | None = None,
+    datetime_fmt_func: Callable[[ICalGLib.Time, str, int], None] | None = None,
 ) -> str | None: ...
 def recur_ensure_end_dates(
     comp: Component,
     refresh: bool,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
     cancellable: Gio.Cancellable | None = None,
-    *tz_cb_data: typing.Any,
+    *tz_cb_data: Any,
 ) -> bool: ...
 def recur_generate_instances_sync(
     icalcomp: ICalGLib.Component,
     interval_start: ICalGLib.Time,
     interval_end: ICalGLib.Time,
-    callback: typing.Callable[..., bool] | None,
-    get_tz_callback: typing.Callable[..., ICalGLib.Timezone | None] | None,
+    callback: Callable[..., bool] | None,
+    get_tz_callback: Callable[..., ICalGLib.Timezone | None] | None,
     default_timezone: ICalGLib.Timezone,
     cancellable: Gio.Cancellable | None = None,
-    *get_tz_callback_user_data: typing.Any,
+    *get_tz_callback_user_data: Any,
 ) -> bool: ...
 def recur_get_localized_nth(nth: int) -> str: ...
 def recur_obtain_enddate(
@@ -145,8 +148,8 @@ def util_component_find_property_for_locale_filtered(
     icalcomp: ICalGLib.Component,
     prop_kind: ICalGLib.PropertyKind,
     locale: str | None = None,
-    func: typing.Callable[..., bool] | None = None,
-    *user_data: typing.Any,
+    func: Callable[..., bool] | None = None,
+    *user_data: Any,
 ) -> ICalGLib.Property | None: ...
 def util_component_find_x_property(
     icalcomp: ICalGLib.Component, x_name: str
@@ -186,58 +189,58 @@ def util_copy_timezone(zone: ICalGLib.Timezone) -> ICalGLib.Timezone: ...
 def util_diff_categories(
     old_comp: ICalGLib.Component | None = None,
     new_comp: ICalGLib.Component | None = None,
-) -> typing.Tuple[dict[str, int], dict[str, int]]: ...
+) -> tuple[dict[str, int], dict[str, int]]: ...
 def util_email_addresses_equal(
     email1: str | None = None, email2: str | None = None
 ) -> bool: ...
 def util_foreach_category(
     comp: ICalGLib.Component,
-    func: typing.Callable[..., typing.Tuple[bool, str]],
-    *user_data: typing.Any,
+    func: Callable[..., tuple[bool, str]],
+    *user_data: Any,
 ) -> None: ...
 def util_generate_alarms_for_comp(
     comp: Component,
     start: int,
     end: int,
     omit: ComponentAlarmAction,
-    resolve_tzid: typing.Callable[..., ICalGLib.Timezone | None],
+    resolve_tzid: Callable[..., ICalGLib.Timezone | None],
     default_timezone: ICalGLib.Timezone,
-    *user_data: typing.Any,
+    *user_data: Any,
 ) -> ComponentAlarms | None: ...
 def util_generate_alarms_for_list(
     comps: list[Component],
     start: int,
     end: int,
     omit: ComponentAlarmAction,
-    resolve_tzid: typing.Callable[..., ICalGLib.Timezone | None],
+    resolve_tzid: Callable[..., ICalGLib.Timezone | None],
     default_timezone: ICalGLib.Timezone,
-    *user_data: typing.Any,
-) -> typing.Tuple[int, list[ComponentAlarms]]: ...
+    *user_data: Any,
+) -> tuple[int, list[ComponentAlarms]]: ...
 def util_generate_alarms_for_uid_sync(
     client: None,
     uid: str,
     start: int,
     end: int,
     omit: ComponentAlarmAction,
-    resolve_tzid: typing.Callable[..., ICalGLib.Timezone | None],
+    resolve_tzid: Callable[..., ICalGLib.Timezone | None],
     default_timezone: ICalGLib.Timezone,
     def_reminder_before_start_seconds: int,
     cancellable: Gio.Cancellable | None = None,
-    *user_data: typing.Any,
+    *user_data: Any,
 ) -> ComponentAlarms | None: ...
 def util_get_attendee_email(
     attendee: ComponentAttendee | None = None,
 ) -> str | None: ...
 def util_get_component_occur_times(
     comp: Component,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
     default_timezone: ICalGLib.Timezone,
     kind: ICalGLib.ComponentKind,
-    *tz_cb_data: typing.Any,
-) -> typing.Tuple[int, int]: ...
+    *tz_cb_data: Any,
+) -> tuple[int, int]: ...
 def util_get_default_name_and_address(
     registry: EDataServer.SourceRegistry,
-) -> typing.Tuple[bool, str, str]: ...
+) -> tuple[bool, str, str]: ...
 def util_get_organizer_email(
     organizer: ComponentOrganizer | None = None,
 ) -> str | None: ...
@@ -249,9 +252,9 @@ def util_has_alarms_in_range(
     start: int,
     end: int,
     omit: ComponentAlarmAction,
-    resolve_tzid: typing.Callable[..., ICalGLib.Timezone | None],
+    resolve_tzid: Callable[..., ICalGLib.Timezone | None],
     default_timezone: ICalGLib.Timezone,
-    *user_data: typing.Any,
+    *user_data: Any,
 ) -> bool: ...
 def util_icaltime_to_tm(itt: ICalGLib.Time) -> None: ...
 def util_icaltime_to_tm_with_zone(
@@ -268,8 +271,8 @@ def util_inline_local_attachments_sync(
 def util_is_first_instance(
     comp: Component,
     rid: ICalGLib.Time,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
-    *tz_cb_data: typing.Any,
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
+    *tz_cb_data: Any,
 ) -> bool: ...
 def util_mark_task_complete_sync(
     vtodo: ICalGLib.Component,
@@ -282,8 +285,8 @@ def util_new_top_level() -> ICalGLib.Component: ...
 def util_normalize_rrule_until_value(
     icalcomp: ICalGLib.Component,
     ttuntil: ICalGLib.Time,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
-    *tz_cb_data: typing.Any,
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
+    *tz_cb_data: Any,
 ) -> None: ...
 def util_operation_flags_to_conflict_resolution(
     flags: int,
@@ -302,8 +305,8 @@ def util_remove_instances_ex(
     icalcomp: ICalGLib.Component,
     rid: ICalGLib.Time,
     mod: ObjModType,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
-    *tz_cb_data: typing.Any,
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
+    *tz_cb_data: Any,
 ) -> None: ...
 def util_seconds_to_string(seconds: int) -> str: ...
 def util_set_alarm_acknowledged(component: Component, auid: str, when: int) -> bool: ...
@@ -316,8 +319,8 @@ def util_split_at_instance_ex(
     icalcomp: ICalGLib.Component,
     rid: ICalGLib.Time,
     master_dtstart: ICalGLib.Time | None,
-    tz_cb: typing.Callable[..., ICalGLib.Timezone | None],
-    *tz_cb_data: typing.Any,
+    tz_cb: Callable[..., ICalGLib.Timezone | None],
+    *tz_cb_data: Any,
 ) -> ICalGLib.Component | None: ...
 def util_strip_mailto(address: str | None = None) -> str: ...
 def util_tm_to_icaltime(tm: None, is_date: bool) -> ICalGLib.Time: ...
@@ -391,8 +394,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         self,
         zone: ICalGLib.Timezone,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def add_timezone_finish(self, result: Gio.AsyncResult) -> bool: ...
     def add_timezone_sync(
@@ -409,9 +412,9 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
     def check_timezones_sync(
         vcalendar: ICalGLib.Component,
         icalcomps: list[ICalGLib.Component] | None = None,
-        tzlookup: typing.Callable[..., ICalGLib.Timezone | None] | None = None,
+        tzlookup: Callable[..., ICalGLib.Timezone | None] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        *tzlookup_data: typing.Any,
+        *tzlookup_data: Any,
     ) -> bool: ...
     @staticmethod
     def connect(
@@ -419,8 +422,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         source_type: ClientSourceType,
         wait_for_connected_seconds: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     @staticmethod
     def connect_finish(result: Gio.AsyncResult) -> EDataServer.Client: ...
@@ -436,35 +439,33 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         icalcomp: ICalGLib.Component,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
-    def create_object_finish(
-        self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, str]: ...
+    def create_object_finish(self, result: Gio.AsyncResult) -> tuple[bool, str]: ...
     def create_object_sync(
         self,
         icalcomp: ICalGLib.Component,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, str]: ...
+    ) -> tuple[bool, str]: ...
     def create_objects(
         self,
         icalcomps: list[ICalGLib.Component],
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def create_objects_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[str]]: ...
+    ) -> tuple[bool, list[str]]: ...
     def create_objects_sync(
         self,
         icalcomps: list[ICalGLib.Component],
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, list[str]]: ...
+    ) -> tuple[bool, list[str]]: ...
     def discard_alarm(
         self,
         uid: str,
@@ -472,8 +473,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         auid: str,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def discard_alarm_finish(self, result: Gio.AsyncResult) -> bool: ...
     def discard_alarm_sync(
@@ -497,8 +498,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         start: int,
         end: int,
         cancellable: Gio.Cancellable | None,
-        cb: typing.Callable[..., bool],
-        *cb_data: typing.Any,
+        cb: Callable[..., bool],
+        *cb_data: Any,
     ) -> None: ...
     def generate_instances_for_object(
         self,
@@ -506,8 +507,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         start: int,
         end: int,
         cancellable: Gio.Cancellable | None,
-        cb: typing.Callable[..., bool],
-        *cb_data: typing.Any,
+        cb: Callable[..., bool],
+        *cb_data: Any,
     ) -> None: ...
     def generate_instances_for_object_sync(
         self,
@@ -515,8 +516,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         start: int,
         end: int,
         cancellable: Gio.Cancellable | None,
-        cb: typing.Callable[..., bool],
-        *cb_data: typing.Any,
+        cb: Callable[..., bool],
+        *cb_data: Any,
     ) -> None: ...
     def generate_instances_for_uid_sync(
         self,
@@ -524,47 +525,47 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         start: int,
         end: int,
         cancellable: Gio.Cancellable | None,
-        cb: typing.Callable[..., bool],
-        *cb_data: typing.Any,
+        cb: Callable[..., bool],
+        *cb_data: Any,
     ) -> None: ...
     def generate_instances_sync(
         self,
         start: int,
         end: int,
         cancellable: Gio.Cancellable | None,
-        cb: typing.Callable[..., bool],
-        *cb_data: typing.Any,
+        cb: Callable[..., bool],
+        *cb_data: Any,
     ) -> None: ...
     def get_attachment_uris(
         self,
         uid: str,
         rid: str | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_attachment_uris_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[str]]: ...
+    ) -> tuple[bool, list[str]]: ...
     def get_attachment_uris_sync(
         self,
         uid: str,
         rid: str | None = None,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, list[str]]: ...
+    ) -> tuple[bool, list[str]]: ...
     def get_component_as_string(self, icalcomp: ICalGLib.Component) -> str | None: ...
     def get_default_object(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_default_object_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, ICalGLib.Component]: ...
+    ) -> tuple[bool, ICalGLib.Component]: ...
     def get_default_object_sync(
         self, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, ICalGLib.Component]: ...
+    ) -> tuple[bool, ICalGLib.Component]: ...
     def get_default_timezone(self) -> ICalGLib.Timezone: ...
     def get_free_busy(
         self,
@@ -572,111 +573,109 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         end: int,
         users: list[str],
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_free_busy_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_free_busy_sync(
         self,
         start: int,
         end: int,
         users: list[str],
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_local_attachment_store(self) -> str: ...
     def get_object(
         self,
         uid: str,
         rid: str | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_object_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, ICalGLib.Component]: ...
+    ) -> tuple[bool, ICalGLib.Component]: ...
     def get_object_list(
         self,
         sexp: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_object_list_as_comps(
         self,
         sexp: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_object_list_as_comps_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_object_list_as_comps_sync(
         self, sexp: str, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_object_list_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[ICalGLib.Component]]: ...
+    ) -> tuple[bool, list[ICalGLib.Component]]: ...
     def get_object_list_sync(
         self, sexp: str, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, list[ICalGLib.Component]]: ...
+    ) -> tuple[bool, list[ICalGLib.Component]]: ...
     def get_object_sync(
         self,
         uid: str,
         rid: str | None = None,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, ICalGLib.Component]: ...
+    ) -> tuple[bool, ICalGLib.Component]: ...
     def get_objects_for_uid(
         self,
         uid: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_objects_for_uid_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_objects_for_uid_sync(
         self, uid: str, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, list[Component]]: ...
+    ) -> tuple[bool, list[Component]]: ...
     def get_source_type(self) -> ClientSourceType: ...
     def get_timezone(
         self,
         tzid: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def get_timezone_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, ICalGLib.Timezone]: ...
+    ) -> tuple[bool, ICalGLib.Timezone]: ...
     def get_timezone_sync(
         self, tzid: str, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, ICalGLib.Timezone]: ...
+    ) -> tuple[bool, ICalGLib.Timezone]: ...
     def get_view(
         self,
         sexp: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
-    def get_view_finish(
-        self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, ClientView]: ...
+    def get_view_finish(self, result: Gio.AsyncResult) -> tuple[bool, ClientView]: ...
     def get_view_sync(
         self, sexp: str, cancellable: Gio.Cancellable | None = None
-    ) -> typing.Tuple[bool, ClientView]: ...
+    ) -> tuple[bool, ClientView]: ...
     def modify_object(
         self,
         icalcomp: ICalGLib.Component,
         mod: ObjModType,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def modify_object_finish(self, result: Gio.AsyncResult) -> bool: ...
     def modify_object_sync(
@@ -692,8 +691,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         mod: ObjModType,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def modify_objects_finish(self, result: Gio.AsyncResult) -> bool: ...
     def modify_objects_sync(
@@ -708,8 +707,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         icalcomp: ICalGLib.Component,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def receive_objects_finish(self, result: Gio.AsyncResult) -> bool: ...
     def receive_objects_sync(
@@ -725,8 +724,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         mod: ObjModType,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def remove_object_finish(self, result: Gio.AsyncResult) -> bool: ...
     def remove_object_sync(
@@ -743,8 +742,8 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         mod: ObjModType,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def remove_objects_finish(self, result: Gio.AsyncResult) -> bool: ...
     def remove_objects_sync(
@@ -759,18 +758,18 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
         icalcomp: ICalGLib.Component,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def send_objects_finish(
         self, result: Gio.AsyncResult
-    ) -> typing.Tuple[bool, list[str], ICalGLib.Component]: ...
+    ) -> tuple[bool, list[str], ICalGLib.Component]: ...
     def send_objects_sync(
         self,
         icalcomp: ICalGLib.Component,
         opflags: OperationFlags,
         cancellable: Gio.Cancellable | None = None,
-    ) -> typing.Tuple[bool, list[str], ICalGLib.Component]: ...
+    ) -> tuple[bool, list[str], ICalGLib.Component]: ...
     def set_default_timezone(self, zone: ICalGLib.Timezone) -> None: ...
     @staticmethod
     def tzlookup_cb(
@@ -881,8 +880,8 @@ class ClientViewClass(GObject.GPointer):
     objects_added: None = ...
     objects_modified: None = ...
     objects_removed: None = ...
-    progress: typing.Callable[[ClientView, int, str], None] = ...
-    complete: typing.Callable[[ClientView, GLib.Error], None] = ...
+    progress: Callable[[ClientView, int, str], None] = ...
+    complete: Callable[[ClientView, GLib.Error], None] = ...
 
 class ClientViewPrivate(GObject.GPointer): ...
 
@@ -1365,16 +1364,16 @@ class ComponentParameterBag(GObject.GBoxed):
     def new_from_property(
         cls,
         property: ICalGLib.Property,
-        func: typing.Callable[..., bool] | None = None,
-        *user_data: typing.Any,
+        func: Callable[..., bool] | None = None,
+        *user_data: Any,
     ) -> ComponentParameterBag: ...
     def remove(self, index: int) -> None: ...
     def remove_by_kind(self, kind: ICalGLib.ParameterKind, all: bool) -> int: ...
     def set_from_property(
         self,
         property: ICalGLib.Property,
-        func: typing.Callable[..., bool] | None = None,
-        *user_data: typing.Any,
+        func: Callable[..., bool] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def take(self, param: ICalGLib.Parameter) -> None: ...
 
@@ -1435,16 +1434,16 @@ class ComponentPropertyBag(GObject.GBoxed):
     def new_from_component(
         cls,
         component: ICalGLib.Component,
-        func: typing.Callable[..., bool] | None = None,
-        *user_data: typing.Any,
+        func: Callable[..., bool] | None = None,
+        *user_data: Any,
     ) -> ComponentPropertyBag: ...
     def remove(self, index: int) -> None: ...
     def remove_by_kind(self, kind: ICalGLib.PropertyKind, all: bool) -> int: ...
     def set_from_component(
         self,
         component: ICalGLib.Component,
-        func: typing.Callable[..., bool] | None = None,
-        *user_data: typing.Any,
+        func: Callable[..., bool] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def take(self, prop: ICalGLib.Property) -> None: ...
 
@@ -1558,14 +1557,14 @@ class ReminderWatcher(GObject.Object):
         self,
         rd: ReminderData,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def dismiss_all(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def dismiss_all_finish(self, result: Gio.AsyncResult) -> bool: ...
     def dismiss_all_sync(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
@@ -1579,8 +1578,8 @@ class ReminderWatcher(GObject.Object):
         source_type: ClientSourceType,
         wait_for_connected_seconds: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: typing.Callable[..., None] | None = None,
-        *user_data: typing.Any,
+        callback: Callable[..., None] | None = None,
+        *user_data: Any,
     ) -> None: ...
     def do_changed(self) -> None: ...
     def do_format_time(
@@ -1610,14 +1609,14 @@ class ReminderWatcherClass(GObject.GPointer):
     """
 
     parent_class: GObject.ObjectClass = ...
-    schedule_timer: typing.Callable[[ReminderWatcher, int], None] = ...
-    format_time: typing.Callable[
+    schedule_timer: Callable[[ReminderWatcher, int], None] = ...
+    format_time: Callable[
         [ReminderWatcher, ReminderData, ICalGLib.Time, str, int], None
     ] = ...
     triggered: None = ...
-    changed: typing.Callable[[ReminderWatcher], None] = ...
+    changed: Callable[[ReminderWatcher], None] = ...
     cal_client_connect_sync: None = ...
-    cal_client_connect: typing.Callable[..., None] = ...
+    cal_client_connect: Callable[..., None] = ...
     cal_client_connect_finish: None = ...
     reserved: list[None] = ...
 
@@ -1644,12 +1643,10 @@ class TimezoneCacheInterface(GObject.GPointer):
     """
 
     parent_interface: GObject.TypeInterface = ...
-    tzcache_add_timezone: typing.Callable[
-        [TimezoneCache, ICalGLib.Timezone], None
-    ] = ...
+    tzcache_add_timezone: Callable[[TimezoneCache, ICalGLib.Timezone], None] = ...
     tzcache_get_timezone: None = ...
     tzcache_list_timezones: None = ...
-    timezone_added: typing.Callable[[TimezoneCache, ICalGLib.Timezone], None] = ...
+    timezone_added: Callable[[TimezoneCache, ICalGLib.Timezone], None] = ...
     reserved_signals: list[None] = ...
 
 class ClientViewFlags(GObject.GFlags):

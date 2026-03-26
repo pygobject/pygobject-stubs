@@ -1,6 +1,6 @@
-import typing
+from typing import TypeVar
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
 _lock = ...  # FIXME Constant
 _namespace: str = "GLibWin32"
