@@ -1,5 +1,3 @@
-from typing import Optional
-
 from gi.repository import GObject
 from gi.repository import Gtk
 

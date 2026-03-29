@@ -1,6 +1,5 @@
 from typing import Any
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 

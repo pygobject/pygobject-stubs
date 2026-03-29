@@ -1,5 +1,3 @@
-from typing import Union
-
 from gi.repository import Gio
 from gi.repository import GObject
 

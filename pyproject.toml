@@ -33,8 +33,7 @@ repository = "https://github.com/pygobject/pygobject-stubs"
 dev = [
     "PyGObject@git+https://gitlab.gnome.org/GNOME/pygobject.git",
     "codespell>=2.4.1",
-    "isort>=6.0.1",
-    "ruff>=0.12.7",
+    "ruff==0.15.8",
     "pre-commit",
 ]
 
@@ -49,14 +48,6 @@ skip = "*__pycache__*,.mypy_cache,.git,pyproject.toml,test,*.pyi,*venv"
 ignore-words-list = """
     astroid,
     inout"""
-
-[tool.isort]
-force_alphabetical_sort_within_sections = true
-force_single_line = true
-group_by_package = true
-known_typing = ["_typeshed", "typing", "typing_extensions"]
-sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
-skip_gitignore = true
 
 [tool.ruff]
 line-length = 88
@@ -73,6 +64,8 @@ target-version = "py310"
 select = [
     "PYI",   # flake8-pyi
     "UP",
+    "I001",  # isort
+    "F401",  # unused imports
 ]
 ignore = [
   "PYI001",  # Name of private `TypeVar` must start with `_`
@@ -83,8 +76,16 @@ ignore = [
   "PYI052",  # Need type annotation
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
   "PYI016",  # Duplicate union member `None`
-  "UP038",
 ]
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+order-by-type = false
+force-single-line = true
+section-order = ["future", "typing", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+typing = ["_typeshed", "typing", "typing_extensions"]
 
 [tool.pyright]
 pythonVersion = "3.10"
