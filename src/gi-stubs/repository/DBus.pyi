@@ -1,5 +1,4 @@
 from typing import TypeVar
-from typing_extensions import Self
 
 from gi.repository import GObject
 

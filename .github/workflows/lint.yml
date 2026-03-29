@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: isort/isort-action@v1
       - uses: astral-sh/ruff-action@v3
-      - run: ruff format
+      - run: ruff check
+      - run: ruff format --check

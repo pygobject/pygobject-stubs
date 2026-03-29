@@ -133,10 +133,10 @@ if __name__ == "__main__":
         gen_process = subprocess.run(cmd)
 
         if gen_process.returncode == 0:
+            print(f"Sorting imports in {output_path}", file=sys.stderr)
+            subprocess.run(["ruff", "check", "--select=I001", "--select=F401", "--fix"])
             print(f"Formatting {output_path}", file=sys.stderr)
             subprocess.run(["ruff", "format", output_path])
-            print(f"Sorting imports in {output_path}", file=sys.stderr)
-            subprocess.run(["isort", output_path])
         else:
             print(f"Failed to generate {output_path}", file=sys.stderr)
             failed_generations.append(output_path)
