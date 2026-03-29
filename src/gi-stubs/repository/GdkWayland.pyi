@@ -66,7 +66,8 @@ class WaylandDevice(_Gdk4.Device):
         tool: _Gdk4.DeviceTool | None
         vendor_id: str | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         display: _Gdk4.Display = ...,
@@ -117,7 +118,8 @@ class WaylandDisplay(_Gdk4.Display):
         rgba: bool
         shadow_width: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_egl_display(self) -> None: ...
     def get_startup_notification_id(self) -> str | None: ...
     def query_registry(self, global_: str) -> bool: ...
@@ -155,7 +157,8 @@ class WaylandGLContext(_Gdk4.GLContext):
         display: _Gdk4.Display | None
         surface: _Gdk4.Surface | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         allowed_apis: _Gdk4.GLAPI = ...,
@@ -212,7 +215,8 @@ class WaylandMonitor(_Gdk4.Monitor):
         valid: bool
         width_mm: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, display: _Gdk4.Display = ...) -> None: ...
 
 class WaylandMonitorClass(GObject.GPointer): ...
@@ -259,7 +263,8 @@ class WaylandPopup(WaylandSurface, _Gdk4.Popup):
         autohide: bool
         parent: _Gdk4.Surface | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         cursor: _Gdk4.Cursor | None = ...,
@@ -294,7 +299,8 @@ class WaylandSeat(_Gdk4.Seat):
     class Props(_Gdk4.Seat.Props):
         display: _Gdk4.Display
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, display: _Gdk4.Display = ...) -> None: ...
 
 class WaylandSeatClass(GObject.GPointer): ...
@@ -339,7 +345,8 @@ class WaylandSurface(_Gdk4.Surface):
         scale_factor: int
         width: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         cursor: _Gdk4.Cursor | None = ...,
@@ -403,7 +410,8 @@ class WaylandToplevel(WaylandSurface, _Gdk4.Toplevel):
         title: str
         transient_for: _Gdk4.Surface
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         cursor: _Gdk4.Cursor | None = ...,

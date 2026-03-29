@@ -55,7 +55,8 @@ class Creator(GObject.Object):
         mime_type: str
         sandbox_selector: SandboxSelector
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, mime_type: str = ..., sandbox_selector: SandboxSelector = ...
     ) -> None: ...
@@ -93,8 +94,8 @@ class CreatorClass(GObject.GPointer):
 
         CreatorClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class EncodedImage(GObject.Object):
     """
@@ -115,7 +116,8 @@ class EncodedImage(GObject.Object):
     class Props(GObject.Object.Props):
         data: GLib.Bytes
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_data(self) -> GLib.Bytes: ...
 
 class EncodedImageClass(GObject.GPointer):
@@ -126,8 +128,8 @@ class EncodedImageClass(GObject.GPointer):
 
         EncodedImageClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Frame(GObject.Object):
     """
@@ -158,8 +160,8 @@ class FrameClass(GObject.GPointer):
 
         FrameClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FrameRequest(GObject.Object):
     """
@@ -185,7 +187,8 @@ class FrameRequest(GObject.Object):
         scale_height: int
         scale_width: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, loop_animation: bool = ...) -> None: ...
     @classmethod
     def new(cls) -> FrameRequest: ...
@@ -200,8 +203,8 @@ class FrameRequestClass(GObject.GPointer):
 
         FrameRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Image(GObject.Object):
     """
@@ -248,8 +251,8 @@ class ImageClass(GObject.GPointer):
 
         ImageClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Loader(GObject.Object):
     """
@@ -285,7 +288,8 @@ class Loader(GObject.Object):
         sandbox_selector: SandboxSelector
         stream: Gio.InputStream
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         apply_transformation: bool = ...,
@@ -334,8 +338,8 @@ class LoaderClass(GObject.GPointer):
 
         LoaderClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class NewFrame(GObject.Object):
     """
@@ -360,8 +364,8 @@ class NewFrameClass(GObject.GPointer):
 
         NewFrameClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class MemoryFormatSelection(GObject.GFlags):
     A8B8G8R8 = 64

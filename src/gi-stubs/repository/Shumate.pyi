@@ -109,7 +109,7 @@ class Compass(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         viewport: Viewport | None
         can_focus: bool
         can_target: bool
@@ -147,7 +147,8 @@ class Compass(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         viewport: Viewport | None = ...,
@@ -195,8 +196,8 @@ class CompassClass(GObject.GPointer):
 
         CompassClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class Coordinate(GObject.InitiallyUnowned, Location):
     """
@@ -214,12 +215,14 @@ class Coordinate(GObject.InitiallyUnowned, Location):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         latitude: float
         longitude: float
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
     def __init__(self, latitude: float = ..., longitude: float = ...) -> None: ...
     @classmethod
     def new(cls) -> Coordinate: ...
@@ -234,9 +237,10 @@ class CoordinateClass(GObject.GPointer):
 
         CoordinateClass()
     """
-
-    parent_class: GObject.InitiallyUnownedClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> GObject.InitiallyUnownedClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class DataSource(GObject.Object):
     """
@@ -261,12 +265,14 @@ class DataSource(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         max_zoom_level: int
         min_zoom_level: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self, max_zoom_level: int = ..., min_zoom_level: int = ...
     ) -> None: ...
@@ -317,14 +323,22 @@ class DataSourceClass(GObject.GPointer):
 
         DataSourceClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    get_tile_data_async: Callable[..., None] = ...
-    get_tile_data_finish: Callable[[DataSource, Gio.AsyncResult], GLib.Bytes] = ...
-    start_request: Callable[
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def get_tile_data_async(self) -> Callable[..., None]: ...
+    @property
+    def get_tile_data_finish(
+        self,
+    ) -> Callable[[DataSource, Gio.AsyncResult], GLib.Bytes]: ...
+    @property
+    def start_request(
+        self,
+    ) -> Callable[
         [DataSource, int, int, int, Gio.Cancellable | None], DataSourceRequest
-    ] = ...
-    padding: list[None] = ...
+    ]: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class DataSourceRequest(GObject.Object):
     """
@@ -355,7 +369,7 @@ class DataSourceRequest(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         completed: bool
         data: GLib.Bytes | None
         error: GLib.Error | None
@@ -363,8 +377,10 @@ class DataSourceRequest(GObject.Object):
         y: int
         zoom_level: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(self, x: int = ..., y: int = ..., zoom_level: int = ...) -> None: ...
     def complete(self) -> None: ...
     def emit_data(self, data: GLib.Bytes, complete: bool) -> None: ...
@@ -386,9 +402,10 @@ class DataSourceRequestClass(GObject.GPointer):
 
         DataSourceRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class FileCache(GObject.Object):
     """
@@ -413,12 +430,13 @@ class FileCache(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         cache_dir: str
         cache_key: str
         size_limit: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, cache_dir: str = ..., cache_key: str = ..., size_limit: int = ...
     ) -> None: ...
@@ -471,8 +489,8 @@ class FileCacheClass(GObject.GPointer):
 
         FileCacheClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Layer(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -543,7 +561,7 @@ class Layer(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTar
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         viewport: Viewport
         can_focus: bool
         can_target: bool
@@ -581,8 +599,10 @@ class Layer(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTar
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
-    parent_instance: _Gtk4.Widget = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
         viewport: Viewport = ...,
@@ -628,10 +648,12 @@ class LayerClass(GObject.GPointer):
 
         LayerClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
-    get_debug_text: Callable[[Layer], str | None] = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
+    @property
+    def get_debug_text(self) -> Callable[[Layer], str | None]: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class License(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -705,7 +727,7 @@ class License(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         extra_text: str
         xalign: float
         can_focus: bool
@@ -744,7 +766,8 @@ class License(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         extra_text: str = ...,
@@ -798,8 +821,8 @@ class LicenseClass(GObject.GPointer):
 
         LicenseClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class Location(GObject.GInterface):
     """
@@ -822,11 +845,14 @@ class LocationInterface(GObject.GPointer):
 
         LocationInterface()
     """
-
-    g_iface: GObject.TypeInterface = ...
-    get_latitude: Callable[[Location], float] = ...
-    get_longitude: Callable[[Location], float] = ...
-    set_location: Callable[[Location, float, float], None] = ...
+    @property
+    def g_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_latitude(self) -> Callable[[Location], float]: ...
+    @property
+    def get_longitude(self) -> Callable[[Location], float]: ...
+    @property
+    def set_location(self) -> Callable[[Location, float, float], None]: ...
 
 class Map(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -910,7 +936,7 @@ class Map(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarge
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         animate_zoom: bool
         go_to_duration: int
         state: State
@@ -952,7 +978,8 @@ class Map(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarge
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         animate_zoom: bool = ...,
@@ -1030,8 +1057,8 @@ class MapClass(GObject.GPointer):
 
         MapClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class MapLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -1110,7 +1137,7 @@ class MapLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget)
       notify (GParam)
     """
 
-    class Props:
+    class Props(Layer.Props):
         map_source: MapSource
         viewport: Viewport
         can_focus: bool
@@ -1149,7 +1176,8 @@ class MapLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget)
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         map_source: MapSource = ...,
@@ -1196,8 +1224,8 @@ class MapLayerClass(GObject.GPointer):
 
         MapLayerClass()
     """
-
-    parent_class: LayerClass = ...
+    @property
+    def parent_class(self) -> LayerClass: ...
 
 class MapSource(GObject.Object):
     """
@@ -1231,7 +1259,7 @@ class MapSource(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         id: str
         license: str
         license_uri: str
@@ -1241,8 +1269,10 @@ class MapSource(GObject.Object):
         projection: MapProjection
         tile_size: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
         id: str = ...,
@@ -1305,11 +1335,14 @@ class MapSourceClass(GObject.GPointer):
 
         MapSourceClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    fill_tile_async: Callable[..., None] = ...
-    fill_tile_finish: Callable[[MapSource, Gio.AsyncResult], bool] = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def fill_tile_async(self) -> Callable[..., None]: ...
+    @property
+    def fill_tile_finish(self) -> Callable[[MapSource, Gio.AsyncResult], bool]: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class MapSourceRegistry(GObject.Object, Gio.ListModel):
     """
@@ -1347,8 +1380,8 @@ class MapSourceRegistryClass(GObject.GPointer):
 
         MapSourceRegistryClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Marker(
     _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget, Location
@@ -1424,7 +1457,7 @@ class Marker(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
         selectable: bool
         can_focus: bool
@@ -1465,8 +1498,10 @@ class Marker(
         latitude: float
         longitude: float
 
-    props: Props = ...
-    parent_instance: _Gtk4.Widget = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
         child: _Gtk4.Widget | None = ...,
@@ -1526,9 +1561,10 @@ class MarkerClass(GObject.GPointer):
 
         MarkerClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class MarkerLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -1609,7 +1645,7 @@ class MarkerLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarg
       notify (GParam)
     """
 
-    class Props:
+    class Props(Layer.Props):
         selection_mode: _Gtk4.SelectionMode
         viewport: Viewport
         can_focus: bool
@@ -1648,7 +1684,8 @@ class MarkerLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarg
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         selection_mode: _Gtk4.SelectionMode = ...,
@@ -1708,8 +1745,8 @@ class MarkerLayerClass(GObject.GPointer):
 
         MarkerLayerClass()
     """
-
-    parent_class: LayerClass = ...
+    @property
+    def parent_class(self) -> LayerClass: ...
 
 class PathLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -1799,7 +1836,7 @@ class PathLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
       notify (GParam)
     """
 
-    class Props:
+    class Props(Layer.Props):
         closed: bool
         fill: bool
         fill_color: _Gdk4.RGBA
@@ -1845,7 +1882,8 @@ class PathLayer(Layer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         closed: bool = ...,
@@ -1922,8 +1960,8 @@ class PathLayerClass(GObject.GPointer):
 
         PathLayerClass()
     """
-
-    parent_class: LayerClass = ...
+    @property
+    def parent_class(self) -> LayerClass: ...
 
 class Point(
     Marker, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget, Location
@@ -1999,7 +2037,7 @@ class Point(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Marker.Props):
         child: _Gtk4.Widget | None
         selectable: bool
         can_focus: bool
@@ -2040,7 +2078,8 @@ class Point(
         latitude: float
         longitude: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         child: _Gtk4.Widget | None = ...,
@@ -2089,8 +2128,8 @@ class PointClass(GObject.GPointer):
 
         PointClass()
     """
-
-    parent_class: MarkerClass = ...
+    @property
+    def parent_class(self) -> MarkerClass: ...
 
 class RasterRenderer(MapSource):
     """
@@ -2132,7 +2171,7 @@ class RasterRenderer(MapSource):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MapSource.Props):
         data_source: DataSource
         id: str
         license: str
@@ -2143,7 +2182,8 @@ class RasterRenderer(MapSource):
         projection: MapProjection
         tile_size: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         data_source: DataSource = ...,
@@ -2195,8 +2235,8 @@ class RasterRendererClass(GObject.GPointer):
 
         RasterRendererClass()
     """
-
-    parent_class: MapSourceClass = ...
+    @property
+    def parent_class(self) -> MapSourceClass: ...
 
 class Scale(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -2272,7 +2312,7 @@ class Scale(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTar
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         max_width: int
         unit: Unit
         viewport: Viewport | None
@@ -2312,7 +2352,8 @@ class Scale(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTar
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         max_width: int = ...,
@@ -2366,8 +2407,8 @@ class ScaleClass(GObject.GPointer):
 
         ScaleClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class SimpleMap(
     _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
@@ -2456,7 +2497,7 @@ class SimpleMap(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         compass: Compass
         license: License
         map: Map
@@ -2500,7 +2541,8 @@ class SimpleMap(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         map_source: MapSource | None = ...,
@@ -2559,8 +2601,8 @@ class SimpleMapClass(GObject.GPointer):
 
         SimpleMapClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class SymbolEvent(GObject.Object, Location):
     """
@@ -2584,14 +2626,15 @@ class SymbolEvent(GObject.Object, Location):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         feature_id: str
         layer: str
         source_layer: str
         latitude: float
         longitude: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, latitude: float = ..., longitude: float = ...) -> None: ...
     def get_feature_id(self) -> str: ...
     def get_keys(self) -> list[str]: ...
@@ -2607,8 +2650,8 @@ class SymbolEventClass(GObject.GPointer):
 
         SymbolEventClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Tile(GObject.Object):
     """
@@ -2644,7 +2687,7 @@ class Tile(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         fade_in: bool
         paintable: _Gdk4.Paintable | None
         scale_factor: float
@@ -2654,7 +2697,8 @@ class Tile(GObject.Object):
         y: int
         zoom_level: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         fade_in: bool = ...,
@@ -2695,8 +2739,8 @@ class TileClass(GObject.GPointer):
 
         TileClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class TileDownloader(DataSource):
     """
@@ -2726,12 +2770,13 @@ class TileDownloader(DataSource):
       notify (GParam)
     """
 
-    class Props:
+    class Props(DataSource.Props):
         url_template: str
         max_zoom_level: int
         min_zoom_level: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         url_template: str = ...,
@@ -2749,8 +2794,8 @@ class TileDownloaderClass(GObject.GPointer):
 
         TileDownloaderClass()
     """
-
-    parent_class: DataSourceClass = ...
+    @property
+    def parent_class(self) -> DataSourceClass: ...
 
 class VectorReader(GObject.Object):
     """
@@ -2779,8 +2824,8 @@ class VectorReaderClass(GObject.GPointer):
 
         VectorReaderClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class VectorReaderIter(GObject.Object):
     """
@@ -2800,10 +2845,11 @@ class VectorReaderIter(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         reader: VectorReader
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, reader: VectorReader = ...) -> None: ...
     def feature_contains_point(self, x: float, y: float) -> bool: ...
     def get_feature_geometry_type(self) -> GeometryType: ...
@@ -2829,8 +2875,8 @@ class VectorReaderIterClass(GObject.GPointer):
 
         VectorReaderIterClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class VectorRenderer(MapSource, Gio.Initable):
     """
@@ -2871,7 +2917,7 @@ class VectorRenderer(MapSource, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MapSource.Props):
         sprite_sheet: VectorSpriteSheet
         style_json: str
         id: str
@@ -2883,7 +2929,8 @@ class VectorRenderer(MapSource, Gio.Initable):
         projection: MapProjection
         tile_size: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         sprite_sheet: VectorSpriteSheet = ...,
@@ -2916,8 +2963,8 @@ class VectorRendererClass(GObject.GPointer):
 
         VectorRendererClass()
     """
-
-    parent_class: MapSourceClass = ...
+    @property
+    def parent_class(self) -> MapSourceClass: ...
 
 class VectorSprite(GObject.Object, _Gdk4.Paintable, _Gtk4.SymbolicPaintable):
     """
@@ -2951,14 +2998,15 @@ class VectorSprite(GObject.Object, _Gdk4.Paintable, _Gtk4.SymbolicPaintable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         height: int
         scale_factor: float
         source_paintable: _Gdk4.Paintable
         source_rect: _Gdk4.Rectangle | None
         width: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         height: int = ...,
@@ -2992,8 +3040,8 @@ class VectorSpriteClass(GObject.GPointer):
 
         VectorSpriteClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class VectorSpriteSheet(GObject.Object):
     """
@@ -3031,8 +3079,8 @@ class VectorSpriteSheetClass(GObject.GPointer):
 
         VectorSpriteSheetClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Viewport(GObject.Object, Location):
     """
@@ -3061,7 +3109,7 @@ class Viewport(GObject.Object, Location):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         max_zoom_level: int
         min_zoom_level: int
         reference_map_source: MapSource | None
@@ -3070,7 +3118,8 @@ class Viewport(GObject.Object, Location):
         latitude: float
         longitude: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         max_zoom_level: int = ...,
@@ -3108,8 +3157,8 @@ class ViewportClass(GObject.GPointer):
 
         ViewportClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FileCacheError(GObject.GEnum):
     FAILED = 0

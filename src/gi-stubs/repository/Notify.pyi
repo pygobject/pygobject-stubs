@@ -56,7 +56,7 @@ class Notification(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         app_name: str | None
         body: str
         closed_reason: int
@@ -64,9 +64,12 @@ class Notification(GObject.Object):
         id: int
         summary: str
 
-    props: Props = ...
-    parent_object: GObject.Object = ...
-    priv: NotificationPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_object(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> NotificationPrivate: ...
     def __init__(
         self,
         app_name: str | None = ...,
@@ -114,9 +117,10 @@ class NotificationClass(GObject.GPointer):
 
         NotificationClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    closed: Callable[[Notification], None] = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def closed(self) -> Callable[[Notification], None]: ...
 
 class NotificationPrivate(GObject.GPointer): ...
 

@@ -234,7 +234,7 @@ class ActionRow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(PreferencesRow.Props):
         activatable_widget: _Gtk3.Widget | None
         icon_name: str
         subtitle: str | None
@@ -289,8 +289,10 @@ class ActionRow(
         action_target: GLib.Variant
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: PreferencesRow = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> PreferencesRow: ...
     def __init__(
         self,
         activatable_widget: _Gtk3.Widget | None = ...,
@@ -369,10 +371,12 @@ class ActionRowClass(GObject.GPointer):
 
         ActionRowClass()
     """
-
-    parent_class: _Gtk3.ListBoxRowClass = ...
-    activate: Callable[[ActionRow], None] = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ListBoxRowClass: ...
+    @property
+    def activate(self) -> Callable[[ActionRow], None]: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class ApplicationWindow(
     _Gtk3.ApplicationWindow,
@@ -651,7 +655,7 @@ class ApplicationWindow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.ApplicationWindow.Props):
         show_menubar: bool
         accept_focus: bool
         application: _Gtk3.Application | None
@@ -729,8 +733,10 @@ class ApplicationWindow(
         startup_id: str
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.ApplicationWindow = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.ApplicationWindow: ...
     def __init__(
         self,
         show_menubar: bool = ...,
@@ -814,9 +820,10 @@ class ApplicationWindowClass(GObject.GPointer):
 
         ApplicationWindowClass()
     """
-
-    parent_class: _Gtk3.ApplicationWindowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ApplicationWindowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class Avatar(_Gtk3.DrawingArea, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -996,7 +1003,7 @@ class Avatar(_Gtk3.DrawingArea, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.DrawingArea.Props):
         icon_name: str | None
         loadable_icon: Gio.LoadableIcon | None
         show_initials: bool
@@ -1042,7 +1049,8 @@ class Avatar(_Gtk3.DrawingArea, Atk.ImplementorIface, _Gtk3.Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         icon_name: str | None = ...,
@@ -1125,8 +1133,8 @@ class AvatarClass(GObject.GPointer):
 
         AvatarClass()
     """
-
-    parent_class: _Gtk3.DrawingAreaClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.DrawingAreaClass: ...
 
 class Carousel(
     _Gtk3.EventBox, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable, Swipeable
@@ -1342,7 +1350,7 @@ class Carousel(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.EventBox.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
         allow_scroll_wheel: bool
@@ -1398,7 +1406,8 @@ class Carousel(
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         allow_long_swipes: bool = ...,
@@ -1483,8 +1492,8 @@ class CarouselClass(GObject.GPointer):
 
         CarouselClass()
     """
-
-    parent_class: _Gtk3.EventBoxClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.EventBoxClass: ...
 
 class CarouselIndicatorDots(
     _Gtk3.DrawingArea, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable
@@ -1658,7 +1667,7 @@ class CarouselIndicatorDots(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.DrawingArea.Props):
         carousel: Carousel | None
         app_paintable: bool
         can_default: bool
@@ -1701,7 +1710,8 @@ class CarouselIndicatorDots(
         window: _Gdk3.Window | None
         orientation: _Gtk3.Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         carousel: Carousel | None = ...,
@@ -1756,8 +1766,8 @@ class CarouselIndicatorDotsClass(GObject.GPointer):
 
         CarouselIndicatorDotsClass()
     """
-
-    parent_class: _Gtk3.DrawingAreaClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.DrawingAreaClass: ...
 
 class CarouselIndicatorLines(
     _Gtk3.DrawingArea, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable
@@ -1931,7 +1941,7 @@ class CarouselIndicatorLines(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.DrawingArea.Props):
         carousel: Carousel | None
         app_paintable: bool
         can_default: bool
@@ -1974,7 +1984,8 @@ class CarouselIndicatorLines(
         window: _Gdk3.Window | None
         orientation: _Gtk3.Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         carousel: Carousel | None = ...,
@@ -2029,8 +2040,8 @@ class CarouselIndicatorLinesClass(GObject.GPointer):
 
         CarouselIndicatorLinesClass()
     """
-
-    parent_class: _Gtk3.DrawingAreaClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.DrawingAreaClass: ...
 
 class Clamp(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable):
     """
@@ -2218,7 +2229,7 @@ class Clamp(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         maximum_size: int
         tightening_threshold: int
         border_width: int
@@ -2265,7 +2276,8 @@ class Clamp(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable):
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         maximum_size: int = ...,
@@ -2326,8 +2338,8 @@ class ClampClass(GObject.GPointer):
 
         ClampClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class ComboRow(ActionRow, Atk.ImplementorIface, _Gtk3.Actionable, _Gtk3.Buildable):
     """
@@ -2547,7 +2559,7 @@ class ComboRow(ActionRow, Atk.ImplementorIface, _Gtk3.Actionable, _Gtk3.Buildabl
       notify (GParam)
     """
 
-    class Props:
+    class Props(ActionRow.Props):
         selected_index: int
         use_subtitle: bool
         activatable_widget: _Gtk3.Widget | None
@@ -2604,8 +2616,10 @@ class ComboRow(ActionRow, Atk.ImplementorIface, _Gtk3.Actionable, _Gtk3.Buildabl
         action_target: GLib.Variant
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: ActionRow = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> ActionRow: ...
     def __init__(
         self,
         selected_index: int = ...,
@@ -2699,9 +2713,10 @@ class ComboRowClass(GObject.GPointer):
 
         ComboRowClass()
     """
-
-    parent_class: ActionRowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> ActionRowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class Deck(
     _Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable, Swipeable
@@ -2910,7 +2925,7 @@ class Deck(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Container.Props):
         can_swipe_back: bool
         can_swipe_forward: bool
         hhomogeneous: bool
@@ -2965,8 +2980,10 @@ class Deck(
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Container = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Container: ...
     def __init__(
         self,
         can_swipe_back: bool = ...,
@@ -3061,9 +3078,10 @@ class DeckClass(GObject.GPointer):
 
         DeckClass()
     """
-
-    parent_class: _Gtk3.ContainerClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ContainerClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class EnumValueObject(GObject.Object):
     """
@@ -3094,8 +3112,8 @@ class EnumValueObjectClass(GObject.GPointer):
 
         EnumValueObjectClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ExpanderRow(
     PreferencesRow, Atk.ImplementorIface, _Gtk3.Actionable, _Gtk3.Buildable
@@ -3308,7 +3326,7 @@ class ExpanderRow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(PreferencesRow.Props):
         enable_expansion: bool
         expanded: bool
         icon_name: str
@@ -3363,8 +3381,10 @@ class ExpanderRow(
         action_target: GLib.Variant
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: PreferencesRow = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> PreferencesRow: ...
     def __init__(
         self,
         enable_expansion: bool = ...,
@@ -3443,9 +3463,10 @@ class ExpanderRowClass(GObject.GPointer):
 
         ExpanderRowClass()
     """
-
-    parent_class: PreferencesRowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> PreferencesRowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class Flap(
     _Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable, Swipeable
@@ -3664,7 +3685,7 @@ class Flap(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Container.Props):
         content: _Gtk3.Widget | None
         flap: _Gtk3.Widget | None
         flap_position: _Gtk3.PackType
@@ -3724,7 +3745,8 @@ class Flap(
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         content: _Gtk3.Widget | None = ...,
@@ -3820,8 +3842,8 @@ class FlapClass(GObject.GPointer):
 
         FlapClass()
     """
-
-    parent_class: _Gtk3.ContainerClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.ContainerClass: ...
 
 class HeaderBar(_Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -4029,7 +4051,7 @@ class HeaderBar(_Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Container.Props):
         centering_policy: CenteringPolicy
         custom_title: _Gtk3.Widget | None
         decoration_layout: str
@@ -4085,8 +4107,10 @@ class HeaderBar(_Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Container = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Container: ...
     def __init__(
         self,
         centering_policy: CenteringPolicy = ...,
@@ -4172,9 +4196,10 @@ class HeaderBarClass(GObject.GPointer):
 
         HeaderBarClass()
     """
-
-    parent_class: _Gtk3.ContainerClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ContainerClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class HeaderGroup(GObject.Object, _Gtk3.Buildable):
     """
@@ -4198,10 +4223,11 @@ class HeaderGroup(GObject.Object, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         decorate_all: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, decorate_all: bool = ...): ...
     def add_gtk_header_bar(self, header_bar: _Gtk3.HeaderBar) -> None: ...
     def add_header_bar(self, header_bar: HeaderBar) -> None: ...
@@ -4243,8 +4269,8 @@ class HeaderGroupChildClass(GObject.GPointer):
 
         HeaderGroupChildClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class HeaderGroupClass(GObject.GPointer):
     """
@@ -4254,8 +4280,8 @@ class HeaderGroupClass(GObject.GPointer):
 
         HeaderGroupClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Keypad(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -4453,7 +4479,7 @@ class Keypad(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         column_spacing: int
         end_action: _Gtk3.Widget | None
         entry: _Gtk3.Entry
@@ -4504,8 +4530,10 @@ class Keypad(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Bin: ...
     def __init__(
         self,
         column_spacing: int = ...,
@@ -4580,9 +4608,10 @@ class KeypadClass(GObject.GPointer):
 
         KeypadClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class Leaflet(
     _Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable, Swipeable
@@ -4799,7 +4828,7 @@ class Leaflet(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Container.Props):
         can_swipe_back: bool
         can_swipe_forward: bool
         child_transition_duration: int
@@ -4858,8 +4887,10 @@ class Leaflet(
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Container = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Container: ...
     def __init__(
         self,
         can_swipe_back: bool = ...,
@@ -4960,9 +4991,10 @@ class LeafletClass(GObject.GPointer):
 
         LeafletClass()
     """
-
-    parent_class: _Gtk3.ContainerClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ContainerClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class PreferencesGroup(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -5152,7 +5184,7 @@ class PreferencesGroup(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         description: str
         title: str
         use_markup: bool
@@ -5199,8 +5231,10 @@ class PreferencesGroup(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Bin: ...
     def __init__(
         self,
         description: str = ...,
@@ -5263,9 +5297,10 @@ class PreferencesGroupClass(GObject.GPointer):
 
         PreferencesGroupClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class PreferencesPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -5453,7 +5488,7 @@ class PreferencesPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         icon_name: str | None
         title: str | None
         border_width: int
@@ -5499,8 +5534,10 @@ class PreferencesPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Bin: ...
     def __init__(
         self,
         icon_name: str | None = ...,
@@ -5560,9 +5597,10 @@ class PreferencesPageClass(GObject.GPointer):
 
         PreferencesPageClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class PreferencesRow(
     _Gtk3.ListBoxRow, Atk.ImplementorIface, _Gtk3.Actionable, _Gtk3.Buildable
@@ -5761,7 +5799,7 @@ class PreferencesRow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.ListBoxRow.Props):
         title: str | None
         use_underline: bool
         activatable: bool
@@ -5811,8 +5849,10 @@ class PreferencesRow(
         action_target: GLib.Variant
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.ListBoxRow = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.ListBoxRow: ...
     def __init__(
         self,
         title: str | None = ...,
@@ -5876,9 +5916,10 @@ class PreferencesRowClass(GObject.GPointer):
 
         PreferencesRowClass()
     """
-
-    parent_class: _Gtk3.ListBoxRowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.ListBoxRowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class PreferencesWindow(Window, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -6141,7 +6182,7 @@ class PreferencesWindow(Window, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         can_swipe_back: bool
         search_enabled: bool
         accept_focus: bool
@@ -6220,8 +6261,10 @@ class PreferencesWindow(Window, Atk.ImplementorIface, _Gtk3.Buildable):
         startup_id: str
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: Window = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Window: ...
     def __init__(
         self,
         can_swipe_back: bool = ...,
@@ -6312,9 +6355,10 @@ class PreferencesWindowClass(GObject.GPointer):
 
         PreferencesWindowClass()
     """
-
-    parent_class: WindowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> WindowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class SearchBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -6502,7 +6546,7 @@ class SearchBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         search_mode_enabled: bool
         show_close_button: bool
         border_width: int
@@ -6548,8 +6592,10 @@ class SearchBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Bin: ...
     def __init__(
         self,
         search_mode_enabled: bool = ...,
@@ -6611,9 +6657,10 @@ class SearchBarClass(GObject.GPointer):
 
         SearchBarClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class Squeezer(
     _Gtk3.Container, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Orientable
@@ -6815,7 +6862,7 @@ class Squeezer(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Container.Props):
         homogeneous: bool
         interpolate_size: bool
         transition_duration: int
@@ -6868,7 +6915,8 @@ class Squeezer(
         orientation: _Gtk3.Orientation
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         homogeneous: bool = ...,
@@ -6945,8 +6993,8 @@ class SqueezerClass(GObject.GPointer):
 
         SqueezerClass()
     """
-
-    parent_class: _Gtk3.ContainerClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.ContainerClass: ...
 
 class StatusPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -7136,7 +7184,7 @@ class StatusPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         description: str | None
         icon_name: str | None
         title: str | None
@@ -7183,7 +7231,8 @@ class StatusPage(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         description: str | None = ...,
@@ -7246,8 +7295,8 @@ class StatusPageClass(GObject.GPointer):
 
         StatusPageClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class StyleManager(GObject.Object):
     """
@@ -7275,14 +7324,15 @@ class StyleManager(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         color_scheme: ColorScheme
         dark: bool
         display: _Gdk3.Display
         high_contrast: bool
         system_supports_color_schemes: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, color_scheme: ColorScheme = ..., display: _Gdk3.Display = ...
     ): ...
@@ -7305,8 +7355,8 @@ class StyleManagerClass(GObject.GPointer):
 
         StyleManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SwipeGroup(GObject.Object, _Gtk3.Buildable):
     """
@@ -7337,8 +7387,8 @@ class SwipeGroupClass(GObject.GPointer):
 
         SwipeGroupClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SwipeTracker(GObject.Object, _Gtk3.Orientable):
     """
@@ -7372,7 +7422,7 @@ class SwipeTracker(GObject.Object, _Gtk3.Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
         enabled: bool
@@ -7380,7 +7430,8 @@ class SwipeTracker(GObject.Object, _Gtk3.Orientable):
         swipeable: Swipeable
         orientation: _Gtk3.Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         allow_long_swipes: bool = ...,
@@ -7411,8 +7462,8 @@ class SwipeTrackerClass(GObject.GPointer):
 
         SwipeTrackerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Swipeable(GObject.GInterface):
     """
@@ -7441,18 +7492,26 @@ class SwipeableInterface(GObject.GPointer):
 
         SwipeableInterface()
     """
-
-    parent: GObject.TypeInterface = ...
-    switch_child: Callable[[Swipeable, int, int], None] = ...
-    get_swipe_tracker: Callable[[Swipeable], SwipeTracker] = ...
-    get_distance: Callable[[Swipeable], float] = ...
-    get_snap_points: Callable[[Swipeable], list[float]] = ...
-    get_progress: Callable[[Swipeable], float] = ...
-    get_cancel_progress: Callable[[Swipeable], float] = ...
-    get_swipe_area: Callable[
-        [Swipeable, NavigationDirection, bool], _Gdk3.Rectangle
-    ] = ...
-    padding: list[None] = ...
+    @property
+    def parent(self) -> GObject.TypeInterface: ...
+    @property
+    def switch_child(self) -> Callable[[Swipeable, int, int], None]: ...
+    @property
+    def get_swipe_tracker(self) -> Callable[[Swipeable], SwipeTracker]: ...
+    @property
+    def get_distance(self) -> Callable[[Swipeable], float]: ...
+    @property
+    def get_snap_points(self) -> Callable[[Swipeable], list[float]]: ...
+    @property
+    def get_progress(self) -> Callable[[Swipeable], float]: ...
+    @property
+    def get_cancel_progress(self) -> Callable[[Swipeable], float]: ...
+    @property
+    def get_swipe_area(
+        self,
+    ) -> Callable[[Swipeable, NavigationDirection, bool], _Gdk3.Rectangle]: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class TabBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -7657,7 +7716,7 @@ class TabBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         autohide: bool
         end_action_widget: _Gtk3.Widget | None
         expand_tabs: bool
@@ -7710,7 +7769,8 @@ class TabBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         autohide: bool = ...,
@@ -7789,8 +7849,8 @@ class TabBarClass(GObject.GPointer):
 
         TabBarClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class TabPage(GObject.Object):
     """
@@ -7830,7 +7890,7 @@ class TabPage(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child: _Gtk3.Widget
         icon: Gio.Icon | None
         indicator_activatable: bool
@@ -7843,7 +7903,8 @@ class TabPage(GObject.Object):
         title: str | None
         tooltip: str | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         child: _Gtk3.Widget = ...,
@@ -7883,8 +7944,8 @@ class TabPageClass(GObject.GPointer):
 
         TabPageClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class TabView(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -8091,7 +8152,7 @@ class TabView(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         default_icon: Gio.Icon
         is_transferring_page: bool
         menu_model: Gio.MenuModel | None
@@ -8142,7 +8203,8 @@ class TabView(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         default_icon: Gio.Icon = ...,
@@ -8240,8 +8302,8 @@ class TabViewClass(GObject.GPointer):
 
         TabViewClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class TitleBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -8427,7 +8489,7 @@ class TitleBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         selection_mode: bool
         border_width: int
         resize_mode: _Gtk3.ResizeMode
@@ -8472,7 +8534,8 @@ class TitleBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         selection_mode: bool = ...,
@@ -8529,8 +8592,8 @@ class TitleBarClass(GObject.GPointer):
 
         TitleBarClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class ValueObject(GObject.Object):
     """
@@ -8551,10 +8614,11 @@ class ValueObject(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         value: Any
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, value: Any = ...): ...
     def copy_value(self, dest: Any) -> None: ...
     def dup_string(self) -> str: ...
@@ -8571,8 +8635,8 @@ class ValueObjectClass(GObject.GPointer):
 
         ValueObjectClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ViewSwitcher(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -8762,7 +8826,7 @@ class ViewSwitcher(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         narrow_ellipsize: Pango.EllipsizeMode
         policy: ViewSwitcherPolicy
         stack: _Gtk3.Stack | None
@@ -8809,7 +8873,8 @@ class ViewSwitcher(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         narrow_ellipsize: Pango.EllipsizeMode = ...,
@@ -9052,7 +9117,7 @@ class ViewSwitcherBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         policy: ViewSwitcherPolicy
         reveal: bool
         stack: _Gtk3.Stack | None
@@ -9099,7 +9164,8 @@ class ViewSwitcherBar(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         policy: ViewSwitcherPolicy = ...,
@@ -9162,8 +9228,8 @@ class ViewSwitcherBarClass(GObject.GPointer):
 
         ViewSwitcherBarClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class ViewSwitcherClass(GObject.GPointer):
     """
@@ -9173,8 +9239,8 @@ class ViewSwitcherClass(GObject.GPointer):
 
         ViewSwitcherClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class ViewSwitcherTitle(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -9370,7 +9436,7 @@ class ViewSwitcherTitle(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Bin.Props):
         policy: ViewSwitcherPolicy
         stack: _Gtk3.Stack | None
         subtitle: str | None
@@ -9420,7 +9486,8 @@ class ViewSwitcherTitle(_Gtk3.Bin, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         policy: ViewSwitcherPolicy = ...,
@@ -9490,8 +9557,8 @@ class ViewSwitcherTitleClass(GObject.GPointer):
 
         ViewSwitcherTitleClass()
     """
-
-    parent_class: _Gtk3.BinClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.BinClass: ...
 
 class Window(_Gtk3.Window, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -9748,7 +9815,7 @@ class Window(_Gtk3.Window, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.Window.Props):
         accept_focus: bool
         application: _Gtk3.Application | None
         attached_to: _Gtk3.Widget | None
@@ -9825,8 +9892,10 @@ class Window(_Gtk3.Window, Atk.ImplementorIface, _Gtk3.Buildable):
         startup_id: str
         child: _Gtk3.Widget
 
-    props: Props = ...
-    parent_instance: _Gtk3.Window = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk3.Window: ...
     def __init__(
         self,
         accept_focus: bool = ...,
@@ -9909,9 +9978,10 @@ class WindowClass(GObject.GPointer):
 
         WindowClass()
     """
-
-    parent_class: _Gtk3.WindowClass = ...
-    padding: list[None] = ...
+    @property
+    def parent_class(self) -> _Gtk3.WindowClass: ...
+    @property
+    def padding(self) -> list[None]: ...
 
 class WindowHandle(_Gtk3.EventBox, Atk.ImplementorIface, _Gtk3.Buildable):
     """
@@ -10099,7 +10169,7 @@ class WindowHandle(_Gtk3.EventBox, Atk.ImplementorIface, _Gtk3.Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk3.EventBox.Props):
         above_child: bool
         visible_window: bool
         border_width: int
@@ -10145,7 +10215,8 @@ class WindowHandle(_Gtk3.EventBox, Atk.ImplementorIface, _Gtk3.Buildable):
         window: _Gdk3.Window | None
         child: _Gtk3.Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         above_child: bool = ...,
@@ -10201,8 +10272,8 @@ class WindowHandleClass(GObject.GPointer):
 
         WindowHandleClass()
     """
-
-    parent_class: _Gtk3.EventBoxClass = ...
+    @property
+    def parent_class(self) -> _Gtk3.EventBoxClass: ...
 
 class CenteringPolicy(GObject.GEnum):
     LOOSE = 0

@@ -62,7 +62,8 @@ class Annotation(GObject.Object):
         line: int
         style: AnnotationStyle
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_description(self) -> str: ...
     def get_icon(self) -> Gio.Icon | None: ...
     def get_line(self) -> int: ...
@@ -84,8 +85,8 @@ class AnnotationClass(GObject.GPointer):
 
         AnnotationClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class AnnotationProvider(GObject.Object):
     """
@@ -105,7 +106,8 @@ class AnnotationProvider(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def add_annotation(self, annotation: Annotation) -> None: ...
     def do_populate_hover_async(
         self,
@@ -138,10 +140,14 @@ class AnnotationProviderClass(GObject.GPointer):
 
         AnnotationProviderClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    populate_hover_async: Callable[..., None] = ...
-    populate_hover_finish: Callable[[AnnotationProvider, Gio.AsyncResult], bool] = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def populate_hover_async(self) -> Callable[..., None]: ...
+    @property
+    def populate_hover_finish(
+        self,
+    ) -> Callable[[AnnotationProvider, Gio.AsyncResult], bool]: ...
 
 class Annotations(GObject.Object):
     """
@@ -170,8 +176,8 @@ class AnnotationsClass(GObject.GPointer):
 
         AnnotationsClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Buffer(_Gtk4.TextBuffer):
     """
@@ -249,8 +255,10 @@ class Buffer(_Gtk4.TextBuffer):
         tag_table: _Gtk4.TextTagTable
         text: str
 
-    props: Props = ...
-    parent_instance: _Gtk4.TextBuffer = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.TextBuffer: ...
     def __init__(
         self,
         highlight_matching_brackets: bool = ...,
@@ -331,9 +339,12 @@ class BufferClass(GObject.GPointer):
 
         BufferClass()
     """
-
-    parent_class: _Gtk4.TextBufferClass = ...
-    bracket_matched: Callable[[Buffer, _Gtk4.TextIter, BracketMatchType], None] = ...
+    @property
+    def parent_class(self) -> _Gtk4.TextBufferClass: ...
+    @property
+    def bracket_matched(
+        self,
+    ) -> Callable[[Buffer, _Gtk4.TextIter, BracketMatchType], None]: ...
 
 class Completion(GObject.Object):
     """
@@ -376,7 +387,8 @@ class Completion(GObject.Object):
         show_icons: bool
         view: View
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         page_size: int = ...,
@@ -524,7 +536,8 @@ class CompletionCell(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         column: CompletionColumn = ...,
@@ -582,8 +595,8 @@ class CompletionCellClass(GObject.GPointer):
 
         CompletionCellClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class CompletionClass(GObject.GPointer):
     """
@@ -593,8 +606,8 @@ class CompletionClass(GObject.GPointer):
 
         CompletionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class CompletionContext(GObject.Object, Gio.ListModel):
     """
@@ -628,7 +641,8 @@ class CompletionContext(GObject.Object, Gio.ListModel):
         completion: Completion | None
         empty: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, completion: Completion = ...) -> None: ...
     def get_activation(self) -> CompletionActivation: ...
     def get_bounds(self) -> tuple[bool, _Gtk4.TextIter, _Gtk4.TextIter]: ...
@@ -677,9 +691,10 @@ class CompletionProposalInterface(GObject.GPointer):
 
         CompletionProposalInterface()
     """
-
-    parent_iface: GObject.TypeInterface = ...
-    get_typed_text: Callable[[CompletionProposal], str | None] = ...
+    @property
+    def parent_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_typed_text(self) -> Callable[[CompletionProposal], str | None]: ...
 
 class CompletionProvider(GObject.GInterface):
     """
@@ -728,12 +743,22 @@ class CompletionProviderInterface(GObject.GPointer):
 
         CompletionProviderInterface()
     """
-
-    parent_iface: GObject.TypeInterface = ...
-    get_title: Callable[[CompletionProvider], str | None] = ...
-    get_priority: Callable[[CompletionProvider, CompletionContext], int] = ...
-    is_trigger: Callable[[CompletionProvider, _Gtk4.TextIter, str], bool] = ...
-    key_activates: Callable[
+    @property
+    def parent_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_title(self) -> Callable[[CompletionProvider], str | None]: ...
+    @property
+    def get_priority(
+        self,
+    ) -> Callable[[CompletionProvider, CompletionContext], int]: ...
+    @property
+    def is_trigger(
+        self,
+    ) -> Callable[[CompletionProvider, _Gtk4.TextIter, str], bool]: ...
+    @property
+    def key_activates(
+        self,
+    ) -> Callable[
         [
             CompletionProvider,
             CompletionContext,
@@ -742,26 +767,39 @@ class CompletionProviderInterface(GObject.GPointer):
             _Gdk4.ModifierType,
         ],
         bool,
-    ] = ...
-    populate: None = ...
-    populate_async: Callable[..., None] = ...
-    populate_finish: Callable[
-        [CompletionProvider, Gio.AsyncResult], Gio.ListModel
-    ] = ...
-    refilter: Callable[
-        [CompletionProvider, CompletionContext, Gio.ListModel], None
-    ] = ...
-    display: Callable[
+    ]: ...
+    @property
+    def populate(self) -> None: ...
+    @property
+    def populate_async(self) -> Callable[..., None]: ...
+    @property
+    def populate_finish(
+        self,
+    ) -> Callable[[CompletionProvider, Gio.AsyncResult], Gio.ListModel]: ...
+    @property
+    def refilter(
+        self,
+    ) -> Callable[[CompletionProvider, CompletionContext, Gio.ListModel], None]: ...
+    @property
+    def display(
+        self,
+    ) -> Callable[
         [CompletionProvider, CompletionContext, CompletionProposal, CompletionCell],
         None,
-    ] = ...
-    activate: Callable[
+    ]: ...
+    @property
+    def activate(
+        self,
+    ) -> Callable[
         [CompletionProvider, CompletionContext, CompletionProposal], None
-    ] = ...
-    list_alternates: Callable[
+    ]: ...
+    @property
+    def list_alternates(
+        self,
+    ) -> Callable[
         [CompletionProvider, CompletionContext, CompletionProposal],
         list[CompletionProposal] | None,
-    ] = ...
+    ]: ...
 
 class CompletionSnippets(GObject.Object, CompletionProvider):
     """
@@ -787,8 +825,10 @@ class CompletionSnippets(GObject.Object, CompletionProvider):
         priority: int
         title: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(self, priority: int = ..., title: str = ...) -> None: ...
     @classmethod
     def new(cls) -> CompletionSnippets: ...
@@ -801,8 +841,8 @@ class CompletionSnippetsClass(GObject.GPointer):
 
         CompletionSnippetsClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class CompletionWords(GObject.Object, CompletionProvider):
     """
@@ -837,8 +877,10 @@ class CompletionWords(GObject.Object, CompletionProvider):
         scan_batch_size: int
         title: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
         minimum_word_size: int = ...,
@@ -860,8 +902,8 @@ class CompletionWordsClass(GObject.GPointer):
 
         CompletionWordsClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Encoding(GObject.GBoxed):
     def copy(self) -> Encoding: ...
@@ -913,8 +955,10 @@ class File(GObject.Object):
         newline_type: NewlineType
         read_only: bool
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(self, location: Gio.File | None = ...) -> None: ...
     def check_file_on_disk(self) -> None: ...
     def get_compression_type(self) -> CompressionType: ...
@@ -937,8 +981,8 @@ class FileClass(GObject.GPointer):
 
         FileClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FileLoader(GObject.Object):
     """
@@ -971,7 +1015,8 @@ class FileLoader(GObject.Object):
         input_stream: Gio.InputStream | None
         location: Gio.File | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         buffer: Buffer = ...,
@@ -1011,8 +1056,8 @@ class FileLoaderClass(GObject.GPointer):
 
         FileLoaderClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FileSaver(GObject.Object):
     """
@@ -1054,7 +1099,8 @@ class FileSaver(GObject.Object):
         location: Gio.File
         newline_type: NewlineType
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         buffer: Buffer = ...,
@@ -1100,8 +1146,8 @@ class FileSaverClass(GObject.GPointer):
 
         FileSaverClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Gutter(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -1214,7 +1260,8 @@ class Gutter(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         view: View = ...,
@@ -1264,8 +1311,8 @@ class GutterClass(GObject.GPointer):
 
         GutterClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class GutterLines(GObject.Object):
     """
@@ -1310,8 +1357,8 @@ class GutterLinesClass(GObject.GPointer):
 
         GutterLinesClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class GutterRenderer(
     _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
@@ -1401,6 +1448,7 @@ class GutterRenderer(
     Signals from GObject:
       notify (GParam)
     """
+
     class Props(_Gtk4.Widget.Props):
         alignment_mode: GutterRendererAlignmentMode
         lines: GutterLines
@@ -1446,8 +1494,10 @@ class GutterRenderer(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
-    parent_instance: _Gtk4.Widget = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
         alignment_mode: GutterRendererAlignmentMode = ...,
@@ -1541,23 +1591,33 @@ class GutterRendererClass(GObject.GPointer):
 
         GutterRendererClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
-    query_data: Callable[[GutterRenderer, GutterLines, int], None] = ...
-    begin: Callable[[GutterRenderer, GutterLines], None] = ...
-    snapshot_line: Callable[
-        [GutterRenderer, _Gtk4.Snapshot, GutterLines, int], None
-    ] = ...
-    end: Callable[[GutterRenderer], None] = ...
-    change_view: Callable[[GutterRenderer, View | None], None] = ...
-    change_buffer: Callable[[GutterRenderer, Buffer | None], None] = ...
-    query_activatable: Callable[
-        [GutterRenderer, _Gtk4.TextIter, _Gdk4.Rectangle], bool
-    ] = ...
-    activate: Callable[
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
+    @property
+    def query_data(self) -> Callable[[GutterRenderer, GutterLines, int], None]: ...
+    @property
+    def begin(self) -> Callable[[GutterRenderer, GutterLines], None]: ...
+    @property
+    def snapshot_line(
+        self,
+    ) -> Callable[[GutterRenderer, _Gtk4.Snapshot, GutterLines, int], None]: ...
+    @property
+    def end(self) -> Callable[[GutterRenderer], None]: ...
+    @property
+    def change_view(self) -> Callable[[GutterRenderer, View | None], None]: ...
+    @property
+    def change_buffer(self) -> Callable[[GutterRenderer, Buffer | None], None]: ...
+    @property
+    def query_activatable(
+        self,
+    ) -> Callable[[GutterRenderer, _Gtk4.TextIter, _Gdk4.Rectangle], bool]: ...
+    @property
+    def activate(
+        self,
+    ) -> Callable[
         [GutterRenderer, _Gtk4.TextIter, _Gdk4.Rectangle, int, _Gdk4.ModifierType, int],
         None,
-    ] = ...
+    ]: ...
 
 class GutterRendererPixbuf(
     GutterRenderer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
@@ -1707,8 +1767,10 @@ class GutterRendererPixbuf(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
-    parent_instance: GutterRenderer = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GutterRenderer: ...
     def __init__(
         self,
         gicon: Gio.Icon | None = ...,
@@ -1772,8 +1834,8 @@ class GutterRendererPixbufClass(GObject.GPointer):
 
         GutterRendererPixbufClass()
     """
-
-    parent_class: GutterRendererClass = ...
+    @property
+    def parent_class(self) -> GutterRendererClass: ...
 
 class GutterRendererText(
     GutterRenderer, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
@@ -1917,8 +1979,10 @@ class GutterRendererText(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
-    parent_instance: GutterRenderer = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GutterRenderer: ...
     def __init__(
         self,
         markup: str = ...,
@@ -1975,8 +2039,8 @@ class GutterRendererTextClass(GObject.GPointer):
 
         GutterRendererTextClass()
     """
-
-    parent_class: GutterRendererClass = ...
+    @property
+    def parent_class(self) -> GutterRendererClass: ...
 
 class Hover(GObject.Object):
     """
@@ -1998,7 +2062,8 @@ class Hover(GObject.Object):
     class Props(GObject.Object.Props):
         hover_delay: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, hover_delay: int = ...) -> None: ...
     def add_provider(self, provider: HoverProvider) -> None: ...
     def remove_provider(self, provider: HoverProvider) -> None: ...
@@ -2011,8 +2076,8 @@ class HoverClass(GObject.GPointer):
 
         HoverClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class HoverContext(GObject.Object):
     """
@@ -2040,8 +2105,8 @@ class HoverContextClass(GObject.GPointer):
 
         HoverContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class HoverDisplay(
     _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
@@ -2148,7 +2213,8 @@ class HoverDisplay(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         can_focus: bool = ...,
@@ -2196,8 +2262,8 @@ class HoverDisplayClass(GObject.GPointer):
 
         HoverDisplayClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class HoverProvider(GObject.GInterface):
     """
@@ -2224,11 +2290,16 @@ class HoverProviderInterface(GObject.GPointer):
 
         HoverProviderInterface()
     """
-
-    parent_iface: GObject.TypeInterface = ...
-    populate: Callable[[HoverProvider, HoverContext, HoverDisplay], bool] = ...
-    populate_async: Callable[..., None] = ...
-    populate_finish: Callable[[HoverProvider, Gio.AsyncResult], bool] = ...
+    @property
+    def parent_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def populate(
+        self,
+    ) -> Callable[[HoverProvider, HoverContext, HoverDisplay], bool]: ...
+    @property
+    def populate_async(self) -> Callable[..., None]: ...
+    @property
+    def populate_finish(self) -> Callable[[HoverProvider, Gio.AsyncResult], bool]: ...
 
 class Indenter(GObject.GInterface):
     """
@@ -2254,12 +2325,14 @@ class IndenterInterface(GObject.GPointer):
 
         IndenterInterface()
     """
-
-    parent_iface: GObject.TypeInterface = ...
-    is_trigger: Callable[
-        [Indenter, View, _Gtk4.TextIter, _Gdk4.ModifierType, int], bool
-    ] = ...
-    indent: Callable[[Indenter, View], _Gtk4.TextIter] = ...
+    @property
+    def parent_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def is_trigger(
+        self,
+    ) -> Callable[[Indenter, View, _Gtk4.TextIter, _Gdk4.ModifierType, int], bool]: ...
+    @property
+    def indent(self) -> Callable[[Indenter, View], _Gtk4.TextIter]: ...
 
 class Language(GObject.Object):
     """
@@ -2290,7 +2363,8 @@ class Language(GObject.Object):
         name: str
         section: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_globs(self) -> list[str] | None: ...
     def get_hidden(self) -> bool: ...
     def get_id(self) -> str: ...
@@ -2310,8 +2384,8 @@ class LanguageClass(GObject.GPointer):
 
         LanguageClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class LanguageManager(GObject.Object):
     """
@@ -2337,7 +2411,8 @@ class LanguageManager(GObject.Object):
         language_ids: list[str] | None
         search_path: list[str]
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, search_path: Sequence[str] | None = ...) -> None: ...
     def append_search_path(self, path: str) -> None: ...
     @staticmethod
@@ -2363,8 +2438,8 @@ class LanguageManagerClass(GObject.GPointer):
 
         LanguageManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Map(
     View,
@@ -2617,8 +2692,10 @@ class Map(
         vadjustment: _Gtk4.Adjustment | None
         vscroll_policy: _Gtk4.ScrollablePolicy
 
-    props: Props = ...
-    parent_instance: View = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> View: ...
     def __init__(
         self,
         font_desc: Pango.FontDescription = ...,
@@ -2708,8 +2785,8 @@ class MapClass(GObject.GPointer):
 
         MapClass()
     """
-
-    parent_class: ViewClass = ...
+    @property
+    def parent_class(self) -> ViewClass: ...
 
 class Mark(_Gtk4.TextMark):
     """
@@ -2738,8 +2815,10 @@ class Mark(_Gtk4.TextMark):
         left_gravity: bool
         name: str | None
 
-    props: Props = ...
-    parent_instance: _Gtk4.TextMark = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.TextMark: ...
     def __init__(
         self, category: str = ..., left_gravity: bool = ..., name: str = ...
     ) -> None: ...
@@ -2783,7 +2862,8 @@ class MarkAttributes(GObject.Object):
         icon_name: str
         pixbuf: GdkPixbuf.Pixbuf
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         background: _Gdk4.RGBA = ...,
@@ -2813,8 +2893,8 @@ class MarkAttributesClass(GObject.GPointer):
 
         MarkAttributesClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class MarkClass(GObject.GPointer):
     """
@@ -2824,8 +2904,8 @@ class MarkClass(GObject.GPointer):
 
         MarkClass()
     """
-
-    parent_class: _Gtk4.TextMarkClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.TextMarkClass: ...
 
 class PrintCompositor(GObject.Object):
     """
@@ -2882,8 +2962,10 @@ class PrintCompositor(GObject.Object):
         tab_width: int
         wrap_mode: _Gtk4.WrapMode
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
         body_font_name: str = ...,
@@ -2959,8 +3041,8 @@ class PrintCompositorClass(GObject.GPointer):
 
         PrintCompositorClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Region(GObject.Object):
     """
@@ -2983,8 +3065,10 @@ class Region(GObject.Object):
     class Props(GObject.Object.Props):
         buffer: _Gtk4.TextBuffer | None
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(self, buffer: _Gtk4.TextBuffer = ...) -> None: ...
     def add_region(self, region_to_add: Region | None = None) -> None: ...
     def add_subregion(self, _start: _Gtk4.TextIter, _end: _Gtk4.TextIter) -> None: ...
@@ -3012,8 +3096,8 @@ class RegionClass(GObject.GPointer):
 
         RegionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RegionIter(GObject.GPointer):
     """
@@ -3023,10 +3107,12 @@ class RegionIter(GObject.GPointer):
 
         RegionIter()
     """
-
-    dummy1: None = ...
-    dummy2: int = ...
-    dummy3: None = ...
+    @property
+    def dummy1(self) -> None: ...
+    @property
+    def dummy2(self) -> int: ...
+    @property
+    def dummy3(self) -> None: ...
     def get_subregion(self) -> tuple[bool, _Gtk4.TextIter, _Gtk4.TextIter]: ...
     def is_end(self) -> bool: ...
     def next(self) -> bool: ...
@@ -3067,7 +3153,8 @@ class SearchContext(GObject.Object):
         regex_error: GLib.Error | None
         settings: SearchSettings
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         buffer: Buffer = ...,
@@ -3133,8 +3220,8 @@ class SearchContextClass(GObject.GPointer):
 
         SearchContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SearchSettings(GObject.Object):
     """
@@ -3172,8 +3259,10 @@ class SearchSettings(GObject.Object):
         visible_only: bool
         wrap_around: bool
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
         at_word_boundaries: bool = ...,
@@ -3206,8 +3295,8 @@ class SearchSettingsClass(GObject.GPointer):
 
         SearchSettingsClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Snippet(GObject.Object):
     """
@@ -3246,7 +3335,8 @@ class Snippet(GObject.Object):
         name: str
         trigger: str | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         description: str = ...,
@@ -3313,7 +3403,8 @@ class SnippetChunk(GObject.InitiallyUnowned):
         text_set: bool
         tooltip_text: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         context: SnippetContext = ...,
@@ -3347,8 +3438,8 @@ class SnippetChunkClass(GObject.GPointer):
 
         SnippetChunkClass()
     """
-
-    parent_class: GObject.InitiallyUnownedClass = ...
+    @property
+    def parent_class(self) -> GObject.InitiallyUnownedClass: ...
 
 class SnippetClass(GObject.GPointer):
     """
@@ -3358,8 +3449,8 @@ class SnippetClass(GObject.GPointer):
 
         SnippetClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SnippetContext(GObject.Object):
     """
@@ -3397,8 +3488,8 @@ class SnippetContextClass(GObject.GPointer):
 
         SnippetContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SnippetManager(GObject.Object):
     """
@@ -3420,7 +3511,8 @@ class SnippetManager(GObject.Object):
     class Props(GObject.Object.Props):
         search_path: list[str]
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, search_path: Sequence[str] | None = ...) -> None: ...
     @staticmethod
     def get_default() -> SnippetManager: ...
@@ -3449,8 +3541,8 @@ class SnippetManagerClass(GObject.GPointer):
 
         SnippetManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SpaceDrawer(GObject.Object):
     """
@@ -3476,7 +3568,8 @@ class SpaceDrawer(GObject.Object):
         enable_matrix: bool
         matrix: GLib.Variant
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, enable_matrix: bool = ..., matrix: GLib.Variant | None = ...
     ) -> None: ...
@@ -3504,8 +3597,8 @@ class SpaceDrawerClass(GObject.GPointer):
 
         SpaceDrawerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Style(GObject.Object):
     """
@@ -3584,7 +3677,8 @@ class Style(GObject.Object):
         weight: Pango.Weight
         weight_set: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         background: str = ...,
@@ -3619,8 +3713,8 @@ class StyleClass(GObject.GPointer):
 
         StyleClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class StyleScheme(GObject.Object):
     """
@@ -3651,7 +3745,8 @@ class StyleScheme(GObject.Object):
         id: str
         name: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, id: str = ...) -> None: ...
     def get_authors(self) -> list[str] | None: ...
     def get_description(self) -> str | None: ...
@@ -3803,8 +3898,10 @@ class StyleSchemeChooserButton(
         action_target: GLib.Variant
         style_scheme: StyleScheme
 
-    props: Props = ...
-    parent_instance: _Gtk4.Button = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Button: ...
     def __init__(
         self,
         can_shrink: bool = ...,
@@ -3859,8 +3956,8 @@ class StyleSchemeChooserButtonClass(GObject.GPointer):
 
         StyleSchemeChooserButtonClass()
     """
-
-    parent: _Gtk4.ButtonClass = ...
+    @property
+    def parent(self) -> _Gtk4.ButtonClass: ...
 
 class StyleSchemeChooserInterface(GObject.GPointer):
     """
@@ -3870,10 +3967,12 @@ class StyleSchemeChooserInterface(GObject.GPointer):
 
         StyleSchemeChooserInterface()
     """
-
-    base_interface: GObject.TypeInterface = ...
-    get_style_scheme: Callable[[StyleSchemeChooser], StyleScheme] = ...
-    set_style_scheme: Callable[[StyleSchemeChooser, StyleScheme], None] = ...
+    @property
+    def base_interface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_style_scheme(self) -> Callable[[StyleSchemeChooser], StyleScheme]: ...
+    @property
+    def set_style_scheme(self) -> Callable[[StyleSchemeChooser, StyleScheme], None]: ...
 
 class StyleSchemeChooserWidget(
     _Gtk4.Widget,
@@ -3986,8 +4085,10 @@ class StyleSchemeChooserWidget(
         accessible_role: _Gtk4.AccessibleRole
         style_scheme: StyleScheme
 
-    props: Props = ...
-    parent_instance: _Gtk4.Widget = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
         can_focus: bool = ...,
@@ -4034,8 +4135,8 @@ class StyleSchemeChooserWidgetClass(GObject.GPointer):
 
         StyleSchemeChooserWidgetClass()
     """
-
-    parent: _Gtk4.WidgetClass = ...
+    @property
+    def parent(self) -> _Gtk4.WidgetClass: ...
 
 class StyleSchemeClass(GObject.GPointer):
     """
@@ -4045,8 +4146,8 @@ class StyleSchemeClass(GObject.GPointer):
 
         StyleSchemeClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class StyleSchemeManager(GObject.Object):
     """
@@ -4072,7 +4173,8 @@ class StyleSchemeManager(GObject.Object):
         scheme_ids: list[str] | None
         search_path: list[str]
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, search_path: Sequence[str] | None = ...) -> None: ...
     def append_search_path(self, path: str) -> None: ...
     def force_rescan(self) -> None: ...
@@ -4094,8 +4196,8 @@ class StyleSchemeManagerClass(GObject.GPointer):
 
         StyleSchemeManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class StyleSchemePreview(
     _Gtk4.Widget,
@@ -4220,7 +4322,8 @@ class StyleSchemePreview(
         action_name: str | None
         action_target: GLib.Variant
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         scheme: StyleScheme = ...,
@@ -4273,8 +4376,8 @@ class StyleSchemePreviewClass(GObject.GPointer):
 
         StyleSchemePreviewClass()
     """
-
-    parent_class: _Gtk4.WidgetClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
 
 class Tag(_Gtk4.TextTag):
     """
@@ -4480,8 +4583,10 @@ class Tag(_Gtk4.TextTag):
         foreground: str
         paragraph_background: str
 
-    props: Props = ...
-    parent_instance: _Gtk4.TextTag = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.TextTag: ...
     def __init__(
         self,
         draw_spaces: bool = ...,
@@ -4587,8 +4692,8 @@ class TagClass(GObject.GPointer):
 
         TagClass()
     """
-
-    parent_class: _Gtk4.TextTagClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.TextTagClass: ...
 
 # override
 class View(
@@ -4835,8 +4940,10 @@ class View(
         vadjustment: _Gtk4.Adjustment | None
         vscroll_policy: _Gtk4.ScrollablePolicy
 
-    props: Props = ...
-    parent_instance: _Gtk4.TextView = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.TextView: ...
     def __init__(
         self,
         auto_indent: bool = ...,
@@ -4985,15 +5092,22 @@ class ViewClass(GObject.GPointer):
 
         ViewClass()
     """
-
-    parent_class: _Gtk4.TextViewClass = ...
-    line_mark_activated: Callable[
-        [View, _Gtk4.TextIter, int, _Gdk4.ModifierType, int], None
-    ] = ...
-    show_completion: Callable[[View], None] = ...
-    move_lines: Callable[[View, bool], None] = ...
-    move_words: Callable[[View, int], None] = ...
-    push_snippet: Callable[[View, Snippet, _Gtk4.TextIter | None], None] = ...
+    @property
+    def parent_class(self) -> _Gtk4.TextViewClass: ...
+    @property
+    def line_mark_activated(
+        self,
+    ) -> Callable[[View, _Gtk4.TextIter, int, _Gdk4.ModifierType, int], None]: ...
+    @property
+    def show_completion(self) -> Callable[[View], None]: ...
+    @property
+    def move_lines(self) -> Callable[[View, bool], None]: ...
+    @property
+    def move_words(self) -> Callable[[View, int], None]: ...
+    @property
+    def push_snippet(
+        self,
+    ) -> Callable[[View, Snippet, _Gtk4.TextIter | None], None]: ...
 
 class VimIMContext(_Gtk4.IMContext):
     """
@@ -5039,7 +5153,8 @@ class VimIMContext(_Gtk4.IMContext):
         input_hints: _Gtk4.InputHints
         input_purpose: _Gtk4.InputPurpose
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         input_hints: _Gtk4.InputHints = ...,
@@ -5059,8 +5174,8 @@ class VimIMContextClass(GObject.GPointer):
 
         VimIMContextClass()
     """
-
-    parent_class: _Gtk4.IMContextClass = ...
+    @property
+    def parent_class(self) -> _Gtk4.IMContextClass: ...
 
 class FileSaverFlags(GObject.GFlags):
     CREATE_BACKUP = 4

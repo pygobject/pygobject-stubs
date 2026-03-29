@@ -64,7 +64,7 @@ class ClientIface(GObject.GPointer):
 class ClientProxy(
     Gio.DBusProxy, Client, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
-    class Props:
+    class Props(Gio.DBusProxy.Props):
         g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
@@ -81,7 +81,8 @@ class ClientProxy(
         requested_accuracy_level: int
         time_threshold: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -99,8 +100,10 @@ class ClientProxy(
         requested_accuracy_level: int = ...,
         time_threshold: int = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: ClientProxyPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusProxy: ...
+    @property
+    def priv(self) -> ClientProxyPrivate: ...
     @staticmethod
     def create(
         desktop_id: str,
@@ -184,7 +187,7 @@ class ClientProxyClass(GObject.GPointer):
 class ClientProxyPrivate(GObject.GPointer): ...
 
 class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
-    class Props:
+    class Props(Gio.DBusInterfaceSkeleton.Props):
         g_flags: Gio.DBusInterfaceSkeletonFlags
         active: bool
         desktop_id: str
@@ -193,7 +196,8 @@ class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
         requested_accuracy_level: int
         time_threshold: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
@@ -204,8 +208,10 @@ class ClientSkeleton(Gio.DBusInterfaceSkeleton, Client, Gio.DBusInterface):
         requested_accuracy_level: int = ...,
         time_threshold: int = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: ClientSkeletonPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusInterfaceSkeleton: ...
+    @property
+    def priv(self) -> ClientSkeletonPrivate: ...
     @classmethod
     def new(cls) -> ClientSkeleton: ...
 
@@ -236,7 +242,7 @@ class LocationIface(GObject.GPointer):
 class LocationProxy(
     Gio.DBusProxy, Location, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
-    class Props:
+    class Props(Gio.DBusProxy.Props):
         g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
@@ -255,7 +261,8 @@ class LocationProxy(
         speed: float
         timestamp: GLib.Variant
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -275,8 +282,10 @@ class LocationProxy(
         speed: float = ...,
         timestamp: GLib.Variant = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: LocationProxyPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusProxy: ...
+    @property
+    def priv(self) -> LocationProxyPrivate: ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -326,7 +335,7 @@ class LocationProxyClass(GObject.GPointer):
 class LocationProxyPrivate(GObject.GPointer): ...
 
 class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
-    class Props:
+    class Props(Gio.DBusInterfaceSkeleton.Props):
         g_flags: Gio.DBusInterfaceSkeletonFlags
         accuracy: float
         altitude: float
@@ -337,7 +346,8 @@ class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
         speed: float
         timestamp: GLib.Variant
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
@@ -350,8 +360,10 @@ class LocationSkeleton(Gio.DBusInterfaceSkeleton, Location, Gio.DBusInterface):
         speed: float = ...,
         timestamp: GLib.Variant = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: LocationSkeletonPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusInterfaceSkeleton: ...
+    @property
+    def priv(self) -> LocationSkeletonPrivate: ...
     @classmethod
     def new(cls) -> LocationSkeleton: ...
 
@@ -430,7 +442,7 @@ class ManagerIface(GObject.GPointer):
 class ManagerProxy(
     Gio.DBusProxy, Manager, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable
 ):
-    class Props:
+    class Props(Gio.DBusProxy.Props):
         g_bus_type: Gio.BusType
         g_connection: Gio.DBusConnection
         g_default_timeout: int
@@ -443,7 +455,8 @@ class ManagerProxy(
         available_accuracy_level: int
         in_use: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -457,8 +470,10 @@ class ManagerProxy(
         available_accuracy_level: int = ...,
         in_use: bool = ...,
     ): ...
-    parent_instance: Gio.DBusProxy = ...
-    priv: ManagerProxyPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusProxy: ...
+    @property
+    def priv(self) -> ManagerProxyPrivate: ...
     @staticmethod
     def new(
         connection: Gio.DBusConnection,
@@ -508,20 +523,23 @@ class ManagerProxyClass(GObject.GPointer):
 class ManagerProxyPrivate(GObject.GPointer): ...
 
 class ManagerSkeleton(Gio.DBusInterfaceSkeleton, Manager, Gio.DBusInterface):
-    class Props:
+    class Props(Gio.DBusInterfaceSkeleton.Props):
         g_flags: Gio.DBusInterfaceSkeletonFlags
         available_accuracy_level: int
         in_use: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         g_flags: Gio.DBusInterfaceSkeletonFlags = ...,
         available_accuracy_level: int = ...,
         in_use: bool = ...,
     ): ...
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: ManagerSkeletonPrivate = ...
+    @property
+    def parent_instance(self) -> Gio.DBusInterfaceSkeleton: ...
+    @property
+    def priv(self) -> ManagerSkeletonPrivate: ...
     @classmethod
     def new(cls) -> ManagerSkeleton: ...
 
@@ -531,7 +549,7 @@ class ManagerSkeletonClass(GObject.GPointer):
 class ManagerSkeletonPrivate(GObject.GPointer): ...
 
 class Simple(GObject.Object, Gio.AsyncInitable):
-    class Props:
+    class Props(GObject.Object.Props):
         accuracy_level: AccuracyLevel
         client: ClientProxy
         desktop_id: str
@@ -539,7 +557,8 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         location: LocationProxy
         time_threshold: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accuracy_level: AccuracyLevel = ...,
@@ -548,7 +567,8 @@ class Simple(GObject.Object, Gio.AsyncInitable):
         time_threshold: int = ...,
     ): ...
     parent: GObject.Object = ...
-    priv: SimplePrivate = ...
+    @property
+    def priv(self) -> SimplePrivate: ...
     # override
     def get_client(self) -> ClientProxy | None: ...
     def get_location(self) -> Location: ...

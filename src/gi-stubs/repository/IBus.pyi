@@ -1,5 +1,4 @@
 from typing import Any
-from typing import TypeVar
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -7,8 +6,6 @@ from collections.abc import Sequence
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
-
-T = TypeVar("T")
 
 A: int = 65
 AE: int = 198
@@ -4421,13 +4418,15 @@ class Bus(Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Object.Props):
         client_only: bool
         connect_async: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Object = ...
-    priv: BusPrivate = ...
+    @property
+    def priv(self) -> BusPrivate: ...
     def __init__(self, client_only: bool = ..., connect_async: bool = ...) -> None: ...
     def add_match(self, rule: str) -> bool: ...
     def add_match_async(
@@ -4709,7 +4708,7 @@ class Component(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         author: str
         command_line: str
         description: str
@@ -4719,9 +4718,11 @@ class Component(Serializable):
         textdomain: str
         version: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: ComponentPrivate = ...
+    @property
+    def priv(self) -> ComponentPrivate: ...
     pdummy: list[None] = ...
     def __init__(
         self,
@@ -4816,7 +4817,7 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Proxy.Props):
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -4827,9 +4828,11 @@ class Config(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         g_object_path: str
         g_bus_type: Gio.BusType
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Proxy = ...
-    priv: ConfigPrivate = ...
+    @property
+    def priv(self) -> ConfigPrivate: ...
     def __init__(
         self,
         g_bus_type: Gio.BusType = ...,
@@ -4930,11 +4933,12 @@ class ConfigService(Service):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Service.Props):
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Service = ...
     def __init__(
         self, connection: Gio.DBusConnection = ..., object_path: str = ...
@@ -4990,15 +4994,17 @@ class EmojiData(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         annotations: None
         category: str
         description: str
         emoji: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: EmojiDataPrivate = ...
+    @property
+    def priv(self) -> EmojiDataPrivate: ...
     def __init__(
         self,
         annotations: None = ...,
@@ -5087,16 +5093,18 @@ class Engine(Service):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Service.Props):
         active_surrounding_text: bool
         engine_name: str
         has_focus_id: bool
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Service = ...
-    priv: EnginePrivate = ...
+    @property
+    def priv(self) -> EnginePrivate: ...
     enabled: bool = ...
     has_focus: bool = ...
     cursor_area: Rectangle = ...
@@ -5262,7 +5270,7 @@ class EngineDesc(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         author: str
         description: str
         hotkeys: str
@@ -5281,9 +5289,11 @@ class EngineDesc(Serializable):
         textdomain: str
         version: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: EngineDescPrivate = ...
+    @property
+    def priv(self) -> EngineDescPrivate: ...
     def __init__(
         self,
         author: str = ...,
@@ -5406,16 +5416,18 @@ class EngineSimple(Engine):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Engine.Props):
         active_surrounding_text: bool
         engine_name: str
         has_focus_id: bool
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Engine = ...
-    priv: EngineSimplePrivate = ...
+    @property
+    def priv(self) -> EngineSimplePrivate: ...
     def __init__(
         self,
         active_surrounding_text: bool = ...,
@@ -5471,16 +5483,18 @@ class ExtensionEvent(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         is_enabled: bool
         is_extension: bool
         name: str
         params: str
         version: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: ExtensionEventPrivate = ...
+    @property
+    def priv(self) -> ExtensionEventPrivate: ...
     def __init__(
         self,
         is_enabled: bool = ...,
@@ -5535,13 +5549,15 @@ class Factory(Service):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Service.Props):
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Service = ...
-    priv: FactoryPrivate = ...
+    @property
+    def priv(self) -> FactoryPrivate: ...
     def __init__(
         self, connection: Gio.DBusConnection = ..., object_path: str = ...
     ) -> None: ...
@@ -5675,7 +5691,7 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Proxy.Props):
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -5686,7 +5702,8 @@ class InputContext(Proxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         g_object_path: str
         g_bus_type: Gio.BusType
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Proxy = ...
     def __init__(
         self,
@@ -5908,7 +5925,8 @@ class Object(GObject.InitiallyUnowned):
 
     parent: GObject.InitiallyUnowned = ...
     flags: int = ...
-    priv: ObjectPrivate = ...
+    @property
+    def priv(self) -> ObjectPrivate: ...
     def destroy(self) -> None: ...
     def do_destroy(self) -> None: ...
     @classmethod
@@ -6028,11 +6046,12 @@ class PanelService(Service):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Service.Props):
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Service = ...
     def __init__(
         self, connection: Gio.DBusConnection = ..., object_path: str = ...
@@ -6231,7 +6250,7 @@ class Property(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         icon: str
         key: str
         label: Text
@@ -6243,9 +6262,11 @@ class Property(Serializable):
         tooltip: Text
         visible: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: PropertyPrivate = ...
+    @property
+    def priv(self) -> PropertyPrivate: ...
     pdummy: list[None] = ...
     def __init__(
         self,
@@ -6338,7 +6359,7 @@ class Proxy(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.DBusProxy.Props):
         g_connection: Gio.DBusConnection
         g_default_timeout: int
         g_flags: Gio.DBusProxyFlags
@@ -6349,7 +6370,8 @@ class Proxy(Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable):
         g_object_path: str
         g_bus_type: Gio.BusType
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Gio.DBusProxy = ...
     flags: int = ...
     own: bool = ...
@@ -6416,7 +6438,8 @@ class Registry(Serializable):
     """
 
     parent: Serializable = ...
-    priv: RegistryPrivate = ...
+    @property
+    def priv(self) -> RegistryPrivate: ...
     def check_modification(self) -> bool: ...
     def get_components(self) -> list[Component]: ...
     def get_observed_paths(self) -> list[ObservedPath]: ...
@@ -6463,7 +6486,8 @@ class Serializable(Object):
     """
 
     parent: Object = ...
-    priv: SerializablePrivate = ...
+    @property
+    def priv(self) -> SerializablePrivate: ...
     def copy(self) -> Serializable: ...
     @staticmethod
     def deserialize_object(variant: GLib.Variant) -> Serializable: ...
@@ -6518,13 +6542,15 @@ class Service(Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Object.Props):
         connection: Gio.DBusConnection
         object_path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Object = ...
-    priv: ServicePrivate = ...
+    @property
+    def priv(self) -> ServicePrivate: ...
     def __init__(
         self, connection: Gio.DBusConnection = ..., object_path: str = ...
     ) -> None: ...
@@ -6681,14 +6707,16 @@ class UnicodeBlock(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         end: int
         name: str
         start: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: UnicodeBlockPrivate = ...
+    @property
+    def priv(self) -> UnicodeBlockPrivate: ...
     def __init__(self, end: int = ..., name: str = ..., start: int = ...) -> None: ...
     def get_end(self) -> str: ...
     def get_name(self) -> str: ...
@@ -6738,15 +6766,17 @@ class UnicodeData(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         alias: str
         block_name: str
         code: int
         name: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: UnicodeDataPrivate = ...
+    @property
+    def priv(self) -> UnicodeDataPrivate: ...
     def __init__(
         self, alias: str = ..., block_name: str = ..., code: int = ..., name: str = ...
     ) -> None: ...
@@ -6842,7 +6872,7 @@ class XEvent(Serializable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Serializable.Props):
         event_type: int
         group: int
         hardware_keycode: int
@@ -6865,9 +6895,11 @@ class XEvent(Serializable):
         y: int
         y_root: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Serializable = ...
-    priv: XEventPrivate = ...
+    @property
+    def priv(self) -> XEventPrivate: ...
     event_type: XEventType = ...
     window: int = ...
     send_event: int = ...

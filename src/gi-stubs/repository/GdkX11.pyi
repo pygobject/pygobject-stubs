@@ -49,7 +49,8 @@ class X11AppLaunchContext(_Gdk4.AppLaunchContext):
     class Props(_Gdk4.AppLaunchContext.Props):
         display: _Gdk4.Display
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, display: _Gdk4.Display = ...) -> None: ...
 
 class X11AppLaunchContextClass(GObject.GPointer): ...
@@ -79,7 +80,8 @@ class X11DeviceManagerXI2(GObject.Object):
         minor: int
         opcode: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         display: _Gdk4.Display = ...,
@@ -151,7 +153,8 @@ class X11DeviceXI2(_Gdk4.Device):
         tool: _Gdk4.DeviceTool | None
         vendor_id: str | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         device_id: int = ...,
@@ -204,7 +207,8 @@ class X11Display(_Gdk4.Display):
         rgba: bool
         shadow_width: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def error_trap_pop(self) -> int: ...
     def error_trap_pop_ignored(self) -> None: ...
     def error_trap_push(self) -> None: ...
@@ -275,7 +279,8 @@ class X11Drag(_Gdk4.Drag):
         selected_action: _Gdk4.DragAction
         surface: _Gdk4.Surface
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         actions: _Gdk4.DragAction = ...,
@@ -317,7 +322,8 @@ class X11GLContext(_Gdk4.GLContext):
         display: _Gdk4.Display | None
         surface: _Gdk4.Surface | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         allowed_apis: _Gdk4.GLAPI = ...,
@@ -374,7 +380,8 @@ class X11Monitor(_Gdk4.Monitor):
         valid: bool
         width_mm: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, display: _Gdk4.Display = ...) -> None: ...
     def get_output(self) -> int: ...
     def get_workarea(self) -> _Gdk4.Rectangle: ...
@@ -447,7 +454,8 @@ class X11Surface(_Gdk4.Surface):
         scale_factor: int
         width: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         cursor: _Gdk4.Cursor | None = ...,
