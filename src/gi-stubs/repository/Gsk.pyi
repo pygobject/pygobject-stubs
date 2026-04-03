@@ -176,8 +176,8 @@ class ColorStop(GObject.GPointer):
         ColorStop()
     """
 
-    offset: float = ...
-    color: _Gdk4.RGBA = ...
+    offset: float
+    color: _Gdk4.RGBA
 
 class ComponentTransfer(GObject.GBoxed):
     """
@@ -615,11 +615,11 @@ class ParseLocation(GObject.GPointer):
         ParseLocation()
     """
 
-    bytes: int = ...
-    chars: int = ...
-    lines: int = ...
-    line_bytes: int = ...
-    line_chars: int = ...
+    bytes: int
+    chars: int
+    lines: int
+    line_bytes: int
+    line_chars: int
 
 class PasteNode(RenderNode):
     """
@@ -968,8 +968,8 @@ class RoundedRect(GObject.GPointer):
         RoundedRect()
     """
 
-    bounds: Graphene.Rect = ...
-    corner: list[Graphene.Size] = ...
+    bounds: Graphene.Rect
+    corner: list[Graphene.Size]
     def contains_point(self, point: Graphene.Point) -> bool: ...
     def contains_rect(self, rect: Graphene.Rect) -> bool: ...
     def init(
@@ -1026,10 +1026,10 @@ class Shadow(GObject.GPointer):
         Shadow()
     """
 
-    color: _Gdk4.RGBA = ...
-    dx: float = ...
-    dy: float = ...
-    radius: float = ...
+    color: _Gdk4.RGBA
+    dx: float
+    dy: float
+    radius: float
 
 class ShadowNode(RenderNode):
     """

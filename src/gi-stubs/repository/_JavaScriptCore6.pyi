@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -8,16 +9,13 @@ from enum import IntFlag
 from gi.repository import GLib
 from gi.repository import GObject
 
-MAJOR_VERSION: int = 2
-MICRO_VERSION: int = 3
-MINOR_VERSION: int = 42
-OPTIONS_USE_DFG: str = "useDFGJIT"
-OPTIONS_USE_FTL: str = "useFTLJIT"
-OPTIONS_USE_JIT: str = "useJIT"
-OPTIONS_USE_LLINT: str = "useLLInt"
-_lock = ...  # FIXME Constant
-_namespace: str = "JavaScriptCore"
-_version: str = "6.0"
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+OPTIONS_USE_DFG: Final = "useDFGJIT"
+OPTIONS_USE_FTL: Final = "useFTLJIT"
+OPTIONS_USE_JIT: Final = "useJIT"
+OPTIONS_USE_LLINT: Final = "useLLInt"
 
 def get_major_version() -> int: ...
 def get_micro_version() -> int: ...
@@ -129,19 +127,11 @@ class ClassVTable(GObject.GPointer):
         ClassVTable()
     """
 
-    get_property: Callable[[Class, Context, None, str], Value | None] = ...
-    set_property: Callable[[Class, Context, None, str, Value], bool] = ...
-    has_property: Callable[[Class, Context, None, str], bool] = ...
-    delete_property: Callable[[Class, Context, None, str], bool] = ...
-    enumerate_properties: Callable[[Class, Context, None], list[str] | None] = ...
-    _jsc_reserved0: None = ...
-    _jsc_reserved1: None = ...
-    _jsc_reserved2: None = ...
-    _jsc_reserved3: None = ...
-    _jsc_reserved4: None = ...
-    _jsc_reserved5: None = ...
-    _jsc_reserved6: None = ...
-    _jsc_reserved7: None = ...
+    get_property: Callable[[Class, Context, None, str], Value | None]
+    set_property: Callable[[Class, Context, None, str, Value], bool]
+    has_property: Callable[[Class, Context, None, str], bool]
+    delete_property: Callable[[Class, Context, None, str], bool]
+    enumerate_properties: Callable[[Class, Context, None], list[str] | None]
 
 class Context(GObject.Object):
     """

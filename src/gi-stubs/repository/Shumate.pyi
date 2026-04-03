@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -13,25 +14,22 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-MAJOR_VERSION: int = 1
-MAP_SOURCE_MFF_RELIEF: str = "mff-relief"
-MAP_SOURCE_OSM_CYCLE_MAP: str = "osm-cyclemap"
-MAP_SOURCE_OSM_MAPNIK: str = "osm-mapnik"
-MAP_SOURCE_OSM_TRANSPORT_MAP: str = "osm-transportmap"
-MAP_SOURCE_OWM_CLOUDS: str = "owm-clouds"
-MAP_SOURCE_OWM_PRECIPITATION: str = "owm-precipitation"
-MAP_SOURCE_OWM_PRESSURE: str = "owm-pressure"
-MAP_SOURCE_OWM_TEMPERATURE: str = "owm-temperature"
-MAP_SOURCE_OWM_WIND: str = "owm-wind"
-MAX_LATITUDE: float = 85.0511287798
-MAX_LONGITUDE: float = 180.0
-MICRO_VERSION: int = 2
-MINOR_VERSION: int = 2
-MIN_LATITUDE: float = -85.0511287798
-MIN_LONGITUDE: float = -180.0
-_lock = ...  # FIXME Constant
-_namespace: str = "Shumate"
-_version: str = "1.0"
+MAJOR_VERSION: Final[int]
+MAP_SOURCE_MFF_RELIEF: Final = "mff-relief"
+MAP_SOURCE_OSM_CYCLE_MAP: Final = "osm-cyclemap"
+MAP_SOURCE_OSM_MAPNIK: Final = "osm-mapnik"
+MAP_SOURCE_OSM_TRANSPORT_MAP: Final = "osm-transportmap"
+MAP_SOURCE_OWM_CLOUDS: Final = "owm-clouds"
+MAP_SOURCE_OWM_PRECIPITATION: Final = "owm-precipitation"
+MAP_SOURCE_OWM_PRESSURE: Final = "owm-pressure"
+MAP_SOURCE_OWM_TEMPERATURE: Final = "owm-temperature"
+MAP_SOURCE_OWM_WIND: Final = "owm-wind"
+MAX_LATITUDE: Final[float]
+MAX_LONGITUDE: Final[float]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+MIN_LATITUDE: Final[float]
+MIN_LONGITUDE: Final[float]
 
 def file_cache_error_quark() -> int: ...
 def get_user_agent() -> str: ...

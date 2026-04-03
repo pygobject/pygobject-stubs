@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -10,21 +11,18 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-COOKIE_MAX_AGE_ONE_DAY: int = 0
-COOKIE_MAX_AGE_ONE_HOUR: int = 3600
-COOKIE_MAX_AGE_ONE_WEEK: int = 0
-COOKIE_MAX_AGE_ONE_YEAR: int = 0
-FORM_MIME_TYPE_MULTIPART: str = "multipart/form-data"
-FORM_MIME_TYPE_URLENCODED: str = "application/x-www-form-urlencoded"
-HSTS_POLICY_MAX_AGE_PAST: int = 0
-HTTP_URI_FLAGS: int = 482
-MAJOR_VERSION: int = 3
-MICRO_VERSION: int = 5
-MINOR_VERSION: int = 6
-VERSION_MIN_REQUIRED: int = 2
-_lock = ...  # FIXME Constant
-_namespace: str = "Soup"
-_version: str = "3.0"
+COOKIE_MAX_AGE_ONE_DAY: Final[int]
+COOKIE_MAX_AGE_ONE_HOUR: Final[int]
+COOKIE_MAX_AGE_ONE_WEEK: Final[int]
+COOKIE_MAX_AGE_ONE_YEAR: Final[int]
+FORM_MIME_TYPE_MULTIPART: Final = "multipart/form-data"
+FORM_MIME_TYPE_URLENCODED: Final = "application/x-www-form-urlencoded"
+HSTS_POLICY_MAX_AGE_PAST: Final[int]
+HTTP_URI_FLAGS: Final[int]
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+VERSION_MIN_REQUIRED: Final[int]
 
 def check_version(major: int, minor: int, micro: int) -> bool: ...
 def cookie_parse(header: str, origin: GLib.Uri | None = None) -> Cookie | None: ...
@@ -435,8 +433,8 @@ class AuthDomainBasicClass(GObject.GPointer):
 
         AuthDomainBasicClass()
     """
-
-    parent_class: AuthDomainClass = ...
+    @property
+    def parent_class(self) -> AuthDomainClass: ...
 
 class AuthDomainClass(GObject.GPointer):
     """
@@ -1078,8 +1076,8 @@ class HSTSEnforcerDBClass(GObject.GPointer):
 
         HSTSEnforcerDBClass()
     """
-
-    parent_class: HSTSEnforcerClass = ...
+    @property
+    def parent_class(self) -> HSTSEnforcerClass: ...
 
 class HSTSPolicy(GObject.GBoxed):
     """
@@ -1359,8 +1357,8 @@ class MessageBody(GObject.GBoxed):
         new() -> Soup.MessageBody
     """
 
-    data: bytes = ...
-    length: int = ...
+    data: bytes
+    length: int
     def append(self, data: Sequence[int]) -> None: ...
     def append_bytes(self, buffer: GLib.Bytes) -> None: ...
     def complete(self) -> None: ...
@@ -1571,8 +1569,8 @@ class Range(GObject.GPointer):
         Range()
     """
 
-    start: int = ...
-    end: int = ...
+    start: int
+    end: int
 
 class Server(GObject.Object):
     """
@@ -1980,14 +1978,6 @@ class SessionClass(GObject.GPointer):
     def request_queued(self) -> Callable[[Session, Message], None]: ...
     @property
     def request_unqueued(self) -> Callable[[Session, Message], None]: ...
-    _soup_reserved1: None = ...
-    _soup_reserved2: None = ...
-    _soup_reserved3: None = ...
-    _soup_reserved4: None = ...
-    _soup_reserved5: None = ...
-    _soup_reserved6: None = ...
-    _soup_reserved7: None = ...
-    _soup_reserved8: None = ...
 
 class SessionFeature(GObject.GInterface): ...
 class SessionFeatureInterface(GObject.GPointer): ...

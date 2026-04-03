@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -31,107 +32,106 @@ CellRendererT = TypeVar(
     CellRendererToggle,
 )
 WidgetT = TypeVar("WidgetT", bound=Widget)
-
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
-ACCESSIBLE_ATTRIBUTE_BACKGROUND: str = "bg-color"
-ACCESSIBLE_ATTRIBUTE_FAMILY: str = "family-name"
-ACCESSIBLE_ATTRIBUTE_FOREGROUND: str = "fg-color"
-ACCESSIBLE_ATTRIBUTE_OVERLINE: str = "overline"
-ACCESSIBLE_ATTRIBUTE_OVERLINE_NONE: str = "none"
-ACCESSIBLE_ATTRIBUTE_OVERLINE_SINGLE: str = "single"
-ACCESSIBLE_ATTRIBUTE_SIZE: str = "size"
-ACCESSIBLE_ATTRIBUTE_STRETCH: str = "stretch"
-ACCESSIBLE_ATTRIBUTE_STRETCH_CONDENSED: str = "condensed"
-ACCESSIBLE_ATTRIBUTE_STRETCH_EXPANDED: str = "expanded"
-ACCESSIBLE_ATTRIBUTE_STRETCH_EXTRA_CONDENSED: str = "extra_condensed"
-ACCESSIBLE_ATTRIBUTE_STRETCH_EXTRA_EXPANDED: str = "extra_expanded"
-ACCESSIBLE_ATTRIBUTE_STRETCH_NORMAL: str = "normal"
-ACCESSIBLE_ATTRIBUTE_STRETCH_SEMI_CONDENSED: str = "semi_condensed"
-ACCESSIBLE_ATTRIBUTE_STRETCH_SEMI_EXPANDED: str = "semi_expanded"
-ACCESSIBLE_ATTRIBUTE_STRETCH_ULTRA_CONDENSED: str = "ultra_condensed"
-ACCESSIBLE_ATTRIBUTE_STRETCH_ULTRA_EXPANDED: str = "ultra_expanded"
-ACCESSIBLE_ATTRIBUTE_STRIKETHROUGH: str = "strikethrough"
-ACCESSIBLE_ATTRIBUTE_STYLE: str = "style"
-ACCESSIBLE_ATTRIBUTE_STYLE_ITALIC: str = "italic"
-ACCESSIBLE_ATTRIBUTE_STYLE_NORMAL: str = "normal"
-ACCESSIBLE_ATTRIBUTE_STYLE_OBLIQUE: str = "oblique"
-ACCESSIBLE_ATTRIBUTE_UNDERLINE: str = "underline"
-ACCESSIBLE_ATTRIBUTE_UNDERLINE_DOUBLE: str = "double"
-ACCESSIBLE_ATTRIBUTE_UNDERLINE_ERROR: str = "error"
-ACCESSIBLE_ATTRIBUTE_UNDERLINE_NONE: str = "none"
-ACCESSIBLE_ATTRIBUTE_UNDERLINE_SINGLE: str = "single"
-ACCESSIBLE_ATTRIBUTE_VARIANT: str = "variant"
-ACCESSIBLE_ATTRIBUTE_VARIANT_ALL_PETITE_CAPS: str = "all-petite-caps"
-ACCESSIBLE_ATTRIBUTE_VARIANT_ALL_SMALL_CAPS: str = "all-small-caps"
-ACCESSIBLE_ATTRIBUTE_VARIANT_PETITE_CAPS: str = "petite-caps"
-ACCESSIBLE_ATTRIBUTE_VARIANT_SMALL_CAPS: str = "small-caps"
-ACCESSIBLE_ATTRIBUTE_VARIANT_TITLE_CAPS: str = "title-caps"
-ACCESSIBLE_ATTRIBUTE_VARIANT_UNICASE: str = "unicase"
-ACCESSIBLE_ATTRIBUTE_WEIGHT: str = "weight"
-ACCESSIBLE_VALUE_UNDEFINED: int = -1
-BINARY_AGE: int = 2201
-IM_MODULE_EXTENSION_POINT_NAME: str = "gtk-im-module"
-INPUT_ERROR: int = -1
-INTERFACE_AGE: int = 1
-INVALID_LIST_POSITION: int = 4294967295
-LEVEL_BAR_OFFSET_FULL: str = "full"
-LEVEL_BAR_OFFSET_HIGH: str = "high"
-LEVEL_BAR_OFFSET_LOW: str = "low"
-MAJOR_VERSION: int = 4
-MAX_COMPOSE_LEN: int = 7
-MEDIA_FILE_EXTENSION_POINT_NAME: str = "gtk-media-file"
-MICRO_VERSION: int = 1
-MINOR_VERSION: int = 22
-PAPER_NAME_A3: str = "iso_a3"
-PAPER_NAME_A4: str = "iso_a4"
-PAPER_NAME_A5: str = "iso_a5"
-PAPER_NAME_B5: str = "iso_b5"
-PAPER_NAME_EXECUTIVE: str = "na_executive"
-PAPER_NAME_LEGAL: str = "na_legal"
-PAPER_NAME_LETTER: str = "na_letter"
-PRINT_SETTINGS_COLLATE: str = "collate"
-PRINT_SETTINGS_DEFAULT_SOURCE: str = "default-source"
-PRINT_SETTINGS_DITHER: str = "dither"
-PRINT_SETTINGS_DUPLEX: str = "duplex"
-PRINT_SETTINGS_FINISHINGS: str = "finishings"
-PRINT_SETTINGS_MEDIA_TYPE: str = "media-type"
-PRINT_SETTINGS_NUMBER_UP: str = "number-up"
-PRINT_SETTINGS_NUMBER_UP_LAYOUT: str = "number-up-layout"
-PRINT_SETTINGS_N_COPIES: str = "n-copies"
-PRINT_SETTINGS_ORIENTATION: str = "orientation"
-PRINT_SETTINGS_OUTPUT_BASENAME: str = "output-basename"
-PRINT_SETTINGS_OUTPUT_BIN: str = "output-bin"
-PRINT_SETTINGS_OUTPUT_DIR: str = "output-dir"
-PRINT_SETTINGS_OUTPUT_FILE_FORMAT: str = "output-file-format"
-PRINT_SETTINGS_OUTPUT_URI: str = "output-uri"
-PRINT_SETTINGS_PAGE_RANGES: str = "page-ranges"
-PRINT_SETTINGS_PAGE_SET: str = "page-set"
-PRINT_SETTINGS_PAPER_FORMAT: str = "paper-format"
-PRINT_SETTINGS_PAPER_HEIGHT: str = "paper-height"
-PRINT_SETTINGS_PAPER_WIDTH: str = "paper-width"
-PRINT_SETTINGS_PRINTER: str = "printer"
-PRINT_SETTINGS_PRINTER_LPI: str = "printer-lpi"
-PRINT_SETTINGS_PRINT_PAGES: str = "print-pages"
-PRINT_SETTINGS_QUALITY: str = "quality"
-PRINT_SETTINGS_RESOLUTION: str = "resolution"
-PRINT_SETTINGS_RESOLUTION_X: str = "resolution-x"
-PRINT_SETTINGS_RESOLUTION_Y: str = "resolution-y"
-PRINT_SETTINGS_REVERSE: str = "reverse"
-PRINT_SETTINGS_SCALE: str = "scale"
-PRINT_SETTINGS_USE_COLOR: str = "use-color"
-PRINT_SETTINGS_WIN32_DRIVER_EXTRA: str = "win32-driver-extra"
-PRINT_SETTINGS_WIN32_DRIVER_VERSION: str = "win32-driver-version"
-PRIORITY_RESIZE: int = 110
-STYLE_PROVIDER_PRIORITY_APPLICATION: int = 600
-STYLE_PROVIDER_PRIORITY_FALLBACK: int = 1
-STYLE_PROVIDER_PRIORITY_SETTINGS: int = 400
-STYLE_PROVIDER_PRIORITY_THEME: int = 200
-STYLE_PROVIDER_PRIORITY_USER: int = 800
-SVG_DEFAULT_FEATURES: int = 15
-TEXT_VIEW_PRIORITY_VALIDATE: int = 125
-TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: int = -1
-TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: int = -2
+ACCESSIBLE_ATTRIBUTE_BACKGROUND: Final = "bg-color"
+ACCESSIBLE_ATTRIBUTE_FAMILY: Final = "family-name"
+ACCESSIBLE_ATTRIBUTE_FOREGROUND: Final = "fg-color"
+ACCESSIBLE_ATTRIBUTE_OVERLINE: Final = "overline"
+ACCESSIBLE_ATTRIBUTE_OVERLINE_NONE: Final = "none"
+ACCESSIBLE_ATTRIBUTE_OVERLINE_SINGLE: Final = "single"
+ACCESSIBLE_ATTRIBUTE_SIZE: Final = "size"
+ACCESSIBLE_ATTRIBUTE_STRETCH: Final = "stretch"
+ACCESSIBLE_ATTRIBUTE_STRETCH_CONDENSED: Final = "condensed"
+ACCESSIBLE_ATTRIBUTE_STRETCH_EXPANDED: Final = "expanded"
+ACCESSIBLE_ATTRIBUTE_STRETCH_EXTRA_CONDENSED: Final = "extra_condensed"
+ACCESSIBLE_ATTRIBUTE_STRETCH_EXTRA_EXPANDED: Final = "extra_expanded"
+ACCESSIBLE_ATTRIBUTE_STRETCH_NORMAL: Final = "normal"
+ACCESSIBLE_ATTRIBUTE_STRETCH_SEMI_CONDENSED: Final = "semi_condensed"
+ACCESSIBLE_ATTRIBUTE_STRETCH_SEMI_EXPANDED: Final = "semi_expanded"
+ACCESSIBLE_ATTRIBUTE_STRETCH_ULTRA_CONDENSED: Final = "ultra_condensed"
+ACCESSIBLE_ATTRIBUTE_STRETCH_ULTRA_EXPANDED: Final = "ultra_expanded"
+ACCESSIBLE_ATTRIBUTE_STRIKETHROUGH: Final = "strikethrough"
+ACCESSIBLE_ATTRIBUTE_STYLE: Final = "style"
+ACCESSIBLE_ATTRIBUTE_STYLE_ITALIC: Final = "italic"
+ACCESSIBLE_ATTRIBUTE_STYLE_NORMAL: Final = "normal"
+ACCESSIBLE_ATTRIBUTE_STYLE_OBLIQUE: Final = "oblique"
+ACCESSIBLE_ATTRIBUTE_UNDERLINE: Final = "underline"
+ACCESSIBLE_ATTRIBUTE_UNDERLINE_DOUBLE: Final = "double"
+ACCESSIBLE_ATTRIBUTE_UNDERLINE_ERROR: Final = "error"
+ACCESSIBLE_ATTRIBUTE_UNDERLINE_NONE: Final = "none"
+ACCESSIBLE_ATTRIBUTE_UNDERLINE_SINGLE: Final = "single"
+ACCESSIBLE_ATTRIBUTE_VARIANT: Final = "variant"
+ACCESSIBLE_ATTRIBUTE_VARIANT_ALL_PETITE_CAPS: Final = "all-petite-caps"
+ACCESSIBLE_ATTRIBUTE_VARIANT_ALL_SMALL_CAPS: Final = "all-small-caps"
+ACCESSIBLE_ATTRIBUTE_VARIANT_PETITE_CAPS: Final = "petite-caps"
+ACCESSIBLE_ATTRIBUTE_VARIANT_SMALL_CAPS: Final = "small-caps"
+ACCESSIBLE_ATTRIBUTE_VARIANT_TITLE_CAPS: Final = "title-caps"
+ACCESSIBLE_ATTRIBUTE_VARIANT_UNICASE: Final = "unicase"
+ACCESSIBLE_ATTRIBUTE_WEIGHT: Final = "weight"
+ACCESSIBLE_VALUE_UNDEFINED: Final[int]
+BINARY_AGE: Final[int]
+IM_MODULE_EXTENSION_POINT_NAME: Final = "gtk-im-module"
+INPUT_ERROR: Final[int]
+INTERFACE_AGE: Final[int]
+INVALID_LIST_POSITION: Final[int]
+LEVEL_BAR_OFFSET_FULL: Final = "full"
+LEVEL_BAR_OFFSET_HIGH: Final = "high"
+LEVEL_BAR_OFFSET_LOW: Final = "low"
+MAJOR_VERSION: Final[int]
+MAX_COMPOSE_LEN: Final[int]
+MEDIA_FILE_EXTENSION_POINT_NAME: Final = "gtk-media-file"
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+PAPER_NAME_A3: Final = "iso_a3"
+PAPER_NAME_A4: Final = "iso_a4"
+PAPER_NAME_A5: Final = "iso_a5"
+PAPER_NAME_B5: Final = "iso_b5"
+PAPER_NAME_EXECUTIVE: Final = "na_executive"
+PAPER_NAME_LEGAL: Final = "na_legal"
+PAPER_NAME_LETTER: Final = "na_letter"
+PRINT_SETTINGS_COLLATE: Final = "collate"
+PRINT_SETTINGS_DEFAULT_SOURCE: Final = "default-source"
+PRINT_SETTINGS_DITHER: Final = "dither"
+PRINT_SETTINGS_DUPLEX: Final = "duplex"
+PRINT_SETTINGS_FINISHINGS: Final = "finishings"
+PRINT_SETTINGS_MEDIA_TYPE: Final = "media-type"
+PRINT_SETTINGS_NUMBER_UP: Final = "number-up"
+PRINT_SETTINGS_NUMBER_UP_LAYOUT: Final = "number-up-layout"
+PRINT_SETTINGS_N_COPIES: Final = "n-copies"
+PRINT_SETTINGS_ORIENTATION: Final = "orientation"
+PRINT_SETTINGS_OUTPUT_BASENAME: Final = "output-basename"
+PRINT_SETTINGS_OUTPUT_BIN: Final = "output-bin"
+PRINT_SETTINGS_OUTPUT_DIR: Final = "output-dir"
+PRINT_SETTINGS_OUTPUT_FILE_FORMAT: Final = "output-file-format"
+PRINT_SETTINGS_OUTPUT_URI: Final = "output-uri"
+PRINT_SETTINGS_PAGE_RANGES: Final = "page-ranges"
+PRINT_SETTINGS_PAGE_SET: Final = "page-set"
+PRINT_SETTINGS_PAPER_FORMAT: Final = "paper-format"
+PRINT_SETTINGS_PAPER_HEIGHT: Final = "paper-height"
+PRINT_SETTINGS_PAPER_WIDTH: Final = "paper-width"
+PRINT_SETTINGS_PRINTER: Final = "printer"
+PRINT_SETTINGS_PRINTER_LPI: Final = "printer-lpi"
+PRINT_SETTINGS_PRINT_PAGES: Final = "print-pages"
+PRINT_SETTINGS_QUALITY: Final = "quality"
+PRINT_SETTINGS_RESOLUTION: Final = "resolution"
+PRINT_SETTINGS_RESOLUTION_X: Final = "resolution-x"
+PRINT_SETTINGS_RESOLUTION_Y: Final = "resolution-y"
+PRINT_SETTINGS_REVERSE: Final = "reverse"
+PRINT_SETTINGS_SCALE: Final = "scale"
+PRINT_SETTINGS_USE_COLOR: Final = "use-color"
+PRINT_SETTINGS_WIN32_DRIVER_EXTRA: Final = "win32-driver-extra"
+PRINT_SETTINGS_WIN32_DRIVER_VERSION: Final = "win32-driver-version"
+PRIORITY_RESIZE: Final[int]
+STYLE_PROVIDER_PRIORITY_APPLICATION: Final[int]
+STYLE_PROVIDER_PRIORITY_FALLBACK: Final[int]
+STYLE_PROVIDER_PRIORITY_SETTINGS: Final[int]
+STYLE_PROVIDER_PRIORITY_THEME: Final[int]
+STYLE_PROVIDER_PRIORITY_USER: Final[int]
+SVG_DEFAULT_FEATURES: Final[int]
+TEXT_VIEW_PRIORITY_VALIDATE: Final[int]
+TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: Final[int]
+TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: Final[int]
 
 def accelerator_get_accessible_label(
     accelerator_key: int, accelerator_mods: _Gdk4.ModifierType
@@ -969,8 +969,8 @@ class AccessibleTextRange(GObject.GPointer):
         AccessibleTextRange()
     """
 
-    start: int = ...
-    length: int = ...
+    start: int
+    length: int
 
 class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
     """
@@ -3166,10 +3166,10 @@ class Border(GObject.GBoxed):
         new() -> Gtk.Border
     """
 
-    left: int = ...
-    right: int = ...
-    top: int = ...
-    bottom: int = ...
+    left: int
+    right: int
+    top: int
+    bottom: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def copy(self) -> Border: ...
@@ -8994,11 +8994,11 @@ class CssLocation(GObject.GPointer):
         CssLocation()
     """
 
-    bytes: int = ...
-    chars: int = ...
-    lines: int = ...
-    line_bytes: int = ...
-    line_chars: int = ...
+    bytes: int
+    chars: int
+    lines: int
+    line_bytes: int
+    line_chars: int
 
 class CssProvider(GObject.Object, StyleProvider):
     """
@@ -21797,11 +21797,11 @@ class PadActionEntry(GObject.GPointer):
         PadActionEntry()
     """
 
-    type: PadActionType = ...
-    index: int = ...
-    mode: int = ...
-    label: str = ...
-    action_name: str = ...
+    type: PadActionType
+    index: int
+    mode: int
+    label: str
+    action_name: str
 
 class PadController(EventController):
     """
@@ -21866,8 +21866,8 @@ class PageRange(GObject.GPointer):
         PageRange()
     """
 
-    start: int = ...
-    end: int = ...
+    start: int
+    end: int
 
 class PageSetup(GObject.Object):
     """
@@ -24967,13 +24967,13 @@ class RecentData(GObject.GPointer):
         RecentData()
     """
 
-    display_name: str = ...
-    description: str = ...
-    mime_type: str = ...
-    app_name: str = ...
-    app_exec: str = ...
-    groups: list[str] = ...
-    is_private: bool = ...
+    display_name: str
+    description: str
+    mime_type: str
+    app_name: str
+    app_exec: str
+    groups: list[str]
+    is_private: bool
 
 class RecentInfo(GObject.GBoxed):
     def create_app_info(self, app_name: str | None = None) -> Gio.AppInfo | None: ...
@@ -25073,9 +25073,9 @@ class RequestedSize(GObject.GPointer):
         RequestedSize()
     """
 
-    data: None = ...
-    minimum_size: int = ...
-    natural_size: int = ...
+    data: None
+    minimum_size: int
+    natural_size: int
 
 class Requisition(GObject.GBoxed):
     """
@@ -25087,8 +25087,8 @@ class Requisition(GObject.GBoxed):
         new() -> Gtk.Requisition
     """
 
-    width: int = ...
-    height: int = ...
+    width: int
+    height: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def copy(self) -> Requisition: ...
@@ -30087,9 +30087,9 @@ class SvgLocation(GObject.GPointer):
         SvgLocation()
     """
 
-    bytes: int = ...
-    lines: int = ...
-    line_chars: int = ...
+    bytes: int
+    lines: int
+    line_chars: int
 
 class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     """
@@ -32287,10 +32287,10 @@ class TreeIter(GObject.GBoxed):
         TreeIter()
     """
 
-    stamp: int = ...
-    user_data: None = ...
-    user_data2: None = ...
-    user_data3: None = ...
+    stamp: int
+    user_data: None
+    user_data2: None
+    user_data3: None
     def copy(self) -> TreeIter: ...
     def free(self) -> None: ...
 

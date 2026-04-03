@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -13,15 +14,15 @@ from gi.repository import GstVideo
 
 T = TypeVar("T")
 
-ENCODING_CATEGORY_CAPTURE: str = "capture"
-ENCODING_CATEGORY_DEVICE: str = "device"
-ENCODING_CATEGORY_FILE_EXTENSION: str = "file-extension"
-ENCODING_CATEGORY_ONLINE_SERVICE: str = "online-service"
-ENCODING_CATEGORY_STORAGE_EDITING: str = "storage-editing"
-PLUGINS_BASE_VERSION_MAJOR: int = 1
-PLUGINS_BASE_VERSION_MICRO: int = 11
-PLUGINS_BASE_VERSION_MINOR: int = 26
-PLUGINS_BASE_VERSION_NANO: int = 1
+ENCODING_CATEGORY_CAPTURE: Final = "capture"
+ENCODING_CATEGORY_DEVICE: Final = "device"
+ENCODING_CATEGORY_FILE_EXTENSION: Final = "file-extension"
+ENCODING_CATEGORY_ONLINE_SERVICE: Final = "online-service"
+ENCODING_CATEGORY_STORAGE_EDITING: Final = "storage-editing"
+PLUGINS_BASE_VERSION_MAJOR: Final[int]
+PLUGINS_BASE_VERSION_MICRO: Final[int]
+PLUGINS_BASE_VERSION_MINOR: Final[int]
+PLUGINS_BASE_VERSION_NANO: Final[int]
 
 def codec_utils_aac_caps_set_level_and_profile(
     caps: Gst.Caps, audio_config: Sequence[int]

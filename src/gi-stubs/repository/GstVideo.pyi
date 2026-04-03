@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -12,95 +13,97 @@ from gi.repository import GstBase
 
 T = TypeVar("T")
 
-BUFFER_POOL_OPTION_VIDEO_AFFINE_TRANSFORMATION_META: str = (
+BUFFER_POOL_OPTION_VIDEO_AFFINE_TRANSFORMATION_META: Final = (
     "GstBufferPoolOptionVideoAffineTransformation"
 )
-BUFFER_POOL_OPTION_VIDEO_ALIGNMENT: str = "GstBufferPoolOptionVideoAlignment"
-BUFFER_POOL_OPTION_VIDEO_GL_TEXTURE_UPLOAD_META: str = (
+BUFFER_POOL_OPTION_VIDEO_ALIGNMENT: Final = "GstBufferPoolOptionVideoAlignment"
+BUFFER_POOL_OPTION_VIDEO_GL_TEXTURE_UPLOAD_META: Final = (
     "GstBufferPoolOptionVideoGLTextureUploadMeta"
 )
-BUFFER_POOL_OPTION_VIDEO_META: str = "GstBufferPoolOptionVideoMeta"
-CAPS_FEATURE_FORMAT_INTERLACED: str = "format:Interlaced"
-CAPS_FEATURE_META_GST_VIDEO_AFFINE_TRANSFORMATION_META: str = (
+BUFFER_POOL_OPTION_VIDEO_META: Final = "GstBufferPoolOptionVideoMeta"
+CAPS_FEATURE_FORMAT_INTERLACED: Final = "format:Interlaced"
+CAPS_FEATURE_META_GST_VIDEO_AFFINE_TRANSFORMATION_META: Final = (
     "meta:GstVideoAffineTransformation"
 )
-CAPS_FEATURE_META_GST_VIDEO_GL_TEXTURE_UPLOAD_META: str = (
+CAPS_FEATURE_META_GST_VIDEO_GL_TEXTURE_UPLOAD_META: Final = (
     "meta:GstVideoGLTextureUploadMeta"
 )
-CAPS_FEATURE_META_GST_VIDEO_META: str = "meta:GstVideoMeta"
-CAPS_FEATURE_META_GST_VIDEO_OVERLAY_COMPOSITION: str = "meta:GstVideoOverlayComposition"
-META_TAG_VIDEO_COLORSPACE_STR: str = "colorspace"
-META_TAG_VIDEO_ORIENTATION_STR: str = "orientation"
-META_TAG_VIDEO_SIZE_STR: str = "size"
-META_TAG_VIDEO_STR: str = "video"
-VIDEO_COLORIMETRY_BT2020: str = "bt2020"
-VIDEO_COLORIMETRY_BT2020_10: str = "bt2020-10"
-VIDEO_COLORIMETRY_BT2100_HLG: str = "bt2100-hlg"
-VIDEO_COLORIMETRY_BT2100_PQ: str = "bt2100-pq"
-VIDEO_COLORIMETRY_BT601: str = "bt601"
-VIDEO_COLORIMETRY_BT709: str = "bt709"
-VIDEO_COLORIMETRY_SMPTE240M: str = "smpte240m"
-VIDEO_COLORIMETRY_SRGB: str = "sRGB"
-VIDEO_COMP_A: int = 3
-VIDEO_COMP_B: int = 2
-VIDEO_COMP_G: int = 1
-VIDEO_COMP_INDEX: int = 0
-VIDEO_COMP_PALETTE: int = 1
-VIDEO_COMP_R: int = 0
-VIDEO_COMP_U: int = 1
-VIDEO_COMP_V: int = 2
-VIDEO_COMP_Y: int = 0
-VIDEO_CONVERTER_OPT_ALPHA_MODE: str = "GstVideoConverter.alpha-mode"
-VIDEO_CONVERTER_OPT_ALPHA_VALUE: str = "GstVideoConverter.alpha-value"
-VIDEO_CONVERTER_OPT_ASYNC_TASKS: str = "GstVideoConverter.async-tasks"
-VIDEO_CONVERTER_OPT_BORDER_ARGB: str = "GstVideoConverter.border-argb"
-VIDEO_CONVERTER_OPT_CHROMA_MODE: str = "GstVideoConverter.chroma-mode"
-VIDEO_CONVERTER_OPT_CHROMA_RESAMPLER_METHOD: str = (
+CAPS_FEATURE_META_GST_VIDEO_META: Final = "meta:GstVideoMeta"
+CAPS_FEATURE_META_GST_VIDEO_OVERLAY_COMPOSITION: Final = (
+    "meta:GstVideoOverlayComposition"
+)
+META_TAG_VIDEO_COLORSPACE_STR: Final = "colorspace"
+META_TAG_VIDEO_ORIENTATION_STR: Final = "orientation"
+META_TAG_VIDEO_SIZE_STR: Final = "size"
+META_TAG_VIDEO_STR: Final = "video"
+VIDEO_COLORIMETRY_BT2020: Final = "bt2020"
+VIDEO_COLORIMETRY_BT2020_10: Final = "bt2020-10"
+VIDEO_COLORIMETRY_BT2100_HLG: Final = "bt2100-hlg"
+VIDEO_COLORIMETRY_BT2100_PQ: Final = "bt2100-pq"
+VIDEO_COLORIMETRY_BT601: Final = "bt601"
+VIDEO_COLORIMETRY_BT709: Final = "bt709"
+VIDEO_COLORIMETRY_SMPTE240M: Final = "smpte240m"
+VIDEO_COLORIMETRY_SRGB: Final = "sRGB"
+VIDEO_COMP_A: Final[int]
+VIDEO_COMP_B: Final[int]
+VIDEO_COMP_G: Final[int]
+VIDEO_COMP_INDEX: Final[int]
+VIDEO_COMP_PALETTE: Final[int]
+VIDEO_COMP_R: Final[int]
+VIDEO_COMP_U: Final[int]
+VIDEO_COMP_V: Final[int]
+VIDEO_COMP_Y: Final[int]
+VIDEO_CONVERTER_OPT_ALPHA_MODE: Final = "GstVideoConverter.alpha-mode"
+VIDEO_CONVERTER_OPT_ALPHA_VALUE: Final = "GstVideoConverter.alpha-value"
+VIDEO_CONVERTER_OPT_ASYNC_TASKS: Final = "GstVideoConverter.async-tasks"
+VIDEO_CONVERTER_OPT_BORDER_ARGB: Final = "GstVideoConverter.border-argb"
+VIDEO_CONVERTER_OPT_CHROMA_MODE: Final = "GstVideoConverter.chroma-mode"
+VIDEO_CONVERTER_OPT_CHROMA_RESAMPLER_METHOD: Final = (
     "GstVideoConverter.chroma-resampler-method"
 )
-VIDEO_CONVERTER_OPT_DEST_HEIGHT: str = "GstVideoConverter.dest-height"
-VIDEO_CONVERTER_OPT_DEST_WIDTH: str = "GstVideoConverter.dest-width"
-VIDEO_CONVERTER_OPT_DEST_X: str = "GstVideoConverter.dest-x"
-VIDEO_CONVERTER_OPT_DEST_Y: str = "GstVideoConverter.dest-y"
-VIDEO_CONVERTER_OPT_DITHER_METHOD: str = "GstVideoConverter.dither-method"
-VIDEO_CONVERTER_OPT_DITHER_QUANTIZATION: str = "GstVideoConverter.dither-quantization"
-VIDEO_CONVERTER_OPT_FILL_BORDER: str = "GstVideoConverter.fill-border"
-VIDEO_CONVERTER_OPT_GAMMA_MODE: str = "GstVideoConverter.gamma-mode"
-VIDEO_CONVERTER_OPT_MATRIX_MODE: str = "GstVideoConverter.matrix-mode"
-VIDEO_CONVERTER_OPT_PRIMARIES_MODE: str = "GstVideoConverter.primaries-mode"
-VIDEO_CONVERTER_OPT_RESAMPLER_METHOD: str = "GstVideoConverter.resampler-method"
-VIDEO_CONVERTER_OPT_RESAMPLER_TAPS: str = "GstVideoConverter.resampler-taps"
-VIDEO_CONVERTER_OPT_SRC_HEIGHT: str = "GstVideoConverter.src-height"
-VIDEO_CONVERTER_OPT_SRC_WIDTH: str = "GstVideoConverter.src-width"
-VIDEO_CONVERTER_OPT_SRC_X: str = "GstVideoConverter.src-x"
-VIDEO_CONVERTER_OPT_SRC_Y: str = "GstVideoConverter.src-y"
-VIDEO_CONVERTER_OPT_THREADS: str = "GstVideoConverter.threads"
-VIDEO_DECODER_MAX_ERRORS: int = -1
-VIDEO_DECODER_SINK_NAME: str = "sink"
-VIDEO_DECODER_SRC_NAME: str = "src"
-VIDEO_DMA_DRM_CAPS_MAKE: str = ...
-VIDEO_ENCODER_SINK_NAME: str = "sink"
-VIDEO_ENCODER_SRC_NAME: str = "src"
-VIDEO_FORMATS_ALL: str = "{ "
-VIDEO_FORMATS_ALL_STR: str = ...
-VIDEO_FORMATS_ANY: str = "{ "
-VIDEO_FORMATS_ANY_STR: str = "DMA_DRM, "
-VIDEO_FORMAT_LAST: int = 139
-VIDEO_FPS_RANGE: str = "(fraction) [ 0, max ]"
-VIDEO_MAX_COMPONENTS: int = 4
-VIDEO_MAX_PLANES: int = 4
-VIDEO_RESAMPLER_OPT_CUBIC_B: str = "GstVideoResampler.cubic-b"
-VIDEO_RESAMPLER_OPT_CUBIC_C: str = "GstVideoResampler.cubic-c"
-VIDEO_RESAMPLER_OPT_ENVELOPE: str = "GstVideoResampler.envelope"
-VIDEO_RESAMPLER_OPT_MAX_TAPS: str = "GstVideoResampler.max-taps"
-VIDEO_RESAMPLER_OPT_SHARPEN: str = "GstVideoResampler.sharpen"
-VIDEO_RESAMPLER_OPT_SHARPNESS: str = "GstVideoResampler.sharpness"
-VIDEO_SCALER_OPT_DITHER_METHOD: str = "GstVideoScaler.dither-method"
-VIDEO_SIZE_RANGE: str = "(int) [ 1, max ]"
-VIDEO_TILE_TYPE_MASK: int = 65535
-VIDEO_TILE_TYPE_SHIFT: int = 16
-VIDEO_TILE_X_TILES_MASK: int = 65535
-VIDEO_TILE_Y_TILES_SHIFT: int = 16
+VIDEO_CONVERTER_OPT_DEST_HEIGHT: Final = "GstVideoConverter.dest-height"
+VIDEO_CONVERTER_OPT_DEST_WIDTH: Final = "GstVideoConverter.dest-width"
+VIDEO_CONVERTER_OPT_DEST_X: Final = "GstVideoConverter.dest-x"
+VIDEO_CONVERTER_OPT_DEST_Y: Final = "GstVideoConverter.dest-y"
+VIDEO_CONVERTER_OPT_DITHER_METHOD: Final = "GstVideoConverter.dither-method"
+VIDEO_CONVERTER_OPT_DITHER_QUANTIZATION: Final = "GstVideoConverter.dither-quantization"
+VIDEO_CONVERTER_OPT_FILL_BORDER: Final = "GstVideoConverter.fill-border"
+VIDEO_CONVERTER_OPT_GAMMA_MODE: Final = "GstVideoConverter.gamma-mode"
+VIDEO_CONVERTER_OPT_MATRIX_MODE: Final = "GstVideoConverter.matrix-mode"
+VIDEO_CONVERTER_OPT_PRIMARIES_MODE: Final = "GstVideoConverter.primaries-mode"
+VIDEO_CONVERTER_OPT_RESAMPLER_METHOD: Final = "GstVideoConverter.resampler-method"
+VIDEO_CONVERTER_OPT_RESAMPLER_TAPS: Final = "GstVideoConverter.resampler-taps"
+VIDEO_CONVERTER_OPT_SRC_HEIGHT: Final = "GstVideoConverter.src-height"
+VIDEO_CONVERTER_OPT_SRC_WIDTH: Final = "GstVideoConverter.src-width"
+VIDEO_CONVERTER_OPT_SRC_X: Final = "GstVideoConverter.src-x"
+VIDEO_CONVERTER_OPT_SRC_Y: Final = "GstVideoConverter.src-y"
+VIDEO_CONVERTER_OPT_THREADS: Final = "GstVideoConverter.threads"
+VIDEO_DECODER_MAX_ERRORS: Final[int]
+VIDEO_DECODER_SINK_NAME: Final = "sink"
+VIDEO_DECODER_SRC_NAME: Final = "src"
+VIDEO_DMA_DRM_CAPS_MAKE: Final[str]
+VIDEO_ENCODER_SINK_NAME: Final = "sink"
+VIDEO_ENCODER_SRC_NAME: Final = "src"
+VIDEO_FORMATS_ALL: Final = "{ "
+VIDEO_FORMATS_ALL_STR: Final[str]
+VIDEO_FORMATS_ANY: Final = "{ "
+VIDEO_FORMATS_ANY_STR: Final = "DMA_DRM, "
+VIDEO_FORMAT_LAST: Final[int]
+VIDEO_FPS_RANGE: Final = "(fraction) [ 0, max ]"
+VIDEO_MAX_COMPONENTS: Final[int]
+VIDEO_MAX_PLANES: Final[int]
+VIDEO_RESAMPLER_OPT_CUBIC_B: Final = "GstVideoResampler.cubic-b"
+VIDEO_RESAMPLER_OPT_CUBIC_C: Final = "GstVideoResampler.cubic-c"
+VIDEO_RESAMPLER_OPT_ENVELOPE: Final = "GstVideoResampler.envelope"
+VIDEO_RESAMPLER_OPT_MAX_TAPS: Final = "GstVideoResampler.max-taps"
+VIDEO_RESAMPLER_OPT_SHARPEN: Final = "GstVideoResampler.sharpen"
+VIDEO_RESAMPLER_OPT_SHARPNESS: Final = "GstVideoResampler.sharpness"
+VIDEO_SCALER_OPT_DITHER_METHOD: Final = "GstVideoScaler.dither-method"
+VIDEO_SIZE_RANGE: Final = "(int) [ 1, max ]"
+VIDEO_TILE_TYPE_MASK: Final[int]
+VIDEO_TILE_TYPE_SHIFT: Final[int]
+VIDEO_TILE_X_TILES_MASK: Final[int]
+VIDEO_TILE_Y_TILES_SHIFT: Final[int]
 
 def ancillary_meta_api_get_type() -> type[Any]: ...
 def ancillary_meta_get_info() -> Gst.MetaInfo: ...
@@ -489,16 +492,16 @@ class AncillaryMeta(GObject.GPointer):
         AncillaryMeta()
     """
 
-    meta: Gst.Meta = ...
-    field: AncillaryMetaField = ...
-    c_not_y_channel: bool = ...
-    line: int = ...
-    offset: int = ...
-    DID: int = ...
-    SDID_block_number: int = ...
-    data_count: int = ...
-    data: int = ...
-    checksum: int = ...
+    meta: Gst.Meta
+    field: AncillaryMetaField
+    c_not_y_channel: bool
+    line: int
+    offset: int
+    DID: int
+    SDID_block_number: int
+    data_count: int
+    data: list[int]
+    checksum: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -741,10 +744,10 @@ class VideoAFDMeta(GObject.GPointer):
         VideoAFDMeta()
     """
 
-    meta: Gst.Meta = ...
-    field: int = ...
-    spec: VideoAFDSpec = ...
-    afd: VideoAFDValue = ...
+    meta: Gst.Meta
+    field: int
+    spec: VideoAFDSpec
+    afd: VideoAFDValue
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -757,8 +760,8 @@ class VideoAffineTransformationMeta(GObject.GPointer):
         VideoAffineTransformationMeta()
     """
 
-    meta: Gst.Meta = ...
-    matrix: list[float] = ...
+    meta: Gst.Meta
+    matrix: list[float]
     def apply_matrix(self, matrix: Sequence[float]) -> None: ...
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
@@ -1234,11 +1237,11 @@ class VideoAlignment(GObject.GPointer):
         VideoAlignment()
     """
 
-    padding_top: int = ...
-    padding_bottom: int = ...
-    padding_left: int = ...
-    padding_right: int = ...
-    stride_align: list[int] = ...
+    padding_top: int
+    padding_bottom: int
+    padding_left: int
+    padding_right: int
+    stride_align: list[int]
     def reset(self) -> None: ...
 
 class VideoAncillary(GObject.GPointer):
@@ -1250,10 +1253,10 @@ class VideoAncillary(GObject.GPointer):
         VideoAncillary()
     """
 
-    DID: int = ...
-    SDID_block_number: int = ...
-    data_count: int = ...
-    data: bytes = ...
+    DID: int
+    SDID_block_number: int
+    data_count: int
+    data: bytes
 
 class VideoBarMeta(GObject.GPointer):
     """
@@ -1264,11 +1267,11 @@ class VideoBarMeta(GObject.GPointer):
         VideoBarMeta()
     """
 
-    meta: Gst.Meta = ...
-    field: int = ...
-    is_letterbox: bool = ...
-    bar_data1: int = ...
-    bar_data2: int = ...
+    meta: Gst.Meta
+    field: int
+    is_letterbox: bool
+    bar_data1: int
+    bar_data2: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1331,10 +1334,10 @@ class VideoCaptionMeta(GObject.GPointer):
         VideoCaptionMeta()
     """
 
-    meta: Gst.Meta = ...
-    caption_type: VideoCaptionType = ...
-    data: bytes = ...
-    size: int = ...
+    meta: Gst.Meta
+    caption_type: VideoCaptionType
+    data: bytes
+    size: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1351,8 +1354,8 @@ class VideoCodecAlphaMeta(GObject.GPointer):
         VideoCodecAlphaMeta()
     """
 
-    meta: Gst.Meta = ...
-    buffer: Gst.Buffer = ...
+    meta: Gst.Meta
+    buffer: Gst.Buffer
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1368,18 +1371,18 @@ class VideoCodecFrame(GObject.GBoxed):
     def ref_count(self) -> int: ...
     @property
     def flags(self) -> int: ...
-    system_frame_number: int = ...
+    system_frame_number: int
     @property
     def decode_frame_number(self) -> int: ...
     @property
     def presentation_frame_number(self) -> int: ...
-    dts: int = ...
-    pts: int = ...
-    duration: int = ...
-    distance_from_sync: int = ...
-    input_buffer: Gst.Buffer = ...
-    output_buffer: Gst.Buffer = ...
-    deadline: int = ...
+    dts: int
+    pts: int
+    duration: int
+    distance_from_sync: int
+    input_buffer: Gst.Buffer
+    output_buffer: Gst.Buffer
+    deadline: int
     @property
     def events(self) -> list[None]: ...
     @property
@@ -1402,12 +1405,12 @@ class VideoCodecState(GObject.GBoxed):
     """
     @property
     def ref_count(self) -> int: ...
-    info: VideoInfo = ...
-    caps: Gst.Caps = ...
-    codec_data: Gst.Buffer = ...
-    allocation_caps: Gst.Caps = ...
-    mastering_display_info: VideoMasteringDisplayInfo = ...
-    content_light_level: VideoContentLightLevel = ...
+    info: VideoInfo
+    caps: Gst.Caps
+    codec_data: Gst.Buffer
+    allocation_caps: Gst.Caps
+    mastering_display_info: VideoMasteringDisplayInfo
+    content_light_level: VideoContentLightLevel
     @property
     def padding(self) -> list[None]: ...
     def ref(self) -> VideoCodecState: ...
@@ -1422,15 +1425,15 @@ class VideoColorPrimariesInfo(GObject.GPointer):
         VideoColorPrimariesInfo()
     """
 
-    primaries: VideoColorPrimaries = ...
-    Wx: float = ...
-    Wy: float = ...
-    Rx: float = ...
-    Ry: float = ...
-    Gx: float = ...
-    Gy: float = ...
-    Bx: float = ...
-    By: float = ...
+    primaries: VideoColorPrimaries
+    Wx: float
+    Wy: float
+    Rx: float
+    Ry: float
+    Gx: float
+    Gy: float
+    Bx: float
+    By: float
 
 class VideoColorimetry(GObject.GPointer):
     """
@@ -1441,10 +1444,10 @@ class VideoColorimetry(GObject.GPointer):
         VideoColorimetry()
     """
 
-    range: VideoColorRange = ...
-    matrix: VideoColorMatrix = ...
-    transfer: VideoTransferFunction = ...
-    primaries: VideoColorPrimaries = ...
+    range: VideoColorRange
+    matrix: VideoColorMatrix
+    transfer: VideoTransferFunction
+    primaries: VideoColorPrimaries
     def from_string(self, color: str) -> bool: ...
     def is_equal(self, other: VideoColorimetry) -> bool: ...
     def is_equivalent(
@@ -1462,8 +1465,8 @@ class VideoContentLightLevel(GObject.GPointer):
         VideoContentLightLevel()
     """
 
-    max_content_light_level: int = ...
-    max_frame_average_light_level: int = ...
+    max_content_light_level: int
+    max_frame_average_light_level: int
     def add_to_caps(self, caps: Gst.Caps) -> bool: ...
     def from_caps(self, caps: Gst.Caps) -> bool: ...
     def from_string(self, level: str) -> bool: ...
@@ -1489,11 +1492,11 @@ class VideoCropMeta(GObject.GPointer):
         VideoCropMeta()
     """
 
-    meta: Gst.Meta = ...
-    x: int = ...
-    y: int = ...
-    width: int = ...
-    height: int = ...
+    meta: Gst.Meta
+    x: int
+    y: int
+    width: int
+    height: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -2016,25 +2019,25 @@ class VideoFormatInfo(GObject.GPointer):
         VideoFormatInfo()
     """
 
-    format: VideoFormat = ...
-    name: str = ...
-    description: str = ...
-    flags: VideoFormatFlags = ...
-    bits: int = ...
-    n_components: int = ...
-    shift: list[int] = ...
-    depth: list[int] = ...
-    pixel_stride: list[int] = ...
-    n_planes: int = ...
-    plane: list[int] = ...
-    poffset: list[int] = ...
-    w_sub: list[int] = ...
-    h_sub: list[int] = ...
-    unpack_format: VideoFormat = ...
+    format: VideoFormat
+    name: str
+    description: str
+    flags: VideoFormatFlags
+    bits: int
+    n_components: int
+    shift: list[int]
+    depth: list[int]
+    pixel_stride: list[int]
+    n_planes: int
+    plane: list[int]
+    poffset: list[int]
+    w_sub: list[int]
+    h_sub: list[int]
+    unpack_format: VideoFormat
     unpack_func: Callable[
         [VideoFormatInfo, VideoPackFlags, None, None, int, int, int, int], None
-    ] = ...
-    pack_lines: int = ...
+    ]
+    pack_lines: int
     pack_func: Callable[
         [
             VideoFormatInfo,
@@ -2048,11 +2051,11 @@ class VideoFormatInfo(GObject.GPointer):
             int,
         ],
         None,
-    ] = ...
-    tile_mode: VideoTileMode = ...
-    tile_ws: int = ...
-    tile_hs: int = ...
-    tile_info: list[VideoTileInfo] = ...
+    ]
+    tile_mode: VideoTileMode
+    tile_ws: int
+    tile_hs: int
+    tile_info: list[VideoTileInfo]
     def component(self, plane: int) -> int: ...
     def extrapolate_stride(self, plane: int, stride: int) -> int: ...
 
@@ -2065,12 +2068,12 @@ class VideoFrame(GObject.GPointer):
         VideoFrame()
     """
 
-    info: VideoInfo = ...
-    flags: VideoFrameFlags = ...
-    buffer: Gst.Buffer = ...
-    meta: None = ...
-    id: int = ...
-    data: list[None] = ...
+    info: VideoInfo
+    flags: VideoFrameFlags
+    buffer: Gst.Buffer
+    meta: None
+    id: int
+    data: list[None]
     def copy(self, src: VideoFrame) -> bool: ...
     def copy_plane(self, src: VideoFrame, plane: int) -> bool: ...
     @staticmethod
@@ -2092,10 +2095,10 @@ class VideoGLTextureUploadMeta(GObject.GPointer):
         VideoGLTextureUploadMeta()
     """
 
-    meta: Gst.Meta = ...
-    texture_orientation: VideoGLTextureOrientation = ...
-    n_textures: int = ...
-    texture_type: list[VideoGLTextureType] = ...
+    meta: Gst.Meta
+    texture_orientation: VideoGLTextureOrientation
+    n_textures: int
+    texture_type: list[VideoGLTextureType]
     @property
     def buffer(self) -> Gst.Buffer: ...
     @property
@@ -2119,21 +2122,21 @@ class VideoInfo(GObject.GBoxed):
         new_from_caps(caps:Gst.Caps) -> GstVideo.VideoInfo or None
     """
 
-    finfo: VideoFormatInfo = ...
-    interlace_mode: VideoInterlaceMode = ...
-    flags: VideoFlags = ...
-    width: int = ...
-    height: int = ...
-    size: int = ...
-    views: int = ...
-    chroma_site: VideoChromaSite = ...
-    colorimetry: VideoColorimetry = ...
-    par_n: int = ...
-    par_d: int = ...
-    fps_n: int = ...
-    fps_d: int = ...
-    offset: list[int] = ...
-    stride: list[int] = ...
+    finfo: VideoFormatInfo
+    interlace_mode: VideoInterlaceMode
+    flags: VideoFlags
+    width: int
+    height: int
+    size: int
+    views: int
+    chroma_site: VideoChromaSite
+    colorimetry: VideoColorimetry
+    par_n: int
+    par_d: int
+    fps_n: int
+    fps_d: int
+    offset: list[int]
+    stride: list[int]
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def align(self, align: VideoAlignment) -> bool: ...
@@ -2168,9 +2171,9 @@ class VideoInfoDmaDrm(GObject.GBoxed):
         new_from_caps(caps:Gst.Caps) -> GstVideo.VideoInfoDmaDrm or None
     """
 
-    vinfo: VideoInfo = ...
-    drm_fourcc: int = ...
-    drm_modifier: int = ...
+    vinfo: VideoInfo
+    drm_fourcc: int
+    drm_modifier: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def free(self) -> None: ...
@@ -2198,10 +2201,10 @@ class VideoMasteringDisplayInfo(GObject.GPointer):
         VideoMasteringDisplayInfo()
     """
 
-    display_primaries: list[VideoMasteringDisplayInfoCoordinates] = ...
-    white_point: VideoMasteringDisplayInfoCoordinates = ...
-    max_display_mastering_luminance: int = ...
-    min_display_mastering_luminance: int = ...
+    display_primaries: list[VideoMasteringDisplayInfoCoordinates]
+    white_point: VideoMasteringDisplayInfoCoordinates
+    max_display_mastering_luminance: int
+    min_display_mastering_luminance: int
     def add_to_caps(self, caps: Gst.Caps) -> bool: ...
     def from_caps(self, caps: Gst.Caps) -> bool: ...
     @staticmethod
@@ -2221,8 +2224,8 @@ class VideoMasteringDisplayInfoCoordinates(GObject.GPointer):
         VideoMasteringDisplayInfoCoordinates()
     """
 
-    x: int = ...
-    y: int = ...
+    x: int
+    y: int
 
 class VideoMeta(GObject.GPointer):
     """
@@ -2233,17 +2236,17 @@ class VideoMeta(GObject.GPointer):
         VideoMeta()
     """
 
-    meta: Gst.Meta = ...
-    buffer: Gst.Buffer = ...
-    flags: VideoFrameFlags = ...
-    format: VideoFormat = ...
-    id: int = ...
-    width: int = ...
-    height: int = ...
-    n_planes: int = ...
-    offset: list[int] = ...
-    stride: list[int] = ...
-    alignment: VideoAlignment = ...
+    meta: Gst.Meta
+    buffer: Gst.Buffer
+    flags: VideoFrameFlags
+    format: VideoFormat
+    id: int
+    width: int
+    height: int
+    n_planes: int
+    offset: list[int]
+    stride: list[int]
+    alignment: VideoAlignment
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
     def get_plane_height(self) -> tuple[bool, list[int]]: ...
@@ -2263,8 +2266,8 @@ class VideoMetaTransform(GObject.GPointer):
         VideoMetaTransform()
     """
 
-    in_info: VideoInfo = ...
-    out_info: VideoInfo = ...
+    in_info: VideoInfo
+    out_info: VideoInfo
     @staticmethod
     def scale_get_quark() -> int: ...
 
@@ -2364,8 +2367,8 @@ class VideoOverlayCompositionMeta(GObject.GPointer):
         VideoOverlayCompositionMeta()
     """
 
-    meta: Gst.Meta = ...
-    overlay: VideoOverlayComposition = ...
+    meta: Gst.Meta
+    overlay: VideoOverlayComposition
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -2437,10 +2440,10 @@ class VideoRectangle(GObject.GPointer):
         VideoRectangle()
     """
 
-    x: int = ...
-    y: int = ...
-    w: int = ...
-    h: int = ...
+    x: int
+    y: int
+    w: int
+    h: int
 
 class VideoRegionOfInterestMeta(GObject.GPointer):
     """
@@ -2451,15 +2454,15 @@ class VideoRegionOfInterestMeta(GObject.GPointer):
         VideoRegionOfInterestMeta()
     """
 
-    meta: Gst.Meta = ...
-    roi_type: int = ...
-    id: int = ...
-    parent_id: int = ...
-    x: int = ...
-    y: int = ...
-    w: int = ...
-    h: int = ...
-    params: list[None] = ...
+    meta: Gst.Meta
+    roi_type: int
+    id: int
+    parent_id: int
+    x: int
+    y: int
+    w: int
+    h: int
+    params: list[None]
     def add_param(self, s: Gst.Structure) -> None: ...
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
@@ -2474,14 +2477,14 @@ class VideoResampler(GObject.GPointer):
         VideoResampler()
     """
 
-    in_size: int = ...
-    out_size: int = ...
-    max_taps: int = ...
-    n_phases: int = ...
-    offset: int = ...
-    phase: int = ...
-    n_taps: int = ...
-    taps: float = ...
+    in_size: int
+    out_size: int
+    max_taps: int
+    n_phases: int
+    offset: int
+    phase: int
+    n_taps: int
+    taps: float
     def clear(self) -> None: ...
     def init(
         self,
@@ -2504,10 +2507,10 @@ class VideoSEIUserDataUnregisteredMeta(GObject.GPointer):
         VideoSEIUserDataUnregisteredMeta()
     """
 
-    meta: Gst.Meta = ...
-    uuid: bytes = ...
-    data: int = ...
-    size: int = ...
+    meta: Gst.Meta
+    uuid: bytes
+    data: int
+    size: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -2663,10 +2666,10 @@ class VideoTileInfo(GObject.GPointer):
         VideoTileInfo()
     """
 
-    width: int = ...
-    height: int = ...
-    stride: int = ...
-    size: int = ...
+    width: int
+    height: int
+    stride: int
+    size: int
     @property
     def padding(self) -> list[int]: ...
 
@@ -2684,12 +2687,12 @@ class VideoTimeCode(GObject.GBoxed):
         new_from_string(tc_str:str) -> GstVideo.VideoTimeCode or None
     """
 
-    config: VideoTimeCodeConfig = ...
-    hours: int = ...
-    minutes: int = ...
-    seconds: int = ...
-    frames: int = ...
-    field_count: int = ...
+    config: VideoTimeCodeConfig
+    hours: int
+    minutes: int
+    seconds: int
+    frames: int
+    field_count: int
     def add_frames(self, frames: int) -> None: ...
     def add_interval(self, tc_inter: VideoTimeCodeInterval) -> VideoTimeCode | None: ...
     def clear(self) -> None: ...
@@ -2775,10 +2778,10 @@ class VideoTimeCodeConfig(GObject.GPointer):
         VideoTimeCodeConfig()
     """
 
-    fps_n: int = ...
-    fps_d: int = ...
-    flags: VideoTimeCodeFlags = ...
-    latest_daily_jam: GLib.DateTime = ...
+    fps_n: int
+    fps_d: int
+    flags: VideoTimeCodeFlags
+    latest_daily_jam: GLib.DateTime
 
 class VideoTimeCodeInterval(GObject.GBoxed):
     """
@@ -2791,10 +2794,10 @@ class VideoTimeCodeInterval(GObject.GBoxed):
         new_from_string(tc_inter_str:str) -> GstVideo.VideoTimeCodeInterval or None
     """
 
-    hours: int = ...
-    minutes: int = ...
-    seconds: int = ...
-    frames: int = ...
+    hours: int
+    minutes: int
+    seconds: int
+    frames: int
     def clear(self) -> None: ...
     def copy(self) -> VideoTimeCodeInterval: ...
     def free(self) -> None: ...
@@ -2815,8 +2818,8 @@ class VideoTimeCodeMeta(GObject.GPointer):
         VideoTimeCodeMeta()
     """
 
-    meta: Gst.Meta = ...
-    tc: VideoTimeCode = ...
+    meta: Gst.Meta
+    tc: VideoTimeCode
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 

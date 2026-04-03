@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -11,59 +12,59 @@ from gi.repository import ICalGLib
 
 T = TypeVar("T")
 
-BACKEND_PROPERTY_ALARM_EMAIL_ADDRESS: str = "alarm-email-address"
-BACKEND_PROPERTY_CAL_EMAIL_ADDRESS: str = "cal-email-address"
-BACKEND_PROPERTY_DEFAULT_OBJECT: str = "default-object"
-BACKEND_PROPERTY_REVISION: str = "revision"
-EVOLUTION_ALARM_UID_PROPERTY: str = "X-EVOLUTION-ALARM-UID"
-EVOLUTION_ENDDATE_PARAMETER: str = "X-EVOLUTION-ENDDATE"
-LIBICAL_GLIB_UNSTABLE_API: int = 1
-STATIC_CAPABILITY_ALARM_DESCRIPTION: str = "alarm-description"
-STATIC_CAPABILITY_ALL_DAY_EVENT_AS_TIME: str = "all-day-event-as-time"
-STATIC_CAPABILITY_BULK_ADDS: str = "bulk-adds"
-STATIC_CAPABILITY_BULK_MODIFIES: str = "bulk-modifies"
-STATIC_CAPABILITY_BULK_REMOVES: str = "bulk-removes"
-STATIC_CAPABILITY_COMPONENT_COLOR: str = "component-color"
-STATIC_CAPABILITY_CREATE_MESSAGES: str = "create-messages"
-STATIC_CAPABILITY_DELEGATE_SUPPORTED: str = "delegate-support"
-STATIC_CAPABILITY_DELEGATE_TO_MANY: str = "delegate-to-many"
-STATIC_CAPABILITY_HAS_UNACCEPTED_MEETING: str = "has-unaccepted-meeting"
-STATIC_CAPABILITY_ITIP_SUPPRESS_ON_REMOVE_SUPPORTED: str = (
+BACKEND_PROPERTY_ALARM_EMAIL_ADDRESS: Final = "alarm-email-address"
+BACKEND_PROPERTY_CAL_EMAIL_ADDRESS: Final = "cal-email-address"
+BACKEND_PROPERTY_DEFAULT_OBJECT: Final = "default-object"
+BACKEND_PROPERTY_REVISION: Final = "revision"
+EVOLUTION_ALARM_UID_PROPERTY: Final = "X-EVOLUTION-ALARM-UID"
+EVOLUTION_ENDDATE_PARAMETER: Final = "X-EVOLUTION-ENDDATE"
+LIBICAL_GLIB_UNSTABLE_API: Final[int]
+STATIC_CAPABILITY_ALARM_DESCRIPTION: Final = "alarm-description"
+STATIC_CAPABILITY_ALL_DAY_EVENT_AS_TIME: Final = "all-day-event-as-time"
+STATIC_CAPABILITY_BULK_ADDS: Final = "bulk-adds"
+STATIC_CAPABILITY_BULK_MODIFIES: Final = "bulk-modifies"
+STATIC_CAPABILITY_BULK_REMOVES: Final = "bulk-removes"
+STATIC_CAPABILITY_COMPONENT_COLOR: Final = "component-color"
+STATIC_CAPABILITY_CREATE_MESSAGES: Final = "create-messages"
+STATIC_CAPABILITY_DELEGATE_SUPPORTED: Final = "delegate-support"
+STATIC_CAPABILITY_DELEGATE_TO_MANY: Final = "delegate-to-many"
+STATIC_CAPABILITY_HAS_UNACCEPTED_MEETING: Final = "has-unaccepted-meeting"
+STATIC_CAPABILITY_ITIP_SUPPRESS_ON_REMOVE_SUPPORTED: Final = (
     "itip-suppress-on-remove-supported"
 )
-STATIC_CAPABILITY_NO_ALARM_AFTER_START: str = "no-alarm-after-start"
-STATIC_CAPABILITY_NO_ALARM_REPEAT: str = "no-alarm-repeat"
-STATIC_CAPABILITY_NO_AUDIO_ALARMS: str = "no-audio-alarms"
-STATIC_CAPABILITY_NO_CONV_TO_ASSIGN_TASK: str = "no-conv-to-assign-task"
-STATIC_CAPABILITY_NO_CONV_TO_RECUR: str = "no-conv-to-recur"
-STATIC_CAPABILITY_NO_DISPLAY_ALARMS: str = "no-display-alarms"
-STATIC_CAPABILITY_NO_EMAIL_ALARMS: str = "no-email-alarms"
-STATIC_CAPABILITY_NO_GEN_OPTIONS: str = "no-general-options"
-STATIC_CAPABILITY_NO_MEMO_START_DATE: str = "no-memo-start-date"
-STATIC_CAPABILITY_NO_ORGANIZER: str = "no-organizer"
-STATIC_CAPABILITY_NO_PROCEDURE_ALARMS: str = "no-procedure-alarms"
-STATIC_CAPABILITY_NO_TASK_ASSIGNMENT: str = "no-task-assignment"
-STATIC_CAPABILITY_NO_THISANDFUTURE: str = "no-thisandfuture"
-STATIC_CAPABILITY_NO_THISANDPRIOR: str = "no-thisandprior"
-STATIC_CAPABILITY_NO_TRANSPARENCY: str = "no-transparency"
-STATIC_CAPABILITY_ONE_ALARM_ONLY: str = "one-alarm-only"
-STATIC_CAPABILITY_ORGANIZER_MUST_ACCEPT: str = "organizer-must-accept"
-STATIC_CAPABILITY_ORGANIZER_MUST_ATTEND: str = "organizer-must-attend"
-STATIC_CAPABILITY_ORGANIZER_NOT_EMAIL_ADDRESS: str = "organizer-not-email-address"
-STATIC_CAPABILITY_RECURRENCES_NO_MASTER: str = "recurrences-no-master-object"
-STATIC_CAPABILITY_REFRESH_SUPPORTED: str = "refresh-supported"
-STATIC_CAPABILITY_REMOVE_ALARMS: str = "remove-alarms"
-STATIC_CAPABILITY_REMOVE_ONLY_THIS: str = "remove-only-this"
-STATIC_CAPABILITY_REQ_SEND_OPTIONS: str = "require-send-options"
-STATIC_CAPABILITY_RETRACT_SUPPORTED: str = "retract-supported"
-STATIC_CAPABILITY_SAVE_SCHEDULES: str = "save-schedules"
-STATIC_CAPABILITY_SIMPLE_MEMO: str = "simple-memo"
-STATIC_CAPABILITY_SIMPLE_MEMO_WITH_SUMMARY: str = "simple-memo-with-summary"
-STATIC_CAPABILITY_TASK_CAN_RECUR: str = "task-can-recur"
-STATIC_CAPABILITY_TASK_DATE_ONLY: str = "task-date-only"
-STATIC_CAPABILITY_TASK_ESTIMATED_DURATION: str = "task-estimated-duration"
-STATIC_CAPABILITY_TASK_HANDLE_RECUR: str = "task-handle-recur"
-STATIC_CAPABILITY_TASK_NO_ALARM: str = "task-no-alarm"
+STATIC_CAPABILITY_NO_ALARM_AFTER_START: Final = "no-alarm-after-start"
+STATIC_CAPABILITY_NO_ALARM_REPEAT: Final = "no-alarm-repeat"
+STATIC_CAPABILITY_NO_AUDIO_ALARMS: Final = "no-audio-alarms"
+STATIC_CAPABILITY_NO_CONV_TO_ASSIGN_TASK: Final = "no-conv-to-assign-task"
+STATIC_CAPABILITY_NO_CONV_TO_RECUR: Final = "no-conv-to-recur"
+STATIC_CAPABILITY_NO_DISPLAY_ALARMS: Final = "no-display-alarms"
+STATIC_CAPABILITY_NO_EMAIL_ALARMS: Final = "no-email-alarms"
+STATIC_CAPABILITY_NO_GEN_OPTIONS: Final = "no-general-options"
+STATIC_CAPABILITY_NO_MEMO_START_DATE: Final = "no-memo-start-date"
+STATIC_CAPABILITY_NO_ORGANIZER: Final = "no-organizer"
+STATIC_CAPABILITY_NO_PROCEDURE_ALARMS: Final = "no-procedure-alarms"
+STATIC_CAPABILITY_NO_TASK_ASSIGNMENT: Final = "no-task-assignment"
+STATIC_CAPABILITY_NO_THISANDFUTURE: Final = "no-thisandfuture"
+STATIC_CAPABILITY_NO_THISANDPRIOR: Final = "no-thisandprior"
+STATIC_CAPABILITY_NO_TRANSPARENCY: Final = "no-transparency"
+STATIC_CAPABILITY_ONE_ALARM_ONLY: Final = "one-alarm-only"
+STATIC_CAPABILITY_ORGANIZER_MUST_ACCEPT: Final = "organizer-must-accept"
+STATIC_CAPABILITY_ORGANIZER_MUST_ATTEND: Final = "organizer-must-attend"
+STATIC_CAPABILITY_ORGANIZER_NOT_EMAIL_ADDRESS: Final = "organizer-not-email-address"
+STATIC_CAPABILITY_RECURRENCES_NO_MASTER: Final = "recurrences-no-master-object"
+STATIC_CAPABILITY_REFRESH_SUPPORTED: Final = "refresh-supported"
+STATIC_CAPABILITY_REMOVE_ALARMS: Final = "remove-alarms"
+STATIC_CAPABILITY_REMOVE_ONLY_THIS: Final = "remove-only-this"
+STATIC_CAPABILITY_REQ_SEND_OPTIONS: Final = "require-send-options"
+STATIC_CAPABILITY_RETRACT_SUPPORTED: Final = "retract-supported"
+STATIC_CAPABILITY_SAVE_SCHEDULES: Final = "save-schedules"
+STATIC_CAPABILITY_SIMPLE_MEMO: Final = "simple-memo"
+STATIC_CAPABILITY_SIMPLE_MEMO_WITH_SUMMARY: Final = "simple-memo-with-summary"
+STATIC_CAPABILITY_TASK_CAN_RECUR: Final = "task-can-recur"
+STATIC_CAPABILITY_TASK_DATE_ONLY: Final = "task-date-only"
+STATIC_CAPABILITY_TASK_ESTIMATED_DURATION: Final = "task-estimated-duration"
+STATIC_CAPABILITY_TASK_HANDLE_RECUR: Final = "task-handle-recur"
+STATIC_CAPABILITY_TASK_NO_ALARM: Final = "task-no-alarm"
 
 def isodate_from_time_t(t: int) -> str: ...
 def match_tzid(tzid: str) -> str | None: ...
@@ -381,7 +382,7 @@ class Client(EDataServer.Client, TimezoneCache, Gio.AsyncInitable, Gio.Initable)
 
     @property
     def props(self) -> Props: ...
-    parent: EDataServer.Client = ...
+    parent: EDataServer.Client
     @property
     def priv(self) -> ClientPrivate: ...
     def __init__(
@@ -794,8 +795,8 @@ class ClientClass(GObject.GPointer):
         ClientClass()
     """
 
-    parent: EDataServer.ClientClass = ...
-    free_busy_data: None = ...
+    parent: EDataServer.ClientClass
+    free_busy_data: None
 
 class ClientPrivate(GObject.GPointer): ...
 
@@ -848,7 +849,7 @@ class ClientView(GObject.Object, Gio.Initable):
 
     @property
     def props(self) -> Props: ...
-    object: GObject.Object = ...
+    object: GObject.Object
     @property
     def priv(self) -> ClientViewPrivate: ...
     def __init__(
@@ -879,12 +880,12 @@ class ClientViewClass(GObject.GPointer):
         ClientViewClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    objects_added: None = ...
-    objects_modified: None = ...
-    objects_removed: None = ...
-    progress: Callable[[ClientView, int, str], None] = ...
-    complete: Callable[[ClientView, GLib.Error], None] = ...
+    parent_class: GObject.ObjectClass
+    objects_added: None
+    objects_modified: None
+    objects_removed: None
+    progress: Callable[[ClientView, int, str], None]
+    complete: Callable[[ClientView, GLib.Error], None]
 
 class ClientViewPrivate(GObject.GPointer): ...
 
@@ -906,7 +907,7 @@ class Component(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> ComponentPrivate: ...
     def abort_sequence(self) -> None: ...
@@ -1258,7 +1259,7 @@ class ComponentClass(GObject.GPointer):
         ComponentClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class ComponentDateTime(GObject.GBoxed):
     """
@@ -1549,7 +1550,7 @@ class ReminderWatcher(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> ReminderWatcherPrivate: ...
     def __init__(
@@ -1614,17 +1615,17 @@ class ReminderWatcherClass(GObject.GPointer):
         ReminderWatcherClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    schedule_timer: Callable[[ReminderWatcher, int], None] = ...
+    parent_class: GObject.ObjectClass
+    schedule_timer: Callable[[ReminderWatcher, int], None]
     format_time: Callable[
         [ReminderWatcher, ReminderData, ICalGLib.Time, str, int], None
-    ] = ...
-    triggered: None = ...
-    changed: Callable[[ReminderWatcher], None] = ...
-    cal_client_connect_sync: None = ...
-    cal_client_connect: Callable[..., None] = ...
-    cal_client_connect_finish: None = ...
-    reserved: list[None] = ...
+    ]
+    triggered: None
+    changed: Callable[[ReminderWatcher], None]
+    cal_client_connect_sync: None
+    cal_client_connect: Callable[..., None]
+    cal_client_connect_finish: None
+    reserved: list[None]
 
 class ReminderWatcherPrivate(GObject.GPointer): ...
 
@@ -1648,12 +1649,12 @@ class TimezoneCacheInterface(GObject.GPointer):
         TimezoneCacheInterface()
     """
 
-    parent_interface: GObject.TypeInterface = ...
-    tzcache_add_timezone: Callable[[TimezoneCache, ICalGLib.Timezone], None] = ...
-    tzcache_get_timezone: None = ...
-    tzcache_list_timezones: None = ...
-    timezone_added: Callable[[TimezoneCache, ICalGLib.Timezone], None] = ...
-    reserved_signals: list[None] = ...
+    parent_interface: GObject.TypeInterface
+    tzcache_add_timezone: Callable[[TimezoneCache, ICalGLib.Timezone], None]
+    tzcache_get_timezone: None
+    tzcache_list_timezones: None
+    timezone_added: Callable[[TimezoneCache, ICalGLib.Timezone], None]
+    reserved_signals: list[None]
 
 class ClientViewFlags(GObject.GFlags):
     NONE = 0

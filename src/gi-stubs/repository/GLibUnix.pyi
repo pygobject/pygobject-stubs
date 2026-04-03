@@ -42,7 +42,7 @@ class Pipe(GObject.GPointer):
         Pipe()
     """
 
-    fds: list[int] = ...
+    fds: list[int]
 
 class PipeEnd(IntEnum):
     READ = 0

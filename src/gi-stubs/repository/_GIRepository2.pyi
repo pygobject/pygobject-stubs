@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -9,13 +10,10 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 0
-MINOR_VERSION: int = 84
-TYPE_TAG_N_TYPES: int = 22
-_lock = ...  # FIXME Constant
-_namespace: str = "GIRepository"
-_version: str = "2.0"
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+TYPE_TAG_N_TYPES: Final[int]
 
 def arg_info_get_closure(info: BaseInfo) -> int: ...
 def arg_info_get_destroy(info: BaseInfo) -> int: ...
@@ -229,10 +227,10 @@ class AttributeIter(GObject.GPointer):
         AttributeIter()
     """
 
-    data: None = ...
-    data2: None = ...
-    data3: None = ...
-    data4: None = ...
+    data: None
+    data2: None
+    data3: None
+    data4: None
 
 class BaseInfo(GObject.GBoxed):
     """
@@ -243,14 +241,14 @@ class BaseInfo(GObject.GBoxed):
         BaseInfo()
     """
 
-    dummy1: int = ...
-    dummy2: int = ...
-    dummy3: None = ...
-    dummy4: None = ...
-    dummy5: None = ...
-    dummy6: int = ...
-    dummy7: int = ...
-    padding: list[None] = ...
+    dummy1: int
+    dummy2: int
+    dummy3: None
+    dummy4: None
+    dummy5: None
+    dummy6: int
+    dummy7: int
+    padding: list[None]
     def equal(self, info2: BaseInfo) -> bool: ...
     def get_attribute(self, name: str) -> str: ...
     def get_container(self) -> BaseInfo: ...
@@ -275,7 +273,7 @@ class Repository(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> RepositoryPrivate: ...
     @staticmethod
@@ -328,7 +326,7 @@ class RepositoryClass(GObject.GPointer):
         RepositoryClass()
     """
 
-    parent: GObject.ObjectClass = ...
+    parent: GObject.ObjectClass
 
 class RepositoryPrivate(GObject.GPointer): ...
 

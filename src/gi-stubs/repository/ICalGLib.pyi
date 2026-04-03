@@ -97,7 +97,7 @@ class ArrayClass(GObject.GPointer):
         ArrayClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Attach(Object):
     """
@@ -168,7 +168,7 @@ class AttachClass(GObject.GPointer):
         AttachClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class CompIter(Object):
     """
@@ -225,7 +225,7 @@ class CompIterClass(GObject.GPointer):
         CompIterClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Component(Object):
     """
@@ -414,7 +414,7 @@ class ComponentClass(GObject.GPointer):
         ComponentClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Datetimeperiod(Object):
     """
@@ -475,7 +475,7 @@ class DatetimeperiodClass(GObject.GPointer):
         DatetimeperiodClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Duration(Object):
     """
@@ -557,7 +557,7 @@ class DurationClass(GObject.GPointer):
         DurationClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Geo(Object):
     """
@@ -619,7 +619,7 @@ class GeoClass(GObject.GPointer):
         GeoClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Object(GObject.Object):
     """
@@ -655,7 +655,7 @@ class Object(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> ObjectPrivate: ...
     def __init__(
@@ -690,7 +690,7 @@ class ObjectClass(GObject.GPointer):
         ObjectClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class ObjectPrivate(GObject.GPointer): ...
 
@@ -1028,7 +1028,7 @@ class ParameterClass(GObject.GPointer):
         ParameterClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Parser(Object):
     """
@@ -1093,7 +1093,7 @@ class ParserClass(GObject.GPointer):
         ParserClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Period(Object):
     """
@@ -1162,7 +1162,7 @@ class PeriodClass(GObject.GPointer):
         PeriodClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Property(Object):
     """
@@ -1842,7 +1842,7 @@ class PropertyClass(GObject.GPointer):
         PropertyClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class RecurIterator(Object):
     """
@@ -1901,7 +1901,7 @@ class RecurIteratorClass(GObject.GPointer):
         RecurIteratorClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Recurrence(Object):
     """
@@ -2033,7 +2033,7 @@ class RecurrenceClass(GObject.GPointer):
         RecurrenceClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Reqstat(Object):
     """
@@ -2095,7 +2095,7 @@ class ReqstatClass(GObject.GPointer):
         ReqstatClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Time(Object):
     """
@@ -2234,7 +2234,7 @@ class TimeClass(GObject.GPointer):
         TimeClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class TimeSpan(Object):
     """
@@ -2303,7 +2303,7 @@ class TimeSpanClass(GObject.GPointer):
         TimeSpanClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Timezone(Object):
     """
@@ -2415,7 +2415,7 @@ class TimezoneClass(GObject.GPointer):
         TimezoneClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Trigger(Object):
     """
@@ -2481,7 +2481,7 @@ class TriggerClass(GObject.GPointer):
         TriggerClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class Value(Object):
     """
@@ -2737,7 +2737,7 @@ class ValueClass(GObject.GPointer):
         ValueClass()
     """
 
-    parent: ObjectClass = ...
+    parent: ObjectClass
 
 class _Array(GObject.GPointer):
     """
@@ -2748,7 +2748,7 @@ class _Array(GObject.GPointer):
         _Array()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Attach(GObject.GPointer):
     """
@@ -2759,7 +2759,7 @@ class _Attach(GObject.GPointer):
         _Attach()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _CompIter(GObject.GPointer):
     """
@@ -2770,7 +2770,7 @@ class _CompIter(GObject.GPointer):
         _CompIter()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Component(GObject.GPointer):
     """
@@ -2781,7 +2781,7 @@ class _Component(GObject.GPointer):
         _Component()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Datetimeperiod(GObject.GPointer):
     """
@@ -2792,7 +2792,7 @@ class _Datetimeperiod(GObject.GPointer):
         _Datetimeperiod()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Duration(GObject.GPointer):
     """
@@ -2803,7 +2803,7 @@ class _Duration(GObject.GPointer):
         _Duration()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Geo(GObject.GPointer):
     """
@@ -2814,7 +2814,7 @@ class _Geo(GObject.GPointer):
         _Geo()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Parameter(GObject.GPointer):
     """
@@ -2825,7 +2825,7 @@ class _Parameter(GObject.GPointer):
         _Parameter()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Parser(GObject.GPointer):
     """
@@ -2836,7 +2836,7 @@ class _Parser(GObject.GPointer):
         _Parser()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Period(GObject.GPointer):
     """
@@ -2847,7 +2847,7 @@ class _Period(GObject.GPointer):
         _Period()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Property(GObject.GPointer):
     """
@@ -2858,7 +2858,7 @@ class _Property(GObject.GPointer):
         _Property()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _RecurIterator(GObject.GPointer):
     """
@@ -2869,7 +2869,7 @@ class _RecurIterator(GObject.GPointer):
         _RecurIterator()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Recurrence(GObject.GPointer):
     """
@@ -2880,7 +2880,7 @@ class _Recurrence(GObject.GPointer):
         _Recurrence()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Reqstat(GObject.GPointer):
     """
@@ -2891,7 +2891,7 @@ class _Reqstat(GObject.GPointer):
         _Reqstat()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Time(GObject.GPointer):
     """
@@ -2902,7 +2902,7 @@ class _Time(GObject.GPointer):
         _Time()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _TimeSpan(GObject.GPointer):
     """
@@ -2913,7 +2913,7 @@ class _TimeSpan(GObject.GPointer):
         _TimeSpan()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Timezone(GObject.GPointer):
     """
@@ -2924,7 +2924,7 @@ class _Timezone(GObject.GPointer):
         _Timezone()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Trigger(GObject.GPointer):
     """
@@ -2935,7 +2935,7 @@ class _Trigger(GObject.GPointer):
         _Trigger()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class _Value(GObject.GPointer):
     """
@@ -2946,7 +2946,7 @@ class _Value(GObject.GPointer):
         _Value()
     """
 
-    parent: Object = ...
+    parent: Object
 
 class ComponentKind(GObject.GEnum):
     ANY_COMPONENT = 1

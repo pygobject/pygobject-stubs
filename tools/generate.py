@@ -899,17 +899,15 @@ def _gi_build_stub_parts(
         else:
             annotation_string = val.__class__.__name__
 
-        if isinstance(val, str):
-            if len(val) > 50:
-                ret += f"{name}: {annotation_string} = ...\n"
-            else:
-                ret += f'{name}: {annotation_string} = "{val}"\n'
-        elif isinstance(val, (bool, float, int)):
-            ret += f"{name}: {annotation_string} = {val}\n"
-        elif annotation is not None or not in_class:
-            ret += f"{name}: {annotation_string} = ...\n"
+        if (isinstance(val, str) and len(val) <= 50) or isinstance(val, bool):
+            ret += f"{name}: {stub.get_final()} = {val!r}\n"
+        elif (
+            isinstance(val, (str, float, int)) or annotation is not None or not in_class
+        ):
+            ret += f"{name}: {stub.get_final(annotation_string)}\n"
         else:
-            ret += f"{name} = ...  # FIXME: Constant is missing typing annotation\n"
+            constant_annotation = "" if in_class else f": {stub.get_final()}"
+            ret += f"{name}{constant_annotation} = ...  # FIXME: Constant is missing typing annotation\n"
 
     if ret and functions:
         ret += "\n"
@@ -1094,13 +1092,13 @@ def _gi_build_stub_parts(
             n = f.get_name()
             override = stub.check_override(full_name, n)
             if override:
-                ret += f"    {override} = ...\n"
+                ret += f"    {override}\n"
             else:
                 field_flags = f.get_flags()
                 if not (field_flags & _IS_FIELD_WRITABLE):
                     ret += stub.get_property(n, t, indent="    ")
                 else:
-                    ret += f"    {n}: {t} = ...\n"
+                    ret += f"    {n}: {t}\n"
 
         class_constructor_override = stub.check_override(full_name, "__init__")
         if class_constructor_override:

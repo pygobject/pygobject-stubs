@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -17,19 +18,21 @@ from gi.repository import GstSdp
 
 T = TypeVar("T")
 
-RTSP_ADDRESS_POOL_ANY_IPV4: str = "0.0.0.0"
-RTSP_ADDRESS_POOL_ANY_IPV6: str = "::"
-RTSP_AUTH_CHECK_CONNECT: str = "auth.check.connect"
-RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS: str = "auth.check.media.factory.access"
-RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT: str = "auth.check.media.factory.construct"
-RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS: str = "auth.check.transport.client-settings"
-RTSP_AUTH_CHECK_URL: str = "auth.check.url"
-RTSP_ONVIF_BACKCHANNEL_REQUIREMENT: str = "www.onvif.org/ver20/backchannel"
-RTSP_ONVIF_REPLAY_REQUIREMENT: str = "onvif-replay"
-RTSP_PERM_MEDIA_FACTORY_ACCESS: str = "media.factory.access"
-RTSP_PERM_MEDIA_FACTORY_CONSTRUCT: str = "media.factory.construct"
-RTSP_TOKEN_MEDIA_FACTORY_ROLE: str = "media.factory.role"
-RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS: str = "transport.client-settings"
+RTSP_ADDRESS_POOL_ANY_IPV4: Final = "0.0.0.0"
+RTSP_ADDRESS_POOL_ANY_IPV6: Final = "::"
+RTSP_AUTH_CHECK_CONNECT: Final = "auth.check.connect"
+RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS: Final = "auth.check.media.factory.access"
+RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT: Final = "auth.check.media.factory.construct"
+RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS: Final = (
+    "auth.check.transport.client-settings"
+)
+RTSP_AUTH_CHECK_URL: Final = "auth.check.url"
+RTSP_ONVIF_BACKCHANNEL_REQUIREMENT: Final = "www.onvif.org/ver20/backchannel"
+RTSP_ONVIF_REPLAY_REQUIREMENT: Final = "onvif-replay"
+RTSP_PERM_MEDIA_FACTORY_ACCESS: Final = "media.factory.access"
+RTSP_PERM_MEDIA_FACTORY_CONSTRUCT: Final = "media.factory.construct"
+RTSP_TOKEN_MEDIA_FACTORY_ROLE: Final = "media.factory.role"
+RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS: Final = "transport.client-settings"
 
 def rtsp_params_get(client: RTSPClient, ctx: RTSPContext) -> GstRtsp.RTSPResult: ...
 def rtsp_params_set(client: RTSPClient, ctx: RTSPContext) -> GstRtsp.RTSPResult: ...
@@ -56,11 +59,11 @@ class RTSPAddress(GObject.GBoxed):
         RTSPAddress()
     """
 
-    pool: RTSPAddressPool = ...
-    address: str = ...
-    port: int = ...
-    n_ports: int = ...
-    ttl: int = ...
+    pool: RTSPAddressPool
+    address: str
+    port: int
+    n_ports: int
+    ttl: int
     @property
     def priv(self) -> None: ...
     def copy(self) -> RTSPAddress: ...
@@ -500,21 +503,21 @@ class RTSPContext(GObject.GPointer):
         RTSPContext()
     """
 
-    server: RTSPServer = ...
-    conn: GstRtsp.RTSPConnection = ...
-    client: RTSPClient = ...
-    request: GstRtsp.RTSPMessage = ...
-    uri: GstRtsp.RTSPUrl = ...
-    method: GstRtsp.RTSPMethod = ...
-    auth: RTSPAuth = ...
-    token: RTSPToken = ...
-    session: RTSPSession = ...
-    sessmedia: RTSPSessionMedia = ...
-    factory: RTSPMediaFactory = ...
-    media: RTSPMedia = ...
-    stream: RTSPStream = ...
-    response: GstRtsp.RTSPMessage = ...
-    trans: RTSPStreamTransport = ...
+    server: RTSPServer
+    conn: GstRtsp.RTSPConnection
+    client: RTSPClient
+    request: GstRtsp.RTSPMessage
+    uri: GstRtsp.RTSPUrl
+    method: GstRtsp.RTSPMethod
+    auth: RTSPAuth
+    token: RTSPToken
+    session: RTSPSession
+    sessmedia: RTSPSessionMedia
+    factory: RTSPMediaFactory
+    media: RTSPMedia
+    stream: RTSPStream
+    response: GstRtsp.RTSPMessage
+    trans: RTSPStreamTransport
     def pop_current(self) -> None: ...
     def push_current(self) -> None: ...
     def set_token(self, token: RTSPToken) -> None: ...
@@ -1574,7 +1577,7 @@ class RTSPPermissions(GObject.GBoxed):
         new() -> GstRtspServer.RTSPPermissions
     """
 
-    mini_object: Gst.MiniObject = ...
+    mini_object: Gst.MiniObject
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def add_permission_for_role(
@@ -2151,10 +2154,10 @@ class RTSPThread(GObject.GBoxed):
         new(type:GstRtspServer.RTSPThreadType) -> GstRtspServer.RTSPThread
     """
 
-    mini_object: Gst.MiniObject = ...
-    type: RTSPThreadType = ...
-    context: GLib.MainContext = ...
-    loop: GLib.MainLoop = ...
+    mini_object: Gst.MiniObject
+    type: RTSPThreadType
+    context: GLib.MainContext
+    loop: GLib.MainLoop
     @classmethod
     def new(cls, type: RTSPThreadType) -> RTSPThread: ...
     def reuse(self) -> bool: ...
@@ -2241,7 +2244,7 @@ class RTSPToken(GObject.GBoxed):
         new() -> GstRtspServer.RTSPToken
     """
 
-    mini_object: Gst.MiniObject = ...
+    mini_object: Gst.MiniObject
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def get_string(self, field: str) -> str | None: ...
@@ -2262,8 +2265,8 @@ class SDPInfo(GObject.GPointer):
         SDPInfo()
     """
 
-    is_ipv6: bool = ...
-    server_ip: str = ...
+    is_ipv6: bool
+    server_ip: str
 
 class RTSPAddressFlags(IntFlag):
     EVEN_PORT = 4

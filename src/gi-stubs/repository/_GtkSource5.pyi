@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -14,9 +15,9 @@ from gi.repository import Pango
 
 T = TypeVar("T")
 
-MAJOR_VERSION: int = 5
-MICRO_VERSION: int = 0
-MINOR_VERSION: int = 18
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
 
 def check_version(major: int, minor: int, micro: int) -> bool: ...
 def encoding_get_all() -> list[Encoding]: ...
@@ -671,8 +672,8 @@ class CompletionContextClass(GObject.GPointer):
 
         CompletionContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class CompletionProposal(GObject.GInterface):
     """

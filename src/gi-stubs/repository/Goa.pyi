@@ -1,4 +1,6 @@
 from typing import Any
+from typing import Final
+from typing import TypeVar
 
 from collections.abc import Callable
 
@@ -6,13 +8,12 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-ERROR_NUM_ENTRIES: int = 6
-MAJOR_VERSION: int = 3
-MICRO_VERSION: int = 0
-MINOR_VERSION: int = 48
-_lock = ...  # FIXME Constant
-_namespace: str = "Goa"
-_version: str = "1.0"
+T = TypeVar("T")
+
+ERROR_NUM_ENTRIES: Final[int]
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
 
 def account_interface_info() -> Gio.DBusInterfaceInfo: ...
 def account_override_properties(

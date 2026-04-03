@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -10,55 +11,52 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-COMPONENTLAYER_COUNT: int = 9
-COORD_TYPE_COUNT: int = 3
-DBUS_INTERFACE_ACCESSIBLE: str = "org.a11y.atspi.Accessible"
-DBUS_INTERFACE_ACTION: str = "org.a11y.atspi.Action"
-DBUS_INTERFACE_APPLICATION: str = "org.a11y.atspi.Application"
-DBUS_INTERFACE_CACHE: str = "org.a11y.atspi.Cache"
-DBUS_INTERFACE_COLLECTION: str = "org.a11y.atspi.Collection"
-DBUS_INTERFACE_COMPONENT: str = "org.a11y.atspi.Component"
-DBUS_INTERFACE_DEC: str = "org.a11y.atspi.DeviceEventController"
-DBUS_INTERFACE_DEVICE_EVENT_LISTENER: str = "org.a11y.atspi.DeviceEventListener"
-DBUS_INTERFACE_DOCUMENT: str = "org.a11y.atspi.Document"
-DBUS_INTERFACE_EDITABLE_TEXT: str = "org.a11y.atspi.EditableText"
-DBUS_INTERFACE_EVENT_KEYBOARD: str = "org.a11y.atspi.Event.Keyboard"
-DBUS_INTERFACE_EVENT_MOUSE: str = "org.a11y.atspi.Event.Mouse"
-DBUS_INTERFACE_EVENT_OBJECT: str = "org.a11y.atspi.Event.Object"
-DBUS_INTERFACE_EVENT_SCREEN_READER: str = "org.a11y.atspi.Event.ScreenReader"
-DBUS_INTERFACE_HYPERLINK: str = "org.a11y.atspi.Hyperlink"
-DBUS_INTERFACE_HYPERTEXT: str = "org.a11y.atspi.Hypertext"
-DBUS_INTERFACE_IMAGE: str = "org.a11y.atspi.Image"
-DBUS_INTERFACE_REGISTRY: str = "org.a11y.atspi.Registry"
-DBUS_INTERFACE_SELECTION: str = "org.a11y.atspi.Selection"
-DBUS_INTERFACE_SOCKET: str = "org.a11y.atspi.Socket"
-DBUS_INTERFACE_TABLE: str = "org.a11y.atspi.Table"
-DBUS_INTERFACE_TABLE_CELL: str = "org.a11y.atspi.TableCell"
-DBUS_INTERFACE_TEXT: str = "org.a11y.atspi.Text"
-DBUS_INTERFACE_VALUE: str = "org.a11y.atspi.Value"
-DBUS_NAME_REGISTRY: str = "org.a11y.atspi.Registry"
-DBUS_PATH_DEC: str = "/org/a11y/atspi/registry/deviceeventcontroller"
-DBUS_PATH_NULL: str = "/org/a11y/atspi/null"
-DBUS_PATH_REGISTRY: str = "/org/a11y/atspi/registry"
-DBUS_PATH_ROOT: str = "/org/a11y/atspi/accessible/root"
-DBUS_PATH_SCREEN_READER: str = "/org/a11y/atspi/screenreader"
-EVENTTYPE_COUNT: int = 4
-KEYEVENTTYPE_COUNT: int = 2
-KEYSYNTHTYPE_COUNT: int = 5
-LOCALE_TYPE_COUNT: int = 6
-MATCHTYPES_COUNT: int = 6
-MODIFIERTYPE_COUNT: int = 8
-RELATIONTYPE_COUNT: int = 24
-ROLE_COUNT: int = 131
-SCROLLTYPE_COUNT: int = 7
-SORTORDER_COUNT: int = 8
-STATETYPE_COUNT: int = 42
-TEXT_BOUNDARY_TYPE_COUNT: int = 7
-TEXT_CLIP_TYPE_COUNT: int = 4
-TREETRAVERSALTYPE_COUNT: int = 4
-_lock = ...  # FIXME Constant
-_namespace: str = "Atspi"
-_version: str = "2.0"
+COMPONENTLAYER_COUNT: Final[int]
+COORD_TYPE_COUNT: Final[int]
+DBUS_INTERFACE_ACCESSIBLE: Final = "org.a11y.atspi.Accessible"
+DBUS_INTERFACE_ACTION: Final = "org.a11y.atspi.Action"
+DBUS_INTERFACE_APPLICATION: Final = "org.a11y.atspi.Application"
+DBUS_INTERFACE_CACHE: Final = "org.a11y.atspi.Cache"
+DBUS_INTERFACE_COLLECTION: Final = "org.a11y.atspi.Collection"
+DBUS_INTERFACE_COMPONENT: Final = "org.a11y.atspi.Component"
+DBUS_INTERFACE_DEC: Final = "org.a11y.atspi.DeviceEventController"
+DBUS_INTERFACE_DEVICE_EVENT_LISTENER: Final = "org.a11y.atspi.DeviceEventListener"
+DBUS_INTERFACE_DOCUMENT: Final = "org.a11y.atspi.Document"
+DBUS_INTERFACE_EDITABLE_TEXT: Final = "org.a11y.atspi.EditableText"
+DBUS_INTERFACE_EVENT_KEYBOARD: Final = "org.a11y.atspi.Event.Keyboard"
+DBUS_INTERFACE_EVENT_MOUSE: Final = "org.a11y.atspi.Event.Mouse"
+DBUS_INTERFACE_EVENT_OBJECT: Final = "org.a11y.atspi.Event.Object"
+DBUS_INTERFACE_EVENT_SCREEN_READER: Final = "org.a11y.atspi.Event.ScreenReader"
+DBUS_INTERFACE_HYPERLINK: Final = "org.a11y.atspi.Hyperlink"
+DBUS_INTERFACE_HYPERTEXT: Final = "org.a11y.atspi.Hypertext"
+DBUS_INTERFACE_IMAGE: Final = "org.a11y.atspi.Image"
+DBUS_INTERFACE_REGISTRY: Final = "org.a11y.atspi.Registry"
+DBUS_INTERFACE_SELECTION: Final = "org.a11y.atspi.Selection"
+DBUS_INTERFACE_SOCKET: Final = "org.a11y.atspi.Socket"
+DBUS_INTERFACE_TABLE: Final = "org.a11y.atspi.Table"
+DBUS_INTERFACE_TABLE_CELL: Final = "org.a11y.atspi.TableCell"
+DBUS_INTERFACE_TEXT: Final = "org.a11y.atspi.Text"
+DBUS_INTERFACE_VALUE: Final = "org.a11y.atspi.Value"
+DBUS_NAME_REGISTRY: Final = "org.a11y.atspi.Registry"
+DBUS_PATH_DEC: Final = "/org/a11y/atspi/registry/deviceeventcontroller"
+DBUS_PATH_NULL: Final = "/org/a11y/atspi/null"
+DBUS_PATH_REGISTRY: Final = "/org/a11y/atspi/registry"
+DBUS_PATH_ROOT: Final = "/org/a11y/atspi/accessible/root"
+DBUS_PATH_SCREEN_READER: Final = "/org/a11y/atspi/screenreader"
+EVENTTYPE_COUNT: Final[int]
+KEYEVENTTYPE_COUNT: Final[int]
+KEYSYNTHTYPE_COUNT: Final[int]
+LOCALE_TYPE_COUNT: Final[int]
+MATCHTYPES_COUNT: Final[int]
+MODIFIERTYPE_COUNT: Final[int]
+RELATIONTYPE_COUNT: Final[int]
+ROLE_COUNT: Final[int]
+SCROLLTYPE_COUNT: Final[int]
+SORTORDER_COUNT: Final[int]
+STATETYPE_COUNT: Final[int]
+TEXT_BOUNDARY_TYPE_COUNT: Final[int]
+TEXT_CLIP_TYPE_COUNT: Final[int]
+TREETRAVERSALTYPE_COUNT: Final[int]
 
 def deregister_device_event_listener(
     listener: DeviceListener, filter: None
@@ -211,9 +209,9 @@ class AccessibleClass(GObject.GPointer):
         AccessibleClass()
     """
 
-    parent_class: ObjectClass = ...
-    region_changed: Callable[[Accessible, int, int], None] = ...
-    mode_changed: Callable[[Accessible, bool], None] = ...
+    parent_class: ObjectClass
+    region_changed: Callable[[Accessible, int, int], None]
+    mode_changed: Callable[[Accessible, bool], None]
 
 class AccessiblePrivate(GObject.GPointer): ...
 
@@ -243,16 +241,16 @@ class Application(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    hash: dict[None, None] = ...
-    bus_name: str = ...
-    bus: DBus.Connection = ...
-    root: None = ...
-    cache: Cache = ...
-    toolkit_name: str = ...
-    toolkit_version: str = ...
-    atspi_version: str = ...
-    time_added: None = ...
+    parent: GObject.Object
+    hash: dict[None, None]
+    bus_name: str
+    bus: DBus.Connection
+    root: None
+    cache: Cache
+    toolkit_name: str
+    toolkit_version: str
+    atspi_version: str
+    time_added: None
 
 class ApplicationClass(GObject.GPointer):
     """
@@ -263,7 +261,7 @@ class ApplicationClass(GObject.GPointer):
         ApplicationClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class Collection(GObject.GInterface):
     """
@@ -334,7 +332,7 @@ class Device(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
+    parent: GObject.Object
     def add_key_grab(
         self,
         kd: KeyDefinition,
@@ -383,16 +381,16 @@ class DeviceClass(GObject.GPointer):
         DeviceClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    add_key_grab: Callable[[Device, KeyDefinition], bool] = ...
-    remove_key_grab: Callable[[Device, int], None] = ...
-    map_modifier: Callable[[Device, int], int] = ...
-    unmap_modifier: Callable[[Device, int], None] = ...
-    get_modifier: Callable[[Device, int], int] = ...
-    grab_keyboard: Callable[[Device], bool] = ...
-    ungrab_keyboard: Callable[[Device], None] = ...
-    get_locked_modifiers: Callable[[Device], int] = ...
-    generate_mouse_event: Callable[[Device, Accessible, int, int, str], None] = ...
+    parent_class: GObject.ObjectClass
+    add_key_grab: Callable[[Device, KeyDefinition], bool]
+    remove_key_grab: Callable[[Device, int], None]
+    map_modifier: Callable[[Device, int], int]
+    unmap_modifier: Callable[[Device, int], None]
+    get_modifier: Callable[[Device, int], int]
+    grab_keyboard: Callable[[Device], bool]
+    ungrab_keyboard: Callable[[Device], None]
+    get_locked_modifiers: Callable[[Device], int]
+    generate_mouse_event: Callable[[Device, Accessible, int, int, str], None]
 
 class DeviceEvent(GObject.GBoxed):
     """
@@ -403,13 +401,13 @@ class DeviceEvent(GObject.GBoxed):
         DeviceEvent()
     """
 
-    type: EventType = ...
-    id: int = ...
-    hw_code: int = ...
-    modifiers: int = ...
-    timestamp: int = ...
-    event_string: str = ...
-    is_text: bool = ...
+    type: EventType
+    id: int
+    hw_code: int
+    modifiers: int
+    timestamp: int
+    event_string: str
+    is_text: bool
 
 class DeviceLegacy(Device):
     """
@@ -426,7 +424,7 @@ class DeviceLegacy(Device):
       notify (GParam)
     """
 
-    parent: Device = ...
+    parent: Device
     @classmethod
     def new(cls) -> DeviceLegacy: ...
 
@@ -439,7 +437,7 @@ class DeviceLegacyClass(GObject.GPointer):
         DeviceLegacyClass()
     """
 
-    parent_class: DeviceClass = ...
+    parent_class: DeviceClass
 
 class DeviceListener(GObject.Object):
     """
@@ -456,9 +454,9 @@ class DeviceListener(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    id: int = ...
-    callbacks: list[None] = ...
+    parent: GObject.Object
+    id: int
+    callbacks: list[None]
     def add_callback(self, callback: Callable[..., bool], *user_data: Any) -> None: ...
     def do_device_event(self, event: DeviceEvent) -> bool: ...
     @classmethod
@@ -474,8 +472,8 @@ class DeviceListenerClass(GObject.GPointer):
         DeviceListenerClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    device_event: Callable[[DeviceListener, DeviceEvent], bool] = ...
+    parent_class: GObject.ObjectClass
+    device_event: Callable[[DeviceListener, DeviceEvent], bool]
 
 class DeviceX11(Device):
     """
@@ -492,7 +490,7 @@ class DeviceX11(Device):
       notify (GParam)
     """
 
-    parent: Device = ...
+    parent: Device
     @classmethod
     def new(cls) -> DeviceX11: ...
 
@@ -505,7 +503,7 @@ class DeviceX11Class(GObject.GPointer):
         DeviceX11Class()
     """
 
-    parent_class: DeviceClass = ...
+    parent_class: DeviceClass
 
 class Document(GObject.GInterface):
     """
@@ -541,12 +539,12 @@ class Event(GObject.GBoxed):
         Event()
     """
 
-    type: str = ...
-    source: Accessible = ...
-    detail1: int = ...
-    detail2: int = ...
-    any_data: Any = ...
-    sender: Accessible = ...
+    type: str
+    source: Accessible
+    detail1: int
+    detail2: int
+    any_data: Any
+    sender: Accessible
     @staticmethod
     def main() -> None: ...
     @staticmethod
@@ -567,10 +565,10 @@ class EventListener(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    callback: Callable[..., None] = ...
-    user_data: None = ...
-    cb_destroyed: Callable[[None], None] = ...
+    parent: GObject.Object
+    callback: Callable[..., None]
+    user_data: None
+    cb_destroyed: Callable[[None], None]
     def deregister(self, event_type: str) -> bool: ...
     @staticmethod
     def deregister_from_callback(
@@ -617,7 +615,7 @@ class EventListenerClass(GObject.GPointer):
         EventListenerClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class EventListenerMode(GObject.GPointer):
     """
@@ -628,9 +626,9 @@ class EventListenerMode(GObject.GPointer):
         EventListenerMode()
     """
 
-    synchronous: bool = ...
-    preemptive: bool = ...
-    global_: bool = ...
+    synchronous: bool
+    preemptive: bool
+    global_: bool
 
 class Hyperlink(Object):
     """
@@ -646,7 +644,7 @@ class Hyperlink(Object):
       notify (GParam)
     """
 
-    parent: Object = ...
+    parent: Object
     def get_end_index(self) -> int: ...
     def get_index_range(self) -> Range: ...
     def get_n_anchors(self) -> int: ...
@@ -664,7 +662,7 @@ class HyperlinkClass(GObject.GPointer):
         HyperlinkClass()
     """
 
-    parent_class: ObjectClass = ...
+    parent_class: ObjectClass
 
 class Hypertext(GObject.GInterface):
     """
@@ -695,10 +693,10 @@ class KeyDefinition(GObject.GBoxed):
         KeyDefinition()
     """
 
-    keycode: int = ...
-    keysym: int = ...
-    keystring: str = ...
-    modifiers: int = ...
+    keycode: int
+    keysym: int
+    keystring: str
+    modifiers: int
 
 class KeySet(GObject.GPointer):
     """
@@ -709,10 +707,10 @@ class KeySet(GObject.GPointer):
         KeySet()
     """
 
-    keysyms: int = ...
-    keycodes: int = ...
-    keystrings: str = ...
-    len: int = ...
+    keysyms: int
+    keycodes: int
+    keystrings: str
+    len: int
 
 class MatchRule(GObject.Object):
     """
@@ -729,16 +727,16 @@ class MatchRule(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    states: StateSet = ...
-    statematchtype: CollectionMatchType = ...
-    attributes: dict[None, None] = ...
-    attributematchtype: CollectionMatchType = ...
-    interfaces: list[None] = ...
-    interfacematchtype: CollectionMatchType = ...
-    roles: list[int] = ...
-    rolematchtype: CollectionMatchType = ...
-    invert: bool = ...
+    parent: GObject.Object
+    states: StateSet
+    statematchtype: CollectionMatchType
+    attributes: dict[None, None]
+    attributematchtype: CollectionMatchType
+    interfaces: list[None]
+    interfacematchtype: CollectionMatchType
+    roles: list[int]
+    rolematchtype: CollectionMatchType
+    invert: bool
     @classmethod
     def new(
         cls,
@@ -762,7 +760,7 @@ class MatchRuleClass(GObject.GPointer):
         MatchRuleClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class Object(GObject.Object):
     """
@@ -778,9 +776,9 @@ class Object(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    app: Application = ...
-    path: str = ...
+    parent: GObject.Object
+    app: Application
+    path: str
 
 class ObjectClass(GObject.GPointer):
     """
@@ -791,7 +789,7 @@ class ObjectClass(GObject.GPointer):
         ObjectClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class Point(GObject.GBoxed):
     """
@@ -802,8 +800,8 @@ class Point(GObject.GBoxed):
         Point()
     """
 
-    x: int = ...
-    y: int = ...
+    x: int
+    y: int
     def copy(self) -> Point: ...
 
 class Range(GObject.GBoxed):
@@ -815,8 +813,8 @@ class Range(GObject.GBoxed):
         Range()
     """
 
-    start_offset: int = ...
-    end_offset: int = ...
+    start_offset: int
+    end_offset: int
     def copy(self) -> Range: ...
 
 class Rect(GObject.GBoxed):
@@ -828,10 +826,10 @@ class Rect(GObject.GBoxed):
         Rect()
     """
 
-    x: int = ...
-    y: int = ...
-    width: int = ...
-    height: int = ...
+    x: int
+    y: int
+    width: int
+    height: int
     def copy(self) -> Rect: ...
 
 class Relation(GObject.Object):
@@ -848,9 +846,9 @@ class Relation(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    relation_type: RelationType = ...
-    targets: list[None] = ...
+    parent: GObject.Object
+    relation_type: RelationType
+    targets: list[None]
     def get_n_targets(self) -> int: ...
     def get_relation_type(self) -> RelationType: ...
     def get_target(self, i: int) -> Accessible: ...
@@ -864,7 +862,7 @@ class RelationClass(GObject.GPointer):
         RelationClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class Selection(GObject.GInterface):
     """
@@ -895,9 +893,9 @@ class StateSet(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
-    accessible: None = ...
-    states: int = ...
+    parent: GObject.Object
+    accessible: None
+    states: int
     def add(self, state: StateType) -> None: ...
     def compare(self, set2: StateSet) -> StateSet: ...
     def contains(self, state: StateType) -> bool: ...
@@ -918,7 +916,7 @@ class StateSetClass(GObject.GPointer):
         StateSetClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class Table(GObject.GInterface):
     """
@@ -1034,9 +1032,9 @@ class TextRange(GObject.GBoxed):
         TextRange()
     """
 
-    start_offset: int = ...
-    end_offset: int = ...
-    content: str = ...
+    start_offset: int
+    end_offset: int
+    content: str
 
 class TextSelection(GObject.GPointer):
     """
@@ -1047,11 +1045,11 @@ class TextSelection(GObject.GPointer):
         TextSelection()
     """
 
-    start_object: Accessible = ...
-    start_offset: int = ...
-    end_object: Accessible = ...
-    end_offset: int = ...
-    start_is_active: bool = ...
+    start_object: Accessible
+    start_offset: int
+    end_object: Accessible
+    end_offset: int
+    start_is_active: bool
 
 class Value(GObject.GInterface):
     """
