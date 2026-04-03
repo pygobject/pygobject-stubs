@@ -407,7 +407,7 @@ WidgetT = typing.TypeVar("WidgetT", bound=Widget)
         imports.append("import enum")
     elif namespace == "Gio":
         typevars.append(
-            'ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object)'
+            'ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object, default=typing.Any)'
         )
 
     if "cairo" in ns:
