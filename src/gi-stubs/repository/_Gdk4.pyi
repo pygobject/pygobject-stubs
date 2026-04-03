@@ -1,8 +1,8 @@
 import typing
 
 import cairo
+from gi import _gi
 from gi.repository import GdkPixbuf
-from gi.repository import gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -3629,7 +3629,7 @@ class Drop(GObject.Object):
     def read_value_finish(self, result: Gio.AsyncResult) -> typing.Any: ...
     def status(self, actions: DragAction, preferred: DragAction) -> None: ...
 
-class Event(gi.Fundamental):
+class Event(_gi.Fundamental):
     """
     :Constructors:
 

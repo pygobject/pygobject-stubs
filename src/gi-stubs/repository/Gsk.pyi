@@ -1,8 +1,8 @@
 import typing
 
 import cairo
+from gi import _gi
 from gi.repository import Gdk
-from gi.repository import gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Graphene
@@ -763,7 +763,7 @@ class RadialGradientNode(RenderNode):
         color_stops: typing.Sequence[ColorStop],
     ) -> RadialGradientNode: ...
 
-class RenderNode(gi.Fundamental):
+class RenderNode(_gi.Fundamental):
     """
     :Constructors:
 

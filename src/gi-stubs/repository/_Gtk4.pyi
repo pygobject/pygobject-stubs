@@ -3,9 +3,9 @@ import typing
 import os
 
 import cairo
+from gi import _gi
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
-from gi.repository import gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -11749,7 +11749,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
     def set_use_markup(self, use_markup: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class Expression(gi.Fundamental):
+class Expression(_gi.Fundamental):
     """
     :Constructors:
 
@@ -24238,7 +24238,7 @@ class PropertyExpression(Expression):
         cls, expression: typing.Optional[Expression], pspec: GObject.ParamSpec
     ) -> PropertyExpression: ...
 
-class PyGTKDeprecationWarning(gi.PyGIDeprecationWarning): ...
+class PyGTKDeprecationWarning(_gi.PyGIDeprecationWarning): ...
 
 class Range(
     Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
