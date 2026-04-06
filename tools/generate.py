@@ -16,6 +16,8 @@ import pprint
 import re
 import textwrap
 import types
+from dataclasses import dataclass
+from dataclasses import field
 from types import ModuleType
 
 import gi
@@ -110,9 +112,8 @@ def _object_get_props(
 
 
 def _callable_get_arguments(
-    type: GI.CallbackInfo,
-    current_namespace: str,
-    needed_namespaces: set[str],
+    stub: Stub,
+    type: GI.CallableInfo,
     can_default: bool = False,
 ) -> typing.Tuple[list[str], list[str], list[str]]:
     function_args = type.get_arguments()
@@ -158,9 +159,7 @@ def _callable_get_arguments(
         if arg.get_closure_index() != i and arg.get_destroy_index() != i:
             direction = arg.get_direction()
             if direction == GI.Direction.OUT or direction == GI.Direction.INOUT:
-                t = _type_to_python(
-                    arg.get_type_info(), current_namespace, needed_namespaces, True
-                )
+                t = _type_to_python(stub, arg.get_type_info(), True)
 
                 dict_return_args[i] = t
             elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
@@ -171,9 +170,8 @@ def _callable_get_arguments(
     args = list(dict_args.values())
     for a in reversed(args):
         t = _type_to_python(
+            stub,
             a.get_type_info(),
-            current_namespace,
-            needed_namespaces,
             False,
             a.get_closure_index() >= 0,  # True if function admits variable arguments
         )
@@ -198,9 +196,7 @@ def _callable_get_arguments(
         names.append(f"*{optional_args_name}")
         str_args.append("typing.Any")
 
-    return_type = _type_to_python(
-        type.get_return_type(), current_namespace, needed_namespaces, True
-    )
+    return_type = _type_to_python(stub, type.get_return_type(), True)
     if type.may_return_null() and return_type != "None" and not is_async_res:
         return_type = f"typing.Optional[{return_type}]"
 
@@ -257,9 +253,8 @@ def _build_type(type: GIRepository.BaseInfo) -> TypeInfo:
 
 
 def _type_to_python(
+    stub: Stub,
     type: TypeInfo,
-    current_namespace: str,
-    needed_namespaces: set[str],
     out_arg: bool = False,
     varargs: bool = False,
 ) -> str:
@@ -268,7 +263,7 @@ def _type_to_python(
 
     if tag == tags.ARRAY:
         array_type = type.get_param_type(0)
-        t = _type_to_python(array_type, current_namespace, needed_namespaces)
+        t = _type_to_python(stub, array_type)
         if out_arg:
             # As output argument array of type uint8 are returned as bytes
             if array_type.get_tag() == GI.TypeTag.UINT8:
@@ -280,7 +275,7 @@ def _type_to_python(
 
     if tag in (tags.GLIST, tags.GSLIST):
         array_type = type.get_param_type(0)
-        t = _type_to_python(array_type, current_namespace, needed_namespaces)
+        t = _type_to_python(stub, array_type)
         return f"list[{t}]"
 
     if tag == tags.BOOLEAN:
@@ -290,17 +285,13 @@ def _type_to_python(
         return "float"
 
     if tag == tags.ERROR:
-        if current_namespace == "GLib":
-            return "Error"
-        else:
-            needed_namespaces.add("GLib")
-            return "GLib.Error"
+        return stub.get_namespace_member("GLib", "Error")
 
     if tag == tags.GHASH:
         key_type = type.get_param_type(0)
         value_type = type.get_param_type(1)
-        kt = _type_to_python(key_type, current_namespace, needed_namespaces)
-        vt = _type_to_python(value_type, current_namespace, needed_namespaces)
+        kt = _type_to_python(stub, key_type)
+        vt = _type_to_python(stub, value_type)
         return f"dict[{kt}, {vt}]"
 
     if tag in (tags.FILENAME, tags.UTF8, tags.UNICHAR):
@@ -324,9 +315,7 @@ def _type_to_python(
     if tag == tags.INTERFACE:
         interface = type.get_interface()
         if isinstance(interface, GI.CallbackInfo):
-            (names, args, return_args) = _callable_get_arguments(
-                interface, current_namespace, needed_namespaces
-            )
+            (names, args, return_args) = _callable_get_arguments(stub, interface)
 
             return_type = ""
             if len(return_args) == 1:
@@ -361,78 +350,12 @@ def _type_to_python(
             if namespace == "cairo" and name == "Context" and not out_arg:
                 return "cairo.Context[_SomeSurface]"
 
-            if current_namespace == namespace:
-                return f"{name}"
-            else:
-                needed_namespaces.add(namespace)
-                return f"{namespace}.{name}"
+            return stub.get_namespace_member(namespace, name)
 
     if tag == tags.VOID:
         return "None"
 
     raise ValueError("TODO")
-
-
-def _build(
-    repo: GIRepository.Repository,
-    parent: ObjectT,
-    namespace: str,
-    overrides: dict[str, str],
-) -> str:
-    ns: set[str] = set()
-    ret = _gi_build_stub(repo, parent, namespace, dir(parent), ns, overrides, None, "")
-
-    imports: list[str] = []
-    typevars: list[str] = [
-        'T = typing.TypeVar("T")',
-    ]
-
-    if namespace == "Gtk":
-        imports.append("import os")
-        typevars.append(
-            """CellRendererT = typing.TypeVar(
-    "CellRendererT",
-    CellRendererCombo,
-    CellRendererPixbuf,
-    CellRendererProgress,
-    CellRendererSpin,
-    CellRendererSpinner,
-    CellRendererText,
-    CellRendererToggle,
-)
-WidgetT = typing.TypeVar("WidgetT", bound=Widget)
-"""
-        )
-    elif namespace == "GObject":
-        imports.append("import enum")
-    elif namespace == "Gio":
-        typevars.append(
-            'ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object, default=typing.Any)'
-        )
-
-    if "cairo" in ns:
-        imports.append("import cairo")
-        typevars.append(
-            '_SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)'
-        )
-        ns.remove("cairo")
-
-    if "_gi" in ns:
-        imports.append("from gi import _gi")
-        ns.remove("_gi")
-
-    imports += [f"from gi.repository import {n}" for n in sorted(ns)]
-
-    return (
-        "import typing\n"
-        + "from typing_extensions import Self\n"
-        + "\n"
-        + "\n".join(imports)
-        + "\n"
-        + "\n".join(typevars)
-        + "\n\n"
-        + ret
-    )
 
 
 def _generate_full_name(prefix: str, name: str) -> str:
@@ -443,11 +366,10 @@ def _generate_full_name(prefix: str, name: str) -> str:
 
 
 def _build_function_info(
-    current_namespace: str,
+    stub: Stub,
     name: str,
     function: GI.FunctionInfo | GI.VFuncInfo,
     in_class: typing.Optional[typing.Any],
-    needed_namespaces: set[str],
     return_signature: typing.Optional[str] = None,
     comment: typing.Optional[str] = None,
 ) -> str:
@@ -468,9 +390,7 @@ def _build_function_info(
         static = True
 
     # Arguments
-    (names, args, return_args) = _callable_get_arguments(
-        function, current_namespace, needed_namespaces, True
-    )
+    (names, args, return_args) = _callable_get_arguments(stub, function, True)
     args_types = [
         f"{fix_argument_name(name)}: {args[i]}" for (i, name) in enumerate(names)
     ]
@@ -509,18 +429,15 @@ def _build_function_info(
 
 
 def _wrapped_strip_boolean_result(
-    current_namespace: str,
+    stub: Stub,
     name: str,
     function: typing.Any,
     in_class: typing.Optional[typing.Any],
-    needed_namespaces: set[str],
 ) -> str:
     real_function = function.__wrapped__
     fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
 
-    (_, _, return_args) = _callable_get_arguments(
-        real_function, current_namespace, needed_namespaces
-    )
+    (_, _, return_args) = _callable_get_arguments(stub, real_function)
     return_args = return_args[1:]  # Strip first return value
 
     if len(return_args) > 1:
@@ -540,36 +457,30 @@ def _wrapped_strip_boolean_result(
             return_signature = f"({return_signature} | typing.Literal[{fail_ret}])"
 
     return _build_function_info(
-        current_namespace,
+        stub,
         name,
         real_function,
         in_class,
-        needed_namespaces,
         return_signature,
         "CHECK Wrapped function",
     )
 
 
 def _build_function(
-    current_namespace: str,
+    stub: Stub,
     name: str,
     function: typing.Any,
     in_class: typing.Optional[typing.Any],
-    needed_namespaces: set[str],
 ) -> str:
     if name.startswith("_") and name not in ALLOWED_FUNCTIONS:
         return ""
 
     if hasattr(function, "__wrapped__"):
         if "strip_boolean_result" in str(function):
-            return _wrapped_strip_boolean_result(
-                current_namespace, name, function, in_class, needed_namespaces
-            )
+            return _wrapped_strip_boolean_result(stub, name, function, in_class)
 
     if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
-        return _build_function_info(
-            current_namespace, name, function, in_class, needed_namespaces
-        )
+        return _build_function_info(stub, name, function, in_class)
 
     signature_string: str
     missing_annotation = False
@@ -619,13 +530,92 @@ def _build_function(
     return definition
 
 
-def _check_override(
-    prefix: str, name: str, overrides: dict[str, str]
-) -> typing.Optional[str]:
-    full_name = _generate_full_name(prefix, name)
-    if full_name in overrides:
-        return "# override\n" + overrides[full_name]
-    return None
+@dataclass(slots=True)
+class Stub:
+    repo: GIRepository.Repository
+    parent: ObjectT
+    namespace: str
+    overrides: dict[str, str]
+    needed_namespaces: set[str] = field(init=False, default_factory=set)
+
+    def check_override(self, prefix: str, name: str) -> typing.Optional[str]:
+        full_name = _generate_full_name(prefix, name)
+        if full_name in overrides:
+            return "# override\n" + overrides[full_name]
+        return None
+
+    def get_namespace_member(
+        self,
+        namespace: str,
+        name: str,
+        /,
+        *,
+        current_namespace_member: typing.Optional[str] = None,
+    ) -> str:
+        if namespace == self.namespace:
+            return (
+                name if current_namespace_member is None else current_namespace_member
+            )
+
+        self.needed_namespaces.add(namespace)
+        return f"{namespace}.{name}"
+
+    def build(self) -> str:
+        ret = _gi_build_stub_parts(self, self.parent, dir(self.parent), None, "")[0]
+
+        imports: list[str] = []
+        typevars: list[str] = [
+            'T = typing.TypeVar("T")',
+        ]
+
+        if self.namespace == "Gtk":
+            imports.append("import os")
+            typevars.append(
+                """CellRendererT = typing.TypeVar(
+    "CellRendererT",
+    CellRendererCombo,
+    CellRendererPixbuf,
+    CellRendererProgress,
+    CellRendererSpin,
+    CellRendererSpinner,
+    CellRendererText,
+    CellRendererToggle,
+)
+WidgetT = typing.TypeVar("WidgetT", bound=Widget)
+"""
+            )
+        elif self.namespace == "GObject":
+            imports.append("import enum")
+        elif self.namespace == "Gio":
+            typevars.append(
+                'ObjectItemType = typing.TypeVar("ObjectItemType", bound=GObject.Object, default=typing.Any)'
+            )
+
+        if "cairo" in self.needed_namespaces:
+            imports.append("import cairo")
+            typevars.append(
+                '_SomeSurface = typing.TypeVar("_SomeSurface", bound=cairo.Surface)'
+            )
+            self.needed_namespaces.remove("cairo")
+
+        if "_gi" in self.needed_namespaces:
+            imports.append("from gi import _gi")
+            self.needed_namespaces.remove("_gi")
+
+        imports += [
+            f"from gi.repository import {n}" for n in sorted(self.needed_namespaces)
+        ]
+
+        return (
+            "import typing\n"
+            + "from typing_extensions import Self\n"
+            + "\n"
+            + "\n".join(imports)
+            + "\n"
+            + "\n".join(typevars)
+            + "\n\n"
+            + ret
+        )
 
 
 def _format_annotation(annotation: typing.Any) -> str:
@@ -637,35 +627,10 @@ def _format_annotation(annotation: typing.Any) -> str:
         return inspect.formatannotation(annotation).replace('"', "").replace("'", "")
 
 
-def _gi_build_stub(
-    repo: GIRepository.Repository,
-    parent: ObjectT,
-    current_namespace: str,
-    children: list[str],
-    needed_namespaces: set[str],
-    overrides: dict[str, str],
-    in_class: typing.Optional[typing.Any],
-    prefix_name: str,
-) -> str:
-    return _gi_build_stub_parts(
-        repo,
-        parent,
-        current_namespace,
-        children,
-        needed_namespaces,
-        overrides,
-        in_class,
-        prefix_name,
-    )[0]
-
-
 def _gi_build_stub_parts(
-    repo: GIRepository.Repository,
+    stub: Stub,
     parent: ObjectT,
-    current_namespace: str,
     children: list[str],
-    needed_namespaces: set[str],
-    overrides: dict[str, str],
     in_class: typing.Optional[typing.Any],
     prefix_name: str,
 ) -> tuple[str, list[GI.FieldInfo]]:
@@ -747,7 +712,7 @@ def _gi_build_stub_parts(
             # Gdk.EventType.2BUTTON_PRESS
             continue
 
-        override = _check_override(prefix_name, name, overrides)
+        override = stub.check_override(prefix_name, name)
         if override:
             ret += override + "\n"
             continue
@@ -782,21 +747,19 @@ def _gi_build_stub_parts(
     if "__new__" in functions or (in_class and issubclass(in_class, GObject.GObject)):
         functions.pop("__init__", None)
     for name in sorted(functions):
-        override = _check_override(prefix_name, name, overrides)
+        override = stub.check_override(prefix_name, name)
         if override:
             ret += override + "\n"
             continue
 
-        ret += _build_function(
-            current_namespace, name, functions[name], in_class, needed_namespaces
-        )
+        ret += _build_function(stub, name, functions[name], in_class)
 
     if ret and classes:
         ret += "\n"
 
     # Classes
     for name, obj in sorted(classes.items()):
-        override = _check_override(prefix_name, name, overrides)
+        override = stub.check_override(prefix_name, name)
         if override:
             ret += override + "\n\n"
             continue
@@ -804,12 +767,9 @@ def _gi_build_stub_parts(
         full_name = _generate_full_name(prefix_name, name)
 
         classret, fields = _gi_build_stub_parts(
-            repo,
+            stub,
             obj,
-            current_namespace,
             _find_attributes(obj),
-            needed_namespaces,
-            overrides,
             obj,
             full_name,
         )
@@ -827,53 +787,37 @@ def _gi_build_stub_parts(
             if isinstance(object_info, GI.ObjectInfo):
                 p = object_info.get_parent()
                 if p:
-                    if current_namespace == p.get_namespace():
-                        parents.append(f"{p.get_name()}")
-                    else:
-                        parents.append(f"{p.get_namespace()}.{p.get_name()}")
-                        needed_namespaces.add(p.get_namespace())
+                    parents.append(
+                        stub.get_namespace_member(p.get_namespace(), p.get_name())
+                    )
                     props_parents.append(f"{parents[-1]}.Props")
                 elif object_info.get_fundamental():
                     # If no parent, but it's a fundamental, it inherits from gi._gi.Fundamental
-                    if current_namespace == "_gi":
-                        parents.append("Fundamental")
-                    else:
-                        parents.append("_gi.Fundamental")
-                        needed_namespaces.add("_gi")
+                    parents.append(stub.get_namespace_member("_gi", "Fundamental"))
 
                 ifaces = object_info.get_interfaces()
                 for i in ifaces:
-                    if current_namespace == i.get_namespace():
-                        parents.append(f"{i.get_name()}")
-                    else:
-                        parents.append(f"{i.get_namespace()}.{i.get_name()}")
-                        needed_namespaces.add(i.get_namespace())
+                    parents.append(
+                        stub.get_namespace_member(i.get_namespace(), i.get_name())
+                    )
 
                 # Properties
-                (rp, wp) = _object_get_props(repo, object_info)
+                (rp, wp) = _object_get_props(stub.repo, object_info)
                 readable_props.extend(rp)
                 writable_props.extend(wp)
 
             elif isinstance(object_info, GI.InterfaceInfo):
-                if current_namespace == "GObject":
-                    parents.append("Object")
-                else:
-                    parents.append("GObject.GInterface")
-                    needed_namespaces.add("GObject")
+                parents.append(
+                    stub.get_namespace_member(
+                        "GObject", "GInterface", current_namespace_member="Object"
+                    )
+                )
 
             elif gtype and issubclass(b, GObject.GBoxed):
-                if current_namespace == "GObject":
-                    parents.append(f"GBoxed")
-                else:
-                    parents.append(f"GObject.GBoxed")
-                    needed_namespaces.add("GObject")
+                parents.append(stub.get_namespace_member("GObject", "GBoxed"))
 
             elif gtype and issubclass(b, GObject.GPointer):
-                if current_namespace == "GObject":
-                    parents.append(f"GPointer")
-                else:
-                    parents.append(f"GObject.GPointer")
-                    needed_namespaces.add("GObject")
+                parents.append(stub.get_namespace_member("GObject", "GPointer"))
 
             else:
                 # Add non-GI base classes. Overrides could define new classes, such as:
@@ -886,8 +830,10 @@ def _gi_build_stub_parts(
                 if type_fullname.startswith("gi.overrides."):
                     type_fullname = type_fullname[len("gi.overrides.") :]
                 ns, type_name = type_fullname.split(".", 1)
-                if ns == current_namespace:
+                if ns == stub.namespace:
                     parents.append(type_name)
+                elif ns in ("gi", "_gi", "GI", "_GI"):
+                    parents.append(stub.get_namespace_member("_gi", type_name))
                 elif ns == "builtins":
                     if type_name != "object":
                         parents.append(type_name)
@@ -918,7 +864,7 @@ def _gi_build_stub_parts(
                 txt = textwrap.indent(txt, "    ")
                 ret += txt
 
-        props_override = _check_override(full_name, "Props", overrides)
+        props_override = stub.check_override(full_name, "Props")
         if props_override:
             for line in props_override.splitlines():
                 ret += "    " + line + "\n"
@@ -932,7 +878,7 @@ def _gi_build_stub_parts(
                     continue
                 names.append(n)
                 type = _build_type(GIRepository.PropertyInfo.get_type_info(p))
-                t = _type_to_python(type, current_namespace, needed_namespaces, True)
+                t = _type_to_python(stub, type, True)
 
                 # Check getter/setter
                 getter = GIRepository.PropertyInfo.get_getter(p)
@@ -960,17 +906,15 @@ def _gi_build_stub_parts(
             ret += f"    props: Props = ...\n"
 
         for f in fields:
-            t = _type_to_python(
-                f.get_type_info(), current_namespace, needed_namespaces, True
-            )
+            t = _type_to_python(stub, f.get_type_info(), True)
             n = f.get_name()
-            override = _check_override(full_name, n, overrides)
+            override = stub.check_override(full_name, n)
             if override:
                 ret += f"    {override} = ...\n"
             else:
                 ret += f"    {n}: {t} = ...\n"
 
-        class_constructor_override = _check_override(full_name, "__init__", overrides)
+        class_constructor_override = stub.check_override(full_name, "__init__")
         if class_constructor_override:
             for line in class_constructor_override.splitlines():
                 ret += "    " + line + "\n"
@@ -984,7 +928,7 @@ def _gi_build_stub_parts(
                     continue
                 names.append(n)
                 type = _build_type(GIRepository.PropertyInfo.get_type_info(p))
-                t = _type_to_python(type, current_namespace, needed_namespaces)
+                t = _type_to_python(stub, type)
                 setter = GIRepository.PropertyInfo.get_setter(p)
                 if setter:
                     arg_info = GIRepository.CallableInfo.get_arg(setter, 0)
@@ -1008,28 +952,24 @@ def _gi_build_stub_parts(
 
     # Flags
     for name, obj in sorted(flags.items()):
-        override = _check_override(prefix_name, name, overrides)
+        override = stub.check_override(prefix_name, name)
         if override:
             ret += override + "\n\n"
             continue
 
         full_name = _generate_full_name(prefix_name, name)
+        flag_base = (
+            stub.get_namespace_member("GObject", "GFlags")
+            if (stub.namespace != "GObject" or name != "GFlags")
+            else "enum.IntFlag"
+        )
 
-        if current_namespace == "GObject":
-            if name != "GFlags":
-                base = "GFlags"
-            else:
-                base = "enum.IntFlag"
-        else:
-            needed_namespaces.add("GObject")
-            base = "GObject.GFlags"
-
-        ret += f"class {name}({base}):\n"
+        ret += f"class {name}({flag_base}):\n"
         for key in sorted(vars(obj)):
             if key.startswith(("__", "_")) or key[0].isdigit():
                 continue
 
-            override = _check_override(full_name, key, overrides)
+            override = stub.check_override(full_name, key)
             if override:
                 for line in override.splitlines():
                     ret += "    " + line + "\n"
@@ -1037,9 +977,7 @@ def _gi_build_stub_parts(
 
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
-                function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
-                )
+                function_ret = _build_function(stub, key, o, obj)
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
@@ -1054,30 +992,26 @@ def _gi_build_stub_parts(
 
     # Enums
     for name, obj in sorted(enums.items()):
-        override = _check_override(prefix_name, name, overrides)
+        override = stub.check_override(prefix_name, name)
         if override:
             ret += override + "\n\n"
             continue
 
         full_name = _generate_full_name(prefix_name, name)
-
-        if current_namespace == "GObject":
-            if name != "GEnum":
-                base = "GEnum"
-            else:
-                base = "enum.IntEnum"
-        else:
-            needed_namespaces.add("GObject")
-            base = "GObject.GEnum"
+        enum_base = (
+            stub.get_namespace_member("GObject", "GEnum")
+            if (stub.namespace != "GObject" or name != "GEnum")
+            else "enum.IntEnum"
+        )
 
         # Some Enums can be empty in the end
-        ret += f"class {name}({base}):\n"
+        ret += f"class {name}({enum_base}):\n"
         length_before = len(ret)
         for key in sorted(vars(obj)):
             if key.startswith(("__", "_")) or key[0].isdigit():
                 continue
 
-            override = _check_override(full_name, key, overrides)
+            override = stub.check_override(full_name, key)
             if override:
                 for line in override.splitlines():
                     ret += "    " + line + "\n"
@@ -1085,9 +1019,7 @@ def _gi_build_stub_parts(
 
             o = getattr(obj, key)
             if isinstance(o, GI.FunctionInfo):
-                function_ret = _build_function(
-                    current_namespace, key, o, obj, needed_namespaces
-                )
+                function_ret = _build_function(stub, key, o, obj)
                 for line in function_ret.splitlines():
                     ret += "    " + line + "\n"
             elif hasattr(o, "real"):
@@ -1128,7 +1060,8 @@ def start(
     m = importlib.import_module(f".{module}", "gi.repository")
     if init:
         exec(init)
-    return _build(repo, m, module, overrides)
+    stub = Stub(repo, m, module, overrides)
+    return stub.build()
 
 
 if __name__ == "__main__":
