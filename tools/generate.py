@@ -1211,14 +1211,17 @@ def start(
 ) -> str:
     repo = GIRepository.Repository()
     repo.require(module, version, 0)  # type: ignore
+
+    gi.require_version(module, version)
     m = importlib.import_module(f".{module}", "gi.repository")
+
     if init:
         exec(init)
     stub = Stub(repo, m, module, overrides, imports)
     return stub.build()
 
 
-if __name__ == "__main__":
+def main() -> None:
     parser = argparse.ArgumentParser(description="Generate module stubs")
     parser.add_argument("module", type=str, help="Gdk, Gtk, ...")
     parser.add_argument("version", type=str, help="3.0, 4.0, ...")
@@ -1248,3 +1251,7 @@ if __name__ == "__main__":
             file.write(output)
     else:
         print(start(args.module, args.version, args.init, {}, []))
+
+
+if __name__ == "__main__":
+    main()
