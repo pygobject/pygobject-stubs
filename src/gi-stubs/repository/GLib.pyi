@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -8,6 +9,9 @@ from collections.abc import Sequence as _Sequence
 from enum import IntEnum
 from enum import IntFlag
 
+import gi
+from gi._error import GError as _GError
+from gi.repository import GLibUnix
 from gi.repository import GObject
 
 T = TypeVar("T")
@@ -211,11 +215,13 @@ USER_DIRECTORY_VIDEOS: int = 7
 VA_COPY_AS_ARRAY: int = 1
 VERSION_MIN_REQUIRED: int = 2
 WIN32_MSG_HANDLE: int = 19981206
-glib_version = ...  # FIXME: Constant is missing typing annotation
+# override
+glib_version: tuple[int, int, int]
 macro__has_attribute___noreturn__: int = 0
 macro__has_attribute_ifunc: int = 0
 macro__has_attribute_no_sanitize_address: int = 0
-pyglib_version = ...  # FIXME: Constant is missing typing annotation
+# override
+pyglib_version: Final = gi.version_info
 
 def access(filename: str, mode: int) -> int: ...
 def aligned_alloc(n_blocks: int, n_block_bytes: int, alignment: int) -> None: ...
@@ -394,7 +400,9 @@ def child_watch_source_new(pid: int) -> Source: ...
 def chmod(filename: str, mode: int) -> int: ...
 def clear_error() -> None: ...
 def close(fd: int) -> bool: ...
-def closefrom(lowfd: int) -> int: ...
+
+closefrom: Final = GLibUnix.closefrom
+
 def compute_checksum_for_bytes(
     checksum_type: ChecksumType, data: Bytes
 ) -> str | None: ...
@@ -479,7 +487,9 @@ def error_domain_register_static(
     error_type_copy: Callable[[Error, Error], None],
     error_type_clear: Callable[[Error], None],
 ) -> int: ...
-def fdwalk_set_cloexec(lowfd: int) -> int: ...
+
+fdwalk_set_cloexec: Final = GLibUnix.fdwalk_set_cloexec
+
 def file_error_from_errno(err_no: int) -> FileError: ...
 def file_error_quark() -> int: ...
 def file_get_contents(filename: str) -> tuple[bool, bytes]: ...
@@ -1079,31 +1089,18 @@ def unicode_canonical_decomposition(ch: str, result_len: int) -> str: ...
 def unicode_canonical_ordering(string: _Sequence[str]) -> None: ...
 def unicode_script_from_iso15924(iso15924: int) -> UnicodeScript: ...
 def unicode_script_to_iso15924(script: UnicodeScript) -> int: ...
-def unix_error_quark() -> int: ...
-def unix_fd_add_full(
-    priority: int,
-    fd: int,
-    condition: IOCondition,
-    function: Callable[..., bool],
-    *user_data: Any,
-) -> int: ...
-def unix_fd_source_new(fd: int, condition: IOCondition) -> Source: ...
-def unix_get_passwd_entry(user_name: str) -> None: ...
-def unix_open_pipe(fds: _Sequence[int], flags: int) -> bool: ...
-def unix_set_fd_nonblocking(fd: int, nonblock: bool) -> bool: ...
-def unix_signal_add(
-    priority: int,
-    signum: int,
-    handler: Callable[..., bool],
-    *user_data: Any,
-) -> int: ...
-def unix_signal_add_full(
-    priority: int,
-    signum: int,
-    handler: Callable[..., bool],
-    *user_data: Any,
-) -> int: ...
-def unix_signal_source_new(signum: int) -> Source: ...
+
+unix_error_quark: Final = GLibUnix.error_quark
+unix_fd_add_full: Final = GLibUnix.fd_add_full
+unix_fd_query_path: Final = GLibUnix.fd_query_path
+unix_fd_source_new: Final = GLibUnix.fd_source_new
+unix_get_passwd_entry: Final = GLibUnix.get_passwd_entry
+unix_open_pipe: Final = GLibUnix.open_pipe
+unix_set_fd_nonblocking: Final = GLibUnix.set_fd_nonblocking
+unix_signal_add: Final = GLibUnix.signal_add
+unix_signal_add_full: Final = GLibUnix.signal_add
+unix_signal_source_new: Final = GLibUnix.signal_source_new
+
 def unlink(filename: str) -> int: ...
 def unsetenv(variable: str) -> None: ...
 def uri_build(
@@ -1755,24 +1752,13 @@ class DoubleIEEE754(GObject.GPointer):
     v_double = ...  # FIXME: Constant is missing typing annotation
 
 # override
-Error = GError
+Error = _GError
 
 class FloatIEEE754(GObject.GPointer):
     v_float = ...  # FIXME: Constant is missing typing annotation
 
-class GError(RuntimeError):
-    code: int
-    domain: str
-    message: str
-
-    def __init__(
-        self, message: str = "unknown error", domain: str = "pygi-error", code: int = 0
-    ) -> None: ...
-    def copy(self) -> Self: ...
-    def matches(self, domain: str | int, code: int) -> bool: ...
-    # override
-    @staticmethod
-    def new_literal(domain: int, message: str, code: int) -> Self: ...
+# override
+GError = _GError
 
 class HashTable(GObject.GBoxed):
     @staticmethod
@@ -2588,12 +2574,11 @@ class PatternSpec(GObject.GBoxed):
     @classmethod
     def new(cls, pattern: str) -> PatternSpec: ...
 
-class Pid(int):
-    def __new__(*args, **kwargs):
-        """
-        Create and return a new object.  See help(type) for accurate signature.
-        """  # FIXME: Override is missing typing annotation
-    def close(self, /): ...  # FIXME: Override is missing typing annotation
+# override
+class Pid:
+    def __init__(self, pid: int) -> None: ...
+    def __int__(self) -> int: ...
+    def close(self) -> None: ...
 
 class PollFD(GObject.GBoxed):
     """
@@ -3521,16 +3506,7 @@ class Tuples(GObject.GPointer):
     def destroy(self) -> None: ...
     def index(self, index_: int, field: int) -> None: ...
 
-class UnixPipe(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        UnixPipe()
-    """
-
-    fds: list[int] = ...
+UnixPipe = GLibUnix.Pipe
 
 class Uri(GObject.GBoxed):
     @staticmethod
@@ -4773,9 +4749,7 @@ class UnicodeType(GObject.GEnum):
     UNASSIGNED = 2
     UPPERCASE_LETTER = 9
 
-class UnixPipeEnd(IntEnum):
-    READ = 0
-    WRITE = 1
+UnixPipeEnd = GLibUnix.PipeEnd
 
 class UriError(IntEnum):
     BAD_AUTH_PARAMS = 4
