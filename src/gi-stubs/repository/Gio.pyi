@@ -13,7 +13,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 
 T = TypeVar("T")
-ObjectItemType = TypeVar("ObjectItemType", bound=GObject.Object)
+ObjectItemType = TypeVar("ObjectItemType", bound=GObject.Object, default=Any)
 
 DBUS_METHOD_INVOCATION_HANDLED: bool = True
 DBUS_METHOD_INVOCATION_UNHANDLED: bool = False
