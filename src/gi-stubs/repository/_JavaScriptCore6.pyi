@@ -58,12 +58,13 @@ class Class(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         name: str
         parent: Class
         context: Context
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, context: Context = ..., name: str = ..., parent: Class = ...
     ): ...
@@ -116,8 +117,8 @@ class ClassClass(GObject.GPointer):
 
         ClassClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ClassVTable(GObject.GPointer):
     """
@@ -161,10 +162,11 @@ class Context(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         virtual_machine: VirtualMachine
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, virtual_machine: VirtualMachine = ...): ...
     def check_syntax(
         self, code: str, length: int, mode: CheckSyntaxMode, uri: str, line_number: int
@@ -217,8 +219,8 @@ class ContextClass(GObject.GPointer):
 
         ContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Exception(GObject.Object):
     """
@@ -257,8 +259,8 @@ class ExceptionClass(GObject.GPointer):
 
         ExceptionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Value(GObject.Object):
     """
@@ -291,10 +293,11 @@ class Value(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         context: Context
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, context: Context = ...): ...
     def array_buffer_get_data(self, size: int | None = None) -> None: ...
     def array_buffer_get_size(self) -> int: ...
@@ -420,8 +423,8 @@ class ValueClass(GObject.GPointer):
 
         ValueClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class VirtualMachine(GObject.Object):
     """
@@ -449,8 +452,8 @@ class VirtualMachineClass(GObject.GPointer):
 
         VirtualMachineClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WeakValue(GObject.Object):
     """
@@ -473,10 +476,11 @@ class WeakValue(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         value: Value
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, value: Value = ...): ...
     def get_value(self) -> Value: ...
     @classmethod
@@ -490,8 +494,8 @@ class WeakValueClass(GObject.GPointer):
 
         WeakValueClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ValuePropertyFlags(IntFlag):
     CONFIGURABLE = 1

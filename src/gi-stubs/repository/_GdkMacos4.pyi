@@ -63,7 +63,8 @@ class MacosDevice(_Gdk4.Device):
         tool: _Gdk4.DeviceTool | None
         vendor_id: str | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -113,7 +114,8 @@ class MacosDisplay(_Gdk4.Display):
         rgba: bool
         shadow_width: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
 
 class MacosDisplayClass(GObject.GPointer): ...
 
@@ -146,7 +148,8 @@ class MacosGLContext(_Gdk4.GLContext):
         display: _Gdk4.Display | None
         surface: _Gdk4.Surface | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -206,7 +209,8 @@ class MacosMonitor(_Gdk4.Monitor):
         valid: bool
         width_mm: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
     @staticmethod
     def get_geometry(self: _Gdk4.Monitor, geometry: _Gdk4.Rectangle) -> None: ...
@@ -240,7 +244,8 @@ class MacosSeat(_Gdk4.Seat):
     class Props(_Gdk4.Seat.Props):
         display: _Gdk4.Display
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
 
 class MacosSeatClass(GObject.GPointer): ...
@@ -289,7 +294,8 @@ class MacosSurface(_Gdk4.Surface):
         scale_factor: int
         width: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         *,

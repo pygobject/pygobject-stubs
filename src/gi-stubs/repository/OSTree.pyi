@@ -255,9 +255,10 @@ class AsyncProgressClass(GObject.GPointer):
 
         AsyncProgressClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    changed: Callable[..., None] = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def changed(self) -> Callable[..., None]: ...
 
 class BootconfigParser(GObject.Object):
     """
@@ -362,8 +363,8 @@ class ContentWriterClass(GObject.GPointer):
 
         ContentWriterClass()
     """
-
-    parent_class: Gio.OutputStreamClass = ...
+    @property
+    def parent_class(self) -> Gio.OutputStreamClass: ...
 
 class Deployment(GObject.Object):
     """
@@ -568,8 +569,8 @@ class MutableTreeClass(GObject.GPointer):
 
         MutableTreeClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class MutableTreeIter(GObject.GPointer):
     """
@@ -617,12 +618,13 @@ class Repo(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         path: Gio.File
         remotes_config_dir: str
         sysroot_path: Gio.File
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         path: Gio.File = ...,
@@ -1405,8 +1407,8 @@ class RepoFileClass(GObject.GPointer):
 
         RepoFileClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RepoFinder(GObject.GInterface):
     """
@@ -1465,8 +1467,8 @@ class RepoFinderAvahiClass(GObject.GPointer):
 
         RepoFinderAvahiClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RepoFinderConfig(GObject.Object, RepoFinder):
     """
@@ -1494,8 +1496,8 @@ class RepoFinderConfigClass(GObject.GPointer):
 
         RepoFinderConfigClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RepoFinderInterface(GObject.GPointer):
     """
@@ -1505,12 +1507,14 @@ class RepoFinderInterface(GObject.GPointer):
 
         RepoFinderInterface()
     """
-
-    g_iface: GObject.TypeInterface = ...
-    resolve_async: Callable[..., None] = ...
-    resolve_finish: Callable[
-        [RepoFinder, Gio.AsyncResult], list[RepoFinderResult]
-    ] = ...
+    @property
+    def g_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def resolve_async(self) -> Callable[..., None]: ...
+    @property
+    def resolve_finish(
+        self,
+    ) -> Callable[[RepoFinder, Gio.AsyncResult], list[RepoFinderResult]]: ...
 
 class RepoFinderMount(GObject.Object, RepoFinder):
     """
@@ -1531,10 +1535,11 @@ class RepoFinderMount(GObject.Object, RepoFinder):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         monitor: Gio.VolumeMonitor
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, monitor: Gio.VolumeMonitor = ...): ...
     @classmethod
     def new(cls, monitor: Gio.VolumeMonitor | None = None) -> RepoFinderMount: ...
@@ -1547,8 +1552,8 @@ class RepoFinderMountClass(GObject.GPointer):
 
         RepoFinderMountClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RepoFinderOverride(GObject.Object, RepoFinder):
     """
@@ -1577,8 +1582,8 @@ class RepoFinderOverrideClass(GObject.GPointer):
 
         RepoFinderOverrideClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class RepoFinderResult(GObject.GBoxed):
     """
@@ -1596,7 +1601,8 @@ class RepoFinderResult(GObject.GBoxed):
     ref_to_checksum: dict[CollectionRef, str] = ...
     summary_last_modified: int = ...
     ref_to_timestamp: dict[CollectionRef, int] = ...
-    padding: list[None] = ...
+    @property
+    def padding(self) -> list[None]: ...
     def compare(self, b: RepoFinderResult) -> int: ...
     def dup(self) -> RepoFinderResult: ...
     def free(self) -> None: ...
@@ -1671,11 +1677,12 @@ class SePolicy(GObject.Object, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         path: Gio.File | None
         rootfs_dfd: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, path: Gio.File = ..., rootfs_dfd: int = ...): ...
     @staticmethod
     def fscreatecon_cleanup(unused: None) -> None: ...
@@ -1793,20 +1800,34 @@ class SignInterface(GObject.GPointer):
 
         SignInterface()
     """
-
-    g_iface: GObject.TypeInterface = ...
-    get_name: Callable[[Sign], str] = ...
-    data: Callable[
+    @property
+    def g_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_name(self) -> Callable[[Sign], str]: ...
+    @property
+    def data(
+        self,
+    ) -> Callable[
         [Sign, GLib.Bytes, Gio.Cancellable | None], tuple[bool, GLib.Bytes]
-    ] = ...
-    data_verify: Callable[[Sign, GLib.Bytes, GLib.Variant], tuple[bool, str]] = ...
-    metadata_key: Callable[[Sign], str] = ...
-    metadata_format: Callable[[Sign], str] = ...
-    clear_keys: Callable[[Sign], bool] = ...
-    set_sk: Callable[[Sign, GLib.Variant], bool] = ...
-    set_pk: Callable[[Sign, GLib.Variant], bool] = ...
-    add_pk: Callable[[Sign, GLib.Variant], bool] = ...
-    load_pk: Callable[[Sign, GLib.Variant], bool] = ...
+    ]: ...
+    @property
+    def data_verify(
+        self,
+    ) -> Callable[[Sign, GLib.Bytes, GLib.Variant], tuple[bool, str]]: ...
+    @property
+    def metadata_key(self) -> Callable[[Sign], str]: ...
+    @property
+    def metadata_format(self) -> Callable[[Sign], str]: ...
+    @property
+    def clear_keys(self) -> Callable[[Sign], bool]: ...
+    @property
+    def set_sk(self) -> Callable[[Sign, GLib.Variant], bool]: ...
+    @property
+    def set_pk(self) -> Callable[[Sign, GLib.Variant], bool]: ...
+    @property
+    def add_pk(self) -> Callable[[Sign, GLib.Variant], bool]: ...
+    @property
+    def load_pk(self) -> Callable[[Sign, GLib.Variant], bool]: ...
 
 class Sysroot(GObject.Object):
     """
@@ -1831,10 +1852,11 @@ class Sysroot(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         path: Gio.File
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, path: Gio.File = ...): ...
     def cleanup(self, cancellable: Gio.Cancellable | None = None) -> bool: ...
     def cleanup_prune_repo(
@@ -2025,12 +2047,13 @@ class SysrootUpgrader(GObject.Object, Gio.Initable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         flags: SysrootUpgraderFlags
         osname: str
         sysroot: Sysroot
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         flags: SysrootUpgraderFlags = ...,

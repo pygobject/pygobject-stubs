@@ -18,7 +18,6 @@ import itertools
 import pprint
 import re
 import textwrap
-import types
 from collections.abc import Callable
 from dataclasses import dataclass
 from dataclasses import field
@@ -49,6 +48,11 @@ ObjectT: TypeAlias = ModuleType | type[Any]
 _identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
 _typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)(?P<suffix>\b)")
 _free_typing_re: Final = re.compile(r"(?P<prefix>\b)(?P<name>Any|Self)(?P<suffix>\b)")
+
+# GLib 2.86 added a new flag which changed the naming of WRITABLE to IS_WRITABLE
+_IS_FIELD_WRITABLE: Final[GIRepository.FieldInfoFlags] = getattr(
+    GIRepository.FieldInfoFlags, "IS_WRITABLE", None
+) or getattr(GIRepository.FieldInfoFlags, "WRITABLE")
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
@@ -693,6 +697,12 @@ class Stub:
 
         return None
 
+    def get_property(
+        self, name: str, return_annotation: str, /, *, indent: str = ""
+    ) -> str:
+        property_symbol = self.get_import("builtins", "property")
+        return f"{indent}@{property_symbol}\n{indent}def {name}(self) -> {return_annotation}: ...\n"
+
     def __replace_typing(self, match: re.Match[str]) -> str:
         match match.group("name"):
             case ("Callable" | "Sequence" | "Iterable" | "Iterator") as name:
@@ -724,7 +734,8 @@ class Stub:
         try:
             # This requires Python 3.14
             formatted = inspect.formatannotation(
-                annotation, quote_annotation_strings=False
+                annotation,
+                quote_annotation_strings=False,  # pyright: ignore[reportCallIssue]
             )
         except:
             # This should be a good enough fallback for older Pythons
@@ -737,7 +748,7 @@ class Stub:
     def format_signature(self, signature: inspect.Signature) -> str:
         try:
             # This requires Python 3.14
-            formatted = signature.format(quote_annotation_strings=False)
+            formatted = signature.format(quote_annotation_strings=False)  # pyright: ignore[reportAttributeAccessIssue]
         except:
             # This should be a good enough fallback for older Pythons
             formatted = str(signature).replace('"', "").replace("'", "")
@@ -770,8 +781,11 @@ WidgetT = {_TypeVar}("WidgetT", bound=Widget)"""
             )
         elif self.namespace == "Gio":
             any_symbol = self.get_import("typing", "Any")
-            typevars.append(
-                f'ObjectItemType = {_TypeVar}("ObjectItemType", bound=GObject.Object, default={any_symbol})'
+            typevars.extend(
+                [
+                    f'ObjectItemType = {_TypeVar}("ObjectItemType", bound=GObject.Object, default={any_symbol})',
+                    f'ObjectPropsItemType = {_TypeVar}("ObjectPropsItemType", bound=GObject.Object, default={any_symbol})',
+                ]
             )
 
         if ("cairo", None) in self.needed_imports:
@@ -944,7 +958,10 @@ def _gi_build_stub_parts(
         parents: list[str] = []
         props_parents: list[str] = []
         object_info = obj.__dict__.get("__info__")
-        bases = [obj] if object_info else types.get_original_bases(obj)
+        bases = (
+            [obj] if object_info else obj.__dict__.get("__orig_bases__", obj.__bases__)
+        )
+
         for b in bases:
             object_info = b.__dict__.get("__info__")
             gtype = b.__dict__.get("__gtype__")
@@ -952,10 +969,11 @@ def _gi_build_stub_parts(
             if isinstance(object_info, GI.ObjectInfo):
                 p = object_info.get_parent()
                 if p:
-                    parents.append(
-                        stub.get_namespace_member(p.get_namespace(), p.get_name())
+                    parent_symbol = stub.get_namespace_member(
+                        p.get_namespace(), p.get_name()
                     )
-                    props_parents.append(f"{parents[-1]}.Props")
+                    parents.append(parent_symbol)
+                    props_parents.append(f"{parent_symbol}.Props")
                 elif object_info.get_fundamental():
                     # If no parent, but it's a fundamental, it inherits from gi._gi.Fundamental
                     parents.append(stub.get_namespace_member("_gi", "Fundamental"))
@@ -1025,11 +1043,11 @@ def _gi_build_stub_parts(
                 txt = textwrap.indent(txt, "    ")
                 ret += txt
 
-        props_override = stub.check_override(full_name, "Props")
-        if props_override:
-            for line in props_override.splitlines():
+        props_class_override = stub.check_override(full_name, "Props")
+        if props_class_override:
+            for line in props_class_override.splitlines():
                 ret += "    " + line + "\n"
-        elif len(readable_props) > 0 or len(writable_props) > 0:
+        elif readable_props or writable_props:
             names: list[str] = []
             s: list[str] = []
             for p in itertools.chain(readable_props, writable_props):
@@ -1055,15 +1073,21 @@ def _gi_build_stub_parts(
                 else:
                     s.append(f"{n}: {t}")
 
-            props_string_parents = ""
-            if len(props_parents) > 0:
-                props_string_parents = f"({', '.join(props_parents)})"
+            props_string_parents = (
+                f"({', '.join(props_parents)})" if props_parents else ""
+            )
 
             separator = "\n        "
-            ret += (
-                f"    class Props{props_string_parents}:\n        {separator.join(s)}\n"
-            )
-            ret += f"    props: Props = ...\n"
+            ret += f"    class Props{props_string_parents}:{separator}"
+            ret += separator.join(s)
+            ret += "\n"
+
+        props_override = stub.check_override(full_name, "props")
+        if props_override:
+            for line in props_override.splitlines():
+                ret += "    " + line + "\n"
+        elif props_class_override or readable_props or writable_props:
+            ret += stub.get_property("props", "Props", indent="    ")
 
         for f in fields:
             t = _type_to_python(stub, f.get_type_info(), True)
@@ -1072,7 +1096,11 @@ def _gi_build_stub_parts(
             if override:
                 ret += f"    {override} = ...\n"
             else:
-                ret += f"    {n}: {t} = ...\n"
+                field_flags = f.get_flags()
+                if not (field_flags & _IS_FIELD_WRITABLE):
+                    ret += stub.get_property(n, t, indent="    ")
+                else:
+                    ret += f"    {n}: {t} = ...\n"
 
         class_constructor_override = stub.check_override(full_name, "__init__")
         if class_constructor_override:

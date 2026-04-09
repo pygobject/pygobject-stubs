@@ -374,8 +374,8 @@ class PortalClass(GObject.GPointer):
 
         PortalClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Session(GObject.Object):
     """
@@ -430,7 +430,8 @@ class SessionClass(GObject.GPointer):
         SessionClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class BackgroundFlags(GObject.GFlags):
     ACTIVATABLE = 2

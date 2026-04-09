@@ -1256,7 +1256,7 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         artists: list[str]
         authors: list[str]
         comments: str
@@ -1349,9 +1349,12 @@ class AboutDialog(Dialog, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: AboutDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> AboutDialogPrivate: ...
     def __init__(
         self,
         artists: Sequence[str] = ...,
@@ -1517,13 +1520,15 @@ class AccelGroup(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         is_locked: bool
         modifier_mask: _Gdk3.ModifierType
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: AccelGroupPrivate = ...
+    @property
+    def priv(self) -> AccelGroupPrivate: ...
     def activate(
         self,
         accel_quark: int,
@@ -1843,7 +1848,7 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Label.Props):
         accel_closure: Callable[..., Any] | None
         accel_widget: Widget | None
         angle: float
@@ -1910,9 +1915,11 @@ class AccelLabel(Label, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         pattern: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     label: Label = ...
-    priv: AccelLabelPrivate = ...
+    @property
+    def priv(self) -> AccelLabelPrivate: ...
     def __init__(
         self,
         accel_closure: Callable[..., Any] | None = ...,
@@ -2130,7 +2137,7 @@ class Accessible(Atk.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Atk.Object.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -2148,9 +2155,11 @@ class Accessible(Atk.Object):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Atk.Object = ...
-    priv: AccessiblePrivate = ...
+    @property
+    def priv(self) -> AccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -2244,7 +2253,7 @@ class Action(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         action_group: ActionGroup
         always_show_image: bool
         gicon: Gio.Icon
@@ -2262,7 +2271,8 @@ class Action(GObject.Object, Buildable):
         visible_overflown: bool
         visible_vertical: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     object: GObject.Object = ...
     private_data: ActionPrivate = ...
     def __init__(
@@ -2520,7 +2530,7 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -2564,7 +2574,8 @@ class ActionBar(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
     def __init__(
         self,
@@ -2702,15 +2713,17 @@ class ActionGroup(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accel_group: AccelGroup
         name: str
         sensitive: bool
         visible: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: ActionGroupPrivate = ...
+    @property
+    def priv(self) -> ActionGroupPrivate: ...
     def __init__(
         self,
         accel_group: AccelGroup | None = ...,
@@ -2855,7 +2868,7 @@ class Adjustment(GObject.InitiallyUnowned):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         lower: float
         page_increment: float
         page_size: float
@@ -2863,9 +2876,12 @@ class Adjustment(GObject.InitiallyUnowned):
         upper: float
         value: float
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
-    priv: AdjustmentPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
+    @property
+    def priv(self) -> AdjustmentPrivate: ...
     def __init__(
         self,
         lower: float = ...,
@@ -3130,7 +3146,7 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         bottom_padding: int
         left_padding: int
         right_padding: int
@@ -3182,9 +3198,11 @@ class Alignment(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: AlignmentPrivate = ...
+    @property
+    def priv(self) -> AlignmentPrivate: ...
     def __init__(
         self,
         bottom_padding: int = ...,
@@ -3522,7 +3540,7 @@ class AppChooserButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ComboBox.Props):
         heading: str | None
         show_default_item: bool
         show_dialog_item: bool
@@ -3587,9 +3605,11 @@ class AppChooserButton(
         editing_canceled: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ComboBox = ...
-    priv: AppChooserButtonPrivate = ...
+    @property
+    def priv(self) -> AppChooserButtonPrivate: ...
     def __init__(
         self,
         heading: str = ...,
@@ -3950,7 +3970,7 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         gfile: Gio.File
         heading: str | None
         use_header_bar: int
@@ -4031,9 +4051,11 @@ class AppChooserDialog(Dialog, Atk.ImplementorIface, AppChooser, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Dialog = ...
-    priv: AppChooserDialogPrivate = ...
+    @property
+    def priv(self) -> AppChooserDialogPrivate: ...
     def __init__(
         self,
         gfile: Gio.File = ...,
@@ -4342,7 +4364,7 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         default_text: str
         show_all: bool
         show_default: bool
@@ -4397,9 +4419,11 @@ class AppChooserWidget(Box, Atk.ImplementorIface, AppChooser, Buildable, Orienta
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Box = ...
-    priv: AppChooserWidgetPrivate = ...
+    @property
+    def priv(self) -> AppChooserWidgetPrivate: ...
     def __init__(
         self,
         default_text: str = ...,
@@ -4559,7 +4583,7 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.Application.Props):
         active_window: Window | None
         app_menu: Gio.MenuModel | None
         menubar: Gio.MenuModel
@@ -4574,9 +4598,11 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
         resource_base_path: str | None
         action_group: Gio.ActionGroup | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Gio.Application = ...
-    priv: ApplicationPrivate = ...
+    @property
+    def priv(self) -> ApplicationPrivate: ...
     def __init__(
         self,
         app_menu: Gio.MenuModel | None = ...,
@@ -4912,7 +4938,7 @@ class ApplicationWindow(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         show_menubar: bool
         accept_focus: bool
         application: Application | None
@@ -4990,9 +5016,12 @@ class ApplicationWindow(
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Window = ...
-    priv: ApplicationWindowPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Window: ...
+    @property
+    def priv(self) -> ApplicationWindowPrivate: ...
     def __init__(
         self,
         show_menubar: bool = ...,
@@ -5269,7 +5298,7 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Misc.Props):
         arrow_type: ArrowType
         shadow_type: ShadowType
         xalign: float
@@ -5316,9 +5345,11 @@ class Arrow(Misc, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     misc: Misc = ...
-    priv: ArrowPrivate = ...
+    @property
+    def priv(self) -> ArrowPrivate: ...
     def __init__(
         self,
         arrow_type: ArrowType = ...,
@@ -5434,7 +5465,7 @@ class ArrowAccessible(WidgetAccessible, Atk.Component, Atk.Image):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -5452,9 +5483,11 @@ class ArrowAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: ArrowAccessiblePrivate = ...
+    @property
+    def priv(self) -> ArrowAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -5704,7 +5737,7 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Frame.Props):
         obey_child: bool
         ratio: float
         xalign: float
@@ -5757,9 +5790,11 @@ class AspectFrame(Frame, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     frame: Frame = ...
-    priv: AspectFramePrivate = ...
+    @property
+    def priv(self) -> AspectFramePrivate: ...
     def __init__(
         self,
         obey_child: bool = ...,
@@ -6107,7 +6142,7 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -6185,9 +6220,11 @@ class Assistant(Window, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Window = ...
-    priv: AssistantPrivate = ...
+    @property
+    def priv(self) -> AssistantPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -6501,7 +6538,7 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -6545,9 +6582,11 @@ class Bin(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: BinPrivate = ...
+    @property
+    def priv(self) -> BinPrivate: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -6774,7 +6813,7 @@ class BooleanCellAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(RendererCellAccessible.Props):
         renderer: CellRenderer
         widget: Widget | None
         accessible_component_layer: int
@@ -6793,9 +6832,11 @@ class BooleanCellAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: RendererCellAccessible = ...
-    priv: BooleanCellAccessiblePrivate = ...
+    @property
+    def priv(self) -> BooleanCellAccessiblePrivate: ...
     def __init__(
         self,
         renderer: CellRenderer = ...,
@@ -7034,7 +7075,7 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -7082,9 +7123,11 @@ class Box(Container, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: BoxPrivate = ...
+    @property
+    def priv(self) -> BoxPrivate: ...
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
@@ -7261,12 +7304,15 @@ class Builder(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         translation_domain: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: BuilderPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> BuilderPrivate: ...
     def __init__(self, translation_domain: str | None = ...): ...
     def add_callback_symbol(
         self, callback_name: str, callback_symbol: Callable[[], None]
@@ -7547,7 +7593,7 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         always_show_image: bool
         image: Widget | None
         image_position: PositionType
@@ -7604,9 +7650,11 @@ class Button(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: ButtonPrivate = ...
+    @property
+    def priv(self) -> ButtonPrivate: ...
     def __init__(
         self,
         always_show_image: bool = ...,
@@ -7772,7 +7820,7 @@ class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Image
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -7790,9 +7838,11 @@ class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Image
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: ButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> ButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -8015,7 +8065,7 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         layout_style: ButtonBoxStyle
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -8064,9 +8114,11 @@ class ButtonBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     box: Box = ...
-    priv: ButtonBoxPrivate = ...
+    @property
+    def priv(self) -> ButtonBoxPrivate: ...
     def __init__(
         self,
         layout_style: ButtonBoxStyle = ...,
@@ -8362,7 +8414,7 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         day: int
         detail_height_rows: int
         detail_width_chars: int
@@ -8413,9 +8465,11 @@ class Calendar(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: CalendarPrivate = ...
+    @property
+    def priv(self) -> CalendarPrivate: ...
     def __init__(
         self,
         day: int = ...,
@@ -8576,7 +8630,7 @@ class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Accessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -8594,9 +8648,11 @@ class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Accessible = ...
-    priv: CellAccessiblePrivate = ...
+    @property
+    def priv(self) -> CellAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -8716,14 +8772,17 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         edit_widget: CellEditable
         edited_cell: CellRenderer
         focus_cell: CellRenderer
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
-    priv: CellAreaPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
+    @property
+    def priv(self) -> CellAreaPrivate: ...
     def __init__(self, focus_cell: CellRenderer = ...): ...
     def activate(
         self,
@@ -8966,16 +9025,19 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellArea.Props):
         spacing: int
         edit_widget: CellEditable
         edited_cell: CellRenderer
         focus_cell: CellRenderer
         orientation: Orientation
 
-    props: Props = ...
-    parent_instance: CellArea = ...
-    priv: CellAreaBoxPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> CellArea: ...
+    @property
+    def priv(self) -> CellAreaBoxPrivate: ...
     def __init__(
         self,
         spacing: int = ...,
@@ -9116,16 +9178,19 @@ class CellAreaContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         area: CellArea
         minimum_height: int
         minimum_width: int
         natural_height: int
         natural_width: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: CellAreaContextPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> CellAreaContextPrivate: ...
     def __init__(self, area: CellArea = ...): ...
     def allocate(self, width: int, height: int) -> None: ...
     def do_allocate(self, width: int, height: int) -> None: ...
@@ -9295,7 +9360,7 @@ class CellRenderer(GObject.InitiallyUnowned):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         cell_background_gdk: _Gdk3.Color
         cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
@@ -9313,9 +9378,12 @@ class CellRenderer(GObject.InitiallyUnowned):
         ypad: int
         cell_background: str
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
-    priv: CellRendererPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
+    @property
+    def priv(self) -> CellRendererPrivate: ...
     def __init__(
         self,
         cell_background: str = ...,
@@ -9604,7 +9672,7 @@ class CellRendererAccel(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         accel_key: int
         accel_mode: CellRendererAccelMode
         accel_mods: _Gdk3.ModifierType
@@ -9674,9 +9742,11 @@ class CellRendererAccel(CellRendererText):
         markup: str
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRendererText = ...
-    priv: CellRendererAccelPrivate = ...
+    @property
+    def priv(self) -> CellRendererAccelPrivate: ...
     def __init__(
         self,
         accel_key: int = ...,
@@ -9842,7 +9912,8 @@ class CellRendererClass(GObject.GPointer):
     ] = ...
     editing_canceled: Callable[[CellRenderer], None] = ...
     editing_started: Callable[[CellRenderer, CellEditable, str], None] = ...
-    priv: CellRendererClassPrivate = ...
+    @property
+    def priv(self) -> CellRendererClassPrivate: ...
     _gtk_reserved2: None = ...
     _gtk_reserved3: None = ...
     _gtk_reserved4: None = ...
@@ -10015,7 +10086,7 @@ class CellRendererCombo(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         has_entry: bool
         model: TreeModel
         text_column: int
@@ -10084,9 +10155,11 @@ class CellRendererCombo(CellRendererText):
         markup: str
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRendererText = ...
-    priv: CellRendererComboPrivate = ...
+    @property
+    def priv(self) -> CellRendererComboPrivate: ...
     def __init__(
         self,
         has_entry: bool = ...,
@@ -10251,7 +10324,7 @@ class CellRendererPixbuf(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         follow_state: bool
         gicon: Gio.Icon
         icon_name: str
@@ -10279,9 +10352,11 @@ class CellRendererPixbuf(CellRenderer):
         ypad: int
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRenderer = ...
-    priv: CellRendererPixbufPrivate = ...
+    @property
+    def priv(self) -> CellRendererPixbufPrivate: ...
     def __init__(
         self,
         follow_state: bool = ...,
@@ -10398,7 +10473,7 @@ class CellRendererProgress(CellRenderer, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         inverted: bool
         pulse: int
         text: str
@@ -10423,9 +10498,12 @@ class CellRendererProgress(CellRenderer, Orientable):
         orientation: Orientation
         cell_background: str
 
-    props: Props = ...
-    parent_instance: CellRenderer = ...
-    priv: CellRendererProgressPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> CellRenderer: ...
+    @property
+    def priv(self) -> CellRendererProgressPrivate: ...
     def __init__(
         self,
         inverted: bool = ...,
@@ -10633,7 +10711,7 @@ class CellRendererSpin(CellRendererText):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRendererText.Props):
         adjustment: Adjustment
         climb_rate: float
         digits: int
@@ -10702,9 +10780,11 @@ class CellRendererSpin(CellRendererText):
         markup: str
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRendererText = ...
-    priv: CellRendererSpinPrivate = ...
+    @property
+    def priv(self) -> CellRendererSpinPrivate: ...
     def __init__(
         self,
         adjustment: Adjustment = ...,
@@ -10855,7 +10935,7 @@ class CellRendererSpinner(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         active: bool
         pulse: int
         size: IconSize
@@ -10876,9 +10956,11 @@ class CellRendererSpinner(CellRenderer):
         ypad: int
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRenderer = ...
-    priv: CellRendererSpinnerPrivate = ...
+    @property
+    def priv(self) -> CellRendererSpinnerPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -11074,7 +11156,7 @@ class CellRendererText(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
@@ -11140,9 +11222,11 @@ class CellRendererText(CellRenderer):
         markup: str
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRenderer = ...
-    priv: CellRendererTextPrivate = ...
+    @property
+    def priv(self) -> CellRendererTextPrivate: ...
     def __init__(
         self,
         align_set: bool = ...,
@@ -11300,7 +11384,7 @@ class CellRendererToggle(CellRenderer):
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellRenderer.Props):
         activatable: bool
         active: bool
         inconsistent: bool
@@ -11323,9 +11407,11 @@ class CellRendererToggle(CellRenderer):
         ypad: int
         cell_background: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellRenderer = ...
-    priv: CellRendererTogglePrivate = ...
+    @property
+    def priv(self) -> CellRendererTogglePrivate: ...
     def __init__(
         self,
         activatable: bool = ...,
@@ -11567,7 +11653,7 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         background_gdk: _Gdk3.Color
         background_rgba: _Gdk3.RGBA
         background_set: bool
@@ -11618,9 +11704,12 @@ class CellView(Widget, Atk.ImplementorIface, Buildable, CellLayout, Orientable):
         orientation: Orientation
         background: str
 
-    props: Props = ...
-    parent_instance: Widget = ...
-    priv: CellViewPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Widget: ...
+    @property
+    def priv(self) -> CellViewPrivate: ...
     def __init__(
         self,
         background: str = ...,
@@ -11932,7 +12021,7 @@ class CheckButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleButton.Props):
         active: bool
         draw_indicator: bool
         inconsistent: bool
@@ -11992,7 +12081,8 @@ class CheckButton(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     toggle_button: ToggleButton = ...
     def __init__(
         self,
@@ -12289,7 +12379,7 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuItem.Props):
         active: bool
         draw_as_radio: bool
         inconsistent: bool
@@ -12345,9 +12435,11 @@ class CheckMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_item: MenuItem = ...
-    priv: CheckMenuItemPrivate = ...
+    @property
+    def priv(self) -> CheckMenuItemPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -12498,7 +12590,7 @@ class CheckMenuItemAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuItemAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -12516,9 +12608,11 @@ class CheckMenuItemAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: MenuItemAccessible = ...
-    priv: CheckMenuItemAccessiblePrivate = ...
+    @property
+    def priv(self) -> CheckMenuItemAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -12857,7 +12951,7 @@ class ColorButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         alpha: int
         color: _Gdk3.Color
         rgba: _Gdk3.RGBA
@@ -12920,9 +13014,11 @@ class ColorButton(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     button: Button = ...
-    priv: ColorButtonPrivate = ...
+    @property
+    def priv(self) -> ColorButtonPrivate: ...
     def __init__(
         self,
         alpha: int = ...,
@@ -13307,7 +13403,7 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         show_editor: bool
         use_header_bar: int
         accept_focus: bool
@@ -13388,9 +13484,12 @@ class ColorChooserDialog(Dialog, Atk.ImplementorIface, Buildable, ColorChooser):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: ColorChooserDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> ColorChooserDialogPrivate: ...
     def __init__(
         self,
         show_editor: bool = ...,
@@ -13703,7 +13802,7 @@ class ColorChooserWidget(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         show_editor: bool
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -13754,9 +13853,12 @@ class ColorChooserWidget(
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
-    parent_instance: Box = ...
-    priv: ColorChooserWidgetPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
+    @property
+    def priv(self) -> ColorChooserWidgetPrivate: ...
     def __init__(
         self,
         show_editor: bool = ...,
@@ -14033,7 +14135,7 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         current_alpha: int
         current_color: _Gdk3.Color
         current_rgba: _Gdk3.RGBA
@@ -14086,8 +14188,10 @@ class ColorSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
-    parent_instance: Box = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
     private_data: ColorSelectionPrivate = ...
     def __init__(
         self,
@@ -14454,7 +14558,7 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         cancel_button: Widget
         color_selection: Widget
         help_button: Widget
@@ -14536,9 +14640,12 @@ class ColorSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: ColorSelectionDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> ColorSelectionDialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -14863,7 +14970,7 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         active: int
         active_id: str | None
         add_tearoffs: bool
@@ -14924,9 +15031,12 @@ class ComboBox(Bin, Atk.ImplementorIface, Buildable, CellEditable, CellLayout):
         editing_canceled: bool
         child: Widget
 
-    props: Props = ...
-    parent_instance: Bin = ...
-    priv: ComboBoxPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Bin: ...
+    @property
+    def priv(self) -> ComboBoxPrivate: ...
     def __init__(
         self,
         active: int = ...,
@@ -15106,7 +15216,7 @@ class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -15124,9 +15234,11 @@ class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: ComboBoxAccessiblePrivate = ...
+    @property
+    def priv(self) -> ComboBoxAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -15405,7 +15517,7 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
       notify (GParam)
     """
 
-    class Props:
+    class Props(ComboBox.Props):
         active: int
         active_id: str | None
         add_tearoffs: bool
@@ -15466,9 +15578,12 @@ class ComboBoxText(ComboBox, Atk.ImplementorIface, Buildable, CellEditable, Cell
         editing_canceled: bool
         child: Widget
 
-    props: Props = ...
-    parent_instance: ComboBox = ...
-    priv: ComboBoxTextPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> ComboBox: ...
+    @property
+    def priv(self) -> ComboBoxTextPrivate: ...
     def __init__(
         self,
         active: int = ...,
@@ -15738,7 +15853,7 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -15782,9 +15897,11 @@ class Container(Widget, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: ContainerPrivate = ...
+    @property
+    def priv(self) -> ContainerPrivate: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -15958,7 +16075,7 @@ class ContainerAccessible(WidgetAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -15976,9 +16093,11 @@ class ContainerAccessible(WidgetAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: ContainerAccessiblePrivate = ...
+    @property
+    def priv(self) -> ContainerAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -16078,7 +16197,7 @@ class ContainerCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tab
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -16096,9 +16215,11 @@ class ContainerCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tab
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellAccessible = ...
-    priv: ContainerCellAccessiblePrivate = ...
+    @property
+    def priv(self) -> ContainerCellAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -16198,8 +16319,10 @@ class CssProvider(GObject.Object, StyleProvider):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: CssProviderPrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> CssProviderPrivate: ...
     def do_parsing_error(self, section: CssSection, error: GLib.Error) -> None: ...
     @staticmethod
     def get_default() -> CssProvider: ...
@@ -16505,7 +16628,7 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -16583,9 +16706,11 @@ class Dialog(Window, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     window: Window = ...
-    priv: DialogPrivate = ...
+    @property
+    def priv(self) -> DialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -16867,7 +16992,7 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -16908,7 +17033,8 @@ class DrawingArea(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
     dummy: None = ...
     def __init__(
@@ -17306,7 +17432,7 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
         buffer: EntryBuffer
@@ -17399,9 +17525,12 @@ class Entry(Widget, Atk.ImplementorIface, Buildable, CellEditable, Editable):
         window: _Gdk3.Window | None
         editing_canceled: bool
 
-    props: Props = ...
-    parent_instance: Widget = ...
-    priv: EntryPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Widget: ...
+    @property
+    def priv(self) -> EntryPrivate: ...
     def __init__(
         self,
         activates_default: bool = ...,
@@ -17682,7 +17811,7 @@ class EntryAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -17700,9 +17829,11 @@ class EntryAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: EntryAccessiblePrivate = ...
+    @property
+    def priv(self) -> EntryAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -17760,14 +17891,17 @@ class EntryBuffer(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         length: int
         max_length: int
         text: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: EntryBufferPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> EntryBufferPrivate: ...
     def __init__(self, max_length: int = ..., text: str = ...): ...
     def delete_text(self, position: int, n_chars: int) -> int: ...
     def do_delete_text(self, position: int, n_chars: int) -> int: ...
@@ -17888,7 +18022,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         cell_area: CellArea
         inline_completion: bool
         inline_selection: bool
@@ -17899,9 +18033,12 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
         popup_single_match: bool
         text_column: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: EntryCompletionPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> EntryCompletionPrivate: ...
     def __init__(
         self,
         cell_area: CellArea = ...,
@@ -18029,7 +18166,7 @@ class EntryIconAccessible(Atk.Object, Atk.Action, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Atk.Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -18046,7 +18183,8 @@ class EntryIconAccessible(Atk.Object, Atk.Action, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accessible_description: str = ...,
@@ -18251,7 +18389,7 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         above_child: bool
         visible_window: bool
         border_width: int
@@ -18297,9 +18435,11 @@ class EventBox(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: EventBoxPrivate = ...
+    @property
+    def priv(self) -> EventBoxPrivate: ...
     def __init__(
         self,
         above_child: bool = ...,
@@ -18388,11 +18528,12 @@ class EventController(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
     ): ...
@@ -18433,11 +18574,12 @@ class EventControllerKey(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
     ): ...
@@ -18476,11 +18618,12 @@ class EventControllerMotion(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self, propagation_phase: PropagationPhase = ..., widget: Widget = ...
     ): ...
@@ -18520,12 +18663,13 @@ class EventControllerScroll(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         flags: EventControllerScrollFlags
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         flags: EventControllerScrollFlags = ...,
@@ -18743,7 +18887,7 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         expanded: bool
         label: str | None
         label_fill: bool
@@ -18795,9 +18939,11 @@ class Expander(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: ExpanderPrivate = ...
+    @property
+    def priv(self) -> ExpanderPrivate: ...
     def __init__(
         self,
         expanded: bool = ...,
@@ -18939,7 +19085,7 @@ class ExpanderAccessible(ContainerAccessible, Atk.Action, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -18957,9 +19103,11 @@ class ExpanderAccessible(ContainerAccessible, Atk.Action, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: ExpanderAccessiblePrivate = ...
+    @property
+    def priv(self) -> ExpanderAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -19295,7 +19443,7 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         title: str
         width_chars: int
         baseline_position: BaselinePosition
@@ -19357,9 +19505,11 @@ class FileChooserButton(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         dialog: FileChooser
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Box = ...
-    priv: FileChooserButtonPrivate = ...
+    @property
+    def priv(self) -> FileChooserButtonPrivate: ...
     def __init__(
         self,
         dialog: FileChooser = ...,
@@ -19719,7 +19869,7 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -19808,9 +19958,12 @@ class FileChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FileChooser):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: FileChooserDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> FileChooserDialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -19953,7 +20106,7 @@ class FileChooserNative(NativeDialog, FileChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(NativeDialog.Props):
         accept_label: str | None
         cancel_label: str | None
         modal: bool
@@ -19972,7 +20125,8 @@ class FileChooserNative(NativeDialog, FileChooser):
         show_hidden: bool
         use_preview_label: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accept_label: str | None = ...,
@@ -20237,7 +20391,7 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         search_mode: bool
         subtitle: str
         baseline_position: BaselinePosition
@@ -20298,9 +20452,12 @@ class FileChooserWidget(Box, Atk.ImplementorIface, Buildable, FileChooser, Orien
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
-    parent_instance: Box = ...
-    priv: FileChooserWidgetPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
+    @property
+    def priv(self) -> FileChooserWidgetPrivate: ...
     def __init__(
         self,
         search_mode: bool = ...,
@@ -20431,7 +20588,7 @@ class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action, Atk.Component
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -20449,9 +20606,11 @@ class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action, Atk.Component
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: FileChooserWidgetAccessiblePrivate = ...
+    @property
+    def priv(self) -> FileChooserWidgetAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -20726,7 +20885,7 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -20770,9 +20929,11 @@ class Fixed(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: FixedPrivate = ...
+    @property
+    def priv(self) -> FixedPrivate: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -21055,7 +21216,7 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         activate_on_single_click: bool
         column_spacing: int
         homogeneous: bool
@@ -21107,7 +21268,8 @@ class FlowBox(Container, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
     def __init__(
         self,
@@ -21280,7 +21442,7 @@ class FlowBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -21298,9 +21460,11 @@ class FlowBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: FlowBoxAccessiblePrivate = ...
+    @property
+    def priv(self) -> FlowBoxAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -21514,7 +21678,7 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -21558,8 +21722,10 @@ class FlowBoxChild(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Bin: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -21678,7 +21844,7 @@ class FlowBoxChildAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -21696,7 +21862,8 @@ class FlowBoxChildAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
     def __init__(
         self,
@@ -21995,7 +22162,7 @@ class FontButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         font_name: str
         show_size: bool
         show_style: bool
@@ -22065,9 +22232,11 @@ class FontButton(
         show_preview_entry: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     button: Button = ...
-    priv: FontButtonPrivate = ...
+    @property
+    def priv(self) -> FontButtonPrivate: ...
     def __init__(
         self,
         font_name: str = ...,
@@ -22467,7 +22636,7 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -22552,9 +22721,12 @@ class FontChooserDialog(Dialog, Atk.ImplementorIface, Buildable, FontChooser):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: FontChooserDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> FontChooserDialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -22869,7 +23041,7 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         tweak_action: Gio.Action
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -22925,9 +23097,12 @@ class FontChooserWidget(Box, Atk.ImplementorIface, Buildable, FontChooser, Orien
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
-    parent_instance: Box = ...
-    priv: FontChooserWidgetPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
+    @property
+    def priv(self) -> FontChooserWidgetPrivate: ...
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
@@ -23198,7 +23373,7 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         font_name: str
         preview_text: str
         baseline_position: BaselinePosition
@@ -23248,9 +23423,12 @@ class FontSelection(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
-    parent_instance: Box = ...
-    priv: FontSelectionPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
+    @property
+    def priv(self) -> FontSelectionPrivate: ...
     def __init__(
         self,
         font_name: str = ...,
@@ -23592,7 +23770,7 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -23670,9 +23848,12 @@ class FontSelectionDialog(Dialog, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: FontSelectionDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> FontSelectionDialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -23965,7 +24146,7 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         label: str | None
         label_widget: Widget | None
         label_xalign: float
@@ -24014,9 +24195,11 @@ class Frame(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: FramePrivate = ...
+    @property
+    def priv(self) -> FramePrivate: ...
     def __init__(
         self,
         label: str | None = ...,
@@ -24145,7 +24328,7 @@ class FrameAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -24163,9 +24346,11 @@ class FrameAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: FrameAccessiblePrivate = ...
+    @property
+    def priv(self) -> FrameAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -24399,7 +24584,7 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         auto_render: bool
         context: _Gdk3.GLContext
         has_alpha: bool
@@ -24446,8 +24631,10 @@ class GLArea(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
-    parent_instance: Widget = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Widget: ...
     def __init__(
         self,
         auto_render: bool = ...,
@@ -24563,13 +24750,14 @@ class Gesture(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         n_points: int
         window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         n_points: int = ...,
@@ -24654,7 +24842,7 @@ class GestureDrag(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -24663,7 +24851,8 @@ class GestureDrag(GestureSingle):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         button: int = ...,
@@ -24731,7 +24920,7 @@ class GestureLongPress(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         delay_factor: float
         button: int
         exclusive: bool
@@ -24741,7 +24930,8 @@ class GestureLongPress(GestureSingle):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         delay_factor: float = ...,
@@ -24805,7 +24995,7 @@ class GestureMultiPress(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -24814,7 +25004,8 @@ class GestureMultiPress(GestureSingle):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         button: int = ...,
@@ -24886,7 +25077,7 @@ class GesturePan(GestureDrag):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureDrag.Props):
         orientation: Orientation
         button: int
         exclusive: bool
@@ -24896,7 +25087,8 @@ class GesturePan(GestureDrag):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         orientation: Orientation = ...,
@@ -24952,13 +25144,14 @@ class GestureRotate(Gesture):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gesture.Props):
         n_points: int
         window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         n_points: int = ...,
@@ -25013,7 +25206,7 @@ class GestureSingle(Gesture):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gesture.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -25022,7 +25215,8 @@ class GestureSingle(Gesture):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         button: int = ...,
@@ -25092,7 +25286,7 @@ class GestureStylus(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -25101,7 +25295,8 @@ class GestureStylus(GestureSingle):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         button: int = ...,
@@ -25165,7 +25360,7 @@ class GestureSwipe(GestureSingle):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GestureSingle.Props):
         button: int
         exclusive: bool
         touch_only: bool
@@ -25174,7 +25369,8 @@ class GestureSwipe(GestureSingle):
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         button: int = ...,
@@ -25228,13 +25424,14 @@ class GestureZoom(Gesture):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gesture.Props):
         n_points: int
         window: _Gdk3.Window | None
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         n_points: int = ...,
@@ -25463,7 +25660,7 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         baseline_row: int
         column_homogeneous: bool
         column_spacing: int
@@ -25513,9 +25710,11 @@ class Grid(Container, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: GridPrivate = ...
+    @property
+    def priv(self) -> GridPrivate: ...
     def __init__(
         self,
         baseline_row: int = ...,
@@ -25805,7 +26004,7 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -25853,7 +26052,8 @@ class HBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     box: Box = ...
     def __init__(
         self,
@@ -26107,7 +26307,7 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonBox.Props):
         layout_style: ButtonBoxStyle
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -26156,7 +26356,8 @@ class HButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     button_box: ButtonBox = ...
     def __init__(
         self,
@@ -26419,7 +26620,7 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Paned.Props):
         max_position: int
         min_position: int
         position: int
@@ -26469,7 +26670,8 @@ class HPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     paned: Paned = ...
     def __init__(
         self,
@@ -26701,7 +26903,7 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -26742,9 +26944,12 @@ class HSV(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
-    parent_instance: Widget = ...
-    priv: HSVPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Widget: ...
+    @property
+    def priv(self) -> HSVPrivate: ...
     def __init__(
         self,
         app_paintable: bool = ...,
@@ -27019,7 +27224,7 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Scale.Props):
         digits: int
         draw_value: bool
         has_origin: bool
@@ -27073,7 +27278,8 @@ class HScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     scale: Scale = ...
     def __init__(
         self,
@@ -27333,7 +27539,7 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Scrollbar.Props):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
@@ -27383,7 +27589,8 @@ class HScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     scrollbar: Scrollbar = ...
     def __init__(
         self,
@@ -27613,7 +27820,7 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Separator.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -27655,7 +27862,8 @@ class HSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     separator: Separator = ...
     def __init__(
         self,
@@ -27907,7 +28115,7 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         child_detached: bool
         handle_position: PositionType
         shadow_type: ShadowType
@@ -27956,9 +28164,11 @@ class HandleBox(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: HandleBoxPrivate = ...
+    @property
+    def priv(self) -> HandleBoxPrivate: ...
     def __init__(
         self,
         handle_position: PositionType = ...,
@@ -28234,7 +28444,7 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         custom_title: Widget | None
         decoration_layout: str
         decoration_layout_set: bool
@@ -28286,7 +28496,8 @@ class HeaderBar(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
     def __init__(
         self,
@@ -28424,7 +28635,7 @@ class HeaderBarAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -28442,7 +28653,8 @@ class HeaderBarAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
     def __init__(
         self,
@@ -28519,12 +28731,14 @@ class IMContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ): ...
@@ -28635,13 +28849,15 @@ class IMContextSimple(IMContext):
       notify (GParam)
     """
 
-    class Props:
+    class Props(IMContext.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     object: IMContext = ...
-    priv: IMContextSimplePrivate = ...
+    @property
+    def priv(self) -> IMContextSimplePrivate: ...
     def __init__(
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ): ...
@@ -28691,13 +28907,15 @@ class IMMulticontext(IMContext):
       notify (GParam)
     """
 
-    class Props:
+    class Props(IMContext.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     object: IMContext = ...
-    priv: IMMulticontextPrivate = ...
+    @property
+    def priv(self) -> IMMulticontextPrivate: ...
     def __init__(
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ): ...
@@ -28739,8 +28957,10 @@ class IconFactory(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: IconFactoryPrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> IconFactoryPrivate: ...
     def add(self, stock_id: str, icon_set: IconSet) -> None: ...
     def add_default(self) -> None: ...
     def lookup(self, stock_id: str) -> IconSet: ...
@@ -28935,8 +29155,10 @@ class IconTheme(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: IconThemePrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> IconThemePrivate: ...
     @staticmethod
     def add_builtin_icon(
         icon_name: str, size: int, pixbuf: GdkPixbuf.Pixbuf
@@ -29241,7 +29463,7 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         activate_on_single_click: bool
         cell_area: CellArea
         column_spacing: int
@@ -29305,9 +29527,11 @@ class IconView(Container, Atk.ImplementorIface, Buildable, CellLayout, Scrollabl
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Container = ...
-    priv: IconViewPrivate = ...
+    @property
+    def priv(self) -> IconViewPrivate: ...
     def __init__(
         self,
         activate_on_single_click: bool = ...,
@@ -29545,7 +29769,7 @@ class IconViewAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -29563,9 +29787,11 @@ class IconViewAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: IconViewAccessiblePrivate = ...
+    @property
+    def priv(self) -> IconViewAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -29834,7 +30060,7 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Misc.Props):
         file: str
         gicon: Gio.Icon
         icon_name: str
@@ -29892,9 +30118,11 @@ class Image(Misc, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     misc: Misc = ...
-    priv: ImagePrivate = ...
+    @property
+    def priv(self) -> ImagePrivate: ...
     def __init__(
         self,
         file: str = ...,
@@ -30056,7 +30284,7 @@ class ImageAccessible(WidgetAccessible, Atk.Component, Atk.Image):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -30074,9 +30302,11 @@ class ImageAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: ImageAccessiblePrivate = ...
+    @property
+    def priv(self) -> ImageAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -30182,7 +30412,7 @@ class ImageCellAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(RendererCellAccessible.Props):
         renderer: CellRenderer
         widget: Widget | None
         accessible_component_layer: int
@@ -30201,9 +30431,11 @@ class ImageCellAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: RendererCellAccessible = ...
-    priv: ImageCellAccessiblePrivate = ...
+    @property
+    def priv(self) -> ImageCellAccessiblePrivate: ...
     def __init__(
         self,
         renderer: CellRenderer = ...,
@@ -30463,7 +30695,7 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuItem.Props):
         always_show_image: bool
         image: Widget
         use_stock: bool
@@ -30520,9 +30752,11 @@ class ImageMenuItem(MenuItem, Atk.ImplementorIface, Actionable, Activatable, Bui
         accel_group: AccelGroup
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_item: MenuItem = ...
-    priv: ImageMenuItemPrivate = ...
+    @property
+    def priv(self) -> ImageMenuItemPrivate: ...
     def __init__(
         self,
         accel_group: AccelGroup = ...,
@@ -30814,7 +31048,7 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         message_type: MessageType
         revealed: bool
         show_close_button: bool
@@ -30865,9 +31099,11 @@ class InfoBar(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Box = ...
-    priv: InfoBarPrivate = ...
+    @property
+    def priv(self) -> InfoBarPrivate: ...
     def __init__(
         self,
         message_type: MessageType = ...,
@@ -31125,7 +31361,7 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         screen: _Gdk3.Screen
         app_paintable: bool
         can_default: bool
@@ -31167,9 +31403,11 @@ class Invisible(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: InvisiblePrivate = ...
+    @property
+    def priv(self) -> InvisiblePrivate: ...
     def __init__(
         self,
         screen: _Gdk3.Screen = ...,
@@ -31464,7 +31702,7 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Misc.Props):
         angle: float
         attributes: Pango.AttrList | None
         cursor_position: int
@@ -31529,9 +31767,11 @@ class Label(Misc, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         pattern: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     misc: Misc = ...
-    priv: LabelPrivate = ...
+    @property
+    def priv(self) -> LabelPrivate: ...
     def __init__(
         self,
         angle: float = ...,
@@ -31728,7 +31968,7 @@ class LabelAccessible(WidgetAccessible, Atk.Component, Atk.Hypertext, Atk.Text):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -31746,9 +31986,11 @@ class LabelAccessible(WidgetAccessible, Atk.Component, Atk.Hypertext, Atk.Text):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: LabelAccessiblePrivate = ...
+    @property
+    def priv(self) -> LabelAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -31991,7 +32233,7 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         height: int
         width: int
         border_width: int
@@ -32041,9 +32283,11 @@ class Layout(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: LayoutPrivate = ...
+    @property
+    def priv(self) -> LayoutPrivate: ...
     def __init__(
         self,
         height: int = ...,
@@ -32307,7 +32551,7 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         inverted: bool
         max_value: float
         min_value: float
@@ -32354,9 +32598,11 @@ class LevelBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Widget = ...
-    priv: LevelBarPrivate = ...
+    @property
+    def priv(self) -> LevelBarPrivate: ...
     def __init__(
         self,
         inverted: bool = ...,
@@ -32490,7 +32736,7 @@ class LevelBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -32508,9 +32754,11 @@ class LevelBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: LevelBarAccessiblePrivate = ...
+    @property
+    def priv(self) -> LevelBarAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -32774,7 +33022,7 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         uri: str
         visited: bool
         always_show_image: bool
@@ -32833,9 +33081,12 @@ class LinkButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
-    parent_instance: Button = ...
-    priv: LinkButtonPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Button: ...
+    @property
+    def priv(self) -> LinkButtonPrivate: ...
     def __init__(
         self,
         uri: str = ...,
@@ -32977,7 +33228,7 @@ class LinkButtonAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -32995,9 +33246,11 @@ class LinkButtonAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ButtonAccessible = ...
-    priv: LinkButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> LinkButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -33242,7 +33495,7 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         activate_on_single_click: bool
         selection_mode: SelectionMode
         border_width: int
@@ -33288,8 +33541,10 @@ class ListBox(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Container = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Container: ...
     def __init__(
         self,
         activate_on_single_click: bool = ...,
@@ -33456,7 +33711,7 @@ class ListBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -33474,9 +33729,11 @@ class ListBoxAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: ListBoxAccessiblePrivate = ...
+    @property
+    def priv(self) -> ListBoxAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -33718,7 +33975,7 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         activatable: bool
         selectable: bool
         border_width: int
@@ -33766,8 +34023,10 @@ class ListBoxRow(Bin, Atk.ImplementorIface, Actionable, Buildable):
         action_target: GLib.Variant
         child: Widget
 
-    props: Props = ...
-    parent_instance: Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Bin: ...
     def __init__(
         self,
         activatable: bool = ...,
@@ -33896,7 +34155,7 @@ class ListBoxRowAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -33914,7 +34173,8 @@ class ListBoxRowAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
     def __init__(
         self,
@@ -33987,8 +34247,8 @@ class ListStore(
     """
 
     parent: GObject.Object = ...
-    priv: ListStorePrivate = ...
-
+    @property
+    def priv(self) -> ListStorePrivate: ...
     def __init__(self, *args: Any) -> None: ...
     def append(self, row: list[Any] | tuple[Any, ...] | None = None) -> TreeIter: ...
     def clear(self) -> None: ...
@@ -34260,7 +34520,7 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         permission: Gio.Permission
         text_lock: str
         text_unlock: str
@@ -34323,9 +34583,11 @@ class LockButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildabl
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Button = ...
-    priv: LockButtonPrivate = ...
+    @property
+    def priv(self) -> LockButtonPrivate: ...
     def __init__(
         self,
         permission: Gio.Permission | None = ...,
@@ -34464,7 +34726,7 @@ class LockButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Imag
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -34482,9 +34744,11 @@ class LockButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Imag
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ButtonAccessible = ...
-    priv: LockButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> LockButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -34761,7 +35025,7 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuShell.Props):
         accel_group: AccelGroup
         accel_path: str
         active: int
@@ -34818,9 +35082,11 @@ class Menu(MenuShell, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_shell: MenuShell = ...
-    priv: MenuPrivate = ...
+    @property
+    def priv(self) -> MenuPrivate: ...
     def __init__(
         self,
         accel_group: AccelGroup | None = ...,
@@ -35031,7 +35297,7 @@ class MenuAccessible(MenuShellAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuShellAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -35049,9 +35315,11 @@ class MenuAccessible(MenuShellAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: MenuShellAccessible = ...
-    priv: MenuAccessiblePrivate = ...
+    @property
+    def priv(self) -> MenuAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -35283,7 +35551,7 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuShell.Props):
         child_pack_direction: PackDirection
         pack_direction: PackDirection
         take_focus: bool
@@ -35330,9 +35598,11 @@ class MenuBar(MenuShell, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_shell: MenuShell = ...
-    priv: MenuBarPrivate = ...
+    @property
+    def priv(self) -> MenuBarPrivate: ...
     def __init__(
         self,
         child_pack_direction: PackDirection = ...,
@@ -35639,7 +35909,7 @@ class MenuButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleButton.Props):
         align_widget: Container | None
         direction: ArrowType
         menu_model: Gio.MenuModel | None
@@ -35705,9 +35975,11 @@ class MenuButton(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToggleButton = ...
-    priv: MenuButtonPrivate = ...
+    @property
+    def priv(self) -> MenuButtonPrivate: ...
     def __init__(
         self,
         align_widget: Container | None = ...,
@@ -35864,7 +36136,7 @@ class MenuButtonAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -35882,9 +36154,11 @@ class MenuButtonAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToggleButtonAccessible = ...
-    priv: MenuButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> MenuButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -36149,7 +36423,7 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         accel_path: str | None
         label: str
         right_justified: bool
@@ -36202,9 +36476,11 @@ class MenuItem(Bin, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: MenuItemPrivate = ...
+    @property
+    def priv(self) -> MenuItemPrivate: ...
     def __init__(
         self,
         accel_path: str | None = ...,
@@ -36360,7 +36636,7 @@ class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -36378,9 +36654,11 @@ class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Component, Atk.Sel
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: MenuItemAccessiblePrivate = ...
+    @property
+    def priv(self) -> MenuItemAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -36631,7 +36909,7 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         take_focus: bool
         border_width: int
         resize_mode: ResizeMode
@@ -36676,9 +36954,11 @@ class MenuShell(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: MenuShellPrivate = ...
+    @property
+    def priv(self) -> MenuShellPrivate: ...
     def __init__(
         self,
         take_focus: bool = ...,
@@ -36823,7 +37103,7 @@ class MenuShellAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -36841,9 +37121,11 @@ class MenuShellAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: MenuShellAccessiblePrivate = ...
+    @property
+    def priv(self) -> MenuShellAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -37120,7 +37402,7 @@ class MenuToolButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToolButton.Props):
         menu: Menu
         icon_name: str | None
         icon_widget: Widget | None
@@ -37178,9 +37460,11 @@ class MenuToolButton(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToolButton = ...
-    priv: MenuToolButtonPrivate = ...
+    @property
+    def priv(self) -> MenuToolButtonPrivate: ...
     def __init__(
         self,
         menu: Menu = ...,
@@ -37547,7 +37831,7 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         image: Widget
         message_area: Widget
         message_type: MessageType
@@ -37633,9 +37917,12 @@ class MessageDialog(Dialog, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: MessageDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> MessageDialogPrivate: ...
     def __init__(
         self,
         buttons: ButtonsType = ...,
@@ -37916,7 +38203,7 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         xalign: float
         xpad: int
         yalign: float
@@ -37961,9 +38248,11 @@ class Misc(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: MiscPrivate = ...
+    @property
+    def priv(self) -> MiscPrivate: ...
     def __init__(
         self,
         xalign: float = ...,
@@ -38257,7 +38546,7 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         active: bool
         centered: bool
         icon: Gio.Icon
@@ -38323,7 +38612,8 @@ class ModelButton(Button, Atk.ImplementorIface, Actionable, Activatable, Buildab
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         active: bool = ...,
@@ -38442,7 +38732,7 @@ class MountOperation(Gio.MountOperation):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.MountOperation.Props):
         is_showing: bool
         parent: Window
         screen: _Gdk3.Screen
@@ -38456,9 +38746,12 @@ class MountOperation(Gio.MountOperation):
         pim: int
         username: str | None
 
-    props: Props = ...
-    parent_instance: Gio.MountOperation = ...
-    priv: MountOperationPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Gio.MountOperation: ...
+    @property
+    def priv(self) -> MountOperationPrivate: ...
     def __init__(
         self,
         parent: Window | None = ...,
@@ -38525,14 +38818,16 @@ class NativeDialog(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         modal: bool
         title: str | None
         transient_for: Window | None
         visible: bool
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
         modal: bool = ...,
@@ -38781,7 +39076,7 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         enable_popup: bool
         group_name: str | None
         page: int
@@ -38832,9 +39127,11 @@ class Notebook(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: NotebookPrivate = ...
+    @property
+    def priv(self) -> NotebookPrivate: ...
     def __init__(
         self,
         enable_popup: bool = ...,
@@ -39035,7 +39332,7 @@ class NotebookAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -39053,9 +39350,11 @@ class NotebookAccessible(ContainerAccessible, Atk.Component, Atk.Selection):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: NotebookAccessiblePrivate = ...
+    @property
+    def priv(self) -> NotebookAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -39176,7 +39475,7 @@ class NotebookPageAccessible(Atk.Object, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Atk.Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -39193,9 +39492,11 @@ class NotebookPageAccessible(Atk.Object, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Atk.Object = ...
-    priv: NotebookPageAccessiblePrivate = ...
+    @property
+    def priv(self) -> NotebookPageAccessiblePrivate: ...
     def __init__(
         self,
         accessible_description: str = ...,
@@ -39261,7 +39562,7 @@ class NumerableIcon(Gio.EmblemedIcon, Gio.Icon):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Gio.EmblemedIcon.Props):
         background_icon: Gio.Icon
         background_icon_name: str | None
         count: int
@@ -39269,9 +39570,11 @@ class NumerableIcon(Gio.EmblemedIcon, Gio.Icon):
         style_context: StyleContext | None
         gicon: Gio.Icon
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Gio.EmblemedIcon = ...
-    priv: NumerableIconPrivate = ...
+    @property
+    def priv(self) -> NumerableIconPrivate: ...
     def __init__(
         self,
         background_icon: Gio.Icon = ...,
@@ -39567,7 +39870,7 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         accept_focus: bool
         application: Application | None
         attached_to: Widget | None
@@ -39644,7 +39947,8 @@ class OffscreenWindow(Window, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent_object: Window = ...
     def __init__(
         self,
@@ -39942,7 +40246,7 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -39986,9 +40290,11 @@ class Overlay(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Bin = ...
-    priv: OverlayPrivate = ...
+    @property
+    def priv(self) -> OverlayPrivate: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -40105,13 +40411,14 @@ class PadController(EventController):
       notify (GParam)
     """
 
-    class Props:
+    class Props(EventController.Props):
         action_group: Gio.ActionGroup
         pad: _Gdk3.Device
         propagation_phase: PropagationPhase
         widget: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         action_group: Gio.ActionGroup = ...,
@@ -40398,7 +40705,7 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         max_position: int
         min_position: int
         position: int
@@ -40448,9 +40755,11 @@ class Paned(Container, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: PanedPrivate = ...
+    @property
+    def priv(self) -> PanedPrivate: ...
     def __init__(
         self,
         position: int = ...,
@@ -40591,7 +40900,7 @@ class PanedAccessible(ContainerAccessible, Atk.Component, Atk.Value):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -40609,9 +40918,11 @@ class PanedAccessible(ContainerAccessible, Atk.Component, Atk.Value):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: PanedAccessiblePrivate = ...
+    @property
+    def priv(self) -> PanedAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -40976,7 +41287,7 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ScrolledWindow.Props):
         local_only: bool
         location: Gio.File | None
         open_flags: PlacesOpenFlags
@@ -41046,7 +41357,8 @@ class PlacesSidebar(ScrolledWindow, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         local_only: bool = ...,
@@ -41412,7 +41724,7 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         embedded: bool
         socket_window: _Gdk3.Window | None
         accept_focus: bool
@@ -41491,9 +41803,11 @@ class Plug(Window, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     window: Window = ...
-    priv: PlugPrivate = ...
+    @property
+    def priv(self) -> PlugPrivate: ...
     def __init__(
         self,
         accept_focus: bool = ...,
@@ -41670,7 +41984,7 @@ class PlugAccessible(WindowAccessible, Atk.Component, Atk.Window):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WindowAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -41688,9 +42002,11 @@ class PlugAccessible(WindowAccessible, Atk.Component, Atk.Window):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WindowAccessible = ...
-    priv: PlugAccessiblePrivate = ...
+    @property
+    def priv(self) -> PlugAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -41938,7 +42254,7 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         constrain_to: PopoverConstraint
         modal: bool
         pointing_to: _Gdk3.Rectangle
@@ -41988,9 +42304,12 @@ class Popover(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Bin = ...
-    priv: PopoverPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Bin: ...
+    @property
+    def priv(self) -> PopoverPrivate: ...
     def __init__(
         self,
         constrain_to: PopoverConstraint = ...,
@@ -42137,7 +42456,7 @@ class PopoverAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -42155,7 +42474,8 @@ class PopoverAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
     def __init__(
         self,
@@ -42399,7 +42719,7 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Popover.Props):
         visible_submenu: str
         constrain_to: PopoverConstraint
         modal: bool
@@ -42450,7 +42770,8 @@ class PopoverMenu(Popover, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         visible_submenu: str = ...,
@@ -42616,7 +42937,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         allow_async: bool
         current_page: int
         custom_tab_label: str | None
@@ -42636,9 +42957,12 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         unit: Unit
         use_full_page: bool
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: PrintOperationPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> PrintOperationPrivate: ...
     def __init__(
         self,
         allow_async: bool = ...,
@@ -43072,7 +43396,7 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         ellipsize: Pango.EllipsizeMode
         fraction: float
         inverted: bool
@@ -43120,9 +43444,11 @@ class ProgressBar(Widget, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Widget = ...
-    priv: ProgressBarPrivate = ...
+    @property
+    def priv(self) -> ProgressBarPrivate: ...
     def __init__(
         self,
         ellipsize: Pango.EllipsizeMode = ...,
@@ -43254,7 +43580,7 @@ class ProgressBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -43272,9 +43598,11 @@ class ProgressBarAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: ProgressBarAccessiblePrivate = ...
+    @property
+    def priv(self) -> ProgressBarAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -43400,7 +43728,7 @@ class RadioAction(ToggleAction, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleAction.Props):
         current_value: int
         value: int
         active: bool
@@ -43423,7 +43751,8 @@ class RadioAction(ToggleAction, Buildable):
         visible_vertical: bool
         group: RadioAction | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToggleAction = ...
     private_data: RadioActionPrivate = ...
     def __init__(
@@ -43733,7 +44062,7 @@ class RadioButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(CheckButton.Props):
         active: bool
         draw_indicator: bool
         inconsistent: bool
@@ -43794,9 +44123,11 @@ class RadioButton(
         group: RadioButton | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     check_button: CheckButton = ...
-    priv: RadioButtonPrivate = ...
+    @property
+    def priv(self) -> RadioButtonPrivate: ...
     def __init__(
         self,
         group: RadioButton | None = ...,
@@ -43960,7 +44291,7 @@ class RadioButtonAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -43978,9 +44309,11 @@ class RadioButtonAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToggleButtonAccessible = ...
-    priv: RadioButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> RadioButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -44254,7 +44587,7 @@ class RadioMenuItem(
       notify (GParam)
     """
 
-    class Props:
+    class Props(CheckMenuItem.Props):
         active: bool
         draw_as_radio: bool
         inconsistent: bool
@@ -44311,9 +44644,11 @@ class RadioMenuItem(
         group: RadioMenuItem | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     check_menu_item: CheckMenuItem = ...
-    priv: RadioMenuItemPrivate = ...
+    @property
+    def priv(self) -> RadioMenuItemPrivate: ...
     def __init__(
         self,
         group: RadioMenuItem | None = ...,
@@ -44480,7 +44815,7 @@ class RadioMenuItemAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(CheckMenuItemAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -44498,9 +44833,11 @@ class RadioMenuItemAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CheckMenuItemAccessible = ...
-    priv: RadioMenuItemAccessiblePrivate = ...
+    @property
+    def priv(self) -> RadioMenuItemAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -44774,7 +45111,7 @@ class RadioToolButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToggleToolButton.Props):
         active: bool
         icon_name: str | None
         icon_widget: Widget | None
@@ -44833,7 +45170,8 @@ class RadioToolButton(
         group: RadioToolButton | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToggleToolButton = ...
     def __init__(
         self,
@@ -45113,7 +45451,7 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
@@ -45163,9 +45501,11 @@ class Range(Widget, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: RangePrivate = ...
+    @property
+    def priv(self) -> RangePrivate: ...
     def __init__(
         self,
         adjustment: Adjustment = ...,
@@ -45320,7 +45660,7 @@ class RangeAccessible(WidgetAccessible, Atk.Component, Atk.Value):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -45338,9 +45678,11 @@ class RangeAccessible(WidgetAccessible, Atk.Component, Atk.Value):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: RangeAccessiblePrivate = ...
+    @property
+    def priv(self) -> RangeAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -45445,7 +45787,8 @@ class RcStyle(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     name: str = ...
     bg_pixmap_name: list[str] = ...
     font_desc: Pango.FontDescription = ...
@@ -45546,7 +45889,7 @@ class RecentAction(Action, Buildable, RecentChooser):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Action.Props):
         show_numbers: bool
         action_group: ActionGroup
         always_show_image: bool
@@ -45575,9 +45918,12 @@ class RecentAction(Action, Buildable, RecentChooser):
         sort_type: RecentSortType
         recent_manager: RecentManager
 
-    props: Props = ...
-    parent_instance: Action = ...
-    priv: RecentActionPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Action: ...
+    @property
+    def priv(self) -> RecentActionPrivate: ...
     def __init__(
         self,
         show_numbers: bool = ...,
@@ -45951,7 +46297,7 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
       notify (GParam)
     """
 
-    class Props:
+    class Props(Dialog.Props):
         use_header_bar: int
         accept_focus: bool
         application: Application | None
@@ -46039,9 +46385,12 @@ class RecentChooserDialog(Dialog, Atk.ImplementorIface, Buildable, RecentChooser
         child: Widget
         recent_manager: RecentManager
 
-    props: Props = ...
-    parent_instance: Dialog = ...
-    priv: RecentChooserDialogPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Dialog: ...
+    @property
+    def priv(self) -> RecentChooserDialogPrivate: ...
     def __init__(
         self,
         use_header_bar: int = ...,
@@ -46402,7 +46751,7 @@ class RecentChooserMenu(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Menu.Props):
         show_numbers: bool
         accel_group: AccelGroup
         accel_path: str
@@ -46472,9 +46821,12 @@ class RecentChooserMenu(
         child: Widget
         recent_manager: RecentManager
 
-    props: Props = ...
-    parent_instance: Menu = ...
-    priv: RecentChooserMenuPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Menu: ...
+    @property
+    def priv(self) -> RecentChooserMenuPrivate: ...
     def __init__(
         self,
         show_numbers: bool = ...,
@@ -46762,7 +47114,7 @@ class RecentChooserWidget(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -46820,9 +47172,12 @@ class RecentChooserWidget(
         child: Widget
         recent_manager: RecentManager
 
-    props: Props = ...
-    parent_instance: Box = ...
-    priv: RecentChooserWidgetPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Box: ...
+    @property
+    def priv(self) -> RecentChooserWidgetPrivate: ...
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
@@ -47019,13 +47374,16 @@ class RecentManager(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         filename: str
         size: int
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: RecentManagerPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> RecentManagerPrivate: ...
     def __init__(self, filename: str = ...): ...
     def add_full(self, uri: str, recent_data: RecentData) -> bool: ...
     def add_item(self, uri: str) -> bool: ...
@@ -47130,7 +47488,7 @@ class RendererCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tabl
       notify (GParam)
     """
 
-    class Props:
+    class Props(CellAccessible.Props):
         renderer: CellRenderer
         widget: Widget | None
         accessible_component_layer: int
@@ -47149,9 +47507,11 @@ class RendererCellAccessible(CellAccessible, Atk.Action, Atk.Component, Atk.Tabl
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: CellAccessible = ...
-    priv: RendererCellAccessiblePrivate = ...
+    @property
+    def priv(self) -> RendererCellAccessiblePrivate: ...
     def __init__(
         self,
         renderer: CellRenderer = ...,
@@ -47405,7 +47765,7 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         child_revealed: bool
         reveal_child: bool
         transition_duration: int
@@ -47453,8 +47813,10 @@ class Revealer(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Bin = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Bin: ...
     def __init__(
         self,
         reveal_child: bool = ...,
@@ -47725,7 +48087,7 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Range.Props):
         digits: int
         draw_value: bool
         has_origin: bool
@@ -47779,9 +48141,11 @@ class Scale(Range, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     range: Range = ...
-    priv: ScalePrivate = ...
+    @property
+    def priv(self) -> ScalePrivate: ...
     def __init__(
         self,
         digits: int = ...,
@@ -47935,7 +48299,7 @@ class ScaleAccessible(RangeAccessible, Atk.Component, Atk.Value):
       notify (GParam)
     """
 
-    class Props:
+    class Props(RangeAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -47953,9 +48317,11 @@ class ScaleAccessible(RangeAccessible, Atk.Component, Atk.Value):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: RangeAccessible = ...
-    priv: ScaleAccessiblePrivate = ...
+    @property
+    def priv(self) -> ScaleAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -48211,7 +48577,7 @@ class ScaleButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         adjustment: Adjustment
         icons: list[str]
         size: IconSize
@@ -48273,9 +48639,11 @@ class ScaleButton(
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Button = ...
-    priv: ScaleButtonPrivate = ...
+    @property
+    def priv(self) -> ScaleButtonPrivate: ...
     def __init__(
         self,
         adjustment: Adjustment = ...,
@@ -48432,7 +48800,7 @@ class ScaleButtonAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -48450,9 +48818,11 @@ class ScaleButtonAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ButtonAccessible = ...
-    priv: ScaleButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> ScaleButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -48741,7 +49111,7 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Range.Props):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
@@ -48791,7 +49161,8 @@ class Scrollbar(Range, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     range: Range = ...
     def __init__(
         self,
@@ -49079,7 +49450,7 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         hadjustment: Adjustment
         hscrollbar_policy: PolicyType
         kinetic_scrolling: bool
@@ -49138,9 +49509,11 @@ class ScrolledWindow(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Bin = ...
-    priv: ScrolledWindowPrivate = ...
+    @property
+    def priv(self) -> ScrolledWindowPrivate: ...
     def __init__(
         self,
         hadjustment: Adjustment | None = ...,
@@ -49310,7 +49683,7 @@ class ScrolledWindowAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -49328,9 +49701,11 @@ class ScrolledWindowAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: ScrolledWindowAccessiblePrivate = ...
+    @property
+    def priv(self) -> ScrolledWindowAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -49567,7 +49942,7 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         search_mode_enabled: bool
         show_close_button: bool
         border_width: int
@@ -49613,7 +49988,8 @@ class SearchBar(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Bin = ...
     def __init__(
         self,
@@ -49993,7 +50369,7 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
       notify (GParam)
     """
 
-    class Props:
+    class Props(Entry.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
         buffer: EntryBuffer
@@ -50086,7 +50462,8 @@ class SearchEntry(Entry, Atk.ImplementorIface, Buildable, CellEditable, Editable
         window: _Gdk3.Window | None
         editing_canceled: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Entry = ...
     def __init__(
         self,
@@ -50385,7 +50762,7 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -50427,9 +50804,11 @@ class Separator(Widget, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Widget = ...
-    priv: SeparatorPrivate = ...
+    @property
+    def priv(self) -> SeparatorPrivate: ...
     def __init__(
         self,
         app_paintable: bool = ...,
@@ -50690,7 +51069,7 @@ class SeparatorMenuItem(
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuItem.Props):
         accel_path: str | None
         label: str
         right_justified: bool
@@ -50743,7 +51122,8 @@ class SeparatorMenuItem(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_item: MenuItem = ...
     def __init__(
         self,
@@ -51012,7 +51392,7 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToolItem.Props):
         draw: bool
         is_important: bool
         visible_horizontal: bool
@@ -51062,9 +51442,11 @@ class SeparatorToolItem(ToolItem, Atk.ImplementorIface, Activatable, Buildable):
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToolItem = ...
-    priv: SeparatorToolItemPrivate = ...
+    @property
+    def priv(self) -> SeparatorToolItemPrivate: ...
     def __init__(
         self,
         draw: bool = ...,
@@ -51324,7 +51706,7 @@ class Settings(GObject.Object, StyleProvider):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         color_hash: dict[str, _Gdk3.Color]
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
@@ -51411,9 +51793,12 @@ class Settings(GObject.Object, StyleProvider):
         gtk_xft_hintstyle: str
         gtk_xft_rgba: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: SettingsPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> SettingsPrivate: ...
     def __init__(
         self,
         gtk_alternative_button_order: bool = ...,
@@ -51741,7 +52126,7 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         accelerator: str | None
         disabled_text: str | None
         baseline_position: BaselinePosition
@@ -51791,7 +52176,8 @@ class ShortcutLabel(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accelerator: str = ...,
@@ -52048,7 +52434,7 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         height: int
         title: str
         view: str
@@ -52101,7 +52487,8 @@ class ShortcutsGroup(Box, Atk.ImplementorIface, Buildable, Orientable):
         title_size_group: SizeGroup
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accel_size_group: SizeGroup = ...,
@@ -52355,7 +52742,7 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         max_height: int
         section_name: str
         title: str
@@ -52407,7 +52794,8 @@ class ShortcutsSection(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         max_height: int = ...,
@@ -52672,7 +53060,7 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -52731,7 +53119,8 @@ class ShortcutsShortcut(Box, Atk.ImplementorIface, Buildable, Orientable):
         title_size_group: SizeGroup
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         accel_size_group: SizeGroup = ...,
@@ -53056,7 +53445,7 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Window.Props):
         section_name: str
         view_name: str
         accept_focus: bool
@@ -53135,7 +53524,8 @@ class ShortcutsWindow(Window, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     window: Window = ...
     def __init__(
         self,
@@ -53247,13 +53637,16 @@ class SizeGroup(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         ignore_hidden: bool
         mode: SizeGroupMode
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: SizeGroupPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> SizeGroupPrivate: ...
     def __init__(self, ignore_hidden: bool = ..., mode: SizeGroupMode = ...): ...
     def add_widget(self, widget: Widget) -> None: ...
     def get_ignore_hidden(self) -> bool: ...
@@ -53466,7 +53859,7 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         border_width: int
         resize_mode: ResizeMode
         app_paintable: bool
@@ -53510,9 +53903,11 @@ class Socket(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: SocketPrivate = ...
+    @property
+    def priv(self) -> SocketPrivate: ...
     def __init__(
         self,
         border_width: int = ...,
@@ -53632,7 +54027,7 @@ class SocketAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -53650,9 +54045,11 @@ class SocketAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: SocketAccessiblePrivate = ...
+    @property
+    def priv(self) -> SocketAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -54035,7 +54432,7 @@ class SpinButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(Entry.Props):
         adjustment: Adjustment
         climb_rate: float
         digits: int
@@ -54137,9 +54534,11 @@ class SpinButton(
         editing_canceled: bool
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     entry: Entry = ...
-    priv: SpinButtonPrivate = ...
+    @property
+    def priv(self) -> SpinButtonPrivate: ...
     def __init__(
         self,
         adjustment: Adjustment = ...,
@@ -54360,7 +54759,7 @@ class SpinButtonAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(EntryAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -54378,9 +54777,11 @@ class SpinButtonAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: EntryAccessible = ...
-    priv: SpinButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> SpinButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -54603,7 +55004,7 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         active: bool
         app_paintable: bool
         can_default: bool
@@ -54645,9 +55046,11 @@ class Spinner(Widget, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Widget = ...
-    priv: SpinnerPrivate = ...
+    @property
+    def priv(self) -> SpinnerPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -54759,7 +55162,7 @@ class SpinnerAccessible(WidgetAccessible, Atk.Component, Atk.Image):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -54777,9 +55180,11 @@ class SpinnerAccessible(WidgetAccessible, Atk.Component, Atk.Image):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: SpinnerAccessiblePrivate = ...
+    @property
+    def priv(self) -> SpinnerAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -55027,7 +55432,7 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         hhomogeneous: bool
         homogeneous: bool
         interpolate_size: bool
@@ -55080,8 +55485,10 @@ class Stack(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Container = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Container: ...
     def __init__(
         self,
         hhomogeneous: bool = ...,
@@ -55267,7 +55674,7 @@ class StackAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -55285,7 +55692,8 @@ class StackAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
     def __init__(
         self,
@@ -55510,7 +55918,7 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         stack: Stack | None
         border_width: int
         resize_mode: ResizeMode
@@ -55555,7 +55963,8 @@ class StackSidebar(Bin, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Bin = ...
     def __init__(
         self,
@@ -55816,7 +56225,7 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         icon_size: int
         stack: Stack | None
         baseline_position: BaselinePosition
@@ -55866,7 +56275,8 @@ class StackSwitcher(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     widget: Box = ...
     def __init__(
         self,
@@ -55997,7 +56407,7 @@ class StatusIcon(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         embedded: bool
         gicon: Gio.Icon | None
         has_tooltip: bool
@@ -56014,9 +56424,12 @@ class StatusIcon(GObject.Object):
         visible: bool
         file: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: StatusIconPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> StatusIconPrivate: ...
     def __init__(
         self,
         file: str = ...,
@@ -56300,7 +56713,7 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -56348,9 +56761,11 @@ class Statusbar(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent_widget: Box = ...
-    priv: StatusbarPrivate = ...
+    @property
+    def priv(self) -> StatusbarPrivate: ...
     def __init__(
         self,
         baseline_position: BaselinePosition = ...,
@@ -56477,7 +56892,7 @@ class StatusbarAccessible(ContainerAccessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -56495,9 +56910,11 @@ class StatusbarAccessible(ContainerAccessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: StatusbarAccessiblePrivate = ...
+    @property
+    def priv(self) -> StatusbarAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -56587,11 +57004,13 @@ class Style(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         context: StyleContext
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     fg: list[_Gdk3.Color] = ...
     bg: list[_Gdk3.Color] = ...
     light: list[_Gdk3.Color] = ...
@@ -57255,15 +57674,17 @@ class StyleContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         direction: TextDirection
         paint_clock: _Gdk3.FrameClock
         parent: StyleContext | None
         screen: _Gdk3.Screen
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent_object: GObject.Object = ...
-    priv: StyleContextPrivate = ...
+    @property
+    def priv(self) -> StyleContextPrivate: ...
     def __init__(
         self,
         direction: TextDirection = ...,
@@ -57373,7 +57794,8 @@ class StyleProperties(GObject.Object, StyleProvider):
     """
 
     parent_object: GObject.Object = ...
-    priv: StylePropertiesPrivate = ...
+    @property
+    def priv(self) -> StylePropertiesPrivate: ...
     def clear(self) -> None: ...
     def get_property(self, property: str, state: StateFlags) -> tuple[bool, Any]: ...
     def lookup_color(self, name: str) -> SymbolicColor: ...
@@ -57604,7 +58026,7 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Widget.Props):
         active: bool
         state: bool
         app_paintable: bool
@@ -57651,9 +58073,12 @@ class Switch(Widget, Atk.ImplementorIface, Actionable, Activatable, Buildable):
         related_action: Action
         use_action_appearance: bool
 
-    props: Props = ...
-    parent_instance: Widget = ...
-    priv: SwitchPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Widget: ...
+    @property
+    def priv(self) -> SwitchPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -57774,7 +58199,7 @@ class SwitchAccessible(WidgetAccessible, Atk.Action, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(WidgetAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -57792,9 +58217,11 @@ class SwitchAccessible(WidgetAccessible, Atk.Action, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: WidgetAccessible = ...
-    priv: SwitchAccessiblePrivate = ...
+    @property
+    def priv(self) -> SwitchAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -58072,7 +58499,7 @@ class Table(Container, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         column_spacing: int
         homogeneous: bool
         n_columns: int
@@ -58121,9 +58548,11 @@ class Table(Container, Atk.ImplementorIface, Buildable):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: TablePrivate = ...
+    @property
+    def priv(self) -> TablePrivate: ...
     def __init__(
         self,
         column_spacing: int = ...,
@@ -58522,7 +58951,7 @@ class TearoffMenuItem(
       notify (GParam)
     """
 
-    class Props:
+    class Props(MenuItem.Props):
         accel_path: str | None
         label: str
         right_justified: bool
@@ -58575,9 +59004,11 @@ class TearoffMenuItem(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     menu_item: MenuItem = ...
-    priv: TearoffMenuItemPrivate = ...
+    @property
+    def priv(self) -> TearoffMenuItemPrivate: ...
     def __init__(
         self,
         accel_path: str | None = ...,
@@ -58771,7 +59202,7 @@ class TextBuffer(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         copy_target_list: TargetList
         cursor_position: int
         has_selection: bool
@@ -58779,9 +59210,12 @@ class TextBuffer(GObject.Object):
         tag_table: TextTagTable
         text: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: TextBufferPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> TextBufferPrivate: ...
     def __init__(self, tag_table: TextTagTable = ..., text: str = ...): ...
     def add_mark(self, mark: TextMark, where: TextIter) -> None: ...
     def add_selection_clipboard(self, clipboard: Clipboard) -> None: ...
@@ -59043,7 +59477,7 @@ class TextCellAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(RendererCellAccessible.Props):
         renderer: CellRenderer
         widget: Widget | None
         accessible_component_layer: int
@@ -59062,9 +59496,11 @@ class TextCellAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: RendererCellAccessible = ...
-    priv: TextCellAccessiblePrivate = ...
+    @property
+    def priv(self) -> TextCellAccessiblePrivate: ...
     def __init__(
         self,
         renderer: CellRenderer = ...,
@@ -59111,7 +59547,8 @@ class TextChildAnchor(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     segment: None = ...
     def get_deleted(self) -> bool: ...
     def get_widgets(self) -> list[Widget]: ...
@@ -59284,12 +59721,14 @@ class TextMark(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         left_gravity: bool
         name: str | None
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
     segment: None = ...
     def __init__(self, left_gravity: bool = ..., name: str = ...): ...
     def get_buffer(self) -> TextBuffer: ...
@@ -59484,7 +59923,7 @@ class TextTag(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         accumulative_margin: bool
         background_full_height: bool
         background_full_height_set: bool
@@ -59560,9 +59999,12 @@ class TextTag(GObject.Object):
         foreground: str
         paragraph_background: str
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: TextTagPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> TextTagPrivate: ...
     def __init__(
         self,
         accumulative_margin: bool = ...,
@@ -59690,8 +60132,10 @@ class TextTagTable(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: TextTagTablePrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> TextTagTablePrivate: ...
     def add(self, tag: TextTag) -> bool: ...
     def do_tag_added(self, tag: TextTag) -> None: ...
     def do_tag_changed(self, tag: TextTag, size_changed: bool) -> None: ...
@@ -59966,7 +60410,7 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         accepts_tab: bool
         bottom_margin: int
         buffer: TextBuffer
@@ -60035,9 +60479,12 @@ class TextView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
-    parent_instance: Container = ...
-    priv: TextViewPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Container: ...
+    @property
+    def priv(self) -> TextViewPrivate: ...
     def __init__(
         self,
         accepts_tab: bool = ...,
@@ -60309,7 +60756,7 @@ class TextViewAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -60327,9 +60774,11 @@ class TextViewAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: TextViewAccessiblePrivate = ...
+    @property
+    def priv(self) -> TextViewAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -60414,12 +60863,14 @@ class ThemingEngine(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         name: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent_object: GObject.Object = ...
-    priv: ThemingEnginePrivate = ...
+    @property
+    def priv(self) -> ThemingEnginePrivate: ...
     def __init__(self, name: str = ...): ...
     def do_render_activity(
         self,
@@ -60722,7 +61173,7 @@ class ToggleAction(Action, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Action.Props):
         active: bool
         draw_as_radio: bool
         action_group: ActionGroup
@@ -60742,7 +61193,8 @@ class ToggleAction(Action, Buildable):
         visible_overflown: bool
         visible_vertical: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Action = ...
     private_data: ToggleActionPrivate = ...
     def __init__(
@@ -61037,7 +61489,7 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
       notify (GParam)
     """
 
-    class Props:
+    class Props(Button.Props):
         active: bool
         draw_indicator: bool
         inconsistent: bool
@@ -61097,9 +61549,11 @@ class ToggleButton(Button, Atk.ImplementorIface, Actionable, Activatable, Builda
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     button: Button = ...
-    priv: ToggleButtonPrivate = ...
+    @property
+    def priv(self) -> ToggleButtonPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -61245,7 +61699,7 @@ class ToggleButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Im
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -61263,9 +61717,11 @@ class ToggleButtonAccessible(ButtonAccessible, Atk.Action, Atk.Component, Atk.Im
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ButtonAccessible = ...
-    priv: ToggleButtonAccessiblePrivate = ...
+    @property
+    def priv(self) -> ToggleButtonAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -61533,7 +61989,7 @@ class ToggleToolButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToolButton.Props):
         active: bool
         icon_name: str | None
         icon_widget: Widget | None
@@ -61591,9 +62047,11 @@ class ToggleToolButton(
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToolButton = ...
-    priv: ToggleToolButtonPrivate = ...
+    @property
+    def priv(self) -> ToggleToolButtonPrivate: ...
     def __init__(
         self,
         active: bool = ...,
@@ -61886,7 +62344,7 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
       notify (GParam)
     """
 
-    class Props:
+    class Props(ToolItem.Props):
         icon_name: str | None
         icon_widget: Widget | None
         label: str | None
@@ -61943,9 +62401,11 @@ class ToolButton(ToolItem, Atk.ImplementorIface, Actionable, Activatable, Builda
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ToolItem = ...
-    priv: ToolButtonPrivate = ...
+    @property
+    def priv(self) -> ToolButtonPrivate: ...
     def __init__(
         self,
         icon_name: str | None = ...,
@@ -62232,7 +62692,7 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
@@ -62281,9 +62741,11 @@ class ToolItem(Bin, Atk.ImplementorIface, Activatable, Buildable):
         use_action_appearance: bool
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Bin = ...
-    priv: ToolItemPrivate = ...
+    @property
+    def priv(self) -> ToolItemPrivate: ...
     def __init__(
         self,
         is_important: bool = ...,
@@ -62574,7 +63036,7 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         collapsed: bool
         ellipsize: Pango.EllipsizeMode
         header_relief: ReliefStyle
@@ -62623,9 +63085,12 @@ class ToolItemGroup(Container, Atk.ImplementorIface, Buildable, ToolShell):
         window: _Gdk3.Window | None
         child: Widget
 
-    props: Props = ...
-    parent_instance: Container = ...
-    priv: ToolItemGroupPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Container: ...
+    @property
+    def priv(self) -> ToolItemGroupPrivate: ...
     def __init__(
         self,
         collapsed: bool = ...,
@@ -62898,7 +63363,7 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         icon_size: IconSize
         icon_size_set: bool
         toolbar_style: ToolbarStyle
@@ -62950,9 +63415,12 @@ class ToolPalette(Container, Atk.ImplementorIface, Buildable, Orientable, Scroll
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
-    parent_instance: Container = ...
-    priv: ToolPalettePrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> Container: ...
+    @property
+    def priv(self) -> ToolPalettePrivate: ...
     def __init__(
         self,
         icon_size: IconSize = ...,
@@ -63286,7 +63754,7 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         icon_size: IconSize
         icon_size_set: bool
         show_arrow: bool
@@ -63335,9 +63803,11 @@ class Toolbar(Container, Atk.ImplementorIface, Buildable, Orientable, ToolShell)
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     container: Container = ...
-    priv: ToolbarPrivate = ...
+    @property
+    def priv(self) -> ToolbarPrivate: ...
     def __init__(
         self,
         icon_size: IconSize = ...,
@@ -63509,7 +63979,7 @@ class ToplevelAccessible(Atk.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Atk.Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
@@ -63526,9 +63996,11 @@ class ToplevelAccessible(Atk.Object):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Atk.Object = ...
-    priv: ToplevelAccessiblePrivate = ...
+    @property
+    def priv(self) -> ToplevelAccessiblePrivate: ...
     def __init__(
         self,
         accessible_description: str = ...,
@@ -63694,13 +64166,15 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         child_model: TreeModel
         virtual_root: TreePath
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: TreeModelFilterPrivate = ...
+    @property
+    def priv(self) -> TreeModelFilterPrivate: ...
     def __init__(self, child_model: TreeModel = ..., virtual_root: TreePath = ...): ...
     def clear_cache(self) -> None: ...
     def convert_child_iter_to_iter(
@@ -63829,12 +64303,14 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         model: TreeModel
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: TreeModelSortPrivate = ...
+    @property
+    def priv(self) -> TreeModelSortPrivate: ...
     def __init__(self, model: TreeModel = ...): ...
     def clear_cache(self) -> None: ...
     def convert_child_iter_to_iter(
@@ -63950,12 +64426,14 @@ class TreeSelection(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         mode: SelectionMode
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: TreeSelectionPrivate = ...
+    @property
+    def priv(self) -> TreeSelectionPrivate: ...
     def __init__(self, mode: SelectionMode = ...): ...
     def count_selected_rows(self) -> int: ...
     def do_changed(self) -> None: ...
@@ -64068,7 +64546,8 @@ class TreeStore(
     """
 
     parent: GObject.Object = ...
-    priv: TreeStorePrivate = ...
+    @property
+    def priv(self) -> TreeStorePrivate: ...
     # override
     def __init__(self, *column_types: Any) -> None: ...
     # override
@@ -64354,7 +64833,7 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Container.Props):
         activate_on_single_click: bool
         enable_grid_lines: TreeViewGridLines
         enable_search: bool
@@ -64420,10 +64899,11 @@ class TreeView(Container, Atk.ImplementorIface, Buildable, Scrollable):
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Container = ...
-    priv: TreeViewPrivate = ...
-
+    @property
+    def priv(self) -> TreeViewPrivate: ...
     def __init__(
         self,
         activate_on_single_click: bool = ...,
@@ -64763,7 +65243,7 @@ class TreeViewAccessible(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -64781,9 +65261,11 @@ class TreeViewAccessible(
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: TreeViewAccessiblePrivate = ...
+    @property
+    def priv(self) -> TreeViewAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -64907,7 +65389,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         alignment: float
         cell_area: CellArea
         clickable: bool
@@ -64928,9 +65410,12 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         width: int
         x_offset: int
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
-    priv: TreeViewColumnPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
+    @property
+    def priv(self) -> TreeViewColumnPrivate: ...
     # override
     def __init__(
         self,
@@ -65060,11 +65545,12 @@ class UIManager(GObject.Object, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         add_tearoffs: bool
         ui: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
     private_data: UIManagerPrivate = ...
     def __init__(self, add_tearoffs: bool = ...): ...
@@ -65317,7 +65803,7 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Box.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
@@ -65365,7 +65851,8 @@ class VBox(Box, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     box: Box = ...
     def __init__(
         self,
@@ -65619,7 +66106,7 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ButtonBox.Props):
         layout_style: ButtonBoxStyle
         baseline_position: BaselinePosition
         homogeneous: bool
@@ -65668,7 +66155,8 @@ class VButtonBox(ButtonBox, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     button_box: ButtonBox = ...
     def __init__(
         self,
@@ -65931,7 +66419,7 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Paned.Props):
         max_position: int
         min_position: int
         position: int
@@ -65981,7 +66469,8 @@ class VPaned(Paned, Atk.ImplementorIface, Buildable, Orientable):
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     paned: Paned = ...
     def __init__(
         self,
@@ -66247,7 +66736,7 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Scale.Props):
         digits: int
         draw_value: bool
         has_origin: bool
@@ -66301,7 +66790,8 @@ class VScale(Scale, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     scale: Scale = ...
     def __init__(
         self,
@@ -66561,7 +67051,7 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Scrollbar.Props):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
@@ -66611,7 +67101,8 @@ class VScrollbar(Scrollbar, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     scrollbar: Scrollbar = ...
     def __init__(
         self,
@@ -66841,7 +67332,7 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Separator.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -66883,7 +67374,8 @@ class VSeparator(Separator, Atk.ImplementorIface, Buildable, Orientable):
         window: _Gdk3.Window | None
         orientation: Orientation
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     separator: Separator = ...
     def __init__(
         self,
@@ -67123,7 +67615,7 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         shadow_type: ShadowType
         border_width: int
         resize_mode: ResizeMode
@@ -67172,9 +67664,11 @@ class Viewport(Bin, Atk.ImplementorIface, Buildable, Scrollable):
         vscroll_policy: ScrollablePolicy
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: ViewportPrivate = ...
+    @property
+    def priv(self) -> ViewportPrivate: ...
     def __init__(
         self,
         shadow_type: ShadowType = ...,
@@ -67483,7 +67977,7 @@ class VolumeButton(
       notify (GParam)
     """
 
-    class Props:
+    class Props(ScaleButton.Props):
         use_symbolic: bool
         adjustment: Adjustment
         icons: list[str]
@@ -67546,7 +68040,8 @@ class VolumeButton(
         orientation: Orientation
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ScaleButton = ...
     def __init__(
         self,
@@ -67792,7 +68287,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
@@ -67833,9 +68328,12 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         width_request: int
         window: _Gdk3.Window | None
 
-    props: Props = ...
-    parent_instance: GObject.InitiallyUnowned = ...
-    priv: WidgetPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.InitiallyUnowned: ...
+    @property
+    def priv(self) -> WidgetPrivate: ...
     def __init__(
         self,
         app_paintable: bool = ...,
@@ -68434,7 +68932,7 @@ class WidgetAccessible(Accessible, Atk.Component):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Accessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -68452,9 +68950,11 @@ class WidgetAccessible(Accessible, Atk.Component):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: Accessible = ...
-    priv: WidgetAccessiblePrivate = ...
+    @property
+    def priv(self) -> WidgetAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -68589,7 +69089,8 @@ class WidgetClass(GObject.GPointer):
     adjust_baseline_request: Callable[[Widget, int, int], None] = ...
     adjust_baseline_allocation: Callable[[Widget, int], None] = ...
     queue_draw_region: Callable[[Widget, cairo.Region], None] = ...
-    priv: WidgetClassPrivate = ...
+    @property
+    def priv(self) -> WidgetClassPrivate: ...
     _gtk_reserved6: None = ...
     _gtk_reserved7: None = ...
     def bind_template_callback_full(
@@ -68919,7 +69420,7 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
       notify (GParam)
     """
 
-    class Props:
+    class Props(Bin.Props):
         accept_focus: bool
         application: Application | None
         attached_to: Widget | None
@@ -68996,9 +69497,11 @@ class Window(Bin, Atk.ImplementorIface, Buildable):
         startup_id: str
         child: Widget
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     bin: Bin = ...
-    priv: WindowPrivate = ...
+    @property
+    def priv(self) -> WindowPrivate: ...
     def __init__(
         self,
         accept_focus: bool = ...,
@@ -69299,7 +69802,7 @@ class WindowAccessible(ContainerAccessible, Atk.Component, Atk.Window):
       notify (GParam)
     """
 
-    class Props:
+    class Props(ContainerAccessible.Props):
         widget: Widget | None
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
@@ -69317,9 +69820,11 @@ class WindowAccessible(ContainerAccessible, Atk.Component, Atk.Window):
         accessible_table_summary: Atk.Object
         accessible_value: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: ContainerAccessible = ...
-    priv: WindowAccessiblePrivate = ...
+    @property
+    def priv(self) -> WindowAccessiblePrivate: ...
     def __init__(
         self,
         widget: Widget | None = ...,
@@ -69386,8 +69891,10 @@ class WindowGroup(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: WindowGroupPrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> WindowGroupPrivate: ...
     def add_window(self, window: Window) -> None: ...
     def get_current_device_grab(self, device: _Gdk3.Device) -> Widget | None: ...
     def get_current_grab(self) -> Widget: ...
@@ -69439,8 +69946,10 @@ class _MountOperationHandlerProxy(GObject.GPointer):
         _MountOperationHandlerProxy()
     """
 
-    parent_instance: Gio.DBusProxy = ...
-    priv: None = ...
+    @property
+    def parent_instance(self) -> Gio.DBusProxy: ...
+    @property
+    def priv(self) -> None: ...
 
 class _MountOperationHandlerProxyClass(GObject.GPointer):
     """
@@ -69464,8 +69973,10 @@ class _MountOperationHandlerSkeleton(GObject.GPointer):
         _MountOperationHandlerSkeleton()
     """
 
-    parent_instance: Gio.DBusInterfaceSkeleton = ...
-    priv: None = ...
+    @property
+    def parent_instance(self) -> Gio.DBusInterfaceSkeleton: ...
+    @property
+    def priv(self) -> None: ...
 
 class _MountOperationHandlerSkeletonClass(GObject.GPointer):
     """

@@ -74,7 +74,8 @@ class Array(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -133,7 +134,8 @@ class Attach(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -200,7 +202,8 @@ class CompIter(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -275,7 +278,8 @@ class Component(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -445,7 +449,8 @@ class Datetimeperiod(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -508,7 +513,8 @@ class Duration(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -586,7 +592,8 @@ class Geo(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -646,9 +653,11 @@ class Object(GObject.Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     parent: GObject.Object = ...
-    priv: ObjectPrivate = ...
+    @property
+    def priv(self) -> ObjectPrivate: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -770,7 +779,8 @@ class Parameter(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -1053,7 +1063,8 @@ class Parser(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -1118,7 +1129,8 @@ class Period(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -1300,7 +1312,8 @@ class Property(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -1864,7 +1877,8 @@ class RecurIterator(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -1923,7 +1937,8 @@ class Recurrence(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2053,7 +2068,8 @@ class Reqstat(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2121,7 +2137,8 @@ class Time(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2253,7 +2270,8 @@ class TimeSpan(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2321,7 +2339,8 @@ class Timezone(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2432,7 +2451,8 @@ class Trigger(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,
@@ -2532,7 +2552,8 @@ class Value(Object):
         native_destroy_func: None
         owner: GObject.Object
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         always_destroy: bool = ...,

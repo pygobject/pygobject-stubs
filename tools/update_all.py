@@ -49,6 +49,7 @@ libraries = [
     # This only works for either version at a time
     # Lib("GIRepository", "2.0", output="_GIRepository2"),
     Lib("GIRepository", "3.0", output="_GIRepository3"),
+    Lib("GioUnix", "2.0"),
     Lib("GioWin32", "2.0"),
     Lib("GLib", "2.0"),
     Lib("GLibWin32", "2.0"),

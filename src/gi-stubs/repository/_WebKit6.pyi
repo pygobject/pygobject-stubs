@@ -113,8 +113,8 @@ class AuthenticationRequestClass(GObject.GPointer):
 
         AuthenticationRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class AutomationSession(GObject.Object):
     """
@@ -136,10 +136,11 @@ class AutomationSession(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         id: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, id: str = ...): ...
     def get_application_info(self) -> ApplicationInfo: ...
     def get_id(self) -> str: ...
@@ -153,8 +154,8 @@ class AutomationSessionClass(GObject.GPointer):
 
         AutomationSessionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class BackForwardList(GObject.Object):
     """
@@ -191,8 +192,8 @@ class BackForwardListClass(GObject.GPointer):
 
         BackForwardListClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class BackForwardListItem(GObject.InitiallyUnowned):
     """
@@ -220,8 +221,8 @@ class BackForwardListItemClass(GObject.GPointer):
 
         BackForwardListItemClass()
     """
-
-    parent_class: GObject.InitiallyUnownedClass = ...
+    @property
+    def parent_class(self) -> GObject.InitiallyUnownedClass: ...
 
 class ClipboardPermissionRequest(GObject.Object, PermissionRequest): ...
 
@@ -233,8 +234,8 @@ class ClipboardPermissionRequestClass(GObject.GPointer):
 
         ClipboardPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ColorChooserRequest(GObject.Object):
     """
@@ -256,10 +257,11 @@ class ColorChooserRequest(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         rgba: _Gdk4.RGBA
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, rgba: _Gdk4.RGBA = ...): ...
     def cancel(self) -> None: ...
     def finish(self) -> None: ...
@@ -275,8 +277,8 @@ class ColorChooserRequestClass(GObject.GPointer):
 
         ColorChooserRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ContextMenu(GObject.Object):
     """
@@ -321,8 +323,8 @@ class ContextMenuClass(GObject.GPointer):
 
         ContextMenuClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ContextMenuItem(GObject.InitiallyUnowned):
     """
@@ -371,8 +373,8 @@ class ContextMenuItemClass(GObject.GPointer):
 
         ContextMenuItemClass()
     """
-
-    parent_class: GObject.InitiallyUnownedClass = ...
+    @property
+    def parent_class(self) -> GObject.InitiallyUnownedClass: ...
 
 class CookieManager(GObject.Object):
     """
@@ -454,8 +456,8 @@ class CookieManagerClass(GObject.GPointer):
 
         CookieManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Credential(GObject.GBoxed):
     """
@@ -500,8 +502,8 @@ class DeviceInfoPermissionRequestClass(GObject.GPointer):
 
         DeviceInfoPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Download(GObject.Object):
     """
@@ -530,13 +532,14 @@ class Download(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         allow_overwrite: bool
         destination: str | None
         estimated_progress: float
         response: URIResponse
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, allow_overwrite: bool = ...): ...
     def cancel(self) -> None: ...
     def get_allow_overwrite(self) -> bool: ...
@@ -558,8 +561,8 @@ class DownloadClass(GObject.GPointer):
 
         DownloadClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class EditorState(GObject.Object):
     """
@@ -578,10 +581,11 @@ class EditorState(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         typing_attributes: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_typing_attributes(self) -> int: ...
     def is_copy_available(self) -> bool: ...
     def is_cut_available(self) -> bool: ...
@@ -597,8 +601,8 @@ class EditorStateClass(GObject.GPointer):
 
         EditorStateClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FaviconDatabase(GObject.Object):
     """
@@ -636,8 +640,8 @@ class FaviconDatabaseClass(GObject.GPointer):
 
         FaviconDatabaseClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Feature(GObject.GBoxed):
     def get_category(self) -> str: ...
@@ -675,13 +679,14 @@ class FileChooserRequest(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         filter: _Gtk4.FileFilter
         mime_types: list[str]
         select_multiple: bool
         selected_files: list[str]
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def cancel(self) -> None: ...
     def get_mime_types(self) -> list[str]: ...
     def get_mime_types_filter(self) -> _Gtk4.FileFilter: ...
@@ -697,8 +702,8 @@ class FileChooserRequestClass(GObject.GPointer):
 
         FileChooserRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FindController(GObject.Object):
     """
@@ -725,13 +730,14 @@ class FindController(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         max_match_count: int
         options: FindOptions
         text: str
         web_view: WebView
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, web_view: WebView = ...): ...
     def count_matches(
         self, search_text: str, find_options: int, max_match_count: int
@@ -755,8 +761,8 @@ class FindControllerClass(GObject.GPointer):
 
         FindControllerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class FormSubmissionRequest(GObject.Object):
     """
@@ -783,8 +789,8 @@ class FormSubmissionRequestClass(GObject.GPointer):
 
         FormSubmissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class GeolocationManager(GObject.Object):
     """
@@ -807,10 +813,11 @@ class GeolocationManager(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         enable_high_accuracy: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def failed(self, error_message: str) -> None: ...
     def get_enable_high_accuracy(self) -> bool: ...
     def update_position(self, position: GeolocationPosition) -> None: ...
@@ -823,8 +830,8 @@ class GeolocationManagerClass(GObject.GPointer):
 
         GeolocationManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class GeolocationPermissionRequest(GObject.Object, PermissionRequest): ...
 
@@ -836,8 +843,8 @@ class GeolocationPermissionRequestClass(GObject.GPointer):
 
         GeolocationPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class GeolocationPosition(GObject.GBoxed):
     """
@@ -882,7 +889,7 @@ class HitTestResult(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         context: int
         image_uri: str
         link_label: str
@@ -890,7 +897,8 @@ class HitTestResult(GObject.Object):
         link_uri: str
         media_uri: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         context: int = ...,
@@ -921,8 +929,8 @@ class HitTestResultClass(GObject.GPointer):
 
         HitTestResultClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ITPFirstParty(GObject.GBoxed):
     def get_domain(self) -> str: ...
@@ -962,13 +970,16 @@ class InputMethodContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
 
-    props: Props = ...
-    parent_instance: GObject.Object = ...
-    priv: InputMethodContextPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> InputMethodContextPrivate: ...
     def __init__(
         self, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
     ): ...
@@ -1012,23 +1023,42 @@ class InputMethodContextClass(GObject.GPointer):
 
         InputMethodContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
-    preedit_started: Callable[[InputMethodContext], None] = ...
-    preedit_changed: Callable[[InputMethodContext], None] = ...
-    preedit_finished: Callable[[InputMethodContext], None] = ...
-    committed: Callable[[InputMethodContext, str], None] = ...
-    delete_surrounding: Callable[[InputMethodContext, int, int], None] = ...
-    set_enable_preedit: Callable[[InputMethodContext, bool], None] = ...
-    get_preedit: Callable[
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def preedit_started(self) -> Callable[[InputMethodContext], None]: ...
+    @property
+    def preedit_changed(self) -> Callable[[InputMethodContext], None]: ...
+    @property
+    def preedit_finished(self) -> Callable[[InputMethodContext], None]: ...
+    @property
+    def committed(self) -> Callable[[InputMethodContext, str], None]: ...
+    @property
+    def delete_surrounding(self) -> Callable[[InputMethodContext, int, int], None]: ...
+    @property
+    def set_enable_preedit(self) -> Callable[[InputMethodContext, bool], None]: ...
+    @property
+    def get_preedit(
+        self,
+    ) -> Callable[
         [InputMethodContext], tuple[str, list[InputMethodUnderline], int]
-    ] = ...
-    filter_key_event: Callable[[InputMethodContext, _Gdk4.Event], bool] = ...
-    notify_focus_in: Callable[[InputMethodContext], None] = ...
-    notify_focus_out: Callable[[InputMethodContext], None] = ...
-    notify_cursor_area: Callable[[InputMethodContext, int, int, int, int], None] = ...
-    notify_surrounding: Callable[[InputMethodContext, str, int, int, int], None] = ...
-    reset: Callable[[InputMethodContext], None] = ...
+    ]: ...
+    @property
+    def filter_key_event(self) -> Callable[[InputMethodContext, _Gdk4.Event], bool]: ...
+    @property
+    def notify_focus_in(self) -> Callable[[InputMethodContext], None]: ...
+    @property
+    def notify_focus_out(self) -> Callable[[InputMethodContext], None]: ...
+    @property
+    def notify_cursor_area(
+        self,
+    ) -> Callable[[InputMethodContext, int, int, int, int], None]: ...
+    @property
+    def notify_surrounding(
+        self,
+    ) -> Callable[[InputMethodContext, str, int, int, int], None]: ...
+    @property
+    def reset(self) -> Callable[[InputMethodContext], None]: ...
     _webkit_reserved0: None = ...
     _webkit_reserved1: None = ...
     _webkit_reserved2: None = ...
@@ -1073,8 +1103,8 @@ class MediaKeySystemPermissionRequestClass(GObject.GPointer):
 
         MediaKeySystemPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class MemoryPressureSettings(GObject.GBoxed):
     """
@@ -1128,10 +1158,11 @@ class NavigationPolicyDecision(PolicyDecision):
       notify (GParam)
     """
 
-    class Props:
+    class Props(PolicyDecision.Props):
         navigation_action: NavigationAction
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_navigation_action(self) -> NavigationAction: ...
 
 class NavigationPolicyDecisionClass(GObject.GPointer):
@@ -1142,8 +1173,8 @@ class NavigationPolicyDecisionClass(GObject.GPointer):
 
         NavigationPolicyDecisionClass()
     """
-
-    parent_class: PolicyDecisionClass = ...
+    @property
+    def parent_class(self) -> PolicyDecisionClass: ...
 
 class NetworkProxySettings(GObject.GBoxed):
     """
@@ -1188,12 +1219,13 @@ class NetworkSession(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         is_ephemeral: bool
         cache_directory: str
         data_directory: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         cache_directory: str = ...,
@@ -1247,8 +1279,8 @@ class NetworkSessionClass(GObject.GPointer):
 
         NetworkSessionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class Notification(GObject.Object):
     """
@@ -1274,13 +1306,14 @@ class Notification(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         body: str
         id: int
         tag: str | None
         title: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def clicked(self) -> None: ...
     def close(self) -> None: ...
     def get_body(self) -> str: ...
@@ -1296,8 +1329,8 @@ class NotificationClass(GObject.GPointer):
 
         NotificationClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class NotificationPermissionRequest(GObject.Object, PermissionRequest): ...
 
@@ -1309,8 +1342,8 @@ class NotificationPermissionRequestClass(GObject.GPointer):
 
         NotificationPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class OptionMenu(GObject.Object):
     """
@@ -1344,8 +1377,8 @@ class OptionMenuClass(GObject.GPointer):
 
         OptionMenuClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class OptionMenuItem(GObject.GBoxed):
     def copy(self) -> OptionMenuItem: ...
@@ -1398,8 +1431,8 @@ class PointerLockPermissionRequestClass(GObject.GPointer):
 
         PointerLockPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class PolicyDecision(GObject.Object):
     """
@@ -1415,8 +1448,10 @@ class PolicyDecision(GObject.Object):
       notify (GParam)
     """
 
-    parent_instance: GObject.Object = ...
-    priv: PolicyDecisionPrivate = ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    @property
+    def priv(self) -> PolicyDecisionPrivate: ...
     def download(self) -> None: ...
     def ignore(self) -> None: ...
     def use(self) -> None: ...
@@ -1430,8 +1465,8 @@ class PolicyDecisionClass(GObject.GPointer):
 
         PolicyDecisionClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
     _webkit_reserved0: None = ...
     _webkit_reserved1: None = ...
     _webkit_reserved2: None = ...
@@ -1467,12 +1502,13 @@ class PrintOperation(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         page_setup: _Gtk4.PageSetup
         print_settings: _Gtk4.PrintSettings
         web_view: WebView
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         page_setup: _Gtk4.PageSetup = ...,
@@ -1498,8 +1534,8 @@ class PrintOperationClass(GObject.GPointer):
 
         PrintOperationClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ResponsePolicyDecision(PolicyDecision):
     """
@@ -1519,11 +1555,12 @@ class ResponsePolicyDecision(PolicyDecision):
       notify (GParam)
     """
 
-    class Props:
+    class Props(PolicyDecision.Props):
         request: URIRequest
         response: URIResponse
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_request(self) -> URIRequest: ...
     def get_response(self) -> URIResponse: ...
     def is_main_frame_main_resource(self) -> bool: ...
@@ -1537,8 +1574,8 @@ class ResponsePolicyDecisionClass(GObject.GPointer):
 
         ResponsePolicyDecisionClass()
     """
-
-    parent_class: PolicyDecisionClass = ...
+    @property
+    def parent_class(self) -> PolicyDecisionClass: ...
 
 class ScriptDialog(GObject.GBoxed):
     def close(self) -> None: ...
@@ -1591,8 +1628,8 @@ class SecurityManagerClass(GObject.GPointer):
 
         SecurityManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class SecurityOrigin(GObject.GBoxed):
     """
@@ -1742,7 +1779,7 @@ class Settings(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         allow_file_access_from_file_urls: bool
         allow_modal_dialogs: bool
         allow_top_navigation_to_data_urls: bool
@@ -1799,7 +1836,8 @@ class Settings(GObject.Object):
         user_agent: str
         zoom_text_only: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         allow_file_access_from_file_urls: bool = ...,
@@ -2000,8 +2038,8 @@ class SettingsClass(GObject.GPointer):
 
         SettingsClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class URIRequest(GObject.Object):
     """
@@ -2021,10 +2059,11 @@ class URIRequest(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         uri: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, uri: str = ...): ...
     def get_http_headers(self) -> _Soup3.MessageHeaders: ...
     def get_http_method(self) -> str: ...
@@ -2041,8 +2080,8 @@ class URIRequestClass(GObject.GPointer):
 
         URIRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class URIResponse(GObject.Object):
     """
@@ -2066,7 +2105,7 @@ class URIResponse(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         content_length: int
         http_headers: _Soup3.MessageHeaders
         mime_type: str
@@ -2074,7 +2113,8 @@ class URIResponse(GObject.Object):
         suggested_filename: str
         uri: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_content_length(self) -> int: ...
     def get_http_headers(self) -> _Soup3.MessageHeaders: ...
     def get_mime_type(self) -> str: ...
@@ -2090,8 +2130,8 @@ class URIResponseClass(GObject.GPointer):
 
         URIResponseClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class URISchemeRequest(GObject.Object):
     """
@@ -2131,8 +2171,8 @@ class URISchemeRequestClass(GObject.GPointer):
 
         URISchemeRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class URISchemeResponse(GObject.Object):
     """
@@ -2153,11 +2193,12 @@ class URISchemeResponse(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         stream: Gio.InputStream
         stream_length: int
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, stream: Gio.InputStream = ..., stream_length: int = ...): ...
     @classmethod
     def new(
@@ -2177,8 +2218,8 @@ class URISchemeResponseClass(GObject.GPointer):
 
         URISchemeResponseClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class UserContentFilter(GObject.GBoxed):
     def get_identifier(self) -> str: ...
@@ -2203,10 +2244,11 @@ class UserContentFilterStore(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         path: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, path: str = ...): ...
     def fetch_identifiers(
         self,
@@ -2261,8 +2303,8 @@ class UserContentFilterStoreClass(GObject.GPointer):
 
         UserContentFilterStoreClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class UserContentManager(GObject.Object):
     """
@@ -2313,8 +2355,8 @@ class UserContentManagerClass(GObject.GPointer):
 
         UserContentManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class UserMediaPermissionRequest(GObject.Object, PermissionRequest):
     """
@@ -2334,11 +2376,12 @@ class UserMediaPermissionRequest(GObject.Object, PermissionRequest):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         is_for_audio_device: bool
         is_for_video_device: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
 
 class UserMediaPermissionRequestClass(GObject.GPointer):
     """
@@ -2348,8 +2391,8 @@ class UserMediaPermissionRequestClass(GObject.GPointer):
 
         UserMediaPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class UserMessage(GObject.InitiallyUnowned):
     """
@@ -2372,12 +2415,13 @@ class UserMessage(GObject.InitiallyUnowned):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.InitiallyUnowned.Props):
         fd_list: Gio.UnixFDList | None
         name: str
         parameters: GLib.Variant | None
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         fd_list: Gio.UnixFDList = ...,
@@ -2406,8 +2450,8 @@ class UserMessageClass(GObject.GPointer):
 
         UserMessageClass()
     """
-
-    parent_class: GObject.InitiallyUnownedClass = ...
+    @property
+    def parent_class(self) -> GObject.InitiallyUnownedClass: ...
 
 class UserScript(GObject.GBoxed):
     """
@@ -2498,11 +2542,12 @@ class WebContext(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         time_zone_override: str
         memory_pressure_settings: MemoryPressureSettings
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         memory_pressure_settings: MemoryPressureSettings = ...,
@@ -2550,8 +2595,8 @@ class WebContextClass(GObject.GPointer):
 
         WebContextClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WebInspector(GObject.Object):
     """
@@ -2579,12 +2624,13 @@ class WebInspector(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         attached_height: int
         can_attach: bool
         inspected_uri: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def attach(self) -> None: ...
     def close(self) -> None: ...
     def detach(self) -> None: ...
@@ -2603,8 +2649,8 @@ class WebInspectorClass(GObject.GPointer):
 
         WebInspectorClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WebResource(GObject.Object):
     """
@@ -2630,11 +2676,12 @@ class WebResource(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         response: URIResponse
         uri: str
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def get_data(
         self,
         cancellable: Gio.Cancellable | None = None,
@@ -2653,8 +2700,8 @@ class WebResourceClass(GObject.GPointer):
 
         WebResourceClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WebView(WebViewBase, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
     """
@@ -2777,7 +2824,7 @@ class WebView(WebViewBase, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
       notify (GParam)
     """
 
-    class Props:
+    class Props(WebViewBase.Props):
         automation_presentation_type: AutomationBrowsingContextPresentation
         camera_capture_state: MediaCaptureState
         default_content_security_policy: str | None
@@ -2838,9 +2885,12 @@ class WebView(WebViewBase, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
         related_view: WebView
         settings: Settings
 
-    props: Props = ...
-    parent_instance: WebViewBase = ...
-    priv: WebViewPrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> WebViewBase: ...
+    @property
+    def priv(self) -> WebViewPrivate: ...
     def __init__(
         self,
         automation_presentation_type: AutomationBrowsingContextPresentation = ...,
@@ -3157,7 +3207,7 @@ class WebViewBase(
       notify (GParam)
     """
 
-    class Props:
+    class Props(_Gtk4.Widget.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
@@ -3194,9 +3244,12 @@ class WebViewBase(
         width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
-    props: Props = ...
-    parent_instance: _Gtk4.Widget = ...
-    priv: WebViewBasePrivate = ...
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> _Gtk4.Widget: ...
+    @property
+    def priv(self) -> WebViewBasePrivate: ...
     def __init__(
         self,
         can_focus: bool = ...,
@@ -3239,8 +3292,8 @@ class WebViewBaseClass(GObject.GPointer):
 
         WebViewBaseClass()
     """
-
-    parentClass: _Gtk4.WidgetClass = ...
+    @property
+    def parentClass(self) -> _Gtk4.WidgetClass: ...
     _webkit_reserved0: None = ...
     _webkit_reserved1: None = ...
     _webkit_reserved2: None = ...
@@ -3256,38 +3309,80 @@ class WebViewClass(GObject.GPointer):
 
         WebViewClass()
     """
-
-    parent: WebViewBaseClass = ...
-    load_changed: Callable[[WebView, LoadEvent], None] = ...
-    load_failed: Callable[[WebView, LoadEvent, str, GLib.Error], bool] = ...
-    create: None = ...
-    ready_to_show: Callable[[WebView], None] = ...
-    run_as_modal: Callable[[WebView], None] = ...
-    close: Callable[[WebView], None] = ...
-    script_dialog: Callable[[WebView, ScriptDialog], bool] = ...
-    decide_policy: Callable[[WebView, PolicyDecision, PolicyDecisionType], bool] = ...
-    permission_request: Callable[[WebView, PermissionRequest], bool] = ...
-    mouse_target_changed: Callable[[WebView, HitTestResult, int], None] = ...
-    print_: Callable[[WebView, PrintOperation], bool] = ...
-    resource_load_started: Callable[[WebView, WebResource, URIRequest], None] = ...
-    enter_fullscreen: Callable[[WebView], bool] = ...
-    leave_fullscreen: Callable[[WebView], bool] = ...
-    run_file_chooser: Callable[[WebView, FileChooserRequest], bool] = ...
-    context_menu: Callable[[WebView, ContextMenu, HitTestResult], bool] = ...
-    context_menu_dismissed: Callable[[WebView], None] = ...
-    submit_form: Callable[[WebView, FormSubmissionRequest], None] = ...
-    insecure_content_detected: Callable[[WebView, InsecureContentEvent], None] = ...
-    web_process_crashed: Callable[[WebView], bool] = ...
-    authenticate: Callable[[WebView, AuthenticationRequest], bool] = ...
-    load_failed_with_tls_errors: Callable[
+    @property
+    def parent(self) -> WebViewBaseClass: ...
+    @property
+    def load_changed(self) -> Callable[[WebView, LoadEvent], None]: ...
+    @property
+    def load_failed(self) -> Callable[[WebView, LoadEvent, str, GLib.Error], bool]: ...
+    @property
+    def create(self) -> None: ...
+    @property
+    def ready_to_show(self) -> Callable[[WebView], None]: ...
+    @property
+    def run_as_modal(self) -> Callable[[WebView], None]: ...
+    @property
+    def close(self) -> Callable[[WebView], None]: ...
+    @property
+    def script_dialog(self) -> Callable[[WebView, ScriptDialog], bool]: ...
+    @property
+    def decide_policy(
+        self,
+    ) -> Callable[[WebView, PolicyDecision, PolicyDecisionType], bool]: ...
+    @property
+    def permission_request(self) -> Callable[[WebView, PermissionRequest], bool]: ...
+    @property
+    def mouse_target_changed(self) -> Callable[[WebView, HitTestResult, int], None]: ...
+    @property
+    def print_(self) -> Callable[[WebView, PrintOperation], bool]: ...
+    @property
+    def resource_load_started(
+        self,
+    ) -> Callable[[WebView, WebResource, URIRequest], None]: ...
+    @property
+    def enter_fullscreen(self) -> Callable[[WebView], bool]: ...
+    @property
+    def leave_fullscreen(self) -> Callable[[WebView], bool]: ...
+    @property
+    def run_file_chooser(self) -> Callable[[WebView, FileChooserRequest], bool]: ...
+    @property
+    def context_menu(self) -> Callable[[WebView, ContextMenu, HitTestResult], bool]: ...
+    @property
+    def context_menu_dismissed(self) -> Callable[[WebView], None]: ...
+    @property
+    def submit_form(self) -> Callable[[WebView, FormSubmissionRequest], None]: ...
+    @property
+    def insecure_content_detected(
+        self,
+    ) -> Callable[[WebView, InsecureContentEvent], None]: ...
+    @property
+    def web_process_crashed(self) -> Callable[[WebView], bool]: ...
+    @property
+    def authenticate(self) -> Callable[[WebView, AuthenticationRequest], bool]: ...
+    @property
+    def load_failed_with_tls_errors(
+        self,
+    ) -> Callable[
         [WebView, str, Gio.TlsCertificate, Gio.TlsCertificateFlags], bool
-    ] = ...
-    show_notification: Callable[[WebView, Notification], bool] = ...
-    run_color_chooser: Callable[[WebView, ColorChooserRequest], bool] = ...
-    show_option_menu: Callable[[WebView, OptionMenu, _Gdk4.Rectangle], bool] = ...
-    web_process_terminated: Callable[[WebView, WebProcessTerminationReason], None] = ...
-    user_message_received: Callable[[WebView, UserMessage], bool] = ...
-    query_permission_state: Callable[[WebView, PermissionStateQuery], bool] = ...
+    ]: ...
+    @property
+    def show_notification(self) -> Callable[[WebView, Notification], bool]: ...
+    @property
+    def run_color_chooser(self) -> Callable[[WebView, ColorChooserRequest], bool]: ...
+    @property
+    def show_option_menu(
+        self,
+    ) -> Callable[[WebView, OptionMenu, _Gdk4.Rectangle], bool]: ...
+    @property
+    def web_process_terminated(
+        self,
+    ) -> Callable[[WebView, WebProcessTerminationReason], None]: ...
+    @property
+    def user_message_received(self) -> Callable[[WebView, UserMessage], bool]: ...
+    @property
+    def query_permission_state(
+        self,
+    ) -> Callable[[WebView, PermissionStateQuery], bool]: ...
     _webkit_reserved0: None = ...
     _webkit_reserved1: None = ...
     _webkit_reserved2: None = ...
@@ -3369,8 +3464,8 @@ class WebsiteDataAccessPermissionRequestClass(GObject.GPointer):
 
         WebsiteDataAccessPermissionRequestClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WebsiteDataManager(GObject.Object):
     """
@@ -3393,14 +3488,15 @@ class WebsiteDataManager(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         base_cache_directory: str | None
         base_data_directory: str | None
         is_ephemeral: bool
         origin_storage_ratio: float
         total_storage_ratio: float
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         base_cache_directory: str = ...,
@@ -3459,8 +3555,8 @@ class WebsiteDataManagerClass(GObject.GPointer):
 
         WebsiteDataManagerClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WebsitePolicies(GObject.Object):
     """
@@ -3480,10 +3576,11 @@ class WebsitePolicies(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         autoplay: AutoplayPolicy
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(self, autoplay: AutoplayPolicy = ...): ...
     def get_autoplay_policy(self) -> AutoplayPolicy: ...
     @classmethod
@@ -3497,8 +3594,8 @@ class WebsitePoliciesClass(GObject.GPointer):
 
         WebsitePoliciesClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class WindowProperties(GObject.Object):
     """
@@ -3524,7 +3621,7 @@ class WindowProperties(GObject.Object):
       notify (GParam)
     """
 
-    class Props:
+    class Props(GObject.Object.Props):
         fullscreen: bool
         geometry: _Gdk4.Rectangle
         locationbar_visible: bool
@@ -3534,7 +3631,8 @@ class WindowProperties(GObject.Object):
         statusbar_visible: bool
         toolbar_visible: bool
 
-    props: Props = ...
+    @property
+    def props(self) -> Props: ...
     def __init__(
         self,
         fullscreen: bool = ...,
@@ -3563,8 +3661,8 @@ class WindowPropertiesClass(GObject.GPointer):
 
         WindowPropertiesClass()
     """
-
-    parent_class: GObject.ObjectClass = ...
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class EditorTypingAttributes(GObject.GFlags):
     BOLD = 4
