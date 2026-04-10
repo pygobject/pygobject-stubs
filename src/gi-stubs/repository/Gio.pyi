@@ -2,6 +2,7 @@ from typing import Any
 from typing import Final
 from typing import Generic
 from typing import overload
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -473,7 +474,7 @@ unix_mounts_changed_since: Final = GioUnix.mounts_changed_since
 unix_mounts_get: Final = GioUnix.mounts_get
 unix_mounts_get_from_file: Final = GioUnix.mounts_get_from_file
 
-class Action(GObject.GInterface):
+class Action(GObject.GInterface, Protocol):
     """
     Interface GAction
 
@@ -516,7 +517,7 @@ class ActionEntry(GObject.GPointer):
     @property
     def padding(self) -> list[int]: ...
 
-class ActionGroup(GObject.GInterface):
+class ActionGroup(GObject.GInterface, Protocol):
     """
     Interface GActionGroup
 
@@ -631,7 +632,7 @@ class ActionInterface(GObject.GPointer):
     @property
     def activate(self) -> Callable[[Action, GLib.Variant | None], None]: ...
 
-class ActionMap(GObject.GInterface):
+class ActionMap(GObject.GInterface, Protocol):
     """
     Interface GActionMap
 
@@ -693,7 +694,7 @@ class ActionMapInterface(GObject.GPointer):
     @property
     def remove_action(self) -> Callable[[ActionMap, str], None]: ...
 
-class AppInfo(GObject.GInterface):
+class AppInfo(GObject.GInterface, Protocol):
     """
     Interface GAppInfo
 
@@ -1237,7 +1238,7 @@ class ApplicationCommandLineClass(GObject.GPointer):
 class ApplicationCommandLinePrivate(GObject.GPointer): ...
 class ApplicationPrivate(GObject.GPointer): ...
 
-class AsyncInitable(GObject.GInterface):
+class AsyncInitable(GObject.GInterface, Protocol):
     """
     Interface GAsyncInitable
 
@@ -1279,7 +1280,7 @@ class AsyncInitableIface(GObject.GPointer):
     @property
     def init_finish(self) -> Callable[[AsyncInitable, AsyncResult], bool]: ...
 
-class AsyncResult(GObject.GInterface):
+class AsyncResult(GObject.GInterface, Protocol):
     """
     Interface GAsyncResult
 
@@ -1597,7 +1598,7 @@ class CharsetConverterClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Converter(GObject.GInterface):
+class Converter(GObject.GInterface, Protocol):
     """
     Interface GConverter
 
@@ -2136,7 +2137,7 @@ class DBusErrorEntry(GObject.GPointer):
     error_code: int
     dbus_error_name: str
 
-class DBusInterface(GObject.GInterface):
+class DBusInterface(GObject.GInterface, Protocol):
     """
     Interface GDBusInterface
 
@@ -2472,7 +2473,7 @@ class DBusNodeInfo(GObject.GBoxed):
     def ref(self) -> DBusNodeInfo: ...
     def unref(self) -> None: ...
 
-class DBusObject(GObject.GInterface):
+class DBusObject(GObject.GInterface, Protocol):
     """
     Interface GDBusObject
 
@@ -2504,7 +2505,7 @@ class DBusObjectIface(GObject.GPointer):
     @property
     def interface_removed(self) -> Callable[[DBusObject, DBusInterface], None]: ...
 
-class DBusObjectManager(GObject.GInterface):
+class DBusObjectManager(GObject.GInterface, Protocol):
     """
     Interface GDBusObjectManager
 
@@ -3465,7 +3466,7 @@ class DataOutputStreamClass(GObject.GPointer):
 
 class DataOutputStreamPrivate(GObject.GPointer): ...
 
-class DatagramBased(GObject.GInterface):
+class DatagramBased(GObject.GInterface, Protocol):
     """
     Interface GDatagramBased
 
@@ -3534,7 +3535,7 @@ class DatagramBasedInterface(GObject.GPointer):
         self,
     ) -> Callable[[DatagramBased, GLib.IOCondition, int, Cancellable | None], bool]: ...
 
-class DebugController(GObject.GInterface):
+class DebugController(GObject.GInterface, Protocol):
     """
     Interface GDebugController
 
@@ -3610,7 +3611,7 @@ class DebugControllerInterface(GObject.GPointer):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
 
-class Drive(GObject.GInterface):
+class Drive(GObject.GInterface, Protocol):
     """
     Interface GDrive
 
@@ -3753,7 +3754,7 @@ class DriveIface(GObject.GPointer):
     @property
     def is_removable(self) -> Callable[[Drive], bool]: ...
 
-class DtlsClientConnection(GObject.GInterface):
+class DtlsClientConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsClientConnection
 
@@ -3781,7 +3782,7 @@ class DtlsClientConnectionInterface(GObject.GPointer):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
 
-class DtlsConnection(GObject.GInterface):
+class DtlsConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsConnection
 
@@ -3886,7 +3887,7 @@ class DtlsConnectionInterface(GObject.GPointer):
         self,
     ) -> Callable[[DtlsConnection, TlsChannelBindingType, Sequence[int]], bool]: ...
 
-class DtlsServerConnection(GObject.GInterface):
+class DtlsServerConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsServerConnection
 
@@ -3995,7 +3996,7 @@ class EmblemedIconClass(GObject.GPointer):
 
 class EmblemedIconPrivate(GObject.GPointer): ...
 
-class File(GObject.GInterface):
+class File(GObject.GInterface, Protocol):
     """
     Interface GFile
 
@@ -5757,7 +5758,7 @@ class IPv6TclassMessageClass(GObject.GPointer):
     @property
     def parent_class(self) -> SocketControlMessageClass: ...
 
-class Icon(GObject.GInterface):
+class Icon(GObject.GInterface, Protocol):
     """
     Interface GIcon
 
@@ -6029,7 +6030,7 @@ class InetSocketAddressClass(GObject.GPointer):
 
 class InetSocketAddressPrivate(GObject.GPointer): ...
 
-class Initable(GObject.GInterface):
+class Initable(GObject.GInterface, Protocol):
     """
     Interface GInitable
 
@@ -6223,7 +6224,7 @@ class InputVector(GObject.GPointer):
     size: int
 
 # override
-class ListModel(GObject.GInterface, Generic[ObjectItemType]):
+class ListModel(GObject.GInterface, Protocol[ObjectItemType]):
     """
     Interface GListModel
 
@@ -6336,7 +6337,7 @@ class ListStoreClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class LoadableIcon(GObject.GInterface):
+class LoadableIcon(GObject.GInterface, Protocol):
     """
     Interface GLoadableIcon
 
@@ -6422,7 +6423,7 @@ class MemoryInputStreamClass(GObject.GPointer):
 
 class MemoryInputStreamPrivate(GObject.GPointer): ...
 
-class MemoryMonitor(GObject.GInterface):
+class MemoryMonitor(GObject.GInterface, Protocol):
     """
     Interface GMemoryMonitor
 
@@ -6756,7 +6757,7 @@ class MenuModelClass(GObject.GPointer):
 
 class MenuModelPrivate(GObject.GPointer): ...
 
-class Mount(GObject.GInterface):
+class Mount(GObject.GInterface, Protocol):
     """
     Interface GMount
 
@@ -7177,7 +7178,7 @@ class NetworkAddressClass(GObject.GPointer):
 
 class NetworkAddressPrivate(GObject.GPointer): ...
 
-class NetworkMonitor(GObject.GInterface):
+class NetworkMonitor(GObject.GInterface, Protocol):
     """
     Interface GNetworkMonitor
 
@@ -7695,7 +7696,7 @@ class PermissionClass(GObject.GPointer):
 
 class PermissionPrivate(GObject.GPointer): ...
 
-class PollableInputStream(GObject.GInterface):
+class PollableInputStream(GObject.GInterface, Protocol):
     """
     Interface GPollableInputStream
 
@@ -7732,7 +7733,7 @@ class PollableInputStreamInterface(GObject.GPointer):
         self,
     ) -> Callable[[PollableInputStream], tuple[int, bytes]]: ...
 
-class PollableOutputStream(GObject.GInterface):
+class PollableOutputStream(GObject.GInterface, Protocol):
     """
     Interface GPollableOutputStream
 
@@ -7778,7 +7779,7 @@ class PollableOutputStreamInterface(GObject.GPointer):
         [PollableOutputStream, Sequence[OutputVector]], tuple[PollableReturn, int]
     ]: ...
 
-class PowerProfileMonitor(GObject.GInterface):
+class PowerProfileMonitor(GObject.GInterface, Protocol):
     """
     Interface GPowerProfileMonitor
 
@@ -7849,7 +7850,7 @@ class PropertyAction(GObject.Object, Action):
         cls, name: str, object: GObject.Object, property_name: str
     ) -> PropertyAction: ...
 
-class Proxy(GObject.GInterface):
+class Proxy(GObject.GInterface, Protocol):
     """
     Interface GProxy
 
@@ -8047,7 +8048,7 @@ class ProxyInterface(GObject.GPointer):
     @property
     def supports_hostname(self) -> Callable[[Proxy], bool]: ...
 
-class ProxyResolver(GObject.GInterface):
+class ProxyResolver(GObject.GInterface, Protocol):
     """
     Interface GProxyResolver
 
@@ -8088,7 +8089,7 @@ class ProxyResolverInterface(GObject.GPointer):
     @property
     def lookup_finish(self) -> Callable[[ProxyResolver, AsyncResult], list[str]]: ...
 
-class RemoteActionGroup(GObject.GInterface):
+class RemoteActionGroup(GObject.GInterface, Protocol):
     """
     Interface GRemoteActionGroup
 
@@ -8388,7 +8389,7 @@ class Resource(GObject.GBoxed):
     def ref(self) -> Resource: ...
     def unref(self) -> None: ...
 
-class Seekable(GObject.GInterface):
+class Seekable(GObject.GInterface, Protocol):
     """
     Interface GSeekable
 
@@ -9460,7 +9461,7 @@ class SocketClientClass(GObject.GPointer):
 
 class SocketClientPrivate(GObject.GPointer): ...
 
-class SocketConnectable(GObject.GInterface):
+class SocketConnectable(GObject.GInterface, Protocol):
     """
     Interface GSocketConnectable
 
@@ -10338,7 +10339,7 @@ class ThreadedSocketServiceClass(GObject.GPointer):
 
 class ThreadedSocketServicePrivate(GObject.GPointer): ...
 
-class TlsBackend(GObject.GInterface):
+class TlsBackend(GObject.GInterface, Protocol):
     """
     Interface GTlsBackend
 
@@ -10520,7 +10521,7 @@ class TlsCertificateClass(GObject.GPointer):
 
 class TlsCertificatePrivate(GObject.GPointer): ...
 
-class TlsClientConnection(GObject.GInterface):
+class TlsClientConnection(GObject.GInterface, Protocol):
     """
     Interface GTlsClientConnection
 
@@ -10985,7 +10986,7 @@ class TlsDatabaseClass(GObject.GPointer):
 
 class TlsDatabasePrivate(GObject.GPointer): ...
 
-class TlsFileDatabase(GObject.GInterface):
+class TlsFileDatabase(GObject.GInterface, Protocol):
     """
     Interface GTlsFileDatabase
 
@@ -11212,7 +11213,7 @@ class TlsPasswordClass(GObject.GPointer):
 
 class TlsPasswordPrivate(GObject.GPointer): ...
 
-class TlsServerConnection(GObject.GInterface):
+class TlsServerConnection(GObject.GInterface, Protocol):
     """
     Interface GTlsServerConnection
 
@@ -11596,7 +11597,7 @@ class VfsClass(GObject.GPointer):
     @property
     def deserialize_icon(self) -> None: ...
 
-class Volume(GObject.GInterface):
+class Volume(GObject.GInterface, Protocol):
     """
     Interface GVolume
 

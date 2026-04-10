@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -822,7 +823,7 @@ class LicenseClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Location(GObject.GInterface):
+class Location(GObject.GInterface, Protocol):
     """
     Interface ShumateLocation
 

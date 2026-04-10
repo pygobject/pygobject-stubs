@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -1629,7 +1630,7 @@ class ReminderWatcherClass(GObject.GPointer):
 
 class ReminderWatcherPrivate(GObject.GPointer): ...
 
-class TimezoneCache(GObject.GInterface):
+class TimezoneCache(GObject.GInterface, Protocol):
     """
     Interface ETimezoneCache
 

@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -736,7 +737,7 @@ class AboutDialog(
     def set_website_label(self, website_label: str) -> None: ...
     def set_wrap_license(self, wrap_license: bool) -> None: ...
 
-class Accessible(GObject.GInterface):
+class Accessible(GObject.GInterface, Protocol):
     """
     Interface GtkAccessible
 
@@ -817,7 +818,7 @@ class AccessibleHyperlinkClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class AccessibleHypertext(GObject.GInterface): ...
+class AccessibleHypertext(GObject.GInterface, Protocol): ...
 
 class AccessibleHypertextInterface(GObject.GPointer):
     """
@@ -882,7 +883,7 @@ class AccessibleList(GObject.GBoxed):
     @classmethod
     def new_from_list(cls, list: list[Accessible]) -> AccessibleList: ...
 
-class AccessibleRange(GObject.GInterface): ...
+class AccessibleRange(GObject.GInterface, Protocol): ...
 
 class AccessibleRangeInterface(GObject.GPointer):
     """
@@ -897,7 +898,7 @@ class AccessibleRangeInterface(GObject.GPointer):
     @property
     def set_current_value(self) -> Callable[[AccessibleRange, float], bool]: ...
 
-class AccessibleText(GObject.GInterface):
+class AccessibleText(GObject.GInterface, Protocol):
     """
     Interface GtkAccessibleText
 
@@ -1128,7 +1129,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
     def set_center_widget(self, center_widget: Widget | None = None) -> None: ...
     def set_revealed(self, revealed: bool) -> None: ...
 
-class Actionable(GObject.GInterface):
+class Actionable(GObject.GInterface, Protocol):
     """
     Interface GtkActionable
 
@@ -1431,7 +1432,7 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
 
 class AnyFilterClass(GObject.GPointer): ...
 
-class AppChooser(GObject.GInterface):
+class AppChooser(GObject.GInterface, Protocol):
     """
     Interface GtkAppChooser
 
@@ -3429,7 +3430,7 @@ class BoxLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class Buildable(GObject.GInterface):
+class Buildable(GObject.GInterface, Protocol):
     """
     Interface GtkBuildable
 
@@ -3684,7 +3685,7 @@ class BuilderListItemFactory(ListItemFactory):
     ) -> BuilderListItemFactory: ...
 
 class BuilderListItemFactoryClass(GObject.GPointer): ...
-class BuilderScope(GObject.GInterface): ...
+class BuilderScope(GObject.GInterface, Protocol): ...
 
 class BuilderScopeInterface(GObject.GPointer):
     """
@@ -4641,7 +4642,7 @@ class CellAreaContextClass(GObject.GPointer):
 
 class CellAreaContextPrivate(GObject.GPointer): ...
 
-class CellEditable(GObject.GInterface):
+class CellEditable(GObject.GInterface, Protocol):
     """
     Interface GtkCellEditable
 
@@ -4669,7 +4670,7 @@ class CellEditableIface(GObject.GPointer):
     @property
     def start_editing(self) -> Callable[[CellEditable, _Gdk4.Event | None], None]: ...
 
-class CellLayout(GObject.GInterface):
+class CellLayout(GObject.GInterface, Protocol):
     """
     Interface GtkCellLayout
 
@@ -7105,7 +7106,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class ColorChooser(GObject.GInterface):
+class ColorChooser(GObject.GInterface, Protocol):
     """
     Interface GtkColorChooser
 
@@ -8982,7 +8983,7 @@ class ConstraintLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class ConstraintTarget(GObject.GInterface): ...
+class ConstraintTarget(GObject.GInterface, Protocol): ...
 class ConstraintTargetInterface(GObject.GPointer): ...
 
 class CssLocation(GObject.GPointer):
@@ -10404,7 +10405,7 @@ class DropTargetAsync(EventController):
 class DropTargetAsyncClass(GObject.GPointer): ...
 class DropTargetClass(GObject.GPointer): ...
 
-class Editable(GObject.GInterface):
+class Editable(GObject.GInterface, Protocol):
     """
     Interface GtkEditable
 
@@ -11958,7 +11959,7 @@ class ExpressionWatch(GObject.GBoxed):
     def unref(self) -> None: ...
     def unwatch(self) -> None: ...
 
-class FileChooser(GObject.GInterface):
+class FileChooser(GObject.GInterface, Protocol):
     """
     Interface GtkFileChooser
 
@@ -13779,7 +13780,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
     def set_use_font(self, use_font: bool) -> None: ...
     def set_use_size(self, use_size: bool) -> None: ...
 
-class FontChooser(GObject.GInterface):
+class FontChooser(GObject.GInterface, Protocol):
     """
     Interface GtkFontChooser
 
@@ -20989,7 +20990,7 @@ class NamedAction(ShortcutAction):
 
 class NamedActionClass(GObject.GPointer): ...
 
-class Native(GObject.GInterface):
+class Native(GObject.GInterface, Protocol):
     """
     Interface GtkNative
 
@@ -21526,7 +21527,7 @@ class ObjectExpression(Expression):
     @classmethod
     def new(cls, object: GObject.Object) -> ObjectExpression: ...
 
-class Orientable(GObject.GInterface):
+class Orientable(GObject.GInterface, Protocol):
     """
     Interface GtkOrientable
 
@@ -24022,7 +24023,7 @@ class PrintOperationClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class PrintOperationPreview(GObject.GInterface):
+class PrintOperationPreview(GObject.GInterface, Protocol):
     """
     Interface GtkPrintOperationPreview
 
@@ -25265,7 +25266,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
     def set_transition_duration(self, duration: int) -> None: ...
     def set_transition_type(self, transition: RevealerTransitionType) -> None: ...
 
-class Root(GObject.GInterface):
+class Root(GObject.GInterface, Protocol):
     """
     Interface GtkRoot
 
@@ -25727,7 +25728,7 @@ class ScrollInfo(GObject.GBoxed):
     def set_enable_vertical(self, vertical: bool) -> None: ...
     def unref(self) -> None: ...
 
-class Scrollable(GObject.GInterface):
+class Scrollable(GObject.GInterface, Protocol):
     """
     Interface GtkScrollable
 
@@ -26512,7 +26513,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     def set_placeholder_text(self, text: str | None = None) -> None: ...
     def set_search_delay(self, delay: int) -> None: ...
 
-class SectionModel(GObject.GInterface):
+class SectionModel(GObject.GInterface, Protocol):
     """
     Interface GtkSectionModel
 
@@ -26581,7 +26582,7 @@ class SelectionFilterModelClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class SelectionModel(GObject.GInterface):
+class SelectionModel(GObject.GInterface, Protocol):
     """
     Interface GtkSelectionModel
 
@@ -27284,7 +27285,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
     def set_disabled_text(self, disabled_text: str) -> None: ...
 
 class ShortcutLabelClass(GObject.GPointer): ...
-class ShortcutManager(GObject.GInterface): ...
+class ShortcutManager(GObject.GInterface, Protocol): ...
 
 class ShortcutManagerInterface(GObject.GPointer):
     """
@@ -29996,7 +29997,7 @@ class StyleContextClass(GObject.GPointer):
     @property
     def changed(self) -> Callable[[StyleContext], None]: ...
 
-class StyleProvider(GObject.GInterface): ...
+class StyleProvider(GObject.GInterface, Protocol): ...
 
 class Svg(GObject.Object, _Gdk4.Paintable, SymbolicPaintable):
     """
@@ -30255,7 +30256,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_active(self, is_active: bool) -> None: ...
     def set_state(self, state: bool) -> None: ...
 
-class SymbolicPaintable(GObject.GInterface):
+class SymbolicPaintable(GObject.GInterface, Protocol):
     """
     Interface GtkSymbolicPaintable
 
@@ -32044,7 +32045,7 @@ class Tooltip(GObject.Object):
     def set_text(self, text: str | None = None) -> None: ...
     def set_tip_area(self, rect: _Gdk4.Rectangle) -> None: ...
 
-class TreeDragDest(GObject.GInterface):
+class TreeDragDest(GObject.GInterface, Protocol):
     """
     Interface GtkTreeDragDest
     """
@@ -32066,7 +32067,7 @@ class TreeDragDestIface(GObject.GPointer):
     @property
     def row_drop_possible(self) -> Callable[[TreeDragDest, TreePath, Any], bool]: ...
 
-class TreeDragSource(GObject.GInterface):
+class TreeDragSource(GObject.GInterface, Protocol):
     """
     Interface GtkTreeDragSource
     """
@@ -32449,7 +32450,7 @@ class TreeListRowSorterClass(GObject.GPointer):
     def parent_class(self) -> SorterClass: ...
 
 # override
-class TreeModel(GObject.GInterface):
+class TreeModel(GObject.GInterface, Protocol):
     """
     Interface GtkTreeModel
 
@@ -32840,7 +32841,7 @@ class TreeSelection(GObject.Object):
     def unselect_path(self, path: TreePath) -> None: ...
     def unselect_range(self, start_path: TreePath, end_path: TreePath) -> None: ...
 
-class TreeSortable(GObject.GInterface):
+class TreeSortable(GObject.GInterface, Protocol):
     """
     Interface GtkTreeSortable
 

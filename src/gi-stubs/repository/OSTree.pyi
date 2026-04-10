@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -1408,7 +1409,7 @@ class RepoFileClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class RepoFinder(GObject.GInterface):
+class RepoFinder(GObject.GInterface, Protocol):
     """
     Interface OstreeRepoFinder
 
@@ -1715,7 +1716,7 @@ class SePolicy(GObject.Object, Gio.Initable):
     ) -> tuple[bool, str]: ...
     def setfscreatecon(self, path: str, mode: int) -> bool: ...
 
-class Sign(GObject.GInterface):
+class Sign(GObject.GInterface, Protocol):
     """
     Interface OstreeSign
 

@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -3162,7 +3163,7 @@ class Device(GObject.Object):
     def get_vendor_id(self) -> str | None: ...
     def has_bidi_layouts(self) -> bool: ...
 
-class DevicePad(GObject.GInterface):
+class DevicePad(GObject.GInterface, Protocol):
     """
     Interface GdkDevicePad
 
@@ -3522,7 +3523,7 @@ class Drag(GObject.Object):
     def get_surface(self) -> Surface: ...
     def set_hotspot(self, hot_x: int, hot_y: int) -> None: ...
 
-class DragSurface(GObject.GInterface):
+class DragSurface(GObject.GInterface, Protocol):
     """
     Interface GdkDragSurface
 
@@ -4172,7 +4173,7 @@ class PadEvent(Event):
     def get_button(self) -> int: ...
     def get_group_mode(self) -> tuple[int, int]: ...
 
-class Paintable(GObject.GInterface):
+class Paintable(GObject.GInterface, Protocol):
     """
     Interface GdkPaintable
 
@@ -4220,7 +4221,7 @@ class PaintableInterface(GObject.GPointer):
     @property
     def get_intrinsic_aspect_ratio(self) -> Callable[[Paintable], float]: ...
 
-class Popup(GObject.GInterface):
+class Popup(GObject.GInterface, Protocol):
     """
     Interface GdkPopup
 
@@ -4563,7 +4564,7 @@ class TimeCoord(GObject.GPointer):
     flags: AxisFlags
     axes: list[float]
 
-class Toplevel(GObject.GInterface):
+class Toplevel(GObject.GInterface, Protocol):
     """
     Interface GdkToplevel
 

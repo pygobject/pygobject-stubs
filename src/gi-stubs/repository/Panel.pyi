@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -967,7 +968,7 @@ class FrameClass(GObject.GPointer):
     def adopt_widget(self) -> Callable[[Frame, Widget], bool]: ...
     _reserved: list[None] = ...
 
-class FrameHeader(GObject.GInterface):
+class FrameHeader(GObject.GInterface, Protocol):
     """
     Interface PanelFrameHeader
 

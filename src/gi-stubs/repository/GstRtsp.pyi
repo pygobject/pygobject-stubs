@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -177,7 +178,7 @@ class RTSPConnection(GObject.GPointer):
     def write(self, data: Sequence[int], timeout: GLib.TimeVal) -> RTSPResult: ...
     def write_usec(self, data: Sequence[int], timeout: int) -> RTSPResult: ...
 
-class RTSPExtension(GObject.GInterface):
+class RTSPExtension(GObject.GInterface, Protocol):
     """
     Interface GstRTSPExtension
     """

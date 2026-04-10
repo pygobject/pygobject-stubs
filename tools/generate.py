@@ -764,7 +764,14 @@ class Stub:
             f'T = {_TypeVar}("T")',
         ]
 
-        if self.namespace == "Gtk":
+        if self.namespace == "GObject":
+            # TODO: find a better way to keep things (like protocols) that aren't in the actual module
+            # but are needed for the stubs
+            object_protocol = self.check_override("", "ObjectProtocol")
+
+            if object_protocol is not None:
+                typevars.append(object_protocol)
+        elif self.namespace == "Gtk":
             self.get_import("os")
             typevars.append(
                 f"""CellRendererT = {_TypeVar}(
@@ -1018,7 +1025,10 @@ def _gi_build_stub_parts(
                     parents.append(type_fullname)
 
         string_parents = ""
-        if len(parents) > 0:
+        if parents:
+            if parents == [stub.get_namespace_member("GObject", "GInterface")]:
+                parents.append(stub.get_import("typing", "Protocol"))
+
             string_parents = f"({', '.join(parents)})"
 
         if (

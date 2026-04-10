@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -505,7 +506,7 @@ class AncillaryMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class ColorBalance(GObject.GInterface):
+class ColorBalance(GObject.GInterface, Protocol):
     """
     Interface GstColorBalance
     """
@@ -577,7 +578,7 @@ class ColorBalanceInterface(GObject.GPointer):
         self,
     ) -> Callable[[ColorBalance, ColorBalanceChannel, int], None]: ...
 
-class Navigation(GObject.GInterface):
+class Navigation(GObject.GInterface, Protocol):
     """
     Interface GstNavigation
     """
@@ -1733,7 +1734,7 @@ class VideoDecoderClass(GObject.GPointer):
     def padding(self) -> list[None]: ...
 
 class VideoDecoderPrivate(GObject.GPointer): ...
-class VideoDirection(GObject.GInterface): ...
+class VideoDirection(GObject.GInterface, Protocol): ...
 
 class VideoDirectionInterface(GObject.GPointer):
     """
@@ -2273,7 +2274,7 @@ class VideoMetaTransform(GObject.GPointer):
 
 class VideoMultiviewFlagsSet(Gst.FlagSet): ...
 
-class VideoOrientation(GObject.GInterface):
+class VideoOrientation(GObject.GInterface, Protocol):
     """
     Interface GstVideoOrientation
     """
@@ -2317,7 +2318,7 @@ class VideoOrientationInterface(GObject.GPointer):
     @property
     def set_vcenter(self) -> Callable[[VideoOrientation, int], bool]: ...
 
-class VideoOverlay(GObject.GInterface):
+class VideoOverlay(GObject.GInterface, Protocol):
     """
     Interface GstVideoOverlay
     """

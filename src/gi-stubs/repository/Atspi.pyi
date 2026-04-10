@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -215,7 +216,7 @@ class AccessibleClass(GObject.GPointer):
 
 class AccessiblePrivate(GObject.GPointer): ...
 
-class Action(GObject.GInterface):
+class Action(GObject.GInterface, Protocol):
     """
     Interface AtspiAction
     """
@@ -263,7 +264,7 @@ class ApplicationClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass
 
-class Collection(GObject.GInterface):
+class Collection(GObject.GInterface, Protocol):
     """
     Interface AtspiCollection
     """
@@ -293,7 +294,7 @@ class Collection(GObject.GInterface):
     ) -> list[Accessible]: ...
     def is_ancestor_of(self, test: Accessible) -> bool: ...
 
-class Component(GObject.GInterface):
+class Component(GObject.GInterface, Protocol):
     """
     Interface AtspiComponent
     """
@@ -505,7 +506,7 @@ class DeviceX11Class(GObject.GPointer):
 
     parent_class: DeviceClass
 
-class Document(GObject.GInterface):
+class Document(GObject.GInterface, Protocol):
     """
     Interface AtspiDocument
     """
@@ -518,7 +519,7 @@ class Document(GObject.GInterface):
     def get_text_selections(self) -> list[TextSelection]: ...
     def set_text_selections(self, selections: Sequence[TextSelection]) -> bool: ...
 
-class EditableText(GObject.GInterface):
+class EditableText(GObject.GInterface, Protocol):
     """
     Interface AtspiEditableText
     """
@@ -664,7 +665,7 @@ class HyperlinkClass(GObject.GPointer):
 
     parent_class: ObjectClass
 
-class Hypertext(GObject.GInterface):
+class Hypertext(GObject.GInterface, Protocol):
     """
     Interface AtspiHypertext
     """
@@ -673,7 +674,7 @@ class Hypertext(GObject.GInterface):
     def get_link_index(self, character_offset: int) -> int: ...
     def get_n_links(self) -> int: ...
 
-class Image(GObject.GInterface):
+class Image(GObject.GInterface, Protocol):
     """
     Interface AtspiImage
     """
@@ -864,7 +865,7 @@ class RelationClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass
 
-class Selection(GObject.GInterface):
+class Selection(GObject.GInterface, Protocol):
     """
     Interface AtspiSelection
     """
@@ -918,7 +919,7 @@ class StateSetClass(GObject.GPointer):
 
     parent_class: GObject.ObjectClass
 
-class Table(GObject.GInterface):
+class Table(GObject.GInterface, Protocol):
     """
     Interface AtspiTable
     """
@@ -952,7 +953,7 @@ class Table(GObject.GInterface):
     def remove_column_selection(self, column: int) -> bool: ...
     def remove_row_selection(self, row: int) -> bool: ...
 
-class TableCell(GObject.GInterface):
+class TableCell(GObject.GInterface, Protocol):
     """
     Interface AtspiTableCell
     """
@@ -966,7 +967,7 @@ class TableCell(GObject.GInterface):
     def get_row_span(self) -> int: ...
     def get_table(self) -> Accessible: ...
 
-class Text(GObject.GInterface):
+class Text(GObject.GInterface, Protocol):
     """
     Interface AtspiText
     """
@@ -1051,7 +1052,7 @@ class TextSelection(GObject.GPointer):
     end_offset: int
     start_is_active: bool
 
-class Value(GObject.GInterface):
+class Value(GObject.GInterface, Protocol):
     """
     Interface AtspiValue
     """
