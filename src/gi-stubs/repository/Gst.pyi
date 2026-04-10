@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import Generic
 from typing import TypeVar
 from typing_extensions import Self
@@ -14,190 +15,192 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-ALLOCATOR_SYSMEM: str = "SystemMemory"
-BUFFER_COPY_ALL: int = 0
-BUFFER_COPY_METADATA: int = 0
-BUFFER_OFFSET_NONE: int = 18446744073709551615
-CAN_INLINE: int = 1
-CAPS_FEATURE_MEMORY_SYSTEM_MEMORY: str = "memory:SystemMemory"
-CLOCK_TIME_NONE: int = 18446744073709551615
-DEBUG_BG_MASK: int = 240
-DEBUG_FG_MASK: int = 15
-DEBUG_FORMAT_MASK: int = 65280
-ELEMENT_FACTORY_KLASS_DECODER: str = "Decoder"
-ELEMENT_FACTORY_KLASS_DECRYPTOR: str = "Decryptor"
-ELEMENT_FACTORY_KLASS_DEMUXER: str = "Demuxer"
-ELEMENT_FACTORY_KLASS_DEPAYLOADER: str = "Depayloader"
-ELEMENT_FACTORY_KLASS_ENCODER: str = "Encoder"
-ELEMENT_FACTORY_KLASS_ENCRYPTOR: str = "Encryptor"
-ELEMENT_FACTORY_KLASS_FORMATTER: str = "Formatter"
-ELEMENT_FACTORY_KLASS_HARDWARE: str = "Hardware"
-ELEMENT_FACTORY_KLASS_MEDIA_AUDIO: str = "Audio"
-ELEMENT_FACTORY_KLASS_MEDIA_IMAGE: str = "Image"
-ELEMENT_FACTORY_KLASS_MEDIA_METADATA: str = "Metadata"
-ELEMENT_FACTORY_KLASS_MEDIA_SUBTITLE: str = "Subtitle"
-ELEMENT_FACTORY_KLASS_MEDIA_VIDEO: str = "Video"
-ELEMENT_FACTORY_KLASS_MUXER: str = "Muxer"
-ELEMENT_FACTORY_KLASS_PARSER: str = "Parser"
-ELEMENT_FACTORY_KLASS_PAYLOADER: str = "Payloader"
-ELEMENT_FACTORY_KLASS_SINK: str = "Sink"
-ELEMENT_FACTORY_KLASS_SRC: str = "Source"
-ELEMENT_FACTORY_TYPE_ANY: int = 562949953421311
-ELEMENT_FACTORY_TYPE_AUDIOVIDEO_SINKS: int = 3940649673949188
-ELEMENT_FACTORY_TYPE_AUDIO_ENCODER: int = 1125899906842626
-ELEMENT_FACTORY_TYPE_DECODABLE: int = 1377
-ELEMENT_FACTORY_TYPE_DECODER: int = 1
-ELEMENT_FACTORY_TYPE_DECRYPTOR: int = 1024
-ELEMENT_FACTORY_TYPE_DEMUXER: int = 32
-ELEMENT_FACTORY_TYPE_DEPAYLOADER: int = 256
-ELEMENT_FACTORY_TYPE_ENCODER: int = 2
-ELEMENT_FACTORY_TYPE_ENCRYPTOR: int = 2048
-ELEMENT_FACTORY_TYPE_FORMATTER: int = 512
-ELEMENT_FACTORY_TYPE_HARDWARE: int = 4096
-ELEMENT_FACTORY_TYPE_MAX_ELEMENTS: int = 281474976710656
-ELEMENT_FACTORY_TYPE_MEDIA_ANY: int = 18446462598732840960
-ELEMENT_FACTORY_TYPE_MEDIA_AUDIO: int = 1125899906842624
-ELEMENT_FACTORY_TYPE_MEDIA_IMAGE: int = 2251799813685248
-ELEMENT_FACTORY_TYPE_MEDIA_METADATA: int = 9007199254740992
-ELEMENT_FACTORY_TYPE_MEDIA_SUBTITLE: int = 4503599627370496
-ELEMENT_FACTORY_TYPE_MEDIA_VIDEO: int = 562949953421312
-ELEMENT_FACTORY_TYPE_MUXER: int = 16
-ELEMENT_FACTORY_TYPE_PARSER: int = 64
-ELEMENT_FACTORY_TYPE_PAYLOADER: int = 128
-ELEMENT_FACTORY_TYPE_SINK: int = 4
-ELEMENT_FACTORY_TYPE_SRC: int = 8
-ELEMENT_FACTORY_TYPE_TIMESTAMPER: int = 8192
-ELEMENT_FACTORY_TYPE_VIDEO_ENCODER: int = 2814749767106562
-ELEMENT_METADATA_AUTHOR: str = "author"
-ELEMENT_METADATA_DESCRIPTION: str = "description"
-ELEMENT_METADATA_DOC_URI: str = "doc-uri"
-ELEMENT_METADATA_ICON_NAME: str = "icon-name"
-ELEMENT_METADATA_KLASS: str = "klass"
-ELEMENT_METADATA_LONGNAME: str = "long-name"
-EVENT_NUM_SHIFT: int = 8
-EVENT_TYPE_BOTH: int = 0
-FLAG_SET_MASK_EXACT: int = 4294967295
-FORMAT_PERCENT_MAX: int = 1000000
-FORMAT_PERCENT_SCALE: int = 10000
-GROUP_ID_INVALID: int = 0
-LICENSE_UNKNOWN: str = "unknown"
-LOCK_FLAG_READWRITE: int = 0
-MAP_READWRITE: int = 0
-META_TAG_MEMORY_REFERENCE_STR: str = "memory-reference"
-META_TAG_MEMORY_STR: str = "memory"
-MSECOND: int = 1000000
-NSECOND: int = 1
-PARAM_CONDITIONALLY_AVAILABLE: int = 16384
-PARAM_CONTROLLABLE: int = 512
-PARAM_DOC_SHOW_DEFAULT: int = 8192
-PARAM_MUTABLE_PAUSED: int = 2048
-PARAM_MUTABLE_PLAYING: int = 4096
-PARAM_MUTABLE_READY: int = 1024
-PARAM_USER_SHIFT: int = 65536
-PROTECTION_SYSTEM_ID_CAPS_FIELD: str = "protection-system"
-PROTECTION_UNSPECIFIED_SYSTEM_ID: str = "unspecified-system-id"
-QUERY_NUM_SHIFT: int = 8
-QUERY_TYPE_BOTH: int = 0
-SECOND: int = 1000000000
-SEGMENT_INSTANT_FLAGS: int = 912
-SEQNUM_INVALID: int = 0
-TAG_ALBUM: str = "album"
-TAG_ALBUM_ARTIST: str = "album-artist"
-TAG_ALBUM_ARTIST_SORTNAME: str = "album-artist-sortname"
-TAG_ALBUM_GAIN: str = "replaygain-album-gain"
-TAG_ALBUM_PEAK: str = "replaygain-album-peak"
-TAG_ALBUM_SORTNAME: str = "album-sortname"
-TAG_ALBUM_VOLUME_COUNT: str = "album-disc-count"
-TAG_ALBUM_VOLUME_NUMBER: str = "album-disc-number"
-TAG_APPLICATION_DATA: str = "application-data"
-TAG_APPLICATION_NAME: str = "application-name"
-TAG_ARTIST: str = "artist"
-TAG_ARTIST_SORTNAME: str = "artist-sortname"
-TAG_ATTACHMENT: str = "attachment"
-TAG_AUDIO_CODEC: str = "audio-codec"
-TAG_BEATS_PER_MINUTE: str = "beats-per-minute"
-TAG_BITRATE: str = "bitrate"
-TAG_CODEC: str = "codec"
-TAG_COMMENT: str = "comment"
-TAG_COMPOSER: str = "composer"
-TAG_COMPOSER_SORTNAME: str = "composer-sortname"
-TAG_CONDUCTOR: str = "conductor"
-TAG_CONTACT: str = "contact"
-TAG_CONTAINER_FORMAT: str = "container-format"
-TAG_CONTAINER_SPECIFIC_TRACK_ID: str = "container-specific-track-id"
-TAG_COPYRIGHT: str = "copyright"
-TAG_COPYRIGHT_URI: str = "copyright-uri"
-TAG_DATE: str = "date"
-TAG_DATE_TIME: str = "datetime"
-TAG_DESCRIPTION: str = "description"
-TAG_DEVICE_MANUFACTURER: str = "device-manufacturer"
-TAG_DEVICE_MODEL: str = "device-model"
-TAG_DURATION: str = "duration"
-TAG_ENCODED_BY: str = "encoded-by"
-TAG_ENCODER: str = "encoder"
-TAG_ENCODER_VERSION: str = "encoder-version"
-TAG_EXTENDED_COMMENT: str = "extended-comment"
-TAG_GENRE: str = "genre"
-TAG_GEO_LOCATION_CAPTURE_DIRECTION: str = "geo-location-capture-direction"
-TAG_GEO_LOCATION_CITY: str = "geo-location-city"
-TAG_GEO_LOCATION_COUNTRY: str = "geo-location-country"
-TAG_GEO_LOCATION_ELEVATION: str = "geo-location-elevation"
-TAG_GEO_LOCATION_HORIZONTAL_ERROR: str = "geo-location-horizontal-error"
-TAG_GEO_LOCATION_LATITUDE: str = "geo-location-latitude"
-TAG_GEO_LOCATION_LONGITUDE: str = "geo-location-longitude"
-TAG_GEO_LOCATION_MOVEMENT_DIRECTION: str = "geo-location-movement-direction"
-TAG_GEO_LOCATION_MOVEMENT_SPEED: str = "geo-location-movement-speed"
-TAG_GEO_LOCATION_NAME: str = "geo-location-name"
-TAG_GEO_LOCATION_SUBLOCATION: str = "geo-location-sublocation"
-TAG_GROUPING: str = "grouping"
-TAG_HOMEPAGE: str = "homepage"
-TAG_IMAGE: str = "image"
-TAG_IMAGE_ORIENTATION: str = "image-orientation"
-TAG_INTERPRETED_BY: str = "interpreted-by"
-TAG_ISRC: str = "isrc"
-TAG_KEYWORDS: str = "keywords"
-TAG_LANGUAGE_CODE: str = "language-code"
-TAG_LANGUAGE_NAME: str = "language-name"
-TAG_LICENSE: str = "license"
-TAG_LICENSE_URI: str = "license-uri"
-TAG_LOCATION: str = "location"
-TAG_LYRICS: str = "lyrics"
-TAG_MAXIMUM_BITRATE: str = "maximum-bitrate"
-TAG_MIDI_BASE_NOTE: str = "midi-base-note"
-TAG_MINIMUM_BITRATE: str = "minimum-bitrate"
-TAG_NOMINAL_BITRATE: str = "nominal-bitrate"
-TAG_ORGANIZATION: str = "organization"
-TAG_PERFORMER: str = "performer"
-TAG_PREVIEW_IMAGE: str = "preview-image"
-TAG_PRIVATE_DATA: str = "private-data"
-TAG_PUBLISHER: str = "publisher"
-TAG_REFERENCE_LEVEL: str = "replaygain-reference-level"
-TAG_SERIAL: str = "serial"
-TAG_SHOW_EPISODE_NUMBER: str = "show-episode-number"
-TAG_SHOW_NAME: str = "show-name"
-TAG_SHOW_SEASON_NUMBER: str = "show-season-number"
-TAG_SHOW_SORTNAME: str = "show-sortname"
-TAG_SUBTITLE_CODEC: str = "subtitle-codec"
-TAG_TITLE: str = "title"
-TAG_TITLE_SORTNAME: str = "title-sortname"
-TAG_TRACK_COUNT: str = "track-count"
-TAG_TRACK_GAIN: str = "replaygain-track-gain"
-TAG_TRACK_NUMBER: str = "track-number"
-TAG_TRACK_PEAK: str = "replaygain-track-peak"
-TAG_USER_RATING: str = "user-rating"
-TAG_VERSION: str = "version"
-TAG_VIDEO_CODEC: str = "video-codec"
-TOC_REPEAT_COUNT_INFINITE: int = -1
-URI_NO_PORT: int = 0
-USECOND: int = 1000
-VALUE_EQUAL: int = 0
-VALUE_GREATER_THAN: int = 1
-VALUE_LESS_THAN: int = -1
-VALUE_UNORDERED: int = 2
-VERSION_MAJOR: int = 1
-VERSION_MICRO: int = 11
-VERSION_MINOR: int = 26
-VERSION_NANO: int = 1
+ALLOCATOR_SYSMEM: Final = "SystemMemory"
+BUFFER_COPY_ALL: Final[int]
+BUFFER_COPY_METADATA: Final[int]
+BUFFER_OFFSET_NONE: Final[int]
+CAN_INLINE: Final[int]
+CAPS_FEATURE_MEMORY_SYSTEM_MEMORY: Final = "memory:SystemMemory"
+CLOCK_TIME_NONE: Final[int]
+DEBUG_BG_MASK: Final[int]
+DEBUG_FG_MASK: Final[int]
+DEBUG_FORMAT_MASK: Final[int]
+ELEMENT_FACTORY_KLASS_DECODER: Final = "Decoder"
+ELEMENT_FACTORY_KLASS_DECRYPTOR: Final = "Decryptor"
+ELEMENT_FACTORY_KLASS_DEMUXER: Final = "Demuxer"
+ELEMENT_FACTORY_KLASS_DEPAYLOADER: Final = "Depayloader"
+ELEMENT_FACTORY_KLASS_ENCODER: Final = "Encoder"
+ELEMENT_FACTORY_KLASS_ENCRYPTOR: Final = "Encryptor"
+ELEMENT_FACTORY_KLASS_FORMATTER: Final = "Formatter"
+ELEMENT_FACTORY_KLASS_HARDWARE: Final = "Hardware"
+ELEMENT_FACTORY_KLASS_MEDIA_AUDIO: Final = "Audio"
+ELEMENT_FACTORY_KLASS_MEDIA_IMAGE: Final = "Image"
+ELEMENT_FACTORY_KLASS_MEDIA_METADATA: Final = "Metadata"
+ELEMENT_FACTORY_KLASS_MEDIA_SUBTITLE: Final = "Subtitle"
+ELEMENT_FACTORY_KLASS_MEDIA_VIDEO: Final = "Video"
+ELEMENT_FACTORY_KLASS_MUXER: Final = "Muxer"
+ELEMENT_FACTORY_KLASS_PARSER: Final = "Parser"
+ELEMENT_FACTORY_KLASS_PAYLOADER: Final = "Payloader"
+ELEMENT_FACTORY_KLASS_SINK: Final = "Sink"
+ELEMENT_FACTORY_KLASS_SRC: Final = "Source"
+ELEMENT_FACTORY_TYPE_ANY: Final[int]
+ELEMENT_FACTORY_TYPE_AUDIOVIDEO_SINKS: Final[int]
+ELEMENT_FACTORY_TYPE_AUDIO_ENCODER: Final[int]
+ELEMENT_FACTORY_TYPE_DECODABLE: Final[int]
+ELEMENT_FACTORY_TYPE_DECODER: Final[int]
+ELEMENT_FACTORY_TYPE_DECRYPTOR: Final[int]
+ELEMENT_FACTORY_TYPE_DEMUXER: Final[int]
+ELEMENT_FACTORY_TYPE_DEPAYLOADER: Final[int]
+ELEMENT_FACTORY_TYPE_ENCODER: Final[int]
+ELEMENT_FACTORY_TYPE_ENCRYPTOR: Final[int]
+ELEMENT_FACTORY_TYPE_FORMATTER: Final[int]
+ELEMENT_FACTORY_TYPE_HARDWARE: Final[int]
+ELEMENT_FACTORY_TYPE_MAX_ELEMENTS: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_ANY: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_AUDIO: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_IMAGE: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_METADATA: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_SUBTITLE: Final[int]
+ELEMENT_FACTORY_TYPE_MEDIA_VIDEO: Final[int]
+ELEMENT_FACTORY_TYPE_MUXER: Final[int]
+ELEMENT_FACTORY_TYPE_PARSER: Final[int]
+ELEMENT_FACTORY_TYPE_PAYLOADER: Final[int]
+ELEMENT_FACTORY_TYPE_SINK: Final[int]
+ELEMENT_FACTORY_TYPE_SRC: Final[int]
+ELEMENT_FACTORY_TYPE_TIMESTAMPER: Final[int]
+ELEMENT_FACTORY_TYPE_VIDEO_ENCODER: Final[int]
+ELEMENT_METADATA_AUTHOR: Final = "author"
+ELEMENT_METADATA_DESCRIPTION: Final = "description"
+ELEMENT_METADATA_DOC_URI: Final = "doc-uri"
+ELEMENT_METADATA_ICON_NAME: Final = "icon-name"
+ELEMENT_METADATA_KLASS: Final = "klass"
+ELEMENT_METADATA_LONGNAME: Final = "long-name"
+EVENT_NUM_SHIFT: Final[int]
+EVENT_TYPE_BOTH: Final[int]
+FLAG_SET_MASK_EXACT: Final[int]
+FORMAT_PERCENT_MAX: Final[int]
+FORMAT_PERCENT_SCALE: Final[int]
+GROUP_ID_INVALID: Final[int]
+LICENSE_UNKNOWN: Final = "unknown"
+LOCK_FLAG_READWRITE: Final[int]
+MAP_READWRITE: Final[int]
+META_TAG_MEMORY_REFERENCE_STR: Final = "memory-reference"
+META_TAG_MEMORY_STR: Final = "memory"
+MSECOND: Final[int]
+NSECOND: Final[int]
+PARAM_CONDITIONALLY_AVAILABLE: Final[int]
+PARAM_CONTROLLABLE: Final[int]
+PARAM_DOC_SHOW_DEFAULT: Final[int]
+PARAM_MUTABLE_PAUSED: Final[int]
+PARAM_MUTABLE_PLAYING: Final[int]
+PARAM_MUTABLE_READY: Final[int]
+PARAM_USER_SHIFT: Final[int]
+PROTECTION_SYSTEM_ID_CAPS_FIELD: Final = "protection-system"
+PROTECTION_UNSPECIFIED_SYSTEM_ID: Final = "unspecified-system-id"
+QUERY_NUM_SHIFT: Final[int]
+QUERY_TYPE_BOTH: Final[int]
+SECOND: Final[int]
+SEGMENT_INSTANT_FLAGS: Final[int]
+SEQNUM_INVALID: Final[int]
+TAG_ALBUM: Final = "album"
+TAG_ALBUM_ARTIST: Final = "album-artist"
+TAG_ALBUM_ARTIST_SORTNAME: Final = "album-artist-sortname"
+TAG_ALBUM_GAIN: Final = "replaygain-album-gain"
+TAG_ALBUM_PEAK: Final = "replaygain-album-peak"
+TAG_ALBUM_SORTNAME: Final = "album-sortname"
+TAG_ALBUM_VOLUME_COUNT: Final = "album-disc-count"
+TAG_ALBUM_VOLUME_NUMBER: Final = "album-disc-number"
+TAG_APPLICATION_DATA: Final = "application-data"
+TAG_APPLICATION_NAME: Final = "application-name"
+TAG_ARTIST: Final = "artist"
+TAG_ARTIST_SORTNAME: Final = "artist-sortname"
+TAG_ATTACHMENT: Final = "attachment"
+TAG_AUDIO_CODEC: Final = "audio-codec"
+TAG_BEATS_PER_MINUTE: Final = "beats-per-minute"
+TAG_BITRATE: Final = "bitrate"
+TAG_CODEC: Final = "codec"
+TAG_COMMENT: Final = "comment"
+TAG_COMPOSER: Final = "composer"
+TAG_COMPOSER_SORTNAME: Final = "composer-sortname"
+TAG_CONDUCTOR: Final = "conductor"
+TAG_CONTACT: Final = "contact"
+TAG_CONTAINER_FORMAT: Final = "container-format"
+TAG_CONTAINER_SPECIFIC_TRACK_ID: Final = "container-specific-track-id"
+TAG_COPYRIGHT: Final = "copyright"
+TAG_COPYRIGHT_URI: Final = "copyright-uri"
+TAG_DATE: Final = "date"
+TAG_DATE_TIME: Final = "datetime"
+TAG_DESCRIPTION: Final = "description"
+TAG_DEVICE_MANUFACTURER: Final = "device-manufacturer"
+TAG_DEVICE_MODEL: Final = "device-model"
+TAG_DURATION: Final = "duration"
+TAG_ENCODED_BY: Final = "encoded-by"
+TAG_ENCODER: Final = "encoder"
+TAG_ENCODER_VERSION: Final = "encoder-version"
+TAG_EXTENDED_COMMENT: Final = "extended-comment"
+TAG_GENRE: Final = "genre"
+TAG_GEO_LOCATION_CAPTURE_DIRECTION: Final = "geo-location-capture-direction"
+TAG_GEO_LOCATION_CITY: Final = "geo-location-city"
+TAG_GEO_LOCATION_COUNTRY: Final = "geo-location-country"
+TAG_GEO_LOCATION_ELEVATION: Final = "geo-location-elevation"
+TAG_GEO_LOCATION_HORIZONTAL_ERROR: Final = "geo-location-horizontal-error"
+TAG_GEO_LOCATION_LATITUDE: Final = "geo-location-latitude"
+TAG_GEO_LOCATION_LONGITUDE: Final = "geo-location-longitude"
+TAG_GEO_LOCATION_MOVEMENT_DIRECTION: Final = "geo-location-movement-direction"
+TAG_GEO_LOCATION_MOVEMENT_SPEED: Final = "geo-location-movement-speed"
+TAG_GEO_LOCATION_NAME: Final = "geo-location-name"
+TAG_GEO_LOCATION_SUBLOCATION: Final = "geo-location-sublocation"
+TAG_GROUPING: Final = "grouping"
+TAG_HOMEPAGE: Final = "homepage"
+TAG_IMAGE: Final = "image"
+TAG_IMAGE_ORIENTATION: Final = "image-orientation"
+TAG_INTERPRETED_BY: Final = "interpreted-by"
+TAG_ISRC: Final = "isrc"
+TAG_KEYWORDS: Final = "keywords"
+TAG_LANGUAGE_CODE: Final = "language-code"
+TAG_LANGUAGE_NAME: Final = "language-name"
+TAG_LICENSE: Final = "license"
+TAG_LICENSE_URI: Final = "license-uri"
+TAG_LOCATION: Final = "location"
+TAG_LYRICS: Final = "lyrics"
+TAG_MAXIMUM_BITRATE: Final = "maximum-bitrate"
+TAG_MIDI_BASE_NOTE: Final = "midi-base-note"
+TAG_MINIMUM_BITRATE: Final = "minimum-bitrate"
+TAG_NOMINAL_BITRATE: Final = "nominal-bitrate"
+TAG_ORGANIZATION: Final = "organization"
+TAG_PERFORMER: Final = "performer"
+TAG_PREVIEW_IMAGE: Final = "preview-image"
+TAG_PRIVATE_DATA: Final = "private-data"
+TAG_PUBLISHER: Final = "publisher"
+TAG_REFERENCE_LEVEL: Final = "replaygain-reference-level"
+TAG_SERIAL: Final = "serial"
+TAG_SHOW_EPISODE_NUMBER: Final = "show-episode-number"
+TAG_SHOW_NAME: Final = "show-name"
+TAG_SHOW_SEASON_NUMBER: Final = "show-season-number"
+TAG_SHOW_SORTNAME: Final = "show-sortname"
+TAG_SUBTITLE_CODEC: Final = "subtitle-codec"
+TAG_TITLE: Final = "title"
+TAG_TITLE_SORTNAME: Final = "title-sortname"
+TAG_TRACK_COUNT: Final = "track-count"
+TAG_TRACK_GAIN: Final = "replaygain-track-gain"
+TAG_TRACK_GAIN_R128: Final = "r128-track-gain"
+TAG_TRACK_NUMBER: Final = "track-number"
+TAG_TRACK_PEAK: Final = "replaygain-track-peak"
+TAG_USER_RATING: Final = "user-rating"
+TAG_VERSION: Final = "version"
+TAG_VIDEO_CODEC: Final = "video-codec"
+TASK_POOL_CONTEXT_TYPE: Final = "gst.task.pool"
+TOC_REPEAT_COUNT_INFINITE: Final[int]
+URI_NO_PORT: Final[int]
+USECOND: Final[int]
+VALUE_EQUAL: Final[int]
+VALUE_GREATER_THAN: Final[int]
+VALUE_LESS_THAN: Final[int]
+VALUE_UNORDERED: Final[int]
+VERSION_MAJOR: Final[int]
+VERSION_MICRO: Final[int]
+VERSION_MINOR: Final[int]
+VERSION_NANO: Final[int]
 
 def TIME_ARGS(time: int) -> str: ...
 def buffer_get_max_memory() -> int: ...
@@ -592,10 +595,10 @@ class AllocationParams(GObject.GBoxed):
         new() -> Gst.AllocationParams
     """
 
-    flags: MemoryFlags = ...
-    align: int = ...
-    prefix: int = ...
-    padding: int = ...
+    flags: MemoryFlags
+    align: int
+    prefix: int
+    padding: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def copy(self) -> AllocationParams | None: ...
@@ -871,15 +874,13 @@ class Buffer(MiniObjectMixin, GObject.GBoxed):
         new_wrapped_full(flags:Gst.MemoryFlags, data:list, maxsize:int, offset:int, user_data=None, notify:GLib.DestroyNotify=None) -> Gst.Buffer
     """
 
-    mini_object: MiniObject = ...
-    pool: BufferPool = ...
-    pts: int = ...
-    dts: int = ...
-    duration: int = ...
-    offset: int = ...
-    offset_end: int = ...
-    flags = ...  # FIXME: Constant is missing typing annotation
-
+    mini_object: MiniObject
+    pool: BufferPool
+    pts: int
+    dts: int
+    duration: int
+    offset: int
+    offset_end: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def add_custom_meta(self, name: str) -> CustomMeta | None: ...
@@ -1121,10 +1122,10 @@ class BufferPoolAcquireParams(GObject.GPointer):
         BufferPoolAcquireParams()
     """
 
-    format: Format = ...
-    start: int = ...
-    stop: int = ...
-    flags: BufferPoolAcquireFlags = ...
+    format: Format
+    start: int
+    stop: int
+    flags: BufferPoolAcquireFlags
 
 class BufferPoolClass(GObject.GPointer):
     """
@@ -1278,8 +1279,8 @@ class ByteArrayInterface(GObject.GPointer):
         ByteArrayInterface()
     """
 
-    data: int = ...
-    len: int = ...
+    data: int
+    len: int
     @property
     def resize(self) -> Callable[[ByteArrayInterface, int], bool]: ...
 
@@ -1297,7 +1298,7 @@ class Caps(MiniObjectMixin, GObject.GBoxed):
         new_static_str_empty_simple(media_type:str) -> Gst.Caps
     """
 
-    mini_object: MiniObject = ...
+    mini_object: MiniObject
     def __getitem__(self, index: int) -> Structure: ...
     def __len__(self) -> int: ...
     @staticmethod
@@ -1616,7 +1617,7 @@ class ClockEntry(GObject.GPointer):
         ClockEntry()
     """
 
-    refcount: int = ...
+    refcount: int
     @property
     def clock(self) -> Clock: ...
     @property
@@ -1813,8 +1814,8 @@ class CustomMeta(GObject.GPointer):
         CustomMeta()
     """
 
-    meta: Meta = ...
-    structure: Structure = ...
+    meta: Meta
+    structure: Structure
     def get_structure(self) -> Structure: ...
     def has_name(self, name: str) -> bool: ...
 
@@ -2722,10 +2723,10 @@ class Event(MiniObjectMixin, GObject.GBoxed):
         new_toc_select(uid:str) -> Gst.Event
     """
 
-    mini_object: MiniObject = ...
-    type: EventType = ...
-    timestamp: int = ...
-    seqnum: int = ...
+    mini_object: MiniObject
+    type: EventType
+    timestamp: int
+    seqnum: int
     def copy_segment(self, segment: Segment) -> None: ...
     def get_running_time_offset(self) -> int: ...
     def get_seqnum(self) -> int: ...
@@ -2860,10 +2861,10 @@ class FormatDefinition(GObject.GPointer):
         FormatDefinition()
     """
 
-    value: Format = ...
-    nick: str = ...
-    description: str = ...
-    quark: int = ...
+    value: Format
+    nick: str
+    description: str
+    quark: int
 
 class Fraction(_gi.Fundamental): ...
 class FractionRange(_gi.Fundamental): ...
@@ -3015,13 +3016,13 @@ class Iterator(GObject.GBoxed, Generic[T]):
         new_single(type:GType, object:GObject.Value) -> Gst.Iterator
     """
 
-    item: Callable[[Iterator, Any], IteratorItem] = ...
-    pushed: Iterator = ...
-    type: type[Any] = ...
-    lock: GLib.Mutex = ...
-    cookie: int = ...
-    master_cookie: int = ...
-    size: int = ...
+    item: Callable[[Iterator, Any], IteratorItem]
+    pushed: Iterator
+    type: type[Any]
+    lock: GLib.Mutex
+    cookie: int
+    master_cookie: int
+    size: int
     def __iter__(self) -> _Iterator[T]: ...
     def copy(self) -> Iterator: ...
     def filter(self, func: Callable[[None, None], int], user_data: Any) -> Iterator: ...
@@ -3067,13 +3068,13 @@ class Memory(GObject.GBoxed):
         new_wrapped(flags:Gst.MemoryFlags, data:list, maxsize:int, offset:int, user_data=None, notify:GLib.DestroyNotify=None) -> Gst.Memory or None
     """
 
-    mini_object: MiniObject = ...
-    allocator: Allocator = ...
-    parent: Memory = ...
-    maxsize: int = ...
-    align: int = ...
-    offset: int = ...
-    size: int = ...
+    mini_object: MiniObject
+    allocator: Allocator
+    parent: Memory
+    maxsize: int
+    align: int
+    offset: int
+    size: int
     def copy(self, offset: int, size: int) -> Memory | None: ...
     def get_sizes(self) -> tuple[int, int, int]: ...
     def is_span(self, mem2: Memory) -> tuple[bool, int]: ...
@@ -3146,11 +3147,11 @@ class Message(GObject.GBoxed):
         new_warning_with_details(src:Gst.Object=None, error:error, debug:str, details:Gst.Structure=None) -> Gst.Message
     """
 
-    mini_object: MiniObject = ...
-    type: MessageType = ...
-    timestamp: int = ...
-    src: Object = ...
-    seqnum: int = ...
+    mini_object: MiniObject
+    type: MessageType
+    timestamp: int
+    src: Object
+    seqnum: int
     @property
     def lock(self) -> GLib.Mutex: ...
     @property
@@ -3422,8 +3423,8 @@ class Meta(GObject.GPointer):
         Meta()
     """
 
-    flags: MetaFlags = ...
-    info: MetaInfo = ...
+    flags: MetaFlags
+    info: MetaInfo
     @staticmethod
     def api_type_aggregate_params(
         api: type[Any],
@@ -3471,15 +3472,15 @@ class MetaInfo(GObject.GPointer):
         MetaInfo()
     """
 
-    api: type[Any] = ...
-    type: type[Any] = ...
-    size: int = ...
-    init_func: Callable[[Meta, None, Buffer], bool] = ...
-    free_func: Callable[[Meta, Buffer], None] = ...
-    transform_func: Callable[[Buffer, Meta, Buffer, int, None], bool] = ...
-    serialize_func: Callable[[Meta, ByteArrayInterface], tuple[bool, int]] = ...
-    deserialize_func: Callable[[MetaInfo, Buffer, int, int, int], Meta | None] = ...
-    clear_func: Callable[[Buffer, Meta], None] = ...
+    api: type[Any]
+    type: type[Any]
+    size: int
+    init_func: Callable[[Meta, None, Buffer], bool]
+    free_func: Callable[[Meta, Buffer], None]
+    transform_func: Callable[[Buffer, Meta, Buffer, int, None], bool]
+    serialize_func: Callable[[Meta, ByteArrayInterface], tuple[bool, int]]
+    deserialize_func: Callable[[MetaInfo, Buffer, int, int, int], Meta | None]
+    clear_func: Callable[[Buffer, Meta], None]
     def is_custom(self) -> bool: ...
     def register(self) -> MetaInfo: ...
 
@@ -3492,9 +3493,9 @@ class MetaTransformCopy(GObject.GPointer):
         MetaTransformCopy()
     """
 
-    region: bool = ...
-    offset: int = ...
-    size: int = ...
+    region: bool
+    offset: int
+    size: int
 
 class MiniObject(GObject.GBoxed):
     """
@@ -3505,13 +3506,13 @@ class MiniObject(GObject.GBoxed):
         MiniObject()
     """
 
-    type: type[Any] = ...
-    refcount: int = ...
-    lockstate: int = ...
-    flags: int = ...
-    copy: Callable[[MiniObject], MiniObject] = ...
-    dispose: Callable[[MiniObject], bool] = ...
-    free: Callable[[MiniObject], None] = ...
+    type: type[Any]
+    refcount: int
+    lockstate: int
+    flags: int
+    copy: Callable[[MiniObject], MiniObject]
+    dispose: Callable[[MiniObject], bool]
+    free: Callable[[MiniObject], None]
     @property
     def priv_uint(self) -> int: ...
     @property
@@ -3964,11 +3965,11 @@ class PadProbeInfo(GObject.GPointer):
         PadProbeInfo()
     """
 
-    type: PadProbeType = ...
-    id: int = ...
-    data: None = ...
-    offset: int = ...
-    size: int = ...
+    type: PadProbeType
+    id: int
+    data: None
+    offset: int
+    size: int
     def get_buffer(self) -> Buffer | None: ...
     def get_buffer_list(self) -> BufferList | None: ...
     def get_event(self) -> Event | None: ...
@@ -4114,8 +4115,8 @@ class ParamSpecArray(GObject.GPointer):
         ParamSpecArray()
     """
 
-    parent_instance: GObject.ParamSpec = ...
-    element_spec: GObject.ParamSpec = ...
+    parent_instance: GObject.ParamSpec
+    element_spec: GObject.ParamSpec
 
 class ParamSpecFraction(GObject.GPointer):
     """
@@ -4126,13 +4127,13 @@ class ParamSpecFraction(GObject.GPointer):
         ParamSpecFraction()
     """
 
-    parent_instance: GObject.ParamSpec = ...
-    min_num: int = ...
-    min_den: int = ...
-    max_num: int = ...
-    max_den: int = ...
-    def_num: int = ...
-    def_den: int = ...
+    parent_instance: GObject.ParamSpec
+    min_num: int
+    min_den: int
+    max_num: int
+    max_den: int
+    def_num: int
+    def_den: int
 
 class ParentBufferMeta(GObject.GPointer):
     """
@@ -4143,8 +4144,8 @@ class ParentBufferMeta(GObject.GPointer):
         ParentBufferMeta()
     """
 
-    parent: Meta = ...
-    buffer: Buffer = ...
+    parent: Meta
+    buffer: Buffer
     @staticmethod
     def get_info() -> MetaInfo: ...
 
@@ -4388,17 +4389,17 @@ class PluginDesc(GObject.GPointer):
         PluginDesc()
     """
 
-    major_version: int = ...
-    minor_version: int = ...
-    name: str = ...
-    description: str = ...
-    plugin_init: Callable[[Plugin], bool] = ...
-    version: str = ...
-    license: str = ...
-    source: str = ...
-    package: str = ...
-    origin: str = ...
-    release_datetime: str = ...
+    major_version: int
+    minor_version: int
+    name: str
+    description: str
+    plugin_init: Callable[[Plugin], bool]
+    version: str
+    license: str
+    source: str
+    package: str
+    origin: str
+    release_datetime: str
 
 class PluginFeature(Object):
     """
@@ -4476,7 +4477,7 @@ class PollFD(GObject.GPointer):
         PollFD()
     """
 
-    fd: int = ...
+    fd: int
     @property
     def idx(self) -> int: ...
     def init(self) -> None: ...
@@ -4537,7 +4538,7 @@ class Promise(GObject.GBoxed):
         new_with_change_func(func:Gst.PromiseChangeFunc, user_data=None) -> Gst.Promise
     """
 
-    parent: MiniObject = ...
+    parent: MiniObject
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def expire(self) -> None: ...
@@ -4563,8 +4564,8 @@ class ProtectionMeta(GObject.GPointer):
         ProtectionMeta()
     """
 
-    meta: Meta = ...
-    info: Structure = ...
+    meta: Meta
+    info: Structure
     @staticmethod
     def get_info() -> MetaInfo: ...
 
@@ -4685,8 +4686,8 @@ class Query(MiniObjectMixin, GObject.GBoxed):
         new_uri() -> Gst.Query
     """
 
-    mini_object: MiniObject = ...
-    type: QueryType = ...
+    mini_object: MiniObject
+    type: QueryType
     def add_allocation_meta(
         self, api: type[Any], params: Structure | None = None
     ) -> None: ...
@@ -4850,10 +4851,10 @@ class ReferenceTimestampMeta(GObject.GPointer):
         ReferenceTimestampMeta()
     """
 
-    parent: Meta = ...
-    reference: Caps = ...
-    timestamp: int = ...
-    duration: int = ...
+    parent: Meta
+    reference: Caps
+    timestamp: int
+    duration: int
     @staticmethod
     def get_info() -> MetaInfo: ...
 
@@ -4981,17 +4982,17 @@ class Segment(GObject.GBoxed):
         new() -> Gst.Segment
     """
 
-    flags: SegmentFlags = ...
-    rate: float = ...
-    applied_rate: float = ...
-    format: Format = ...
-    base: int = ...
-    offset: int = ...
-    start: int = ...
-    stop: int = ...
-    time: int = ...
-    position: int = ...
-    duration: int = ...
+    flags: SegmentFlags
+    rate: float
+    applied_rate: float
+    format: Format
+    base: int
+    offset: int
+    start: int
+    stop: int
+    time: int
+    position: int
+    duration: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def clip(self, format: Format, start: int, stop: int) -> tuple[bool, int, int]: ...
@@ -5091,8 +5092,8 @@ class StaticCaps(GObject.GPointer):
         StaticCaps()
     """
 
-    caps: Caps = ...
-    string: str = ...
+    caps: Caps
+    string: str
     def cleanup(self) -> None: ...
     def get(self) -> Caps | None: ...
 
@@ -5105,10 +5106,10 @@ class StaticPadTemplate(GObject.GPointer):
         StaticPadTemplate()
     """
 
-    name_template: str = ...
-    direction: PadDirection = ...
-    presence: PadPresence = ...
-    static_caps: StaticCaps = ...
+    name_template: str
+    direction: PadDirection
+    presence: PadPresence
+    static_caps: StaticCaps
     def get(self) -> PadTemplate | None: ...
     def get_caps(self) -> Caps: ...
 
@@ -5510,7 +5511,7 @@ class TagList(GObject.GBoxed):
         new_from_string(str:str) -> Gst.TagList or None
     """
 
-    mini_object: MiniObject = ...
+    mini_object: MiniObject
     def __getitem__(self, index: int) -> Any: ...
     def __init__(self): ...  # FIXME: Override is missing typing annotation
     def __len__(self) -> int: ...
@@ -5760,8 +5761,8 @@ class TimedValue(GObject.GPointer):
         TimedValue()
     """
 
-    timestamp: int = ...
-    value: float = ...
+    timestamp: int
+    value: float
 
 class Toc(GObject.GBoxed):
     """
@@ -5973,7 +5974,7 @@ class TypeFind(GObject.GPointer):
         TypeFind()
     """
 
-    data: None = ...
+    data: None
     def get_length(self) -> int: ...
     def peek(self, offset: int, size: int) -> int | None: ...
     @staticmethod
@@ -6226,11 +6227,11 @@ class ValueTable(GObject.GPointer):
         ValueTable()
     """
 
-    type: type[Any] = ...
-    compare: Callable[[Any, Any], int] = ...
-    serialize: Callable[[Any], str] = ...
-    deserialize: Callable[[Any, str], bool] = ...
-    deserialize_with_pspec: Callable[[Any, str, GObject.ParamSpec], bool] = ...
+    type: type[Any]
+    compare: Callable[[Any, Any], int]
+    serialize: Callable[[Any], str]
+    deserialize: Callable[[Any, str], bool]
+    deserialize_with_pspec: Callable[[Any, str, GObject.ParamSpec], bool]
 
 class AllocatorFlags(GObject.GFlags):
     CUSTOM_ALLOC = 16

@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -13,11 +14,11 @@ from gi.repository import Pango
 
 T = TypeVar("T")
 
-DURATION_INFINITE: int = 4294967295
-MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 2
-MINOR_VERSION: int = 8
-VERSION_S: str = "1.8.2"
+DURATION_INFINITE: Final[int]
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+VERSION_S: Final = "1.9.0"
 
 def accent_color_to_rgba(self: AccentColor) -> _Gdk4.RGBA: ...
 def accent_color_to_standalone_rgba(self: AccentColor, dark: bool) -> _Gdk4.RGBA: ...

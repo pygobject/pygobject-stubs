@@ -1,3 +1,4 @@
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Sequence
@@ -7,14 +8,11 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-PI: float = 3.141593
-PI_2: float = 1.570796
-VEC2_LEN: int = 2
-VEC3_LEN: int = 3
-VEC4_LEN: int = 4
-_lock = ...  # FIXME Constant
-_namespace: str = "Graphene"
-_version: str = "1.0"
+PI: Final[float]
+PI_2: Final[float]
+VEC2_LEN: Final[int]
+VEC3_LEN: Final[int]
+VEC4_LEN: Final[int]
 
 def box_empty() -> Box: ...
 def box_infinite() -> Box: ...
@@ -304,8 +302,8 @@ class Point(GObject.GBoxed):
         alloc() -> Graphene.Point
     """
 
-    x: float = ...
-    y: float = ...
+    x: float
+    y: float
     @classmethod
     def alloc(cls) -> Point: ...
     def distance(self, b: Point) -> tuple[float, float, float]: ...
@@ -330,9 +328,9 @@ class Point3D(GObject.GBoxed):
         alloc() -> Graphene.Point3D
     """
 
-    x: float = ...
-    y: float = ...
-    z: float = ...
+    x: float
+    y: float
+    z: float
     @classmethod
     def alloc(cls) -> Point3D: ...
     def cross(self, b: Point3D) -> Point3D: ...
@@ -473,8 +471,8 @@ class Rect(GObject.GBoxed):
         Rect()
     """
 
-    origin: Point = ...
-    size: Size = ...
+    origin: Point
+    size: Size
     @staticmethod
     def alloc() -> Rect: ...
     def contains_point(self, p: Point) -> bool: ...
@@ -555,8 +553,8 @@ class Size(GObject.GBoxed):
         alloc() -> Graphene.Size
     """
 
-    width: float = ...
-    height: float = ...
+    width: float
+    height: float
     @classmethod
     def alloc(cls) -> Size: ...
     def equal(self, b: Size) -> bool: ...

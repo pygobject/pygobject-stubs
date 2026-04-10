@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -7,18 +8,15 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-IMAGE_LARGE_HEIGHT: int = 423
-IMAGE_LARGE_WIDTH: int = 752
-IMAGE_NORMAL_HEIGHT: int = 351
-IMAGE_NORMAL_WIDTH: int = 624
-IMAGE_THUMBNAIL_HEIGHT: int = 63
-IMAGE_THUMBNAIL_WIDTH: int = 112
-MAJOR_VERSION: int = 0
-MICRO_VERSION: int = 1
-MINOR_VERSION: int = 16
-_lock = ...  # FIXME Constant
-_namespace: str = "AppStream"
-_version: str = "1.0"
+IMAGE_LARGE_HEIGHT: Final[int]
+IMAGE_LARGE_WIDTH: Final[int]
+IMAGE_NORMAL_HEIGHT: Final[int]
+IMAGE_NORMAL_WIDTH: Final[int]
+IMAGE_THUMBNAIL_HEIGHT: Final[int]
+IMAGE_THUMBNAIL_WIDTH: Final[int]
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
 
 def agreement_kind_from_string(value: str) -> AgreementKind: ...
 def agreement_kind_to_string(value: AgreementKind) -> str: ...

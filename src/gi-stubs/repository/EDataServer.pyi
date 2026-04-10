@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -14,89 +15,89 @@ from gi.repository import libxml2
 
 T = TypeVar("T")
 
-CLIENT_BACKEND_PROPERTY_CACHE_DIR: str = "cache-dir"
-CLIENT_BACKEND_PROPERTY_CAPABILITIES: str = "capabilities"
-CLIENT_BACKEND_PROPERTY_ONLINE: str = "online"
-CLIENT_BACKEND_PROPERTY_OPENED: str = "opened"
-CLIENT_BACKEND_PROPERTY_OPENING: str = "opening"
-CLIENT_BACKEND_PROPERTY_READONLY: str = "readonly"
-CLIENT_BACKEND_PROPERTY_REVISION: str = "revision"
-DEBUG_LOG_DOMAIN_CAL_QUERIES: str = "CalQueries"
-DEBUG_LOG_DOMAIN_GLOG: str = "GLog"
-DEBUG_LOG_DOMAIN_USER: str = "USER"
-EDS_MAJOR_VERSION: int = 3
-EDS_MICRO_VERSION: int = 3
-EDS_MINOR_VERSION: int = 52
-NETWORK_MONITOR_ALWAYS_ONLINE_NAME: str = '"always-online"'
-OAUTH2_SECRET_ACCESS_TOKEN: str = "access_token"
-OAUTH2_SECRET_EXPIRES_AFTER: str = "expires_after"
-OAUTH2_SECRET_REFRESH_TOKEN: str = "refresh_token"
-SOURCE_CREDENTIAL_PASSWORD: str = "password"
-SOURCE_CREDENTIAL_SSL_TRUST: str = "ssl-trust"
-SOURCE_CREDENTIAL_USERNAME: str = "username"
-SOURCE_EXTENSION_ADDRESS_BOOK: str = "Address Book"
-SOURCE_EXTENSION_ALARMS: str = "Alarms"
-SOURCE_EXTENSION_AUTHENTICATION: str = "Authentication"
-SOURCE_EXTENSION_AUTOCOMPLETE: str = "Autocomplete"
-SOURCE_EXTENSION_AUTOCONFIG: str = "Autoconfig"
-SOURCE_EXTENSION_CALENDAR: str = "Calendar"
-SOURCE_EXTENSION_COLLECTION: str = "Collection"
-SOURCE_EXTENSION_CONTACTS_BACKEND: str = "Contacts Backend"
-SOURCE_EXTENSION_GOA: str = "GNOME Online Accounts"
-SOURCE_EXTENSION_LDAP_BACKEND: str = "LDAP Backend"
-SOURCE_EXTENSION_LOCAL_BACKEND: str = "Local Backend"
-SOURCE_EXTENSION_MAIL_ACCOUNT: str = "Mail Account"
-SOURCE_EXTENSION_MAIL_COMPOSITION: str = "Mail Composition"
-SOURCE_EXTENSION_MAIL_IDENTITY: str = "Mail Identity"
-SOURCE_EXTENSION_MAIL_SIGNATURE: str = "Mail Signature"
-SOURCE_EXTENSION_MAIL_SUBMISSION: str = "Mail Submission"
-SOURCE_EXTENSION_MAIL_TRANSPORT: str = "Mail Transport"
-SOURCE_EXTENSION_MDN: str = "Message Disposition Notifications"
-SOURCE_EXTENSION_MEMO_LIST: str = "Memo List"
-SOURCE_EXTENSION_OFFLINE: str = "Offline"
-SOURCE_EXTENSION_OPENPGP: str = "Pretty Good Privacy (OpenPGP)"
-SOURCE_EXTENSION_PROXY: str = "Proxy"
-SOURCE_EXTENSION_REFRESH: str = "Refresh"
-SOURCE_EXTENSION_RESOURCE: str = "Resource"
-SOURCE_EXTENSION_REVISION_GUARDS: str = "Revision Guards"
-SOURCE_EXTENSION_SECURITY: str = "Security"
-SOURCE_EXTENSION_SMIME: str = "Secure MIME (S/MIME)"
-SOURCE_EXTENSION_TASK_LIST: str = "Task List"
-SOURCE_EXTENSION_UOA: str = "Ubuntu Online Accounts"
-SOURCE_EXTENSION_WEATHER_BACKEND: str = "Weather Backend"
-SOURCE_EXTENSION_WEBDAV_BACKEND: str = "WebDAV Backend"
-SOURCE_EXTENSION_WEBDAV_NOTES: str = "WebDAV Notes"
-SOURCE_PARAM_SETTING: int = 1
-WEBDAV_CAPABILITY_ACCESS_CONTROL: str = "access-control"
-WEBDAV_CAPABILITY_ADDRESSBOOK: str = "addressbook"
-WEBDAV_CAPABILITY_BIND: str = "bind"
-WEBDAV_CAPABILITY_CALENDAR_ACCESS: str = "calendar-access"
-WEBDAV_CAPABILITY_CALENDAR_AUTO_SCHEDULE: str = "calendar-auto-schedule"
-WEBDAV_CAPABILITY_CALENDAR_PROXY: str = "calendar-proxy"
-WEBDAV_CAPABILITY_CALENDAR_SCHEDULE: str = "calendar-schedule"
-WEBDAV_CAPABILITY_CLASS_1: str = "1"
-WEBDAV_CAPABILITY_CLASS_2: str = "2"
-WEBDAV_CAPABILITY_CLASS_3: str = "3"
-WEBDAV_CAPABILITY_EXTENDED_MKCOL: str = "extended-mkcol"
-WEBDAV_COLLATION_ASCII_CASEMAP: str = "i;"
-WEBDAV_COLLATION_ASCII_CASEMAP_SUFFIX: str = "ascii-casemap"
-WEBDAV_COLLATION_ASCII_NUMERIC: str = "i;"
-WEBDAV_COLLATION_ASCII_NUMERIC_SUFFIX: str = "ascii-numeric"
-WEBDAV_COLLATION_OCTET: str = "i;"
-WEBDAV_COLLATION_OCTET_SUFFIX: str = "octet"
-WEBDAV_COLLATION_UNICODE_CASEMAP: str = "i;"
-WEBDAV_COLLATION_UNICODE_CASEMAP_SUFFIX: str = "unicode-casemap"
-WEBDAV_CONTENT_TYPE_CALENDAR: str = 'text/calendar; charset="utf-8"'
-WEBDAV_CONTENT_TYPE_VCARD: str = 'text/vcard; charset="utf-8"'
-WEBDAV_CONTENT_TYPE_XML: str = 'application/xml; charset="utf-8"'
-WEBDAV_DEPTH_INFINITY: str = "infinity"
-WEBDAV_DEPTH_THIS: str = "0"
-WEBDAV_DEPTH_THIS_AND_CHILDREN: str = "1"
-WEBDAV_NS_CALDAV: str = "urn:ietf:params:xml:ns:caldav"
-WEBDAV_NS_CALENDARSERVER: str = "http://calendarserver.org/ns/"
-WEBDAV_NS_CARDDAV: str = "urn:ietf:params:xml:ns:carddav"
-WEBDAV_NS_DAV: str = "DAV:"
-WEBDAV_NS_ICAL: str = "http://apple.com/ns/ical/"
+CLIENT_BACKEND_PROPERTY_CACHE_DIR: Final = "cache-dir"
+CLIENT_BACKEND_PROPERTY_CAPABILITIES: Final = "capabilities"
+CLIENT_BACKEND_PROPERTY_ONLINE: Final = "online"
+CLIENT_BACKEND_PROPERTY_OPENED: Final = "opened"
+CLIENT_BACKEND_PROPERTY_OPENING: Final = "opening"
+CLIENT_BACKEND_PROPERTY_READONLY: Final = "readonly"
+CLIENT_BACKEND_PROPERTY_REVISION: Final = "revision"
+DEBUG_LOG_DOMAIN_CAL_QUERIES: Final = "CalQueries"
+DEBUG_LOG_DOMAIN_GLOG: Final = "GLog"
+DEBUG_LOG_DOMAIN_USER: Final = "USER"
+EDS_MAJOR_VERSION: Final[int]
+EDS_MICRO_VERSION: Final[int]
+EDS_MINOR_VERSION: Final[int]
+NETWORK_MONITOR_ALWAYS_ONLINE_NAME: Final = '"always-online"'
+OAUTH2_SECRET_ACCESS_TOKEN: Final = "access_token"
+OAUTH2_SECRET_EXPIRES_AFTER: Final = "expires_after"
+OAUTH2_SECRET_REFRESH_TOKEN: Final = "refresh_token"
+SOURCE_CREDENTIAL_PASSWORD: Final = "password"
+SOURCE_CREDENTIAL_SSL_TRUST: Final = "ssl-trust"
+SOURCE_CREDENTIAL_USERNAME: Final = "username"
+SOURCE_EXTENSION_ADDRESS_BOOK: Final = "Address Book"
+SOURCE_EXTENSION_ALARMS: Final = "Alarms"
+SOURCE_EXTENSION_AUTHENTICATION: Final = "Authentication"
+SOURCE_EXTENSION_AUTOCOMPLETE: Final = "Autocomplete"
+SOURCE_EXTENSION_AUTOCONFIG: Final = "Autoconfig"
+SOURCE_EXTENSION_CALENDAR: Final = "Calendar"
+SOURCE_EXTENSION_COLLECTION: Final = "Collection"
+SOURCE_EXTENSION_CONTACTS_BACKEND: Final = "Contacts Backend"
+SOURCE_EXTENSION_GOA: Final = "GNOME Online Accounts"
+SOURCE_EXTENSION_LDAP_BACKEND: Final = "LDAP Backend"
+SOURCE_EXTENSION_LOCAL_BACKEND: Final = "Local Backend"
+SOURCE_EXTENSION_MAIL_ACCOUNT: Final = "Mail Account"
+SOURCE_EXTENSION_MAIL_COMPOSITION: Final = "Mail Composition"
+SOURCE_EXTENSION_MAIL_IDENTITY: Final = "Mail Identity"
+SOURCE_EXTENSION_MAIL_SIGNATURE: Final = "Mail Signature"
+SOURCE_EXTENSION_MAIL_SUBMISSION: Final = "Mail Submission"
+SOURCE_EXTENSION_MAIL_TRANSPORT: Final = "Mail Transport"
+SOURCE_EXTENSION_MDN: Final = "Message Disposition Notifications"
+SOURCE_EXTENSION_MEMO_LIST: Final = "Memo List"
+SOURCE_EXTENSION_OFFLINE: Final = "Offline"
+SOURCE_EXTENSION_OPENPGP: Final = "Pretty Good Privacy (OpenPGP)"
+SOURCE_EXTENSION_PROXY: Final = "Proxy"
+SOURCE_EXTENSION_REFRESH: Final = "Refresh"
+SOURCE_EXTENSION_RESOURCE: Final = "Resource"
+SOURCE_EXTENSION_REVISION_GUARDS: Final = "Revision Guards"
+SOURCE_EXTENSION_SECURITY: Final = "Security"
+SOURCE_EXTENSION_SMIME: Final = "Secure MIME (S/MIME)"
+SOURCE_EXTENSION_TASK_LIST: Final = "Task List"
+SOURCE_EXTENSION_UOA: Final = "Ubuntu Online Accounts"
+SOURCE_EXTENSION_WEATHER_BACKEND: Final = "Weather Backend"
+SOURCE_EXTENSION_WEBDAV_BACKEND: Final = "WebDAV Backend"
+SOURCE_EXTENSION_WEBDAV_NOTES: Final = "WebDAV Notes"
+SOURCE_PARAM_SETTING: Final[int]
+WEBDAV_CAPABILITY_ACCESS_CONTROL: Final = "access-control"
+WEBDAV_CAPABILITY_ADDRESSBOOK: Final = "addressbook"
+WEBDAV_CAPABILITY_BIND: Final = "bind"
+WEBDAV_CAPABILITY_CALENDAR_ACCESS: Final = "calendar-access"
+WEBDAV_CAPABILITY_CALENDAR_AUTO_SCHEDULE: Final = "calendar-auto-schedule"
+WEBDAV_CAPABILITY_CALENDAR_PROXY: Final = "calendar-proxy"
+WEBDAV_CAPABILITY_CALENDAR_SCHEDULE: Final = "calendar-schedule"
+WEBDAV_CAPABILITY_CLASS_1: Final = "1"
+WEBDAV_CAPABILITY_CLASS_2: Final = "2"
+WEBDAV_CAPABILITY_CLASS_3: Final = "3"
+WEBDAV_CAPABILITY_EXTENDED_MKCOL: Final = "extended-mkcol"
+WEBDAV_COLLATION_ASCII_CASEMAP: Final = "i;"
+WEBDAV_COLLATION_ASCII_CASEMAP_SUFFIX: Final = "ascii-casemap"
+WEBDAV_COLLATION_ASCII_NUMERIC: Final = "i;"
+WEBDAV_COLLATION_ASCII_NUMERIC_SUFFIX: Final = "ascii-numeric"
+WEBDAV_COLLATION_OCTET: Final = "i;"
+WEBDAV_COLLATION_OCTET_SUFFIX: Final = "octet"
+WEBDAV_COLLATION_UNICODE_CASEMAP: Final = "i;"
+WEBDAV_COLLATION_UNICODE_CASEMAP_SUFFIX: Final = "unicode-casemap"
+WEBDAV_CONTENT_TYPE_CALENDAR: Final = 'text/calendar; charset="utf-8"'
+WEBDAV_CONTENT_TYPE_VCARD: Final = 'text/vcard; charset="utf-8"'
+WEBDAV_CONTENT_TYPE_XML: Final = 'application/xml; charset="utf-8"'
+WEBDAV_DEPTH_INFINITY: Final = "infinity"
+WEBDAV_DEPTH_THIS: Final = "0"
+WEBDAV_DEPTH_THIS_AND_CHILDREN: Final = "1"
+WEBDAV_NS_CALDAV: Final = "urn:ietf:params:xml:ns:caldav"
+WEBDAV_NS_CALENDARSERVER: Final = "http://calendarserver.org/ns/"
+WEBDAV_NS_CARDDAV: Final = "urn:ietf:params:xml:ns:carddav"
+WEBDAV_NS_DAV: Final = "DAV:"
+WEBDAV_NS_ICAL: Final = "http://apple.com/ns/ical/"
 
 def binding_bind_property(
     source: GObject.Object,
@@ -444,7 +445,7 @@ class Client(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> ClientPrivate: ...
     def __init__(self, online: bool = ..., source: Source = ...) -> None: ...
@@ -667,42 +668,38 @@ class ClientClass(GObject.GPointer):
         ClientClass()
     """
 
-    parent: GObject.ObjectClass = ...
-    get_dbus_proxy: None = ...
-    unwrap_dbus_error: Callable[[Client, GLib.Error], None] = ...
-    retrieve_capabilities: Callable[..., None] = ...
-    retrieve_capabilities_finish: Callable[
-        [Client, Gio.AsyncResult], tuple[bool, str]
-    ] = ...
+    parent: GObject.ObjectClass
+    get_dbus_proxy: None
+    unwrap_dbus_error: Callable[[Client, GLib.Error], None]
+    retrieve_capabilities: Callable[..., None]
+    retrieve_capabilities_finish: Callable[[Client, Gio.AsyncResult], tuple[bool, str]]
     retrieve_capabilities_sync: Callable[
         [Client, Gio.Cancellable | None], tuple[bool, str]
-    ] = ...
-    get_backend_property: Callable[..., None] = ...
-    get_backend_property_finish: Callable[
-        [Client, Gio.AsyncResult], tuple[bool, str]
-    ] = ...
+    ]
+    get_backend_property: Callable[..., None]
+    get_backend_property_finish: Callable[[Client, Gio.AsyncResult], tuple[bool, str]]
     get_backend_property_sync: Callable[
         [Client, str, Gio.Cancellable | None], tuple[bool, str]
-    ] = ...
-    set_backend_property: Callable[..., None] = ...
-    set_backend_property_finish: Callable[[Client, Gio.AsyncResult], bool] = ...
+    ]
+    set_backend_property: Callable[..., None]
+    set_backend_property_finish: Callable[[Client, Gio.AsyncResult], bool]
     set_backend_property_sync: Callable[
         [Client, str, str, Gio.Cancellable | None], bool
-    ] = ...
-    open: Callable[..., None] = ...
-    open_finish: Callable[[Client, Gio.AsyncResult], bool] = ...
-    open_sync: Callable[[Client, bool, Gio.Cancellable | None], bool] = ...
-    remove: Callable[..., None] = ...
-    remove_finish: Callable[[Client, Gio.AsyncResult], bool] = ...
-    remove_sync: Callable[[Client, Gio.Cancellable | None], bool] = ...
-    refresh: Callable[..., None] = ...
-    refresh_finish: Callable[[Client, Gio.AsyncResult], bool] = ...
-    refresh_sync: Callable[[Client, Gio.Cancellable | None], bool] = ...
-    retrieve_properties_sync: Callable[[Client, Gio.Cancellable | None], bool] = ...
-    opened: Callable[[Client, GLib.Error], None] = ...
-    backend_error: Callable[[Client, str], None] = ...
-    backend_died: Callable[[Client], None] = ...
-    backend_property_changed: Callable[[Client, str, str], None] = ...
+    ]
+    open: Callable[..., None]
+    open_finish: Callable[[Client, Gio.AsyncResult], bool]
+    open_sync: Callable[[Client, bool, Gio.Cancellable | None], bool]
+    remove: Callable[..., None]
+    remove_finish: Callable[[Client, Gio.AsyncResult], bool]
+    remove_sync: Callable[[Client, Gio.Cancellable | None], bool]
+    refresh: Callable[..., None]
+    refresh_finish: Callable[[Client, Gio.AsyncResult], bool]
+    refresh_sync: Callable[[Client, Gio.Cancellable | None], bool]
+    retrieve_properties_sync: Callable[[Client, Gio.Cancellable | None], bool]
+    opened: Callable[[Client, GLib.Error], None]
+    backend_error: Callable[[Client, str], None]
+    backend_died: Callable[[Client], None]
+    backend_property_changed: Callable[[Client, str, str], None]
 
 class ClientErrorsList(GObject.GPointer):
     """
@@ -713,8 +710,8 @@ class ClientErrorsList(GObject.GPointer):
         ClientErrorsList()
     """
 
-    name: str = ...
-    err_code: int = ...
+    name: str
+    err_code: int
 
 class ClientPrivate(GObject.GPointer): ...
 
@@ -763,7 +760,7 @@ class ExtensibleInterface(GObject.GPointer):
         ExtensibleInterface()
     """
 
-    parent_interface: GObject.TypeInterface = ...
+    parent_interface: GObject.TypeInterface
 
 class Extension(GObject.Object):
     """
@@ -787,7 +784,7 @@ class Extension(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> ExtensionPrivate: ...
     def __init__(self, extensible: Extensible = ...) -> None: ...
@@ -802,8 +799,8 @@ class ExtensionClass(GObject.GPointer):
         ExtensionClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    extensible_type: type[Any] = ...
+    parent_class: GObject.ObjectClass
+    extensible_type: type[Any]
 
 class ExtensionPrivate(GObject.GPointer): ...
 class Flag(GObject.GPointer): ...
@@ -817,9 +814,9 @@ class FreeFormExpSymbol(GObject.GPointer):
         FreeFormExpSymbol()
     """
 
-    names: str = ...
-    hint: str = ...
-    build_sexp: Callable[[str, str, str], str] = ...
+    names: str
+    hint: str
+    build_sexp: Callable[[str, str, str], str]
 
 class GDataQuery(GObject.GBoxed):
     """
@@ -921,7 +918,7 @@ class GDataSession(SoupSession):
 
     @property
     def props(self) -> Props: ...
-    parent: SoupSession = ...
+    parent: SoupSession
     @property
     def priv(self) -> GDataSessionPrivate: ...
     def __init__(
@@ -1035,8 +1032,8 @@ class GDataSessionClass(GObject.GPointer):
         GDataSessionClass()
     """
 
-    parent_class: SoupSessionClass = ...
-    reserved: list[None] = ...
+    parent_class: SoupSessionClass
+    reserved: list[None]
 
 class GDataSessionPrivate(GObject.GPointer): ...
 class MemChunk(GObject.GPointer): ...
@@ -1064,7 +1061,7 @@ class Module(GObject.TypeModule, GObject.TypePlugin):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.TypeModule = ...
+    parent: GObject.TypeModule
     @property
     def priv(self) -> ModulePrivate: ...
     def __init__(self, filename: str = ...) -> None: ...
@@ -1089,7 +1086,7 @@ class ModuleClass(GObject.GPointer):
         ModuleClass()
     """
 
-    parent_class: GObject.TypeModuleClass = ...
+    parent_class: GObject.TypeModuleClass
 
 class ModulePrivate(GObject.GPointer): ...
 
@@ -1150,7 +1147,7 @@ class NetworkMonitor(GObject.Object, Gio.Initable, Gio.NetworkMonitor):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> NetworkMonitorPrivate: ...
     def __init__(self, gio_name: str | None = ...) -> None: ...
@@ -1169,7 +1166,7 @@ class NetworkMonitorClass(GObject.GPointer):
         NetworkMonitorClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
+    parent_class: GObject.ObjectClass
 
 class NetworkMonitorPrivate(GObject.GPointer): ...
 
@@ -1289,7 +1286,7 @@ class OAuth2ServiceBase(Extension):
 
     @property
     def props(self) -> Props: ...
-    parent: Extension = ...
+    parent: Extension
     def __init__(self, extensible: Extensible = ...) -> None: ...
 
 class OAuth2ServiceBaseClass(GObject.GPointer):
@@ -1301,7 +1298,7 @@ class OAuth2ServiceBaseClass(GObject.GPointer):
         OAuth2ServiceBaseClass()
     """
 
-    parent_class: ExtensionClass = ...
+    parent_class: ExtensionClass
 
 class OAuth2ServiceGoogle(OAuth2ServiceBase, OAuth2Service):
     """
@@ -1325,7 +1322,7 @@ class OAuth2ServiceGoogle(OAuth2ServiceBase, OAuth2Service):
 
     @property
     def props(self) -> Props: ...
-    parent: OAuth2ServiceBase = ...
+    parent: OAuth2ServiceBase
     def __init__(self, extensible: Extensible = ...) -> None: ...
 
 class OAuth2ServiceGoogleClass(GObject.GPointer):
@@ -1337,7 +1334,7 @@ class OAuth2ServiceGoogleClass(GObject.GPointer):
         OAuth2ServiceGoogleClass()
     """
 
-    parent_class: OAuth2ServiceBaseClass = ...
+    parent_class: OAuth2ServiceBaseClass
 
 class OAuth2ServiceInterface(GObject.GPointer):
     """
@@ -1348,42 +1345,38 @@ class OAuth2ServiceInterface(GObject.GPointer):
         OAuth2ServiceInterface()
     """
 
-    parent_interface: GObject.TypeInterface = ...
-    can_process: Callable[[OAuth2Service, Source], bool] = ...
-    guess_can_process: Callable[[OAuth2Service, str | None, str | None], bool] = ...
-    get_flags: Callable[[OAuth2Service], int] = ...
-    get_name: Callable[[OAuth2Service], str] = ...
-    get_display_name: Callable[[OAuth2Service], str] = ...
-    get_client_id: Callable[[OAuth2Service, Source], str] = ...
-    get_client_secret: Callable[[OAuth2Service, Source], str | None] = ...
-    get_authentication_uri: Callable[[OAuth2Service, Source], str] = ...
-    get_refresh_uri: Callable[[OAuth2Service, Source], str] = ...
-    get_redirect_uri: Callable[[OAuth2Service, Source], str | None] = ...
+    parent_interface: GObject.TypeInterface
+    can_process: Callable[[OAuth2Service, Source], bool]
+    guess_can_process: Callable[[OAuth2Service, str | None, str | None], bool]
+    get_flags: Callable[[OAuth2Service], int]
+    get_name: Callable[[OAuth2Service], str]
+    get_display_name: Callable[[OAuth2Service], str]
+    get_client_id: Callable[[OAuth2Service, Source], str]
+    get_client_secret: Callable[[OAuth2Service, Source], str | None]
+    get_authentication_uri: Callable[[OAuth2Service, Source], str]
+    get_refresh_uri: Callable[[OAuth2Service, Source], str]
+    get_redirect_uri: Callable[[OAuth2Service, Source], str | None]
     prepare_authentication_uri_query: Callable[
         [OAuth2Service, Source, dict[str, str]], None
-    ] = ...
+    ]
     get_authentication_policy: Callable[
         [OAuth2Service, Source, str], OAuth2ServiceNavigationPolicy
-    ] = ...
+    ]
     extract_authorization_code: Callable[
         [OAuth2Service, Source, str, str, str | None], tuple[bool, str]
-    ] = ...
-    prepare_get_token_form: Callable[
-        [OAuth2Service, Source, str, dict[str, str]], None
-    ] = ...
-    prepare_get_token_message: Callable[
-        [OAuth2Service, Source, _Soup3.Message], None
-    ] = ...
+    ]
+    prepare_get_token_form: Callable[[OAuth2Service, Source, str, dict[str, str]], None]
+    prepare_get_token_message: Callable[[OAuth2Service, Source, _Soup3.Message], None]
     prepare_refresh_token_form: Callable[
         [OAuth2Service, Source, str, dict[str, str]], None
-    ] = ...
+    ]
     prepare_refresh_token_message: Callable[
         [OAuth2Service, Source, _Soup3.Message], None
-    ] = ...
+    ]
     extract_error_message: Callable[
         [OAuth2Service, Source, str, str, str | None], tuple[bool, str]
-    ] = ...
-    reserved: list[None] = ...
+    ]
+    reserved: list[None]
 
 class OAuth2ServiceOutlook(OAuth2ServiceBase, OAuth2Service):
     """
@@ -1407,7 +1400,7 @@ class OAuth2ServiceOutlook(OAuth2ServiceBase, OAuth2Service):
 
     @property
     def props(self) -> Props: ...
-    parent: OAuth2ServiceBase = ...
+    parent: OAuth2ServiceBase
     def __init__(self, extensible: Extensible = ...) -> None: ...
 
 class OAuth2ServiceOutlookClass(GObject.GPointer):
@@ -1419,7 +1412,7 @@ class OAuth2ServiceOutlookClass(GObject.GPointer):
         OAuth2ServiceOutlookClass()
     """
 
-    parent_class: OAuth2ServiceBaseClass = ...
+    parent_class: OAuth2ServiceBaseClass
 
 class OAuth2ServiceYahoo(OAuth2ServiceBase, OAuth2Service):
     """
@@ -1443,7 +1436,7 @@ class OAuth2ServiceYahoo(OAuth2ServiceBase, OAuth2Service):
 
     @property
     def props(self) -> Props: ...
-    parent: OAuth2ServiceBase = ...
+    parent: OAuth2ServiceBase
     def __init__(self, extensible: Extensible = ...) -> None: ...
 
 class OAuth2ServiceYahooClass(GObject.GPointer):
@@ -1455,7 +1448,7 @@ class OAuth2ServiceYahooClass(GObject.GPointer):
         OAuth2ServiceYahooClass()
     """
 
-    parent_class: OAuth2ServiceBaseClass = ...
+    parent_class: OAuth2ServiceBaseClass
 
 class OAuth2Services(GObject.Object, Extensible):
     """
@@ -1472,7 +1465,7 @@ class OAuth2Services(GObject.Object, Extensible):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> OAuth2ServicesPrivate: ...
     def add(self, service: OAuth2Service) -> None: ...
@@ -1501,8 +1494,8 @@ class OAuth2ServicesClass(GObject.GPointer):
         OAuth2ServicesClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    reserved: list[None] = ...
+    parent_class: GObject.ObjectClass
+    reserved: list[None]
 
 class OAuth2ServicesPrivate(GObject.GPointer): ...
 
@@ -1549,7 +1542,7 @@ class SoupAuthBearer(_Soup3.Auth):
 
     @property
     def props(self) -> Props: ...
-    parent: _Soup3.Auth = ...
+    parent: _Soup3.Auth
     @property
     def priv(self) -> SoupAuthBearerPrivate: ...
     def __init__(
@@ -1567,7 +1560,7 @@ class SoupAuthBearerClass(GObject.GPointer):
         SoupAuthBearerClass()
     """
 
-    parent_class: _Soup3.AuthClass = ...
+    parent_class: _Soup3.AuthClass
 
 class SoupAuthBearerPrivate(GObject.GPointer): ...
 
@@ -1639,7 +1632,7 @@ class SoupSession(_Soup3.Session):
 
     @property
     def props(self) -> Props: ...
-    parent: _Soup3.Session = ...
+    parent: _Soup3.Session
     @property
     def priv(self) -> SoupSessionPrivate: ...
     def __init__(
@@ -1750,8 +1743,8 @@ class SoupSessionClass(GObject.GPointer):
         SoupSessionClass()
     """
 
-    parent_class: _Soup3.SessionClass = ...
-    reserved: list[None] = ...
+    parent_class: _Soup3.SessionClass
+    reserved: list[None]
 
 class SoupSessionPrivate(GObject.GPointer): ...
 
@@ -1813,7 +1806,7 @@ class Source(GObject.Object, Gio.Initable, Gio.ProxyResolver):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> SourcePrivate: ...
     def __init__(
@@ -2191,7 +2184,7 @@ class SourceAddressBook(SourceBackend):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceBackend = ...
+    parent: SourceBackend
     @property
     def priv(self) -> SourceAddressBookPrivate: ...
     def __init__(
@@ -2212,7 +2205,7 @@ class SourceAddressBookClass(GObject.GPointer):
         SourceAddressBookClass()
     """
 
-    parent_class: SourceBackendClass = ...
+    parent_class: SourceBackendClass
 
 class SourceAddressBookPrivate(GObject.GPointer): ...
 
@@ -2249,7 +2242,7 @@ class SourceAlarms(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceAlarmsPrivate: ...
     def __init__(
@@ -2276,7 +2269,7 @@ class SourceAlarmsClass(GObject.GPointer):
         SourceAlarmsClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceAlarmsPrivate(GObject.GPointer): ...
 
@@ -2331,7 +2324,7 @@ class SourceAuthentication(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceAuthenticationPrivate: ...
     def __init__(
@@ -2379,7 +2372,7 @@ class SourceAuthenticationClass(GObject.GPointer):
         SourceAuthenticationClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceAuthenticationPrivate(GObject.GPointer): ...
 
@@ -2410,7 +2403,7 @@ class SourceAutocomplete(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceAutocompletePrivate: ...
     def __init__(self, include_me: bool = ..., source: Source = ...) -> None: ...
@@ -2426,7 +2419,7 @@ class SourceAutocompleteClass(GObject.GPointer):
         SourceAutocompleteClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceAutocompletePrivate(GObject.GPointer): ...
 
@@ -2457,7 +2450,7 @@ class SourceAutoconfig(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceAutoconfigPrivate: ...
     def __init__(self, revision: str = ..., source: Source = ...) -> None: ...
@@ -2474,7 +2467,7 @@ class SourceAutoconfigClass(GObject.GPointer):
         SourceAutoconfigClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceAutoconfigPrivate(GObject.GPointer): ...
 
@@ -2505,7 +2498,7 @@ class SourceBackend(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceBackendPrivate: ...
     def __init__(
@@ -2524,7 +2517,7 @@ class SourceBackendClass(GObject.GPointer):
         SourceBackendClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceBackendPrivate(GObject.GPointer): ...
 
@@ -2566,7 +2559,7 @@ class SourceCalendar(SourceSelectable):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceSelectable = ...
+    parent: SourceSelectable
     @property
     def priv(self) -> SourceCalendarPrivate: ...
     def __init__(
@@ -2587,7 +2580,7 @@ class SourceCalendarClass(GObject.GPointer):
         SourceCalendarClass()
     """
 
-    parent_class: SourceSelectableClass = ...
+    parent_class: SourceSelectableClass
 
 class SourceCalendarPrivate(GObject.GPointer): ...
 
@@ -2618,7 +2611,7 @@ class SourceCamel(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceCamelPrivate: ...
     def __init__(self, source: Source = ...) -> None: ...
@@ -2641,8 +2634,8 @@ class SourceCamelClass(GObject.GPointer):
         SourceCamelClass()
     """
 
-    parent_class: SourceExtensionClass = ...
-    settings_type: type[Any] = ...
+    parent_class: SourceExtensionClass
+    settings_type: type[Any]
 
 class SourceCamelPrivate(GObject.GPointer): ...
 
@@ -2655,42 +2648,42 @@ class SourceClass(GObject.GPointer):
         SourceClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    changed: Callable[[Source], None] = ...
+    parent_class: GObject.ObjectClass
+    changed: Callable[[Source], None]
     credentials_required: Callable[
         [Source, SourceCredentialsReason, str, Gio.TlsCertificateFlags, GLib.Error],
         None,
-    ] = ...
-    authenticate: Callable[[Source, NamedParameters], None] = ...
-    remove_sync: Callable[[Source, Gio.Cancellable | None], bool] = ...
-    remove: Callable[..., None] = ...
-    remove_finish: Callable[[Source, Gio.AsyncResult], bool] = ...
-    write_sync: Callable[[Source, Gio.Cancellable | None], bool] = ...
-    write: Callable[..., None] = ...
-    write_finish: Callable[[Source, Gio.AsyncResult], bool] = ...
-    remote_create_sync: Callable[[Source, Source, Gio.Cancellable | None], bool] = ...
-    remote_create: Callable[..., None] = ...
-    remote_create_finish: Callable[[Source, Gio.AsyncResult], bool] = ...
-    remote_delete_sync: Callable[[Source, Gio.Cancellable | None], bool] = ...
-    remote_delete: Callable[..., None] = ...
-    remote_delete_finish: Callable[[Source, Gio.AsyncResult], bool] = ...
+    ]
+    authenticate: Callable[[Source, NamedParameters], None]
+    remove_sync: Callable[[Source, Gio.Cancellable | None], bool]
+    remove: Callable[..., None]
+    remove_finish: Callable[[Source, Gio.AsyncResult], bool]
+    write_sync: Callable[[Source, Gio.Cancellable | None], bool]
+    write: Callable[..., None]
+    write_finish: Callable[[Source, Gio.AsyncResult], bool]
+    remote_create_sync: Callable[[Source, Source, Gio.Cancellable | None], bool]
+    remote_create: Callable[..., None]
+    remote_create_finish: Callable[[Source, Gio.AsyncResult], bool]
+    remote_delete_sync: Callable[[Source, Gio.Cancellable | None], bool]
+    remote_delete: Callable[..., None]
+    remote_delete_finish: Callable[[Source, Gio.AsyncResult], bool]
     get_oauth2_access_token_sync: Callable[
         [Source, Gio.Cancellable | None], tuple[bool, str, int]
-    ] = ...
-    get_oauth2_access_token: Callable[..., None] = ...
+    ]
+    get_oauth2_access_token: Callable[..., None]
     get_oauth2_access_token_finish: Callable[
         [Source, Gio.AsyncResult], tuple[bool, str, int]
-    ] = ...
+    ]
     invoke_credentials_required_impl: Callable[
         [Source, None, str, str, str, str, str, Gio.Cancellable | None], bool
-    ] = ...
+    ]
     invoke_authenticate_impl: Callable[
         [Source, None, str, Gio.Cancellable | None], bool
-    ] = ...
+    ]
     unset_last_credentials_required_arguments_impl: Callable[
         [Source, Gio.Cancellable | None], bool
-    ] = ...
-    reserved: list[None] = ...
+    ]
+    reserved: list[None]
 
 class SourceCollection(SourceBackend):
     """
@@ -2742,7 +2735,7 @@ class SourceCollection(SourceBackend):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceBackend = ...
+    parent: SourceBackend
     @property
     def priv(self) -> SourceCollectionPrivate: ...
     def __init__(
@@ -2784,7 +2777,7 @@ class SourceCollectionClass(GObject.GPointer):
         SourceCollectionClass()
     """
 
-    parent_class: SourceBackendClass = ...
+    parent_class: SourceBackendClass
 
 class SourceCollectionPrivate(GObject.GPointer): ...
 
@@ -2815,7 +2808,7 @@ class SourceContacts(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceContactsPrivate: ...
     def __init__(self, include_me: bool = ..., source: Source = ...) -> None: ...
@@ -2831,7 +2824,7 @@ class SourceContactsClass(GObject.GPointer):
         SourceContactsClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceContactsPrivate(GObject.GPointer): ...
 
@@ -2858,7 +2851,7 @@ class SourceCredentialsProvider(GObject.Object, Extensible):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> SourceCredentialsProviderPrivate: ...
     def __init__(self, registry: GObject.Object = ...) -> None: ...
@@ -2923,8 +2916,8 @@ class SourceCredentialsProviderClass(GObject.GPointer):
         SourceCredentialsProviderClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    ref_source: Callable[[SourceCredentialsProvider, str], Source | None] = ...
+    parent_class: GObject.ObjectClass
+    ref_source: Callable[[SourceCredentialsProvider, str], Source | None]
 
 class SourceCredentialsProviderImpl(Extension):
     """
@@ -2948,7 +2941,7 @@ class SourceCredentialsProviderImpl(Extension):
 
     @property
     def props(self) -> Props: ...
-    parent: Extension = ...
+    parent: Extension
     @property
     def priv(self) -> SourceCredentialsProviderImplPrivate: ...
     def __init__(self, extensible: Extensible = ...) -> None: ...
@@ -2995,14 +2988,14 @@ class SourceCredentialsProviderImplClass(GObject.GPointer):
         SourceCredentialsProviderImplClass()
     """
 
-    parent_class: ExtensionClass = ...
-    can_process: Callable[[SourceCredentialsProviderImpl, Source], bool] = ...
-    can_store: Callable[[SourceCredentialsProviderImpl], bool] = ...
-    can_prompt: Callable[[SourceCredentialsProviderImpl], bool] = ...
+    parent_class: ExtensionClass
+    can_process: Callable[[SourceCredentialsProviderImpl, Source], bool]
+    can_store: Callable[[SourceCredentialsProviderImpl], bool]
+    can_prompt: Callable[[SourceCredentialsProviderImpl], bool]
     lookup_sync: Callable[
         [SourceCredentialsProviderImpl, Source, Gio.Cancellable | None],
         tuple[bool, NamedParameters],
-    ] = ...
+    ]
     store_sync: Callable[
         [
             SourceCredentialsProviderImpl,
@@ -3012,10 +3005,10 @@ class SourceCredentialsProviderImplClass(GObject.GPointer):
             Gio.Cancellable | None,
         ],
         bool,
-    ] = ...
+    ]
     delete_sync: Callable[
         [SourceCredentialsProviderImpl, Source, Gio.Cancellable | None], bool
-    ] = ...
+    ]
 
 class SourceCredentialsProviderImplOAuth2(SourceCredentialsProviderImpl):
     """
@@ -3039,7 +3032,7 @@ class SourceCredentialsProviderImplOAuth2(SourceCredentialsProviderImpl):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceCredentialsProviderImpl = ...
+    parent: SourceCredentialsProviderImpl
     @property
     def priv(self) -> SourceCredentialsProviderImplOAuth2Private: ...
     def __init__(self, extensible: Extensible = ...) -> None: ...
@@ -3053,7 +3046,7 @@ class SourceCredentialsProviderImplOAuth2Class(GObject.GPointer):
         SourceCredentialsProviderImplOAuth2Class()
     """
 
-    parent_class: SourceCredentialsProviderImplClass = ...
+    parent_class: SourceCredentialsProviderImplClass
 
 class SourceCredentialsProviderImplOAuth2Private(GObject.GPointer): ...
 
@@ -3079,7 +3072,7 @@ class SourceCredentialsProviderImplPassword(SourceCredentialsProviderImpl):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceCredentialsProviderImpl = ...
+    parent: SourceCredentialsProviderImpl
     @property
     def priv(self) -> SourceCredentialsProviderImplPasswordPrivate: ...
     def __init__(self, extensible: Extensible = ...) -> None: ...
@@ -3093,7 +3086,7 @@ class SourceCredentialsProviderImplPasswordClass(GObject.GPointer):
         SourceCredentialsProviderImplPasswordClass()
     """
 
-    parent_class: SourceCredentialsProviderImplClass = ...
+    parent_class: SourceCredentialsProviderImplClass
 
 class SourceCredentialsProviderImplPasswordPrivate(GObject.GPointer): ...
 class SourceCredentialsProviderImplPrivate(GObject.GPointer): ...
@@ -3121,7 +3114,7 @@ class SourceExtension(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> SourceExtensionPrivate: ...
     def __init__(self, source: Source = ...) -> None: ...
@@ -3139,8 +3132,8 @@ class SourceExtensionClass(GObject.GPointer):
         SourceExtensionClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    name: str = ...
+    parent_class: GObject.ObjectClass
+    name: str
 
 class SourceExtensionPrivate(GObject.GPointer): ...
 
@@ -3183,7 +3176,7 @@ class SourceGoa(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceGoaPrivate: ...
     def __init__(
@@ -3220,7 +3213,7 @@ class SourceGoaClass(GObject.GPointer):
         SourceGoaClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceGoaPrivate(GObject.GPointer): ...
 
@@ -3269,7 +3262,7 @@ class SourceLDAP(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceLDAPPrivate: ...
     def __init__(
@@ -3309,7 +3302,7 @@ class SourceLDAPClass(GObject.GPointer):
         SourceLDAPClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceLDAPPrivate(GObject.GPointer): ...
 
@@ -3346,7 +3339,7 @@ class SourceLocal(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceLocalPrivate: ...
     def __init__(
@@ -3374,7 +3367,7 @@ class SourceLocalClass(GObject.GPointer):
         SourceLocalClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceLocalPrivate(GObject.GPointer): ...
 
@@ -3405,7 +3398,7 @@ class SourceMDN(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceMDNPrivate: ...
     def __init__(
@@ -3423,7 +3416,7 @@ class SourceMDNClass(GObject.GPointer):
         SourceMDNClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceMDNPrivate(GObject.GPointer): ...
 
@@ -3474,7 +3467,7 @@ class SourceMailAccount(SourceBackend):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceBackend = ...
+    parent: SourceBackend
     @property
     def priv(self) -> SourceMailAccountPrivate: ...
     def __init__(
@@ -3512,7 +3505,7 @@ class SourceMailAccountClass(GObject.GPointer):
         SourceMailAccountClass()
     """
 
-    parent_class: SourceBackendClass = ...
+    parent_class: SourceBackendClass
 
 class SourceMailAccountPrivate(GObject.GPointer): ...
 
@@ -3567,7 +3560,7 @@ class SourceMailComposition(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceMailCompositionPrivate: ...
     def __init__(
@@ -3616,7 +3609,7 @@ class SourceMailCompositionClass(GObject.GPointer):
         SourceMailCompositionClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceMailCompositionPrivate(GObject.GPointer): ...
 
@@ -3662,7 +3655,7 @@ class SourceMailIdentity(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceMailIdentityPrivate: ...
     def __init__(
@@ -3704,7 +3697,7 @@ class SourceMailIdentityClass(GObject.GPointer):
         SourceMailIdentityClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceMailIdentityPrivate(GObject.GPointer): ...
 
@@ -3738,7 +3731,7 @@ class SourceMailSignature(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceMailSignaturePrivate: ...
     def __init__(self, mime_type: str | None = ..., source: Source = ...) -> None: ...
@@ -3756,7 +3749,7 @@ class SourceMailSignatureClass(GObject.GPointer):
         SourceMailSignatureClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceMailSignaturePrivate(GObject.GPointer): ...
 
@@ -3796,7 +3789,7 @@ class SourceMailSubmission(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceMailSubmissionPrivate: ...
     def __init__(
@@ -3827,7 +3820,7 @@ class SourceMailSubmissionClass(GObject.GPointer):
         SourceMailSubmissionClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceMailSubmissionPrivate(GObject.GPointer): ...
 
@@ -3858,7 +3851,7 @@ class SourceMailTransport(SourceBackend):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceBackend = ...
+    parent: SourceBackend
     @property
     def priv(self) -> SourceMailTransportPrivate: ...
     def __init__(
@@ -3874,7 +3867,7 @@ class SourceMailTransportClass(GObject.GPointer):
         SourceMailTransportClass()
     """
 
-    parent_class: SourceBackendClass = ...
+    parent_class: SourceBackendClass
 
 class SourceMailTransportPrivate(GObject.GPointer): ...
 
@@ -3916,7 +3909,7 @@ class SourceMemoList(SourceSelectable):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceSelectable = ...
+    parent: SourceSelectable
     @property
     def priv(self) -> SourceMemoListPrivate: ...
     def __init__(
@@ -3937,7 +3930,7 @@ class SourceMemoListClass(GObject.GPointer):
         SourceMemoListClass()
     """
 
-    parent_class: SourceSelectableClass = ...
+    parent_class: SourceSelectableClass
 
 class SourceMemoListPrivate(GObject.GPointer): ...
 
@@ -3968,7 +3961,7 @@ class SourceOffline(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceOfflinePrivate: ...
     def __init__(self, stay_synchronized: bool = ..., source: Source = ...) -> None: ...
@@ -3984,7 +3977,7 @@ class SourceOfflineClass(GObject.GPointer):
         SourceOfflineClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceOfflinePrivate(GObject.GPointer): ...
 
@@ -4045,7 +4038,7 @@ class SourceOpenPGP(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceOpenPGPPrivate: ...
     def __init__(
@@ -4097,7 +4090,7 @@ class SourceOpenPGPClass(GObject.GPointer):
         SourceOpenPGPClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceOpenPGPPrivate(GObject.GPointer): ...
 class SourcePrivate(GObject.GPointer): ...
@@ -4168,7 +4161,7 @@ class SourceProxy(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceProxyPrivate: ...
     def __init__(
@@ -4235,7 +4228,7 @@ class SourceProxyClass(GObject.GPointer):
         SourceProxyClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceProxyPrivate(GObject.GPointer): ...
 
@@ -4272,7 +4265,7 @@ class SourceRefresh(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceRefreshPrivate: ...
     def __init__(
@@ -4298,7 +4291,7 @@ class SourceRefreshClass(GObject.GPointer):
         SourceRefreshClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceRefreshPrivate(GObject.GPointer): ...
 
@@ -4349,7 +4342,7 @@ class SourceRegistry(GObject.Object, Gio.AsyncInitable, Gio.Initable):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> SourceRegistryPrivate: ...
     def __init__(
@@ -4471,12 +4464,12 @@ class SourceRegistryClass(GObject.GPointer):
         SourceRegistryClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    source_added: Callable[[SourceRegistry, Source], None] = ...
-    source_changed: Callable[[SourceRegistry, Source], None] = ...
-    source_removed: Callable[[SourceRegistry, Source], None] = ...
-    source_enabled: Callable[[SourceRegistry, Source], None] = ...
-    source_disabled: Callable[[SourceRegistry, Source], None] = ...
+    parent_class: GObject.ObjectClass
+    source_added: Callable[[SourceRegistry, Source], None]
+    source_changed: Callable[[SourceRegistry, Source], None]
+    source_removed: Callable[[SourceRegistry, Source], None]
+    source_enabled: Callable[[SourceRegistry, Source], None]
+    source_disabled: Callable[[SourceRegistry, Source], None]
     credentials_required: Callable[
         [
             SourceRegistry,
@@ -4487,7 +4480,7 @@ class SourceRegistryClass(GObject.GPointer):
             GLib.Error,
         ],
         None,
-    ] = ...
+    ]
 
 class SourceRegistryPrivate(GObject.GPointer): ...
 
@@ -4521,7 +4514,7 @@ class SourceRegistryWatcher(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> SourceRegistryWatcherPrivate: ...
     def __init__(
@@ -4547,10 +4540,10 @@ class SourceRegistryWatcherClass(GObject.GPointer):
         SourceRegistryWatcherClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    filter: Callable[[SourceRegistryWatcher, Source], bool] = ...
-    appeared: Callable[[SourceRegistryWatcher, Source], None] = ...
-    disappeared: Callable[[SourceRegistryWatcher, Source], None] = ...
+    parent_class: GObject.ObjectClass
+    filter: Callable[[SourceRegistryWatcher, Source], bool]
+    appeared: Callable[[SourceRegistryWatcher, Source], None]
+    disappeared: Callable[[SourceRegistryWatcher, Source], None]
 
 class SourceRegistryWatcherPrivate(GObject.GPointer): ...
 
@@ -4581,7 +4574,7 @@ class SourceResource(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceResourcePrivate: ...
     def __init__(self, identity: str | None = ..., source: Source = ...) -> None: ...
@@ -4598,7 +4591,7 @@ class SourceResourceClass(GObject.GPointer):
         SourceResourceClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceResourcePrivate(GObject.GPointer): ...
 
@@ -4629,7 +4622,7 @@ class SourceRevisionGuards(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceRevisionGuardsPrivate: ...
     def __init__(self, enabled: bool = ..., source: Source = ...) -> None: ...
@@ -4645,7 +4638,7 @@ class SourceRevisionGuardsClass(GObject.GPointer):
         SourceRevisionGuardsClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceRevisionGuardsPrivate(GObject.GPointer): ...
 
@@ -4691,7 +4684,7 @@ class SourceSMIME(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceSMIMEPrivate: ...
     def __init__(
@@ -4733,7 +4726,7 @@ class SourceSMIMEClass(GObject.GPointer):
         SourceSMIMEClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceSMIMEPrivate(GObject.GPointer): ...
 
@@ -4767,7 +4760,7 @@ class SourceSecurity(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceSecurityPrivate: ...
     def __init__(
@@ -4791,7 +4784,7 @@ class SourceSecurityClass(GObject.GPointer):
         SourceSecurityClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceSecurityPrivate(GObject.GPointer): ...
 
@@ -4833,7 +4826,7 @@ class SourceSelectable(SourceBackend):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceBackend = ...
+    parent: SourceBackend
     @property
     def priv(self) -> SourceSelectablePrivate: ...
     def __init__(
@@ -4861,7 +4854,7 @@ class SourceSelectableClass(GObject.GPointer):
         SourceSelectableClass()
     """
 
-    parent_class: SourceBackendClass = ...
+    parent_class: SourceBackendClass
 
 class SourceSelectablePrivate(GObject.GPointer): ...
 
@@ -4903,7 +4896,7 @@ class SourceTaskList(SourceSelectable):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceSelectable = ...
+    parent: SourceSelectable
     @property
     def priv(self) -> SourceTaskListPrivate: ...
     def __init__(
@@ -4924,7 +4917,7 @@ class SourceTaskListClass(GObject.GPointer):
         SourceTaskListClass()
     """
 
-    parent_class: SourceSelectableClass = ...
+    parent_class: SourceSelectableClass
 
 class SourceTaskListPrivate(GObject.GPointer): ...
 
@@ -4955,7 +4948,7 @@ class SourceUoa(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceUoaPrivate: ...
     def __init__(self, account_id: int = ..., source: Source = ...) -> None: ...
@@ -4971,7 +4964,7 @@ class SourceUoaClass(GObject.GPointer):
         SourceUoaClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceUoaPrivate(GObject.GPointer): ...
 
@@ -5005,7 +4998,7 @@ class SourceWeather(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceWeatherPrivate: ...
     def __init__(
@@ -5026,7 +5019,7 @@ class SourceWeatherClass(GObject.GPointer):
         SourceWeatherClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceWeatherPrivate(GObject.GPointer): ...
 
@@ -5057,7 +5050,7 @@ class SourceWebDAVNotes(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceWebDAVNotesPrivate: ...
     def __init__(self, default_ext: str | None = ..., source: Source = ...) -> None: ...
@@ -5074,7 +5067,7 @@ class SourceWebDAVNotesClass(GObject.GPointer):
         SourceWebDAVNotesClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceWebDAVNotesPrivate(GObject.GPointer): ...
 
@@ -5132,7 +5125,7 @@ class SourceWebdav(SourceExtension):
 
     @property
     def props(self) -> Props: ...
-    parent: SourceExtension = ...
+    parent: SourceExtension
     @property
     def priv(self) -> SourceWebdavPrivate: ...
     def __init__(
@@ -5194,7 +5187,7 @@ class SourceWebdavClass(GObject.GPointer):
         SourceWebdavClass()
     """
 
-    parent_class: SourceExtensionClass = ...
+    parent_class: SourceExtensionClass
 
 class SourceWebdavPrivate(GObject.GPointer): ...
 
@@ -5208,11 +5201,11 @@ class WebDAVAccessControlEntry(GObject.GBoxed):
         new(principal_kind:EDataServer.WebDAVACEPrincipalKind, principal_href:str=None, flags:int, inherited_href:str=None) -> EDataServer.WebDAVAccessControlEntry
     """
 
-    principal_kind: WebDAVACEPrincipalKind = ...
-    principal_href: str = ...
-    flags: int = ...
-    inherited_href: str = ...
-    privileges: list[None] = ...
+    principal_kind: WebDAVACEPrincipalKind
+    principal_href: str
+    flags: int
+    inherited_href: str
+    privileges: list[None]
     def append_privilege(self, privilege: WebDAVPrivilege) -> None: ...
     def copy(self) -> WebDAVAccessControlEntry | None: ...
     @staticmethod
@@ -5236,12 +5229,12 @@ class WebDAVDiscoveredSource(GObject.GBoxed):
         WebDAVDiscoveredSource()
     """
 
-    href: str = ...
-    supports: int = ...
-    display_name: str = ...
-    description: str = ...
-    color: str = ...
-    order: int = ...
+    href: str
+    supports: int
+    display_name: str
+    description: str
+    color: str
+    order: int
     def copy(self) -> WebDAVDiscoveredSource: ...
     def free(self) -> None: ...
 
@@ -5255,11 +5248,11 @@ class WebDAVPrivilege(GObject.GBoxed):
         new(ns_uri:str=None, name:str=None, description:str=None, kind:EDataServer.WebDAVPrivilegeKind, hint:EDataServer.WebDAVPrivilegeHint) -> EDataServer.WebDAVPrivilege
     """
 
-    ns_uri: str = ...
-    name: str = ...
-    description: str = ...
-    kind: WebDAVPrivilegeKind = ...
-    hint: WebDAVPrivilegeHint = ...
+    ns_uri: str
+    name: str
+    description: str
+    kind: WebDAVPrivilegeKind
+    hint: WebDAVPrivilegeHint
     def copy(self) -> WebDAVPrivilege | None: ...
     @staticmethod
     def free(ptr: None) -> None: ...
@@ -5284,10 +5277,10 @@ class WebDAVPropertyChange(GObject.GBoxed):
         new_set(ns_uri:str, name:str, value:str=None) -> EDataServer.WebDAVPropertyChange
     """
 
-    kind: WebDAVPropertyChangeKind = ...
-    ns_uri: str = ...
-    name: str = ...
-    value: str = ...
+    kind: WebDAVPropertyChangeKind
+    ns_uri: str
+    name: str
+    value: str
     def copy(self) -> WebDAVPropertyChange | None: ...
     @staticmethod
     def free(ptr: None) -> None: ...
@@ -5308,18 +5301,18 @@ class WebDAVResource(GObject.GBoxed):
         new(kind:EDataServer.WebDAVResourceKind, supports:int, href:str, etag:str=None, display_name:str=None, content_type:str=None, content_length:int, creation_date:int, last_modified:int, description:str=None, color:str=None, order:int) -> EDataServer.WebDAVResource
     """
 
-    kind: WebDAVResourceKind = ...
-    supports: int = ...
-    href: str = ...
-    etag: str = ...
-    display_name: str = ...
-    content_type: str = ...
-    content_length: int = ...
-    creation_date: int = ...
-    last_modified: int = ...
-    description: str = ...
-    color: str = ...
-    order: int = ...
+    kind: WebDAVResourceKind
+    supports: int
+    href: str
+    etag: str
+    display_name: str
+    content_type: str
+    content_length: int
+    creation_date: int
+    last_modified: int
+    description: str
+    color: str
+    order: int
     def copy(self) -> WebDAVResource | None: ...
     @staticmethod
     def free(ptr: None) -> None: ...
@@ -5408,7 +5401,7 @@ class WebDAVSession(SoupSession):
 
     @property
     def props(self) -> Props: ...
-    parent: SoupSession = ...
+    parent: SoupSession
     @property
     def priv(self) -> WebDAVSessionPrivate: ...
     def __init__(
@@ -5692,8 +5685,8 @@ class WebDAVSessionClass(GObject.GPointer):
         WebDAVSessionClass()
     """
 
-    parent_class: SoupSessionClass = ...
-    reserved: list[None] = ...
+    parent_class: SoupSessionClass
+    reserved: list[None]
 
 class WebDAVSessionPrivate(GObject.GPointer): ...
 
@@ -5712,7 +5705,7 @@ class XmlDocument(GObject.Object):
       notify (GParam)
     """
 
-    parent: GObject.Object = ...
+    parent: GObject.Object
     @property
     def priv(self) -> XmlDocumentPrivate: ...
     def add_attribute(self, ns_href: str | None, name: str, value: str) -> None: ...
@@ -5750,8 +5743,8 @@ class XmlDocumentClass(GObject.GPointer):
         XmlDocumentClass()
     """
 
-    parent_class: GObject.ObjectClass = ...
-    reserved: list[None] = ...
+    parent_class: GObject.ObjectClass
+    reserved: list[None]
 
 class XmlDocumentPrivate(GObject.GPointer): ...
 class XmlHash(GObject.GPointer): ...

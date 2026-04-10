@@ -2,10 +2,6 @@ from typing import TypeVar
 
 T = TypeVar("T")
 
-_lock = ...  # FIXME Constant
-_namespace: str = "GLibWin32"
-_version: str = "2.0"
-
 def check_windows_version(
     major: int, minor: int, spver: int, os_type: OSType
 ) -> bool: ...

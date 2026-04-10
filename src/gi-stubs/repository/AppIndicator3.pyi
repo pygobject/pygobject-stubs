@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from enum import IntEnum
@@ -7,16 +8,13 @@ from gi.repository import _Gdk3
 from gi.repository import _Gtk3
 from gi.repository import GObject
 
-INDICATOR_SIGNAL_CONNECTION_CHANGED: str = "connection-changed"
-INDICATOR_SIGNAL_NEW_ATTENTION_ICON: str = "new-attention-icon"
-INDICATOR_SIGNAL_NEW_ICON: str = "new-icon"
-INDICATOR_SIGNAL_NEW_ICON_THEME_PATH: str = "new-icon-theme-path"
-INDICATOR_SIGNAL_NEW_LABEL: str = "new-label"
-INDICATOR_SIGNAL_NEW_STATUS: str = "new-status"
-INDICATOR_SIGNAL_SCROLL_EVENT: str = "scroll-event"
-_lock = ...  # FIXME Constant
-_namespace: str = "AppIndicator3"
-_version: str = "0.1"
+INDICATOR_SIGNAL_CONNECTION_CHANGED: Final = "connection-changed"
+INDICATOR_SIGNAL_NEW_ATTENTION_ICON: Final = "new-attention-icon"
+INDICATOR_SIGNAL_NEW_ICON: Final = "new-icon"
+INDICATOR_SIGNAL_NEW_ICON_THEME_PATH: Final = "new-icon-theme-path"
+INDICATOR_SIGNAL_NEW_LABEL: Final = "new-label"
+INDICATOR_SIGNAL_NEW_STATUS: Final = "new-status"
+INDICATOR_SIGNAL_SCROLL_EVENT: Final = "scroll-event"
 
 class Indicator(GObject.Object):
     """

@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -7,10 +8,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-WALLPAPER_TARGET_BOTH: int = 0
-_lock = ...  # FIXME Constant
-_namespace: str = "Xdp"
-_version: str = "1.0"
+WALLPAPER_TARGET_BOTH: Final[int]
 
 class Parent(GObject.GBoxed):
     def copy(self) -> Parent: ...

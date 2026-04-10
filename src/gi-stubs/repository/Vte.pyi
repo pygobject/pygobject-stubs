@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -12,17 +13,15 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
 
-MAJOR_VERSION: int = 0
-MICRO_VERSION: int = 0
-MINOR_VERSION: int = 70
-REGEX_FLAGS_DEFAULT: int = 1075314688
-SPAWN_NO_PARENT_ENVV: int = 33554432
-SPAWN_NO_SYSTEMD_SCOPE: int = 67108864
-SPAWN_REQUIRE_SYSTEMD_SCOPE: int = 134217728
-TEST_FLAGS_ALL: int = 18446744073709551615
-TEST_FLAGS_NONE: int = 0
-_namespace: str = "Vte"
-_version: str = "2.91"
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+REGEX_FLAGS_DEFAULT: Final[int]
+SPAWN_NO_PARENT_ENVV: Final[int]
+SPAWN_NO_SYSTEMD_SCOPE: Final[int]
+SPAWN_REQUIRE_SYSTEMD_SCOPE: Final[int]
+TEST_FLAGS_ALL: Final[int]
+TEST_FLAGS_NONE: Final[int]
 
 def get_encoding_supported(encoding: str) -> bool: ...
 def get_encodings(include_aliases: bool) -> list[str]: ...
@@ -196,7 +195,6 @@ class Terminal(_Gtk3.Widget, Atk.ImplementorIface, _Gtk3.Buildable, _Gtk3.Scroll
     def props(self) -> Props: ...
     @property
     def widget(self) -> _Gtk3.Widget: ...
-    _unused_padding: list[None] = ...
     def __init__(
         self,
         allow_bold: bool = ...,
@@ -558,8 +556,6 @@ class TerminalClass(GObject.GPointer):
     def paste_clipboard(self) -> Callable[[Terminal], None]: ...
     @property
     def bell(self) -> Callable[[Terminal], None]: ...
-    _extra_padding: list[None] = ...
-    _padding: list[None] = ...
     @property
     def priv(self) -> TerminalClassPrivate: ...
 

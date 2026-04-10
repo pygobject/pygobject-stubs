@@ -16,136 +16,136 @@ from gi.repository import GLib
 
 T = TypeVar("T")
 
-G_MAXDOUBLE: float = 1.7976931348623157e308
-G_MAXFLOAT: float = 3.4028234663852886e38
-G_MAXINT: int = 2147483647
-G_MAXINT16: int = 32767
-G_MAXINT32: int = 2147483647
-G_MAXINT64: int = 9223372036854775807
-G_MAXINT8: int = 127
-G_MAXLONG: int = 9223372036854775807
-G_MAXOFFSET: int = 9223372036854775807
-G_MAXSHORT: int = 32767
-G_MAXSIZE: int = 18446744073709551615
-G_MAXSSIZE: int = 9223372036854775807
-G_MAXUINT: int = 4294967295
-G_MAXUINT16: int = 65535
-G_MAXUINT32: int = 4294967295
-G_MAXUINT64: int = 18446744073709551615
-G_MAXUINT8: int = 255
-G_MAXULONG: int = 18446744073709551615
-G_MAXUSHORT: int = 65535
-G_MINDOUBLE: float = 2.2250738585072014e-308
-G_MINFLOAT: float = 1.1754943508222875e-38
-G_MININT: int = -2147483648
-G_MININT16: int = -32768
-G_MININT32: int = -2147483648
-G_MININT64: int = -9223372036854775808
-G_MININT8: int = -128
-G_MINLONG: int = -9223372036854775808
-G_MINOFFSET: int = -9223372036854775808
-G_MINSHORT: int = -32768
-G_MINSSIZE: int = -9223372036854775808
-IO_ERR: int = 8
-IO_FLAG_APPEND: int = 1
-IO_FLAG_GET_MASK: int = 31
-IO_FLAG_IS_READABLE: int = 4
-IO_FLAG_IS_SEEKABLE: int = 16
-IO_FLAG_IS_WRITEABLE: int = 8
-IO_FLAG_MASK: int = 31
-IO_FLAG_NONBLOCK: int = 2
-IO_FLAG_SET_MASK: int = 3
-IO_HUP: int = 16
-IO_IN: int = 1
-IO_NVAL: int = 32
-IO_OUT: int = 4
-IO_PRI: int = 2
-IO_STATUS_AGAIN: int = 3
-IO_STATUS_EOF: int = 2
-IO_STATUS_ERROR: int = 0
-IO_STATUS_NORMAL: int = 1
-OPTION_ERROR_BAD_VALUE: int = 1
-OPTION_ERROR_FAILED: int = 2
-OPTION_ERROR_UNKNOWN_OPTION: int = 0
-OPTION_FLAG_FILENAME: int = 16
-OPTION_FLAG_HIDDEN: int = 1
-OPTION_FLAG_IN_MAIN: int = 2
-OPTION_FLAG_NOALIAS: int = 64
-OPTION_FLAG_NO_ARG: int = 8
-OPTION_FLAG_OPTIONAL_ARG: int = 32
-OPTION_FLAG_REVERSE: int = 4
-OPTION_REMAINING: str = ""
-PARAM_CONSTRUCT: int = 4
-PARAM_CONSTRUCT_ONLY: int = 8
-PARAM_LAX_VALIDATION: int = 16
-PARAM_MASK: int = 255
-PARAM_READABLE: int = 1
-PARAM_READWRITE: int = 3
-PARAM_STATIC_STRINGS: int = 224
-PARAM_USER_SHIFT: int = 8
-PARAM_WRITABLE: int = 2
-PRIORITY_DEFAULT: int = 0
-PRIORITY_DEFAULT_IDLE: int = 200
-PRIORITY_HIGH: int = -100
-PRIORITY_HIGH_IDLE: int = 100
-PRIORITY_LOW: int = 300
-SIGNAL_ACTION: int = 32
-SIGNAL_DETAILED: int = 16
-SIGNAL_FLAGS_MASK: int = 511
-SIGNAL_MATCH_MASK: int = 63
-SIGNAL_NO_HOOKS: int = 64
-SIGNAL_NO_RECURSE: int = 8
-SIGNAL_RUN_CLEANUP: int = 4
-SIGNAL_RUN_FIRST: int = 1
-SIGNAL_RUN_LAST: int = 2
-SPAWN_CHILD_INHERITS_STDIN: int = 32
-SPAWN_DO_NOT_REAP_CHILD: int = 2
-SPAWN_FILE_AND_ARGV_ZERO: int = 64
-SPAWN_LEAVE_DESCRIPTORS_OPEN: int = 1
-SPAWN_SEARCH_PATH: int = 4
-SPAWN_STDERR_TO_DEV_NULL: int = 16
-SPAWN_STDOUT_TO_DEV_NULL: int = 8
-TYPE_BOOLEAN: GType = ...
-TYPE_BOXED: GType = ...
-TYPE_CHAR: GType = ...
-TYPE_DOUBLE: GType = ...
-TYPE_ENUM: GType = ...
-TYPE_FLAGS: GType = ...
-TYPE_FLAG_RESERVED_ID_BIT: int = 1
-TYPE_FLOAT: GType = ...
-TYPE_FUNDAMENTAL_MAX: int = 1020
-TYPE_FUNDAMENTAL_SHIFT: int = 2
-TYPE_GSTRING: GType = ...
-TYPE_GTYPE: GType = ...
-TYPE_INT: GType = ...
-TYPE_INT64: GType = ...
-TYPE_INTERFACE: GType = ...
-TYPE_INVALID: GType = ...
-TYPE_LONG: GType = ...
-TYPE_NONE: GType = ...
-TYPE_OBJECT: GType = ...
-TYPE_PARAM: GType = ...
-TYPE_POINTER: GType = ...
-TYPE_PYOBJECT: GType = ...
-TYPE_RESERVED_BSE_FIRST: int = 32
-TYPE_RESERVED_BSE_LAST: int = 48
-TYPE_RESERVED_GLIB_FIRST: int = 22
-TYPE_RESERVED_GLIB_LAST: int = 31
-TYPE_RESERVED_USER_FIRST: int = 49
-TYPE_STRING: GType = ...
-TYPE_STRV: GType = ...
-TYPE_UCHAR: GType = ...
-TYPE_UINT: GType = ...
-TYPE_UINT64: GType = ...
-TYPE_ULONG: GType = ...
-TYPE_UNICHAR: GType = ...
-TYPE_VALUE: GType = ...
-TYPE_VARIANT: GType = ...
-VALUE_COLLECT_FORMAT_MAX_LENGTH: int = 8
-VALUE_INTERNED_STRING: int = 268435456
-VALUE_NOCOPY_CONTENTS: int = 134217728
-features: dict = ...
-glib_version: tuple = ...
+G_MAXDOUBLE: Final[float]
+G_MAXFLOAT: Final[float]
+G_MAXINT: Final[int]
+G_MAXINT16: Final[int]
+G_MAXINT32: Final[int]
+G_MAXINT64: Final[int]
+G_MAXINT8: Final[int]
+G_MAXLONG: Final[int]
+G_MAXOFFSET: Final[int]
+G_MAXSHORT: Final[int]
+G_MAXSIZE: Final[int]
+G_MAXSSIZE: Final[int]
+G_MAXUINT: Final[int]
+G_MAXUINT16: Final[int]
+G_MAXUINT32: Final[int]
+G_MAXUINT64: Final[int]
+G_MAXUINT8: Final[int]
+G_MAXULONG: Final[int]
+G_MAXUSHORT: Final[int]
+G_MINDOUBLE: Final[float]
+G_MINFLOAT: Final[float]
+G_MININT: Final[int]
+G_MININT16: Final[int]
+G_MININT32: Final[int]
+G_MININT64: Final[int]
+G_MININT8: Final[int]
+G_MINLONG: Final[int]
+G_MINOFFSET: Final[int]
+G_MINSHORT: Final[int]
+G_MINSSIZE: Final[int]
+IO_ERR: Final[int]
+IO_FLAG_APPEND: Final[int]
+IO_FLAG_GET_MASK: Final[int]
+IO_FLAG_IS_READABLE: Final[int]
+IO_FLAG_IS_SEEKABLE: Final[int]
+IO_FLAG_IS_WRITEABLE: Final[int]
+IO_FLAG_MASK: Final[int]
+IO_FLAG_NONBLOCK: Final[int]
+IO_FLAG_SET_MASK: Final[int]
+IO_HUP: Final[int]
+IO_IN: Final[int]
+IO_NVAL: Final[int]
+IO_OUT: Final[int]
+IO_PRI: Final[int]
+IO_STATUS_AGAIN: Final[int]
+IO_STATUS_EOF: Final[int]
+IO_STATUS_ERROR: Final[int]
+IO_STATUS_NORMAL: Final[int]
+OPTION_ERROR_BAD_VALUE: Final[int]
+OPTION_ERROR_FAILED: Final[int]
+OPTION_ERROR_UNKNOWN_OPTION: Final[int]
+OPTION_FLAG_FILENAME: Final[int]
+OPTION_FLAG_HIDDEN: Final[int]
+OPTION_FLAG_IN_MAIN: Final[int]
+OPTION_FLAG_NOALIAS: Final[int]
+OPTION_FLAG_NO_ARG: Final[int]
+OPTION_FLAG_OPTIONAL_ARG: Final[int]
+OPTION_FLAG_REVERSE: Final[int]
+OPTION_REMAINING: Final = ""
+PARAM_CONSTRUCT: Final[int]
+PARAM_CONSTRUCT_ONLY: Final[int]
+PARAM_LAX_VALIDATION: Final[int]
+PARAM_MASK: Final[int]
+PARAM_READABLE: Final[int]
+PARAM_READWRITE: Final[int]
+PARAM_STATIC_STRINGS: Final[int]
+PARAM_USER_SHIFT: Final[int]
+PARAM_WRITABLE: Final[int]
+PRIORITY_DEFAULT: Final[int]
+PRIORITY_DEFAULT_IDLE: Final[int]
+PRIORITY_HIGH: Final[int]
+PRIORITY_HIGH_IDLE: Final[int]
+PRIORITY_LOW: Final[int]
+SIGNAL_ACTION: Final[int]
+SIGNAL_DETAILED: Final[int]
+SIGNAL_FLAGS_MASK: Final[int]
+SIGNAL_MATCH_MASK: Final[int]
+SIGNAL_NO_HOOKS: Final[int]
+SIGNAL_NO_RECURSE: Final[int]
+SIGNAL_RUN_CLEANUP: Final[int]
+SIGNAL_RUN_FIRST: Final[int]
+SIGNAL_RUN_LAST: Final[int]
+SPAWN_CHILD_INHERITS_STDIN: Final[int]
+SPAWN_DO_NOT_REAP_CHILD: Final[int]
+SPAWN_FILE_AND_ARGV_ZERO: Final[int]
+SPAWN_LEAVE_DESCRIPTORS_OPEN: Final[int]
+SPAWN_SEARCH_PATH: Final[int]
+SPAWN_STDERR_TO_DEV_NULL: Final[int]
+SPAWN_STDOUT_TO_DEV_NULL: Final[int]
+TYPE_BOOLEAN: Final[GType]
+TYPE_BOXED: Final[GType]
+TYPE_CHAR: Final[GType]
+TYPE_DOUBLE: Final[GType]
+TYPE_ENUM: Final[GType]
+TYPE_FLAGS: Final[GType]
+TYPE_FLAG_RESERVED_ID_BIT: Final[int]
+TYPE_FLOAT: Final[GType]
+TYPE_FUNDAMENTAL_MAX: Final[int]
+TYPE_FUNDAMENTAL_SHIFT: Final[int]
+TYPE_GSTRING: Final[GType]
+TYPE_GTYPE: Final[GType]
+TYPE_INT: Final[GType]
+TYPE_INT64: Final[GType]
+TYPE_INTERFACE: Final[GType]
+TYPE_INVALID: Final[GType]
+TYPE_LONG: Final[GType]
+TYPE_NONE: Final[GType]
+TYPE_OBJECT: Final[GType]
+TYPE_PARAM: Final[GType]
+TYPE_POINTER: Final[GType]
+TYPE_PYOBJECT: Final[GType]
+TYPE_RESERVED_BSE_FIRST: Final[int]
+TYPE_RESERVED_BSE_LAST: Final[int]
+TYPE_RESERVED_GLIB_FIRST: Final[int]
+TYPE_RESERVED_GLIB_LAST: Final[int]
+TYPE_RESERVED_USER_FIRST: Final[int]
+TYPE_STRING: Final[GType]
+TYPE_STRV: Final[GType]
+TYPE_UCHAR: Final[GType]
+TYPE_UINT: Final[GType]
+TYPE_UINT64: Final[GType]
+TYPE_ULONG: Final[GType]
+TYPE_UNICHAR: Final[GType]
+TYPE_VALUE: Final[GType]
+TYPE_VARIANT: Final[GType]
+VALUE_COLLECT_FORMAT_MAX_LENGTH: Final[int]
+VALUE_INTERNED_STRING: Final[int]
+VALUE_NOCOPY_CONTENTS: Final[int]
+features: Final[dict]
+glib_version: Final[tuple]
 # override
 pygobject_version: Final = _gi.pygobject_version
 
@@ -922,8 +922,8 @@ class CClosure(GPointer):
         CClosure()
     """
 
-    closure: Callable[..., Any] = ...
-    callback: None = ...
+    closure: Callable[..., Any]
+    callback: None
     @staticmethod
     def marshal_BOOLEAN__BOXED_BOXED(
         closure: Callable[..., Any],
@@ -1160,8 +1160,8 @@ class Closure(GBoxed):
     def floating(self) -> int: ...
     @_property
     def derivative_flag(self) -> int: ...
-    in_marshal: int = ...
-    is_invalid: int = ...
+    in_marshal: int
+    is_invalid: int
     @_property
     def marshal(
         self,
@@ -1189,8 +1189,8 @@ class ClosureNotifyData(GPointer):
         ClosureNotifyData()
     """
 
-    data: None = ...
-    notify: Callable[[None, Callable[..., Any]], None] = ...
+    data: None
+    notify: Callable[[None, Callable[..., Any]], None]
 
 class Date(GBoxed): ...
 class DateTime(GBoxed): ...
@@ -1205,11 +1205,11 @@ class EnumClass(GPointer):
         EnumClass()
     """
 
-    g_type_class: TypeClass = ...
-    minimum: int = ...
-    maximum: int = ...
-    n_values: int = ...
-    values: list[EnumValue] = ...
+    g_type_class: TypeClass
+    minimum: int
+    maximum: int
+    n_values: int
+    values: list[EnumValue]
 
 class EnumValue(GPointer):
     """
@@ -1220,9 +1220,9 @@ class EnumValue(GPointer):
         EnumValue()
     """
 
-    value: int = ...
-    value_name: str = ...
-    value_nick: str = ...
+    value: int
+    value_name: str
+    value_nick: str
 
 Error = GLib.Error
 
@@ -1235,10 +1235,10 @@ class FlagsClass(GPointer):
         FlagsClass()
     """
 
-    g_type_class: TypeClass = ...
-    mask: int = ...
-    n_values: int = ...
-    values: list[FlagsValue] = ...
+    g_type_class: TypeClass
+    mask: int
+    n_values: int
+    values: list[FlagsValue]
 
 class FlagsValue(GPointer):
     """
@@ -1249,9 +1249,9 @@ class FlagsValue(GPointer):
         FlagsValue()
     """
 
-    value: int = ...
-    value_name: str = ...
-    value_nick: str = ...
+    value: int
+    value_name: str
+    value_nick: str
 
 class Float(float): ...
 
@@ -1340,9 +1340,9 @@ class InterfaceInfo(GPointer):
         InterfaceInfo()
     """
 
-    interface_init: Callable[[TypeInterface, None], None] = ...
-    interface_finalize: Callable[[TypeInterface, None], None] = ...
-    interface_data: None = ...
+    interface_init: Callable[[TypeInterface, None], None]
+    interface_finalize: Callable[[TypeInterface, None], None]
+    interface_data: None
 
 class KeyFile(GBoxed): ...
 
@@ -1478,8 +1478,8 @@ class ObjectConstructParam(GPointer):
         ObjectConstructParam()
     """
 
-    pspec: ParamSpec = ...
-    value: Any = ...
+    pspec: ParamSpec
+    value: Any
 
 OptionContext = GLib.OptionContext
 OptionGroup = GLib.OptionGroup
@@ -1830,11 +1830,11 @@ class ParamSpecTypeInfo(GPointer):
         ParamSpecTypeInfo()
     """
 
-    instance_size: int = ...
-    n_preallocs: int = ...
+    instance_size: int
+    n_preallocs: int
     @_property
     def instance_init(self) -> Callable[[ParamSpec], None]: ...
-    value_type: type[Any] = ...
+    value_type: type[Any]
     @_property
     def finalize(self) -> Callable[[ParamSpec], None]: ...
     @_property
@@ -1966,8 +1966,8 @@ class Parameter(GPointer):
         Parameter()
     """
 
-    name: str = ...
-    value: Any = ...
+    name: str
+    value: Any
 
 class PatternSpec(GBoxed): ...
 
@@ -2043,9 +2043,9 @@ class SignalInvocationHint(GPointer):
         SignalInvocationHint()
     """
 
-    signal_id: int = ...
-    detail: int = ...
-    run_type: SignalFlags = ...
+    signal_id: int
+    detail: int
+    run_type: SignalFlags
 
 # override
 SignalOverride = _SignalOverride
@@ -2059,13 +2059,13 @@ class SignalQuery(GPointer):
         SignalQuery()
     """
 
-    signal_id: int = ...
-    signal_name: str = ...
-    itype: type[Any] = ...
-    signal_flags: SignalFlags = ...
-    return_type: type[Any] = ...
-    n_params: int = ...
-    param_types: list[type[Any]] = ...
+    signal_id: int
+    signal_name: str
+    itype: type[Any]
+    signal_flags: SignalFlags
+    return_type: type[Any]
+    n_params: int
+    param_types: list[type[Any]]
 
 Source = GLib.Source
 
@@ -2120,7 +2120,7 @@ class TypeFundamentalInfo(GPointer):
         TypeFundamentalInfo()
     """
 
-    type_flags: TypeFundamentalFlags = ...
+    type_flags: TypeFundamentalFlags
 
 class TypeInfo(GPointer):
     """
@@ -2131,16 +2131,16 @@ class TypeInfo(GPointer):
         TypeInfo()
     """
 
-    class_size: int = ...
-    base_init: Callable[[TypeClass], None] = ...
-    base_finalize: Callable[[TypeClass], None] = ...
-    class_init: Callable[[TypeClass, None], None] = ...
-    class_finalize: Callable[[TypeClass, None], None] = ...
-    class_data: None = ...
-    instance_size: int = ...
-    n_preallocs: int = ...
-    instance_init: Callable[[TypeInstance, TypeClass], None] = ...
-    value_table: TypeValueTable = ...
+    class_size: int
+    base_init: Callable[[TypeClass], None]
+    base_finalize: Callable[[TypeClass], None]
+    class_init: Callable[[TypeClass, None], None]
+    class_finalize: Callable[[TypeClass, None], None]
+    class_data: None
+    instance_size: int
+    n_preallocs: int
+    instance_init: Callable[[TypeInstance, TypeClass], None]
+    value_table: TypeValueTable
 
 class TypeInstance(GPointer):
     """
@@ -2267,14 +2267,14 @@ class TypePluginClass(GPointer):
     """
     @_property
     def base_iface(self) -> TypeInterface: ...
-    use_plugin: Callable[[TypePlugin], None] = ...
-    unuse_plugin: Callable[[TypePlugin], None] = ...
+    use_plugin: Callable[[TypePlugin], None]
+    unuse_plugin: Callable[[TypePlugin], None]
     complete_type_info: Callable[
         [TypePlugin, type[Any], TypeInfo, TypeValueTable], None
-    ] = ...
+    ]
     complete_interface_info: Callable[
         [TypePlugin, type[Any], type[Any], InterfaceInfo], None
-    ] = ...
+    ]
 
 class TypeQuery(GPointer):
     """
@@ -2285,10 +2285,10 @@ class TypeQuery(GPointer):
         TypeQuery()
     """
 
-    type: type[Any] = ...
-    type_name: str = ...
-    class_size: int = ...
-    instance_size: int = ...
+    type: type[Any]
+    type_name: str
+    class_size: int
+    instance_size: int
 
 class TypeValueTable(GPointer):
     """
@@ -2299,14 +2299,14 @@ class TypeValueTable(GPointer):
         TypeValueTable()
     """
 
-    value_init: Callable[[Any], None] = ...
-    value_free: Callable[[Any], None] = ...
-    value_copy: Callable[[Any], Any] = ...
-    value_peek_pointer: Callable[[Any], None] = ...
-    collect_format: str = ...
-    collect_value: Callable[[Any, Sequence[TypeCValue], int], str | None] = ...
-    lcopy_format: str = ...
-    lcopy_value: Callable[[Any, Sequence[TypeCValue], int], str | None] = ...
+    value_init: Callable[[Any], None]
+    value_free: Callable[[Any], None]
+    value_copy: Callable[[Any], Any]
+    value_peek_pointer: Callable[[Any], None]
+    collect_format: str
+    collect_value: Callable[[Any, Sequence[TypeCValue], int], str | None]
+    lcopy_format: str
+    lcopy_value: Callable[[Any, Sequence[TypeCValue], int], str | None]
 
 class Uri(GBoxed): ...
 
@@ -2320,7 +2320,7 @@ class Value(GBoxed):
     """
     @_property
     def g_type(self) -> type[Any]: ...
-    data: list[_Value__data__union] = ...
+    data: list[_Value__data__union]
     def __init__(
         self, value_type: GType | None = None, py_value: Any | None = None
     ) -> None: ...
@@ -2406,8 +2406,8 @@ class ValueArray(GBoxed):
         new(n_prealloced:int) -> GObject.ValueArray
     """
 
-    n_values: int = ...
-    values: Any = ...
+    n_values: int
+    values: Any
     @_property
     def n_prealloced(self) -> int: ...
     def append(self, value: Any | None = None) -> ValueArray: ...

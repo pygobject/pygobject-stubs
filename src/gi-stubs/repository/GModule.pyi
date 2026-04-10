@@ -1,3 +1,4 @@
+from typing import Final
 from typing import TypeVar
 
 from enum import IntEnum
@@ -7,10 +8,10 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-MODULE_IMPL_AR: int = 7
-MODULE_IMPL_DL: int = 1
-MODULE_IMPL_NONE: int = 0
-MODULE_IMPL_WIN32: int = 3
+MODULE_IMPL_AR: Final[int]
+MODULE_IMPL_DL: Final[int]
+MODULE_IMPL_NONE: Final[int]
+MODULE_IMPL_WIN32: Final[int]
 
 def module_build_path(directory: str | None, module_name: str) -> str: ...
 def module_error() -> str: ...

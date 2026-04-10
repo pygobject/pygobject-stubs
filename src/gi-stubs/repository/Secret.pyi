@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -9,15 +10,12 @@ from gi.repository import GObject
 
 T = TypeVar("T")
 
-BACKEND_EXTENSION_POINT_NAME: str = "secret-backend"
-COLLECTION_DEFAULT: str = "default"
-COLLECTION_SESSION: str = "session"
-MAJOR_VERSION: int = 0
-MICRO_VERSION: int = 7
-MINOR_VERSION: int = 21
-_lock = ...  # FIXME Constant
-_namespace: str = "Secret"
-_version: str = "1"
+BACKEND_EXTENSION_POINT_NAME: Final = "secret-backend"
+COLLECTION_DEFAULT: Final = "default"
+COLLECTION_SESSION: Final = "session"
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
 
 def attributes_validate(schema: Schema, attributes: dict[None, None]) -> bool: ...
 def backend_get(
@@ -688,9 +686,9 @@ class Schema(GObject.GBoxed):
         new(name:str, flags:Secret.SchemaFlags, attribute_names_and_types:dict) -> Secret.Schema
     """
 
-    name: str = ...
-    flags: SchemaFlags = ...
-    attributes: list[SchemaAttribute] = ...
+    name: str
+    flags: SchemaFlags
+    attributes: list[SchemaAttribute]
     @property
     def reserved(self) -> int: ...
     @property
@@ -726,8 +724,8 @@ class SchemaAttribute(GObject.GBoxed):
         SchemaAttribute()
     """
 
-    name: str = ...
-    type: SchemaAttributeType = ...
+    name: str
+    type: SchemaAttributeType
 
 class Service(
     Gio.DBusProxy, Gio.AsyncInitable, Gio.DBusInterface, Gio.Initable, Backend

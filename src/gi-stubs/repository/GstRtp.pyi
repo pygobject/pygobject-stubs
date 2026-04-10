@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -11,58 +12,58 @@ from gi.repository import GstBase
 
 T = TypeVar("T")
 
-RTCP_MAX_BYE_SSRC_COUNT: int = 31
-RTCP_MAX_RB_COUNT: int = 31
-RTCP_MAX_SDES: int = 255
-RTCP_MAX_SDES_ITEM_COUNT: int = 31
-RTCP_REDUCED_SIZE_VALID_MASK: int = 49400
-RTCP_VALID_MASK: int = 57598
-RTCP_VALID_VALUE: int = 32968
-RTCP_VERSION: int = 2
-RTP_HDREXT_BASE: str = "urn:ietf:params:rtp-hdrext:"
-RTP_HDREXT_ELEMENT_CLASS: str = "Network/Extension/RTPHeader"
-RTP_HDREXT_NTP_56: str = "ntp-56"
-RTP_HDREXT_NTP_56_SIZE: int = 7
-RTP_HDREXT_NTP_64: str = "ntp-64"
-RTP_HDREXT_NTP_64_SIZE: int = 8
-RTP_HEADER_EXTENSION_URI_METADATA_KEY: str = "RTP-Header-Extension-URI"
-RTP_PAYLOAD_1016_STRING: str = "1"
-RTP_PAYLOAD_CELLB_STRING: str = "25"
-RTP_PAYLOAD_CN_STRING: str = "13"
-RTP_PAYLOAD_DVI4_11025_STRING: str = "16"
-RTP_PAYLOAD_DVI4_16000_STRING: str = "6"
-RTP_PAYLOAD_DVI4_22050_STRING: str = "17"
-RTP_PAYLOAD_DVI4_8000_STRING: str = "5"
-RTP_PAYLOAD_DYNAMIC_STRING: str = "[96, 127]"
-RTP_PAYLOAD_G721_STRING: str = "2"
-RTP_PAYLOAD_G722_STRING: str = "9"
-RTP_PAYLOAD_G723_53: int = 17
-RTP_PAYLOAD_G723_53_STRING: str = "17"
-RTP_PAYLOAD_G723_63: int = 16
-RTP_PAYLOAD_G723_63_STRING: str = "16"
-RTP_PAYLOAD_G723_STRING: str = "4"
-RTP_PAYLOAD_G728_STRING: str = "15"
-RTP_PAYLOAD_G729_STRING: str = "18"
-RTP_PAYLOAD_GSM_STRING: str = "3"
-RTP_PAYLOAD_H261_STRING: str = "31"
-RTP_PAYLOAD_H263_STRING: str = "34"
-RTP_PAYLOAD_JPEG_STRING: str = "26"
-RTP_PAYLOAD_L16_MONO_STRING: str = "11"
-RTP_PAYLOAD_L16_STEREO_STRING: str = "10"
-RTP_PAYLOAD_LPC_STRING: str = "7"
-RTP_PAYLOAD_MP2T_STRING: str = "33"
-RTP_PAYLOAD_MPA_STRING: str = "14"
-RTP_PAYLOAD_MPV_STRING: str = "32"
-RTP_PAYLOAD_NV_STRING: str = "28"
-RTP_PAYLOAD_PCMA_STRING: str = "8"
-RTP_PAYLOAD_PCMU_STRING: str = "0"
-RTP_PAYLOAD_QCELP_STRING: str = "12"
-RTP_PAYLOAD_TS41: int = 19
-RTP_PAYLOAD_TS41_STRING: str = "19"
-RTP_PAYLOAD_TS48: int = 18
-RTP_PAYLOAD_TS48_STRING: str = "18"
-RTP_SOURCE_META_MAX_CSRC_COUNT: int = 15
-RTP_VERSION: int = 2
+RTCP_MAX_BYE_SSRC_COUNT: Final[int]
+RTCP_MAX_RB_COUNT: Final[int]
+RTCP_MAX_SDES: Final[int]
+RTCP_MAX_SDES_ITEM_COUNT: Final[int]
+RTCP_REDUCED_SIZE_VALID_MASK: Final[int]
+RTCP_VALID_MASK: Final[int]
+RTCP_VALID_VALUE: Final[int]
+RTCP_VERSION: Final[int]
+RTP_HDREXT_BASE: Final = "urn:ietf:params:rtp-hdrext:"
+RTP_HDREXT_ELEMENT_CLASS: Final = "Network/Extension/RTPHeader"
+RTP_HDREXT_NTP_56: Final = "ntp-56"
+RTP_HDREXT_NTP_56_SIZE: Final[int]
+RTP_HDREXT_NTP_64: Final = "ntp-64"
+RTP_HDREXT_NTP_64_SIZE: Final[int]
+RTP_HEADER_EXTENSION_URI_METADATA_KEY: Final = "RTP-Header-Extension-URI"
+RTP_PAYLOAD_1016_STRING: Final = "1"
+RTP_PAYLOAD_CELLB_STRING: Final = "25"
+RTP_PAYLOAD_CN_STRING: Final = "13"
+RTP_PAYLOAD_DVI4_11025_STRING: Final = "16"
+RTP_PAYLOAD_DVI4_16000_STRING: Final = "6"
+RTP_PAYLOAD_DVI4_22050_STRING: Final = "17"
+RTP_PAYLOAD_DVI4_8000_STRING: Final = "5"
+RTP_PAYLOAD_DYNAMIC_STRING: Final = "[96, 127]"
+RTP_PAYLOAD_G721_STRING: Final = "2"
+RTP_PAYLOAD_G722_STRING: Final = "9"
+RTP_PAYLOAD_G723_53: Final[int]
+RTP_PAYLOAD_G723_53_STRING: Final = "17"
+RTP_PAYLOAD_G723_63: Final[int]
+RTP_PAYLOAD_G723_63_STRING: Final = "16"
+RTP_PAYLOAD_G723_STRING: Final = "4"
+RTP_PAYLOAD_G728_STRING: Final = "15"
+RTP_PAYLOAD_G729_STRING: Final = "18"
+RTP_PAYLOAD_GSM_STRING: Final = "3"
+RTP_PAYLOAD_H261_STRING: Final = "31"
+RTP_PAYLOAD_H263_STRING: Final = "34"
+RTP_PAYLOAD_JPEG_STRING: Final = "26"
+RTP_PAYLOAD_L16_MONO_STRING: Final = "11"
+RTP_PAYLOAD_L16_STEREO_STRING: Final = "10"
+RTP_PAYLOAD_LPC_STRING: Final = "7"
+RTP_PAYLOAD_MP2T_STRING: Final = "33"
+RTP_PAYLOAD_MPA_STRING: Final = "14"
+RTP_PAYLOAD_MPV_STRING: Final = "32"
+RTP_PAYLOAD_NV_STRING: Final = "28"
+RTP_PAYLOAD_PCMA_STRING: Final = "8"
+RTP_PAYLOAD_PCMU_STRING: Final = "0"
+RTP_PAYLOAD_QCELP_STRING: Final = "12"
+RTP_PAYLOAD_TS41: Final[int]
+RTP_PAYLOAD_TS41_STRING: Final = "19"
+RTP_PAYLOAD_TS48: Final[int]
+RTP_PAYLOAD_TS48_STRING: Final = "18"
+RTP_SOURCE_META_MAX_CSRC_COUNT: Final[int]
+RTP_VERSION: Final[int]
 
 def buffer_add_rtp_source_meta(
     buffer: Gst.Buffer,
@@ -134,7 +135,7 @@ class RTCPBuffer(GObject.GPointer):
         RTCPBuffer()
     """
 
-    buffer: Gst.Buffer = ...
+    buffer: Gst.Buffer
     def add_packet(self, type: RTCPType, packet: RTCPPacket) -> bool: ...
     def get_first_packet(self, packet: RTCPPacket) -> bool: ...
     def get_packet_count(self) -> int: ...
@@ -165,8 +166,8 @@ class RTCPPacket(GObject.GPointer):
         RTCPPacket()
     """
 
-    rtcp: RTCPBuffer = ...
-    offset: int = ...
+    rtcp: RTCPBuffer
+    offset: int
     @property
     def padding(self) -> bool: ...
     @property
@@ -783,10 +784,10 @@ class RTPBuffer(GObject.GPointer):
         RTPBuffer()
     """
 
-    buffer: Gst.Buffer = ...
-    state: int = ...
-    data: list[None] = ...
-    size: list[int] = ...
+    buffer: Gst.Buffer
+    state: int
+    data: list[None]
+    size: list[int]
     def add_extension_onebyte_header(self, id: int, data: Sequence[int]) -> bool: ...
     def add_extension_twobytes_header(
         self, appbits: int, id: int, data: Sequence[int]
@@ -1012,12 +1013,12 @@ class RTPPayloadInfo(GObject.GPointer):
         RTPPayloadInfo()
     """
 
-    payload_type: int = ...
-    media: str = ...
-    encoding_name: str = ...
-    clock_rate: int = ...
-    encoding_parameters: str = ...
-    bitrate: int = ...
+    payload_type: int
+    media: str
+    encoding_name: str
+    clock_rate: int
+    encoding_parameters: str
+    bitrate: int
     @staticmethod
     def for_name(media: str, encoding_name: str) -> RTPPayloadInfo | None: ...
     @staticmethod
@@ -1032,11 +1033,11 @@ class RTPSourceMeta(GObject.GPointer):
         RTPSourceMeta()
     """
 
-    meta: Gst.Meta = ...
-    ssrc: int = ...
-    ssrc_valid: bool = ...
-    csrc: list[int] = ...
-    csrc_count: int = ...
+    meta: Gst.Meta
+    ssrc: int
+    ssrc_valid: bool
+    csrc: list[int]
+    csrc_count: int
     def append_csrc(self, csrc: Sequence[int]) -> bool: ...
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...

@@ -11,10 +11,6 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Pango
 
-_lock = ...  # FIXME Constant
-_namespace: str = "Handy"
-_version: str = "1"
-
 def ease_out_cubic(t: float) -> float: ...
 def enum_value_row_name(value: EnumValueObject, user_data: None) -> str: ...
 def get_enable_animations(widget: _Gtk3.Widget) -> bool: ...

@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -13,47 +14,53 @@ from gi.repository import GstBase
 
 T = TypeVar("T")
 
-AUDIO_CHANNELS_RANGE: str = "(int) [ 1, max ]"
-AUDIO_CONVERTER_OPT_DITHER_METHOD: str = "GstAudioConverter.dither-method"
-AUDIO_CONVERTER_OPT_DITHER_THRESHOLD: str = "GstAudioConverter.dither-threshold"
-AUDIO_CONVERTER_OPT_MIX_MATRIX: str = "GstAudioConverter.mix-matrix"
-AUDIO_CONVERTER_OPT_NOISE_SHAPING_METHOD: str = "GstAudioConverter.noise-shaping-method"
-AUDIO_CONVERTER_OPT_QUANTIZATION: str = "GstAudioConverter.quantization"
-AUDIO_CONVERTER_OPT_RESAMPLER_METHOD: str = "GstAudioConverter.resampler-method"
-AUDIO_DECODER_MAX_ERRORS: int = -1
-AUDIO_DECODER_SINK_NAME: str = "sink"
-AUDIO_DECODER_SRC_NAME: str = "src"
-AUDIO_DEF_CHANNELS: int = 2
-AUDIO_DEF_FORMAT: str = "S16LE"
-AUDIO_DEF_RATE: int = 44100
-AUDIO_ENCODER_SINK_NAME: str = "sink"
-AUDIO_ENCODER_SRC_NAME: str = "src"
-AUDIO_FORMATS_ALL: str = ...
-AUDIO_FORMAT_LAST: int = 32
-AUDIO_RATE_RANGE: str = "(int) [ 1, max ]"
-AUDIO_RESAMPLER_OPT_CUBIC_B: str = "GstAudioResampler.cubic-b"
-AUDIO_RESAMPLER_OPT_CUBIC_C: str = "GstAudioResampler.cubic-c"
-AUDIO_RESAMPLER_OPT_CUTOFF: str = "GstAudioResampler.cutoff"
-AUDIO_RESAMPLER_OPT_FILTER_INTERPOLATION: str = "GstAudioResampler.filter-interpolation"
-AUDIO_RESAMPLER_OPT_FILTER_MODE: str = "GstAudioResampler.filter-mode"
-AUDIO_RESAMPLER_OPT_FILTER_MODE_THRESHOLD: str = (
+AUDIO_CHANNELS_RANGE: Final = "(int) [ 1, max ]"
+AUDIO_CONVERTER_OPT_DITHER_METHOD: Final = "GstAudioConverter.dither-method"
+AUDIO_CONVERTER_OPT_DITHER_THRESHOLD: Final = "GstAudioConverter.dither-threshold"
+AUDIO_CONVERTER_OPT_MIX_MATRIX: Final = "GstAudioConverter.mix-matrix"
+AUDIO_CONVERTER_OPT_NOISE_SHAPING_METHOD: Final = (
+    "GstAudioConverter.noise-shaping-method"
+)
+AUDIO_CONVERTER_OPT_QUANTIZATION: Final = "GstAudioConverter.quantization"
+AUDIO_CONVERTER_OPT_RESAMPLER_METHOD: Final = "GstAudioConverter.resampler-method"
+AUDIO_DECODER_MAX_ERRORS: Final[int]
+AUDIO_DECODER_SINK_NAME: Final = "sink"
+AUDIO_DECODER_SRC_NAME: Final = "src"
+AUDIO_DEF_CHANNELS: Final[int]
+AUDIO_DEF_FORMAT: Final = "S16LE"
+AUDIO_DEF_RATE: Final[int]
+AUDIO_ENCODER_SINK_NAME: Final = "sink"
+AUDIO_ENCODER_SRC_NAME: Final = "src"
+AUDIO_FORMATS_ALL: Final[str]
+AUDIO_FORMAT_LAST: Final[int]
+AUDIO_RATE_RANGE: Final = "(int) [ 1, max ]"
+AUDIO_RESAMPLER_OPT_CUBIC_B: Final = "GstAudioResampler.cubic-b"
+AUDIO_RESAMPLER_OPT_CUBIC_C: Final = "GstAudioResampler.cubic-c"
+AUDIO_RESAMPLER_OPT_CUTOFF: Final = "GstAudioResampler.cutoff"
+AUDIO_RESAMPLER_OPT_FILTER_INTERPOLATION: Final = (
+    "GstAudioResampler.filter-interpolation"
+)
+AUDIO_RESAMPLER_OPT_FILTER_MODE: Final = "GstAudioResampler.filter-mode"
+AUDIO_RESAMPLER_OPT_FILTER_MODE_THRESHOLD: Final = (
     "GstAudioResampler.filter-mode-threshold"
 )
-AUDIO_RESAMPLER_OPT_FILTER_OVERSAMPLE: str = "GstAudioResampler.filter-oversample"
-AUDIO_RESAMPLER_OPT_MAX_PHASE_ERROR: str = "GstAudioResampler.max-phase-error"
-AUDIO_RESAMPLER_OPT_N_TAPS: str = "GstAudioResampler.n-taps"
-AUDIO_RESAMPLER_OPT_STOP_ATTENUATION: str = "GstAudioResampler.stop-attenutation"
-AUDIO_RESAMPLER_OPT_TRANSITION_BANDWIDTH: str = "GstAudioResampler.transition-bandwidth"
-AUDIO_RESAMPLER_QUALITY_DEFAULT: int = 4
-AUDIO_RESAMPLER_QUALITY_MAX: int = 10
-AUDIO_RESAMPLER_QUALITY_MIN: int = 0
-DSD_FORMATS_ALL: str = "{ DSDU32BE, DSDU16BE, DSDU8, DSDU32LE, DSDU16LE }"
-DSD_MEDIA_TYPE: str = "audio/x-dsd"
-DSD_SILENCE_PATTERN_BYTE: int = 105
-META_TAG_AUDIO_CHANNELS_STR: str = "channels"
-META_TAG_AUDIO_RATE_STR: str = "rate"
-META_TAG_AUDIO_STR: str = "audio"
-META_TAG_DSD_PLANE_OFFSETS_STR: str = "dsdplaneoffsets"
+AUDIO_RESAMPLER_OPT_FILTER_OVERSAMPLE: Final = "GstAudioResampler.filter-oversample"
+AUDIO_RESAMPLER_OPT_MAX_PHASE_ERROR: Final = "GstAudioResampler.max-phase-error"
+AUDIO_RESAMPLER_OPT_N_TAPS: Final = "GstAudioResampler.n-taps"
+AUDIO_RESAMPLER_OPT_STOP_ATTENUATION: Final = "GstAudioResampler.stop-attenutation"
+AUDIO_RESAMPLER_OPT_TRANSITION_BANDWIDTH: Final = (
+    "GstAudioResampler.transition-bandwidth"
+)
+AUDIO_RESAMPLER_QUALITY_DEFAULT: Final[int]
+AUDIO_RESAMPLER_QUALITY_MAX: Final[int]
+AUDIO_RESAMPLER_QUALITY_MIN: Final[int]
+DSD_FORMATS_ALL: Final = "{ DSDU32BE, DSDU16BE, DSDU8, DSDU32LE, DSDU16LE }"
+DSD_MEDIA_TYPE: Final = "audio/x-dsd"
+DSD_SILENCE_PATTERN_BYTE: Final[int]
+META_TAG_AUDIO_CHANNELS_STR: Final = "channels"
+META_TAG_AUDIO_RATE_STR: Final = "rate"
+META_TAG_AUDIO_STR: Final = "audio"
+META_TAG_DSD_PLANE_OFFSETS_STR: Final = "dsdplaneoffsets"
 
 def audio_buffer_clip(
     buffer: Gst.Buffer, segment: Gst.Segment, rate: int, bpf: int
@@ -829,11 +836,11 @@ class AudioBuffer(GObject.GPointer):
         AudioBuffer()
     """
 
-    info: AudioInfo = ...
-    n_samples: int = ...
-    n_planes: int = ...
-    planes: None = ...
-    buffer: Gst.Buffer = ...
+    info: AudioInfo
+    n_samples: int
+    n_planes: int
+    planes: None
+    buffer: Gst.Buffer
     @property
     def map_infos(self) -> Gst.MapInfo: ...
     @property
@@ -975,11 +982,11 @@ class AudioCdSrcTrack(GObject.GPointer):
         AudioCdSrcTrack()
     """
 
-    is_audio: bool = ...
-    num: int = ...
-    start: int = ...
-    end: int = ...
-    tags: Gst.TagList = ...
+    is_audio: bool
+    num: int
+    start: int
+    end: int
+    tags: Gst.TagList
 
 class AudioChannelMixer(GObject.GPointer):
     def free(self) -> None: ...
@@ -995,10 +1002,10 @@ class AudioClippingMeta(GObject.GPointer):
         AudioClippingMeta()
     """
 
-    meta: Gst.Meta = ...
-    format: Gst.Format = ...
-    start: int = ...
-    end: int = ...
+    meta: Gst.Meta
+    format: Gst.Format
+    start: int
+    end: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1329,12 +1336,12 @@ class AudioDownmixMeta(GObject.GPointer):
         AudioDownmixMeta()
     """
 
-    meta: Gst.Meta = ...
-    from_position: AudioChannelPosition = ...
-    to_position: AudioChannelPosition = ...
-    from_channels: int = ...
-    to_channels: int = ...
-    matrix: float = ...
+    meta: Gst.Meta
+    from_position: list[AudioChannelPosition]
+    to_position: list[AudioChannelPosition]
+    from_channels: int
+    to_channels: int
+    matrix: list[float]
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1590,15 +1597,15 @@ class AudioFormatInfo(GObject.GPointer):
         AudioFormatInfo()
     """
 
-    format: AudioFormat = ...
-    name: str = ...
-    description: str = ...
-    flags: AudioFormatFlags = ...
-    endianness: int = ...
-    width: int = ...
-    depth: int = ...
-    silence: bytes = ...
-    unpack_format: AudioFormat = ...
+    format: AudioFormat
+    name: str
+    description: str
+    flags: AudioFormatFlags
+    endianness: int
+    width: int
+    depth: int
+    silence: bytes
+    unpack_format: AudioFormat
     unpack_func: Callable[
         [
             AudioFormatInfo,
@@ -1632,13 +1639,13 @@ class AudioInfo(GObject.GBoxed):
         new_from_caps(caps:Gst.Caps) -> GstAudio.AudioInfo or None
     """
 
-    finfo: AudioFormatInfo = ...
-    flags: AudioFlags = ...
-    layout: AudioLayout = ...
-    rate: int = ...
-    channels: int = ...
-    bpf: int = ...
-    position: list[AudioChannelPosition] = ...
+    finfo: AudioFormatInfo
+    flags: AudioFlags
+    layout: AudioLayout
+    rate: int
+    channels: int
+    bpf: int
+    position: list[AudioChannelPosition]
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def convert(
@@ -1672,9 +1679,9 @@ class AudioLevelMeta(GObject.GPointer):
         AudioLevelMeta()
     """
 
-    meta: Gst.Meta = ...
-    level: int = ...
-    voice_activity: bool = ...
+    meta: Gst.Meta
+    level: int
+    voice_activity: bool
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1687,10 +1694,10 @@ class AudioMeta(GObject.GPointer):
         AudioMeta()
     """
 
-    meta: Gst.Meta = ...
-    info: AudioInfo = ...
-    samples: int = ...
-    offsets: int = ...
+    meta: Gst.Meta
+    info: AudioInfo
+    samples: int
+    offsets: list[int]
     @property
     def priv_offsets_arr(self) -> list[int]: ...
     @staticmethod
@@ -1912,14 +1919,14 @@ class AudioRingBufferSpec(GObject.GPointer):
         AudioRingBufferSpec()
     """
 
-    caps: Gst.Caps = ...
-    type: AudioRingBufferFormatType = ...
-    info: AudioInfo = ...
-    latency_time: int = ...
-    buffer_time: int = ...
-    segsize: int = ...
-    segtotal: int = ...
-    seglatency: int = ...
+    caps: Gst.Caps
+    type: AudioRingBufferFormatType
+    info: AudioInfo
+    latency_time: int
+    buffer_time: int
+    segsize: int
+    segtotal: int
+    seglatency: int
 
 class AudioSink(AudioBaseSink):
     """
@@ -2267,13 +2274,13 @@ class DsdInfo(GObject.GBoxed):
         new_from_caps(caps:Gst.Caps) -> GstAudio.DsdInfo
     """
 
-    format: DsdFormat = ...
-    rate: int = ...
-    channels: int = ...
-    layout: AudioLayout = ...
-    reversed_bytes: bool = ...
-    positions: list[AudioChannelPosition] = ...
-    flags: AudioFlags = ...
+    format: DsdFormat
+    rate: int
+    channels: int
+    layout: AudioLayout
+    reversed_bytes: bool
+    positions: list[AudioChannelPosition]
+    flags: AudioFlags
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def copy(self) -> DsdInfo: ...
@@ -2305,10 +2312,10 @@ class DsdPlaneOffsetMeta(GObject.GPointer):
         DsdPlaneOffsetMeta()
     """
 
-    meta: Gst.Meta = ...
-    num_channels: int = ...
-    num_bytes_per_channel: int = ...
-    offsets: int = ...
+    meta: Gst.Meta
+    num_channels: int
+    num_bytes_per_channel: int
+    offsets: int
     @property
     def priv_offsets_arr(self) -> list[int]: ...
     @staticmethod

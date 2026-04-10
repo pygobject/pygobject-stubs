@@ -17,137 +17,137 @@ T = TypeVar("T")
 ObjectItemType = TypeVar("ObjectItemType", bound=GObject.Object, default=Any)
 ObjectPropsItemType = TypeVar("ObjectPropsItemType", bound=GObject.Object, default=Any)
 
-DBUS_METHOD_INVOCATION_HANDLED: bool = True
-DBUS_METHOD_INVOCATION_UNHANDLED: bool = False
-DEBUG_CONTROLLER_EXTENSION_POINT_NAME: str = "gio-debug-controller"
-DRIVE_IDENTIFIER_KIND_UNIX_DEVICE: str = "unix-device"
-FILE_ATTRIBUTE_ACCESS_CAN_DELETE: str = "access::can-delete"
-FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE: str = "access::can-execute"
-FILE_ATTRIBUTE_ACCESS_CAN_READ: str = "access::can-read"
-FILE_ATTRIBUTE_ACCESS_CAN_RENAME: str = "access::can-rename"
-FILE_ATTRIBUTE_ACCESS_CAN_TRASH: str = "access::can-trash"
-FILE_ATTRIBUTE_ACCESS_CAN_WRITE: str = "access::can-write"
-FILE_ATTRIBUTE_DOS_IS_ARCHIVE: str = "dos::is-archive"
-FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT: str = "dos::is-mountpoint"
-FILE_ATTRIBUTE_DOS_IS_SYSTEM: str = "dos::is-system"
-FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG: str = "dos::reparse-point-tag"
-FILE_ATTRIBUTE_ETAG_VALUE: str = "etag::value"
-FILE_ATTRIBUTE_FILESYSTEM_FREE: str = "filesystem::free"
-FILE_ATTRIBUTE_FILESYSTEM_READONLY: str = "filesystem::readonly"
-FILE_ATTRIBUTE_FILESYSTEM_REMOTE: str = "filesystem::remote"
-FILE_ATTRIBUTE_FILESYSTEM_SIZE: str = "filesystem::size"
-FILE_ATTRIBUTE_FILESYSTEM_TYPE: str = "filesystem::type"
-FILE_ATTRIBUTE_FILESYSTEM_USED: str = "filesystem::used"
-FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW: str = "filesystem::use-preview"
-FILE_ATTRIBUTE_GVFS_BACKEND: str = "gvfs::backend"
-FILE_ATTRIBUTE_ID_FILE: str = "id::file"
-FILE_ATTRIBUTE_ID_FILESYSTEM: str = "id::filesystem"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_EJECT: str = "mountable::can-eject"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_MOUNT: str = "mountable::can-mount"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_POLL: str = "mountable::can-poll"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_START: str = "mountable::can-start"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_START_DEGRADED: str = "mountable::can-start-degraded"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_STOP: str = "mountable::can-stop"
-FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT: str = "mountable::can-unmount"
-FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI: str = "mountable::hal-udi"
-FILE_ATTRIBUTE_MOUNTABLE_IS_MEDIA_CHECK_AUTOMATIC: str = (
+DBUS_METHOD_INVOCATION_HANDLED: Final = True
+DBUS_METHOD_INVOCATION_UNHANDLED: Final = False
+DEBUG_CONTROLLER_EXTENSION_POINT_NAME: Final = "gio-debug-controller"
+DRIVE_IDENTIFIER_KIND_UNIX_DEVICE: Final = "unix-device"
+FILE_ATTRIBUTE_ACCESS_CAN_DELETE: Final = "access::can-delete"
+FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE: Final = "access::can-execute"
+FILE_ATTRIBUTE_ACCESS_CAN_READ: Final = "access::can-read"
+FILE_ATTRIBUTE_ACCESS_CAN_RENAME: Final = "access::can-rename"
+FILE_ATTRIBUTE_ACCESS_CAN_TRASH: Final = "access::can-trash"
+FILE_ATTRIBUTE_ACCESS_CAN_WRITE: Final = "access::can-write"
+FILE_ATTRIBUTE_DOS_IS_ARCHIVE: Final = "dos::is-archive"
+FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT: Final = "dos::is-mountpoint"
+FILE_ATTRIBUTE_DOS_IS_SYSTEM: Final = "dos::is-system"
+FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG: Final = "dos::reparse-point-tag"
+FILE_ATTRIBUTE_ETAG_VALUE: Final = "etag::value"
+FILE_ATTRIBUTE_FILESYSTEM_FREE: Final = "filesystem::free"
+FILE_ATTRIBUTE_FILESYSTEM_READONLY: Final = "filesystem::readonly"
+FILE_ATTRIBUTE_FILESYSTEM_REMOTE: Final = "filesystem::remote"
+FILE_ATTRIBUTE_FILESYSTEM_SIZE: Final = "filesystem::size"
+FILE_ATTRIBUTE_FILESYSTEM_TYPE: Final = "filesystem::type"
+FILE_ATTRIBUTE_FILESYSTEM_USED: Final = "filesystem::used"
+FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW: Final = "filesystem::use-preview"
+FILE_ATTRIBUTE_GVFS_BACKEND: Final = "gvfs::backend"
+FILE_ATTRIBUTE_ID_FILE: Final = "id::file"
+FILE_ATTRIBUTE_ID_FILESYSTEM: Final = "id::filesystem"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_EJECT: Final = "mountable::can-eject"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_MOUNT: Final = "mountable::can-mount"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_POLL: Final = "mountable::can-poll"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_START: Final = "mountable::can-start"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_START_DEGRADED: Final = "mountable::can-start-degraded"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_STOP: Final = "mountable::can-stop"
+FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT: Final = "mountable::can-unmount"
+FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI: Final = "mountable::hal-udi"
+FILE_ATTRIBUTE_MOUNTABLE_IS_MEDIA_CHECK_AUTOMATIC: Final = (
     "mountable::is-media-check-automatic"
 )
-FILE_ATTRIBUTE_MOUNTABLE_START_STOP_TYPE: str = "mountable::start-stop-type"
-FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE: str = "mountable::unix-device"
-FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE: str = "mountable::unix-device-file"
-FILE_ATTRIBUTE_OWNER_GROUP: str = "owner::group"
-FILE_ATTRIBUTE_OWNER_USER: str = "owner::user"
-FILE_ATTRIBUTE_OWNER_USER_REAL: str = "owner::user-real"
-FILE_ATTRIBUTE_PREVIEW_ICON: str = "preview::icon"
-FILE_ATTRIBUTE_RECENT_MODIFIED: str = "recent::modified"
-FILE_ATTRIBUTE_SELINUX_CONTEXT: str = "selinux::context"
-FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE: str = "standard::allocated-size"
-FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE: str = "standard::content-type"
-FILE_ATTRIBUTE_STANDARD_COPY_NAME: str = "standard::copy-name"
-FILE_ATTRIBUTE_STANDARD_DESCRIPTION: str = "standard::description"
-FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME: str = "standard::display-name"
-FILE_ATTRIBUTE_STANDARD_EDIT_NAME: str = "standard::edit-name"
-FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE: str = "standard::fast-content-type"
-FILE_ATTRIBUTE_STANDARD_ICON: str = "standard::icon"
-FILE_ATTRIBUTE_STANDARD_IS_BACKUP: str = "standard::is-backup"
-FILE_ATTRIBUTE_STANDARD_IS_HIDDEN: str = "standard::is-hidden"
-FILE_ATTRIBUTE_STANDARD_IS_SYMLINK: str = "standard::is-symlink"
-FILE_ATTRIBUTE_STANDARD_IS_VIRTUAL: str = "standard::is-virtual"
-FILE_ATTRIBUTE_STANDARD_IS_VOLATILE: str = "standard::is-volatile"
-FILE_ATTRIBUTE_STANDARD_NAME: str = "standard::name"
-FILE_ATTRIBUTE_STANDARD_SIZE: str = "standard::size"
-FILE_ATTRIBUTE_STANDARD_SORT_ORDER: str = "standard::sort-order"
-FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON: str = "standard::symbolic-icon"
-FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET: str = "standard::symlink-target"
-FILE_ATTRIBUTE_STANDARD_TARGET_URI: str = "standard::target-uri"
-FILE_ATTRIBUTE_STANDARD_TYPE: str = "standard::type"
-FILE_ATTRIBUTE_THUMBNAILING_FAILED: str = "thumbnail::failed"
-FILE_ATTRIBUTE_THUMBNAILING_FAILED_LARGE: str = "thumbnail::failed-large"
-FILE_ATTRIBUTE_THUMBNAILING_FAILED_NORMAL: str = "thumbnail::failed-normal"
-FILE_ATTRIBUTE_THUMBNAILING_FAILED_XLARGE: str = "thumbnail::failed-xlarge"
-FILE_ATTRIBUTE_THUMBNAILING_FAILED_XXLARGE: str = "thumbnail::failed-xxlarge"
-FILE_ATTRIBUTE_THUMBNAIL_IS_VALID: str = "thumbnail::is-valid"
-FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_LARGE: str = "thumbnail::is-valid-large"
-FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_NORMAL: str = "thumbnail::is-valid-normal"
-FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XLARGE: str = "thumbnail::is-valid-xlarge"
-FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XXLARGE: str = "thumbnail::is-valid-xxlarge"
-FILE_ATTRIBUTE_THUMBNAIL_PATH: str = "thumbnail::path"
-FILE_ATTRIBUTE_THUMBNAIL_PATH_LARGE: str = "thumbnail::path-large"
-FILE_ATTRIBUTE_THUMBNAIL_PATH_NORMAL: str = "thumbnail::path-normal"
-FILE_ATTRIBUTE_THUMBNAIL_PATH_XLARGE: str = "thumbnail::path-xlarge"
-FILE_ATTRIBUTE_THUMBNAIL_PATH_XXLARGE: str = "thumbnail::path-xxlarge"
-FILE_ATTRIBUTE_TIME_ACCESS: str = "time::access"
-FILE_ATTRIBUTE_TIME_ACCESS_NSEC: str = "time::access-nsec"
-FILE_ATTRIBUTE_TIME_ACCESS_USEC: str = "time::access-usec"
-FILE_ATTRIBUTE_TIME_CHANGED: str = "time::changed"
-FILE_ATTRIBUTE_TIME_CHANGED_NSEC: str = "time::changed-nsec"
-FILE_ATTRIBUTE_TIME_CHANGED_USEC: str = "time::changed-usec"
-FILE_ATTRIBUTE_TIME_CREATED: str = "time::created"
-FILE_ATTRIBUTE_TIME_CREATED_NSEC: str = "time::created-nsec"
-FILE_ATTRIBUTE_TIME_CREATED_USEC: str = "time::created-usec"
-FILE_ATTRIBUTE_TIME_MODIFIED: str = "time::modified"
-FILE_ATTRIBUTE_TIME_MODIFIED_NSEC: str = "time::modified-nsec"
-FILE_ATTRIBUTE_TIME_MODIFIED_USEC: str = "time::modified-usec"
-FILE_ATTRIBUTE_TRASH_DELETION_DATE: str = "trash::deletion-date"
-FILE_ATTRIBUTE_TRASH_ITEM_COUNT: str = "trash::item-count"
-FILE_ATTRIBUTE_TRASH_ORIG_PATH: str = "trash::orig-path"
-FILE_ATTRIBUTE_UNIX_BLOCKS: str = "unix::blocks"
-FILE_ATTRIBUTE_UNIX_BLOCK_SIZE: str = "unix::block-size"
-FILE_ATTRIBUTE_UNIX_DEVICE: str = "unix::device"
-FILE_ATTRIBUTE_UNIX_GID: str = "unix::gid"
-FILE_ATTRIBUTE_UNIX_INODE: str = "unix::inode"
-FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT: str = "unix::is-mountpoint"
-FILE_ATTRIBUTE_UNIX_MODE: str = "unix::mode"
-FILE_ATTRIBUTE_UNIX_NLINK: str = "unix::nlink"
-FILE_ATTRIBUTE_UNIX_RDEV: str = "unix::rdev"
-FILE_ATTRIBUTE_UNIX_UID: str = "unix::uid"
-MEMORY_MONITOR_EXTENSION_POINT_NAME: str = "gio-memory-monitor"
-MENU_ATTRIBUTE_ACTION: str = "action"
-MENU_ATTRIBUTE_ACTION_NAMESPACE: str = "action-namespace"
-MENU_ATTRIBUTE_ICON: str = "icon"
-MENU_ATTRIBUTE_LABEL: str = "label"
-MENU_ATTRIBUTE_TARGET: str = "target"
-MENU_EXPORTER_MAX_SECTION_SIZE: int = 1000
-MENU_LINK_SECTION: str = "section"
-MENU_LINK_SUBMENU: str = "submenu"
-NATIVE_VOLUME_MONITOR_EXTENSION_POINT_NAME: str = "gio-native-volume-monitor"
-NETWORK_MONITOR_EXTENSION_POINT_NAME: str = "gio-network-monitor"
-POWER_PROFILE_MONITOR_EXTENSION_POINT_NAME: str = "gio-power-profile-monitor"
-PROXY_EXTENSION_POINT_NAME: str = "gio-proxy"
-PROXY_RESOLVER_EXTENSION_POINT_NAME: str = "gio-proxy-resolver"
-SETTINGS_BACKEND_EXTENSION_POINT_NAME: str = "gsettings-backend"
-TLS_BACKEND_EXTENSION_POINT_NAME: str = "gio-tls-backend"
-TLS_DATABASE_PURPOSE_AUTHENTICATE_CLIENT: str = "1.3.6.1.5.5.7.3.2"
-TLS_DATABASE_PURPOSE_AUTHENTICATE_SERVER: str = "1.3.6.1.5.5.7.3.1"
-VFS_EXTENSION_POINT_NAME: str = "gio-vfs"
-VOLUME_IDENTIFIER_KIND_CLASS: str = "class"
-VOLUME_IDENTIFIER_KIND_HAL_UDI: str = "hal-udi"
-VOLUME_IDENTIFIER_KIND_LABEL: str = "label"
-VOLUME_IDENTIFIER_KIND_NFS_MOUNT: str = "nfs-mount"
-VOLUME_IDENTIFIER_KIND_UNIX_DEVICE: str = "unix-device"
-VOLUME_IDENTIFIER_KIND_UUID: str = "uuid"
-VOLUME_MONITOR_EXTENSION_POINT_NAME: str = "gio-volume-monitor"
+FILE_ATTRIBUTE_MOUNTABLE_START_STOP_TYPE: Final = "mountable::start-stop-type"
+FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE: Final = "mountable::unix-device"
+FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE: Final = "mountable::unix-device-file"
+FILE_ATTRIBUTE_OWNER_GROUP: Final = "owner::group"
+FILE_ATTRIBUTE_OWNER_USER: Final = "owner::user"
+FILE_ATTRIBUTE_OWNER_USER_REAL: Final = "owner::user-real"
+FILE_ATTRIBUTE_PREVIEW_ICON: Final = "preview::icon"
+FILE_ATTRIBUTE_RECENT_MODIFIED: Final = "recent::modified"
+FILE_ATTRIBUTE_SELINUX_CONTEXT: Final = "selinux::context"
+FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE: Final = "standard::allocated-size"
+FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE: Final = "standard::content-type"
+FILE_ATTRIBUTE_STANDARD_COPY_NAME: Final = "standard::copy-name"
+FILE_ATTRIBUTE_STANDARD_DESCRIPTION: Final = "standard::description"
+FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME: Final = "standard::display-name"
+FILE_ATTRIBUTE_STANDARD_EDIT_NAME: Final = "standard::edit-name"
+FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE: Final = "standard::fast-content-type"
+FILE_ATTRIBUTE_STANDARD_ICON: Final = "standard::icon"
+FILE_ATTRIBUTE_STANDARD_IS_BACKUP: Final = "standard::is-backup"
+FILE_ATTRIBUTE_STANDARD_IS_HIDDEN: Final = "standard::is-hidden"
+FILE_ATTRIBUTE_STANDARD_IS_SYMLINK: Final = "standard::is-symlink"
+FILE_ATTRIBUTE_STANDARD_IS_VIRTUAL: Final = "standard::is-virtual"
+FILE_ATTRIBUTE_STANDARD_IS_VOLATILE: Final = "standard::is-volatile"
+FILE_ATTRIBUTE_STANDARD_NAME: Final = "standard::name"
+FILE_ATTRIBUTE_STANDARD_SIZE: Final = "standard::size"
+FILE_ATTRIBUTE_STANDARD_SORT_ORDER: Final = "standard::sort-order"
+FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON: Final = "standard::symbolic-icon"
+FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET: Final = "standard::symlink-target"
+FILE_ATTRIBUTE_STANDARD_TARGET_URI: Final = "standard::target-uri"
+FILE_ATTRIBUTE_STANDARD_TYPE: Final = "standard::type"
+FILE_ATTRIBUTE_THUMBNAILING_FAILED: Final = "thumbnail::failed"
+FILE_ATTRIBUTE_THUMBNAILING_FAILED_LARGE: Final = "thumbnail::failed-large"
+FILE_ATTRIBUTE_THUMBNAILING_FAILED_NORMAL: Final = "thumbnail::failed-normal"
+FILE_ATTRIBUTE_THUMBNAILING_FAILED_XLARGE: Final = "thumbnail::failed-xlarge"
+FILE_ATTRIBUTE_THUMBNAILING_FAILED_XXLARGE: Final = "thumbnail::failed-xxlarge"
+FILE_ATTRIBUTE_THUMBNAIL_IS_VALID: Final = "thumbnail::is-valid"
+FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_LARGE: Final = "thumbnail::is-valid-large"
+FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_NORMAL: Final = "thumbnail::is-valid-normal"
+FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XLARGE: Final = "thumbnail::is-valid-xlarge"
+FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XXLARGE: Final = "thumbnail::is-valid-xxlarge"
+FILE_ATTRIBUTE_THUMBNAIL_PATH: Final = "thumbnail::path"
+FILE_ATTRIBUTE_THUMBNAIL_PATH_LARGE: Final = "thumbnail::path-large"
+FILE_ATTRIBUTE_THUMBNAIL_PATH_NORMAL: Final = "thumbnail::path-normal"
+FILE_ATTRIBUTE_THUMBNAIL_PATH_XLARGE: Final = "thumbnail::path-xlarge"
+FILE_ATTRIBUTE_THUMBNAIL_PATH_XXLARGE: Final = "thumbnail::path-xxlarge"
+FILE_ATTRIBUTE_TIME_ACCESS: Final = "time::access"
+FILE_ATTRIBUTE_TIME_ACCESS_NSEC: Final = "time::access-nsec"
+FILE_ATTRIBUTE_TIME_ACCESS_USEC: Final = "time::access-usec"
+FILE_ATTRIBUTE_TIME_CHANGED: Final = "time::changed"
+FILE_ATTRIBUTE_TIME_CHANGED_NSEC: Final = "time::changed-nsec"
+FILE_ATTRIBUTE_TIME_CHANGED_USEC: Final = "time::changed-usec"
+FILE_ATTRIBUTE_TIME_CREATED: Final = "time::created"
+FILE_ATTRIBUTE_TIME_CREATED_NSEC: Final = "time::created-nsec"
+FILE_ATTRIBUTE_TIME_CREATED_USEC: Final = "time::created-usec"
+FILE_ATTRIBUTE_TIME_MODIFIED: Final = "time::modified"
+FILE_ATTRIBUTE_TIME_MODIFIED_NSEC: Final = "time::modified-nsec"
+FILE_ATTRIBUTE_TIME_MODIFIED_USEC: Final = "time::modified-usec"
+FILE_ATTRIBUTE_TRASH_DELETION_DATE: Final = "trash::deletion-date"
+FILE_ATTRIBUTE_TRASH_ITEM_COUNT: Final = "trash::item-count"
+FILE_ATTRIBUTE_TRASH_ORIG_PATH: Final = "trash::orig-path"
+FILE_ATTRIBUTE_UNIX_BLOCKS: Final = "unix::blocks"
+FILE_ATTRIBUTE_UNIX_BLOCK_SIZE: Final = "unix::block-size"
+FILE_ATTRIBUTE_UNIX_DEVICE: Final = "unix::device"
+FILE_ATTRIBUTE_UNIX_GID: Final = "unix::gid"
+FILE_ATTRIBUTE_UNIX_INODE: Final = "unix::inode"
+FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT: Final = "unix::is-mountpoint"
+FILE_ATTRIBUTE_UNIX_MODE: Final = "unix::mode"
+FILE_ATTRIBUTE_UNIX_NLINK: Final = "unix::nlink"
+FILE_ATTRIBUTE_UNIX_RDEV: Final = "unix::rdev"
+FILE_ATTRIBUTE_UNIX_UID: Final = "unix::uid"
+MEMORY_MONITOR_EXTENSION_POINT_NAME: Final = "gio-memory-monitor"
+MENU_ATTRIBUTE_ACTION: Final = "action"
+MENU_ATTRIBUTE_ACTION_NAMESPACE: Final = "action-namespace"
+MENU_ATTRIBUTE_ICON: Final = "icon"
+MENU_ATTRIBUTE_LABEL: Final = "label"
+MENU_ATTRIBUTE_TARGET: Final = "target"
+MENU_EXPORTER_MAX_SECTION_SIZE: Final[int]
+MENU_LINK_SECTION: Final = "section"
+MENU_LINK_SUBMENU: Final = "submenu"
+NATIVE_VOLUME_MONITOR_EXTENSION_POINT_NAME: Final = "gio-native-volume-monitor"
+NETWORK_MONITOR_EXTENSION_POINT_NAME: Final = "gio-network-monitor"
+POWER_PROFILE_MONITOR_EXTENSION_POINT_NAME: Final = "gio-power-profile-monitor"
+PROXY_EXTENSION_POINT_NAME: Final = "gio-proxy"
+PROXY_RESOLVER_EXTENSION_POINT_NAME: Final = "gio-proxy-resolver"
+SETTINGS_BACKEND_EXTENSION_POINT_NAME: Final = "gsettings-backend"
+TLS_BACKEND_EXTENSION_POINT_NAME: Final = "gio-tls-backend"
+TLS_DATABASE_PURPOSE_AUTHENTICATE_CLIENT: Final = "1.3.6.1.5.5.7.3.2"
+TLS_DATABASE_PURPOSE_AUTHENTICATE_SERVER: Final = "1.3.6.1.5.5.7.3.1"
+VFS_EXTENSION_POINT_NAME: Final = "gio-vfs"
+VOLUME_IDENTIFIER_KIND_CLASS: Final = "class"
+VOLUME_IDENTIFIER_KIND_HAL_UDI: Final = "hal-udi"
+VOLUME_IDENTIFIER_KIND_LABEL: Final = "label"
+VOLUME_IDENTIFIER_KIND_NFS_MOUNT: Final = "nfs-mount"
+VOLUME_IDENTIFIER_KIND_UNIX_DEVICE: Final = "unix-device"
+VOLUME_IDENTIFIER_KIND_UUID: Final = "uuid"
+VOLUME_MONITOR_EXTENSION_POINT_NAME: Final = "gio-volume-monitor"
 
 def action_name_is_valid(action_name: str) -> bool: ...
 def action_parse_detailed_name(
@@ -506,11 +506,11 @@ class ActionEntry(GObject.GPointer):
         ActionEntry()
     """
 
-    name: str = ...
+    name: str
     @property
     def activate(self) -> Callable[..., None]: ...
-    parameter_type: str = ...
-    state: str = ...
+    parameter_type: str
+    state: str
     @property
     def change_state(self) -> Callable[..., None]: ...
     @property
@@ -1804,10 +1804,10 @@ class DBusAnnotationInfo(GObject.GBoxed):
         DBusAnnotationInfo()
     """
 
-    ref_count: int = ...
-    key: str = ...
-    value: str = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    key: str
+    value: str
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -1827,10 +1827,10 @@ class DBusArgInfo(GObject.GBoxed):
         DBusArgInfo()
     """
 
-    ref_count: int = ...
-    name: str = ...
-    signature: str = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    name: str
+    signature: str
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -2133,8 +2133,8 @@ class DBusErrorEntry(GObject.GPointer):
         DBusErrorEntry()
     """
 
-    error_code: int = ...
-    dbus_error_name: str = ...
+    error_code: int
+    dbus_error_name: str
 
 class DBusInterface(GObject.GInterface):
     """
@@ -2175,12 +2175,12 @@ class DBusInterfaceInfo(GObject.GBoxed):
         DBusInterfaceInfo()
     """
 
-    ref_count: int = ...
-    name: str = ...
-    methods: list[DBusMethodInfo] = ...
-    signals: list[DBusSignalInfo] = ...
-    properties: list[DBusPropertyInfo] = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    name: str
+    methods: list[DBusMethodInfo]
+    signals: list[DBusSignalInfo]
+    properties: list[DBusPropertyInfo]
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -2281,9 +2281,9 @@ class DBusInterfaceVTable(GObject.GPointer):
         DBusInterfaceVTable()
     """
 
-    method_call: Callable[..., None] = ...
-    get_property: Callable[..., GLib.Variant] = ...
-    set_property: Callable[..., bool] = ...
+    method_call: Callable[..., None]
+    get_property: Callable[..., GLib.Variant]
+    set_property: Callable[..., bool]
     @property
     def padding(self) -> list[None]: ...
 
@@ -2406,11 +2406,11 @@ class DBusMethodInfo(GObject.GBoxed):
         DBusMethodInfo()
     """
 
-    ref_count: int = ...
-    name: str = ...
-    in_args: list[DBusArgInfo] = ...
-    out_args: list[DBusArgInfo] = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    name: str
+    in_args: list[DBusArgInfo]
+    out_args: list[DBusArgInfo]
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -2457,11 +2457,11 @@ class DBusNodeInfo(GObject.GBoxed):
         new_for_xml(xml_data:str) -> Gio.DBusNodeInfo
     """
 
-    ref_count: int = ...
-    path: str = ...
-    interfaces: list[DBusInterfaceInfo] = ...
-    nodes: list[DBusNodeInfo] = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    path: str
+    interfaces: list[DBusInterfaceInfo]
+    nodes: list[DBusNodeInfo]
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -2906,11 +2906,11 @@ class DBusPropertyInfo(GObject.GBoxed):
         DBusPropertyInfo()
     """
 
-    ref_count: int = ...
-    name: str = ...
-    signature: str = ...
-    flags: DBusPropertyInfoFlags = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    name: str
+    signature: str
+    flags: DBusPropertyInfoFlags
+    annotations: list[DBusAnnotationInfo]
     def ref(self) -> DBusPropertyInfo: ...
     def unref(self) -> None: ...
 
@@ -3257,10 +3257,10 @@ class DBusSignalInfo(GObject.GBoxed):
         DBusSignalInfo()
     """
 
-    ref_count: int = ...
-    name: str = ...
-    args: list[DBusArgInfo] = ...
-    annotations: list[DBusAnnotationInfo] = ...
+    ref_count: int
+    name: str
+    args: list[DBusArgInfo]
+    annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
@@ -3276,9 +3276,9 @@ class DBusSubtreeVTable(GObject.GPointer):
         DBusSubtreeVTable()
     """
 
-    enumerate: Callable[..., list[str]] = ...
-    introspect: Callable[..., list[DBusInterfaceInfo] | None] = ...
-    dispatch: Callable[..., DBusInterfaceVTable | None] = ...
+    enumerate: Callable[..., list[str]]
+    introspect: Callable[..., list[DBusInterfaceInfo] | None]
+    dispatch: Callable[..., DBusInterfaceVTable | None]
     @property
     def padding(self) -> list[None]: ...
 
@@ -4544,9 +4544,9 @@ class FileAttributeInfo(GObject.GPointer):
         FileAttributeInfo()
     """
 
-    name: str = ...
-    type: FileAttributeType = ...
-    flags: FileAttributeInfoFlags = ...
+    name: str
+    type: FileAttributeType
+    flags: FileAttributeInfoFlags
 
 class FileAttributeInfoList(GObject.GBoxed):
     """
@@ -4558,8 +4558,8 @@ class FileAttributeInfoList(GObject.GBoxed):
         new() -> Gio.FileAttributeInfoList
     """
 
-    infos: FileAttributeInfo = ...
-    n_infos: int = ...
+    infos: FileAttributeInfo
+    n_infos: int
     @staticmethod
     def __new__(cls: type[Self]) -> Self: ...
     def add(
@@ -6066,13 +6066,13 @@ class InputMessage(GObject.GPointer):
         InputMessage()
     """
 
-    address: SocketAddress = ...
-    vectors: list[InputVector] = ...
-    num_vectors: int = ...
-    bytes_received: int = ...
-    flags: int = ...
-    control_messages: list[SocketControlMessage] = ...
-    num_control_messages: int = ...
+    address: SocketAddress
+    vectors: list[InputVector]
+    num_vectors: int
+    bytes_received: int
+    flags: int
+    control_messages: list[SocketControlMessage]
+    num_control_messages: int
 
 class InputStream(GObject.Object):
     """
@@ -6219,8 +6219,8 @@ class InputVector(GObject.GPointer):
         InputVector()
     """
 
-    buffer: None = ...
-    size: int = ...
+    buffer: None
+    size: int
 
 # override
 class ListModel(GObject.GInterface, Generic[ObjectItemType]):
@@ -7349,12 +7349,12 @@ class OutputMessage(GObject.GPointer):
         OutputMessage()
     """
 
-    address: SocketAddress = ...
-    vectors: OutputVector = ...
-    num_vectors: int = ...
-    bytes_sent: int = ...
-    control_messages: list[SocketControlMessage] = ...
-    num_control_messages: int = ...
+    address: SocketAddress
+    vectors: OutputVector
+    num_vectors: int
+    bytes_sent: int
+    control_messages: list[SocketControlMessage]
+    num_control_messages: int
 
 class OutputStream(GObject.Object):
     """
@@ -7597,8 +7597,8 @@ class OutputVector(GObject.GPointer):
         OutputVector()
     """
 
-    buffer: None = ...
-    size: int = ...
+    buffer: None
+    size: int
 
 class Permission(GObject.Object):
     """

@@ -10,10 +10,6 @@ from gi.repository import Pango
 T = TypeVar("T")
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
-_lock = ...  # FIXME Constant
-_namespace: str = "PangoCairo"
-_version: str = "1.0"
-
 def context_get_font_options(
     context: Pango.Context,
 ) -> cairo.FontOptions | None: ...

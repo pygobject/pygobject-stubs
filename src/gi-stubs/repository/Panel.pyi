@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -10,17 +11,14 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-MAJOR_VERSION: int = 1
-MICRO_VERSION: int = 1
-MINOR_VERSION: int = 4
-VERSION_S: str = "1.4.1"
-WIDGET_KIND_ANY: str = "*"
-WIDGET_KIND_DOCUMENT: str = "document"
-WIDGET_KIND_UNKNOWN: str = "unknown"
-WIDGET_KIND_UTILITY: str = "utility"
-_lock = ...  # FIXME Constant
-_namespace: str = "Panel"
-_version: str = "1"
+MAJOR_VERSION: Final[int]
+MICRO_VERSION: Final[int]
+MINOR_VERSION: Final[int]
+VERSION_S: Final = "1.10.4"
+WIDGET_KIND_ANY: Final = "*"
+WIDGET_KIND_DOCUMENT: Final = "document"
+WIDGET_KIND_UNKNOWN: Final = "unknown"
+WIDGET_KIND_UTILITY: Final = "utility"
 
 def check_version(major: int, minor: int, micro: int) -> bool: ...
 def finalize() -> None: ...
@@ -4220,7 +4218,6 @@ class WorkspaceClass(GObject.GPointer):
     """
     @property
     def parent_class(self) -> Adw.ApplicationWindowClass: ...
-    _reserved: list[None] = ...
     def install_action(
         self,
         action_name: str,
