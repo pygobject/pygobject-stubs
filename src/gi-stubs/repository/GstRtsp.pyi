@@ -6,6 +6,7 @@ from typing import TypeVar
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -20,9 +21,7 @@ def rtsp_auth_credentials_free(credentials: RTSPAuthCredential) -> None: ...
 def rtsp_connection_accept(
     socket: Gio.Socket, cancellable: Gio.Cancellable | None = None
 ) -> tuple[RTSPResult, RTSPConnection]: ...
-def rtsp_connection_create(
-    url: RTSPUrl,
-) -> tuple[RTSPResult, RTSPConnection]: ...
+def rtsp_connection_create(url: RTSPUrl) -> tuple[RTSPResult, RTSPConnection]: ...
 def rtsp_connection_create_from_socket(
     socket: Gio.Socket, ip: str, port: int, initial_buffer: str
 ) -> tuple[RTSPResult, RTSPConnection]: ...
@@ -48,9 +47,7 @@ def rtsp_message_new_request(
     method: RTSPMethod, uri: str
 ) -> tuple[RTSPResult, RTSPMessage]: ...
 def rtsp_message_new_response(
-    code: RTSPStatusCode,
-    reason: str | None = None,
-    request: RTSPMessage | None = None,
+    code: RTSPStatusCode, reason: str | None = None, request: RTSPMessage | None = None
 ) -> tuple[RTSPResult, RTSPMessage]: ...
 def rtsp_method_as_text(method: RTSPMethod) -> str | None: ...
 def rtsp_options_as_text(options: RTSPMethod) -> str: ...
@@ -99,7 +96,7 @@ class RTSPAuthParam(GObject.GBoxed):
     def copy(self) -> RTSPAuthParam: ...
     def free(self) -> None: ...
 
-class RTSPConnection(GObject.GPointer):
+class RTSPConnection(_gi.Struct):
     @staticmethod
     def accept(
         socket: Gio.Socket, cancellable: Gio.Cancellable | None = None
@@ -195,7 +192,7 @@ class RTSPExtension(GObject.GInterface, Protocol):
     def setup_media(self, media: GstSdp.SDPMedia) -> RTSPResult: ...
     def stream_select(self, url: RTSPUrl) -> RTSPResult: ...
 
-class RTSPExtensionInterface(GObject.GPointer):
+class RTSPExtensionInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -279,12 +276,8 @@ class RTSPMessage(GObject.GBoxed):
         self, field: RTSPHeaderField
     ) -> list[RTSPAuthCredential]: ...
     def parse_data(self) -> tuple[RTSPResult, int]: ...
-    def parse_request(
-        self,
-    ) -> tuple[RTSPResult, RTSPMethod, str, RTSPVersion]: ...
-    def parse_response(
-        self,
-    ) -> tuple[RTSPResult, RTSPStatusCode, str, RTSPVersion]: ...
+    def parse_request(self) -> tuple[RTSPResult, RTSPMethod, str, RTSPVersion]: ...
+    def parse_response(self) -> tuple[RTSPResult, RTSPStatusCode, str, RTSPVersion]: ...
     def remove_header(self, field: RTSPHeaderField, indx: int) -> RTSPResult: ...
     def remove_header_by_name(self, header: str, index: int) -> RTSPResult: ...
     def set_body(self, data: Sequence[int]) -> RTSPResult: ...
@@ -297,7 +290,7 @@ class RTSPMessage(GObject.GBoxed):
     def take_header_by_name(self, header: str, value: str) -> RTSPResult: ...
     def unset(self) -> RTSPResult: ...
 
-class RTSPRange(GObject.GPointer):
+class RTSPRange(_gi.Struct):
     """
     :Constructors:
 
@@ -319,7 +312,7 @@ class RTSPRange(GObject.GPointer):
     @staticmethod
     def to_string(range: RTSPTimeRange) -> str: ...
 
-class RTSPTime(GObject.GPointer):
+class RTSPTime(_gi.Struct):
     """
     :Constructors:
 
@@ -331,7 +324,7 @@ class RTSPTime(GObject.GPointer):
     type: RTSPTimeType
     seconds: float
 
-class RTSPTime2(GObject.GPointer):
+class RTSPTime2(_gi.Struct):
     """
     :Constructors:
 
@@ -345,7 +338,7 @@ class RTSPTime2(GObject.GPointer):
     month: int
     day: int
 
-class RTSPTimeRange(GObject.GPointer):
+class RTSPTimeRange(_gi.Struct):
     """
     :Constructors:
 
@@ -360,7 +353,7 @@ class RTSPTimeRange(GObject.GPointer):
     min2: RTSPTime2
     max2: RTSPTime2
 
-class RTSPTransport(GObject.GPointer):
+class RTSPTransport(_gi.Struct):
     """
     :Constructors:
 
@@ -425,7 +418,7 @@ class RTSPUrl(GObject.GBoxed):
     def parse(urlstr: str) -> tuple[RTSPResult, RTSPUrl]: ...
     def set_port(self, port: int) -> RTSPResult: ...
 
-class RTSPWatch(GObject.GPointer):
+class RTSPWatch(_gi.Struct):
     def attach(self, context: GLib.MainContext | None = None) -> int: ...
     def get_send_backlog(self) -> tuple[int, int]: ...
     def reset(self) -> None: ...
@@ -440,7 +433,7 @@ class RTSPWatch(GObject.GPointer):
     def wait_backlog_usec(self, timeout: int) -> RTSPResult: ...
     def write_data(self, data: Sequence[int]) -> tuple[RTSPResult, int]: ...
 
-class RTSPWatchFuncs(GObject.GPointer):
+class RTSPWatchFuncs(_gi.Struct):
     """
     :Constructors:
 

@@ -5,6 +5,7 @@ from typing import TypeVar
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
@@ -66,13 +67,9 @@ RTP_SOURCE_META_MAX_CSRC_COUNT: Final[int]
 RTP_VERSION: Final[int]
 
 def buffer_add_rtp_source_meta(
-    buffer: Gst.Buffer,
-    ssrc: int | None = None,
-    csrc: Sequence[int] | None = None,
+    buffer: Gst.Buffer, ssrc: int | None = None, csrc: Sequence[int] | None = None
 ) -> RTPSourceMeta: ...
-def buffer_get_rtp_source_meta(
-    buffer: Gst.Buffer,
-) -> RTPSourceMeta | None: ...
+def buffer_get_rtp_source_meta(buffer: Gst.Buffer) -> RTPSourceMeta | None: ...
 def rtcp_buffer_map(
     buffer: Gst.Buffer, flags: Gst.MapFlags, rtcp: RTCPBuffer
 ) -> bool: ...
@@ -126,7 +123,7 @@ def rtp_payload_info_for_pt(payload_type: int) -> RTPPayloadInfo | None: ...
 def rtp_source_meta_api_get_type() -> type[Any]: ...
 def rtp_source_meta_get_info() -> Gst.MetaInfo: ...
 
-class RTCPBuffer(GObject.GPointer):
+class RTCPBuffer(_gi.Struct):
     """
     :Constructors:
 
@@ -157,7 +154,7 @@ class RTCPBuffer(GObject.GPointer):
     @staticmethod
     def validate_reduced(buffer: Gst.Buffer) -> bool: ...
 
-class RTCPPacket(GObject.GPointer):
+class RTCPPacket(_gi.Struct):
     """
     :Constructors:
 
@@ -441,7 +438,7 @@ class RTPBaseAudioPayload(RTPBasePayload):
     def set_sample_options(self, sample_size: int) -> None: ...
     def set_samplebits_options(self, sample_size: int) -> None: ...
 
-class RTPBaseAudioPayloadClass(GObject.GPointer):
+class RTPBaseAudioPayloadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -452,7 +449,7 @@ class RTPBaseAudioPayloadClass(GObject.GPointer):
     @property
     def parent_class(self) -> RTPBasePayloadClass: ...
 
-class RTPBaseAudioPayloadPrivate(GObject.GPointer): ...
+class RTPBaseAudioPayloadPrivate(_gi.Struct): ...
 
 class RTPBaseDepayload(Gst.Element):
     """
@@ -547,7 +544,7 @@ class RTPBaseDepayload(Gst.Element):
     def set_aggregate_hdrext_enabled(self, enable: bool) -> None: ...
     def set_source_info_enabled(self, enable: bool) -> None: ...
 
-class RTPBaseDepayloadClass(GObject.GPointer):
+class RTPBaseDepayloadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -570,7 +567,7 @@ class RTPBaseDepayloadClass(GObject.GPointer):
         self,
     ) -> Callable[[RTPBaseDepayload, RTPBuffer], Gst.Buffer]: ...
 
-class RTPBaseDepayloadPrivate(GObject.GPointer): ...
+class RTPBaseDepayloadPrivate(_gi.Struct): ...
 
 class RTPBasePayload(Gst.Element):
     """
@@ -748,7 +745,7 @@ class RTPBasePayload(Gst.Element):
     def set_outcaps_structure(self, s: Gst.Structure | None = None) -> bool: ...
     def set_source_info_enabled(self, enable: bool) -> None: ...
 
-class RTPBasePayloadClass(GObject.GPointer):
+class RTPBasePayloadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -773,9 +770,9 @@ class RTPBasePayloadClass(GObject.GPointer):
     @property
     def query(self) -> Callable[[RTPBasePayload, Gst.Pad, Gst.Query], bool]: ...
 
-class RTPBasePayloadPrivate(GObject.GPointer): ...
+class RTPBasePayloadPrivate(_gi.Struct): ...
 
-class RTPBuffer(GObject.GPointer):
+class RTPBuffer(_gi.Struct):
     """
     :Constructors:
 
@@ -951,7 +948,7 @@ class RTPHeaderExtension(Gst.Element):
         data: Sequence[int],
     ) -> int: ...
 
-class RTPHeaderExtensionClass(GObject.GPointer):
+class RTPHeaderExtensionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1004,7 +1001,7 @@ class RTPHeaderExtensionClass(GObject.GPointer):
     ) -> Callable[[RTPHeaderExtension, Gst.Caps], bool]: ...
     def set_uri(self, uri: str) -> None: ...
 
-class RTPPayloadInfo(GObject.GPointer):
+class RTPPayloadInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1024,7 +1021,7 @@ class RTPPayloadInfo(GObject.GPointer):
     @staticmethod
     def for_pt(payload_type: int) -> RTPPayloadInfo | None: ...
 
-class RTPSourceMeta(GObject.GPointer):
+class RTPSourceMeta(_gi.Struct):
     """
     :Constructors:
 
