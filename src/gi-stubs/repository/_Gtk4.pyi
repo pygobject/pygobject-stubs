@@ -3539,12 +3539,10 @@ class Builder(GObject.Object):
 
     @property
     def props(self) -> Props: ...
+    # override
     def __init__(
         self,
-        *,
-        current_object: GObject.Object | None = ...,
-        scope: BuilderScope | None = ...,
-        translation_domain: str | None = ...,
+        scope_object_or_map: GObject.Object | None = ...,
     ) -> None: ...
     def add_from_file(self, filename: str) -> bool: ...
     def add_from_resource(self, resource_path: str) -> bool: ...
