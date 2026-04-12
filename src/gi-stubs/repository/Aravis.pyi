@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -1496,7 +1497,7 @@ class GcFeatureNodeClass(GObject.GPointer):
     @property
     def default_access_mode(self) -> GcAccessMode: ...
 
-class GcFloat(GObject.GInterface):
+class GcFloat(GObject.GInterface, Protocol):
     """
     Interface ArvGcFloat
 
@@ -1761,7 +1762,7 @@ class GcIntSwissKnifeNodeClass(GObject.GPointer):
     @property
     def parent_class(self) -> GcSwissKnifeClass: ...
 
-class GcInteger(GObject.GInterface):
+class GcInteger(GObject.GInterface, Protocol):
     """
     Interface ArvGcInteger
 
@@ -2187,7 +2188,7 @@ class GcPropertyNodeClass(GObject.GPointer):
     @property
     def parent_class(self) -> GcNodeClass: ...
 
-class GcRegister(GObject.GInterface):
+class GcRegister(GObject.GInterface, Protocol):
     """
     Interface ArvGcRegister
 
@@ -2291,7 +2292,7 @@ class GcRegisterNodeClass(GObject.GPointer):
     @property
     def default_cachable(self) -> GcCachable: ...
 
-class GcSelector(GObject.GInterface):
+class GcSelector(GObject.GInterface, Protocol):
     """
     Interface ArvGcSelector
 
@@ -2314,7 +2315,7 @@ class GcSelectorInterface(GObject.GPointer):
     @property
     def get_selected_features(self) -> Callable[[GcSelector], list[GcFeatureNode]]: ...
 
-class GcString(GObject.GInterface):
+class GcString(GObject.GInterface, Protocol):
     """
     Interface ArvGcString
 

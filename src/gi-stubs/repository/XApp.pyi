@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -1528,7 +1529,7 @@ class MonitorBlankerClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Object(GObject.GInterface):
+class Object(GObject.GInterface, Protocol):
     """
     Interface XAppObject
 
@@ -2626,7 +2627,7 @@ class StatusIconClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class StatusIconInterface(GObject.GInterface):
+class StatusIconInterface(GObject.GInterface, Protocol):
     """
     Interface XAppStatusIconInterface
 
@@ -3059,7 +3060,7 @@ class StyleManagerClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class SwitcherooControl(GObject.GInterface):
+class SwitcherooControl(GObject.GInterface, Protocol):
     """
     Interface XAppSwitcherooControl
 

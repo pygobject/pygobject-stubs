@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import overload
+from typing import Protocol
 
 from collections.abc import Callable
 
@@ -804,7 +805,7 @@ class Session:
 
 class SessionAsync: ...
 
-class SessionFeature(GObject.GInterface):
+class SessionFeature(GObject.GInterface, Protocol):
     def add_feature(*args, **kwargs): ...
     def attach(*args, **kwargs): ...
     def detach(*args, **kwargs): ...

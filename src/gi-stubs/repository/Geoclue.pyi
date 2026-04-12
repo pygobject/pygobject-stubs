@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Protocol
 
 from collections.abc import Callable
 
@@ -19,7 +20,7 @@ def manager_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
 
-class Client(GObject.GInterface):
+class Client(GObject.GInterface, Protocol):
     def call_start(
         self,
         cancellable: Gio.Cancellable | None = None,
@@ -229,7 +230,7 @@ class ClientSkeletonClass(GObject.GPointer):
 
 class ClientSkeletonPrivate(GObject.GPointer): ...
 
-class Location(GObject.GInterface):
+class Location(GObject.GInterface, Protocol):
     @staticmethod
     def interface_info() -> Gio.DBusInterfaceInfo: ...
     @staticmethod
@@ -392,7 +393,7 @@ class LocationSkeletonClass(GObject.GPointer):
 
 class LocationSkeletonPrivate(GObject.GPointer): ...
 
-class Manager(GObject.GInterface):
+class Manager(GObject.GInterface, Protocol):
     def call_add_agent(
         self,
         arg_id: str,

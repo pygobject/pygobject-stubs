@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -100,7 +101,7 @@ def todo_override_properties(
     klass: GObject.ObjectClass, property_id_begin: int
 ) -> int: ...
 
-class Account(GObject.GInterface):
+class Account(GObject.GInterface, Protocol):
     """
     Interface GoaAccount
 
@@ -475,7 +476,7 @@ class AccountSkeletonClass(GObject.GPointer):
 
 class AccountSkeletonPrivate(GObject.GPointer): ...
 
-class Calendar(GObject.GInterface):
+class Calendar(GObject.GInterface, Protocol):
     """
     Interface GoaCalendar
 
@@ -692,7 +693,7 @@ class CalendarSkeletonClass(GObject.GPointer):
 
 class CalendarSkeletonPrivate(GObject.GPointer): ...
 
-class Chat(GObject.GInterface):
+class Chat(GObject.GInterface, Protocol):
     """
     Interface GoaChat
 
@@ -950,7 +951,7 @@ class ClientClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Contacts(GObject.GInterface):
+class Contacts(GObject.GInterface, Protocol):
     """
     Interface GoaContacts
 
@@ -1167,7 +1168,7 @@ class ContactsSkeletonClass(GObject.GPointer):
 
 class ContactsSkeletonPrivate(GObject.GPointer): ...
 
-class Documents(GObject.GInterface):
+class Documents(GObject.GInterface, Protocol):
     """
     Interface GoaDocuments
 
@@ -1369,7 +1370,7 @@ class DocumentsSkeletonClass(GObject.GPointer):
 
 class DocumentsSkeletonPrivate(GObject.GPointer): ...
 
-class Exchange(GObject.GInterface):
+class Exchange(GObject.GInterface, Protocol):
     """
     Interface GoaExchange
 
@@ -1586,7 +1587,7 @@ class ExchangeSkeletonClass(GObject.GPointer):
 
 class ExchangeSkeletonPrivate(GObject.GPointer): ...
 
-class Files(GObject.GInterface):
+class Files(GObject.GInterface, Protocol):
     """
     Interface GoaFiles
 
@@ -1803,7 +1804,7 @@ class FilesSkeletonClass(GObject.GPointer):
 
 class FilesSkeletonPrivate(GObject.GPointer): ...
 
-class Mail(GObject.GInterface):
+class Mail(GObject.GInterface, Protocol):
     """
     Interface GoaMail
 
@@ -2104,7 +2105,7 @@ class MailSkeletonClass(GObject.GPointer):
 
 class MailSkeletonPrivate(GObject.GPointer): ...
 
-class Manager(GObject.GInterface):
+class Manager(GObject.GInterface, Protocol):
     """
     Interface GoaManager
 
@@ -2365,7 +2366,7 @@ class ManagerSkeletonClass(GObject.GPointer):
 
 class ManagerSkeletonPrivate(GObject.GPointer): ...
 
-class Maps(GObject.GInterface):
+class Maps(GObject.GInterface, Protocol):
     """
     Interface GoaMaps
 
@@ -2567,7 +2568,7 @@ class MapsSkeletonClass(GObject.GPointer):
 
 class MapsSkeletonPrivate(GObject.GPointer): ...
 
-class MediaServer(GObject.GInterface):
+class MediaServer(GObject.GInterface, Protocol):
     """
     Interface GoaMediaServer
 
@@ -2784,7 +2785,7 @@ class MediaServerSkeletonClass(GObject.GPointer):
 
 class MediaServerSkeletonPrivate(GObject.GPointer): ...
 
-class Music(GObject.GInterface):
+class Music(GObject.GInterface, Protocol):
     """
     Interface GoaMusic
 
@@ -2986,7 +2987,7 @@ class MusicSkeletonClass(GObject.GPointer):
 
 class MusicSkeletonPrivate(GObject.GPointer): ...
 
-class OAuth2Based(GObject.GInterface):
+class OAuth2Based(GObject.GInterface, Protocol):
     """
     Interface GoaOAuth2Based
 
@@ -3228,7 +3229,7 @@ class OAuth2BasedSkeletonClass(GObject.GPointer):
 
 class OAuth2BasedSkeletonPrivate(GObject.GPointer): ...
 
-class OAuthBased(GObject.GInterface):
+class OAuthBased(GObject.GInterface, Protocol):
     """
     Interface GoaOAuthBased
 
@@ -3472,7 +3473,7 @@ class OAuthBasedSkeletonClass(GObject.GPointer):
 
 class OAuthBasedSkeletonPrivate(GObject.GPointer): ...
 
-class Object(GObject.GInterface):
+class Object(GObject.GInterface, Protocol):
     """
     Interface GoaObject
 
@@ -3877,7 +3878,7 @@ class ObjectSkeletonClass(GObject.GPointer):
 
 class ObjectSkeletonPrivate(GObject.GPointer): ...
 
-class PasswordBased(GObject.GInterface):
+class PasswordBased(GObject.GInterface, Protocol):
     """
     Interface GoaPasswordBased
 
@@ -4105,7 +4106,7 @@ class PasswordBasedSkeletonClass(GObject.GPointer):
 
 class PasswordBasedSkeletonPrivate(GObject.GPointer): ...
 
-class Photos(GObject.GInterface):
+class Photos(GObject.GInterface, Protocol):
     """
     Interface GoaPhotos
 
@@ -4307,7 +4308,7 @@ class PhotosSkeletonClass(GObject.GPointer):
 
 class PhotosSkeletonPrivate(GObject.GPointer): ...
 
-class Printers(GObject.GInterface):
+class Printers(GObject.GInterface, Protocol):
     """
     Interface GoaPrinters
 
@@ -4509,7 +4510,7 @@ class PrintersSkeletonClass(GObject.GPointer):
 
 class PrintersSkeletonPrivate(GObject.GPointer): ...
 
-class ReadLater(GObject.GInterface):
+class ReadLater(GObject.GInterface, Protocol):
     """
     Interface GoaReadLater
 
@@ -4711,7 +4712,7 @@ class ReadLaterSkeletonClass(GObject.GPointer):
 
 class ReadLaterSkeletonPrivate(GObject.GPointer): ...
 
-class Ticketing(GObject.GInterface):
+class Ticketing(GObject.GInterface, Protocol):
     """
     Interface GoaTicketing
 
@@ -4941,7 +4942,7 @@ class TicketingSkeletonClass(GObject.GPointer):
 
 class TicketingSkeletonPrivate(GObject.GPointer): ...
 
-class Todo(GObject.GInterface):
+class Todo(GObject.GInterface, Protocol):
     """
     Interface GoaTodo
 

@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -1979,7 +1980,7 @@ class SessionClass(GObject.GPointer):
     @property
     def request_unqueued(self) -> Callable[[Session, Message], None]: ...
 
-class SessionFeature(GObject.GInterface): ...
+class SessionFeature(GObject.GInterface, Protocol): ...
 class SessionFeatureInterface(GObject.GPointer): ...
 
 class WebsocketConnection(GObject.Object):

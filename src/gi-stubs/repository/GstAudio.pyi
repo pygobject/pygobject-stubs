@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -2321,7 +2322,7 @@ class DsdPlaneOffsetMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class StreamVolume(GObject.GInterface):
+class StreamVolume(GObject.GInterface, Protocol):
     """
     Interface GstStreamVolume
 

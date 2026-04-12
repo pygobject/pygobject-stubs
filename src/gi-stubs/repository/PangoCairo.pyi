@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -56,7 +57,7 @@ def show_layout_line(
 def update_context(cr: cairo.Context[_SomeSurface], context: Pango.Context) -> None: ...
 def update_layout(cr: cairo.Context[_SomeSurface], layout: Pango.Layout) -> None: ...
 
-class Font(GObject.GInterface):
+class Font(GObject.GInterface, Protocol):
     """
     Interface PangoCairoFont
 
@@ -65,7 +66,7 @@ class Font(GObject.GInterface):
     """
     def get_scaled_font(self) -> cairo.ScaledFont | None: ...
 
-class FontMap(GObject.GInterface):
+class FontMap(GObject.GInterface, Protocol):
     """
     Interface PangoCairoFontMap
 

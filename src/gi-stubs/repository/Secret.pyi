@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -107,7 +108,7 @@ def password_store_sync(
 ) -> bool: ...
 def password_wipe(password: str | None = None) -> None: ...
 
-class Backend(GObject.GInterface):
+class Backend(GObject.GInterface, Protocol):
     """
     Interface SecretBackend
 
@@ -636,7 +637,7 @@ class PromptClass(GObject.GPointer):
 
 class PromptPrivate(GObject.GPointer): ...
 
-class Retrievable(GObject.GInterface):
+class Retrievable(GObject.GInterface, Protocol):
     """
     Interface SecretRetrievable
 

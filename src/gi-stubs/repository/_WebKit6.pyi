@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -1372,7 +1373,7 @@ class OptionMenuItem(GObject.GBoxed):
     def is_group_label(self) -> bool: ...
     def is_selected(self) -> bool: ...
 
-class PermissionRequest(GObject.GInterface):
+class PermissionRequest(GObject.GInterface, Protocol):
     """
     Interface WebKitPermissionRequest
 

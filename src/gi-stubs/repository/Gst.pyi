@@ -1,6 +1,6 @@
 from typing import Any
 from typing import Final
-from typing import Generic
+from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -1418,7 +1418,7 @@ class CapsFeatures(GObject.GBoxed):
     def set_parent_refcount(self, refcount: int) -> bool: ...
     def to_string(self) -> str: ...
 
-class ChildProxy(GObject.GInterface):
+class ChildProxy(GObject.GInterface, Protocol):
     """
     Interface GstChildProxy
 
@@ -4482,7 +4482,7 @@ class PollFD(GObject.GPointer):
     def idx(self) -> int: ...
     def init(self) -> None: ...
 
-class Preset(GObject.GInterface):
+class Preset(GObject.GInterface, Protocol):
     """
     Interface GstPreset
     """
@@ -5573,7 +5573,7 @@ class TagList(GObject.GBoxed):
     ) -> tuple[bool, TagList]: ...
     def to_string(self) -> str: ...
 
-class TagSetter(GObject.GInterface):
+class TagSetter(GObject.GInterface, Protocol):
     """
     Interface GstTagSetter
 
@@ -5813,7 +5813,7 @@ class TocEntry(GObject.GBoxed):
     def set_start_stop_times(self, start: int, stop: int) -> None: ...
     def set_tags(self, tags: TagList | None = None) -> None: ...
 
-class TocSetter(GObject.GInterface):
+class TocSetter(GObject.GInterface, Protocol):
     """
     Interface GstTocSetter
 
@@ -6028,7 +6028,7 @@ class TypeFindFactory(PluginFeature):
 
 class TypeFindFactoryClass(GObject.GPointer): ...
 
-class URIHandler(GObject.GInterface):
+class URIHandler(GObject.GInterface, Protocol):
     """
     Interface GstURIHandler
     """

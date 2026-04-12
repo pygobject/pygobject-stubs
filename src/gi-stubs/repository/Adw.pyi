@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -10931,7 +10932,7 @@ class SwipeTrackerClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Swipeable(GObject.GInterface):
+class Swipeable(GObject.GInterface, Protocol):
     """
     Interface AdwSwipeable
 

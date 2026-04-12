@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -740,7 +741,7 @@ class Collator(GObject.GBoxed):
     def ref(self) -> Collator: ...
     def unref(self) -> None: ...
 
-class Extensible(GObject.GInterface):
+class Extensible(GObject.GInterface, Protocol):
     """
     Interface EExtensible
 
@@ -1170,7 +1171,7 @@ class NetworkMonitorClass(GObject.GPointer):
 
 class NetworkMonitorPrivate(GObject.GPointer): ...
 
-class OAuth2Service(GObject.GInterface):
+class OAuth2Service(GObject.GInterface, Protocol):
     """
     Interface EOAuth2Service
 

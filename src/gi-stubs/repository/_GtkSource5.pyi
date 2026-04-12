@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -675,7 +676,7 @@ class CompletionContextClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class CompletionProposal(GObject.GInterface):
+class CompletionProposal(GObject.GInterface, Protocol):
     """
     Interface GtkSourceCompletionProposal
 
@@ -697,7 +698,7 @@ class CompletionProposalInterface(GObject.GPointer):
     @property
     def get_typed_text(self) -> Callable[[CompletionProposal], str | None]: ...
 
-class CompletionProvider(GObject.GInterface):
+class CompletionProvider(GObject.GInterface, Protocol):
     """
     Interface GtkSourceCompletionProvider
 
@@ -2266,7 +2267,7 @@ class HoverDisplayClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class HoverProvider(GObject.GInterface):
+class HoverProvider(GObject.GInterface, Protocol):
     """
     Interface GtkSourceHoverProvider
 
@@ -2302,7 +2303,7 @@ class HoverProviderInterface(GObject.GPointer):
     @property
     def populate_finish(self) -> Callable[[HoverProvider, Gio.AsyncResult], bool]: ...
 
-class Indenter(GObject.GInterface):
+class Indenter(GObject.GInterface, Protocol):
     """
     Interface GtkSourceIndenter
 
@@ -3757,7 +3758,7 @@ class StyleScheme(GObject.Object):
     def get_name(self) -> str: ...
     def get_style(self, style_id: str) -> Style | None: ...
 
-class StyleSchemeChooser(GObject.GInterface):
+class StyleSchemeChooser(GObject.GInterface, Protocol):
     """
     Interface GtkSourceStyleSchemeChooser
 

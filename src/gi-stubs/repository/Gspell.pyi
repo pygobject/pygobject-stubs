@@ -1,3 +1,5 @@
+from typing import Protocol
+
 from gi.repository import _Gtk3
 from gi.repository import GObject
 
@@ -56,7 +58,7 @@ class Language:
     @classmethod
     def lookup(cls, language_code: str) -> Language | None: ...
 
-class LanguageChooser(GObject.GInterface):
+class LanguageChooser(GObject.GInterface, Protocol):
     def get_language(self) -> Language | None: ...
     def get_language_code(self) -> str: ...
     def set_language(self, language: Language | None) -> None: ...
@@ -70,7 +72,7 @@ class LanguageChooserInterface:
     parent_interface: GObject.TypeInterface
     set_language: object
 
-class Navigator(GObject.GInterface):
+class Navigator(GObject.GInterface, Protocol):
     def change(self, word: str, change_to: str) -> None: ...
     def change_all(self, word: str, change_to: str) -> None: ...
     def goto_next(self) -> tuple[bool, str, Checker]: ...

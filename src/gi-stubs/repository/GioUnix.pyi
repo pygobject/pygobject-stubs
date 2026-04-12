@@ -1,3 +1,4 @@
+from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -93,7 +94,7 @@ class FDMessageClass(GObject.GPointer):
 
 class FDMessagePrivate(GObject.GPointer): ...
 
-class FileDescriptorBased(GObject.GInterface):
+class FileDescriptorBased(GObject.GInterface, Protocol):
     """
     Interface GFileDescriptorBased
 
