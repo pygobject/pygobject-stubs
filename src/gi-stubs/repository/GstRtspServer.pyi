@@ -209,6 +209,7 @@ class RTSPClient(GObject.Object):
     Object GstRTSPClient
 
     Signals from GstRTSPClient:
+      pre-closed ()
       closed ()
       new-session (GstRTSPSession)
       pre-options-request (GstRTSPContext) -> GstRTSPStatusCode
@@ -1166,6 +1167,7 @@ class RTSPOnvifClient(RTSPClient):
     Object GstRTSPOnvifClient
 
     Signals from GstRTSPClient:
+      pre-closed ()
       closed ()
       new-session (GstRTSPSession)
       pre-options-request (GstRTSPContext) -> GstRTSPStatusCode
@@ -2068,9 +2070,18 @@ class RTSPStreamTransport(GObject.Object):
 
     Object GstRTSPStreamTransport
 
+    Properties from GstRTSPStreamTransport:
+      timed-out -> gboolean: Timed Out
+        Whether this transport is timed out
+
     Signals from GObject:
       notify (GParam)
     """
+    class Props(GObject.Object.Props):
+        timed_out: bool
+
+    @property
+    def props(self) -> Props: ...
     @property
     def parent(self) -> GObject.Object: ...
     @property

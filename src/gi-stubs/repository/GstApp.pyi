@@ -1,4 +1,6 @@
+from typing import Any
 from typing import TypeVar
+from typing_extensions import Self
 
 from collections.abc import Callable
 
@@ -50,6 +52,22 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         The maximum total duration to queue internally (in ns, 0 = unlimited)
       max-bytes -> guint64: Max bytes
         The maximum amount of bytes to queue internally (0 = unlimited)
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      leaky-type -> GstAppLeakyType: Leaky Type
+        Whether to drop buffers once the internal queue is full
+      in -> guint64: In
+        Number of input buffers
+      out -> guint64: Out
+        Number of output buffers
+      dropped -> guint64: Dropped
+        Number of dropped buffers
+      silent -> gboolean: silent
+        Don't emit notify for dropped buffers
 
     Properties from GstBaseSink:
       sync -> gboolean: Sync
@@ -99,12 +117,19 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     class Props(GstBase.BaseSink.Props):
         buffer_list: bool
         caps: Gst.Caps | None
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         drop: bool
+        dropped: int
         emit_signals: bool
         eos: bool
+        leaky_type: AppLeakyType
         max_buffers: int
         max_bytes: int
         max_time: int
+        out: int
+        silent: bool
         wait_on_eos: bool
         blocksize: int
         enable_last_sample: bool
@@ -134,9 +159,11 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         caps: Gst.Caps | None = ...,
         drop: bool = ...,
         emit_signals: bool = ...,
+        leaky_type: AppLeakyType = ...,
         max_buffers: int = ...,
         max_bytes: int = ...,
         max_time: int = ...,
+        silent: bool = ...,
         wait_on_eos: bool = ...,
         blocksize: int = ...,
         enable_last_sample: bool = ...,
@@ -161,8 +188,12 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     def do_try_pull_sample(self, timeout: int) -> Gst.Sample | None: ...
     def get_buffer_list_support(self) -> bool: ...
     def get_caps(self) -> Gst.Caps | None: ...
+    def get_current_level_buffers(self) -> int: ...
+    def get_current_level_bytes(self) -> int: ...
+    def get_current_level_time(self) -> int: ...
     def get_drop(self) -> bool: ...
     def get_emit_signals(self) -> bool: ...
+    def get_leaky_type(self) -> AppLeakyType: ...
     def get_max_buffers(self) -> int: ...
     def get_max_bytes(self) -> int: ...
     def get_max_time(self) -> int: ...
@@ -175,9 +206,13 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     def set_caps(self, caps: Gst.Caps | None = None) -> None: ...
     def set_drop(self, drop: bool) -> None: ...
     def set_emit_signals(self, emit: bool) -> None: ...
+    def set_leaky_type(self, leaky: AppLeakyType) -> None: ...
     def set_max_buffers(self, max: int) -> None: ...
     def set_max_bytes(self, max: int) -> None: ...
     def set_max_time(self, max: int) -> None: ...
+    def set_simple_callbacks(
+        self, cb: AppSinkSimpleCallbacks | None = None
+    ) -> None: ...
     def set_wait_on_eos(self, wait: bool) -> None: ...
     def try_pull_object(self, timeout: int) -> Gst.MiniObject | None: ...
     def try_pull_preroll(self, timeout: int) -> Gst.Sample | None: ...
@@ -211,6 +246,34 @@ class AppSinkClass(_gi.Struct):
     def try_pull_object(self) -> Callable[[AppSink, int], Gst.MiniObject | None]: ...
 
 class AppSinkPrivate(_gi.Struct): ...
+
+class AppSinkSimpleCallbacks(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> GstApp.AppSinkSimpleCallbacks
+    """
+    @staticmethod
+    def __new__(cls: type[Self]) -> Self: ...
+    @classmethod
+    def new(cls) -> AppSinkSimpleCallbacks: ...
+    def ref(self) -> AppSinkSimpleCallbacks: ...
+    def set_eos(self, eos_cb: Callable[..., None], *user_data: Any) -> None: ...
+    def set_new_event(
+        self, new_event_cb: Callable[..., bool], *user_data: Any
+    ) -> None: ...
+    def set_new_preroll(
+        self, new_preroll_cb: Callable[..., Gst.FlowReturn], *user_data: Any
+    ) -> None: ...
+    def set_new_sample(
+        self, new_sample_cb: Callable[..., Gst.FlowReturn], *user_data: Any
+    ) -> None: ...
+    def set_propose_allocation(
+        self, propose_allocation_cb: Callable[..., bool], *user_data: Any
+    ) -> None: ...
+    def unref(self) -> None: ...
 
 class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     """
@@ -270,6 +333,14 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         Whether to detect and handle changed time format GstSegment in GstSample. User should set valid GstSegment in GstSample. Must set format property as "time" to enable this property
       leaky-type -> GstAppLeakyType: Leaky Type
         Whether to drop buffers once the internal queue is full
+      in -> guint64: In
+        Number of input buffers
+      out -> guint64: Out
+        Number of output buffers
+      dropped -> guint64: Dropped
+        Number of dropped buffers
+      silent -> gboolean: silent
+        Don't emit notify for dropped buffers
 
     Properties from GstBaseSrc:
       blocksize -> guint: Block size
@@ -306,6 +377,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         current_level_buffers: int
         current_level_bytes: int
         current_level_time: int
+        dropped: int
         duration: int
         emit_signals: bool
         format: Gst.Format
@@ -318,6 +390,8 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         max_time: int
         min_latency: int
         min_percent: int
+        out: int
+        silent: bool
         size: int
         stream_type: AppStreamType
         automatic_eos: bool
@@ -351,6 +425,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         max_time: int = ...,
         min_latency: int = ...,
         min_percent: int = ...,
+        silent: bool = ...,
         size: int = ...,
         stream_type: AppStreamType = ...,
         automatic_eos: bool = ...,
@@ -393,6 +468,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     def set_max_buffers(self, max: int) -> None: ...
     def set_max_bytes(self, max: int) -> None: ...
     def set_max_time(self, max: int) -> None: ...
+    def set_simple_callbacks(self, cb: AppSrcSimpleCallbacks | None = None) -> None: ...
     def set_size(self, size: int) -> None: ...
     def set_stream_type(self, type: AppStreamType) -> None: ...
 
@@ -424,6 +500,30 @@ class AppSrcClass(_gi.Struct):
     ) -> Callable[[AppSrc, Gst.BufferList], Gst.FlowReturn]: ...
 
 class AppSrcPrivate(_gi.Struct): ...
+
+class AppSrcSimpleCallbacks(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> GstApp.AppSrcSimpleCallbacks
+    """
+    @staticmethod
+    def __new__(cls: type[Self]) -> Self: ...
+    @classmethod
+    def new(cls) -> AppSrcSimpleCallbacks: ...
+    def ref(self) -> AppSrcSimpleCallbacks: ...
+    def set_enough_data(
+        self, enough_data_cb: Callable[..., None], *user_data: Any
+    ) -> None: ...
+    def set_need_data(
+        self, need_data_cb: Callable[..., None], *user_data: Any
+    ) -> None: ...
+    def set_seek_data(
+        self, seek_data_cb: Callable[..., bool], *user_data: Any
+    ) -> None: ...
+    def unref(self) -> None: ...
 
 class AppLeakyType(GObject.GEnum):
     DOWNSTREAM = 2
