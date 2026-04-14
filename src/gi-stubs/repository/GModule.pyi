@@ -4,7 +4,7 @@ from typing import TypeVar
 from enum import IntEnum
 from enum import IntFlag
 
-from gi.repository import GObject
+from gi import _gi
 
 T = TypeVar("T")
 
@@ -18,7 +18,7 @@ def module_error() -> str: ...
 def module_error_quark() -> int: ...
 def module_supported() -> bool: ...
 
-class Module(GObject.GPointer):
+class Module(_gi.Struct):
     @staticmethod
     def build_path(directory: str | None, module_name: str) -> str: ...
     def close(self) -> bool: ...

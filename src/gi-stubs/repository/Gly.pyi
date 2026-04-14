@@ -3,6 +3,7 @@ from typing import TypeVar
 
 from collections.abc import Callable
 
+from gi import _gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -54,7 +55,7 @@ class Creator(GObject.Object):
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, mime_type: str = ..., sandbox_selector: SandboxSelector = ...
+        self, *, mime_type: str = ..., sandbox_selector: SandboxSelector = ...
     ) -> None: ...
     def add_frame(
         self, width: int, height: int, memory_format: MemoryFormat, texture: GLib.Bytes
@@ -82,7 +83,7 @@ class Creator(GObject.Object):
     def set_encoding_quality(self, quality: int) -> bool: ...
     def set_sandbox_selector(self, sandbox_selector: SandboxSelector) -> bool: ...
 
-class CreatorClass(GObject.GPointer):
+class CreatorClass(_gi.Struct):
     """
     :Constructors:
 
@@ -116,7 +117,7 @@ class EncodedImage(GObject.Object):
     def props(self) -> Props: ...
     def get_data(self) -> GLib.Bytes: ...
 
-class EncodedImageClass(GObject.GPointer):
+class EncodedImageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -148,7 +149,7 @@ class Frame(GObject.Object):
     def get_stride(self) -> int: ...
     def get_width(self) -> int: ...
 
-class FrameClass(GObject.GPointer):
+class FrameClass(_gi.Struct):
     """
     :Constructors:
 
@@ -185,13 +186,13 @@ class FrameRequest(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, loop_animation: bool = ...) -> None: ...
+    def __init__(self, *, loop_animation: bool = ...) -> None: ...
     @classmethod
     def new(cls) -> FrameRequest: ...
     def set_loop_animation(self, loop_animation: bool) -> None: ...
     def set_scale(self, width: int, height: int) -> None: ...
 
-class FrameRequestClass(GObject.GPointer):
+class FrameRequestClass(_gi.Struct):
     """
     :Constructors:
 
@@ -239,7 +240,7 @@ class Image(GObject.Object):
     ) -> None: ...
     def next_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
 
-class ImageClass(GObject.GPointer):
+class ImageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -288,6 +289,7 @@ class Loader(GObject.Object):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         apply_transformation: bool = ...,
         bytes: GLib.Bytes = ...,
         cancellable: Gio.Cancellable = ...,
@@ -326,7 +328,7 @@ class Loader(GObject.Object):
     def set_apply_transformations(self, apply_transformations: bool) -> None: ...
     def set_sandbox_selector(self, sandbox_selector: SandboxSelector) -> None: ...
 
-class LoaderClass(GObject.GPointer):
+class LoaderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -352,7 +354,7 @@ class NewFrame(GObject.Object):
     """
     def set_color_icc_profile(self, icc_profile: GLib.Bytes) -> bool: ...
 
-class NewFrameClass(GObject.GPointer):
+class NewFrameClass(_gi.Struct):
     """
     :Constructors:
 

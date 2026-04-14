@@ -77,6 +77,35 @@ class BorderNode(RenderNode):
         border_color: Sequence[_Gdk4.RGBA],
     ) -> BorderNode: ...
 
+class BroadwayRenderer(Renderer):
+    """
+    :Constructors:
+
+    ::
+
+        BroadwayRenderer(**properties)
+        new() -> Gsk.Renderer
+
+    Object GskBroadwayRenderer
+
+    Properties from GskRenderer:
+      realized -> gboolean: realized
+      surface -> GdkSurface: surface
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    class Props(Renderer.Props):
+        realized: bool
+        surface: _Gdk4.Surface | None
+
+    @property
+    def props(self) -> Props: ...
+    @classmethod
+    def new(cls) -> BroadwayRenderer: ...
+
+class BroadwayRendererClass(_gi.Struct): ...
+
 class CairoNode(RenderNode):
     """
     :Constructors:
@@ -118,7 +147,7 @@ class CairoRenderer(Renderer):
     @classmethod
     def new(cls) -> CairoRenderer: ...
 
-class CairoRendererClass(GObject.GPointer): ...
+class CairoRendererClass(_gi.Struct): ...
 
 class ClipNode(RenderNode):
     """
@@ -167,7 +196,7 @@ class ColorNode(RenderNode):
     @classmethod
     def new(cls, rgba: _Gdk4.RGBA, bounds: Graphene.Rect) -> ColorNode: ...
 
-class ColorStop(GObject.GPointer):
+class ColorStop(_gi.Struct):
     """
     :Constructors:
 
@@ -220,7 +249,7 @@ class ComponentTransferNode(RenderNode):
         new(child:Gsk.RenderNode, r:Gsk.ComponentTransfer, g:Gsk.ComponentTransfer, b:Gsk.ComponentTransfer, a:Gsk.ComponentTransfer) -> Gsk.ComponentTransferNode
     """
     def get_child(self) -> RenderNode: ...
-    def get_transfer(self, component: _Gdk4.ColorChannel) -> ComponentTransfer: ...
+    def get_transfer(self, component: int) -> ComponentTransfer: ...
     @classmethod
     def new(
         cls,
@@ -230,23 +259,6 @@ class ComponentTransferNode(RenderNode):
         b: ComponentTransfer,
         a: ComponentTransfer,
     ) -> ComponentTransferNode: ...
-
-class CompositeNode(RenderNode):
-    """
-    :Constructors:
-
-    ::
-
-        CompositeNode(**properties)
-        new(child:Gsk.RenderNode, mask:Gsk.RenderNode, op:Gsk.PorterDuff) -> Gsk.CompositeNode
-    """
-    def get_child(self) -> RenderNode: ...
-    def get_mask(self) -> RenderNode: ...
-    def get_operator(self) -> PorterDuff: ...
-    @classmethod
-    def new(
-        cls, child: RenderNode, mask: RenderNode, op: PorterDuff
-    ) -> CompositeNode: ...
 
 class ConicGradientNode(RenderNode):
     """
@@ -284,19 +296,6 @@ class ContainerNode(RenderNode):
     def get_n_children(self) -> int: ...
     @classmethod
     def new(cls, children: Sequence[RenderNode]) -> ContainerNode: ...
-
-class CopyNode(RenderNode):
-    """
-    :Constructors:
-
-    ::
-
-        CopyNode(**properties)
-        new(child:Gsk.RenderNode) -> Gsk.CopyNode
-    """
-    def get_child(self) -> RenderNode: ...
-    @classmethod
-    def new(cls, child: RenderNode) -> CopyNode: ...
 
 class CrossFadeNode(RenderNode):
     """
@@ -371,7 +370,7 @@ class GLRenderer(Renderer):
     @classmethod
     def new(cls) -> GLRenderer: ...
 
-class GLRendererClass(GObject.GPointer): ...
+class GLRendererClass(_gi.Struct): ...
 
 class GLShader(GObject.Object):
     """
@@ -427,7 +426,7 @@ class GLShader(GObject.Object):
     @classmethod
     def new_from_resource(cls, resource_path: str) -> GLShader: ...
 
-class GLShaderClass(GObject.GPointer):
+class GLShaderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -485,20 +484,6 @@ class InsetShadowNode(RenderNode):
         spread: float,
         blur_radius: float,
     ) -> InsetShadowNode: ...
-
-class IsolationNode(RenderNode):
-    """
-    :Constructors:
-
-    ::
-
-        IsolationNode(**properties)
-        new(child:Gsk.RenderNode, isolations:Gsk.Isolation) -> Gsk.IsolationNode
-    """
-    def get_child(self) -> RenderNode: ...
-    def get_isolations(self) -> Isolation: ...
-    @classmethod
-    def new(cls, child: RenderNode, isolations: Isolation) -> IsolationNode: ...
 
 class LinearGradientNode(RenderNode):
     """
@@ -606,7 +591,7 @@ class OutsetShadowNode(RenderNode):
         blur_radius: float,
     ) -> OutsetShadowNode: ...
 
-class ParseLocation(GObject.GPointer):
+class ParseLocation(_gi.Struct):
     """
     :Constructors:
 
@@ -621,21 +606,7 @@ class ParseLocation(GObject.GPointer):
     line_bytes: int
     line_chars: int
 
-class PasteNode(RenderNode):
-    """
-    :Constructors:
-
-    ::
-
-        PasteNode(**properties)
-        new(bounds:Graphene.Rect, depth:int) -> Gsk.PasteNode
-    """
-    def get_depth(self) -> int: ...
-    @classmethod
-    def new(cls, bounds: Graphene.Rect, depth: int) -> PasteNode: ...
-
 class Path(GObject.GBoxed):
-    def equal(self, path2: Path) -> bool: ...
     def foreach(
         self, flags: PathForeachFlags, func: Callable[..., bool], *user_data: Any
     ) -> bool: ...
@@ -647,11 +618,8 @@ class Path(GObject.GBoxed):
         self, point: Graphene.Point, threshold: float
     ) -> tuple[bool, PathPoint, float]: ...
     def get_end_point(self) -> tuple[bool, PathPoint]: ...
-    def get_next(self) -> tuple[bool, PathPoint]: ...
-    def get_previous(self) -> tuple[bool, PathPoint]: ...
     def get_start_point(self) -> tuple[bool, PathPoint]: ...
     def get_stroke_bounds(self, stroke: Stroke) -> tuple[bool, Graphene.Rect]: ...
-    def get_tight_bounds(self) -> tuple[bool, Graphene.Rect]: ...
     def in_fill(self, point: Graphene.Point, fill_rule: FillRule) -> bool: ...
     def is_closed(self) -> bool: ...
     def is_empty(self) -> bool: ...
@@ -814,40 +782,12 @@ class RenderNode(_gi.Fundamental):
     ) -> RenderNode | None: ...
     def draw(self, cr: cairo.Context[_SomeSurface]) -> None: ...
     def get_bounds(self) -> Graphene.Rect: ...
-    def get_children(self) -> list[RenderNode] | None: ...
     def get_node_type(self) -> RenderNodeType: ...
     def get_opaque_rect(self) -> tuple[bool, Graphene.Rect]: ...
     def ref(self) -> RenderNode: ...
     def serialize(self) -> GLib.Bytes: ...
     def unref(self) -> None: ...
     def write_to_file(self, filename: str) -> bool: ...
-
-class RenderReplay(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        new() -> Gsk.RenderReplay
-    """
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
-    def default(self, node: RenderNode) -> RenderNode | None: ...
-    def filter_font(self, font: Pango.Font) -> Pango.Font: ...
-    def filter_node(self, node: RenderNode) -> RenderNode | None: ...
-    def filter_texture(self, texture: _Gdk4.Texture) -> _Gdk4.Texture: ...
-    def free(self) -> None: ...
-    @classmethod
-    def new(cls) -> RenderReplay: ...
-    def set_font_filter(
-        self, filter: Callable[..., Pango.Font] | None = None, *user_data: Any
-    ) -> None: ...
-    def set_node_filter(
-        self, filter: Callable[..., RenderNode | None] | None = None, *user_data: Any
-    ) -> None: ...
-    def set_texture_filter(
-        self, filter: Callable[..., _Gdk4.Texture] | None = None, *user_data: Any
-    ) -> None: ...
 
 class Renderer(GObject.Object):
     """
@@ -885,7 +825,7 @@ class Renderer(GObject.Object):
     ) -> _Gdk4.Texture: ...
     def unrealize(self) -> None: ...
 
-class RendererClass(GObject.GPointer): ...
+class RendererClass(_gi.Struct): ...
 
 class RepeatNode(RenderNode):
     """
@@ -959,7 +899,7 @@ class RoundedClipNode(RenderNode):
     @classmethod
     def new(cls, child: RenderNode, clip: RoundedRect) -> RoundedClipNode: ...
 
-class RoundedRect(GObject.GPointer):
+class RoundedRect(_gi.Struct):
     """
     :Constructors:
 
@@ -1017,7 +957,7 @@ class ShaderArgsBuilder(GObject.GBoxed):
     def to_args(self) -> GLib.Bytes: ...
     def unref(self) -> None: ...
 
-class Shadow(GObject.GPointer):
+class Shadow(_gi.Struct):
     """
     :Constructors:
 
@@ -1207,14 +1147,12 @@ class TransformNode(RenderNode):
     ::
 
         TransformNode(**properties)
-        new(child:Gsk.RenderNode, transform:Gsk.Transform=None) -> Gsk.TransformNode
+        new(child:Gsk.RenderNode, transform:Gsk.Transform) -> Gsk.TransformNode
     """
     def get_child(self) -> RenderNode: ...
     def get_transform(self) -> Transform: ...
     @classmethod
-    def new(
-        cls, child: RenderNode, transform: Transform | None = None
-    ) -> TransformNode: ...
+    def new(cls, child: RenderNode, transform: Transform) -> TransformNode: ...
 
 class VulkanRenderer(Renderer):
     """
@@ -1243,13 +1181,7 @@ class VulkanRenderer(Renderer):
     @classmethod
     def new(cls) -> VulkanRenderer: ...
 
-class VulkanRendererClass(GObject.GPointer): ...
-
-class Isolation(GObject.GFlags):
-    ALL = 4294967295
-    BACKGROUND = 1
-    COPY_PASTE = 2
-    NONE = 0
+class VulkanRendererClass(_gi.Struct): ...
 
 class PathForeachFlags(GObject.GFlags):
     CONIC = 4
@@ -1331,22 +1263,7 @@ class PathOperation(GObject.GEnum):
     MOVE = 0
     QUAD = 3
 
-class PorterDuff(GObject.GEnum):
-    CLEAR = 11
-    DEST = 1
-    DEST_ATOP_SOURCE = 9
-    DEST_IN_SOURCE = 5
-    DEST_OUT_SOURCE = 7
-    DEST_OVER_SOURCE = 3
-    SOURCE = 0
-    SOURCE_ATOP_DEST = 8
-    SOURCE_IN_DEST = 4
-    SOURCE_OUT_DEST = 6
-    SOURCE_OVER_DEST = 2
-    XOR = 10
-
 class RenderNodeType(GObject.GEnum):
-    ARITHMETIC_NODE = 37
     BLEND_NODE = 20
     BLUR_NODE = 23
     BORDER_NODE = 9
@@ -1355,23 +1272,18 @@ class RenderNodeType(GObject.GEnum):
     COLOR_MATRIX_NODE = 15
     COLOR_NODE = 3
     COMPONENT_TRANSFER_NODE = 31
-    COMPOSITE_NODE = 34
     CONIC_GRADIENT_NODE = 8
     CONTAINER_NODE = 1
-    COPY_NODE = 32
     CROSS_FADE_NODE = 21
     DEBUG_NODE = 24
-    DISPLACEMENT_NODE = 36
     FILL_NODE = 28
     GL_SHADER_NODE = 25
     INSET_SHADOW_NODE = 11
-    ISOLATION_NODE = 35
     LINEAR_GRADIENT_NODE = 4
     MASK_NODE = 27
     NOT_A_RENDER_NODE = 0
     OPACITY_NODE = 14
     OUTSET_SHADOW_NODE = 12
-    PASTE_NODE = 33
     RADIAL_GRADIENT_NODE = 6
     REPEATING_LINEAR_GRADIENT_NODE = 5
     REPEATING_RADIAL_GRADIENT_NODE = 7

@@ -7,9 +7,15 @@
 from __future__ import annotations
 
 from typing import Any
+from typing import cast
 from typing import Final
+from typing import Generic
+from typing import get_args
+from typing import get_origin
+from typing import Protocol
 from typing import TYPE_CHECKING
 from typing import TypeAlias
+from typing_extensions import get_original_bases
 
 import argparse
 import importlib
@@ -24,6 +30,7 @@ from dataclasses import field
 from dataclasses import InitVar
 from enum import IntEnum
 from enum import IntFlag
+from types import GenericAlias
 from types import ModuleType
 
 import gi
@@ -46,8 +53,12 @@ from gi.repository import GObject
 ObjectT: TypeAlias = ModuleType | type[Any]
 
 _identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
-_typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)(?P<suffix>\b)")
-_free_typing_re: Final = re.compile(r"(?P<prefix>\b)(?P<name>Any|Self)(?P<suffix>\b)")
+_typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)\b")
+_free_typing_re: Final = re.compile(r"\b(?P<name>Any|Self)\b")
+_gi_repository_re: Final = re.compile(
+    r"\bgi\.repository\.(?P<namespace>\w+)\.(?P<name>.*)\b"
+)
+_type_vars_re: Final = re.compile(r"[~+-](?P<name>\w+)\b")
 
 # GLib 2.86 added a new flag which changed the naming of WRITABLE to IS_WRITABLE
 _IS_FIELD_WRITABLE: Final[GIRepository.FieldInfoFlags] = getattr(
@@ -67,6 +78,12 @@ ALLOWED_FUNCTIONS = {
     "__int__",
     "__float__",
     "__bool__",
+    "__contains__",
+}
+
+GI_IMPORT_ALIASES: Final = {
+    "gi.Boxed": ("GObject", "GBoxed"),
+    "gobject.GInterface": ("GObject", "GInterface"),
 }
 
 
@@ -330,9 +347,7 @@ def _type_to_python(
                 return stub.get_import("typing", "Any")
 
             if namespace == "GObject" and name == "Closure":
-                return f"{stub.get_import('collections.abc', 'Callable')}[..., {
-                    stub.get_import('typing', 'Any')
-                }]"
+                return f"{stub.get_import('collections.abc', 'Callable')}[..., {stub.get_import('typing', 'Any')}]"
 
             if namespace == "cairo" and name == "Context" and not out_arg:
                 return f"{stub.get_namespace_member('cairo', 'Context')}[_SomeSurface]"
@@ -442,9 +457,7 @@ def _wrapped_strip_boolean_result(
             else:
                 return_signature = f"({return_signature} | tuple[()])"
         else:
-            return_signature = f"({return_signature} | {
-                stub.get_import('typing', 'Literal')
-            }[{fail_ret}])"
+            return_signature = f"({return_signature} | {stub.get_import('typing', 'Literal')}[{fail_ret}])"
 
     return _build_function_info(
         stub,
@@ -472,9 +485,7 @@ def _build_function(
     if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
         if in_class is None and function.get_namespace() != stub.namespace:
             # Set up a constant for functions that are aliases
-            return f"{name}: {stub.get_final()} = {
-                stub.get_namespace_member(function.get_namespace(), function.get_name())
-            }\n"
+            return f"{name}: {stub.get_final()} = {stub.get_namespace_member(function.get_namespace(), function.get_name())}\n"
 
         return _build_function_info(stub, name, function, in_class)
 
@@ -485,6 +496,7 @@ def _build_function(
     signature_string: str
     missing_annotation = False
     try:
+        # TODO: handle @overload with get_overloads()
         signature = inspect.signature(function)
         for param in signature.parameters.values():
             if param.name != "self" and param.annotation is inspect.Parameter.empty:
@@ -653,17 +665,16 @@ class Stub:
         namespace: str,
         name: str,
         /,
-        *,
-        current_namespace_member: str | None = None,
     ) -> str:
         if namespace == self.namespace:
-            return (
-                name if current_namespace_member is None else current_namespace_member
-            )
+            return name
 
-        if namespace == "_gi":
-            if (_import := self.__get_import("gi", "_gi")) is None:
-                _import = self.__add_import("gi", "_gi")
+        if namespace in ("_gi", "_gtktemplate"):
+            if (_import := self.__get_import("gi", namespace)) is None:
+                _import = self.__add_import("gi", namespace)
+        elif namespace == "_gi_gst":
+            if (_import := self.__get_import("gi.overrides", "_gi_gst")) is None:
+                _import = self.__add_import("gi.overrides", "_gi_gst")
         elif namespace == "cairo":
             if (_import := self.__get_import(namespace)) is None:
                 _import = self.__add_import(namespace)
@@ -689,6 +700,8 @@ class Stub:
             namespace = obj.__module__.rsplit(".", 1)[1]
         elif obj.__module__ == "gobject" or obj.__module__ == "gi._gi":
             namespace = "_gi"
+        elif obj.__module__ == "gi._gtktemplate":
+            return self.get_namespace_member("_gtktemplate", obj.__qualname__)
         else:
             return None
 
@@ -703,32 +716,120 @@ class Stub:
         property_symbol = self.get_import("builtins", "property")
         return f"{indent}@{property_symbol}\n{indent}def {name}(self) -> {return_annotation}: ...\n"
 
+    def get_class_import(self, cls: Any, /) -> str:
+        # Things like Generic and Protocol show up in the MRO as `Generic` rather than
+        # `Generic[T]`, so we need to get the original class to get the type arguments
+        # to recreate them in the stubs
+        origin_cls = get_origin(cls) or cls
+
+        # TODO: track generics and properly create them in the stub
+        arg_names = [arg.__name__ for arg in get_args(cls)]
+        args = f"[{', '.join(arg_names)}]" if arg_names else ""
+
+        full_name = f"{origin_cls.__module__}.{origin_cls.__qualname__}"
+
+        ns: str | None = None
+        name = ""
+
+        if alias := GI_IMPORT_ALIASES.get(full_name):
+            ns, name = alias
+        elif full_name.startswith(("gi.overrides.", "gi.repository.")):
+            _, _, ns, name = full_name.split(".", 3)
+        elif full_name.startswith(("gi.", "_gi.", "GI.", "_GI.", "gobject.")):
+            ns, name = full_name.split(".", 1)
+            ns = "_gi"
+        elif full_name.startswith("cairo."):
+            ns, name = full_name.split(".", 1)
+
+        if ns is not None:
+            return f"{self.get_namespace_member(ns, name)}{args}"
+
+        module, name = full_name.rsplit(".", 1)
+        return f"{self.get_import(module, name)}{args}"
+
+    def get_class_info(
+        self, cls: type[Any], /
+    ) -> tuple[tuple[type[Any], ...], GI.RegisteredTypeInfo | None]:
+        full_name = f"{cls.__module__}.{cls.__qualname__}"
+        object_info: GI.RegisteredTypeInfo | None = cls.__dict__.get("__info__")
+        bases = list(get_original_bases(cls))
+
+        # Because we're generating types for gi.repository, we have to generate stubs for
+        # override classes that come from gi.repository and inherit from gi.repository classes.
+        # Effectively, we want to write the stubs as if the override class and repository class
+        # are one class in the MRO. What this means is that the following transformations need to
+        # happen:
+        # 1. For the following:
+        #    gi.repository.X.One(<One repository bases>)
+        #    gi.overrides.X.One(<One prefix override bases>, gi.repository.X.One, <One suffix override bases>) ->
+        #        gi.repository.X.One(<One prefix override bases>, <One repository bases>, <One override bases>)
+        # 2. gi.overrides.X.Two(float) -> gi.repository.X.Two(float)
+        # 3. gi.overrides.X.Three(gi.overrides.X.Four, ...) -> gi.repository.X.Three(gi.repository.X.Four, ...)
+        if full_name.startswith("gi.overrides.") and any(
+            base.__module__.startswith("gi.repository.") for base in bases
+        ):
+            bases: list[Any] = []
+            gi_repo_full_name = full_name.replace("gi.overrides.", "gi.repository.", 1)
+
+            for base in get_original_bases(cls):
+                if f"{base.__module__}.{base.__qualname__}" == gi_repo_full_name:
+                    bases.extend(get_original_bases(base))
+
+                    if object_info is None:
+                        object_info = base.__dict__.get("__info__")
+                elif base is not object:
+                    bases.append(base)
+
+        if GI.GInterface in bases and not any(
+            get_origin(base) is Protocol for base in bases
+        ):
+            # Most overrides use Generic instead of Protocol for interfaces
+            index = next(
+                (
+                    i
+                    for i, base in enumerate(bases)
+                    if get_origin(base) is Generic and get_args(base)
+                ),
+                None,
+            )
+            if index is None:
+                bases.append(Protocol)
+            else:
+                args = get_args(bases[index])
+                bases[index] = GenericAlias(cast(Any, Protocol), args)
+
+        return tuple(bases), object_info
+
     def __replace_typing(self, match: re.Match[str]) -> str:
         match match.group("name"):
             case ("Callable" | "Sequence" | "Iterable" | "Iterator") as name:
-                prefix = self.get_import("collections.abc", name)
+                symbol = self.get_import("collections.abc", name)
             case "ContextManager" as name:
-                prefix = self.get_import("contextlib", f"Abstract{name}")
+                symbol = self.get_import("contextlib", f"Abstract{name}")
             case "Type" | "Tuple" | "List" | "Dict" | "Set" | "FrozenSet" as name:
-                prefix = name.lower()
+                symbol = name.lower()
             case _ as name:
-                prefix = self.get_import("typing", name)
+                symbol = self.get_import("typing", name)
 
-        return f"{prefix}{match.group('suffix')}"
+        return symbol
 
     def __replace_free_typing(self, match: re.Match[str]) -> str:
         name = match.group("name")
-        symbol = self.get_import(
-            "typing" if name == "Any" else "typing_extensions", name
-        )
-        return f"{match.group('prefix')}{symbol}{match.group('suffix')}"
+        return self.get_import("typing" if name == "Any" else "typing_extensions", name)
+
+    def __replace_gi_repository(self, match: re.Match[str]) -> str:
+        namespace = match.group("namespace")
+        symbol = self.get_namespace_member(namespace, match.group("name"))
+        return f"{symbol}"
 
     def __fix_annotations(self, formatted: str) -> str:
         formatted = _replace_optional(formatted)
         formatted = _replace_union(formatted)
         formatted = _typing_re.sub(self.__replace_typing, formatted)
         formatted = _free_typing_re.sub(self.__replace_free_typing, formatted)
-        return re.sub(rf"(\b){self.namespace}\.", r"\1", formatted)
+        formatted = _gi_repository_re.sub(self.__replace_gi_repository, formatted)
+        formatted = _type_vars_re.sub(r"\g<name>", formatted)
+        return re.sub(rf"\b{self.namespace}\.", r"", formatted)
 
     def format_annotation(self, annotation: Any) -> str:
         try:
@@ -920,7 +1021,11 @@ def _gi_build_stub_parts(
         ret += "\n"
 
     # Functions
-    if "__new__" in functions or (in_class and issubclass(in_class, GObject.GObject)):
+    if (
+        "__new__" in functions
+        or (in_class and issubclass(in_class, GObject.GObject))
+        or stub.check_override(prefix_name, "__init__")
+    ):
         functions.pop("__init__", None)
 
     for name, func in sorted(functions.items()):
@@ -960,76 +1065,31 @@ def _gi_build_stub_parts(
 
         readable_props: list[GIRepository.PropertyInfo] = []
         writable_props: list[GIRepository.PropertyInfo] = []
-        parents: list[str] = []
         props_parents: list[str] = []
-        object_info = obj.__dict__.get("__info__")
-        bases = (
-            [obj] if object_info else obj.__dict__.get("__orig_bases__", obj.__bases__)
-        )
+        class_bases, class_object_info = stub.get_class_info(obj)
 
-        for b in bases:
-            object_info = b.__dict__.get("__info__")
-            gtype = b.__dict__.get("__gtype__")
-
-            if isinstance(object_info, GI.ObjectInfo):
-                p = object_info.get_parent()
+        if class_object_info is not None:
+            if isinstance(class_object_info, GI.ObjectInfo):
+                p = class_object_info.get_parent()
                 if p:
-                    parent_symbol = stub.get_namespace_member(
-                        p.get_namespace(), p.get_name()
-                    )
-                    parents.append(parent_symbol)
-                    props_parents.append(f"{parent_symbol}.Props")
-                elif object_info.get_fundamental():
-                    # If no parent, but it's a fundamental, it inherits from gi._gi.Fundamental
-                    parents.append(stub.get_namespace_member("_gi", "Fundamental"))
-
-                ifaces = object_info.get_interfaces()
-                for i in ifaces:
-                    parents.append(
-                        stub.get_namespace_member(i.get_namespace(), i.get_name())
+                    props_parents.append(
+                        f"{stub.get_namespace_member(p.get_namespace(), p.get_name())}.Props"
                     )
 
                 # Properties
-                (rp, wp) = _object_get_props(stub.repo, object_info)
+                (rp, wp) = _object_get_props(stub.repo, class_object_info)
                 readable_props.extend(rp)
                 writable_props.extend(wp)
 
-            elif isinstance(object_info, GI.InterfaceInfo):
-                parents.append(stub.get_namespace_member("GObject", "GInterface"))
-
-            elif gtype and issubclass(b, GObject.GBoxed):
-                parents.append(stub.get_namespace_member("GObject", "GBoxed"))
-
-            elif gtype and issubclass(b, GObject.GPointer):
-                parents.append(stub.get_namespace_member("GObject", "GPointer"))
-
-            else:
-                # Add non-GI base classes. Overrides could define new classes, such as:
-                # class FooError(Exception):
-                #    pass
-                type_fullname = f"{b.__module__}.{b.__qualname__}"
-                if type_fullname.startswith("typing."):
-                    type_fullname = str(b).replace("~", "")
-
-                if type_fullname.startswith("gi.overrides."):
-                    type_fullname = type_fullname[len("gi.overrides.") :]
-                ns, type_name = type_fullname.split(".", 1)
-                if ns == stub.namespace:
-                    parents.append(type_name)
-                elif ns in ("gi", "_gi", "GI", "_GI"):
-                    parents.append(stub.get_namespace_member("_gi", type_name))
-                elif ns == "builtins":
-                    if type_name != "object":
-                        parents.append(stub.get_import("builtins", type_name))
-                else:
-                    parents.append(type_fullname)
-
         string_parents = ""
-        if parents:
-            if parents == [stub.get_namespace_member("GObject", "GInterface")]:
-                parents.append(stub.get_import("typing", "Protocol"))
+        if class_bases:
+            bases_strings = [
+                stub.get_class_import(base)
+                for base in class_bases
+                if base is not object
+            ]
 
-            string_parents = f"({', '.join(parents)})"
+            string_parents = f"({', '.join(bases_strings)})"
 
         if (
             not classret
