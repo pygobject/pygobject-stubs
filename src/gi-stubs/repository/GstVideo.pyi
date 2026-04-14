@@ -7,6 +7,7 @@ from typing_extensions import Self
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
@@ -190,9 +191,7 @@ def buffer_pool_config_set_video_alignment(
     config: Gst.Structure, align: VideoAlignment
 ) -> None: ...
 def is_video_overlay_prepare_window_handle_message(msg: Gst.Message) -> bool: ...
-def navigation_event_get_coordinates(
-    event: Gst.Event,
-) -> tuple[bool, float, float]: ...
+def navigation_event_get_coordinates(event: Gst.Event) -> tuple[bool, float, float]: ...
 def navigation_event_get_type(event: Gst.Event) -> NavigationEventType: ...
 def navigation_event_new_command(command: NavigationCommand) -> Gst.Event: ...
 def navigation_event_new_key_press(
@@ -260,19 +259,13 @@ def navigation_message_new_mouse_over(src: Gst.Object, active: bool) -> Gst.Mess
 def navigation_message_parse_angles_changed(
     message: Gst.Message,
 ) -> tuple[bool, int, int]: ...
-def navigation_message_parse_event(
-    message: Gst.Message,
-) -> tuple[bool, Gst.Event]: ...
-def navigation_message_parse_mouse_over(
-    message: Gst.Message,
-) -> tuple[bool, bool]: ...
+def navigation_message_parse_event(message: Gst.Message) -> tuple[bool, Gst.Event]: ...
+def navigation_message_parse_mouse_over(message: Gst.Message) -> tuple[bool, bool]: ...
 def navigation_query_get_type(query: Gst.Query) -> NavigationQueryType: ...
 def navigation_query_new_angles() -> Gst.Query: ...
 def navigation_query_new_commands() -> Gst.Query: ...
 def navigation_query_parse_angles(query: Gst.Query) -> tuple[bool, int, int]: ...
-def navigation_query_parse_commands_length(
-    query: Gst.Query,
-) -> tuple[bool, int]: ...
+def navigation_query_parse_commands_length(query: Gst.Query) -> tuple[bool, int]: ...
 def navigation_query_parse_commands_nth(
     query: Gst.Query, nth: int
 ) -> tuple[bool, NavigationCommand]: ...
@@ -399,9 +392,7 @@ def video_frame_map_id(
 def video_gl_texture_upload_meta_api_get_type() -> type[Any]: ...
 def video_gl_texture_upload_meta_get_info() -> Gst.MetaInfo: ...
 def video_guess_framerate(duration: int) -> tuple[bool, int, int]: ...
-def video_info_dma_drm_from_caps(
-    caps: Gst.Caps,
-) -> tuple[bool, VideoInfoDmaDrm]: ...
+def video_info_dma_drm_from_caps(caps: Gst.Caps) -> tuple[bool, VideoInfoDmaDrm]: ...
 def video_info_dma_drm_from_video_info(
     info: VideoInfo, modifier: int
 ) -> tuple[bool, VideoInfoDmaDrm]: ...
@@ -414,9 +405,7 @@ def video_is_common_aspect_ratio(
     width: int, height: int, par_n: int, par_d: int
 ) -> bool: ...
 def video_is_dma_drm_caps(caps: Gst.Caps) -> bool: ...
-def video_make_raw_caps(
-    formats: Sequence[VideoFormat] | None = None,
-) -> Gst.Caps: ...
+def video_make_raw_caps(formats: Sequence[VideoFormat] | None = None) -> Gst.Caps: ...
 def video_make_raw_caps_with_features(
     formats: Sequence[VideoFormat] | None = None,
     features: Gst.CapsFeatures | None = None,
@@ -484,7 +473,7 @@ def video_transfer_function_is_equivalent(
 ) -> bool: ...
 def video_transfer_function_to_iso(func: VideoTransferFunction) -> int: ...
 
-class AncillaryMeta(GObject.GPointer):
+class AncillaryMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -501,7 +490,7 @@ class AncillaryMeta(GObject.GPointer):
     DID: int
     SDID_block_number: int
     data_count: int
-    data: list[int]
+    data: int
     checksum: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
@@ -542,7 +531,7 @@ class ColorBalanceChannel(GObject.Object):
     def max_value(self) -> int: ...
     def do_value_changed(self, value: int) -> None: ...
 
-class ColorBalanceChannelClass(GObject.GPointer):
+class ColorBalanceChannelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -555,7 +544,7 @@ class ColorBalanceChannelClass(GObject.GPointer):
     @property
     def value_changed(self) -> Callable[[ColorBalanceChannel, int], None]: ...
 
-class ColorBalanceInterface(GObject.GPointer):
+class ColorBalanceInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -641,9 +630,7 @@ class Navigation(GObject.GInterface, Protocol):
         identifier: int, x: float, y: float, state: NavigationModifierType
     ) -> Gst.Event: ...
     @staticmethod
-    def event_parse_command(
-        event: Gst.Event,
-    ) -> tuple[bool, NavigationCommand]: ...
+    def event_parse_command(event: Gst.Event) -> tuple[bool, NavigationCommand]: ...
     @staticmethod
     def event_parse_key_event(event: Gst.Event) -> tuple[bool, str]: ...
     @staticmethod
@@ -655,9 +642,7 @@ class Navigation(GObject.GInterface, Protocol):
         event: Gst.Event,
     ) -> tuple[bool, int, float, float]: ...
     @staticmethod
-    def event_parse_mouse_move_event(
-        event: Gst.Event,
-    ) -> tuple[bool, float, float]: ...
+    def event_parse_mouse_move_event(event: Gst.Event) -> tuple[bool, float, float]: ...
     @staticmethod
     def event_parse_mouse_scroll_event(
         event: Gst.Event,
@@ -685,9 +670,7 @@ class Navigation(GObject.GInterface, Protocol):
     @staticmethod
     def message_new_mouse_over(src: Gst.Object, active: bool) -> Gst.Message: ...
     @staticmethod
-    def message_parse_angles_changed(
-        message: Gst.Message,
-    ) -> tuple[bool, int, int]: ...
+    def message_parse_angles_changed(message: Gst.Message) -> tuple[bool, int, int]: ...
     @staticmethod
     def message_parse_event(message: Gst.Message) -> tuple[bool, Gst.Event]: ...
     @staticmethod
@@ -721,7 +704,7 @@ class Navigation(GObject.GInterface, Protocol):
         self, x: float, y: float, delta_x: float, delta_y: float
     ) -> None: ...
 
-class NavigationInterface(GObject.GPointer):
+class NavigationInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -736,7 +719,7 @@ class NavigationInterface(GObject.GPointer):
     @property
     def send_event_simple(self) -> Callable[[Navigation, Gst.Event], None]: ...
 
-class VideoAFDMeta(GObject.GPointer):
+class VideoAFDMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -752,7 +735,7 @@ class VideoAFDMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class VideoAffineTransformationMeta(GObject.GPointer):
+class VideoAffineTransformationMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -851,7 +834,7 @@ class VideoAggregator(GstBase.Aggregator):
     def do_update_caps(self, caps: Gst.Caps) -> Gst.Caps: ...
     def get_execution_task_pool(self) -> Gst.TaskPool: ...
 
-class VideoAggregatorClass(GObject.GPointer):
+class VideoAggregatorClass(_gi.Struct):
     """
     :Constructors:
 
@@ -969,7 +952,7 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     ) -> None: ...
     def update_conversion_info(self) -> None: ...
 
-class VideoAggregatorConvertPadClass(GObject.GPointer):
+class VideoAggregatorConvertPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -984,7 +967,7 @@ class VideoAggregatorConvertPadClass(GObject.GPointer):
         self,
     ) -> Callable[[VideoAggregatorConvertPad, VideoAggregator, VideoInfo], None]: ...
 
-class VideoAggregatorConvertPadPrivate(GObject.GPointer): ...
+class VideoAggregatorConvertPadPrivate(_gi.Struct): ...
 
 class VideoAggregatorPad(GstBase.AggregatorPad):
     """
@@ -1094,7 +1077,7 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
     def has_current_buffer(self) -> bool: ...
     def set_needs_alpha(self, needs_alpha: bool) -> None: ...
 
-class VideoAggregatorPadClass(GObject.GPointer):
+class VideoAggregatorPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1127,7 +1110,7 @@ class VideoAggregatorPadClass(GObject.GPointer):
         self,
     ) -> Callable[[VideoAggregatorPad, VideoAggregator, VideoFrame], None]: ...
 
-class VideoAggregatorPadPrivate(GObject.GPointer): ...
+class VideoAggregatorPadPrivate(_gi.Struct): ...
 
 class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
     """
@@ -1216,7 +1199,7 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
         parent: Gst.Object = ...,
     ) -> None: ...
 
-class VideoAggregatorParallelConvertPadClass(GObject.GPointer):
+class VideoAggregatorParallelConvertPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1227,9 +1210,9 @@ class VideoAggregatorParallelConvertPadClass(GObject.GPointer):
     @property
     def parent_class(self) -> VideoAggregatorConvertPadClass: ...
 
-class VideoAggregatorPrivate(GObject.GPointer): ...
+class VideoAggregatorPrivate(_gi.Struct): ...
 
-class VideoAlignment(GObject.GPointer):
+class VideoAlignment(_gi.Struct):
     """
     :Constructors:
 
@@ -1245,7 +1228,7 @@ class VideoAlignment(GObject.GPointer):
     stride_align: list[int]
     def reset(self) -> None: ...
 
-class VideoAncillary(GObject.GPointer):
+class VideoAncillary(_gi.Struct):
     """
     :Constructors:
 
@@ -1259,7 +1242,7 @@ class VideoAncillary(GObject.GPointer):
     data_count: int
     data: bytes
 
-class VideoBarMeta(GObject.GPointer):
+class VideoBarMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1313,7 +1296,7 @@ class VideoBufferPool(Gst.BufferPool):
     @classmethod
     def new(cls) -> VideoBufferPool: ...
 
-class VideoBufferPoolClass(GObject.GPointer):
+class VideoBufferPoolClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1324,9 +1307,9 @@ class VideoBufferPoolClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gst.BufferPoolClass: ...
 
-class VideoBufferPoolPrivate(GObject.GPointer): ...
+class VideoBufferPoolPrivate(_gi.Struct): ...
 
-class VideoCaptionMeta(GObject.GPointer):
+class VideoCaptionMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1342,11 +1325,11 @@ class VideoCaptionMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class VideoChromaResample(GObject.GPointer):
+class VideoChromaResample(_gi.Struct):
     def free(self) -> None: ...
     def get_info(self) -> tuple[int, int]: ...
 
-class VideoCodecAlphaMeta(GObject.GPointer):
+class VideoCodecAlphaMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1417,7 +1400,7 @@ class VideoCodecState(GObject.GBoxed):
     def ref(self) -> VideoCodecState: ...
     def unref(self) -> None: ...
 
-class VideoColorPrimariesInfo(GObject.GPointer):
+class VideoColorPrimariesInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1436,7 +1419,7 @@ class VideoColorPrimariesInfo(GObject.GPointer):
     Bx: float
     By: float
 
-class VideoColorimetry(GObject.GPointer):
+class VideoColorimetry(_gi.Struct):
     """
     :Constructors:
 
@@ -1457,7 +1440,7 @@ class VideoColorimetry(GObject.GPointer):
     def matches(self, color: str) -> bool: ...
     def to_string(self) -> str | None: ...
 
-class VideoContentLightLevel(GObject.GPointer):
+class VideoContentLightLevel(_gi.Struct):
     """
     :Constructors:
 
@@ -1475,7 +1458,7 @@ class VideoContentLightLevel(GObject.GPointer):
     def is_equal(self, other: VideoContentLightLevel) -> bool: ...
     def to_string(self) -> str: ...
 
-class VideoConverter(GObject.GPointer):
+class VideoConverter(_gi.Struct):
     def frame(self, src: VideoFrame, dest: VideoFrame) -> None: ...
     def frame_finish(self) -> None: ...
     def free(self) -> None: ...
@@ -1484,7 +1467,7 @@ class VideoConverter(GObject.GPointer):
     def get_out_info(self) -> VideoInfo: ...
     def set_config(self, config: Gst.Structure) -> bool: ...
 
-class VideoCropMeta(GObject.GPointer):
+class VideoCropMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1638,9 +1621,7 @@ class VideoDecoder(Gst.Element):
     def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
-        self,
-        caps: Gst.Caps | None = None,
-        filter: Gst.Caps | None = None,
+        self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
     ) -> Gst.Caps: ...
     def release_frame(self, frame: VideoCodecFrame) -> None: ...
     def request_sync_point(
@@ -1670,7 +1651,7 @@ class VideoDecoder(Gst.Element):
     def set_subframe_mode(self, subframe_mode: bool) -> None: ...
     def set_use_default_pad_acceptcaps(self, use: bool) -> None: ...
 
-class VideoDecoderClass(GObject.GPointer):
+class VideoDecoderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1733,10 +1714,10 @@ class VideoDecoderClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class VideoDecoderPrivate(GObject.GPointer): ...
+class VideoDecoderPrivate(_gi.Struct): ...
 class VideoDirection(GObject.GInterface, Protocol): ...
 
-class VideoDirectionInterface(GObject.GPointer):
+class VideoDirectionInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -1747,7 +1728,7 @@ class VideoDirectionInterface(GObject.GPointer):
     @property
     def iface(self) -> GObject.TypeInterface: ...
 
-class VideoDither(GObject.GPointer):
+class VideoDither(_gi.Struct):
     def free(self) -> None: ...
     def line(self, line: None, x: int, y: int, width: int) -> None: ...
 
@@ -1854,9 +1835,7 @@ class VideoEncoder(Gst.Element, Gst.Preset):
     def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
-        self,
-        caps: Gst.Caps | None = None,
-        filter: Gst.Caps | None = None,
+        self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
     ) -> Gst.Caps: ...
     def release_frame(self, frame: VideoCodecFrame) -> None: ...
     def set_headers(self, headers: list[Gst.Buffer]) -> None: ...
@@ -1868,7 +1847,7 @@ class VideoEncoder(Gst.Element, Gst.Preset):
     ) -> VideoCodecState | None: ...
     def set_qos_enabled(self, enabled: bool) -> None: ...
 
-class VideoEncoderClass(GObject.GPointer):
+class VideoEncoderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1921,7 +1900,7 @@ class VideoEncoderClass(GObject.GPointer):
         self,
     ) -> Callable[[VideoEncoder, VideoCodecFrame, Gst.Meta], bool]: ...
 
-class VideoEncoderPrivate(GObject.GPointer): ...
+class VideoEncoderPrivate(_gi.Struct): ...
 
 class VideoFilter(GstBase.BaseTransform):
     """
@@ -1970,11 +1949,7 @@ class VideoFilter(GstBase.BaseTransform):
     @property
     def out_info(self) -> VideoInfo: ...
     def __init__(
-        self,
-        *,
-        qos: bool = ...,
-        name: str | None = ...,
-        parent: Gst.Object = ...,
+        self, *, qos: bool = ..., name: str | None = ..., parent: Gst.Object = ...
     ) -> None: ...
     def do_set_info(
         self,
@@ -1988,7 +1963,7 @@ class VideoFilter(GstBase.BaseTransform):
     ) -> Gst.FlowReturn: ...
     def do_transform_frame_ip(self, frame: VideoFrame) -> Gst.FlowReturn: ...
 
-class VideoFilterClass(GObject.GPointer):
+class VideoFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2011,7 +1986,7 @@ class VideoFilterClass(GObject.GPointer):
         self,
     ) -> Callable[[VideoFilter, VideoFrame], Gst.FlowReturn]: ...
 
-class VideoFormatInfo(GObject.GPointer):
+class VideoFormatInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -2060,7 +2035,7 @@ class VideoFormatInfo(GObject.GPointer):
     def component(self, plane: int) -> int: ...
     def extrapolate_stride(self, plane: int, stride: int) -> int: ...
 
-class VideoFrame(GObject.GPointer):
+class VideoFrame(_gi.Struct):
     """
     :Constructors:
 
@@ -2087,7 +2062,7 @@ class VideoFrame(GObject.GPointer):
     ) -> tuple[bool, VideoFrame]: ...
     def unmap(self) -> None: ...
 
-class VideoGLTextureUploadMeta(GObject.GPointer):
+class VideoGLTextureUploadMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2193,7 +2168,7 @@ class VideoInfoDmaDrm(GObject.GBoxed):
     def to_caps(self) -> Gst.Caps | None: ...
     def to_video_info(self) -> tuple[bool, VideoInfo]: ...
 
-class VideoMasteringDisplayInfo(GObject.GPointer):
+class VideoMasteringDisplayInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -2209,14 +2184,12 @@ class VideoMasteringDisplayInfo(GObject.GPointer):
     def add_to_caps(self, caps: Gst.Caps) -> bool: ...
     def from_caps(self, caps: Gst.Caps) -> bool: ...
     @staticmethod
-    def from_string(
-        mastering: str,
-    ) -> tuple[bool, VideoMasteringDisplayInfo]: ...
+    def from_string(mastering: str) -> tuple[bool, VideoMasteringDisplayInfo]: ...
     def init(self) -> None: ...
     def is_equal(self, other: VideoMasteringDisplayInfo) -> bool: ...
     def to_string(self) -> str: ...
 
-class VideoMasteringDisplayInfoCoordinates(GObject.GPointer):
+class VideoMasteringDisplayInfoCoordinates(_gi.Struct):
     """
     :Constructors:
 
@@ -2228,7 +2201,7 @@ class VideoMasteringDisplayInfoCoordinates(GObject.GPointer):
     x: int
     y: int
 
-class VideoMeta(GObject.GPointer):
+class VideoMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2258,7 +2231,7 @@ class VideoMeta(GObject.GPointer):
     def set_alignment(self, alignment: VideoAlignment) -> bool: ...
     def unmap(self, plane: int, info: Gst.MapInfo) -> bool: ...
 
-class VideoMetaTransform(GObject.GPointer):
+class VideoMetaTransform(_gi.Struct):
     """
     :Constructors:
 
@@ -2279,9 +2252,7 @@ class VideoOrientation(GObject.GInterface, Protocol):
     Interface GstVideoOrientation
     """
     @staticmethod
-    def from_tag(
-        taglist: Gst.TagList,
-    ) -> tuple[bool, VideoOrientationMethod]: ...
+    def from_tag(taglist: Gst.TagList) -> tuple[bool, VideoOrientationMethod]: ...
     def get_hcenter(self) -> tuple[bool, int]: ...
     def get_hflip(self) -> tuple[bool, bool]: ...
     def get_vcenter(self) -> tuple[bool, int]: ...
@@ -2291,7 +2262,7 @@ class VideoOrientation(GObject.GInterface, Protocol):
     def set_vcenter(self, center: int) -> bool: ...
     def set_vflip(self, flip: bool) -> bool: ...
 
-class VideoOrientationInterface(GObject.GPointer):
+class VideoOrientationInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -2359,7 +2330,7 @@ class VideoOverlayComposition(GObject.GBoxed):
         cls, rectangle: VideoOverlayRectangle | None = None
     ) -> VideoOverlayComposition: ...
 
-class VideoOverlayCompositionMeta(GObject.GPointer):
+class VideoOverlayCompositionMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2373,7 +2344,7 @@ class VideoOverlayCompositionMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class VideoOverlayInterface(GObject.GPointer):
+class VideoOverlayInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -2432,7 +2403,7 @@ class VideoOverlayRectangle(GObject.GBoxed):
         self, render_x: int, render_y: int, render_width: int, render_height: int
     ) -> None: ...
 
-class VideoRectangle(GObject.GPointer):
+class VideoRectangle(_gi.Struct):
     """
     :Constructors:
 
@@ -2446,7 +2417,7 @@ class VideoRectangle(GObject.GPointer):
     w: int
     h: int
 
-class VideoRegionOfInterestMeta(GObject.GPointer):
+class VideoRegionOfInterestMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2469,7 +2440,7 @@ class VideoRegionOfInterestMeta(GObject.GPointer):
     def get_info() -> Gst.MetaInfo: ...
     def get_param(self, name: str) -> Gst.Structure | None: ...
 
-class VideoResampler(GObject.GPointer):
+class VideoResampler(_gi.Struct):
     """
     :Constructors:
 
@@ -2499,7 +2470,7 @@ class VideoResampler(GObject.GPointer):
         options: Gst.Structure,
     ) -> bool: ...
 
-class VideoSEIUserDataUnregisteredMeta(GObject.GPointer):
+class VideoSEIUserDataUnregisteredMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2515,7 +2486,7 @@ class VideoSEIUserDataUnregisteredMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class VideoScaler(GObject.GPointer):
+class VideoScaler(_gi.Struct):
     def free(self) -> None: ...
     def get_coeff(self, out_offset: int) -> tuple[float, int, int]: ...
     def get_max_taps(self) -> int: ...
@@ -2641,7 +2612,7 @@ class VideoSink(GstBase.BaseSink):
     def do_set_info(self, caps: Gst.Caps, info: VideoInfo) -> bool: ...
     def do_show_frame(self, buf: Gst.Buffer) -> Gst.FlowReturn: ...
 
-class VideoSinkClass(GObject.GPointer):
+class VideoSinkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2656,9 +2627,9 @@ class VideoSinkClass(GObject.GPointer):
     @property
     def set_info(self) -> Callable[[VideoSink, Gst.Caps, VideoInfo], bool]: ...
 
-class VideoSinkPrivate(GObject.GPointer): ...
+class VideoSinkPrivate(_gi.Struct): ...
 
-class VideoTileInfo(GObject.GPointer):
+class VideoTileInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -2770,7 +2741,7 @@ class VideoTimeCode(GObject.GBoxed):
     def to_date_time(self) -> GLib.DateTime | None: ...
     def to_string(self) -> str: ...
 
-class VideoTimeCodeConfig(GObject.GPointer):
+class VideoTimeCodeConfig(_gi.Struct):
     """
     :Constructors:
 
@@ -2810,7 +2781,7 @@ class VideoTimeCodeInterval(GObject.GBoxed):
     @classmethod
     def new_from_string(cls, tc_inter_str: str) -> VideoTimeCodeInterval | None: ...
 
-class VideoTimeCodeMeta(GObject.GPointer):
+class VideoTimeCodeMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2835,11 +2806,7 @@ class VideoVBIEncoder(GObject.GBoxed):
     @staticmethod
     def __new__(cls: type[Self], format: VideoFormat, pixel_width: int) -> Self: ...
     def add_ancillary(
-        self,
-        composite: bool,
-        DID: int,
-        SDID_block_number: int,
-        data: Sequence[int],
+        self, composite: bool, DID: int, SDID_block_number: int, data: Sequence[int]
     ) -> bool: ...
     def copy(self) -> VideoVBIEncoder: ...
     def free(self) -> None: ...

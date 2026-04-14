@@ -5,6 +5,7 @@ from typing_extensions import Self
 from collections.abc import Sequence
 from enum import IntEnum
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
@@ -23,9 +24,7 @@ def sdp_address_is_multicast(nettype: str, addrtype: str, addr: str) -> bool: ..
 def sdp_make_keymgmt(uri: str, base64: str) -> str: ...
 def sdp_media_init() -> tuple[SDPResult, SDPMedia]: ...
 def sdp_media_new() -> tuple[SDPResult, SDPMedia]: ...
-def sdp_media_set_media_from_caps(
-    caps: Gst.Caps,
-) -> tuple[SDPResult, SDPMedia]: ...
+def sdp_media_set_media_from_caps(caps: Gst.Caps) -> tuple[SDPResult, SDPMedia]: ...
 def sdp_message_as_uri(scheme: str, msg: SDPMessage) -> str: ...
 def sdp_message_init() -> tuple[SDPResult, SDPMessage]: ...
 def sdp_message_new() -> tuple[SDPResult, SDPMessage]: ...
@@ -33,10 +32,10 @@ def sdp_message_new_from_text(text: str) -> tuple[SDPResult, SDPMessage]: ...
 def sdp_message_parse_buffer(data: Sequence[int], msg: SDPMessage) -> SDPResult: ...
 def sdp_message_parse_uri(uri: str, msg: SDPMessage) -> SDPResult: ...
 
-class MIKEYDecryptInfo(GObject.GPointer): ...
-class MIKEYEncryptInfo(GObject.GPointer): ...
+class MIKEYDecryptInfo(_gi.Struct): ...
+class MIKEYEncryptInfo(_gi.Struct): ...
 
-class MIKEYMapSRTP(GObject.GPointer):
+class MIKEYMapSRTP(_gi.Struct):
     """
     :Constructors:
 
@@ -153,7 +152,7 @@ class MIKEYPayload(GObject.GBoxed):
     def sp_set(self, policy: int, proto: MIKEYSecProto) -> bool: ...
     def t_set(self, type: MIKEYTSType, ts_value: Sequence[int]) -> bool: ...
 
-class MIKEYPayloadKEMAC(GObject.GPointer):
+class MIKEYPayloadKEMAC(_gi.Struct):
     """
     :Constructors:
 
@@ -167,7 +166,7 @@ class MIKEYPayloadKEMAC(GObject.GPointer):
     mac_alg: MIKEYMacAlg
     subpayloads: list[None]
 
-class MIKEYPayloadKeyData(GObject.GPointer):
+class MIKEYPayloadKeyData(_gi.Struct):
     """
     :Constructors:
 
@@ -186,7 +185,7 @@ class MIKEYPayloadKeyData(GObject.GPointer):
     kv_len: bytes
     kv_data: bytes
 
-class MIKEYPayloadPKE(GObject.GPointer):
+class MIKEYPayloadPKE(_gi.Struct):
     """
     :Constructors:
 
@@ -200,7 +199,7 @@ class MIKEYPayloadPKE(GObject.GPointer):
     data_len: int
     data: int
 
-class MIKEYPayloadRAND(GObject.GPointer):
+class MIKEYPayloadRAND(_gi.Struct):
     """
     :Constructors:
 
@@ -213,7 +212,7 @@ class MIKEYPayloadRAND(GObject.GPointer):
     len: int
     rand: int
 
-class MIKEYPayloadSP(GObject.GPointer):
+class MIKEYPayloadSP(_gi.Struct):
     """
     :Constructors:
 
@@ -227,7 +226,7 @@ class MIKEYPayloadSP(GObject.GPointer):
     proto: MIKEYSecProto
     params: list[None]
 
-class MIKEYPayloadSPParam(GObject.GPointer):
+class MIKEYPayloadSPParam(_gi.Struct):
     """
     :Constructors:
 
@@ -240,7 +239,7 @@ class MIKEYPayloadSPParam(GObject.GPointer):
     len: int
     val: int
 
-class MIKEYPayloadT(GObject.GPointer):
+class MIKEYPayloadT(_gi.Struct):
     """
     :Constructors:
 
@@ -253,7 +252,7 @@ class MIKEYPayloadT(GObject.GPointer):
     type: MIKEYTSType
     ts_value: int
 
-class SDPAttribute(GObject.GPointer):
+class SDPAttribute(_gi.Struct):
     """
     :Constructors:
 
@@ -267,7 +266,7 @@ class SDPAttribute(GObject.GPointer):
     def clear(self) -> SDPResult: ...
     def set(self, key: str, value: str | None = None) -> SDPResult: ...
 
-class SDPBandwidth(GObject.GPointer):
+class SDPBandwidth(_gi.Struct):
     """
     :Constructors:
 
@@ -281,7 +280,7 @@ class SDPBandwidth(GObject.GPointer):
     def clear(self) -> SDPResult: ...
     def set(self, bwtype: str, bandwidth: int) -> SDPResult: ...
 
-class SDPConnection(GObject.GPointer):
+class SDPConnection(_gi.Struct):
     """
     :Constructors:
 
@@ -300,7 +299,7 @@ class SDPConnection(GObject.GPointer):
         self, nettype: str, addrtype: str, address: str, ttl: int, addr_number: int
     ) -> SDPResult: ...
 
-class SDPKey(GObject.GPointer):
+class SDPKey(_gi.Struct):
     """
     :Constructors:
 
@@ -312,7 +311,7 @@ class SDPKey(GObject.GPointer):
     type: str
     data: str
 
-class SDPMedia(GObject.GPointer):
+class SDPMedia(_gi.Struct):
     """
     :Constructors:
 
@@ -493,7 +492,7 @@ class SDPMessage(GObject.GBoxed):
     def uninit(self) -> SDPResult: ...
     def zones_len(self) -> int: ...
 
-class SDPOrigin(GObject.GPointer):
+class SDPOrigin(_gi.Struct):
     """
     :Constructors:
 
@@ -509,7 +508,7 @@ class SDPOrigin(GObject.GPointer):
     addrtype: str
     addr: str
 
-class SDPTime(GObject.GPointer):
+class SDPTime(_gi.Struct):
     """
     :Constructors:
 
@@ -524,7 +523,7 @@ class SDPTime(GObject.GPointer):
     def clear(self) -> SDPResult: ...
     def set(self, start: str, stop: str, repeat: Sequence[str]) -> SDPResult: ...
 
-class SDPZone(GObject.GPointer):
+class SDPZone(_gi.Struct):
     """
     :Constructors:
 

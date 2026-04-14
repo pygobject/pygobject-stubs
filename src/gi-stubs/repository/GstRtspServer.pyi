@@ -8,6 +8,7 @@ from collections.abc import Sequence
 from enum import IntEnum
 from enum import IntFlag
 
+from gi import _gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -102,7 +103,7 @@ class RTSPAddressPool(GObject.Object):
         self, ip_address: str, port: int, n_ports: int, ttl: int
     ) -> tuple[RTSPAddressPoolResult, RTSPAddress]: ...
 
-class RTSPAddressPoolClass(GObject.GPointer):
+class RTSPAddressPoolClass(_gi.Struct):
     """
     :Constructors:
 
@@ -113,7 +114,7 @@ class RTSPAddressPoolClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class RTSPAddressPoolPrivate(GObject.GPointer): ...
+class RTSPAddressPoolPrivate(_gi.Struct): ...
 
 class RTSPAuth(GObject.Object):
     """
@@ -169,7 +170,7 @@ class RTSPAuth(GObject.Object):
     def set_tls_certificate(self, cert: Gio.TlsCertificate | None = None) -> None: ...
     def set_tls_database(self, database: Gio.TlsDatabase | None = None) -> None: ...
 
-class RTSPAuthClass(GObject.GPointer):
+class RTSPAuthClass(_gi.Struct):
     """
     :Constructors:
 
@@ -194,7 +195,7 @@ class RTSPAuthClass(GObject.GPointer):
         [RTSPAuth, Gio.TlsConnection, Gio.TlsCertificate, Gio.TlsCertificateFlags], bool
     ]: ...
 
-class RTSPAuthPrivate(GObject.GPointer): ...
+class RTSPAuthPrivate(_gi.Struct): ...
 
 class RTSPClient(GObject.Object):
     """
@@ -345,9 +346,7 @@ class RTSPClient(GObject.Object):
         self, session: RTSPSession | None, message: GstRtsp.RTSPMessage
     ) -> GstRtsp.RTSPResult: ...
     def session_filter(
-        self,
-        func: Callable[..., RTSPFilterResult] | None = None,
-        *user_data: Any,
+        self, func: Callable[..., RTSPFilterResult] | None = None, *user_data: Any
     ) -> list[RTSPSession]: ...
     def set_auth(self, auth: RTSPAuth | None = None) -> None: ...
     def set_connection(self, conn: GstRtsp.RTSPConnection) -> bool: ...
@@ -360,7 +359,7 @@ class RTSPClient(GObject.Object):
     def set_session_pool(self, pool: RTSPSessionPool | None = None) -> None: ...
     def set_thread_pool(self, pool: RTSPThreadPool | None = None) -> None: ...
 
-class RTSPClientClass(GObject.GPointer):
+class RTSPClientClass(_gi.Struct):
     """
     :Constructors:
 
@@ -492,9 +491,9 @@ class RTSPClientClass(GObject.GPointer):
         [RTSPClient, RTSPContext, GstRtsp.RTSPStatusCode], GstRtsp.RTSPStatusCode
     ]: ...
 
-class RTSPClientPrivate(GObject.GPointer): ...
+class RTSPClientPrivate(_gi.Struct): ...
 
-class RTSPContext(GObject.GPointer):
+class RTSPContext(_gi.Struct):
     """
     :Constructors:
 
@@ -745,7 +744,7 @@ class RTSPMedia(GObject.Object):
     def unsuspend(self) -> bool: ...
     def use_time_provider(self, time_provider: bool) -> None: ...
 
-class RTSPMediaClass(GObject.GPointer):
+class RTSPMediaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -954,7 +953,7 @@ class RTSPMediaFactory(GObject.Object):
     def set_suspend_mode(self, mode: RTSPSuspendMode) -> None: ...
     def set_transport_mode(self, mode: RTSPTransportMode) -> None: ...
 
-class RTSPMediaFactoryClass(GObject.GPointer):
+class RTSPMediaFactoryClass(_gi.Struct):
     """
     :Constructors:
 
@@ -983,7 +982,7 @@ class RTSPMediaFactoryClass(GObject.GPointer):
     @property
     def media_configure(self) -> Callable[[RTSPMediaFactory, RTSPMedia], None]: ...
 
-class RTSPMediaFactoryPrivate(GObject.GPointer): ...
+class RTSPMediaFactoryPrivate(_gi.Struct): ...
 
 class RTSPMediaFactoryURI(RTSPMediaFactory):
     """
@@ -1100,7 +1099,7 @@ class RTSPMediaFactoryURI(RTSPMediaFactory):
     def new(cls) -> RTSPMediaFactoryURI: ...
     def set_uri(self, uri: str) -> None: ...
 
-class RTSPMediaFactoryURIClass(GObject.GPointer):
+class RTSPMediaFactoryURIClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1111,8 +1110,8 @@ class RTSPMediaFactoryURIClass(GObject.GPointer):
     @property
     def parent_class(self) -> RTSPMediaFactoryClass: ...
 
-class RTSPMediaFactoryURIPrivate(GObject.GPointer): ...
-class RTSPMediaPrivate(GObject.GPointer): ...
+class RTSPMediaFactoryURIPrivate(_gi.Struct): ...
+class RTSPMediaPrivate(_gi.Struct): ...
 
 class RTSPMountPoints(GObject.Object):
     """
@@ -1140,7 +1139,7 @@ class RTSPMountPoints(GObject.Object):
     def new(cls) -> RTSPMountPoints: ...
     def remove_factory(self, path: str) -> None: ...
 
-class RTSPMountPointsClass(GObject.GPointer):
+class RTSPMountPointsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1153,7 +1152,7 @@ class RTSPMountPointsClass(GObject.GPointer):
     @property
     def make_path(self) -> Callable[[RTSPMountPoints, GstRtsp.RTSPUrl], str | None]: ...
 
-class RTSPMountPointsPrivate(GObject.GPointer): ...
+class RTSPMountPointsPrivate(_gi.Struct): ...
 
 class RTSPOnvifClient(RTSPClient):
     """
@@ -1227,7 +1226,7 @@ class RTSPOnvifClient(RTSPClient):
     @classmethod
     def new(cls) -> RTSPOnvifClient: ...
 
-class RTSPOnvifClientClass(GObject.GPointer):
+class RTSPOnvifClientClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1350,7 +1349,7 @@ class RTSPOnvifMedia(RTSPMedia):
     def get_backchannel_bandwidth(self) -> int: ...
     def set_backchannel_bandwidth(self, bandwidth: int) -> None: ...
 
-class RTSPOnvifMediaClass(GObject.GPointer):
+class RTSPOnvifMediaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1477,7 +1476,7 @@ class RTSPOnvifMediaFactory(RTSPMediaFactory):
     def set_backchannel_launch(self, launch: str | None = None) -> None: ...
     def set_replay_support(self, has_replay_support: bool) -> None: ...
 
-class RTSPOnvifMediaFactoryClass(GObject.GPointer):
+class RTSPOnvifMediaFactoryClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1494,8 +1493,8 @@ class RTSPOnvifMediaFactoryClass(GObject.GPointer):
         self,
     ) -> Callable[[RTSPOnvifMediaFactory, RTSPOnvifMedia, RTSPContext], bool]: ...
 
-class RTSPOnvifMediaFactoryPrivate(GObject.GPointer): ...
-class RTSPOnvifMediaPrivate(GObject.GPointer): ...
+class RTSPOnvifMediaFactoryPrivate(_gi.Struct): ...
+class RTSPOnvifMediaPrivate(_gi.Struct): ...
 
 class RTSPOnvifServer(RTSPServer):
     """
@@ -1556,7 +1555,7 @@ class RTSPOnvifServer(RTSPServer):
     @classmethod
     def new(cls) -> RTSPOnvifServer: ...
 
-class RTSPOnvifServerClass(GObject.GPointer):
+class RTSPOnvifServerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1651,9 +1650,7 @@ class RTSPServer(GObject.Object):
     ) -> None: ...
     def attach(self, context: GLib.MainContext | None = None) -> int: ...
     def client_filter(
-        self,
-        func: Callable[..., RTSPFilterResult] | None = None,
-        *user_data: Any,
+        self, func: Callable[..., RTSPFilterResult] | None = None, *user_data: Any
     ) -> list[RTSPClient]: ...
     def create_socket(
         self, cancellable: Gio.Cancellable | None = None
@@ -1686,14 +1683,10 @@ class RTSPServer(GObject.Object):
     def set_session_pool(self, pool: RTSPSessionPool | None = None) -> None: ...
     def set_thread_pool(self, pool: RTSPThreadPool | None = None) -> None: ...
     def transfer_connection(
-        self,
-        socket: Gio.Socket,
-        ip: str,
-        port: int,
-        initial_buffer: str | None = None,
+        self, socket: Gio.Socket, ip: str, port: int, initial_buffer: str | None = None
     ) -> bool: ...
 
-class RTSPServerClass(GObject.GPointer):
+class RTSPServerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1708,7 +1701,7 @@ class RTSPServerClass(GObject.GPointer):
     @property
     def client_connected(self) -> Callable[[RTSPServer, RTSPClient], None]: ...
 
-class RTSPServerPrivate(GObject.GPointer): ...
+class RTSPServerPrivate(_gi.Struct): ...
 
 class RTSPSession(GObject.Object):
     """
@@ -1757,9 +1750,7 @@ class RTSPSession(GObject.Object):
     def allow_expire(self) -> None: ...
     def dup_media(self, path: str) -> tuple[RTSPSessionMedia | None, int]: ...
     def filter(
-        self,
-        func: Callable[..., RTSPFilterResult] | None = None,
-        *user_data: Any,
+        self, func: Callable[..., RTSPFilterResult] | None = None, *user_data: Any
     ) -> list[RTSPSessionMedia]: ...
     def get_header(self) -> str | None: ...
     def get_media(self, path: str) -> tuple[RTSPSessionMedia | None, int]: ...
@@ -1777,7 +1768,7 @@ class RTSPSession(GObject.Object):
     def set_timeout(self, timeout: int) -> None: ...
     def touch(self) -> None: ...
 
-class RTSPSessionClass(GObject.GPointer):
+class RTSPSessionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1822,7 +1813,7 @@ class RTSPSessionMedia(GObject.Object):
         self, stream: RTSPStream, tr: GstRtsp.RTSPTransport
     ) -> RTSPStreamTransport: ...
 
-class RTSPSessionMediaClass(GObject.GPointer):
+class RTSPSessionMediaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1833,7 +1824,7 @@ class RTSPSessionMediaClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class RTSPSessionMediaPrivate(GObject.GPointer): ...
+class RTSPSessionMediaPrivate(_gi.Struct): ...
 
 class RTSPSessionPool(GObject.Object):
     """
@@ -1872,9 +1863,7 @@ class RTSPSessionPool(GObject.Object):
     def do_create_session_id(self) -> str: ...
     def do_session_removed(self, session: RTSPSession) -> None: ...
     def filter(
-        self,
-        func: Callable[..., RTSPFilterResult] | None = None,
-        *user_data: Any,
+        self, func: Callable[..., RTSPFilterResult] | None = None, *user_data: Any
     ) -> list[RTSPSession]: ...
     def find(self, sessionid: str) -> RTSPSession | None: ...
     def get_max_sessions(self) -> int: ...
@@ -1884,7 +1873,7 @@ class RTSPSessionPool(GObject.Object):
     def remove(self, sess: RTSPSession) -> bool: ...
     def set_max_sessions(self, max: int) -> None: ...
 
-class RTSPSessionPoolClass(GObject.GPointer):
+class RTSPSessionPoolClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1901,8 +1890,8 @@ class RTSPSessionPoolClass(GObject.GPointer):
     @property
     def session_removed(self) -> Callable[[RTSPSessionPool, RTSPSession], None]: ...
 
-class RTSPSessionPoolPrivate(GObject.GPointer): ...
-class RTSPSessionPrivate(GObject.GPointer): ...
+class RTSPSessionPoolPrivate(_gi.Struct): ...
+class RTSPSessionPrivate(_gi.Struct): ...
 
 class RTSPStream(GObject.Object):
     """
@@ -2048,16 +2037,14 @@ class RTSPStream(GObject.Object):
     def set_ulpfec_percentage(self, percentage: int) -> None: ...
     def set_ulpfec_pt(self, pt: int) -> None: ...
     def transport_filter(
-        self,
-        func: Callable[..., RTSPFilterResult] | None = None,
-        *user_data: Any,
+        self, func: Callable[..., RTSPFilterResult] | None = None, *user_data: Any
     ) -> list[RTSPStreamTransport]: ...
     def unblock_linked(self) -> bool: ...
     def unblock_rtcp(self) -> None: ...
     def update_crypto(self, ssrc: int, crypto: Gst.Caps | None = None) -> bool: ...
     def verify_mcast_ttl(self, ttl: int) -> bool: ...
 
-class RTSPStreamClass(GObject.GPointer):
+class RTSPStreamClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2068,7 +2055,7 @@ class RTSPStreamClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class RTSPStreamPrivate(GObject.GPointer): ...
+class RTSPStreamPrivate(_gi.Struct): ...
 
 class RTSPStreamTransport(GObject.Object):
     """
@@ -2084,7 +2071,6 @@ class RTSPStreamTransport(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @property
     def parent(self) -> GObject.Object: ...
     @property
@@ -2131,7 +2117,7 @@ class RTSPStreamTransport(GObject.Object):
     def set_transport(self, tr: GstRtsp.RTSPTransport) -> None: ...
     def set_url(self, url: GstRtsp.RTSPUrl | None = None) -> None: ...
 
-class RTSPStreamTransportClass(GObject.GPointer):
+class RTSPStreamTransportClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2142,7 +2128,7 @@ class RTSPStreamTransportClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class RTSPStreamTransportPrivate(GObject.GPointer): ...
+class RTSPStreamTransportPrivate(_gi.Struct): ...
 
 class RTSPThread(GObject.GBoxed):
     """
@@ -2207,7 +2193,7 @@ class RTSPThreadPool(GObject.Object):
     def new(cls) -> RTSPThreadPool: ...
     def set_max_threads(self, max_threads: int) -> None: ...
 
-class RTSPThreadPoolClass(GObject.GPointer):
+class RTSPThreadPoolClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2232,7 +2218,7 @@ class RTSPThreadPoolClass(GObject.GPointer):
     @property
     def thread_leave(self) -> Callable[[RTSPThreadPool, RTSPThread], None]: ...
 
-class RTSPThreadPoolPrivate(GObject.GPointer): ...
+class RTSPThreadPoolPrivate(_gi.Struct): ...
 
 class RTSPToken(GObject.GBoxed):
     """
@@ -2256,7 +2242,7 @@ class RTSPToken(GObject.GBoxed):
     def set_string(self, field: str, string_value: str) -> None: ...
     def writable_structure(self) -> Gst.Structure: ...
 
-class SDPInfo(GObject.GPointer):
+class SDPInfo(_gi.Struct):
     """
     :Constructors:
 

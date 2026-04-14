@@ -2,6 +2,7 @@ from typing import TypeVar
 
 from collections.abc import Callable
 
+from gi import _gi
 from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GstBase
@@ -182,7 +183,7 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     def try_pull_preroll(self, timeout: int) -> Gst.Sample | None: ...
     def try_pull_sample(self, timeout: int) -> Gst.Sample | None: ...
 
-class AppSinkClass(GObject.GPointer):
+class AppSinkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -209,7 +210,7 @@ class AppSinkClass(GObject.GPointer):
     @property
     def try_pull_object(self) -> Callable[[AppSink, int], Gst.MiniObject | None]: ...
 
-class AppSinkPrivate(GObject.GPointer): ...
+class AppSinkPrivate(_gi.Struct): ...
 
 class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     """
@@ -395,7 +396,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     def set_size(self, size: int) -> None: ...
     def set_stream_type(self, type: AppStreamType) -> None: ...
 
-class AppSrcClass(GObject.GPointer):
+class AppSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -422,7 +423,7 @@ class AppSrcClass(GObject.GPointer):
         self,
     ) -> Callable[[AppSrc, Gst.BufferList], Gst.FlowReturn]: ...
 
-class AppSrcPrivate(GObject.GPointer): ...
+class AppSrcPrivate(_gi.Struct): ...
 
 class AppLeakyType(GObject.GEnum):
     DOWNSTREAM = 2

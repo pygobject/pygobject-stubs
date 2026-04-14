@@ -7,6 +7,7 @@ from collections.abc import Callable
 from collections.abc import Sequence
 from enum import IntFlag
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
@@ -26,9 +27,7 @@ def type_find_helper_for_buffer_with_caps(
     obj: Gst.Object | None, buf: Gst.Buffer, caps: Gst.Caps
 ) -> tuple[Gst.Caps | None, Gst.TypeFindProbability]: ...
 def type_find_helper_for_buffer_with_extension(
-    obj: Gst.Object | None,
-    buf: Gst.Buffer,
-    extension: str | None = None,
+    obj: Gst.Object | None, buf: Gst.Buffer, extension: str | None = None
 ) -> tuple[Gst.Caps | None, Gst.TypeFindProbability]: ...
 def type_find_helper_for_data(
     obj: Gst.Object | None, data: Sequence[int]
@@ -37,9 +36,7 @@ def type_find_helper_for_data_with_caps(
     obj: Gst.Object | None, data: Sequence[int], caps: Gst.Caps
 ) -> tuple[Gst.Caps | None, Gst.TypeFindProbability]: ...
 def type_find_helper_for_data_with_extension(
-    obj: Gst.Object | None,
-    data: Sequence[int],
-    extension: str | None = None,
+    obj: Gst.Object | None, data: Sequence[int], extension: str | None = None
 ) -> tuple[Gst.Caps | None, Gst.TypeFindProbability]: ...
 def type_find_helper_for_extension(
     obj: Gst.Object | None, extension: str
@@ -48,8 +45,7 @@ def type_find_helper_get_range(
     obj: Gst.Object,
     parent: Gst.Object | None,
     func: Callable[
-        [Gst.Object, Gst.Object | None, int, int],
-        tuple[Gst.FlowReturn, Gst.Buffer],
+        [Gst.Object, Gst.Object | None, int, int], tuple[Gst.FlowReturn, Gst.Buffer]
     ],
     size: int,
     extension: str | None = None,
@@ -58,8 +54,7 @@ def type_find_helper_get_range_full(
     obj: Gst.Object,
     parent: Gst.Object | None,
     func: Callable[
-        [Gst.Object, Gst.Object | None, int, int],
-        tuple[Gst.FlowReturn, Gst.Buffer],
+        [Gst.Object, Gst.Object | None, int, int], tuple[Gst.FlowReturn, Gst.Buffer]
     ],
     size: int,
     extension: str | None = None,
@@ -117,7 +112,7 @@ class Adapter(GObject.Object):
     def take_list(self, nbytes: int) -> list[Gst.Buffer] | None: ...
     def unmap(self) -> None: ...
 
-class AdapterClass(GObject.GPointer): ...
+class AdapterClass(_gi.Struct): ...
 
 class Aggregator(Gst.Element):
     """
@@ -234,11 +229,7 @@ class Aggregator(Gst.Element):
     def peek_next_sample(self, pad: AggregatorPad) -> Gst.Sample | None: ...
     def push_src_event(self, event: Gst.Event) -> bool: ...
     def selected_samples(
-        self,
-        pts: int,
-        dts: int,
-        duration: int,
-        info: Gst.Structure | None = None,
+        self, pts: int, dts: int, duration: int, info: Gst.Structure | None = None
     ) -> None: ...
     def set_force_live(self, force_live: bool) -> None: ...
     def set_ignore_inactive_pads(self, ignore: bool) -> None: ...
@@ -247,7 +238,7 @@ class Aggregator(Gst.Element):
     def simple_get_next_time(self) -> int: ...
     def update_segment(self, segment: Gst.Segment) -> None: ...
 
-class AggregatorClass(GObject.GPointer):
+class AggregatorClass(_gi.Struct):
     """
     :Constructors:
 
@@ -260,9 +251,7 @@ class AggregatorClass(GObject.GPointer):
     @property
     def flush(self) -> Callable[[Aggregator], Gst.FlowReturn]: ...
     @property
-    def clip(
-        self,
-    ) -> Callable[[Aggregator, AggregatorPad, Gst.Buffer], Gst.Buffer | None]: ...
+    def clip(self) -> Callable[[Aggregator, AggregatorPad, Gst.Buffer], Gst.Buffer]: ...
     @property
     def finish_buffer(self) -> Callable[[Aggregator, Gst.Buffer], Gst.FlowReturn]: ...
     @property
@@ -284,11 +273,7 @@ class AggregatorClass(GObject.GPointer):
     @property
     def get_next_time(self) -> Callable[[Aggregator], int]: ...
     @property
-    def create_new_pad(
-        self,
-    ) -> Callable[
-        [Aggregator, Gst.PadTemplate, str | None, Gst.Caps | None], AggregatorPad
-    ]: ...
+    def create_new_pad(self) -> None: ...
     @property
     def update_src_caps(
         self,
@@ -401,7 +386,7 @@ class AggregatorPad(Gst.Pad):
     def peek_buffer(self) -> Gst.Buffer | None: ...
     def pop_buffer(self) -> Gst.Buffer | None: ...
 
-class AggregatorPadClass(GObject.GPointer):
+class AggregatorPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -418,8 +403,8 @@ class AggregatorPadClass(GObject.GPointer):
         self,
     ) -> Callable[[AggregatorPad, Aggregator, Gst.Buffer], bool]: ...
 
-class AggregatorPadPrivate(GObject.GPointer): ...
-class AggregatorPrivate(GObject.GPointer): ...
+class AggregatorPadPrivate(_gi.Struct): ...
+class AggregatorPrivate(_gi.Struct): ...
 
 class BaseParse(Gst.Element):
     """
@@ -518,7 +503,7 @@ class BaseParse(Gst.Element):
     def set_syncable(self, syncable: bool) -> None: ...
     def set_ts_at_offset(self, offset: int) -> None: ...
 
-class BaseParseClass(GObject.GPointer):
+class BaseParseClass(_gi.Struct):
     """
     :Constructors:
 
@@ -584,7 +569,7 @@ class BaseParseFrame(GObject.GBoxed):
         cls, buffer: Gst.Buffer, flags: BaseParseFrameFlags, overhead: int
     ) -> BaseParseFrame: ...
 
-class BaseParsePrivate(GObject.GPointer): ...
+class BaseParsePrivate(_gi.Struct): ...
 
 class BaseSink(Gst.Element):
     """
@@ -765,7 +750,7 @@ class BaseSink(Gst.Element):
     def wait_clock(self, time: int) -> tuple[Gst.ClockReturn, int]: ...
     def wait_preroll(self) -> Gst.FlowReturn: ...
 
-class BaseSinkClass(GObject.GPointer):
+class BaseSinkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -812,7 +797,7 @@ class BaseSinkClass(GObject.GPointer):
     @property
     def render_list(self) -> Callable[[BaseSink, Gst.BufferList], Gst.FlowReturn]: ...
 
-class BaseSinkPrivate(GObject.GPointer): ...
+class BaseSinkPrivate(_gi.Struct): ...
 
 class BaseSrc(Gst.Element):
     """
@@ -957,7 +942,7 @@ class BaseSrc(Gst.Element):
     def submit_buffer_list(self, buffer_list: Gst.BufferList) -> None: ...
     def wait_playing(self) -> Gst.FlowReturn: ...
 
-class BaseSrcClass(GObject.GPointer):
+class BaseSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1012,7 +997,7 @@ class BaseSrcClass(GObject.GPointer):
     @property
     def fill(self) -> Callable[[BaseSrc, int, int, Gst.Buffer], Gst.FlowReturn]: ...
 
-class BaseSrcPrivate(GObject.GPointer): ...
+class BaseSrcPrivate(_gi.Struct): ...
 
 class BaseTransform(Gst.Element):
     """
@@ -1067,11 +1052,7 @@ class BaseTransform(Gst.Element):
     @property
     def priv(self) -> BaseTransformPrivate: ...
     def __init__(
-        self,
-        *,
-        qos: bool = ...,
-        name: str | None = ...,
-        parent: Gst.Object = ...,
+        self, *, qos: bool = ..., name: str | None = ..., parent: Gst.Object = ...
     ) -> None: ...
     def do_accept_caps(self, direction: Gst.PadDirection, caps: Gst.Caps) -> bool: ...
     def do_before_transform(self, buffer: Gst.Buffer) -> None: ...
@@ -1131,7 +1112,7 @@ class BaseTransform(Gst.Element):
     def update_qos(self, proportion: float, diff: int, timestamp: int) -> None: ...
     def update_src_caps(self, updated_caps: Gst.Caps) -> bool: ...
 
-class BaseTransformClass(GObject.GPointer):
+class BaseTransformClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1218,9 +1199,9 @@ class BaseTransformClass(GObject.GPointer):
         self,
     ) -> Callable[[BaseTransform], tuple[Gst.FlowReturn, Gst.Buffer]]: ...
 
-class BaseTransformPrivate(GObject.GPointer): ...
+class BaseTransformPrivate(_gi.Struct): ...
 
-class BitReader(GObject.GPointer):
+class BitReader(_gi.Struct):
     """
     :Constructors:
 
@@ -1250,7 +1231,7 @@ class BitReader(GObject.GPointer):
     def skip(self, nbits: int) -> bool: ...
     def skip_to_byte(self) -> bool: ...
 
-class BitWriter(GObject.GPointer):
+class BitWriter(_gi.Struct):
     """
     :Constructors:
 
@@ -1284,7 +1265,7 @@ class BitWriter(GObject.GPointer):
     def reset_and_get_data(self) -> bytes: ...
     def set_pos(self, pos: int) -> bool: ...
 
-class ByteReader(GObject.GPointer):
+class ByteReader(_gi.Struct):
     """
     :Constructors:
 
@@ -1365,7 +1346,7 @@ class ByteReader(GObject.GPointer):
     def skip_string_utf32(self) -> bool: ...
     def skip_string_utf8(self) -> bool: ...
 
-class ByteWriter(GObject.GPointer):
+class ByteWriter(_gi.Struct):
     """
     :Constructors:
 
@@ -1418,7 +1399,7 @@ class ByteWriter(GObject.GPointer):
     def reset_and_get_buffer(self) -> Gst.Buffer: ...
     def reset_and_get_data(self) -> bytes: ...
 
-class CollectData(GObject.GPointer):
+class CollectData(_gi.Struct):
     """
     :Constructors:
 
@@ -1437,7 +1418,7 @@ class CollectData(GObject.GPointer):
     @property
     def priv(self) -> CollectDataPrivate: ...
 
-class CollectDataPrivate(GObject.GPointer): ...
+class CollectDataPrivate(_gi.Struct): ...
 
 class CollectPads(Gst.Object):
     """
@@ -1531,7 +1512,7 @@ class CollectPads(Gst.Object):
     def stop(self) -> None: ...
     def take_buffer(self, data: CollectData, size: int) -> Gst.Buffer | None: ...
 
-class CollectPadsClass(GObject.GPointer):
+class CollectPadsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1542,7 +1523,7 @@ class CollectPadsClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gst.ObjectClass: ...
 
-class CollectPadsPrivate(GObject.GPointer): ...
+class CollectPadsPrivate(_gi.Struct): ...
 
 class DataQueue(GObject.Object):
     """
@@ -1583,7 +1564,7 @@ class DataQueue(GObject.Object):
     def do_empty(self) -> None: ...
     def do_full(self) -> None: ...
 
-class DataQueueClass(GObject.GPointer):
+class DataQueueClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1598,7 +1579,7 @@ class DataQueueClass(GObject.GPointer):
     @property
     def full(self) -> Callable[[DataQueue], None]: ...
 
-class DataQueuePrivate(GObject.GPointer): ...
+class DataQueuePrivate(_gi.Struct): ...
 
 class FlowCombiner(GObject.GBoxed):
     """
@@ -1689,7 +1670,7 @@ class PushSrc(BaseSrc):
     def do_create(self) -> tuple[Gst.FlowReturn, Gst.Buffer]: ...
     def do_fill(self, buf: Gst.Buffer) -> Gst.FlowReturn: ...
 
-class PushSrcClass(GObject.GPointer):
+class PushSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1706,7 +1687,7 @@ class PushSrcClass(GObject.GPointer):
     @property
     def fill(self) -> Callable[[PushSrc, Gst.Buffer], Gst.FlowReturn]: ...
 
-class TypeFindData(GObject.GPointer): ...
+class TypeFindData(_gi.Struct): ...
 
 class BaseParseFrameFlags(IntFlag):
     CLIP = 4

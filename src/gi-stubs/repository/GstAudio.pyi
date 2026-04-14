@@ -8,6 +8,7 @@ from collections.abc import Callable
 from collections.abc import Sequence
 from enum import IntEnum
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
@@ -113,10 +114,7 @@ def audio_get_channel_reorder_map(
 ) -> bool: ...
 def audio_iec61937_frame_size(spec: AudioRingBufferSpec) -> int: ...
 def audio_iec61937_payload(
-    src: Sequence[int],
-    dst: Sequence[int],
-    spec: AudioRingBufferSpec,
-    endianness: int,
+    src: Sequence[int], dst: Sequence[int], spec: AudioRingBufferSpec, endianness: int
 ) -> bool: ...
 def audio_info_from_caps(caps: Gst.Caps) -> tuple[bool, AudioInfo]: ...
 def audio_info_init() -> AudioInfo: ...
@@ -165,10 +163,7 @@ def buffer_add_audio_level_meta(
     buffer: Gst.Buffer, level: int, voice_activity: bool
 ) -> AudioLevelMeta | None: ...
 def buffer_add_audio_meta(
-    buffer: Gst.Buffer,
-    info: AudioInfo,
-    samples: int,
-    offsets: int | None = None,
+    buffer: Gst.Buffer, info: AudioInfo, samples: int, offsets: int | None = None
 ) -> AudioMeta: ...
 def buffer_add_dsd_plane_offset_meta(
     buffer: Gst.Buffer,
@@ -179,9 +174,7 @@ def buffer_add_dsd_plane_offset_meta(
 def buffer_get_audio_downmix_meta_for_channels(
     buffer: Gst.Buffer, to_position: Sequence[AudioChannelPosition]
 ) -> AudioDownmixMeta: ...
-def buffer_get_audio_level_meta(
-    buffer: Gst.Buffer,
-) -> AudioLevelMeta | None: ...
+def buffer_get_audio_level_meta(buffer: Gst.Buffer) -> AudioLevelMeta | None: ...
 def dsd_convert(
     input_data: int,
     output_data: int,
@@ -314,7 +307,7 @@ class AudioAggregator(GstBase.Aggregator):
     def do_create_output_buffer(self, num_frames: int) -> Gst.Buffer: ...
     def set_sink_caps(self, pad: AudioAggregatorPad, caps: Gst.Caps) -> None: ...
 
-class AudioAggregatorClass(GObject.GPointer):
+class AudioAggregatorClass(_gi.Struct):
     """
     :Constructors:
 
@@ -415,7 +408,7 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
         parent: Gst.Object = ...,
     ) -> None: ...
 
-class AudioAggregatorConvertPadClass(GObject.GPointer):
+class AudioAggregatorConvertPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -426,7 +419,7 @@ class AudioAggregatorConvertPadClass(GObject.GPointer):
     @property
     def parent_class(self) -> AudioAggregatorPadClass: ...
 
-class AudioAggregatorConvertPadPrivate(GObject.GPointer): ...
+class AudioAggregatorConvertPadPrivate(_gi.Struct): ...
 
 class AudioAggregatorPad(GstBase.AggregatorPad):
     """
@@ -509,7 +502,7 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
     ) -> Gst.Buffer: ...
     def do_update_conversion_info(self) -> None: ...
 
-class AudioAggregatorPadClass(GObject.GPointer):
+class AudioAggregatorPadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -528,8 +521,8 @@ class AudioAggregatorPadClass(GObject.GPointer):
     @property
     def update_conversion_info(self) -> Callable[[AudioAggregatorPad], None]: ...
 
-class AudioAggregatorPadPrivate(GObject.GPointer): ...
-class AudioAggregatorPrivate(GObject.GPointer): ...
+class AudioAggregatorPadPrivate(_gi.Struct): ...
+class AudioAggregatorPrivate(_gi.Struct): ...
 
 class AudioBaseSink(GstBase.BaseSink):
     """
@@ -688,7 +681,7 @@ class AudioBaseSink(GstBase.BaseSink):
     def set_provide_clock(self, provide: bool) -> None: ...
     def set_slave_method(self, method: AudioBaseSinkSlaveMethod) -> None: ...
 
-class AudioBaseSinkClass(GObject.GPointer):
+class AudioBaseSinkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -705,7 +698,7 @@ class AudioBaseSinkClass(GObject.GPointer):
     @property
     def payload(self) -> Callable[[AudioBaseSink, Gst.Buffer], Gst.Buffer]: ...
 
-class AudioBaseSinkPrivate(GObject.GPointer): ...
+class AudioBaseSinkPrivate(_gi.Struct): ...
 
 class AudioBaseSrc(GstBase.PushSrc):
     """
@@ -813,7 +806,7 @@ class AudioBaseSrc(GstBase.PushSrc):
     def set_provide_clock(self, provide: bool) -> None: ...
     def set_slave_method(self, method: AudioBaseSrcSlaveMethod) -> None: ...
 
-class AudioBaseSrcClass(GObject.GPointer):
+class AudioBaseSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -826,9 +819,9 @@ class AudioBaseSrcClass(GObject.GPointer):
     @property
     def create_ringbuffer(self) -> Callable[[AudioBaseSrc], AudioRingBuffer | None]: ...
 
-class AudioBaseSrcPrivate(GObject.GPointer): ...
+class AudioBaseSrcPrivate(_gi.Struct): ...
 
-class AudioBuffer(GObject.GPointer):
+class AudioBuffer(_gi.Struct):
     """
     :Constructors:
 
@@ -955,7 +948,7 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
     def do_open(self, device: str) -> bool: ...
     def do_read_sector(self, sector: int) -> Gst.Buffer: ...
 
-class AudioCdSrcClass(GObject.GPointer):
+class AudioCdSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -972,9 +965,9 @@ class AudioCdSrcClass(GObject.GPointer):
     @property
     def read_sector(self) -> Callable[[AudioCdSrc, int], Gst.Buffer]: ...
 
-class AudioCdSrcPrivate(GObject.GPointer): ...
+class AudioCdSrcPrivate(_gi.Struct): ...
 
-class AudioCdSrcTrack(GObject.GPointer):
+class AudioCdSrcTrack(_gi.Struct):
     """
     :Constructors:
 
@@ -989,12 +982,12 @@ class AudioCdSrcTrack(GObject.GPointer):
     end: int
     tags: Gst.TagList
 
-class AudioChannelMixer(GObject.GPointer):
+class AudioChannelMixer(_gi.Struct):
     def free(self) -> None: ...
     def is_passthrough(self) -> bool: ...
     def samples(self, in_: None, out: None, samples: int) -> None: ...
 
-class AudioClippingMeta(GObject.GPointer):
+class AudioClippingMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1089,7 +1082,7 @@ class AudioClock(Gst.SystemClock):
     ) -> AudioClock: ...
     def reset(self, time: int) -> None: ...
 
-class AudioClockClass(GObject.GPointer):
+class AudioClockClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1257,9 +1250,7 @@ class AudioDecoder(Gst.Element):
     def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
-        self,
-        caps: Gst.Caps | None = None,
-        filter: Gst.Caps | None = None,
+        self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
     ) -> Gst.Caps: ...
     def set_allocation_caps(self, allocation_caps: Gst.Caps | None = None) -> None: ...
     def set_drainable(self, enabled: bool) -> None: ...
@@ -1275,7 +1266,7 @@ class AudioDecoder(Gst.Element):
     def set_tolerance(self, tolerance: int) -> None: ...
     def set_use_default_pad_acceptcaps(self, use: bool) -> None: ...
 
-class AudioDecoderClass(GObject.GPointer):
+class AudioDecoderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1326,9 +1317,9 @@ class AudioDecoderClass(GObject.GPointer):
         self,
     ) -> Callable[[AudioDecoder, Gst.Buffer, Gst.Meta, Gst.Buffer], bool]: ...
 
-class AudioDecoderPrivate(GObject.GPointer): ...
+class AudioDecoderPrivate(_gi.Struct): ...
 
-class AudioDownmixMeta(GObject.GPointer):
+class AudioDownmixMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1338,11 +1329,11 @@ class AudioDownmixMeta(GObject.GPointer):
     """
 
     meta: Gst.Meta
-    from_position: list[AudioChannelPosition]
-    to_position: list[AudioChannelPosition]
+    from_position: AudioChannelPosition
+    to_position: AudioChannelPosition
     from_channels: int
     to_channels: int
-    matrix: list[float]
+    matrix: float
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1455,9 +1446,7 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
-        self,
-        caps: Gst.Caps | None = None,
-        filter: Gst.Caps | None = None,
+        self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
     ) -> Gst.Caps: ...
     def set_allocation_caps(self, allocation_caps: Gst.Caps | None = None) -> None: ...
     def set_drainable(self, enabled: bool) -> None: ...
@@ -1474,7 +1463,7 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     def set_perfect_timestamp(self, enabled: bool) -> None: ...
     def set_tolerance(self, tolerance: int) -> None: ...
 
-class AudioEncoderClass(GObject.GPointer):
+class AudioEncoderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1521,7 +1510,7 @@ class AudioEncoderClass(GObject.GPointer):
     @property
     def src_query(self) -> Callable[[AudioEncoder, Gst.Query], bool]: ...
 
-class AudioEncoderPrivate(GObject.GPointer): ...
+class AudioEncoderPrivate(_gi.Struct): ...
 
 class AudioFilter(GstBase.BaseTransform):
     """
@@ -1566,16 +1555,12 @@ class AudioFilter(GstBase.BaseTransform):
     @property
     def info(self) -> AudioInfo: ...
     def __init__(
-        self,
-        *,
-        qos: bool = ...,
-        name: str | None = ...,
-        parent: Gst.Object = ...,
+        self, *, qos: bool = ..., name: str | None = ..., parent: Gst.Object = ...
     ) -> None: ...
     def add_pad_templates(self, allowed_caps: Gst.Caps) -> None: ...
     def do_setup(self, info: AudioInfo) -> bool: ...
 
-class AudioFilterClass(GObject.GPointer):
+class AudioFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1589,7 +1574,7 @@ class AudioFilterClass(GObject.GPointer):
     def setup(self) -> Callable[[AudioFilter, AudioInfo], bool]: ...
     def add_pad_templates(self, allowed_caps: Gst.Caps) -> None: ...
 
-class AudioFormatInfo(GObject.GPointer):
+class AudioFormatInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1608,25 +1593,11 @@ class AudioFormatInfo(GObject.GPointer):
     silence: bytes
     unpack_format: AudioFormat
     unpack_func: Callable[
-        [
-            AudioFormatInfo,
-            AudioPackFlags,
-            Sequence[int],
-            Sequence[int],
-            int,
-        ],
-        None,
-    ] = ...
+        [AudioFormatInfo, AudioPackFlags, Sequence[int], Sequence[int], int], None
+    ]
     pack_func: Callable[
-        [
-            AudioFormatInfo,
-            AudioPackFlags,
-            Sequence[int],
-            Sequence[int],
-            int,
-        ],
-        None,
-    ] = ...
+        [AudioFormatInfo, AudioPackFlags, Sequence[int], Sequence[int], int], None
+    ]
     def fill_silence(self, dest: Sequence[int]) -> None: ...
 
 class AudioInfo(GObject.GBoxed):
@@ -1671,7 +1642,7 @@ class AudioInfo(GObject.GBoxed):
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 
-class AudioLevelMeta(GObject.GPointer):
+class AudioLevelMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1686,7 +1657,7 @@ class AudioLevelMeta(GObject.GPointer):
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class AudioMeta(GObject.GPointer):
+class AudioMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -1698,18 +1669,18 @@ class AudioMeta(GObject.GPointer):
     meta: Gst.Meta
     info: AudioInfo
     samples: int
-    offsets: list[int]
+    offsets: int
     @property
     def priv_offsets_arr(self) -> list[int]: ...
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
-class AudioQuantize(GObject.GPointer):
+class AudioQuantize(_gi.Struct):
     def free(self) -> None: ...
     def reset(self) -> None: ...
     def samples(self, in_: None, out: None, samples: int) -> None: ...
 
-class AudioResampler(GObject.GPointer):
+class AudioResampler(_gi.Struct):
     def free(self) -> None: ...
     def get_in_frames(self, out_frames: int) -> int: ...
     def get_max_latency(self) -> int: ...
@@ -1857,9 +1828,7 @@ class AudioRingBuffer(Gst.Object):
     def release(self) -> bool: ...
     def samples_done(self) -> int: ...
     def set_callback(
-        self,
-        cb: Callable[..., None] | None = None,
-        *user_data: Any,
+        self, cb: Callable[..., None] | None = None, *user_data: Any
     ) -> None: ...
     def set_channel_positions(
         self, position: Sequence[AudioChannelPosition]
@@ -1872,7 +1841,7 @@ class AudioRingBuffer(Gst.Object):
     def start(self) -> bool: ...
     def stop(self) -> bool: ...
 
-class AudioRingBufferClass(GObject.GPointer):
+class AudioRingBufferClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1909,9 +1878,9 @@ class AudioRingBufferClass(GObject.GPointer):
     @property
     def clear_all(self) -> Callable[[AudioRingBuffer], None]: ...
 
-class AudioRingBufferPrivate(GObject.GPointer): ...
+class AudioRingBufferPrivate(_gi.Struct): ...
 
-class AudioRingBufferSpec(GObject.GPointer):
+class AudioRingBufferSpec(_gi.Struct):
     """
     :Constructors:
 
@@ -2067,7 +2036,7 @@ class AudioSink(AudioBaseSink):
     def do_unprepare(self) -> bool: ...
     def do_write(self, data: Sequence[int]) -> int: ...
 
-class AudioSinkClass(GObject.GPointer):
+class AudioSinkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2100,7 +2069,7 @@ class AudioSinkClass(GObject.GPointer):
     @property
     def extension(self) -> AudioSinkClassExtension: ...
 
-class AudioSinkClassExtension(GObject.GPointer):
+class AudioSinkClassExtension(_gi.Struct):
     """
     :Constructors:
 
@@ -2208,7 +2177,7 @@ class AudioSrc(AudioBaseSrc):
     def do_reset(self) -> None: ...
     def do_unprepare(self) -> bool: ...
 
-class AudioSrcClass(GObject.GPointer):
+class AudioSrcClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2304,7 +2273,7 @@ class DsdInfo(GObject.GBoxed):
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 
-class DsdPlaneOffsetMeta(GObject.GPointer):
+class DsdPlaneOffsetMeta(_gi.Struct):
     """
     :Constructors:
 
@@ -2338,7 +2307,7 @@ class StreamVolume(GObject.GInterface, Protocol):
     def set_mute(self, mute: bool) -> None: ...
     def set_volume(self, format: StreamVolumeFormat, val: float) -> None: ...
 
-class StreamVolumeInterface(GObject.GPointer):
+class StreamVolumeInterface(_gi.Struct):
     """
     :Constructors:
 
