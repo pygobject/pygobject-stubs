@@ -1,12 +1,17 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import TypeVar
+from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
+
+T = TypeVar("T")
 
 BINARY_AGE: Final[int]
 INTERFACE_AGE: Final[int]
@@ -50,6 +55,9 @@ def value_type_get_localized_name(value_type: ValueType) -> str: ...
 def value_type_get_name(value_type: ValueType) -> str: ...
 
 class Action(GObject.GInterface, Protocol):
+    """
+    Interface AtkAction
+    """
     def do_action(self, i: int) -> bool: ...
     def get_description(self, i: int) -> str | None: ...
     def get_keybinding(self, i: int) -> str | None: ...
@@ -58,7 +66,14 @@ class Action(GObject.GInterface, Protocol):
     def get_name(self, i: int) -> str | None: ...
     def set_description(self, i: int, desc: str) -> bool: ...
 
-class ActionIface(GObject.GPointer):
+class ActionIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ActionIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -76,13 +91,24 @@ class ActionIface(GObject.GPointer):
     @property
     def get_localized_name(self) -> Callable[[Action, int], str | None]: ...
 
-class Attribute(GObject.GPointer):
-    name: str = ...
-    value: str = ...
+class Attribute(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        Attribute()
+    """
+
+    name: str
+    value: str
     @staticmethod
     def set_free(attrib_set: list[None]) -> None: ...
 
 class Component(GObject.GInterface, Protocol):
+    """
+    Interface AtkComponent
+    """
     def contains(self, x: int, y: int, coord_type: CoordType) -> bool: ...
     def get_alpha(self) -> float: ...
     def get_extents(self, coord_type: CoordType) -> tuple[int, int, int, int]: ...
@@ -103,7 +129,14 @@ class Component(GObject.GInterface, Protocol):
     def set_position(self, x: int, y: int, coord_type: CoordType) -> bool: ...
     def set_size(self, width: int, height: int) -> bool: ...
 
-class ComponentIface(GObject.GPointer):
+class ComponentIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ComponentIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -148,6 +181,9 @@ class ComponentIface(GObject.GPointer):
     def scroll_to_point(self) -> Callable[[Component, CoordType, int, int], bool]: ...
 
 class Document(GObject.GInterface, Protocol):
+    """
+    Interface AtkDocument
+    """
     def get_attribute_value(self, attribute_name: str) -> str | None: ...
     def get_attributes(self) -> list[None]: ...
     def get_current_page_number(self) -> int: ...
@@ -155,11 +191,20 @@ class Document(GObject.GInterface, Protocol):
     def get_document_type(self) -> str: ...
     def get_locale(self) -> str: ...
     def get_page_count(self) -> int: ...
+    def get_text_selections(self) -> list[TextSelection]: ...
     def set_attribute_value(
         self, attribute_name: str, attribute_value: str
     ) -> bool: ...
+    def set_text_selections(self, selections: Sequence[TextSelection]) -> bool: ...
 
-class DocumentIface(GObject.GPointer):
+class DocumentIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        DocumentIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -178,8 +223,17 @@ class DocumentIface(GObject.GPointer):
     def get_current_page_number(self) -> Callable[[Document], int]: ...
     @property
     def get_page_count(self) -> Callable[[Document], int]: ...
+    @property
+    def get_text_selections(self) -> Callable[[Document], list[TextSelection]]: ...
+    @property
+    def set_text_selections(
+        self,
+    ) -> Callable[[Document, Sequence[TextSelection]], bool]: ...
 
 class EditableText(GObject.GInterface, Protocol):
+    """
+    Interface AtkEditableText
+    """
     def copy_text(self, start_pos: int, end_pos: int) -> None: ...
     def cut_text(self, start_pos: int, end_pos: int) -> None: ...
     def delete_text(self, start_pos: int, end_pos: int) -> None: ...
@@ -190,7 +244,14 @@ class EditableText(GObject.GInterface, Protocol):
     ) -> bool: ...
     def set_text_contents(self, string: str) -> None: ...
 
-class EditableTextIface(GObject.GPointer):
+class EditableTextIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        EditableTextIface()
+    """
     @property
     def parent_interface(self) -> GObject.TypeInterface: ...
     @property
@@ -211,11 +272,72 @@ class EditableTextIface(GObject.GPointer):
     def paste_text(self) -> Callable[[EditableText, int], None]: ...
 
 class GObjectAccessible(Object):
+    """
+    :Constructors:
+
+    ::
+
+        GObjectAccessible(**properties)
+
+    Object AtkGObjectAccessible
+
+    Signals from AtkObject:
+      children-changed (guint, gpointer)
+      focus-event (gboolean)
+      property-change (gpointer)
+      state-change (gchararray, gboolean)
+      visible-data-changed ()
+      active-descendant-changed (gpointer)
+      announcement (gchararray)
+      notification (gchararray, gint)
+      attribute-changed (gchararray, gchararray)
+
+    Properties from AtkObject:
+      accessible-name -> gchararray: Accessible Name
+        Object instance’s name formatted for assistive technology access
+      accessible-description -> gchararray: Accessible Description
+        Description of an object, formatted for assistive technology access
+      accessible-parent -> AtkObject: Accessible Parent
+        Parent of the current accessible as returned by atk_object_get_parent()
+      accessible-value -> gdouble: Accessible Value
+        Is used to notify that the value has changed
+      accessible-role -> AtkRole: Accessible Role
+        The accessible role of this object
+      accessible-component-layer -> gint: Accessible Layer
+        The accessible layer of this object
+      accessible-component-mdi-zorder -> gint: Accessible MDI Value
+        The accessible MDI value of this object
+      accessible-table-caption -> gchararray: Accessible Table Caption
+        Is used to notify that the table caption has changed; this property should not be used. accessible-table-caption-object should be used instead
+      accessible-table-column-description -> gchararray: Accessible Table Column Description
+        Is used to notify that the table column description has changed
+      accessible-table-column-header -> AtkObject: Accessible Table Column Header
+        Is used to notify that the table column header has changed
+      accessible-table-row-description -> gchararray: Accessible Table Row Description
+        Is used to notify that the table row description has changed
+      accessible-table-row-header -> AtkObject: Accessible Table Row Header
+        Is used to notify that the table row header has changed
+      accessible-table-summary -> AtkObject: Accessible Table Summary
+        Is used to notify that the table summary has changed
+      accessible-table-caption-object -> AtkObject: Accessible Table Caption Object
+        Is used to notify that the table caption has changed
+      accessible-hypertext-nlinks -> gint: Number of Accessible Hypertext Links
+        The number of links which the current AtkHypertext has
+      accessible-id -> gchararray: Accessible ID
+        ID for the accessible; useful for automated testing
+      accessible-help-text -> gchararray: Help text
+        Help text associated with the accessible
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
+        accessible_help_text: str
         accessible_hypertext_nlinks: int
+        accessible_id: str
         accessible_name: str
         accessible_parent: Object
         accessible_role: Role
@@ -234,7 +356,10 @@ class GObjectAccessible(Object):
     def parent(self) -> Object: ...
     def __init__(
         self,
+        *,
         accessible_description: str = ...,
+        accessible_help_text: str = ...,
+        accessible_id: str = ...,
         accessible_name: str = ...,
         accessible_parent: Object = ...,
         accessible_role: Role = ...,
@@ -246,12 +371,19 @@ class GObjectAccessible(Object):
         accessible_table_row_header: Object = ...,
         accessible_table_summary: Object = ...,
         accessible_value: float = ...,
-    ): ...
+    ) -> None: ...
     @staticmethod
     def for_object(obj: GObject.Object) -> Object: ...
     def get_object(self) -> GObject.Object: ...
 
-class GObjectAccessibleClass(GObject.GPointer):
+class GObjectAccessibleClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        GObjectAccessibleClass()
+    """
     @property
     def parent_class(self) -> ObjectClass: ...
     @property
@@ -260,6 +392,31 @@ class GObjectAccessibleClass(GObject.GPointer):
     def pad2(self) -> Callable[..., bool]: ...
 
 class Hyperlink(GObject.Object, Action):
+    """
+    :Constructors:
+
+    ::
+
+        Hyperlink(**properties)
+
+    Object AtkHyperlink
+
+    Signals from AtkHyperlink:
+      link-activated ()
+
+    Properties from AtkHyperlink:
+      selected-link -> gboolean: Selected Link
+        Specifies whether the AtkHyperlink object is selected
+      number-of-anchors -> gint: Number of Anchors
+        The number of anchors associated with the AtkHyperlink object
+      end-index -> gint: End index
+        The end index of the AtkHyperlink object
+      start-index -> gint: Start index
+        The start index of the AtkHyperlink object
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(GObject.Object.Props):
         end_index: int
         number_of_anchors: int
@@ -288,7 +445,14 @@ class Hyperlink(GObject.Object, Action):
     def is_selected_link(self) -> bool: ...
     def is_valid(self) -> bool: ...
 
-class HyperlinkClass(GObject.GPointer):
+class HyperlinkClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        HyperlinkClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
     @property
@@ -313,20 +477,40 @@ class HyperlinkClass(GObject.GPointer):
     def pad1(self) -> Callable[..., bool]: ...
 
 class HyperlinkImpl(GObject.GInterface, Protocol):
+    """
+    Interface AtkHyperlinkImpl
+    """
     def get_hyperlink(self) -> Hyperlink: ...
 
-class HyperlinkImplIface(GObject.GPointer):
+class HyperlinkImplIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        HyperlinkImplIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
     def get_hyperlink(self) -> Callable[[HyperlinkImpl], Hyperlink]: ...
 
 class Hypertext(GObject.GInterface, Protocol):
+    """
+    Interface AtkHypertext
+    """
     def get_link(self, link_index: int) -> Hyperlink: ...
     def get_link_index(self, char_index: int) -> int: ...
     def get_n_links(self) -> int: ...
 
-class HypertextIface(GObject.GPointer):
+class HypertextIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        HypertextIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -339,13 +523,23 @@ class HypertextIface(GObject.GPointer):
     def link_selected(self) -> Callable[[Hypertext, int], None]: ...
 
 class Image(GObject.GInterface, Protocol):
+    """
+    Interface AtkImage
+    """
     def get_image_description(self) -> str: ...
     def get_image_locale(self) -> str | None: ...
     def get_image_position(self, coord_type: CoordType) -> tuple[int, int]: ...
     def get_image_size(self) -> tuple[int, int]: ...
     def set_image_description(self, description: str) -> bool: ...
 
-class ImageIface(GObject.GPointer):
+class ImageIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ImageIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -359,12 +553,20 @@ class ImageIface(GObject.GPointer):
     @property
     def get_image_locale(self) -> Callable[[Image], str | None]: ...
 
-class Implementor(GObject.GPointer):
+class Implementor(_gi.Struct):
     def ref_accessible(self) -> Object: ...
 
 class ImplementorIface(GObject.GInterface, Protocol): ...
 
-class KeyEventStruct(GObject.GPointer):
+class KeyEventStruct(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        KeyEventStruct()
+    """
+
     type: int
     state: int
     keyval: int
@@ -374,6 +576,18 @@ class KeyEventStruct(GObject.GPointer):
     timestamp: int
 
 class Misc(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Misc(**properties)
+
+    Object AtkMisc
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
     def do_threads_enter(self) -> None: ...
@@ -383,7 +597,14 @@ class Misc(GObject.Object):
     def threads_enter(self) -> None: ...
     def threads_leave(self) -> None: ...
 
-class MiscClass(GObject.GPointer):
+class MiscClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        MiscClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
     @property
@@ -408,11 +629,120 @@ class NoOpObject(
     Value,
     Window,
 ):
+    """
+    :Constructors:
+
+    ::
+
+        NoOpObject(**properties)
+        new(obj:GObject.Object) -> Atk.Object
+
+    Object AtkNoOpObject
+
+    Signals from AtkComponent:
+      bounds-changed (AtkRectangle)
+
+    Signals from AtkSelection:
+      selection-changed ()
+
+    Signals from AtkTable:
+      row-inserted (gint, gint)
+      column-inserted (gint, gint)
+      row-deleted (gint, gint)
+      column-deleted (gint, gint)
+      row-reordered ()
+      column-reordered ()
+      model-changed ()
+
+    Signals from AtkText:
+      text-changed (gint, gint)
+      text-insert (gint, gint, gchararray)
+      text-remove (gint, gint, gchararray)
+      text-caret-moved (gint)
+      text-selection-changed ()
+      text-attributes-changed ()
+
+    Signals from AtkHypertext:
+      link-selected (gint)
+
+    Signals from AtkValue:
+      value-changed (gdouble, gchararray)
+
+    Signals from AtkDocument:
+      load-complete ()
+      reload ()
+      load-stopped ()
+      page-changed (gint)
+      document-attribute-changed (gchararray, gchararray)
+
+    Signals from AtkWindow:
+      activate ()
+      create ()
+      deactivate ()
+      destroy ()
+      maximize ()
+      minimize ()
+      move ()
+      resize ()
+      restore ()
+
+    Signals from AtkObject:
+      children-changed (guint, gpointer)
+      focus-event (gboolean)
+      property-change (gpointer)
+      state-change (gchararray, gboolean)
+      visible-data-changed ()
+      active-descendant-changed (gpointer)
+      announcement (gchararray)
+      notification (gchararray, gint)
+      attribute-changed (gchararray, gchararray)
+
+    Properties from AtkObject:
+      accessible-name -> gchararray: Accessible Name
+        Object instance’s name formatted for assistive technology access
+      accessible-description -> gchararray: Accessible Description
+        Description of an object, formatted for assistive technology access
+      accessible-parent -> AtkObject: Accessible Parent
+        Parent of the current accessible as returned by atk_object_get_parent()
+      accessible-value -> gdouble: Accessible Value
+        Is used to notify that the value has changed
+      accessible-role -> AtkRole: Accessible Role
+        The accessible role of this object
+      accessible-component-layer -> gint: Accessible Layer
+        The accessible layer of this object
+      accessible-component-mdi-zorder -> gint: Accessible MDI Value
+        The accessible MDI value of this object
+      accessible-table-caption -> gchararray: Accessible Table Caption
+        Is used to notify that the table caption has changed; this property should not be used. accessible-table-caption-object should be used instead
+      accessible-table-column-description -> gchararray: Accessible Table Column Description
+        Is used to notify that the table column description has changed
+      accessible-table-column-header -> AtkObject: Accessible Table Column Header
+        Is used to notify that the table column header has changed
+      accessible-table-row-description -> gchararray: Accessible Table Row Description
+        Is used to notify that the table row description has changed
+      accessible-table-row-header -> AtkObject: Accessible Table Row Header
+        Is used to notify that the table row header has changed
+      accessible-table-summary -> AtkObject: Accessible Table Summary
+        Is used to notify that the table summary has changed
+      accessible-table-caption-object -> AtkObject: Accessible Table Caption Object
+        Is used to notify that the table caption has changed
+      accessible-hypertext-nlinks -> gint: Number of Accessible Hypertext Links
+        The number of links which the current AtkHypertext has
+      accessible-id -> gchararray: Accessible ID
+        ID for the accessible; useful for automated testing
+      accessible-help-text -> gchararray: Help text
+        Help text associated with the accessible
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
+        accessible_help_text: str
         accessible_hypertext_nlinks: int
+        accessible_id: str
         accessible_name: str
         accessible_parent: Object
         accessible_role: Role
@@ -431,7 +761,10 @@ class NoOpObject(
     def parent(self) -> Object: ...
     def __init__(
         self,
+        *,
         accessible_description: str = ...,
+        accessible_help_text: str = ...,
+        accessible_id: str = ...,
         accessible_name: str = ...,
         accessible_parent: Object = ...,
         accessible_role: Role = ...,
@@ -443,30 +776,118 @@ class NoOpObject(
         accessible_table_row_header: Object = ...,
         accessible_table_summary: Object = ...,
         accessible_value: float = ...,
-    ): ...
+    ) -> None: ...
     @classmethod
     def new(cls, obj: GObject.Object) -> NoOpObject: ...
 
-class NoOpObjectClass(GObject.GPointer):
+class NoOpObjectClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        NoOpObjectClass()
+    """
     @property
     def parent_class(self) -> ObjectClass: ...
 
 class NoOpObjectFactory(ObjectFactory):
+    """
+    :Constructors:
+
+    ::
+
+        NoOpObjectFactory(**properties)
+        new() -> Atk.ObjectFactory
+
+    Object AtkNoOpObjectFactory
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> ObjectFactory: ...
     @classmethod
     def new(cls) -> NoOpObjectFactory: ...
 
-class NoOpObjectFactoryClass(GObject.GPointer):
+class NoOpObjectFactoryClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        NoOpObjectFactoryClass()
+    """
     @property
     def parent_class(self) -> ObjectFactoryClass: ...
 
 class Object(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Object(**properties)
+
+    Object AtkObject
+
+    Signals from AtkObject:
+      children-changed (guint, gpointer)
+      focus-event (gboolean)
+      property-change (gpointer)
+      state-change (gchararray, gboolean)
+      visible-data-changed ()
+      active-descendant-changed (gpointer)
+      announcement (gchararray)
+      notification (gchararray, gint)
+      attribute-changed (gchararray, gchararray)
+
+    Properties from AtkObject:
+      accessible-name -> gchararray: Accessible Name
+        Object instance’s name formatted for assistive technology access
+      accessible-description -> gchararray: Accessible Description
+        Description of an object, formatted for assistive technology access
+      accessible-parent -> AtkObject: Accessible Parent
+        Parent of the current accessible as returned by atk_object_get_parent()
+      accessible-value -> gdouble: Accessible Value
+        Is used to notify that the value has changed
+      accessible-role -> AtkRole: Accessible Role
+        The accessible role of this object
+      accessible-component-layer -> gint: Accessible Layer
+        The accessible layer of this object
+      accessible-component-mdi-zorder -> gint: Accessible MDI Value
+        The accessible MDI value of this object
+      accessible-table-caption -> gchararray: Accessible Table Caption
+        Is used to notify that the table caption has changed; this property should not be used. accessible-table-caption-object should be used instead
+      accessible-table-column-description -> gchararray: Accessible Table Column Description
+        Is used to notify that the table column description has changed
+      accessible-table-column-header -> AtkObject: Accessible Table Column Header
+        Is used to notify that the table column header has changed
+      accessible-table-row-description -> gchararray: Accessible Table Row Description
+        Is used to notify that the table row description has changed
+      accessible-table-row-header -> AtkObject: Accessible Table Row Header
+        Is used to notify that the table row header has changed
+      accessible-table-summary -> AtkObject: Accessible Table Summary
+        Is used to notify that the table summary has changed
+      accessible-table-caption-object -> AtkObject: Accessible Table Caption Object
+        Is used to notify that the table caption has changed
+      accessible-hypertext-nlinks -> gint: Number of Accessible Hypertext Links
+        The number of links which the current AtkHypertext has
+      accessible-id -> gchararray: Accessible ID
+        ID for the accessible; useful for automated testing
+      accessible-help-text -> gchararray: Help text
+        Help text associated with the accessible
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(GObject.Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
+        accessible_help_text: str
         accessible_hypertext_nlinks: int
+        accessible_id: str
         accessible_name: str
         accessible_parent: Object
         accessible_role: Role
@@ -497,7 +918,10 @@ class Object(GObject.Object):
     def layer(self) -> Layer: ...
     def __init__(
         self,
+        *,
         accessible_description: str = ...,
+        accessible_help_text: str = ...,
+        accessible_id: str = ...,
         accessible_name: str = ...,
         accessible_parent: Object = ...,
         accessible_role: Role = ...,
@@ -509,7 +933,7 @@ class Object(GObject.Object):
         accessible_table_row_header: Object = ...,
         accessible_table_summary: Object = ...,
         accessible_value: float = ...,
-    ): ...
+    ) -> None: ...
     def add_relationship(self, relationship: RelationType, target: Object) -> bool: ...
     def do_active_descendant_changed(self, child: None) -> None: ...
     def do_children_changed(self, change_index: int, changed_child: None) -> None: ...
@@ -538,6 +962,7 @@ class Object(GObject.Object):
     def get_accessible_id(self) -> str: ...
     def get_attributes(self) -> list[None]: ...
     def get_description(self) -> str: ...
+    def get_help_text(self) -> str: ...
     def get_index_in_parent(self) -> int: ...
     def get_layer(self) -> Layer: ...
     def get_mdi_zorder(self) -> int: ...
@@ -556,13 +981,21 @@ class Object(GObject.Object):
     def remove_relationship(
         self, relationship: RelationType, target: Object
     ) -> bool: ...
-    def set_accessible_id(self, name: str) -> None: ...
+    def set_accessible_id(self, id: str) -> None: ...
     def set_description(self, description: str) -> None: ...
+    def set_help_text(self, help_text: str) -> None: ...
     def set_name(self, name: str) -> None: ...
     def set_parent(self, parent: Object) -> None: ...
     def set_role(self, role: Role) -> None: ...
 
-class ObjectClass(GObject.GPointer):
+class ObjectClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
     @property
@@ -621,14 +1054,33 @@ class ObjectClass(GObject.GPointer):
     def pad1(self) -> Callable[..., bool]: ...
 
 class ObjectFactory(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactory(**properties)
+
+    Object AtkObjectFactory
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
     def create_accessible(self, obj: GObject.Object) -> Object: ...
     def do_invalidate(self) -> None: ...
-    def get_accessible_type(self) -> type: ...
+    def get_accessible_type(self) -> type[Any]: ...
     def invalidate(self) -> None: ...
 
-class ObjectFactoryClass(GObject.GPointer):
+class ObjectFactoryClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ObjectFactoryClass()
+    """
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
     @property
@@ -643,11 +1095,76 @@ class ObjectFactoryClass(GObject.GPointer):
     def pad2(self) -> Callable[..., bool]: ...
 
 class Plug(Object, Component):
+    """
+    :Constructors:
+
+    ::
+
+        Plug(**properties)
+        new() -> Atk.Object
+
+    Object AtkPlug
+
+    Signals from AtkComponent:
+      bounds-changed (AtkRectangle)
+
+    Signals from AtkObject:
+      children-changed (guint, gpointer)
+      focus-event (gboolean)
+      property-change (gpointer)
+      state-change (gchararray, gboolean)
+      visible-data-changed ()
+      active-descendant-changed (gpointer)
+      announcement (gchararray)
+      notification (gchararray, gint)
+      attribute-changed (gchararray, gchararray)
+
+    Properties from AtkObject:
+      accessible-name -> gchararray: Accessible Name
+        Object instance’s name formatted for assistive technology access
+      accessible-description -> gchararray: Accessible Description
+        Description of an object, formatted for assistive technology access
+      accessible-parent -> AtkObject: Accessible Parent
+        Parent of the current accessible as returned by atk_object_get_parent()
+      accessible-value -> gdouble: Accessible Value
+        Is used to notify that the value has changed
+      accessible-role -> AtkRole: Accessible Role
+        The accessible role of this object
+      accessible-component-layer -> gint: Accessible Layer
+        The accessible layer of this object
+      accessible-component-mdi-zorder -> gint: Accessible MDI Value
+        The accessible MDI value of this object
+      accessible-table-caption -> gchararray: Accessible Table Caption
+        Is used to notify that the table caption has changed; this property should not be used. accessible-table-caption-object should be used instead
+      accessible-table-column-description -> gchararray: Accessible Table Column Description
+        Is used to notify that the table column description has changed
+      accessible-table-column-header -> AtkObject: Accessible Table Column Header
+        Is used to notify that the table column header has changed
+      accessible-table-row-description -> gchararray: Accessible Table Row Description
+        Is used to notify that the table row description has changed
+      accessible-table-row-header -> AtkObject: Accessible Table Row Header
+        Is used to notify that the table row header has changed
+      accessible-table-summary -> AtkObject: Accessible Table Summary
+        Is used to notify that the table summary has changed
+      accessible-table-caption-object -> AtkObject: Accessible Table Caption Object
+        Is used to notify that the table caption has changed
+      accessible-hypertext-nlinks -> gint: Number of Accessible Hypertext Links
+        The number of links which the current AtkHypertext has
+      accessible-id -> gchararray: Accessible ID
+        ID for the accessible; useful for automated testing
+      accessible-help-text -> gchararray: Help text
+        Help text associated with the accessible
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
+        accessible_help_text: str
         accessible_hypertext_nlinks: int
+        accessible_id: str
         accessible_name: str
         accessible_parent: Object
         accessible_role: Role
@@ -666,7 +1183,10 @@ class Plug(Object, Component):
     def parent(self) -> Object: ...
     def __init__(
         self,
+        *,
         accessible_description: str = ...,
+        accessible_help_text: str = ...,
+        accessible_id: str = ...,
         accessible_name: str = ...,
         accessible_parent: Object = ...,
         accessible_role: Role = ...,
@@ -678,25 +1198,51 @@ class Plug(Object, Component):
         accessible_table_row_header: Object = ...,
         accessible_table_summary: Object = ...,
         accessible_value: float = ...,
-    ): ...
+    ) -> None: ...
     def do_get_object_id(self) -> str: ...
     def get_id(self) -> str: ...
     @classmethod
     def new(cls) -> Plug: ...
     def set_child(self, child: Object) -> None: ...
 
-class PlugClass(GObject.GPointer):
+class PlugClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        PlugClass()
+    """
     @property
     def parent_class(self) -> ObjectClass: ...
     @property
     def get_object_id(self) -> Callable[[Plug], str]: ...
 
-class PropertyValues(GObject.GPointer):
-    property_name: str = ...
-    old_value: Any = ...
-    new_value: Any = ...
+class PropertyValues(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        PropertyValues()
+    """
+
+    property_name: str
+    old_value: Any
+    new_value: Any
 
 class Range(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        new(lower_limit:float, upper_limit:float, description:str) -> Atk.Range
+    """
+    @staticmethod
+    def __new__(
+        cls: type[Self], lower_limit: float, upper_limit: float, description: str
+    ) -> Self: ...
     def copy(self) -> Range: ...
     def free(self) -> None: ...
     def get_description(self) -> str: ...
@@ -706,27 +1252,73 @@ class Range(GObject.GBoxed):
     def new(cls, lower_limit: float, upper_limit: float, description: str) -> Range: ...
 
 class Rectangle(GObject.GBoxed):
-    x: int = ...
-    y: int = ...
-    width: int = ...
-    height: int = ...
+    """
+    :Constructors:
+
+    ::
+
+        Rectangle()
+    """
+
+    x: int
+    y: int
+    width: int
+    height: int
 
 class Registry(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Registry(**properties)
+
+    Object AtkRegistry
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
     @property
     def factory_type_registry(self) -> dict[None, None]: ...
     @property
     def factory_singleton_cache(self) -> dict[None, None]: ...
-    def get_factory(self, type: type) -> ObjectFactory: ...
-    def get_factory_type(self, type: type) -> type: ...
-    def set_factory_type(self, type: type, factory_type: type) -> None: ...
+    def get_factory(self, type: type[Any]) -> ObjectFactory: ...
+    def get_factory_type(self, type: type[Any]) -> type[Any]: ...
+    def set_factory_type(self, type: type[Any], factory_type: type[Any]) -> None: ...
 
-class RegistryClass(GObject.GPointer):
+class RegistryClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        RegistryClass()
+    """
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
 class Relation(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Relation(**properties)
+        new(targets:list, relationship:Atk.RelationType) -> Atk.Relation
+
+    Object AtkRelation
+
+    Properties from AtkRelation:
+      relation-type -> AtkRelationType: Relation Type
+        The type of the relation
+      target -> GValueArray: Target
+        An array of the targets for the relation
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(GObject.Object.Props):
         relation_type: RelationType
         target: GObject.ValueArray
@@ -740,8 +1332,8 @@ class Relation(GObject.Object):
     @property
     def relationship(self) -> RelationType: ...
     def __init__(
-        self, relation_type: RelationType = ..., target: GObject.ValueArray = ...
-    ): ...
+        self, *, relation_type: RelationType = ..., target: GObject.ValueArray = ...
+    ) -> None: ...
     def add_target(self, target: Object) -> None: ...
     def get_relation_type(self) -> RelationType: ...
     def get_target(self) -> list[Object]: ...
@@ -749,11 +1341,31 @@ class Relation(GObject.Object):
     def new(cls, targets: Sequence[Object], relationship: RelationType) -> Relation: ...
     def remove_target(self, target: Object) -> bool: ...
 
-class RelationClass(GObject.GPointer):
+class RelationClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        RelationClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
 
 class RelationSet(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        RelationSet(**properties)
+        new() -> Atk.RelationSet
+
+    Object AtkRelationSet
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
     @property
@@ -771,7 +1383,14 @@ class RelationSet(GObject.Object):
     def new(cls) -> RelationSet: ...
     def remove(self, relation: Relation) -> None: ...
 
-class RelationSetClass(GObject.GPointer):
+class RelationSetClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        RelationSetClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
     @property
@@ -780,6 +1399,9 @@ class RelationSetClass(GObject.GPointer):
     def pad2(self) -> Callable[..., bool]: ...
 
 class Selection(GObject.GInterface, Protocol):
+    """
+    Interface AtkSelection
+    """
     def add_selection(self, i: int) -> bool: ...
     def clear_selection(self) -> bool: ...
     def get_selection_count(self) -> int: ...
@@ -788,7 +1410,14 @@ class Selection(GObject.GInterface, Protocol):
     def remove_selection(self, i: int) -> bool: ...
     def select_all_selection(self) -> bool: ...
 
-class SelectionIface(GObject.GPointer):
+class SelectionIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        SelectionIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -809,11 +1438,76 @@ class SelectionIface(GObject.GPointer):
     def selection_changed(self) -> Callable[[Selection], None]: ...
 
 class Socket(Object, Component):
+    """
+    :Constructors:
+
+    ::
+
+        Socket(**properties)
+        new() -> Atk.Object
+
+    Object AtkSocket
+
+    Signals from AtkComponent:
+      bounds-changed (AtkRectangle)
+
+    Signals from AtkObject:
+      children-changed (guint, gpointer)
+      focus-event (gboolean)
+      property-change (gpointer)
+      state-change (gchararray, gboolean)
+      visible-data-changed ()
+      active-descendant-changed (gpointer)
+      announcement (gchararray)
+      notification (gchararray, gint)
+      attribute-changed (gchararray, gchararray)
+
+    Properties from AtkObject:
+      accessible-name -> gchararray: Accessible Name
+        Object instance’s name formatted for assistive technology access
+      accessible-description -> gchararray: Accessible Description
+        Description of an object, formatted for assistive technology access
+      accessible-parent -> AtkObject: Accessible Parent
+        Parent of the current accessible as returned by atk_object_get_parent()
+      accessible-value -> gdouble: Accessible Value
+        Is used to notify that the value has changed
+      accessible-role -> AtkRole: Accessible Role
+        The accessible role of this object
+      accessible-component-layer -> gint: Accessible Layer
+        The accessible layer of this object
+      accessible-component-mdi-zorder -> gint: Accessible MDI Value
+        The accessible MDI value of this object
+      accessible-table-caption -> gchararray: Accessible Table Caption
+        Is used to notify that the table caption has changed; this property should not be used. accessible-table-caption-object should be used instead
+      accessible-table-column-description -> gchararray: Accessible Table Column Description
+        Is used to notify that the table column description has changed
+      accessible-table-column-header -> AtkObject: Accessible Table Column Header
+        Is used to notify that the table column header has changed
+      accessible-table-row-description -> gchararray: Accessible Table Row Description
+        Is used to notify that the table row description has changed
+      accessible-table-row-header -> AtkObject: Accessible Table Row Header
+        Is used to notify that the table row header has changed
+      accessible-table-summary -> AtkObject: Accessible Table Summary
+        Is used to notify that the table summary has changed
+      accessible-table-caption-object -> AtkObject: Accessible Table Caption Object
+        Is used to notify that the table caption has changed
+      accessible-hypertext-nlinks -> gint: Number of Accessible Hypertext Links
+        The number of links which the current AtkHypertext has
+      accessible-id -> gchararray: Accessible ID
+        ID for the accessible; useful for automated testing
+      accessible-help-text -> gchararray: Help text
+        Help text associated with the accessible
+
+    Signals from GObject:
+      notify (GParam)
+    """
     class Props(Object.Props):
         accessible_component_layer: int
         accessible_component_mdi_zorder: int
         accessible_description: str
+        accessible_help_text: str
         accessible_hypertext_nlinks: int
+        accessible_id: str
         accessible_name: str
         accessible_parent: Object
         accessible_role: Role
@@ -834,7 +1528,10 @@ class Socket(Object, Component):
     def embedded_plug_id(self) -> str: ...
     def __init__(
         self,
+        *,
         accessible_description: str = ...,
+        accessible_help_text: str = ...,
+        accessible_id: str = ...,
         accessible_name: str = ...,
         accessible_parent: Object = ...,
         accessible_role: Role = ...,
@@ -846,20 +1543,40 @@ class Socket(Object, Component):
         accessible_table_row_header: Object = ...,
         accessible_table_summary: Object = ...,
         accessible_value: float = ...,
-    ): ...
+    ) -> None: ...
     def do_embed(self, plug_id: str) -> None: ...
     def embed(self, plug_id: str) -> None: ...
     def is_occupied(self) -> bool: ...
     @classmethod
     def new(cls) -> Socket: ...
 
-class SocketClass(GObject.GPointer):
+class SocketClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        SocketClass()
+    """
     @property
     def parent_class(self) -> ObjectClass: ...
     @property
     def embed(self) -> Callable[[Socket, str], None]: ...
 
 class StateSet(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        StateSet(**properties)
+        new() -> Atk.StateSet
+
+    Object AtkStateSet
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
     def add_state(self, type: StateType) -> bool: ...
@@ -875,17 +1592,34 @@ class StateSet(GObject.Object):
     def remove_state(self, type: StateType) -> bool: ...
     def xor_sets(self, compare_set: StateSet) -> StateSet: ...
 
-class StateSetClass(GObject.GPointer):
+class StateSetClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        StateSetClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
 
 class StreamableContent(GObject.GInterface, Protocol):
+    """
+    Interface AtkStreamableContent
+    """
     def get_mime_type(self, i: int) -> str: ...
     def get_n_mime_types(self) -> int: ...
     def get_stream(self, mime_type: str) -> GLib.IOChannel: ...
     def get_uri(self, mime_type: str) -> str | None: ...
 
-class StreamableContentIface(GObject.GPointer):
+class StreamableContentIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        StreamableContentIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -904,6 +1638,9 @@ class StreamableContentIface(GObject.GPointer):
     def pad3(self) -> Callable[..., bool]: ...
 
 class Table(GObject.GInterface, Protocol):
+    """
+    Interface AtkTable
+    """
     def add_column_selection(self, column: int) -> bool: ...
     def add_row_selection(self, row: int) -> bool: ...
     def get_caption(self) -> Object | None: ...
@@ -935,6 +1672,12 @@ class Table(GObject.GInterface, Protocol):
     def set_summary(self, accessible: Object) -> None: ...
 
 class TableCell(GObject.GInterface, Protocol):
+    """
+    Interface AtkTableCell
+
+    Signals from GObject:
+      notify (GParam)
+    """
     def get_column_header_cells(self) -> list[Object]: ...
     def get_column_span(self) -> int: ...
     def get_position(self) -> tuple[bool, int, int]: ...
@@ -943,7 +1686,14 @@ class TableCell(GObject.GInterface, Protocol):
     def get_row_span(self) -> int: ...
     def get_table(self) -> Object: ...
 
-class TableCellIface(GObject.GPointer):
+class TableCellIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        TableCellIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -963,7 +1713,14 @@ class TableCellIface(GObject.GPointer):
     @property
     def get_table(self) -> Callable[[TableCell], Object]: ...
 
-class TableIface(GObject.GPointer):
+class TableIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        TableIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -1040,6 +1797,9 @@ class TableIface(GObject.GPointer):
     def model_changed(self) -> Callable[[Table], None]: ...
 
 class Text(GObject.GInterface, Protocol):
+    """
+    Interface AtkText
+    """
     def add_selection(self, start_offset: int, end_offset: int) -> bool: ...
     @staticmethod
     def free_ranges(ranges: Sequence[TextRange]) -> None: ...
@@ -1089,7 +1849,14 @@ class Text(GObject.GInterface, Protocol):
         self, selection_num: int, start_offset: int, end_offset: int
     ) -> bool: ...
 
-class TextIface(GObject.GPointer):
+class TextIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        TextIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -1166,22 +1933,72 @@ class TextIface(GObject.GPointer):
     ) -> Callable[[Text, int, int, CoordType, int, int], bool]: ...
 
 class TextRange(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        TextRange()
+    """
+
     bounds: TextRectangle
     start_offset: int
     end_offset: int
     content: str
 
-class TextRectangle(GObject.GPointer):
+class TextRectangle(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        TextRectangle()
+    """
+
     x: int
     y: int
     width: int
     height: int
 
+class TextSelection(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        TextSelection()
+    """
+
+    start_object: Object
+    start_offset: int
+    end_object: Object
+    end_offset: int
+    start_is_active: bool
+
 class Util(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Util(**properties)
+
+    Object AtkUtil
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @property
     def parent(self) -> GObject.Object: ...
 
-class UtilClass(GObject.GPointer):
+class UtilClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        UtilClass()
+    """
     @property
     def parent(self) -> GObject.ObjectClass: ...
     @property
@@ -1200,6 +2017,9 @@ class UtilClass(GObject.GPointer):
     def get_toolkit_version(self) -> Callable[[], str]: ...
 
 class Value(GObject.GInterface, Protocol):
+    """
+    Interface AtkValue
+    """
     def get_current_value(self) -> Any: ...
     def get_increment(self) -> float: ...
     def get_maximum_value(self) -> Any: ...
@@ -1211,7 +2031,14 @@ class Value(GObject.GInterface, Protocol):
     def set_current_value(self, value: Any) -> bool: ...
     def set_value(self, new_value: float) -> None: ...
 
-class ValueIface(GObject.GPointer):
+class ValueIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ValueIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
@@ -1237,7 +2064,14 @@ class ValueIface(GObject.GPointer):
 
 class Window(GObject.GInterface, Protocol): ...
 
-class WindowIface(GObject.GPointer):
+class WindowIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        WindowIface()
+    """
     @property
     def parent(self) -> GObject.TypeInterface: ...
 
@@ -1263,6 +2097,11 @@ class Layer(GObject.GEnum):
     POPUP = 5
     WIDGET = 3
     WINDOW = 7
+
+class Live(GObject.GEnum):
+    ASSERTIVE = 2
+    NONE = 0
+    POLITE = 1
 
 class RelationType(GObject.GEnum):
     CONTROLLED_BY = 1
@@ -1304,6 +2143,7 @@ class Role(GObject.GEnum):
     AUDIO = 104
     AUTOCOMPLETE = 74
     BLOCK_QUOTE = 103
+    BUTTON = 42
     CALENDAR = 5
     CANVAS = 6
     CAPTION = 79
@@ -1357,7 +2197,7 @@ class Role(GObject.GEnum):
     INVALID = 0
     LABEL = 28
     LANDMARK = 108
-    LAST_DEFINED = 128
+    LAST_DEFINED = 129
     LAYERED_PANE = 29
     LEVEL_BAR = 101
     LINK = 86
@@ -1404,6 +2244,7 @@ class Role(GObject.GEnum):
     SUBSCRIPT = 120
     SUGGESTION = 126
     SUPERSCRIPT = 121
+    SWITCH = 128
     TABLE = 54
     TABLE_CELL = 55
     TABLE_COLUMN_HEADER = 56

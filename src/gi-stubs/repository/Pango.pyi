@@ -1,10 +1,12 @@
 from typing import Any
 from typing import Final
 from typing import TypeVar
+from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
@@ -115,9 +117,7 @@ def itemize_with_base_dir(
     attrs: AttrList,
     cached_iter: AttrIterator | None = None,
 ) -> list[Item]: ...
-def language_from_string(
-    language: str | None = None,
-) -> Language | None: ...
+def language_from_string(language: str | None = None) -> Language | None: ...
 def language_get_default() -> Language: ...
 def language_get_preferred() -> list[Language] | None: ...
 def layout_deserialize_error_quark() -> int: ...
@@ -183,7 +183,7 @@ def version_check(
 ) -> str | None: ...
 def version_string() -> str: ...
 
-class Analysis(GObject.GPointer):
+class Analysis(_gi.Struct):
     """
     :Constructors:
 
@@ -202,7 +202,7 @@ class Analysis(GObject.GPointer):
     language: Language
     extra_attrs: list[None]
 
-class AttrClass(GObject.GPointer):
+class AttrClass(_gi.Struct):
     """
     :Constructors:
 
@@ -219,7 +219,7 @@ class AttrClass(GObject.GPointer):
     @property
     def equal(self) -> Callable[[Attribute, Attribute], bool]: ...
 
-class AttrColor(GObject.GPointer):
+class AttrColor(_gi.Struct):
     """
     :Constructors:
 
@@ -231,7 +231,7 @@ class AttrColor(GObject.GPointer):
     attr: Attribute
     color: Color
 
-class AttrFloat(GObject.GPointer):
+class AttrFloat(_gi.Struct):
     """
     :Constructors:
 
@@ -243,7 +243,7 @@ class AttrFloat(GObject.GPointer):
     attr: Attribute
     value: float
 
-class AttrFontDesc(GObject.GPointer):
+class AttrFontDesc(_gi.Struct):
     """
     :Constructors:
 
@@ -257,7 +257,7 @@ class AttrFontDesc(GObject.GPointer):
     @staticmethod
     def new(desc: FontDescription) -> Attribute: ...
 
-class AttrFontFeatures(GObject.GPointer):
+class AttrFontFeatures(_gi.Struct):
     """
     :Constructors:
 
@@ -271,7 +271,7 @@ class AttrFontFeatures(GObject.GPointer):
     @staticmethod
     def new(features: str) -> Attribute: ...
 
-class AttrInt(GObject.GPointer):
+class AttrInt(_gi.Struct):
     """
     :Constructors:
 
@@ -292,7 +292,7 @@ class AttrIterator(GObject.GBoxed):
     def next(self) -> bool: ...
     def range(self) -> tuple[int, int]: ...
 
-class AttrLanguage(GObject.GPointer):
+class AttrLanguage(_gi.Struct):
     """
     :Constructors:
 
@@ -314,6 +314,8 @@ class AttrList(GObject.GBoxed):
 
         new() -> Pango.AttrList
     """
+    @staticmethod
+    def __new__(cls: type[Self]) -> Self: ...
     def change(self, attr: Attribute) -> None: ...
     def copy(self) -> AttrList | None: ...
     def equal(self, other_list: AttrList) -> bool: ...
@@ -332,7 +334,7 @@ class AttrList(GObject.GBoxed):
     def unref(self) -> None: ...
     def update(self, pos: int, remove: int, add: int) -> None: ...
 
-class AttrShape(GObject.GPointer):
+class AttrShape(_gi.Struct):
     """
     :Constructors:
 
@@ -358,7 +360,7 @@ class AttrShape(GObject.GPointer):
         destroy_func: Callable[[None], None] | None = None,
     ) -> Attribute: ...
 
-class AttrSize(GObject.GPointer):
+class AttrSize(_gi.Struct):
     """
     :Constructors:
 
@@ -375,7 +377,7 @@ class AttrSize(GObject.GPointer):
     @staticmethod
     def new_absolute(size: int) -> Attribute: ...
 
-class AttrString(GObject.GPointer):
+class AttrString(_gi.Struct):
     """
     :Constructors:
 
@@ -455,9 +457,7 @@ class Context(GObject.Object):
     def get_language(self) -> Language: ...
     def get_matrix(self) -> Matrix | None: ...
     def get_metrics(
-        self,
-        desc: FontDescription | None = None,
-        language: Language | None = None,
+        self, desc: FontDescription | None = None, language: Language | None = None
     ) -> FontMetrics: ...
     def get_round_glyph_positions(self) -> bool: ...
     def get_serial(self) -> int: ...
@@ -470,14 +470,14 @@ class Context(GObject.Object):
     def new(cls) -> Context: ...
     def set_base_dir(self, direction: Direction) -> None: ...
     def set_base_gravity(self, gravity: Gravity) -> None: ...
-    def set_font_description(self, desc: FontDescription | None = None) -> None: ...
+    def set_font_description(self, desc: FontDescription) -> None: ...
     def set_font_map(self, font_map: FontMap | None = None) -> None: ...
     def set_gravity_hint(self, hint: GravityHint) -> None: ...
     def set_language(self, language: Language | None = None) -> None: ...
     def set_matrix(self, matrix: Matrix | None = None) -> None: ...
     def set_round_glyph_positions(self, round_positions: bool) -> None: ...
 
-class ContextClass(GObject.GPointer): ...
+class ContextClass(_gi.Struct): ...
 
 class Coverage(GObject.Object):
     """
@@ -518,15 +518,12 @@ class Font(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @property
     def parent_instance(self) -> GObject.Object: ...
     def describe(self) -> FontDescription: ...
     def describe_with_absolute_size(self) -> FontDescription: ...
     @staticmethod
-    def descriptions_free(
-        descs: Sequence[FontDescription] | None = None,
-    ) -> None: ...
+    def descriptions_free(descs: Sequence[FontDescription] | None = None) -> None: ...
     @staticmethod
     def deserialize(context: Context, bytes: GLib.Bytes) -> Font | None: ...
     def do_create_hb_font(self) -> HarfBuzz.font_t: ...
@@ -547,7 +544,7 @@ class Font(GObject.Object):
     def has_char(self, wc: str) -> bool: ...
     def serialize(self) -> GLib.Bytes: ...
 
-class FontClass(GObject.GPointer):
+class FontClass(_gi.Struct):
     """
     :Constructors:
 
@@ -586,6 +583,8 @@ class FontDescription(GObject.GBoxed):
 
         new() -> Pango.FontDescription
     """
+    @staticmethod
+    def __new__(cls: type[Self], string: str | None = None) -> Self: ...
     def better_match(
         self, old_match: FontDescription | None, new_match: FontDescription
     ) -> bool: ...
@@ -647,7 +646,6 @@ class FontFace(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @property
     def parent_instance(self) -> GObject.Object: ...
     def describe(self) -> FontDescription: ...
@@ -661,7 +659,7 @@ class FontFace(GObject.Object):
     def is_synthesized(self) -> bool: ...
     def list_sizes(self) -> list[int]: ...
 
-class FontFaceClass(GObject.GPointer):
+class FontFaceClass(_gi.Struct):
     """
     :Constructors:
 
@@ -732,7 +730,7 @@ class FontFamily(GObject.Object, Gio.ListModel):
     def is_variable(self) -> bool: ...
     def list_faces(self) -> list[FontFace]: ...
 
-class FontFamilyClass(GObject.GPointer):
+class FontFamilyClass(_gi.Struct):
     """
     :Constructors:
 
@@ -787,14 +785,14 @@ class FontMap(GObject.Object, Gio.ListModel):
     def changed(self) -> None: ...
     def create_context(self) -> Context: ...
     def do_changed(self) -> None: ...
-    def do_get_family(self, name: str) -> FontFamily: ...
+    def do_get_family(self, name: str) -> FontFamily | None: ...
     def do_get_serial(self) -> int: ...
     def do_list_families(self) -> list[FontFamily]: ...
     def do_load_font(self, context: Context, desc: FontDescription) -> Font | None: ...
     def do_load_fontset(
         self, context: Context, desc: FontDescription, language: Language
     ) -> Fontset | None: ...
-    def get_family(self, name: str) -> FontFamily: ...
+    def get_family(self, name: str) -> FontFamily | None: ...
     def get_serial(self) -> int: ...
     def list_families(self) -> list[FontFamily]: ...
     def load_font(self, context: Context, desc: FontDescription) -> Font | None: ...
@@ -809,7 +807,7 @@ class FontMap(GObject.Object, Gio.ListModel):
         variations: str | None = None,
     ) -> Font: ...
 
-class FontMapClass(GObject.GPointer):
+class FontMapClass(_gi.Struct):
     """
     :Constructors:
 
@@ -848,7 +846,6 @@ class FontMetrics(GObject.GBoxed):
 
         FontMetrics()
     """
-
     @property
     def ref_count(self) -> int: ...
     @property
@@ -894,7 +891,6 @@ class Fontset(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @property
     def parent_instance(self) -> GObject.Object: ...
     def do_foreach(self, func: Callable[..., bool], *data: Any) -> None: ...
@@ -905,7 +901,7 @@ class Fontset(GObject.Object):
     def get_font(self, wc: int) -> Font: ...
     def get_metrics(self) -> FontMetrics: ...
 
-class FontsetClass(GObject.GPointer):
+class FontsetClass(_gi.Struct):
     """
     :Constructors:
 
@@ -943,9 +939,9 @@ class FontsetSimple(Fontset):
     def new(cls, language: Language) -> FontsetSimple: ...
     def size(self) -> int: ...
 
-class FontsetSimpleClass(GObject.GPointer): ...
+class FontsetSimpleClass(_gi.Struct): ...
 
-class GlyphGeometry(GObject.GPointer):
+class GlyphGeometry(_gi.Struct):
     """
     :Constructors:
 
@@ -958,7 +954,7 @@ class GlyphGeometry(GObject.GPointer):
     x_offset: int
     y_offset: int
 
-class GlyphInfo(GObject.GPointer):
+class GlyphInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1033,6 +1029,8 @@ class GlyphString(GObject.GBoxed):
     log_clusters: int
     @property
     def space(self) -> int: ...
+    @staticmethod
+    def __new__(cls: type[Self]) -> Self: ...
     def copy(self) -> GlyphString | None: ...
     def extents(self, font: Font) -> tuple[Rectangle, Rectangle]: ...
     def extents_range(
@@ -1062,7 +1060,7 @@ class GlyphString(GObject.GBoxed):
         self, text: str, length: int, analysis: Analysis, x_pos: int
     ) -> tuple[int, int]: ...
 
-class GlyphVisAttr(GObject.GPointer):
+class GlyphVisAttr(_gi.Struct):
     """
     :Constructors:
 
@@ -1088,6 +1086,8 @@ class Item(GObject.GBoxed):
     length: int
     num_chars: int
     analysis: Analysis
+    @staticmethod
+    def __new__(cls: type[Self]) -> Self: ...
     def apply_attrs(self, iter: AttrIterator) -> None: ...
     def copy(self) -> Item | None: ...
     def free(self) -> None: ...
@@ -1098,9 +1098,7 @@ class Item(GObject.GBoxed):
 
 class Language(GObject.GBoxed):
     @staticmethod
-    def from_string(
-        language: str | None = None,
-    ) -> Language | None: ...
+    def from_string(language: str | None = None) -> Language | None: ...
     @staticmethod
     def get_default() -> Language: ...
     @staticmethod
@@ -1125,6 +1123,8 @@ class Layout(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @staticmethod
+    def __new__(cls: type[Self], context: Context) -> Self: ...
     def context_changed(self) -> None: ...
     def copy(self) -> Layout: ...
     @staticmethod
@@ -1187,23 +1187,20 @@ class Layout(GObject.Object):
     def set_justify(self, justify: bool) -> None: ...
     def set_justify_last_line(self, justify: bool) -> None: ...
     def set_line_spacing(self, factor: float) -> None: ...
-    def set_markup(
-        self, text, length=-1
-    ): ...  # FIXME: Override is missing typing annotation
+    def set_markup(self, text: str, length: int = 1) -> None: ...
     def set_markup_with_accel(
         self, markup: str, length: int, accel_marker: str
     ) -> str: ...
     def set_single_paragraph_mode(self, setting: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
     def set_tabs(self, tabs: TabArray | None = None) -> None: ...
-    # override
-    def set_text(self, text: str, length: int = -1) -> None: ...
+    def set_text(self, text: str, length: int = 1) -> None: ...
     def set_width(self, width: int) -> None: ...
     def set_wrap(self, wrap: WrapMode) -> None: ...
     def write_to_file(self, flags: LayoutSerializeFlags, filename: str) -> bool: ...
     def xy_to_index(self, x: int, y: int) -> tuple[bool, int, int]: ...
 
-class LayoutClass(GObject.GPointer): ...
+class LayoutClass(_gi.Struct): ...
 
 class LayoutIter(GObject.GBoxed):
     def at_last_line(self) -> bool: ...
@@ -1255,7 +1252,7 @@ class LayoutLine(GObject.GBoxed):
     def unref(self) -> None: ...
     def x_to_index(self, x_pos: int) -> tuple[bool, int, int]: ...
 
-class LogAttr(GObject.GPointer):
+class LogAttr(_gi.Struct):
     """
     :Constructors:
 
@@ -1310,7 +1307,7 @@ class Matrix(GObject.GBoxed):
     def transform_rectangle(self) -> Rectangle: ...
     def translate(self, tx: float, ty: float) -> None: ...
 
-class Rectangle(GObject.GPointer):
+class Rectangle(_gi.Struct):
     """
     :Constructors:
 
@@ -1337,7 +1334,6 @@ class Renderer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-
     @property
     def parent_instance(self) -> GObject.Object: ...
     @property
@@ -1411,7 +1407,7 @@ class Renderer(GObject.Object):
     def set_color(self, part: RenderPart, color: Color | None = None) -> None: ...
     def set_matrix(self, matrix: Matrix | None = None) -> None: ...
 
-class RendererClass(GObject.GPointer):
+class RendererClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1456,7 +1452,7 @@ class RendererClass(GObject.GPointer):
         self,
     ) -> Callable[[Renderer, str | None, GlyphItem, int, int], None]: ...
 
-class RendererPrivate(GObject.GPointer): ...
+class RendererPrivate(_gi.Struct): ...
 
 class ScriptIter(GObject.GBoxed):
     """
@@ -1466,6 +1462,8 @@ class ScriptIter(GObject.GBoxed):
 
         new(text:str, length:int) -> Pango.ScriptIter
     """
+    @staticmethod
+    def __new__(cls: type[Self], text: str, length: int) -> Self: ...
     def free(self) -> None: ...
     def get_range(self) -> tuple[str, str, Script]: ...
     @classmethod
@@ -1480,6 +1478,10 @@ class TabArray(GObject.GBoxed):
 
         new(initial_size:int, positions_in_pixels:bool) -> Pango.TabArray
     """
+    @staticmethod
+    def __new__(
+        cls: type[Self], initial_size: int, positions_in_pixels: bool
+    ) -> Self: ...
     def copy(self) -> TabArray: ...
     def free(self) -> None: ...
     @staticmethod

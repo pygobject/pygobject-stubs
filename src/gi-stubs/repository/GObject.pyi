@@ -386,12 +386,10 @@ def gtype_get_type() -> type[Any]: ...
 
 idle_add: Final = GLib.idle_add
 io_add_watch: Final = GLib.io_add_watch
-# override
 list_properties: Final = _gi.list_properties
 main_context_default: Final = GLib.main_context_default
 main_depth: Final = GLib.main_depth
 markup_escape_text: Final = GLib.markup_escape_text
-# override
 new: Final = _gi.new
 
 def param_spec_boolean(
@@ -683,7 +681,6 @@ def signal_list_names(type_: GType | Object) -> tuple[str, ...]: ...
 def signal_lookup(name: str, type_: GType | Object) -> int: ...
 def signal_name(signal_id: int) -> str | None: ...
 
-# override
 signal_new: Final = _gi.signal_new
 
 def signal_override_class_closure(
@@ -794,7 +791,6 @@ def type_parent(type_: GType | Object) -> GType: ...
 def type_qname(type: type[Any]) -> int: ...
 def type_query(type: type[Any]) -> TypeQuery: ...
 
-# override
 type_register: Final = _gi.type_register
 
 def type_register_dynamic(
@@ -916,7 +912,7 @@ class BookmarkFile(GBoxed): ...
 class ByteArray(GBoxed): ...
 class Bytes(GBoxed): ...
 
-class CClosure(GPointer):
+class CClosure(_gi.Struct):
     """
     :Constructors:
 
@@ -1183,7 +1179,7 @@ class Closure(GBoxed):
     def sink(self) -> None: ...
     def unref(self) -> None: ...
 
-class ClosureNotifyData(GPointer):
+class ClosureNotifyData(_gi.Struct):
     """
     :Constructors:
 
@@ -1199,7 +1195,7 @@ class Date(GBoxed): ...
 class DateTime(GBoxed): ...
 class Dir(GBoxed): ...
 
-class EnumClass(GPointer):
+class EnumClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1212,9 +1208,9 @@ class EnumClass(GPointer):
     minimum: int
     maximum: int
     n_values: int
-    values: list[EnumValue]
+    values: EnumValue
 
-class EnumValue(GPointer):
+class EnumValue(_gi.Struct):
     """
     :Constructors:
 
@@ -1229,7 +1225,7 @@ class EnumValue(GPointer):
 
 Error = GLib.Error
 
-class FlagsClass(GPointer):
+class FlagsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1241,9 +1237,9 @@ class FlagsClass(GPointer):
     g_type_class: TypeClass
     mask: int
     n_values: int
-    values: list[FlagsValue]
+    values: FlagsValue
 
-class FlagsValue(GPointer):
+class FlagsValue(_gi.Struct):
     """
     :Constructors:
 
@@ -1293,7 +1289,7 @@ class InitiallyUnowned(Object):
     @_property
     def qdata(self) -> GLib.Data: ...
 
-class InitiallyUnownedClass(GPointer):
+class InitiallyUnownedClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1334,7 +1330,7 @@ class InitiallyUnownedClass(GPointer):
     @_property
     def pdummy(self) -> list[None]: ...
 
-class InterfaceInfo(GPointer):
+class InterfaceInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1372,7 +1368,7 @@ class Object(_gi.GObject, ObjectProtocol):
       notify (GParam)
     """
 
-class ObjectClass(GPointer):
+class ObjectClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1418,7 +1414,7 @@ class ObjectClass(GPointer):
     def list_properties(self) -> list[ParamSpec]: ...
     def override_property(self, property_id: int, name: str) -> None: ...
 
-class ObjectConstructParam(GPointer):
+class ObjectConstructParam(_gi.Struct):
     """
     :Constructors:
 
@@ -1526,7 +1522,7 @@ class ParamSpecChar(ParamSpec):
     @_property
     def default_value(self) -> int: ...
 
-class ParamSpecClass(GPointer):
+class ParamSpecClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1743,7 +1739,7 @@ class ParamSpecPointer(ParamSpec):
     @_property
     def parent_instance(self) -> ParamSpec: ...
 
-class ParamSpecPool(GPointer):
+class ParamSpecPool(_gi.Struct):
     def free(self) -> None: ...
     def insert(self, pspec: ParamSpec, owner_type: type[Any]) -> None: ...
     def list(self, owner_type: type[Any]) -> list[ParamSpec]: ...
@@ -1776,7 +1772,7 @@ class ParamSpecString(ParamSpec):
     @_property
     def ensure_non_null(self) -> int: ...
 
-class ParamSpecTypeInfo(GPointer):
+class ParamSpecTypeInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -1912,7 +1908,7 @@ class ParamSpecVariant(ParamSpec):
     @_property
     def padding(self) -> list[None]: ...
 
-class Parameter(GPointer):
+class Parameter(_gi.Struct):
     """
     :Constructors:
 
@@ -1989,7 +1985,7 @@ class SignalGroup(Object):
     def set_target(self, target: Object | None = None) -> None: ...
     def unblock(self) -> None: ...
 
-class SignalInvocationHint(GPointer):
+class SignalInvocationHint(_gi.Struct):
     """
     :Constructors:
 
@@ -2005,7 +2001,7 @@ class SignalInvocationHint(GPointer):
 # override
 SignalOverride = _SignalOverride
 
-class SignalQuery(GPointer):
+class SignalQuery(_gi.Struct):
     """
     :Constructors:
 
@@ -2034,14 +2030,14 @@ Timeout = GLib.Timeout
 
 class Tree(GBoxed): ...
 
-class TypeCValue(GPointer):
+class TypeCValue(_gi.Struct):
     v_double = ...  # FIXME: Constant is missing typing annotation
     v_int = ...  # FIXME: Constant is missing typing annotation
     v_int64 = ...  # FIXME: Constant is missing typing annotation
     v_long = ...  # FIXME: Constant is missing typing annotation
     v_pointer = ...  # FIXME: Constant is missing typing annotation
 
-class TypeClass(GPointer):
+class TypeClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2066,7 +2062,7 @@ class TypeClass(GPointer):
     def ref(type: type[Any]) -> TypeClass: ...
     def unref(self) -> None: ...
 
-class TypeFundamentalInfo(GPointer):
+class TypeFundamentalInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -2077,7 +2073,7 @@ class TypeFundamentalInfo(GPointer):
 
     type_flags: TypeFundamentalFlags
 
-class TypeInfo(GPointer):
+class TypeInfo(_gi.Struct):
     """
     :Constructors:
 
@@ -2097,7 +2093,7 @@ class TypeInfo(GPointer):
     instance_init: Callable[[TypeInstance, TypeClass], None]
     value_table: TypeValueTable
 
-class TypeInstance(GPointer):
+class TypeInstance(_gi.Struct):
     """
     :Constructors:
 
@@ -2109,7 +2105,7 @@ class TypeInstance(GPointer):
     def g_class(self) -> TypeClass: ...
     def get_private(self, private_type: type[Any]) -> None: ...
 
-class TypeInterface(GPointer):
+class TypeInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -2139,8 +2135,19 @@ class TypeInterface(GPointer):
     @staticmethod
     def prerequisites(interface_type: type[Any]) -> list[type[Any]]: ...
 
-# override
 class TypeModule(Object, TypePlugin):
+    """
+    :Constructors:
+
+    ::
+
+        TypeModule(**properties)
+
+    Object GTypeModule
+
+    Signals from GObject:
+      notify (GParam)
+    """
     @_property
     def parent_instance(self) -> Object: ...
     @_property
@@ -2176,7 +2183,7 @@ class TypeModule(Object, TypePlugin):
     def unuse(self) -> None: ...
     def use(self) -> bool: ...
 
-class TypeModuleClass(GPointer):
+class TypeModuleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2212,7 +2219,7 @@ class TypePlugin(GInterface, Protocol):
     def unuse(self) -> None: ...
     def use(self) -> None: ...
 
-class TypePluginClass(GPointer):
+class TypePluginClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2231,7 +2238,7 @@ class TypePluginClass(GPointer):
         [TypePlugin, type[Any], type[Any], InterfaceInfo], None
     ]
 
-class TypeQuery(GPointer):
+class TypeQuery(_gi.Struct):
     """
     :Constructors:
 
@@ -2245,7 +2252,7 @@ class TypeQuery(GPointer):
     class_size: int
     instance_size: int
 
-class TypeValueTable(GPointer):
+class TypeValueTable(_gi.Struct):
     """
     :Constructors:
 
@@ -2380,9 +2387,9 @@ class VariantType(GBoxed): ...
 
 Warning = _gi.Warning
 
-class WeakRef(GPointer): ...
+class WeakRef(_gi.Struct): ...
 
-class _Value__data__union(GPointer):
+class _Value__data__union(_gi.Struct):
     v_double = ...  # FIXME: Constant is missing typing annotation
     v_float = ...  # FIXME: Constant is missing typing annotation
     v_int = ...  # FIXME: Constant is missing typing annotation
@@ -2464,5 +2471,4 @@ class TypeFundamentalFlags(IntFlag):
     DERIVABLE = 4
     INSTANTIATABLE = 2
 
-# override
 GEnum = _gi.GEnum

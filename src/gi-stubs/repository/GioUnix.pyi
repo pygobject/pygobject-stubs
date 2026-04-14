@@ -1,12 +1,19 @@
+from typing import Any
+from typing import Final
 from typing import Protocol
 from typing import TypeVar
 
 from collections.abc import Callable
+from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import Gio
+from gi.repository import GLib
 from gi.repository import GObject
 
 T = TypeVar("T")
+
+DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME: Final = "gio-desktop-app-info-lookup"
 
 def is_mount_path_system_internal(mount_path: str) -> bool: ...
 def is_system_device_path(device_path: str) -> bool: ...
@@ -45,6 +52,118 @@ def mounts_changed_since(time: int) -> bool: ...
 def mounts_get() -> tuple[list[MountEntry], int]: ...
 def mounts_get_from_file(table_path: str) -> tuple[list[MountEntry] | None, int]: ...
 
+class DesktopAppInfo(GObject.Object, Gio.AppInfo):
+    """
+    :Constructors:
+
+    ::
+
+        DesktopAppInfo(**properties)
+        new(desktop_id:str) -> GioUnix.DesktopAppInfo or None
+        new_from_filename(filename:str) -> GioUnix.DesktopAppInfo or None
+        new_from_keyfile(key_file:GLib.KeyFile) -> GioUnix.DesktopAppInfo or None
+
+    Object GDesktopAppInfo
+
+    Properties from GDesktopAppInfo:
+      filename -> gchararray: filename
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    class Props(GObject.Object.Props):
+        filename: str | None
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(self, *, filename: str = ...) -> None: ...
+    def get_action_name(self, action_name: str) -> str: ...
+    def get_boolean(self, key: str) -> bool: ...
+    def get_categories(self) -> str | None: ...
+    def get_filename(self) -> str | None: ...
+    def get_generic_name(self) -> str | None: ...
+    @staticmethod
+    def get_implementations(interface: str) -> list[DesktopAppInfo]: ...
+    def get_is_hidden(self) -> bool: ...
+    def get_keywords(self) -> list[str]: ...
+    def get_locale_string(self, key: str) -> str | None: ...
+    def get_nodisplay(self) -> bool: ...
+    def get_show_in(self, desktop_env: str | None = None) -> bool: ...
+    def get_startup_wm_class(self) -> str | None: ...
+    def get_string(self, key: str) -> str | None: ...
+    def get_string_list(self, key: str) -> list[str]: ...
+    def has_key(self, key: str) -> bool: ...
+    def launch_action(
+        self, action_name: str, launch_context: Gio.AppLaunchContext | None = None
+    ) -> None: ...
+    def launch_uris_as_manager(
+        self,
+        uris: list[str],
+        launch_context: Gio.AppLaunchContext | None,
+        spawn_flags: GLib.SpawnFlags,
+        user_setup: Callable[..., None] | None = None,
+        pid_callback: Callable[..., None] | None = None,
+        *pid_callback_data: Any,
+    ) -> bool: ...
+    def launch_uris_as_manager_with_fds(
+        self,
+        uris: list[str],
+        launch_context: Gio.AppLaunchContext | None,
+        spawn_flags: GLib.SpawnFlags,
+        user_setup: Callable[..., None] | None,
+        pid_callback: Callable[..., None] | None,
+        stdin_fd: int,
+        stdout_fd: int,
+        stderr_fd: int,
+        *pid_callback_data: Any,
+    ) -> bool: ...
+    def list_actions(self) -> list[str]: ...
+    @classmethod
+    def new(cls, desktop_id: str) -> DesktopAppInfo | None: ...
+    @classmethod
+    def new_from_filename(cls, filename: str) -> DesktopAppInfo | None: ...
+    @classmethod
+    def new_from_keyfile(cls, key_file: GLib.KeyFile) -> DesktopAppInfo | None: ...
+    @staticmethod
+    def search(search_string: str) -> list[Sequence[str]]: ...
+    @staticmethod
+    def set_desktop_env(desktop_env: str) -> None: ...
+
+class DesktopAppInfoClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        DesktopAppInfoClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
+class DesktopAppInfoLookup(GObject.GInterface, Protocol):
+    """
+    Interface GDesktopAppInfoLookup
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    def get_default_for_uri_scheme(self, uri_scheme: str) -> Gio.AppInfo | None: ...
+
+class DesktopAppInfoLookupIface(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        DesktopAppInfoLookupIface()
+    """
+    @property
+    def g_iface(self) -> GObject.TypeInterface: ...
+    @property
+    def get_default_for_uri_scheme(
+        self,
+    ) -> Callable[[DesktopAppInfoLookup, str], Gio.AppInfo | None]: ...
+
 class FDMessage(Gio.SocketControlMessage):
     """
     :Constructors:
@@ -81,7 +200,7 @@ class FDMessage(Gio.SocketControlMessage):
     def new_with_fd_list(cls, fd_list: Gio.UnixFDList) -> FDMessage: ...
     def steal_fds(self) -> list[int]: ...
 
-class FDMessageClass(GObject.GPointer):
+class FDMessageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -92,7 +211,7 @@ class FDMessageClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gio.SocketControlMessageClass: ...
 
-class FDMessagePrivate(GObject.GPointer): ...
+class FDMessagePrivate(_gi.Struct): ...
 
 class FileDescriptorBased(GObject.GInterface, Protocol):
     """
@@ -103,7 +222,7 @@ class FileDescriptorBased(GObject.GInterface, Protocol):
     """
     def get_fd(self) -> int: ...
 
-class FileDescriptorBasedIface(GObject.GPointer):
+class FileDescriptorBasedIface(_gi.Struct):
     """
     :Constructors:
 
@@ -151,7 +270,7 @@ class InputStream(Gio.InputStream, Gio.PollableInputStream, FileDescriptorBased)
     def new(cls, fd: int, close_fd: bool) -> InputStream: ...
     def set_close_fd(self, close_fd: bool) -> None: ...
 
-class InputStreamClass(GObject.GPointer):
+class InputStreamClass(_gi.Struct):
     """
     :Constructors:
 
@@ -162,7 +281,7 @@ class InputStreamClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gio.InputStreamClass: ...
 
-class InputStreamPrivate(GObject.GPointer): ...
+class InputStreamPrivate(_gi.Struct): ...
 
 class MountEntry(GObject.GBoxed):
     @staticmethod
@@ -209,7 +328,7 @@ class MountMonitor(GObject.Object):
     def new(cls) -> MountMonitor: ...
     def set_rate_limit(self, limit_msec: int) -> None: ...
 
-class MountMonitorClass(GObject.GPointer): ...
+class MountMonitorClass(_gi.Struct): ...
 
 class MountPoint(GObject.GBoxed):
     @staticmethod
@@ -264,7 +383,7 @@ class OutputStream(Gio.OutputStream, Gio.PollableOutputStream, FileDescriptorBas
     def new(cls, fd: int, close_fd: bool) -> OutputStream: ...
     def set_close_fd(self, close_fd: bool) -> None: ...
 
-class OutputStreamClass(GObject.GPointer):
+class OutputStreamClass(_gi.Struct):
     """
     :Constructors:
 
@@ -275,4 +394,4 @@ class OutputStreamClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gio.OutputStreamClass: ...
 
-class OutputStreamPrivate(GObject.GPointer): ...
+class OutputStreamPrivate(_gi.Struct): ...

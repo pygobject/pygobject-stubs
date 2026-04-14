@@ -1,7 +1,7 @@
 from typing import TypeVar
 
-from gi.repository import GObject
+from gi import _gi
 
 T = TypeVar("T")
 
-class MSG(GObject.GPointer): ...
+class MSG(_gi.Struct): ...

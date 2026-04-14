@@ -2,10 +2,12 @@ from typing import Any
 from typing import Final
 from typing import Protocol
 from typing import TypeVar
+from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
 
+from gi import _gi
 from gi.repository import _Gdk4
 from gi.repository import _Gtk4
 from gi.repository import Gio
@@ -19,7 +21,7 @@ DURATION_INFINITE: Final[int]
 MAJOR_VERSION: Final[int]
 MICRO_VERSION: Final[int]
 MINOR_VERSION: Final[int]
-VERSION_S: Final = "1.9.0"
+VERSION_S: Final = "1.8.5.1"
 
 def accent_color_to_rgba(self: AccentColor) -> _Gdk4.RGBA: ...
 def accent_color_to_standalone_rgba(self: AccentColor, dark: bool) -> _Gdk4.RGBA: ...
@@ -40,13 +42,7 @@ def length_unit_to_px(
 def lerp(a: float, b: float, t: float) -> float: ...
 def rgba_to_standalone(rgba: _Gdk4.RGBA, dark: bool) -> _Gdk4.RGBA: ...
 
-class AboutDialog(
-    Dialog,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.ShortcutManager,
-):
+class AboutDialog(Dialog):
     """
     :Constructors:
 
@@ -226,6 +222,7 @@ class AboutDialog(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         application_icon: str = ...,
         application_name: str = ...,
         artists: Sequence[str] | None = ...,
@@ -347,7 +344,7 @@ class AboutDialog(
     def set_version(self, version: str) -> None: ...
     def set_website(self, website: str) -> None: ...
 
-class AboutDialogClass(GObject.GPointer):
+class AboutDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -358,15 +355,7 @@ class AboutDialogClass(GObject.GPointer):
     @property
     def parent_class(self) -> DialogClass: ...
 
-class AboutWindow(
-    Window,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Native,
-    _Gtk4.Root,
-    _Gtk4.ShortcutManager,
-):
+class AboutWindow(Window):
     """
     :Constructors:
 
@@ -593,6 +582,7 @@ class AboutWindow(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         application_icon: str = ...,
         application_name: str = ...,
         artists: Sequence[str] | None = ...,
@@ -730,7 +720,7 @@ class AboutWindow(
     def set_version(self, version: str) -> None: ...
     def set_website(self, website: str) -> None: ...
 
-class AboutWindowClass(GObject.GPointer):
+class AboutWindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -741,13 +731,7 @@ class AboutWindowClass(GObject.GPointer):
     @property
     def parent_class(self) -> WindowClass: ...
 
-class ActionRow(
-    PreferencesRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class ActionRow(PreferencesRow):
     """
     :Constructors:
 
@@ -897,6 +881,7 @@ class ActionRow(
     def parent_instance(self) -> PreferencesRow: ...
     def __init__(
         self,
+        *,
         activatable_widget: _Gtk4.Widget | None = ...,
         icon_name: str | None = ...,
         subtitle: str = ...,
@@ -947,6 +932,7 @@ class ActionRow(
     def activate(self) -> None: ...
     def add_prefix(self, widget: _Gtk4.Widget) -> None: ...
     def add_suffix(self, widget: _Gtk4.Widget) -> None: ...
+    def do_activate(self) -> None: ...
     def get_activatable_widget(self) -> _Gtk4.Widget | None: ...
     def get_icon_name(self) -> str | None: ...
     def get_subtitle(self) -> str | None: ...
@@ -963,7 +949,7 @@ class ActionRow(
     def set_subtitle_selectable(self, subtitle_selectable: bool) -> None: ...
     def set_title_lines(self, title_lines: int) -> None: ...
 
-class ActionRowClass(GObject.GPointer):
+class ActionRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -978,13 +964,7 @@ class ActionRowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class AlertDialog(
-    Dialog,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.ShortcutManager,
-):
+class AlertDialog(Dialog):
     """
     :Constructors:
 
@@ -1141,6 +1121,7 @@ class AlertDialog(
     def parent_instance(self) -> Dialog: ...
     def __init__(
         self,
+        *,
         body: str = ...,
         body_use_markup: bool = ...,
         close_response: str = ...,
@@ -1231,7 +1212,7 @@ class AlertDialog(
     def set_response_enabled(self, response: str, enabled: bool) -> None: ...
     def set_response_label(self, response: str, label: str) -> None: ...
 
-class AlertDialogClass(GObject.GPointer):
+class AlertDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1282,6 +1263,7 @@ class Animation(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     def __init__(
         self,
+        *,
         follow_enable_animations_setting: bool = ...,
         target: AnimationTarget = ...,
         widget: _Gtk4.Widget = ...,
@@ -1299,11 +1281,11 @@ class Animation(GObject.Object):
     def set_target(self, target: AnimationTarget) -> None: ...
     def skip(self) -> None: ...
 
-class AnimationClass(GObject.GPointer): ...
+class AnimationClass(_gi.Struct): ...
 class AnimationTarget(GObject.Object): ...
-class AnimationTargetClass(GObject.GPointer): ...
+class AnimationTargetClass(_gi.Struct): ...
 
-class Application(_Gtk4.Application, Gio.ActionGroup, Gio.ActionMap):
+class Application(_Gtk4.Application):
     """
     :Constructors:
 
@@ -1391,6 +1373,7 @@ class Application(_Gtk4.Application, Gio.ActionGroup, Gio.ActionMap):
     def parent_instance(self) -> _Gtk4.Application: ...
     def __init__(
         self,
+        *,
         menubar: Gio.MenuModel | None = ...,
         register_session: bool = ...,
         action_group: Gio.ActionGroup | None = ...,
@@ -1406,7 +1389,7 @@ class Application(_Gtk4.Application, Gio.ActionGroup, Gio.ActionMap):
         cls, application_id: str | None, flags: Gio.ApplicationFlags
     ) -> Application: ...
 
-class ApplicationClass(GObject.GPointer):
+class ApplicationClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1419,17 +1402,7 @@ class ApplicationClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ApplicationWindow(
-    _Gtk4.ApplicationWindow,
-    Gio.ActionGroup,
-    Gio.ActionMap,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Native,
-    _Gtk4.Root,
-    _Gtk4.ShortcutManager,
-):
+class ApplicationWindow(_Gtk4.ApplicationWindow):
     """
     :Constructors:
 
@@ -1628,6 +1601,7 @@ class ApplicationWindow(
     def parent_instance(self) -> _Gtk4.ApplicationWindow: ...
     def __init__(
         self,
+        *,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
         show_menubar: bool = ...,
@@ -1698,7 +1672,7 @@ class ApplicationWindow(
     def set_adaptive_preview(self, adaptive_preview: bool) -> None: ...
     def set_content(self, content: _Gtk4.Widget | None = None) -> None: ...
 
-class ApplicationWindowClass(GObject.GPointer):
+class ApplicationWindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1711,7 +1685,7 @@ class ApplicationWindowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class Avatar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
+class Avatar(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -1831,6 +1805,7 @@ class Avatar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         custom_image: _Gdk4.Paintable | None = ...,
         icon_name: str | None = ...,
         show_initials: bool = ...,
@@ -1882,7 +1857,7 @@ class Avatar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
     def set_size(self, size: int) -> None: ...
     def set_text(self, text: str | None = None) -> None: ...
 
-class AvatarClass(GObject.GPointer):
+class AvatarClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1893,13 +1868,7 @@ class AvatarClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Banner(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class Banner(_Gtk4.Widget, _Gtk4.Actionable):
     """
     :Constructors:
 
@@ -2024,6 +1993,7 @@ class Banner(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         button_label: str | None = ...,
         button_style: BannerButtonStyle = ...,
         revealed: bool = ...,
@@ -2076,7 +2046,7 @@ class Banner(
     def set_title(self, title: str) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
 
-class BannerClass(GObject.GPointer):
+class BannerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2087,7 +2057,7 @@ class BannerClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Bin(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
+class Bin(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -2201,6 +2171,7 @@ class Bin(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarge
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -2239,7 +2210,7 @@ class Bin(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarge
     def new(cls) -> Bin: ...
     def set_child(self, child: _Gtk4.Widget | None = None) -> None: ...
 
-class BinClass(GObject.GPointer):
+class BinClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2250,9 +2221,7 @@ class BinClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class BottomSheet(
-    _Gtk4.Widget, Swipeable, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class BottomSheet(_Gtk4.Widget, Swipeable):
     """
     :Constructors:
 
@@ -2391,6 +2360,7 @@ class BottomSheet(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         align: float = ...,
         bottom_bar: _Gtk4.Widget | None = ...,
         can_close: bool = ...,
@@ -2461,7 +2431,7 @@ class BottomSheet(
     def set_sheet(self, sheet: _Gtk4.Widget | None = None) -> None: ...
     def set_show_drag_handle(self, show_drag_handle: bool) -> None: ...
 
-class BottomSheetClass(GObject.GPointer):
+class BottomSheetClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2498,12 +2468,9 @@ class Breakpoint(GObject.Object, _Gtk4.Buildable):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, condition: BreakpointCondition | None = ...) -> None: ...
+    def __init__(self, *, condition: BreakpointCondition | None = ...) -> None: ...
     def add_setter(
-        self,
-        object: GObject.Object,
-        property: str,
-        value: Any | None = None,
+        self, object: GObject.Object, property: str, value: Any | None = None
     ) -> None: ...
     def add_setters(
         self,
@@ -2516,9 +2483,7 @@ class Breakpoint(GObject.Object, _Gtk4.Buildable):
     def new(cls, condition: BreakpointCondition) -> Breakpoint: ...
     def set_condition(self, condition: BreakpointCondition | None = None) -> None: ...
 
-class BreakpointBin(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class BreakpointBin(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -2634,6 +2599,7 @@ class BreakpointBin(
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -2675,7 +2641,7 @@ class BreakpointBin(
     def remove_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def set_child(self, child: _Gtk4.Widget | None = None) -> None: ...
 
-class BreakpointBinClass(GObject.GPointer):
+class BreakpointBinClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2688,7 +2654,7 @@ class BreakpointBinClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class BreakpointClass(GObject.GPointer):
+class BreakpointClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2732,9 +2698,7 @@ class BreakpointCondition(GObject.GBoxed):
     def parse(str: str) -> BreakpointCondition: ...
     def to_string(self) -> str: ...
 
-class ButtonContent(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ButtonContent(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -2852,6 +2816,7 @@ class ButtonContent(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_shrink: bool = ...,
         icon_name: str = ...,
         label: str = ...,
@@ -2899,7 +2864,7 @@ class ButtonContent(
     def set_label(self, label: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class ButtonContentClass(GObject.GPointer):
+class ButtonContentClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2910,13 +2875,7 @@ class ButtonContentClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ButtonRow(
-    PreferencesRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class ButtonRow(PreferencesRow):
     """
     :Constructors:
 
@@ -3056,6 +3015,7 @@ class ButtonRow(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         end_icon_name: str | None = ...,
         start_icon_name: str | None = ...,
         title: str = ...,
@@ -3106,7 +3066,7 @@ class ButtonRow(
     def set_end_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_start_icon_name(self, icon_name: str | None = None) -> None: ...
 
-class ButtonRowClass(GObject.GPointer):
+class ButtonRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3136,16 +3096,9 @@ class CallbackAnimationTarget(AnimationTarget):
         cls, callback: Callable[..., None], *user_data: Any
     ) -> CallbackAnimationTarget: ...
 
-class CallbackAnimationTargetClass(GObject.GPointer): ...
+class CallbackAnimationTargetClass(_gi.Struct): ...
 
-class Carousel(
-    _Gtk4.Widget,
-    Swipeable,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -3277,6 +3230,7 @@ class Carousel(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         allow_long_swipes: bool = ...,
         allow_mouse_drag: bool = ...,
         allow_scroll_wheel: bool = ...,
@@ -3343,7 +3297,7 @@ class Carousel(
     def set_scroll_params(self, params: SpringParams) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
 
-class CarouselClass(GObject.GPointer):
+class CarouselClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3354,13 +3308,7 @@ class CarouselClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class CarouselIndicatorDots(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -3473,6 +3421,7 @@ class CarouselIndicatorDots(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         carousel: Carousel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -3512,7 +3461,7 @@ class CarouselIndicatorDots(
     def new(cls) -> CarouselIndicatorDots: ...
     def set_carousel(self, carousel: Carousel | None = None) -> None: ...
 
-class CarouselIndicatorDotsClass(GObject.GPointer):
+class CarouselIndicatorDotsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3523,13 +3472,7 @@ class CarouselIndicatorDotsClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class CarouselIndicatorLines(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -3642,6 +3585,7 @@ class CarouselIndicatorLines(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         carousel: Carousel | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -3681,7 +3625,7 @@ class CarouselIndicatorLines(
     def new(cls) -> CarouselIndicatorLines: ...
     def set_carousel(self, carousel: Carousel | None = None) -> None: ...
 
-class CarouselIndicatorLinesClass(GObject.GPointer):
+class CarouselIndicatorLinesClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3692,13 +3636,7 @@ class CarouselIndicatorLinesClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Clamp(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -3817,6 +3755,7 @@ class Clamp(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
@@ -3865,7 +3804,7 @@ class Clamp(
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
     def set_unit(self, unit: LengthUnit) -> None: ...
 
-class ClampClass(GObject.GPointer):
+class ClampClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3905,6 +3844,7 @@ class ClampLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
@@ -3919,7 +3859,7 @@ class ClampLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
     def set_unit(self, unit: LengthUnit) -> None: ...
 
-class ClampLayoutClass(GObject.GPointer):
+class ClampLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3930,14 +3870,7 @@ class ClampLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.LayoutManagerClass: ...
 
-class ClampScrollable(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-    _Gtk4.Scrollable,
-):
+class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
     """
     :Constructors:
 
@@ -4060,6 +3993,7 @@ class ClampScrollable(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         maximum_size: int = ...,
         tightening_threshold: int = ...,
@@ -4112,7 +4046,7 @@ class ClampScrollable(
     def set_tightening_threshold(self, tightening_threshold: int) -> None: ...
     def set_unit(self, unit: LengthUnit) -> None: ...
 
-class ClampScrollableClass(GObject.GPointer):
+class ClampScrollableClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4123,13 +4057,7 @@ class ClampScrollableClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ComboRow(
-    ActionRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class ComboRow(ActionRow):
     """
     :Constructors:
 
@@ -4302,6 +4230,7 @@ class ComboRow(
     def parent_instance(self) -> ActionRow: ...
     def __init__(
         self,
+        *,
         enable_search: bool = ...,
         expression: _Gtk4.Expression | None = ...,
         factory: _Gtk4.ListItemFactory | None = ...,
@@ -4386,7 +4315,7 @@ class ComboRow(
     def set_selected(self, position: int) -> None: ...
     def set_use_subtitle(self, use_subtitle: bool) -> None: ...
 
-class ComboRowClass(GObject.GPointer):
+class ComboRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4399,13 +4328,7 @@ class ComboRowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class Dialog(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.ShortcutManager,
-):
+class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
     """
     :Constructors:
 
@@ -4541,6 +4464,7 @@ class Dialog(
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -4614,7 +4538,7 @@ class Dialog(
     ) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class DialogClass(GObject.GPointer):
+class DialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4631,14 +4555,7 @@ class DialogClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class EntryRow(
-    PreferencesRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Editable,
-):
+class EntryRow(PreferencesRow, _Gtk4.Editable):
     """
     :Constructors:
 
@@ -4806,6 +4723,7 @@ class EntryRow(
     def parent_instance(self) -> PreferencesRow: ...
     def __init__(
         self,
+        *,
         activates_default: bool = ...,
         attributes: Pango.AttrList | None = ...,
         enable_emoji_completion: bool = ...,
@@ -4882,7 +4800,7 @@ class EntryRow(
     def set_max_length(self, max_length: int) -> None: ...
     def set_show_apply_button(self, show_apply_button: bool) -> None: ...
 
-class EntryRowClass(GObject.GPointer):
+class EntryRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4922,7 +4840,7 @@ class EnumListItem(GObject.Object):
     def get_nick(self) -> str: ...
     def get_value(self) -> int: ...
 
-class EnumListItemClass(GObject.GPointer):
+class EnumListItemClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4958,13 +4876,13 @@ class EnumListModel(GObject.Object, Gio.ListModel):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, enum_type: type[Any] = ...) -> None: ...
+    def __init__(self, *, enum_type: type[Any] = ...) -> None: ...
     def find_position(self, value: int) -> int: ...
     def get_enum_type(self) -> type[Any]: ...
     @classmethod
     def new(cls, enum_type: type[Any]) -> EnumListModel: ...
 
-class EnumListModelClass(GObject.GPointer):
+class EnumListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4975,13 +4893,7 @@ class EnumListModelClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ExpanderRow(
-    PreferencesRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class ExpanderRow(PreferencesRow):
     """
     :Constructors:
 
@@ -5130,6 +5042,7 @@ class ExpanderRow(
     def parent_instance(self) -> PreferencesRow: ...
     def __init__(
         self,
+        *,
         enable_expansion: bool = ...,
         expanded: bool = ...,
         icon_name: str | None = ...,
@@ -5200,7 +5113,7 @@ class ExpanderRow(
     def set_subtitle_lines(self, subtitle_lines: int) -> None: ...
     def set_title_lines(self, title_lines: int) -> None: ...
 
-class ExpanderRowClass(GObject.GPointer):
+class ExpanderRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5213,14 +5126,7 @@ class ExpanderRowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class Flap(
-    _Gtk4.Widget,
-    Swipeable,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -5363,6 +5269,7 @@ class Flap(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         content: _Gtk4.Widget | None = ...,
         flap: _Gtk4.Widget | None = ...,
         flap_position: _Gtk4.PackType = ...,
@@ -5443,7 +5350,7 @@ class Flap(
     def set_swipe_to_open(self, swipe_to_open: bool) -> None: ...
     def set_transition_type(self, transition_type: FlapTransitionType) -> None: ...
 
-class FlapClass(GObject.GPointer):
+class FlapClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5454,9 +5361,7 @@ class FlapClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class HeaderBar(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class HeaderBar(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -5580,6 +5485,7 @@ class HeaderBar(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         centering_policy: CenteringPolicy = ...,
         decoration_layout: str | None = ...,
         show_back_button: bool = ...,
@@ -5639,7 +5545,7 @@ class HeaderBar(
     def set_show_title(self, show_title: bool) -> None: ...
     def set_title_widget(self, title_widget: _Gtk4.Widget | None = None) -> None: ...
 
-class HeaderBarClass(GObject.GPointer):
+class HeaderBarClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5650,13 +5556,7 @@ class HeaderBarClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class InlineViewSwitcher(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -5775,6 +5675,7 @@ class InlineViewSwitcher(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_shrink: bool = ...,
         display_mode: InlineViewSwitcherDisplayMode = ...,
         homogeneous: bool = ...,
@@ -5823,7 +5724,7 @@ class InlineViewSwitcher(
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_stack(self, stack: ViewStack | None = None) -> None: ...
 
-class InlineViewSwitcherClass(GObject.GPointer):
+class InlineViewSwitcherClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5858,14 +5759,16 @@ class Layout(GObject.Object, _Gtk4.Buildable):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, content: _Gtk4.Widget = ..., name: str | None = ...) -> None: ...
+    def __init__(
+        self, *, content: _Gtk4.Widget = ..., name: str | None = ...
+    ) -> None: ...
     def get_content(self) -> _Gtk4.Widget: ...
     def get_name(self) -> str | None: ...
     @classmethod
     def new(cls, content: _Gtk4.Widget) -> Layout: ...
     def set_name(self, name: str | None = None) -> None: ...
 
-class LayoutClass(GObject.GPointer):
+class LayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5876,9 +5779,7 @@ class LayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class LayoutSlot(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class LayoutSlot(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -5990,6 +5891,7 @@ class LayoutSlot(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         id: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -6027,7 +5929,7 @@ class LayoutSlot(
     @classmethod
     def new(cls, id: str) -> LayoutSlot: ...
 
-class LayoutSlotClass(GObject.GPointer):
+class LayoutSlotClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6038,14 +5940,7 @@ class LayoutSlotClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Leaflet(
-    _Gtk4.Widget,
-    Swipeable,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -6182,6 +6077,7 @@ class Leaflet(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_navigate_back: bool = ...,
         can_navigate_forward: bool = ...,
         can_unfold: bool = ...,
@@ -6266,7 +6162,7 @@ class Leaflet(
     def set_visible_child(self, visible_child: _Gtk4.Widget) -> None: ...
     def set_visible_child_name(self, name: str) -> None: ...
 
-class LeafletClass(GObject.GPointer):
+class LeafletClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6304,6 +6200,7 @@ class LeafletPage(GObject.Object):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget = ...,
         name: str | None = ...,
         navigatable: bool = ...,
@@ -6314,7 +6211,7 @@ class LeafletPage(GObject.Object):
     def set_name(self, name: str | None = None) -> None: ...
     def set_navigatable(self, navigatable: bool) -> None: ...
 
-class LeafletPageClass(GObject.GPointer):
+class LeafletPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6325,15 +6222,7 @@ class LeafletPageClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class MessageDialog(
-    _Gtk4.Window,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Native,
-    _Gtk4.Root,
-    _Gtk4.ShortcutManager,
-):
+class MessageDialog(_Gtk4.Window):
     """
     :Constructors:
 
@@ -6523,6 +6412,7 @@ class MessageDialog(
     def parent_instance(self) -> _Gtk4.Window: ...
     def __init__(
         self,
+        *,
         body: str = ...,
         body_use_markup: bool = ...,
         close_response: str = ...,
@@ -6628,7 +6518,7 @@ class MessageDialog(
     def set_response_enabled(self, response: str, enabled: bool) -> None: ...
     def set_response_label(self, response: str, label: str) -> None: ...
 
-class MessageDialogClass(GObject.GPointer):
+class MessageDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6643,9 +6533,7 @@ class MessageDialogClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class MultiLayoutView(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class MultiLayoutView(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -6759,6 +6647,7 @@ class MultiLayoutView(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         layout: Layout = ...,
         layout_name: str = ...,
         can_focus: bool = ...,
@@ -6805,7 +6694,7 @@ class MultiLayoutView(
     def set_layout(self, layout: Layout) -> None: ...
     def set_layout_name(self, name: str) -> None: ...
 
-class MultiLayoutViewClass(GObject.GPointer):
+class MultiLayoutViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6816,9 +6705,7 @@ class MultiLayoutViewClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class NavigationPage(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class NavigationPage(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -6945,6 +6832,7 @@ class NavigationPage(
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         can_pop: bool = ...,
         child: _Gtk4.Widget | None = ...,
         tag: str | None = ...,
@@ -7000,7 +6888,7 @@ class NavigationPage(
     def set_tag(self, tag: str | None = None) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class NavigationPageClass(GObject.GPointer):
+class NavigationPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7021,9 +6909,7 @@ class NavigationPageClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class NavigationSplitView(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class NavigationSplitView(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -7151,6 +7037,7 @@ class NavigationSplitView(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         collapsed: bool = ...,
         content: NavigationPage | None = ...,
         max_sidebar_width: float = ...,
@@ -7213,7 +7100,7 @@ class NavigationSplitView(
     def set_sidebar_width_fraction(self, fraction: float) -> None: ...
     def set_sidebar_width_unit(self, unit: LengthUnit) -> None: ...
 
-class NavigationSplitViewClass(GObject.GPointer):
+class NavigationSplitViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7224,9 +7111,7 @@ class NavigationSplitViewClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class NavigationView(
-    _Gtk4.Widget, Swipeable, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class NavigationView(_Gtk4.Widget, Swipeable):
     """
     :Constructors:
 
@@ -7356,6 +7241,7 @@ class NavigationView(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         animate_transitions: bool = ...,
         hhomogeneous: bool = ...,
         pop_on_escape: bool = ...,
@@ -7396,7 +7282,6 @@ class NavigationView(
     def find_page(self, tag: str) -> NavigationPage | None: ...
     def get_animate_transitions(self) -> bool: ...
     def get_hhomogeneous(self) -> bool: ...
-    # override
     def get_navigation_stack(self) -> Gio.ListModel: ...
     def get_pop_on_escape(self) -> bool: ...
     def get_previous_page(self, page: NavigationPage) -> NavigationPage | None: ...
@@ -7418,7 +7303,7 @@ class NavigationView(
     def set_pop_on_escape(self, pop_on_escape: bool) -> None: ...
     def set_vhomogeneous(self, vhomogeneous: bool) -> None: ...
 
-class NavigationViewClass(GObject.GPointer):
+class NavigationViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7429,9 +7314,7 @@ class NavigationViewClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class OverlaySplitView(
-    _Gtk4.Widget, Swipeable, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class OverlaySplitView(_Gtk4.Widget, Swipeable):
     """
     :Constructors:
 
@@ -7565,6 +7448,7 @@ class OverlaySplitView(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         collapsed: bool = ...,
         content: _Gtk4.Widget | None = ...,
         enable_hide_gesture: bool = ...,
@@ -7636,7 +7520,7 @@ class OverlaySplitView(
     def set_sidebar_width_fraction(self, fraction: float) -> None: ...
     def set_sidebar_width_unit(self, unit: LengthUnit) -> None: ...
 
-class OverlaySplitViewClass(GObject.GPointer):
+class OverlaySplitViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7647,14 +7531,7 @@ class OverlaySplitViewClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class PasswordEntryRow(
-    EntryRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Editable,
-):
+class PasswordEntryRow(EntryRow):
     """
     :Constructors:
 
@@ -7825,6 +7702,7 @@ class PasswordEntryRow(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         activates_default: bool = ...,
         attributes: Pango.AttrList | None = ...,
         enable_emoji_completion: bool = ...,
@@ -7882,7 +7760,7 @@ class PasswordEntryRow(
     @classmethod
     def new(cls) -> PasswordEntryRow: ...
 
-class PasswordEntryRowClass(GObject.GPointer):
+class PasswordEntryRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7893,13 +7771,7 @@ class PasswordEntryRowClass(GObject.GPointer):
     @property
     def parent_class(self) -> EntryRowClass: ...
 
-class PreferencesDialog(
-    Dialog,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.ShortcutManager,
-):
+class PreferencesDialog(Dialog):
     """
     :Constructors:
 
@@ -8043,6 +7915,7 @@ class PreferencesDialog(
     def parent_instance(self) -> Dialog: ...
     def __init__(
         self,
+        *,
         search_enabled: bool = ...,
         visible_page: _Gtk4.Widget = ...,
         visible_page_name: str = ...,
@@ -8101,7 +7974,7 @@ class PreferencesDialog(
     def set_visible_page(self, page: PreferencesPage) -> None: ...
     def set_visible_page_name(self, name: str) -> None: ...
 
-class PreferencesDialogClass(GObject.GPointer):
+class PreferencesDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8114,9 +7987,7 @@ class PreferencesDialogClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class PreferencesGroup(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class PreferencesGroup(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -8236,6 +8107,7 @@ class PreferencesGroup(
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         description: str | None = ...,
         header_suffix: _Gtk4.Widget | None = ...,
         separate_rows: bool = ...,
@@ -8292,7 +8164,7 @@ class PreferencesGroup(
     def set_separate_rows(self, separate_rows: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class PreferencesGroupClass(GObject.GPointer):
+class PreferencesGroupClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8305,9 +8177,7 @@ class PreferencesGroupClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class PreferencesPage(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class PreferencesPage(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -8432,6 +8302,7 @@ class PreferencesPage(
     def parent_instance(self) -> _Gtk4.Widget: ...
     def __init__(
         self,
+        *,
         banner: Banner | None = ...,
         description: str = ...,
         description_centered: bool = ...,
@@ -8492,7 +8363,7 @@ class PreferencesPage(
     def set_title(self, title: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class PreferencesPageClass(GObject.GPointer):
+class PreferencesPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8505,13 +8376,7 @@ class PreferencesPageClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class PreferencesRow(
-    _Gtk4.ListBoxRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class PreferencesRow(_Gtk4.ListBoxRow):
     """
     :Constructors:
 
@@ -8644,6 +8509,7 @@ class PreferencesRow(
     def parent_instance(self) -> _Gtk4.ListBoxRow: ...
     def __init__(
         self,
+        *,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
@@ -8696,7 +8562,7 @@ class PreferencesRow(
     def set_use_markup(self, use_markup: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class PreferencesRowClass(GObject.GPointer):
+class PreferencesRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8709,15 +8575,7 @@ class PreferencesRowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class PreferencesWindow(
-    Window,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Native,
-    _Gtk4.Root,
-    _Gtk4.ShortcutManager,
-):
+class PreferencesWindow(Window):
     """
     :Constructors:
 
@@ -8910,6 +8768,7 @@ class PreferencesWindow(
     def parent_instance(self) -> Window: ...
     def __init__(
         self,
+        *,
         can_navigate_back: bool = ...,
         search_enabled: bool = ...,
         visible_page: _Gtk4.Widget = ...,
@@ -8990,7 +8849,7 @@ class PreferencesWindow(
     def set_visible_page(self, page: PreferencesPage) -> None: ...
     def set_visible_page_name(self, name: str) -> None: ...
 
-class PreferencesWindowClass(GObject.GPointer):
+class PreferencesWindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9029,7 +8888,7 @@ class PropertyAnimationTarget(AnimationTarget):
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, object: GObject.Object = ..., pspec: GObject.ParamSpec = ...
+        self, *, object: GObject.Object = ..., pspec: GObject.ParamSpec = ...
     ) -> None: ...
     def get_object(self) -> GObject.Object: ...
     def get_pspec(self) -> GObject.ParamSpec: ...
@@ -9042,11 +8901,9 @@ class PropertyAnimationTarget(AnimationTarget):
         cls, object: GObject.Object, pspec: GObject.ParamSpec
     ) -> PropertyAnimationTarget: ...
 
-class PropertyAnimationTargetClass(GObject.GPointer): ...
+class PropertyAnimationTargetClass(_gi.Struct): ...
 
-class ShortcutLabel(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ShortcutLabel(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -9160,6 +9017,7 @@ class ShortcutLabel(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         accelerator: str = ...,
         disabled_text: str = ...,
         can_focus: bool = ...,
@@ -9201,7 +9059,7 @@ class ShortcutLabel(
     def set_accelerator(self, accelerator: str) -> None: ...
     def set_disabled_text(self, disabled_text: str) -> None: ...
 
-class ShortcutLabelClass(GObject.GPointer):
+class ShortcutLabelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9212,13 +9070,7 @@ class ShortcutLabelClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ShortcutsDialog(
-    Dialog,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.ShortcutManager,
-):
+class ShortcutsDialog(Dialog):
     """
     :Constructors:
 
@@ -9352,6 +9204,7 @@ class ShortcutsDialog(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -9397,7 +9250,7 @@ class ShortcutsDialog(
     @classmethod
     def new(cls) -> ShortcutsDialog: ...
 
-class ShortcutsDialogClass(GObject.GPointer):
+class ShortcutsDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9441,6 +9294,7 @@ class ShortcutsItem(GObject.Object):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         accelerator: str = ...,
         action_name: str = ...,
         direction: _Gtk4.TextDirection = ...,
@@ -9462,7 +9316,7 @@ class ShortcutsItem(GObject.Object):
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class ShortcutsItemClass(GObject.GPointer):
+class ShortcutsItemClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9498,14 +9352,14 @@ class ShortcutsSection(GObject.Object, Gio.ListModel, _Gtk4.Buildable):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, title: str | None = ...) -> None: ...
+    def __init__(self, *, title: str | None = ...) -> None: ...
     def add(self, item: ShortcutsItem) -> None: ...
     def get_title(self) -> str | None: ...
     @classmethod
     def new(cls, title: str | None = None) -> ShortcutsSection: ...
     def set_title(self, title: str | None = None) -> None: ...
 
-class ShortcutsSectionClass(GObject.GPointer):
+class ShortcutsSectionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9516,14 +9370,7 @@ class ShortcutsSectionClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class SpinRow(
-    ActionRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Editable,
-):
+class SpinRow(ActionRow, _Gtk4.Editable):
     """
     :Constructors:
 
@@ -9708,6 +9555,7 @@ class SpinRow(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         adjustment: _Gtk4.Adjustment | None = ...,
         climb_rate: float = ...,
         digits: int = ...,
@@ -9770,10 +9618,7 @@ class SpinRow(
         xalign: float = ...,
     ) -> None: ...
     def configure(
-        self,
-        adjustment: _Gtk4.Adjustment | None,
-        climb_rate: float,
-        digits: int,
+        self, adjustment: _Gtk4.Adjustment | None, climb_rate: float, digits: int
     ) -> None: ...
     def get_adjustment(self) -> _Gtk4.Adjustment: ...
     def get_climb_rate(self) -> float: ...
@@ -9800,7 +9645,7 @@ class SpinRow(
     def set_wrap(self, wrap: bool) -> None: ...
     def update(self) -> None: ...
 
-class SpinRowClass(GObject.GPointer):
+class SpinRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9811,7 +9656,7 @@ class SpinRowClass(GObject.GPointer):
     @property
     def parent_class(self) -> ActionRowClass: ...
 
-class Spinner(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
+class Spinner(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -9919,6 +9764,7 @@ class Spinner(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -9954,7 +9800,7 @@ class Spinner(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
     @classmethod
     def new(cls) -> Spinner: ...
 
-class SpinnerClass(GObject.GPointer):
+class SpinnerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9991,13 +9837,13 @@ class SpinnerPaintable(GObject.Object, _Gdk4.Paintable, _Gtk4.SymbolicPaintable)
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, widget: _Gtk4.Widget | None = ...) -> None: ...
+    def __init__(self, *, widget: _Gtk4.Widget | None = ...) -> None: ...
     def get_widget(self) -> _Gtk4.Widget | None: ...
     @classmethod
     def new(cls, widget: _Gtk4.Widget | None = None) -> SpinnerPaintable: ...
     def set_widget(self, widget: _Gtk4.Widget | None = None) -> None: ...
 
-class SpinnerPaintableClass(GObject.GPointer):
+class SpinnerPaintableClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10008,13 +9854,7 @@ class SpinnerPaintableClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class SplitButton(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
     """
     :Constructors:
 
@@ -10148,6 +9988,7 @@ class SplitButton(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         can_shrink: bool = ...,
         child: _Gtk4.Widget | None = ...,
         direction: _Gtk4.ArrowType = ...,
@@ -10214,7 +10055,7 @@ class SplitButton(
     def set_popover(self, popover: _Gtk4.Popover | None = None) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class SplitButtonClass(GObject.GPointer):
+class SplitButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10278,6 +10119,7 @@ class SpringAnimation(Animation):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         clamp: bool = ...,
         epsilon: float = ...,
         initial_velocity: float = ...,
@@ -10314,7 +10156,7 @@ class SpringAnimation(Animation):
     def set_value_from(self, value: float) -> None: ...
     def set_value_to(self, value: float) -> None: ...
 
-class SpringAnimationClass(GObject.GPointer): ...
+class SpringAnimationClass(_gi.Struct): ...
 
 class SpringParams(GObject.GBoxed):
     """
@@ -10325,6 +10167,10 @@ class SpringParams(GObject.GBoxed):
         new(damping_ratio:float, mass:float, stiffness:float) -> Adw.SpringParams
         new_full(damping:float, mass:float, stiffness:float) -> Adw.SpringParams
     """
+    @staticmethod
+    def __new__(
+        cls: type[Self], damping_ratio: float, mass: float, stiffness: float
+    ) -> Self: ...
     def get_damping(self) -> float: ...
     def get_damping_ratio(self) -> float: ...
     def get_mass(self) -> float: ...
@@ -10340,13 +10186,7 @@ class SpringParams(GObject.GBoxed):
     def ref(self) -> SpringParams: ...
     def unref(self) -> None: ...
 
-class Squeezer(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -10479,6 +10319,7 @@ class Squeezer(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         allow_none: bool = ...,
         homogeneous: bool = ...,
         interpolate_size: bool = ...,
@@ -10545,7 +10386,7 @@ class Squeezer(
     def set_xalign(self, xalign: float) -> None: ...
     def set_yalign(self, yalign: float) -> None: ...
 
-class SqueezerClass(GObject.GPointer):
+class SqueezerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10579,12 +10420,12 @@ class SqueezerPage(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, child: _Gtk4.Widget = ..., enabled: bool = ...) -> None: ...
+    def __init__(self, *, child: _Gtk4.Widget = ..., enabled: bool = ...) -> None: ...
     def get_child(self) -> _Gtk4.Widget: ...
     def get_enabled(self) -> bool: ...
     def set_enabled(self, enabled: bool) -> None: ...
 
-class SqueezerPageClass(GObject.GPointer):
+class SqueezerPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10595,9 +10436,7 @@ class SqueezerPageClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class StatusPage(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class StatusPage(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -10717,6 +10556,7 @@ class StatusPage(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         description: str | None = ...,
         icon_name: str | None = ...,
@@ -10767,7 +10607,7 @@ class StatusPage(
     def set_paintable(self, paintable: _Gdk4.Paintable | None = None) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class StatusPageClass(GObject.GPointer):
+class StatusPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10818,7 +10658,7 @@ class StyleManager(GObject.Object):
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, color_scheme: ColorScheme = ..., display: _Gdk4.Display = ...
+        self, *, color_scheme: ColorScheme = ..., display: _Gdk4.Display = ...
     ) -> None: ...
     def get_accent_color(self) -> AccentColor: ...
     def get_accent_color_rgba(self) -> _Gdk4.RGBA: ...
@@ -10836,7 +10676,7 @@ class StyleManager(GObject.Object):
     def get_system_supports_color_schemes(self) -> bool: ...
     def set_color_scheme(self, color_scheme: ColorScheme) -> None: ...
 
-class StyleManagerClass(GObject.GPointer):
+class StyleManagerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10892,6 +10732,7 @@ class SwipeTracker(GObject.Object, _Gtk4.Orientable):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         allow_long_swipes: bool = ...,
         allow_mouse_drag: bool = ...,
         allow_window_handle: bool = ...,
@@ -10921,7 +10762,7 @@ class SwipeTracker(GObject.Object, _Gtk4.Orientable):
     def set_upper_overshoot(self, overshoot: bool) -> None: ...
     def shift_position(self, delta: float) -> None: ...
 
-class SwipeTrackerClass(GObject.GPointer):
+class SwipeTrackerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10947,7 +10788,7 @@ class Swipeable(GObject.GInterface, Protocol):
         self, navigation_direction: NavigationDirection, is_drag: bool
     ) -> _Gdk4.Rectangle: ...
 
-class SwipeableInterface(GObject.GPointer):
+class SwipeableInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -10972,13 +10813,7 @@ class SwipeableInterface(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class SwitchRow(
-    ActionRow,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class SwitchRow(ActionRow):
     """
     :Constructors:
 
@@ -11130,6 +10965,7 @@ class SwitchRow(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         active: bool = ...,
         activatable_widget: _Gtk4.Widget | None = ...,
         icon_name: str | None = ...,
@@ -11183,7 +11019,7 @@ class SwitchRow(
     def new(cls) -> SwitchRow: ...
     def set_active(self, is_active: bool) -> None: ...
 
-class SwitchRowClass(GObject.GPointer):
+class SwitchRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11194,7 +11030,7 @@ class SwitchRowClass(GObject.GPointer):
     @property
     def parent_class(self) -> ActionRowClass: ...
 
-class TabBar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
+class TabBar(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -11328,6 +11164,7 @@ class TabBar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         autohide: bool = ...,
         end_action_widget: _Gtk4.Widget | None = ...,
         expand_tabs: bool = ...,
@@ -11387,12 +11224,10 @@ class TabBar(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTa
     def set_start_action_widget(self, widget: _Gtk4.Widget | None = None) -> None: ...
     def set_view(self, view: TabView | None = None) -> None: ...
     def setup_extra_drop_target(
-        self,
-        actions: _Gdk4.DragAction,
-        types: Sequence[type[Any]] | None = None,
+        self, actions: _Gdk4.DragAction, types: Sequence[type[Any]] | None = None
     ) -> None: ...
 
-class TabBarClass(GObject.GPointer):
+class TabBarClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11403,13 +11238,7 @@ class TabBarClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class TabButton(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Actionable,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-):
+class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
     """
     :Constructors:
 
@@ -11527,6 +11356,7 @@ class TabButton(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         view: TabView | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -11567,7 +11397,7 @@ class TabButton(
     def new(cls) -> TabButton: ...
     def set_view(self, view: TabView | None = None) -> None: ...
 
-class TabButtonClass(GObject.GPointer):
+class TabButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11578,9 +11408,7 @@ class TabButtonClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class TabOverview(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class TabOverview(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -11719,6 +11547,7 @@ class TabOverview(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         enable_new_tab: bool = ...,
         enable_search: bool = ...,
@@ -11788,12 +11617,10 @@ class TabOverview(
     def set_show_start_title_buttons(self, show_start_title_buttons: bool) -> None: ...
     def set_view(self, view: TabView | None = None) -> None: ...
     def setup_extra_drop_target(
-        self,
-        actions: _Gdk4.DragAction,
-        types: Sequence[type[Any]] | None = None,
+        self, actions: _Gdk4.DragAction, types: Sequence[type[Any]] | None = None
     ) -> None: ...
 
-class TabOverviewClass(GObject.GPointer):
+class TabOverviewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11858,6 +11685,7 @@ class TabPage(GObject.Object, _Gtk4.Accessible):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget = ...,
         icon: Gio.Icon | None = ...,
         indicator_activatable: bool = ...,
@@ -11904,7 +11732,7 @@ class TabPage(GObject.Object, _Gtk4.Accessible):
     def set_title(self, title: str) -> None: ...
     def set_tooltip(self, tooltip: str) -> None: ...
 
-class TabPageClass(GObject.GPointer):
+class TabPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11915,7 +11743,7 @@ class TabPageClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class TabView(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget):
+class TabView(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -12050,6 +11878,7 @@ class TabView(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         default_icon: Gio.Icon = ...,
         menu_model: Gio.MenuModel | None = ...,
         selected_page: TabPage = ...,
@@ -12132,7 +11961,7 @@ class TabView(_Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintT
         self, page: TabPage, other_view: TabView, position: int
     ) -> None: ...
 
-class TabViewClass(GObject.GPointer):
+class TabViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12194,6 +12023,7 @@ class TimedAnimation(Animation):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         alternate: bool = ...,
         duration: int = ...,
         easing: Easing = ...,
@@ -12229,7 +12059,7 @@ class TimedAnimation(Animation):
     def set_value_from(self, value: float) -> None: ...
     def set_value_to(self, value: float) -> None: ...
 
-class TimedAnimationClass(GObject.GPointer): ...
+class TimedAnimationClass(_gi.Struct): ...
 
 class Toast(GObject.Object):
     """
@@ -12273,6 +12103,7 @@ class Toast(GObject.Object):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         action_name: str | None = ...,
         action_target: GLib.Variant | None = ...,
         button_label: str | None = ...,
@@ -12307,7 +12138,7 @@ class Toast(GObject.Object):
     def set_title(self, title: str) -> None: ...
     def set_use_markup(self, use_markup: bool) -> None: ...
 
-class ToastClass(GObject.GPointer):
+class ToastClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12318,9 +12149,7 @@ class ToastClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ToastOverlay(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ToastOverlay(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -12432,6 +12261,7 @@ class ToastOverlay(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
@@ -12472,7 +12302,7 @@ class ToastOverlay(
     def new(cls) -> ToastOverlay: ...
     def set_child(self, child: _Gtk4.Widget | None = None) -> None: ...
 
-class ToastOverlayClass(GObject.GPointer):
+class ToastOverlayClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12519,6 +12349,7 @@ class Toggle(GObject.Object):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         child: _Gtk4.Widget | None = ...,
         enabled: bool = ...,
         icon_name: str | None = ...,
@@ -12545,7 +12376,7 @@ class Toggle(GObject.Object):
     def set_tooltip(self, tooltip: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class ToggleClass(GObject.GPointer):
+class ToggleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12556,13 +12387,7 @@ class ToggleClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ToggleGroup(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -12685,6 +12510,7 @@ class ToggleGroup(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         active: int = ...,
         active_name: str | None = ...,
         can_shrink: bool = ...,
@@ -12740,7 +12566,7 @@ class ToggleGroup(
     def set_can_shrink(self, can_shrink: bool) -> None: ...
     def set_homogeneous(self, homogeneous: bool) -> None: ...
 
-class ToggleGroupClass(GObject.GPointer):
+class ToggleGroupClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12751,9 +12577,7 @@ class ToggleGroupClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ToolbarView(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ToolbarView(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -12881,6 +12705,7 @@ class ToolbarView(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         bottom_bar_style: ToolbarStyle = ...,
         content: _Gtk4.Widget | None = ...,
         extend_content_to_bottom_edge: bool = ...,
@@ -12942,7 +12767,7 @@ class ToolbarView(
     def set_reveal_top_bars(self, reveal: bool) -> None: ...
     def set_top_bar_style(self, style: ToolbarStyle) -> None: ...
 
-class ToolbarViewClass(GObject.GPointer):
+class ToolbarViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12953,9 +12778,7 @@ class ToolbarViewClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ViewStack(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ViewStack(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -13081,6 +12904,7 @@ class ViewStack(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         enable_transitions: bool = ...,
         hhomogeneous: bool = ...,
         transition_duration: int = ...,
@@ -13149,7 +12973,7 @@ class ViewStack(
     def set_visible_child(self, child: _Gtk4.Widget) -> None: ...
     def set_visible_child_name(self, name: str) -> None: ...
 
-class ViewStackClass(GObject.GPointer):
+class ViewStackClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13198,6 +13022,7 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         badge_number: int = ...,
         child: _Gtk4.Widget = ...,
         icon_name: str | None = ...,
@@ -13224,7 +13049,7 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
     def set_use_underline(self, use_underline: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
-class ViewStackPageClass(GObject.GPointer):
+class ViewStackPageClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13262,11 +13087,11 @@ class ViewStackPages(GObject.Object, Gio.ListModel, _Gtk4.SelectionModel):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, selected_page: ViewStackPage = ...) -> None: ...
+    def __init__(self, *, selected_page: ViewStackPage = ...) -> None: ...
     def get_selected_page(self) -> ViewStackPage | None: ...
     def set_selected_page(self, page: ViewStackPage) -> None: ...
 
-class ViewStackPagesClass(GObject.GPointer):
+class ViewStackPagesClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13277,9 +13102,7 @@ class ViewStackPagesClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ViewSwitcher(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ViewSwitcher(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -13393,6 +13216,7 @@ class ViewSwitcher(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         policy: ViewSwitcherPolicy = ...,
         stack: ViewStack | None = ...,
         can_focus: bool = ...,
@@ -13434,9 +13258,7 @@ class ViewSwitcher(
     def set_policy(self, policy: ViewSwitcherPolicy) -> None: ...
     def set_stack(self, stack: ViewStack | None = None) -> None: ...
 
-class ViewSwitcherBar(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ViewSwitcherBar(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -13550,6 +13372,7 @@ class ViewSwitcherBar(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         reveal: bool = ...,
         stack: ViewStack | None = ...,
         can_focus: bool = ...,
@@ -13591,7 +13414,7 @@ class ViewSwitcherBar(
     def set_reveal(self, reveal: bool) -> None: ...
     def set_stack(self, stack: ViewStack | None = None) -> None: ...
 
-class ViewSwitcherBarClass(GObject.GPointer):
+class ViewSwitcherBarClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13602,7 +13425,7 @@ class ViewSwitcherBarClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ViewSwitcherClass(GObject.GPointer):
+class ViewSwitcherClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13613,9 +13436,7 @@ class ViewSwitcherClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class ViewSwitcherTitle(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class ViewSwitcherTitle(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -13735,6 +13556,7 @@ class ViewSwitcherTitle(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         stack: ViewStack | None = ...,
         subtitle: str = ...,
         title: str = ...,
@@ -13783,7 +13605,7 @@ class ViewSwitcherTitle(
     def set_title(self, title: str) -> None: ...
     def set_view_switcher_enabled(self, enabled: bool) -> None: ...
 
-class ViewSwitcherTitleClass(GObject.GPointer):
+class ViewSwitcherTitleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13794,15 +13616,7 @@ class ViewSwitcherTitleClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class Window(
-    _Gtk4.Window,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Native,
-    _Gtk4.Root,
-    _Gtk4.ShortcutManager,
-):
+class Window(_Gtk4.Window):
     """
     :Constructors:
 
@@ -13985,6 +13799,7 @@ class Window(
     def parent_instance(self) -> _Gtk4.Window: ...
     def __init__(
         self,
+        *,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
         application: _Gtk4.Application | None = ...,
@@ -14054,7 +13869,7 @@ class Window(
     def set_adaptive_preview(self, adaptive_preview: bool) -> None: ...
     def set_content(self, content: _Gtk4.Widget | None = None) -> None: ...
 
-class WindowClass(GObject.GPointer):
+class WindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14067,9 +13882,7 @@ class WindowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class WindowTitle(
-    _Gtk4.Widget, _Gtk4.Accessible, _Gtk4.Buildable, _Gtk4.ConstraintTarget
-):
+class WindowTitle(_Gtk4.Widget):
     """
     :Constructors:
 
@@ -14183,6 +13996,7 @@ class WindowTitle(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         subtitle: str = ...,
         title: str = ...,
         can_focus: bool = ...,
@@ -14224,7 +14038,7 @@ class WindowTitle(
     def set_subtitle(self, subtitle: str) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class WindowTitleClass(GObject.GPointer):
+class WindowTitleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14235,13 +14049,7 @@ class WindowTitleClass(GObject.GPointer):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
-class WrapBox(
-    _Gtk4.Widget,
-    _Gtk4.Accessible,
-    _Gtk4.Buildable,
-    _Gtk4.ConstraintTarget,
-    _Gtk4.Orientable,
-):
+class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
     """
     :Constructors:
 
@@ -14378,6 +14186,7 @@ class WrapBox(
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         align: float = ...,
         child_spacing: int = ...,
         child_spacing_unit: LengthUnit = ...,
@@ -14463,7 +14272,7 @@ class WrapBox(
     def set_wrap_policy(self, wrap_policy: WrapPolicy) -> None: ...
     def set_wrap_reverse(self, wrap_reverse: bool) -> None: ...
 
-class WrapBoxClass(GObject.GPointer):
+class WrapBoxClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14523,6 +14332,7 @@ class WrapLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
         align: float = ...,
         child_spacing: int = ...,
         child_spacing_unit: LengthUnit = ...,
@@ -14567,7 +14377,7 @@ class WrapLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     def set_wrap_policy(self, wrap_policy: WrapPolicy) -> None: ...
     def set_wrap_reverse(self, wrap_reverse: bool) -> None: ...
 
-class WrapLayoutClass(GObject.GPointer):
+class WrapLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14597,7 +14407,6 @@ class TabViewShortcuts(GObject.GFlags):
 class AccentColor(GObject.GEnum):
     BLUE = 0
     GREEN = 2
-    MAIA = 108
     ORANGE = 4
     PINK = 6
     PURPLE = 7

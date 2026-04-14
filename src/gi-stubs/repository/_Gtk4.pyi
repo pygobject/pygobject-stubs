@@ -4,7 +4,6 @@ from typing import Protocol
 from typing import TypeVar
 from typing_extensions import Self
 
-import os
 from collections.abc import Callable
 from collections.abc import Iterator
 from collections.abc import Sequence
@@ -12,6 +11,7 @@ from enum import IntEnum
 
 import cairo
 from gi import _gi
+from gi import _gtktemplate
 from gi.repository import _Gdk4
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
@@ -129,14 +129,10 @@ STYLE_PROVIDER_PRIORITY_FALLBACK: Final[int]
 STYLE_PROVIDER_PRIORITY_SETTINGS: Final[int]
 STYLE_PROVIDER_PRIORITY_THEME: Final[int]
 STYLE_PROVIDER_PRIORITY_USER: Final[int]
-SVG_DEFAULT_FEATURES: Final[int]
 TEXT_VIEW_PRIORITY_VALIDATE: Final[int]
 TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: Final[int]
 TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: Final[int]
 
-def accelerator_get_accessible_label(
-    accelerator_key: int, accelerator_mods: _Gdk4.ModifierType
-) -> str: ...
 def accelerator_get_default_mod_mask() -> _Gdk4.ModifierType: ...
 def accelerator_get_label(
     accelerator_key: int, accelerator_mods: _Gdk4.ModifierType
@@ -179,7 +175,6 @@ def constraint_vfl_parser_error_quark() -> int: ...
 def css_parser_error_quark() -> int: ...
 def css_parser_warning_quark() -> int: ...
 def dialog_error_quark() -> int: ...
-def disable_portal_interfaces(portal_interfaces: Sequence[str]) -> None: ...
 def disable_portals() -> None: ...
 def disable_setlocale() -> None: ...
 def distribute_natural_allocation(
@@ -333,11 +328,6 @@ def show_uri_full(
     *user_data: Any,
 ) -> None: ...
 def show_uri_full_finish(parent: Window, result: Gio.AsyncResult) -> bool: ...
-def svg_error_get_attribute(error: GLib.Error) -> str | None: ...
-def svg_error_get_element(error: GLib.Error) -> str | None: ...
-def svg_error_get_end(error: GLib.Error) -> SvgLocation | None: ...
-def svg_error_get_start(error: GLib.Error) -> SvgLocation | None: ...
-def svg_error_quark() -> int: ...
 def test_accessible_assertion_message_role(
     domain: str,
     file: str,
@@ -418,11 +408,9 @@ class ATContext(GObject.Object):
     def get_accessible(self) -> Accessible: ...
     def get_accessible_role(self) -> AccessibleRole: ...
 
-class ATContextClass(GObject.GPointer): ...
+class ATContextClass(_gi.Struct): ...
 
-class AboutDialog(
-    Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class AboutDialog(Window):
     """
     :Constructors:
 
@@ -455,9 +443,9 @@ class AboutDialog(
       license-type -> GtkLicense: license-type
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -490,7 +478,6 @@ class AboutDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -499,6 +486,7 @@ class AboutDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -747,7 +735,6 @@ class Accessible(GObject.GInterface, Protocol):
     def announce(
         self, message: str, priority: AccessibleAnnouncementPriority
     ) -> None: ...
-    def get_accessible_id(self) -> str | None: ...
     def get_accessible_parent(self) -> Accessible | None: ...
     def get_accessible_role(self) -> AccessibleRole: ...
     def get_at_context(self) -> ATContext: ...
@@ -775,69 +762,7 @@ class Accessible(GObject.GInterface, Protocol):
         self, states: Sequence[AccessibleState], values: Sequence[Any]
     ) -> None: ...
 
-class AccessibleHyperlink(GObject.Object, Accessible):
-    """
-    :Constructors:
-
-    ::
-
-        AccessibleHyperlink(**properties)
-        new(parent:Gtk.AccessibleHypertext, index:int, uri:str, bounds:Gtk.AccessibleTextRange) -> Gtk.AccessibleHyperlink
-
-    Object GtkAccessibleHyperlink
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(GObject.Object.Props):
-        accessible_role: AccessibleRole
-
-    @property
-    def props(self) -> Props: ...
-    def __init__(self, *, accessible_role: AccessibleRole = ...) -> None: ...
-    @classmethod
-    def new(
-        cls,
-        parent: AccessibleHypertext,
-        index: int,
-        uri: str,
-        bounds: AccessibleTextRange,
-    ) -> AccessibleHyperlink: ...
-    def set_platform_state(
-        self, state: AccessiblePlatformState, enabled: bool
-    ) -> None: ...
-
-class AccessibleHyperlinkClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        AccessibleHyperlinkClass()
-    """
-    @property
-    def parent_class(self) -> GObject.ObjectClass: ...
-
-class AccessibleHypertext(GObject.GInterface, Protocol): ...
-
-class AccessibleHypertextInterface(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        AccessibleHypertextInterface()
-    """
-    @property
-    def g_iface(self) -> GObject.TypeInterface: ...
-    @property
-    def get_n_links(self) -> Callable[[AccessibleHypertext], int]: ...
-    @property
-    def get_link(self) -> Callable[[AccessibleHypertext, int], AccessibleHyperlink]: ...
-    @property
-    def get_link_at(self) -> Callable[[AccessibleHypertext, int], int]: ...
-
-class AccessibleInterface(GObject.GPointer):
+class AccessibleInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -865,8 +790,6 @@ class AccessibleInterface(GObject.GPointer):
     ) -> Callable[[Accessible], Accessible | None]: ...
     @property
     def get_bounds(self) -> Callable[[Accessible], tuple[bool, int, int, int, int]]: ...
-    @property
-    def get_accessible_id(self) -> Callable[[Accessible], str | None]: ...
 
 class AccessibleList(GObject.GBoxed):
     """
@@ -885,7 +808,7 @@ class AccessibleList(GObject.GBoxed):
 
 class AccessibleRange(GObject.GInterface, Protocol): ...
 
-class AccessibleRangeInterface(GObject.GPointer):
+class AccessibleRangeInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -911,7 +834,7 @@ class AccessibleText(GObject.GInterface, Protocol):
     ) -> None: ...
     def update_selection_bound(self) -> None: ...
 
-class AccessibleTextInterface(GObject.GPointer):
+class AccessibleTextInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -954,14 +877,8 @@ class AccessibleTextInterface(GObject.GPointer):
     def get_offset(
         self,
     ) -> Callable[[AccessibleText, Graphene.Point], tuple[bool, int]]: ...
-    @property
-    def set_caret_position(self) -> Callable[[AccessibleText, int], bool]: ...
-    @property
-    def set_selection(
-        self,
-    ) -> Callable[[AccessibleText, int, AccessibleTextRange], bool]: ...
 
-class AccessibleTextRange(GObject.GPointer):
+class AccessibleTextRange(_gi.Struct):
     """
     :Constructors:
 
@@ -973,7 +890,7 @@ class AccessibleTextRange(GObject.GPointer):
     start: int
     length: int
 
-class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
+class ActionBar(Widget):
     """
     :Constructors:
 
@@ -988,7 +905,6 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
       revealed -> gboolean: revealed
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -997,6 +913,7 @@ class ActionBar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1144,7 +1061,7 @@ class Actionable(GObject.GInterface, Protocol):
     ) -> None: ...
     def set_detailed_action_name(self, detailed_action_name: str) -> None: ...
 
-class ActionableInterface(GObject.GPointer):
+class ActionableInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -1183,7 +1100,7 @@ class ActivateAction(ShortcutAction):
     @staticmethod
     def get() -> ActivateAction: ...
 
-class ActivateActionClass(GObject.GPointer): ...
+class ActivateActionClass(_gi.Struct): ...
 
 class Adjustment(GObject.InitiallyUnowned):
     """
@@ -1269,7 +1186,7 @@ class Adjustment(GObject.InitiallyUnowned):
     def set_upper(self, upper: float) -> None: ...
     def set_value(self, value: float) -> None: ...
 
-class AdjustmentClass(GObject.GPointer):
+class AdjustmentClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1347,7 +1264,7 @@ class AlertDialog(GObject.Object):
     def set_modal(self, modal: bool) -> None: ...
     def show(self, parent: Window | None = None) -> None: ...
 
-class AlertDialogClass(GObject.GPointer):
+class AlertDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -1392,9 +1309,9 @@ class AlternativeTrigger(ShortcutTrigger):
         cls, first: ShortcutTrigger, second: ShortcutTrigger
     ) -> AlternativeTrigger: ...
 
-class AlternativeTriggerClass(GObject.GPointer): ...
+class AlternativeTriggerClass(_gi.Struct): ...
 
-class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
+class AnyFilter(MultiFilter):
     """
     :Constructors:
 
@@ -1430,7 +1347,7 @@ class AnyFilter(MultiFilter, Gio.ListModel, Buildable):
     @classmethod
     def new(cls) -> AnyFilter: ...
 
-class AnyFilterClass(GObject.GPointer): ...
+class AnyFilterClass(_gi.Struct): ...
 
 class AppChooser(GObject.GInterface, Protocol):
     """
@@ -1443,7 +1360,7 @@ class AppChooser(GObject.GInterface, Protocol):
     def get_content_type(self) -> str: ...
     def refresh(self) -> None: ...
 
-class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
+class AppChooserButton(Widget, AppChooser):
     """
     :Constructors:
 
@@ -1466,7 +1383,6 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       modal -> gboolean: modal
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1475,6 +1391,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1619,16 +1536,7 @@ class AppChooserButton(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
     def set_show_default_item(self, setting: bool) -> None: ...
     def set_show_dialog_item(self, setting: bool) -> None: ...
 
-class AppChooserDialog(
-    Dialog,
-    Accessible,
-    AppChooser,
-    Buildable,
-    ConstraintTarget,
-    Native,
-    Root,
-    ShortcutManager,
-):
+class AppChooserDialog(Dialog, AppChooser):
     """
     :Constructors:
 
@@ -1652,9 +1560,9 @@ class AppChooserDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -1687,7 +1595,6 @@ class AppChooserDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1696,6 +1603,7 @@ class AppChooserDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1886,7 +1794,7 @@ class AppChooserDialog(
     ) -> AppChooserDialog: ...
     def set_heading(self, heading: str) -> None: ...
 
-class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarget):
+class AppChooserWidget(Widget, AppChooser):
     """
     :Constructors:
 
@@ -1910,7 +1818,6 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       default-text -> gchararray: default-text
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1919,6 +1826,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2068,7 +1976,7 @@ class AppChooserWidget(Widget, Accessible, AppChooser, Buildable, ConstraintTarg
     def set_show_other(self, setting: bool) -> None: ...
     def set_show_recommended(self, setting: bool) -> None: ...
 
-class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
+class Application(Gio.Application):
     """
     :Constructors:
 
@@ -2184,7 +2092,7 @@ class Application(Gio.Application, Gio.ActionGroup, Gio.ActionMap):
     def set_menubar(self, menubar: Gio.MenuModel | None = None) -> None: ...
     def uninhibit(self, cookie: int) -> None: ...
 
-class ApplicationClass(GObject.GPointer):
+class ApplicationClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2201,17 +2109,7 @@ class ApplicationClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ApplicationWindow(
-    Window,
-    Gio.ActionGroup,
-    Gio.ActionMap,
-    Accessible,
-    Buildable,
-    ConstraintTarget,
-    Native,
-    Root,
-    ShortcutManager,
-):
+class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
     """
     :Constructors:
 
@@ -2232,9 +2130,9 @@ class ApplicationWindow(
       action-state-changed (gchararray, GVariant)
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -2267,7 +2165,6 @@ class ApplicationWindow(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2276,6 +2173,7 @@ class ApplicationWindow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2458,7 +2356,7 @@ class ApplicationWindow(
     def set_help_overlay(self, help_overlay: ShortcutsWindow | None = None) -> None: ...
     def set_show_menubar(self, show_menubar: bool) -> None: ...
 
-class ApplicationWindowClass(GObject.GPointer):
+class ApplicationWindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -2471,7 +2369,7 @@ class ApplicationWindowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
+class AspectFrame(Widget):
     """
     :Constructors:
 
@@ -2490,7 +2388,6 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2499,6 +2396,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2644,9 +2542,7 @@ class AspectFrame(Widget, Accessible, Buildable, ConstraintTarget):
     def set_xalign(self, xalign: float) -> None: ...
     def set_yalign(self, yalign: float) -> None: ...
 
-class Assistant(
-    Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class Assistant(Window):
     """
     :Constructors:
 
@@ -2669,9 +2565,9 @@ class Assistant(
       pages -> GListModel: pages
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -2704,7 +2600,6 @@ class Assistant(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2713,6 +2608,7 @@ class Assistant(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2968,7 +2864,7 @@ class BinLayout(LayoutManager):
     @classmethod
     def new(cls) -> BinLayout: ...
 
-class BinLayoutClass(GObject.GPointer):
+class BinLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3098,7 +2994,7 @@ class BookmarkList(GObject.Object, Gio.ListModel):
     def set_attributes(self, attributes: str | None = None) -> None: ...
     def set_io_priority(self, io_priority: int) -> None: ...
 
-class BookmarkListClass(GObject.GPointer):
+class BookmarkListClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3146,7 +3042,7 @@ class BoolFilter(Filter):
     def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_invert(self, invert: bool) -> None: ...
 
-class BoolFilterClass(GObject.GPointer):
+class BoolFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3178,7 +3074,7 @@ class Border(GObject.GBoxed):
     @classmethod
     def new(cls) -> Border: ...
 
-class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Box(Widget, Orientable):
     """
     :Constructors:
 
@@ -3196,7 +3092,6 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3205,6 +3100,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3357,7 +3253,7 @@ class Box(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
 
-class BoxClass(GObject.GPointer):
+class BoxClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3419,7 +3315,7 @@ class BoxLayout(LayoutManager, Orientable):
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
 
-class BoxLayoutClass(GObject.GPointer):
+class BoxLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3439,7 +3335,7 @@ class Buildable(GObject.GInterface, Protocol):
     """
     def get_buildable_id(self) -> str | None: ...
 
-class BuildableIface(GObject.GPointer):
+class BuildableIface(_gi.Struct):
     """
     :Constructors:
 
@@ -3485,14 +3381,14 @@ class BuildableIface(GObject.GPointer):
         self,
     ) -> Callable[[Buildable, Builder, str], GObject.Object]: ...
 
-class BuildableParseContext(GObject.GPointer):
+class BuildableParseContext(_gi.Struct):
     def get_element(self) -> str | None: ...
     def get_element_stack(self) -> list[str]: ...
     def get_position(self) -> tuple[int, int]: ...
     def pop(self) -> None: ...
     def push(self, parser: BuildableParser, user_data: None) -> None: ...
 
-class BuildableParser(GObject.GPointer):
+class BuildableParser(_gi.Struct):
     """
     :Constructors:
 
@@ -3541,10 +3437,7 @@ class Builder(GObject.Object):
     @property
     def props(self) -> Props: ...
     # override
-    def __init__(
-        self,
-        scope_object_or_map: GObject.Object | None = ...,
-    ) -> None: ...
+    def __init__(self, scope_object_or_map: GObject.Object | None = ...) -> None: ...
     def add_from_file(self, filename: str) -> bool: ...
     def add_from_resource(self, resource_path: str) -> bool: ...
     # override
@@ -3594,16 +3487,8 @@ class Builder(GObject.Object):
         self, type: type[Any], string: str
     ) -> tuple[bool, Any]: ...
 
-    class BuilderScope(GObject.Object, GObject.GInterface):
-        """
-        Object gi+_gtktemplate+BuilderScope
-
-        Signals from GObject:
-          notify (GParam)
-        """
-        def do_create_closure(
-            self, builder, func_name, flags, obj
-        ): ...  # FIXME: Override is missing typing annotation
+    # override
+    BuilderScope = _gtktemplate._BuilderScope
 
 class BuilderCScope(GObject.Object, BuilderScope):
     """
@@ -3627,7 +3512,7 @@ class BuilderCScope(GObject.Object, BuilderScope):
     @classmethod
     def new(cls) -> BuilderCScope: ...
 
-class BuilderCScopeClass(GObject.GPointer):
+class BuilderCScopeClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3638,7 +3523,7 @@ class BuilderCScopeClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class BuilderClass(GObject.GPointer): ...
+class BuilderClass(_gi.Struct): ...
 
 class BuilderListItemFactory(ListItemFactory):
     """
@@ -3682,10 +3567,10 @@ class BuilderListItemFactory(ListItemFactory):
         cls, scope: BuilderScope | None, resource_path: str
     ) -> BuilderListItemFactory: ...
 
-class BuilderListItemFactoryClass(GObject.GPointer): ...
+class BuilderListItemFactoryClass(_gi.Struct): ...
 class BuilderScope(GObject.GInterface, Protocol): ...
 
-class BuilderScopeInterface(GObject.GPointer):
+class BuilderScopeInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -3711,7 +3596,7 @@ class BuilderScopeInterface(GObject.GPointer):
         Callable[..., Any],
     ]: ...
 
-class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
+class Button(Widget, Actionable):
     """
     :Constructors:
 
@@ -3738,7 +3623,6 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3747,6 +3631,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3908,7 +3793,7 @@ class Button(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_label(self, label: str) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class ButtonClass(GObject.GPointer):
+class ButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -3925,7 +3810,7 @@ class ButtonClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ButtonPrivate(GObject.GPointer): ...
+class ButtonPrivate(_gi.Struct): ...
 
 class CClosureExpression(Expression):
     """
@@ -3949,7 +3834,7 @@ class CClosureExpression(Expression):
         *user_data: Any,
     ) -> CClosureExpression: ...
 
-class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
+class Calendar(Widget):
     """
     :Constructors:
 
@@ -3977,7 +3862,6 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
       show-week-numbers -> gboolean: show-week-numbers
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3986,6 +3870,7 @@ class Calendar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4159,7 +4044,7 @@ class CallbackAction(ShortcutAction):
     @classmethod
     def new(cls, callback: Callable[..., bool], *data: Any) -> CallbackAction: ...
 
-class CallbackActionClass(GObject.GPointer): ...
+class CallbackActionClass(_gi.Struct): ...
 
 class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     """
@@ -4406,7 +4291,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     ) -> None: ...
     def stop_editing(self, canceled: bool) -> None: ...
 
-class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
+class CellAreaBox(CellArea, Orientable):
     """
     :Constructors:
 
@@ -4461,7 +4346,7 @@ class CellAreaBox(CellArea, Buildable, CellLayout, Orientable):
     ) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
 
-class CellAreaClass(GObject.GPointer):
+class CellAreaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4613,7 +4498,7 @@ class CellAreaContext(GObject.Object):
     def push_preferred_width(self, minimum_width: int, natural_width: int) -> None: ...
     def reset(self) -> None: ...
 
-class CellAreaContextClass(GObject.GPointer):
+class CellAreaContextClass(_gi.Struct):
     """
     :Constructors:
 
@@ -4638,7 +4523,7 @@ class CellAreaContextClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class CellAreaContextPrivate(GObject.GPointer): ...
+class CellAreaContextPrivate(_gi.Struct): ...
 
 class CellEditable(GObject.GInterface, Protocol):
     """
@@ -4651,7 +4536,7 @@ class CellEditable(GObject.GInterface, Protocol):
     def remove_widget(self) -> None: ...
     def start_editing(self, event: _Gdk4.Event | None = None) -> None: ...
 
-class CellEditableIface(GObject.GPointer):
+class CellEditableIface(_gi.Struct):
     """
     :Constructors:
 
@@ -4692,7 +4577,7 @@ class CellLayout(GObject.GInterface, Protocol):
         *func_data: Any,
     ) -> None: ...
 
-class CellLayoutIface(GObject.GPointer):
+class CellLayoutIface(_gi.Struct):
     """
     :Constructors:
 
@@ -5131,7 +5016,7 @@ class CellRendererAccel(CellRendererText):
     @classmethod
     def new(cls) -> CellRendererAccel: ...
 
-class CellRendererClass(GObject.GPointer):
+class CellRendererClass(_gi.Struct):
     """
     :Constructors:
 
@@ -5216,7 +5101,7 @@ class CellRendererClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class CellRendererClassPrivate(GObject.GPointer): ...
+class CellRendererClassPrivate(_gi.Struct): ...
 
 class CellRendererCombo(CellRendererText):
     """
@@ -5548,7 +5433,7 @@ class CellRendererPixbuf(CellRenderer):
     @classmethod
     def new(cls) -> CellRendererPixbuf: ...
 
-class CellRendererPrivate(GObject.GPointer): ...
+class CellRendererPrivate(_gi.Struct): ...
 
 class CellRendererProgress(CellRenderer, Orientable):
     """
@@ -6184,7 +6069,7 @@ class CellRendererText(CellRenderer):
     def new(cls) -> CellRendererText: ...
     def set_fixed_height_from_font(self, number_of_rows: int) -> None: ...
 
-class CellRendererTextClass(GObject.GPointer):
+class CellRendererTextClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6297,7 +6182,7 @@ class CellRendererToggle(CellRenderer):
     def set_active(self, setting: bool) -> None: ...
     def set_radio(self, radio: bool) -> None: ...
 
-class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orientable):
+class CellView(Widget, CellLayout, Orientable):
     """
     :Constructors:
 
@@ -6320,7 +6205,6 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
       fit-model -> gboolean: fit-model
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6329,6 +6213,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6480,7 +6365,7 @@ class CellView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Orie
     def set_fit_model(self, fit_model: bool) -> None: ...
     def set_model(self, model: TreeModel | None = None) -> None: ...
 
-class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class CenterBox(Widget, Orientable):
     """
     :Constructors:
 
@@ -6499,7 +6384,6 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       shrink-center-last -> gboolean: shrink-center-last
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6508,6 +6392,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6653,7 +6538,7 @@ class CenterBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
     def set_start_widget(self, child: Widget | None = None) -> None: ...
 
-class CenterBoxClass(GObject.GPointer): ...
+class CenterBoxClass(_gi.Struct): ...
 
 class CenterLayout(LayoutManager):
     """
@@ -6693,7 +6578,7 @@ class CenterLayout(LayoutManager):
     def set_shrink_center_last(self, shrink_center_last: bool) -> None: ...
     def set_start_widget(self, widget: Widget | None = None) -> None: ...
 
-class CenterLayoutClass(GObject.GPointer):
+class CenterLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6704,7 +6589,7 @@ class CenterLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
+class CheckButton(Widget, Actionable):
     """
     :Constructors:
 
@@ -6730,7 +6615,6 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6739,6 +6623,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6897,7 +6782,7 @@ class CheckButton(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_label(self, label: str | None = None) -> None: ...
     def set_use_underline(self, setting: bool) -> None: ...
 
-class CheckButtonClass(GObject.GPointer):
+class CheckButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -6931,7 +6816,7 @@ class ClosureExpression(Expression):
         params: Sequence[Expression] | None = None,
     ) -> ClosureExpression: ...
 
-class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget):
+class ColorButton(Widget, ColorChooser):
     """
     :Constructors:
 
@@ -6956,7 +6841,6 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
       color-activated (GdkRGBA)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6965,6 +6849,7 @@ class ColorButton(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget)
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7122,16 +7007,7 @@ class ColorChooser(GObject.GInterface, Protocol):
     def set_rgba(self, color: _Gdk4.RGBA) -> None: ...
     def set_use_alpha(self, use_alpha: bool) -> None: ...
 
-class ColorChooserDialog(
-    Dialog,
-    Accessible,
-    Buildable,
-    ColorChooser,
-    ConstraintTarget,
-    Native,
-    Root,
-    ShortcutManager,
-):
+class ColorChooserDialog(Dialog, ColorChooser):
     """
     :Constructors:
 
@@ -7156,9 +7032,9 @@ class ColorChooserDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -7191,7 +7067,6 @@ class ColorChooserDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7200,6 +7075,7 @@ class ColorChooserDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7383,7 +7259,7 @@ class ColorChooserDialog(
         cls, title: str | None = None, parent: Window | None = None
     ) -> ColorChooserDialog: ...
 
-class ColorChooserInterface(GObject.GPointer):
+class ColorChooserInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -7408,7 +7284,7 @@ class ColorChooserInterface(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, ConstraintTarget):
+class ColorChooserWidget(Widget, ColorChooser):
     """
     :Constructors:
 
@@ -7426,7 +7302,6 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
       color-activated (GdkRGBA)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7435,6 +7310,7 @@ class ColorChooserWidget(Widget, Accessible, Buildable, ColorChooser, Constraint
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7611,7 +7487,7 @@ class ColorDialog(GObject.Object):
     def set_title(self, title: str) -> None: ...
     def set_with_alpha(self, with_alpha: bool) -> None: ...
 
-class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
+class ColorDialogButton(Widget):
     """
     :Constructors:
 
@@ -7630,7 +7506,6 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       rgba -> GdkRGBA: rgba
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7639,6 +7514,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7770,7 +7646,7 @@ class ColorDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
     def set_dialog(self, dialog: ColorDialog) -> None: ...
     def set_rgba(self, color: _Gdk4.RGBA) -> None: ...
 
-class ColorDialogButtonClass(GObject.GPointer):
+class ColorDialogButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7781,7 +7657,7 @@ class ColorDialogButtonClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class ColorDialogClass(GObject.GPointer):
+class ColorDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -7792,7 +7668,7 @@ class ColorDialogClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
+class ColumnView(Widget, Scrollable):
     """
     :Constructors:
 
@@ -7820,7 +7696,6 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       tab-behavior -> GtkListTabBehavior: tab-behavior
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7829,6 +7704,7 @@ class ColumnView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8075,8 +7951,8 @@ class ColumnViewCell(ListItem):
     def set_child(self, child: Widget | None = None) -> None: ...
     def set_focusable(self, focusable: bool) -> None: ...
 
-class ColumnViewCellClass(GObject.GPointer): ...
-class ColumnViewClass(GObject.GPointer): ...
+class ColumnViewCellClass(_gi.Struct): ...
+class ColumnViewClass(_gi.Struct): ...
 
 class ColumnViewColumn(GObject.Object):
     """
@@ -8155,7 +8031,7 @@ class ColumnViewColumn(GObject.Object):
     def set_title(self, title: str | None = None) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
-class ColumnViewColumnClass(GObject.GPointer): ...
+class ColumnViewColumnClass(_gi.Struct): ...
 
 class ColumnViewRow(GObject.Object):
     """
@@ -8215,7 +8091,7 @@ class ColumnViewRow(GObject.Object):
     def set_focusable(self, focusable: bool) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
-class ColumnViewRowClass(GObject.GPointer): ...
+class ColumnViewRowClass(_gi.Struct): ...
 
 class ColumnViewSorter(Sorter):
     """
@@ -8250,7 +8126,7 @@ class ColumnViewSorter(Sorter):
     def get_primary_sort_column(self) -> ColumnViewColumn | None: ...
     def get_primary_sort_order(self) -> SortType: ...
 
-class ColumnViewSorterClass(GObject.GPointer):
+class ColumnViewSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8261,9 +8137,7 @@ class ColumnViewSorterClass(GObject.GPointer):
     @property
     def parent_class(self) -> SorterClass: ...
 
-class ComboBox(
-    Widget, Accessible, Buildable, CellEditable, CellLayout, ConstraintTarget
-):
+class ComboBox(Widget, CellEditable, CellLayout):
     """
     :Constructors:
 
@@ -8303,7 +8177,6 @@ class ComboBox(
       remove-widget ()
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8312,6 +8185,7 @@ class ComboBox(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8494,7 +8368,7 @@ class ComboBox(
         self, func: Callable[..., bool] | None = None, *data: Any
     ) -> None: ...
 
-class ComboBoxClass(GObject.GPointer):
+class ComboBoxClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8513,9 +8387,7 @@ class ComboBoxClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ComboBoxText(
-    ComboBox, Accessible, Buildable, CellEditable, CellLayout, ConstraintTarget
-):
+class ComboBoxText(ComboBox):
     """
     :Constructors:
 
@@ -8557,7 +8429,6 @@ class ComboBoxText(
       remove-widget ()
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8566,6 +8437,7 @@ class ComboBoxText(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8818,7 +8690,7 @@ class Constraint(GObject.Object):
         strength: int,
     ) -> Constraint: ...
 
-class ConstraintClass(GObject.GPointer):
+class ConstraintClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8890,7 +8762,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
     def set_nat_size(self, width: int, height: int) -> None: ...
     def set_strength(self, strength: ConstraintStrength) -> None: ...
 
-class ConstraintGuideClass(GObject.GPointer):
+class ConstraintGuideClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8959,7 +8831,7 @@ class ConstraintLayoutChild(LayoutChild):
         self, *, child_widget: Widget = ..., layout_manager: LayoutManager = ...
     ) -> None: ...
 
-class ConstraintLayoutChildClass(GObject.GPointer):
+class ConstraintLayoutChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8970,7 +8842,7 @@ class ConstraintLayoutChildClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutChildClass: ...
 
-class ConstraintLayoutClass(GObject.GPointer):
+class ConstraintLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -8982,9 +8854,9 @@ class ConstraintLayoutClass(GObject.GPointer):
     def parent_class(self) -> LayoutManagerClass: ...
 
 class ConstraintTarget(GObject.GInterface, Protocol): ...
-class ConstraintTargetInterface(GObject.GPointer): ...
+class ConstraintTargetInterface(_gi.Struct): ...
 
-class CssLocation(GObject.GPointer):
+class CssLocation(_gi.Struct):
     """
     :Constructors:
 
@@ -9016,7 +8888,6 @@ class CssProvider(GObject.Object, StyleProvider):
     Properties from GtkCssProvider:
       prefers-color-scheme -> GtkInterfaceColorScheme: prefers-color-scheme
       prefers-contrast -> GtkInterfaceContrast: prefers-contrast
-      prefers-reduced-motion -> GtkReducedMotion: prefers-reduced-motion
 
     Signals from GtkStyleProvider:
       gtk-private-changed ()
@@ -9027,7 +8898,6 @@ class CssProvider(GObject.Object, StyleProvider):
     class Props(GObject.Object.Props):
         prefers_color_scheme: InterfaceColorScheme
         prefers_contrast: InterfaceContrast
-        prefers_reduced_motion: ReducedMotion
 
     @property
     def props(self) -> Props: ...
@@ -9038,11 +8908,10 @@ class CssProvider(GObject.Object, StyleProvider):
         *,
         prefers_color_scheme: InterfaceColorScheme = ...,
         prefers_contrast: InterfaceContrast = ...,
-        prefers_reduced_motion: ReducedMotion = ...,
     ) -> None: ...
     def load_from_bytes(self, data: GLib.Bytes) -> None: ...
     def load_from_data(
-        self, text, length=-1
+        self, text, length=1
     ): ...  # FIXME: Override is missing typing annotation
     def load_from_file(self, file: Gio.File) -> None: ...
     def load_from_path(self, path: str) -> None: ...
@@ -9053,8 +8922,8 @@ class CssProvider(GObject.Object, StyleProvider):
     def new(cls) -> CssProvider: ...
     def to_string(self) -> str: ...
 
-class CssProviderClass(GObject.GPointer): ...
-class CssProviderPrivate(GObject.GPointer): ...
+class CssProviderClass(_gi.Struct): ...
+class CssProviderPrivate(_gi.Struct): ...
 
 class CssSection(GObject.GBoxed):
     """
@@ -9091,7 +8960,7 @@ class CssSection(GObject.GBoxed):
     def to_string(self) -> str: ...
     def unref(self) -> None: ...
 
-class CssStyleChange(GObject.GPointer): ...
+class CssStyleChange(_gi.Struct): ...
 
 class CustomFilter(Filter):
     """
@@ -9118,7 +8987,7 @@ class CustomFilter(Filter):
         self, match_func: Callable[..., bool] | None = None, *user_data: Any
     ) -> None: ...
 
-class CustomFilterClass(GObject.GPointer):
+class CustomFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9151,7 +9020,7 @@ class CustomLayout(LayoutManager):
         allocate: Callable[[Widget, int, int, int], None],
     ) -> CustomLayout: ...
 
-class CustomLayoutClass(GObject.GPointer):
+class CustomLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9193,7 +9062,7 @@ class CustomSorter(Sorter):
         user_data: Any = None,
     ) -> None: ...
 
-class CustomSorterClass(GObject.GPointer):
+class CustomSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9204,9 +9073,7 @@ class CustomSorterClass(GObject.GPointer):
     @property
     def parent_class(self) -> SorterClass: ...
 
-class Dialog(
-    Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class Dialog(Window):
     """
     :Constructors:
 
@@ -9225,9 +9092,9 @@ class Dialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -9260,7 +9127,6 @@ class Dialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9269,6 +9135,7 @@ class Dialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9471,7 +9338,7 @@ class Dialog(
     def set_default_response(self, response_id: int) -> None: ...
     def set_response_sensitive(self, response_id: int, setting: bool) -> None: ...
 
-class DialogClass(GObject.GPointer):
+class DialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9550,7 +9417,7 @@ class DirectoryList(GObject.Object, Gio.ListModel):
     def set_io_priority(self, io_priority: int) -> None: ...
     def set_monitored(self, monitored: bool) -> None: ...
 
-class DirectoryListClass(GObject.GPointer):
+class DirectoryListClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9561,7 +9428,7 @@ class DirectoryListClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
+class DragIcon(Widget, Native, Root):
     """
     :Constructors:
 
@@ -9576,7 +9443,6 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9585,6 +9451,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9718,7 +9585,7 @@ class DragIcon(Widget, Accessible, Buildable, ConstraintTarget, Native, Root):
         drag: _Gdk4.Drag, paintable: _Gdk4.Paintable, hot_x: int, hot_y: int
     ) -> None: ...
 
-class DragIconClass(GObject.GPointer):
+class DragIconClass(_gi.Struct):
     """
     :Constructors:
 
@@ -9813,9 +9680,9 @@ class DragSource(GestureSingle):
         self, paintable: _Gdk4.Paintable | None, hot_x: int, hot_y: int
     ) -> None: ...
 
-class DragSourceClass(GObject.GPointer): ...
+class DragSourceClass(_gi.Struct): ...
 
-class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
+class DrawingArea(Widget):
     """
     :Constructors:
 
@@ -9834,7 +9701,6 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
       content-height -> gint: content-height
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9843,6 +9709,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9980,7 +9847,7 @@ class DrawingArea(Widget, Accessible, Buildable, ConstraintTarget):
         self, draw_func: Callable[..., None] | None = None, *user_data: Any
     ) -> None: ...
 
-class DrawingAreaClass(GObject.GPointer):
+class DrawingAreaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10049,9 +9916,9 @@ class DropControllerMotion(EventController):
     @classmethod
     def new(cls) -> DropControllerMotion: ...
 
-class DropControllerMotionClass(GObject.GPointer): ...
+class DropControllerMotionClass(_gi.Struct): ...
 
-class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
+class DropDown(Widget):
     """
     :Constructors:
 
@@ -10079,7 +9946,6 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
       search-match-mode -> GtkStringFilterMatchMode: search-match-mode
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10088,6 +9954,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10255,7 +10122,7 @@ class DropDown(Widget, Accessible, Buildable, ConstraintTarget):
     def set_selected(self, position: int) -> None: ...
     def set_show_arrow(self, show_arrow: bool) -> None: ...
 
-class DropDownClass(GObject.GPointer):
+class DropDownClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10400,8 +10267,8 @@ class DropTargetAsync(EventController):
     def set_actions(self, actions: _Gdk4.DragAction) -> None: ...
     def set_formats(self, formats: _Gdk4.ContentFormats | None = None) -> None: ...
 
-class DropTargetAsyncClass(GObject.GPointer): ...
-class DropTargetClass(GObject.GPointer): ...
+class DropTargetAsyncClass(_gi.Struct): ...
+class DropTargetClass(_gi.Struct): ...
 
 class Editable(GObject.GInterface, Protocol):
     """
@@ -10453,7 +10320,7 @@ class Editable(GObject.GInterface, Protocol):
     def set_text(self, text: str) -> None: ...
     def set_width_chars(self, n_chars: int) -> None: ...
 
-class EditableInterface(GObject.GPointer):
+class EditableInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -10482,7 +10349,7 @@ class EditableInterface(GObject.GPointer):
     @property
     def get_delegate(self) -> Callable[[Editable], Editable | None]: ...
 
-class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
+class EditableLabel(Widget, Editable):
     """
     :Constructors:
 
@@ -10502,7 +10369,6 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       delete-text (gint, gint)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10511,6 +10377,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10653,7 +10520,7 @@ class EditableLabel(Widget, Accessible, Buildable, ConstraintTarget, Editable):
     def start_editing(self) -> None: ...
     def stop_editing(self, commit: bool) -> None: ...
 
-class EditableLabelClass(GObject.GPointer):
+class EditableLabelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -10664,9 +10531,7 @@ class EditableLabelClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class EmojiChooser(
-    Popover, Accessible, Buildable, ConstraintTarget, Native, ShortcutManager
-):
+class EmojiChooser(Popover):
     """
     :Constructors:
 
@@ -10695,7 +10560,6 @@ class EmojiChooser(
       cascade-popdown -> gboolean: cascade-popdown
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10704,6 +10568,7 @@ class EmojiChooser(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10843,9 +10708,9 @@ class EmojiChooser(
     @classmethod
     def new(cls) -> EmojiChooser: ...
 
-class EmojiChooserClass(GObject.GPointer): ...
+class EmojiChooserClass(_gi.Struct): ...
 
-class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Editable):
+class Entry(Widget, CellEditable, Editable):
     """
     :Constructors:
 
@@ -10915,7 +10780,6 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
       remove-widget ()
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10924,6 +10788,7 @@ class Entry(Widget, Accessible, Buildable, CellEditable, ConstraintTarget, Edita
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11281,7 +11146,7 @@ class EntryBuffer(GObject.Object):
     def set_max_length(self, max_length: int) -> None: ...
     def set_text(self, chars: str, n_chars: int) -> None: ...
 
-class EntryBufferClass(GObject.GPointer):
+class EntryBufferClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11304,7 +11169,7 @@ class EntryBufferClass(GObject.GPointer):
     @property
     def delete_text(self) -> Callable[[EntryBuffer, int, int], int]: ...
 
-class EntryClass(GObject.GPointer):
+class EntryClass(_gi.Struct):
     """
     :Constructors:
 
@@ -11452,7 +11317,7 @@ class EventController(GObject.Object):
     def set_propagation_phase(self, phase: PropagationPhase) -> None: ...
     def set_static_name(self, name: str | None = None) -> None: ...
 
-class EventControllerClass(GObject.GPointer): ...
+class EventControllerClass(_gi.Struct): ...
 
 class EventControllerFocus(EventController):
     """
@@ -11504,7 +11369,7 @@ class EventControllerFocus(EventController):
     @classmethod
     def new(cls) -> EventControllerFocus: ...
 
-class EventControllerFocusClass(GObject.GPointer): ...
+class EventControllerFocusClass(_gi.Struct): ...
 
 class EventControllerKey(EventController):
     """
@@ -11554,7 +11419,7 @@ class EventControllerKey(EventController):
     def new(cls) -> EventControllerKey: ...
     def set_im_context(self, im_context: IMContext | None = None) -> None: ...
 
-class EventControllerKeyClass(GObject.GPointer): ...
+class EventControllerKeyClass(_gi.Struct): ...
 
 class EventControllerLegacy(EventController):
     """
@@ -11597,7 +11462,7 @@ class EventControllerLegacy(EventController):
     @classmethod
     def new(cls) -> EventControllerLegacy: ...
 
-class EventControllerLegacyClass(GObject.GPointer): ...
+class EventControllerLegacyClass(_gi.Struct): ...
 
 class EventControllerMotion(EventController):
     """
@@ -11650,7 +11515,7 @@ class EventControllerMotion(EventController):
     @classmethod
     def new(cls) -> EventControllerMotion: ...
 
-class EventControllerMotionClass(GObject.GPointer): ...
+class EventControllerMotionClass(_gi.Struct): ...
 
 class EventControllerScroll(EventController):
     """
@@ -11704,9 +11569,9 @@ class EventControllerScroll(EventController):
     def new(cls, flags: EventControllerScrollFlags) -> EventControllerScroll: ...
     def set_flags(self, flags: EventControllerScrollFlags) -> None: ...
 
-class EventControllerScrollClass(GObject.GPointer): ...
+class EventControllerScrollClass(_gi.Struct): ...
 
-class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
+class EveryFilter(MultiFilter):
     """
     :Constructors:
 
@@ -11742,9 +11607,9 @@ class EveryFilter(MultiFilter, Gio.ListModel, Buildable):
     @classmethod
     def new(cls) -> EveryFilter: ...
 
-class EveryFilterClass(GObject.GPointer): ...
+class EveryFilterClass(_gi.Struct): ...
 
-class Expander(Widget, Accessible, Buildable, ConstraintTarget):
+class Expander(Widget):
     """
     :Constructors:
 
@@ -11769,7 +11634,6 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11778,6 +11642,7 @@ class Expander(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11997,16 +11862,7 @@ class FileChooser(GObject.GInterface, Protocol):
     def set_filter(self, filter: FileFilter) -> None: ...
     def set_select_multiple(self, select_multiple: bool) -> None: ...
 
-class FileChooserDialog(
-    Dialog,
-    Accessible,
-    Buildable,
-    ConstraintTarget,
-    FileChooser,
-    Native,
-    Root,
-    ShortcutManager,
-):
+class FileChooserDialog(Dialog, FileChooser):
     """
     :Constructors:
 
@@ -12024,9 +11880,9 @@ class FileChooserDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -12059,7 +11915,6 @@ class FileChooserDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12068,6 +11923,7 @@ class FileChooserDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12322,7 +12178,7 @@ class FileChooserNative(NativeDialog, FileChooser):
     def set_accept_label(self, accept_label: str | None = None) -> None: ...
     def set_cancel_label(self, cancel_label: str | None = None) -> None: ...
 
-class FileChooserNativeClass(GObject.GPointer):
+class FileChooserNativeClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12333,7 +12189,7 @@ class FileChooserNativeClass(GObject.GPointer):
     @property
     def parent_class(self) -> NativeDialogClass: ...
 
-class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileChooser):
+class FileChooserWidget(Widget, FileChooser):
     """
     :Constructors:
 
@@ -12364,7 +12220,6 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
       show-time -> gboolean: show-time
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12373,6 +12228,7 @@ class FileChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FileCho
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12651,7 +12507,7 @@ class FileDialog(GObject.Object):
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class FileDialogClass(GObject.GPointer):
+class FileDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12703,7 +12559,6 @@ class FileFilter(Filter, Buildable):
         suffixes: Sequence[str] = ...,
     ) -> None: ...
     def add_mime_type(self, mime_type: str) -> None: ...
-    def add_mime_types(self, mime_types: Sequence[str]) -> None: ...
     def add_pattern(self, pattern: str) -> None: ...
     def add_pixbuf_formats(self) -> None: ...
     def add_suffix(self, suffix: str) -> None: ...
@@ -12774,7 +12629,7 @@ class FileLauncher(GObject.Object):
     def set_file(self, file: Gio.File | None = None) -> None: ...
     def set_writable(self, writable: bool) -> None: ...
 
-class FileLauncherClass(GObject.GPointer):
+class FileLauncherClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12809,7 +12664,7 @@ class Filter(GObject.Object):
     def get_strictness(self) -> FilterMatch: ...
     def match(self, item: GObject.Object) -> bool: ...
 
-class FilterClass(GObject.GPointer):
+class FilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12886,7 +12741,7 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_watch_items(self, watch_items: bool) -> None: ...
 
-class FilterListModelClass(GObject.GPointer):
+class FilterListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -12897,7 +12752,7 @@ class FilterListModelClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
+class Fixed(Widget):
     """
     :Constructors:
 
@@ -12909,7 +12764,6 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
     Object GtkFixed
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12918,6 +12772,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -13051,7 +12906,7 @@ class Fixed(Widget, Accessible, Buildable, ConstraintTarget):
         self, widget: Widget, transform: Gsk.Transform | None = None
     ) -> None: ...
 
-class FixedClass(GObject.GPointer):
+class FixedClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13118,7 +12973,7 @@ class FixedLayoutChild(LayoutChild):
     def get_transform(self) -> Gsk.Transform | None: ...
     def set_transform(self, transform: Gsk.Transform) -> None: ...
 
-class FixedLayoutChildClass(GObject.GPointer):
+class FixedLayoutChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13129,7 +12984,7 @@ class FixedLayoutChildClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutChildClass: ...
 
-class FixedLayoutClass(GObject.GPointer):
+class FixedLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13179,7 +13034,7 @@ class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     def new(cls, model: Gio.ListModel | None = None) -> FlattenListModel: ...
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
-class FlattenListModelClass(GObject.GPointer):
+class FlattenListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13190,7 +13045,7 @@ class FlattenListModelClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class FlowBox(Widget, Orientable):
     """
     :Constructors:
 
@@ -13221,7 +13076,6 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       accept-unpaired-release -> gboolean: accept-unpaired-release
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -13230,6 +13084,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -13414,7 +13269,7 @@ class FlowBox(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def unselect_all(self) -> None: ...
     def unselect_child(self, child: FlowBoxChild) -> None: ...
 
-class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
+class FlowBoxChild(Widget):
     """
     :Constructors:
 
@@ -13432,7 +13287,6 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -13441,6 +13295,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -13574,7 +13429,7 @@ class FlowBoxChild(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls) -> FlowBoxChild: ...
     def set_child(self, child: Widget | None = None) -> None: ...
 
-class FlowBoxChildClass(GObject.GPointer):
+class FlowBoxChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -13589,7 +13444,7 @@ class FlowBoxChildClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
+class FontButton(Widget, FontChooser):
     """
     :Constructors:
 
@@ -13615,7 +13470,6 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
       font-activated (gchararray)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -13624,6 +13478,7 @@ class FontButton(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -13807,16 +13662,7 @@ class FontChooser(GObject.GInterface, Protocol):
     def set_preview_text(self, text: str) -> None: ...
     def set_show_preview_entry(self, show_preview_entry: bool) -> None: ...
 
-class FontChooserDialog(
-    Dialog,
-    Accessible,
-    Buildable,
-    ConstraintTarget,
-    FontChooser,
-    Native,
-    Root,
-    ShortcutManager,
-):
+class FontChooserDialog(Dialog, FontChooser):
     """
     :Constructors:
 
@@ -13838,9 +13684,9 @@ class FontChooserDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -13873,7 +13719,6 @@ class FontChooserDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -13882,6 +13727,7 @@ class FontChooserDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -14072,7 +13918,7 @@ class FontChooserDialog(
         cls, title: str | None = None, parent: Window | None = None
     ) -> FontChooserDialog: ...
 
-class FontChooserIface(GObject.GPointer):
+class FontChooserIface(_gi.Struct):
     """
     :Constructors:
 
@@ -14099,7 +13945,7 @@ class FontChooserIface(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontChooser):
+class FontChooserWidget(Widget, FontChooser):
     """
     :Constructors:
 
@@ -14117,7 +13963,6 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
       font-activated (gchararray)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -14126,6 +13971,7 @@ class FontChooserWidget(Widget, Accessible, Buildable, ConstraintTarget, FontCho
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -14353,7 +14199,7 @@ class FontDialog(GObject.Object):
     def set_modal(self, modal: bool) -> None: ...
     def set_title(self, title: str) -> None: ...
 
-class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
+class FontDialogButton(Widget):
     """
     :Constructors:
 
@@ -14377,7 +14223,6 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       use-size -> gboolean: use-size
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -14386,6 +14231,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -14537,7 +14383,7 @@ class FontDialogButton(Widget, Accessible, Buildable, ConstraintTarget):
     def set_use_font(self, use_font: bool) -> None: ...
     def set_use_size(self, use_size: bool) -> None: ...
 
-class FontDialogButtonClass(GObject.GPointer):
+class FontDialogButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14548,7 +14394,7 @@ class FontDialogButtonClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class FontDialogClass(GObject.GPointer):
+class FontDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14559,7 +14405,7 @@ class FontDialogClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Frame(Widget, Accessible, Buildable, ConstraintTarget):
+class Frame(Widget):
     """
     :Constructors:
 
@@ -14577,7 +14423,6 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -14586,6 +14431,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -14728,7 +14574,7 @@ class Frame(Widget, Accessible, Buildable, ConstraintTarget):
     def set_label_align(self, xalign: float) -> None: ...
     def set_label_widget(self, label_widget: Widget | None = None) -> None: ...
 
-class FrameClass(GObject.GPointer):
+class FrameClass(_gi.Struct):
     """
     :Constructors:
 
@@ -14743,7 +14589,7 @@ class FrameClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
+class GLArea(Widget):
     """
     :Constructors:
 
@@ -14769,7 +14615,6 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
       auto-render -> gboolean: auto-render
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -14778,6 +14623,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -14936,7 +14782,7 @@ class GLArea(Widget, Accessible, Buildable, ConstraintTarget):
     def set_required_version(self, major: int, minor: int) -> None: ...
     def set_use_es(self, use_es: bool) -> None: ...
 
-class GLAreaClass(GObject.GPointer):
+class GLAreaClass(_gi.Struct):
     """
     :Constructors:
 
@@ -15025,7 +14871,7 @@ class Gesture(EventController):
     def set_state(self, state: EventSequenceState) -> bool: ...
     def ungroup(self) -> None: ...
 
-class GestureClass(GObject.GPointer): ...
+class GestureClass(_gi.Struct): ...
 
 class GestureClick(GestureSingle):
     """
@@ -15094,7 +14940,7 @@ class GestureClick(GestureSingle):
     @classmethod
     def new(cls) -> GestureClick: ...
 
-class GestureClickClass(GObject.GPointer): ...
+class GestureClickClass(_gi.Struct): ...
 
 class GestureDrag(GestureSingle):
     """
@@ -15164,7 +15010,7 @@ class GestureDrag(GestureSingle):
     @classmethod
     def new(cls) -> GestureDrag: ...
 
-class GestureDragClass(GObject.GPointer): ...
+class GestureDragClass(_gi.Struct): ...
 
 class GestureLongPress(GestureSingle):
     """
@@ -15238,7 +15084,7 @@ class GestureLongPress(GestureSingle):
     def new(cls) -> GestureLongPress: ...
     def set_delay_factor(self, delay_factor: float) -> None: ...
 
-class GestureLongPressClass(GObject.GPointer): ...
+class GestureLongPressClass(_gi.Struct): ...
 
 class GesturePan(GestureDrag):
     """
@@ -15316,7 +15162,7 @@ class GesturePan(GestureDrag):
     def new(cls, orientation: Orientation) -> GesturePan: ...
     def set_orientation(self, orientation: Orientation) -> None: ...
 
-class GesturePanClass(GObject.GPointer): ...
+class GesturePanClass(_gi.Struct): ...
 
 class GestureRotate(Gesture):
     """
@@ -15372,7 +15218,7 @@ class GestureRotate(Gesture):
     @classmethod
     def new(cls) -> GestureRotate: ...
 
-class GestureRotateClass(GObject.GPointer): ...
+class GestureRotateClass(_gi.Struct): ...
 
 class GestureSingle(Gesture):
     """
@@ -15440,7 +15286,7 @@ class GestureSingle(Gesture):
     def set_exclusive(self, exclusive: bool) -> None: ...
     def set_touch_only(self, touch_only: bool) -> None: ...
 
-class GestureSingleClass(GObject.GPointer): ...
+class GestureSingleClass(_gi.Struct): ...
 
 class GestureStylus(GestureSingle):
     """
@@ -15520,7 +15366,7 @@ class GestureStylus(GestureSingle):
     def new(cls) -> GestureStylus: ...
     def set_stylus_only(self, stylus_only: bool) -> None: ...
 
-class GestureStylusClass(GObject.GPointer): ...
+class GestureStylusClass(_gi.Struct): ...
 
 class GestureSwipe(GestureSingle):
     """
@@ -15587,7 +15433,7 @@ class GestureSwipe(GestureSingle):
     @classmethod
     def new(cls) -> GestureSwipe: ...
 
-class GestureSwipeClass(GObject.GPointer): ...
+class GestureSwipeClass(_gi.Struct): ...
 
 class GestureZoom(Gesture):
     """
@@ -15643,9 +15489,9 @@ class GestureZoom(Gesture):
     @classmethod
     def new(cls) -> GestureZoom: ...
 
-class GestureZoomClass(GObject.GPointer): ...
+class GestureZoomClass(_gi.Struct): ...
 
-class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
+class GraphicsOffload(Widget):
     """
     :Constructors:
 
@@ -15662,7 +15508,6 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
       black-background -> gboolean: black-background
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -15671,6 +15516,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -15806,7 +15652,7 @@ class GraphicsOffload(Widget, Accessible, Buildable, ConstraintTarget):
     def set_child(self, child: Widget | None = None) -> None: ...
     def set_enabled(self, enabled: GraphicsOffloadEnabled) -> None: ...
 
-class GraphicsOffloadClass(GObject.GPointer):
+class GraphicsOffloadClass(_gi.Struct):
     """
     :Constructors:
 
@@ -15817,7 +15663,7 @@ class GraphicsOffloadClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Grid(Widget, Orientable):
     """
     :Constructors:
 
@@ -15836,7 +15682,6 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       baseline-row -> gint: baseline-row
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -15845,6 +15690,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -16013,7 +15859,7 @@ class Grid(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     def set_row_homogeneous(self, homogeneous: bool) -> None: ...
     def set_row_spacing(self, spacing: int) -> None: ...
 
-class GridClass(GObject.GPointer):
+class GridClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16132,7 +15978,7 @@ class GridLayoutChild(LayoutChild):
     def set_row(self, row: int) -> None: ...
     def set_row_span(self, span: int) -> None: ...
 
-class GridLayoutChildClass(GObject.GPointer):
+class GridLayoutChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16143,7 +15989,7 @@ class GridLayoutChildClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutChildClass: ...
 
-class GridLayoutClass(GObject.GPointer):
+class GridLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16154,9 +16000,7 @@ class GridLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class GridView(
-    ListBase, Accessible, Buildable, ConstraintTarget, Orientable, Scrollable
-):
+class GridView(ListBase):
     """
     :Constructors:
 
@@ -16183,7 +16027,6 @@ class GridView(
       orientation -> GtkOrientation: orientation
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -16192,6 +16035,7 @@ class GridView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -16358,9 +16202,9 @@ class GridView(
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
     def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
 
-class GridViewClass(GObject.GPointer): ...
+class GridViewClass(_gi.Struct): ...
 
-class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
+class HeaderBar(Widget):
     """
     :Constructors:
 
@@ -16378,7 +16222,6 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
       use-native-controls -> gboolean: use-native-controls
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -16387,6 +16230,7 @@ class HeaderBar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -16546,7 +16390,6 @@ class IMContext(GObject.Object):
       commit (gchararray)
       retrieve-surrounding () -> gboolean
       delete-surrounding (gint, gint) -> gboolean
-      invalid-composition (gchararray) -> gboolean
 
     Properties from GtkIMContext:
       input-purpose -> GtkInputPurpose: input-purpose
@@ -16578,7 +16421,6 @@ class IMContext(GObject.Object):
     def do_get_preedit_string(self) -> tuple[str, Pango.AttrList, int]: ...
     def do_get_surrounding(self) -> tuple[bool, str, int]: ...
     def do_get_surrounding_with_selection(self) -> tuple[bool, str, int, int]: ...
-    def do_invalid_composition(self, str: str) -> bool: ...
     def do_preedit_changed(self) -> None: ...
     def do_preedit_end(self) -> None: ...
     def do_preedit_start(self) -> None: ...
@@ -16616,7 +16458,7 @@ class IMContext(GObject.Object):
     ) -> None: ...
     def set_use_preedit(self, use_preedit: bool) -> None: ...
 
-class IMContextClass(GObject.GPointer):
+class IMContextClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16672,8 +16514,6 @@ class IMContextClass(GObject.GPointer):
     def activate_osk(self) -> Callable[[IMContext], None]: ...
     @property
     def activate_osk_with_event(self) -> Callable[[IMContext, _Gdk4.Event], bool]: ...
-    @property
-    def invalid_composition(self) -> Callable[[IMContext, str], bool]: ...
 
 class IMContextSimple(IMContext):
     """
@@ -16693,7 +16533,6 @@ class IMContextSimple(IMContext):
       commit (gchararray)
       retrieve-surrounding () -> gboolean
       delete-surrounding (gint, gint) -> gboolean
-      invalid-composition (gchararray) -> gboolean
 
     Properties from GtkIMContext:
       input-purpose -> GtkInputPurpose: input-purpose
@@ -16719,7 +16558,7 @@ class IMContextSimple(IMContext):
     @classmethod
     def new(cls) -> IMContextSimple: ...
 
-class IMContextSimpleClass(GObject.GPointer):
+class IMContextSimpleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16730,7 +16569,7 @@ class IMContextSimpleClass(GObject.GPointer):
     @property
     def parent_class(self) -> IMContextClass: ...
 
-class IMContextSimplePrivate(GObject.GPointer): ...
+class IMContextSimplePrivate(_gi.Struct): ...
 
 class IMMulticontext(IMContext):
     """
@@ -16750,7 +16589,6 @@ class IMMulticontext(IMContext):
       commit (gchararray)
       retrieve-surrounding () -> gboolean
       delete-surrounding (gint, gint) -> gboolean
-      invalid-composition (gchararray) -> gboolean
 
     Properties from GtkIMContext:
       input-purpose -> GtkInputPurpose: input-purpose
@@ -16777,7 +16615,7 @@ class IMMulticontext(IMContext):
     def new(cls) -> IMMulticontext: ...
     def set_context_id(self, context_id: str | None = None) -> None: ...
 
-class IMMulticontextClass(GObject.GPointer):
+class IMMulticontextClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16788,7 +16626,7 @@ class IMMulticontextClass(GObject.GPointer):
     @property
     def parent_class(self) -> IMContextClass: ...
 
-class IMMulticontextPrivate(GObject.GPointer): ...
+class IMMulticontextPrivate(_gi.Struct): ...
 
 class IconPaintable(GObject.Object, _Gdk4.Paintable, SymbolicPaintable):
     """
@@ -16839,7 +16677,7 @@ class IconPaintable(GObject.Object, _Gdk4.Paintable, SymbolicPaintable):
     @classmethod
     def new_for_file(cls, file: Gio.File, size: int, scale: int) -> IconPaintable: ...
 
-class IconPaintableClass(GObject.GPointer):
+class IconPaintableClass(_gi.Struct):
     """
     :Constructors:
 
@@ -16926,7 +16764,7 @@ class IconTheme(GObject.Object):
     def set_search_path(self, path: Sequence[str] | None = None) -> None: ...
     def set_theme_name(self, theme_name: str | None = None) -> None: ...
 
-class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scrollable):
+class IconView(Widget, CellLayout, Scrollable):
     """
     :Constructors:
 
@@ -16969,7 +16807,6 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
       activate-on-single-click -> gboolean: activate-on-single-click
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -16978,6 +16815,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -17232,7 +17070,7 @@ class IconView(Widget, Accessible, Buildable, CellLayout, ConstraintTarget, Scro
     def unset_model_drag_dest(self) -> None: ...
     def unset_model_drag_source(self) -> None: ...
 
-class Image(Widget, Accessible, Buildable, ConstraintTarget):
+class Image(Widget):
     """
     :Constructors:
 
@@ -17261,7 +17099,6 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
       use-fallback -> gboolean: use-fallback
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -17270,6 +17107,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -17437,7 +17275,7 @@ class Image(Widget, Accessible, Buildable, ConstraintTarget):
     def set_icon_size(self, icon_size: IconSize) -> None: ...
     def set_pixel_size(self, pixel_size: int) -> None: ...
 
-class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
+class InfoBar(Widget):
     """
     :Constructors:
 
@@ -17458,7 +17296,6 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
       revealed -> gboolean: revealed
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -17467,6 +17304,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -17610,7 +17448,7 @@ class InfoBar(Widget, Accessible, Buildable, ConstraintTarget):
     def set_revealed(self, revealed: bool) -> None: ...
     def set_show_close_button(self, setting: bool) -> None: ...
 
-class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget):
+class Inscription(Widget, AccessibleText):
     """
     :Constructors:
 
@@ -17635,7 +17473,6 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
       yalign -> gfloat: yalign
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -17644,6 +17481,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -17810,7 +17648,7 @@ class Inscription(Widget, Accessible, AccessibleText, Buildable, ConstraintTarge
     def set_xalign(self, xalign: float) -> None: ...
     def set_yalign(self, yalign: float) -> None: ...
 
-class InscriptionClass(GObject.GPointer):
+class InscriptionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -17853,11 +17691,9 @@ class KeyvalTrigger(ShortcutTrigger):
     @classmethod
     def new(cls, keyval: int, modifiers: _Gdk4.ModifierType) -> KeyvalTrigger: ...
 
-class KeyvalTriggerClass(GObject.GPointer): ...
+class KeyvalTriggerClass(_gi.Struct): ...
 
-class Label(
-    Widget, Accessible, AccessibleHypertext, AccessibleText, Buildable, ConstraintTarget
-):
+class Label(Widget, AccessibleText):
     """
     :Constructors:
 
@@ -17898,7 +17734,6 @@ class Label(
       tabs -> PangoTabArray: tabs
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -17907,6 +17742,7 @@ class Label(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -18151,7 +17987,7 @@ class LayoutChild(GObject.Object):
     def get_child_widget(self) -> Widget: ...
     def get_layout_manager(self) -> LayoutManager: ...
 
-class LayoutChildClass(GObject.GPointer):
+class LayoutChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -18200,7 +18036,7 @@ class LayoutManager(GObject.Object):
         self, widget: Widget, orientation: Orientation, for_size: int
     ) -> tuple[int, int, int, int]: ...
 
-class LayoutManagerClass(GObject.GPointer):
+class LayoutManagerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -18233,9 +18069,7 @@ class LayoutManagerClass(GObject.GPointer):
     @property
     def unroot(self) -> Callable[[LayoutManager], None]: ...
 
-class LevelBar(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class LevelBar(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -18258,7 +18092,6 @@ class LevelBar(
       inverted -> gboolean: inverted
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -18267,6 +18100,7 @@ class LevelBar(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -18417,7 +18251,7 @@ class LevelBar(
     def set_mode(self, mode: LevelBarMode) -> None: ...
     def set_value(self, value: float) -> None: ...
 
-class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
+class LinkButton(Button):
     """
     :Constructors:
 
@@ -18449,7 +18283,6 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -18458,6 +18291,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -18607,7 +18441,7 @@ class LinkButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_uri(self, uri: str) -> None: ...
     def set_visited(self, visited: bool) -> None: ...
 
-class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scrollable):
+class ListBase(Widget, Orientable, Scrollable):
     """
     :Constructors:
 
@@ -18621,7 +18455,6 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
       orientation -> GtkOrientation: orientation
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -18630,6 +18463,7 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -18761,9 +18595,9 @@ class ListBase(Widget, Accessible, Buildable, ConstraintTarget, Orientable, Scro
         vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
 
-class ListBaseClass(GObject.GPointer): ...
+class ListBaseClass(_gi.Struct): ...
 
-class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
+class ListBox(Widget):
     """
     :Constructors:
 
@@ -18792,7 +18626,6 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
       tab-behavior -> GtkListTabBehavior: tab-behavior
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -18801,6 +18634,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -18979,7 +18813,7 @@ class ListBox(Widget, Accessible, Buildable, ConstraintTarget):
     def unselect_all(self) -> None: ...
     def unselect_row(self, row: ListBoxRow) -> None: ...
 
-class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
+class ListBoxRow(Widget, Actionable):
     """
     :Constructors:
 
@@ -18999,7 +18833,6 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -19008,6 +18841,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -19155,7 +18989,7 @@ class ListBoxRow(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_header(self, header: Widget | None = None) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
-class ListBoxRowClass(GObject.GPointer):
+class ListBoxRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -19207,7 +19041,7 @@ class ListHeader(GObject.Object):
     def get_start(self) -> int: ...
     def set_child(self, child: Widget | None = None) -> None: ...
 
-class ListHeaderClass(GObject.GPointer): ...
+class ListHeaderClass(_gi.Struct): ...
 
 class ListItem(GObject.Object):
     """
@@ -19272,9 +19106,9 @@ class ListItem(GObject.Object):
     def set_focusable(self, focusable: bool) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
 
-class ListItemClass(GObject.GPointer): ...
+class ListItemClass(_gi.Struct): ...
 class ListItemFactory(GObject.Object): ...
-class ListItemFactoryClass(GObject.GPointer): ...
+class ListItemFactoryClass(_gi.Struct): ...
 
 # override
 class ListStore(
@@ -19291,14 +19125,14 @@ class ListStore(
     Object GtkListStore
 
     Signals from GtkTreeModel:
-      row-changed (GtkTreePath, GtkTreeIter)
-      row-inserted (GtkTreePath, GtkTreeIter)
-      row-has-child-toggled (GtkTreePath, GtkTreeIter)
-      row-deleted (GtkTreePath)
-      rows-reordered (GtkTreePath, GtkTreeIter, gpointer)
+      rowchanged (GtkTreePath, GtkTreeIter)
+      rowinserted (GtkTreePath, GtkTreeIter)
+      rowhaschildtoggled (GtkTreePath, GtkTreeIter)
+      rowdeleted (GtkTreePath)
+      rowsreordered (GtkTreePath, GtkTreeIter, gpointer)
 
     Signals from GtkTreeSortable:
-      sort-column-changed ()
+      sortcolumnchanged ()
 
     Signals from GObject:
       notify (GParam)
@@ -19339,7 +19173,7 @@ class ListStore(
     def set_value(self, treeiter: TreeIter, column: int, value: Any) -> None: ...
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
-class ListStoreClass(GObject.GPointer):
+class ListStoreClass(_gi.Struct):
     """
     :Constructors:
 
@@ -19352,11 +19186,9 @@ class ListStoreClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ListStorePrivate(GObject.GPointer): ...
+class ListStorePrivate(_gi.Struct): ...
 
-class ListView(
-    ListBase, Accessible, Buildable, ConstraintTarget, Orientable, Scrollable
-):
+class ListView(ListBase):
     """
     :Constructors:
 
@@ -19383,7 +19215,6 @@ class ListView(
       orientation -> GtkOrientation: orientation
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -19392,6 +19223,7 @@ class ListView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -19558,9 +19390,9 @@ class ListView(
     def set_single_click_activate(self, single_click_activate: bool) -> None: ...
     def set_tab_behavior(self, tab_behavior: ListTabBehavior) -> None: ...
 
-class ListViewClass(GObject.GPointer): ...
+class ListViewClass(_gi.Struct): ...
 
-class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
+class LockButton(Button):
     """
     :Constructors:
 
@@ -19592,7 +19424,6 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -19601,6 +19432,7 @@ class LockButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -19803,7 +19635,7 @@ class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     ) -> None: ...
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
-class MapListModelClass(GObject.GPointer):
+class MapListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -19814,7 +19646,7 @@ class MapListModelClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
+class MediaControls(Widget):
     """
     :Constructors:
 
@@ -19829,7 +19661,6 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
       media-stream -> GtkMediaStream: media-stream
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -19838,6 +19669,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -19965,7 +19797,7 @@ class MediaControls(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls, stream: MediaStream | None = None) -> MediaControls: ...
     def set_media_stream(self, stream: MediaStream | None = None) -> None: ...
 
-class MediaControlsClass(GObject.GPointer):
+class MediaControlsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -19976,7 +19808,7 @@ class MediaControlsClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class MediaFile(MediaStream, _Gdk4.Paintable):
+class MediaFile(MediaStream):
     """
     :Constructors:
 
@@ -20072,7 +19904,7 @@ class MediaFile(MediaStream, _Gdk4.Paintable):
     def set_input_stream(self, stream: Gio.InputStream | None = None) -> None: ...
     def set_resource(self, resource_path: str | None = None) -> None: ...
 
-class MediaFileClass(GObject.GPointer):
+class MediaFileClass(_gi.Struct):
     """
     :Constructors:
 
@@ -20184,7 +20016,7 @@ class MediaStream(GObject.Object, _Gdk4.Paintable):
     def unrealize(self, surface: _Gdk4.Surface) -> None: ...
     def update(self, timestamp: int) -> None: ...
 
-class MediaStreamClass(GObject.GPointer):
+class MediaStreamClass(_gi.Struct):
     """
     :Constructors:
 
@@ -20207,7 +20039,7 @@ class MediaStreamClass(GObject.GPointer):
     @property
     def unrealize(self) -> Callable[[MediaStream, _Gdk4.Surface], None]: ...
 
-class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
+class MenuButton(Widget):
     """
     :Constructors:
 
@@ -20236,7 +20068,6 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -20245,6 +20076,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -20421,9 +20253,7 @@ class MenuButton(Widget, Accessible, Buildable, ConstraintTarget):
     def set_primary(self, primary: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
-class MessageDialog(
-    Dialog, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class MessageDialog(Dialog):
     """
     :Constructors:
 
@@ -20450,9 +20280,9 @@ class MessageDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -20485,7 +20315,6 @@ class MessageDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -20494,6 +20323,7 @@ class MessageDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -20684,7 +20514,7 @@ class MessageDialog(
     def get_message_area(self) -> Widget: ...
     def set_markup(self, str: str) -> None: ...
 
-class MessageDialogClass(GObject.GPointer): ...
+class MessageDialogClass(_gi.Struct): ...
 
 class MnemonicAction(ShortcutAction):
     """
@@ -20702,7 +20532,7 @@ class MnemonicAction(ShortcutAction):
     @staticmethod
     def get() -> MnemonicAction: ...
 
-class MnemonicActionClass(GObject.GPointer): ...
+class MnemonicActionClass(_gi.Struct): ...
 
 class MnemonicTrigger(ShortcutTrigger):
     """
@@ -20731,7 +20561,7 @@ class MnemonicTrigger(ShortcutTrigger):
     @classmethod
     def new(cls, keyval: int) -> MnemonicTrigger: ...
 
-class MnemonicTriggerClass(GObject.GPointer): ...
+class MnemonicTriggerClass(_gi.Struct): ...
 
 class MountOperation(Gio.MountOperation):
     """
@@ -20814,7 +20644,7 @@ class MountOperation(Gio.MountOperation):
     def set_display(self, display: _Gdk4.Display) -> None: ...
     def set_parent(self, parent: Window | None = None) -> None: ...
 
-class MountOperationClass(GObject.GPointer):
+class MountOperationClass(_gi.Struct):
     """
     :Constructors:
 
@@ -20825,7 +20655,7 @@ class MountOperationClass(GObject.GPointer):
     @property
     def parent_class(self) -> Gio.MountOperationClass: ...
 
-class MountOperationPrivate(GObject.GPointer): ...
+class MountOperationPrivate(_gi.Struct): ...
 
 class MultiFilter(Filter, Gio.ListModel, Buildable):
     """
@@ -20859,7 +20689,7 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
     def append(self, filter: Filter) -> None: ...
     def remove(self, position: int) -> None: ...
 
-class MultiFilterClass(GObject.GPointer): ...
+class MultiFilterClass(_gi.Struct): ...
 
 class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -20902,7 +20732,7 @@ class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel
     def new(cls, model: Gio.ListModel | None = None) -> MultiSelection: ...
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
-class MultiSelectionClass(GObject.GPointer):
+class MultiSelectionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -20948,7 +20778,7 @@ class MultiSorter(Sorter, Gio.ListModel, Buildable):
     def new(cls) -> MultiSorter: ...
     def remove(self, position: int) -> None: ...
 
-class MultiSorterClass(GObject.GPointer):
+class MultiSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -20986,7 +20816,7 @@ class NamedAction(ShortcutAction):
     @classmethod
     def new(cls, name: str) -> NamedAction: ...
 
-class NamedActionClass(GObject.GPointer): ...
+class NamedActionClass(_gi.Struct): ...
 
 class Native(GObject.GInterface, Protocol):
     """
@@ -21057,7 +20887,7 @@ class NativeDialog(GObject.Object):
     def set_transient_for(self, parent: Window | None = None) -> None: ...
     def show(self) -> None: ...
 
-class NativeDialogClass(GObject.GPointer):
+class NativeDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -21074,7 +20904,7 @@ class NativeDialogClass(GObject.GPointer):
     @property
     def hide(self) -> Callable[[NativeDialog], None]: ...
 
-class NativeInterface(GObject.GPointer): ...
+class NativeInterface(_gi.Struct): ...
 
 class NeverTrigger(ShortcutTrigger):
     """
@@ -21092,7 +20922,7 @@ class NeverTrigger(ShortcutTrigger):
     @staticmethod
     def get() -> NeverTrigger: ...
 
-class NeverTriggerClass(GObject.GPointer): ...
+class NeverTriggerClass(_gi.Struct): ...
 
 class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -21135,7 +20965,7 @@ class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     def new(cls, model: Gio.ListModel | None = None) -> NoSelection: ...
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
 
-class NoSelectionClass(GObject.GPointer):
+class NoSelectionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -21146,7 +20976,7 @@ class NoSelectionClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
+class Notebook(Widget):
     """
     :Constructors:
 
@@ -21180,7 +21010,6 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
       pages -> GListModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -21189,6 +21018,7 @@ class Notebook(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -21462,7 +21292,7 @@ class NothingAction(ShortcutAction):
     @staticmethod
     def get() -> NothingAction: ...
 
-class NothingActionClass(GObject.GPointer): ...
+class NothingActionClass(_gi.Struct): ...
 
 class NumericSorter(Sorter):
     """
@@ -21501,7 +21331,7 @@ class NumericSorter(Sorter):
     def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_sort_order(self, sort_order: SortType) -> None: ...
 
-class NumericSorterClass(GObject.GPointer):
+class NumericSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -21535,7 +21365,7 @@ class Orientable(GObject.GInterface, Protocol):
     def get_orientation(self) -> Orientation: ...
     def set_orientation(self, orientation: Orientation) -> None: ...
 
-class OrientableIface(GObject.GPointer):
+class OrientableIface(_gi.Struct):
     """
     :Constructors:
 
@@ -21546,7 +21376,7 @@ class OrientableIface(GObject.GPointer):
     @property
     def base_iface(self) -> GObject.TypeInterface: ...
 
-class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
+class Overlay(Widget):
     """
     :Constructors:
 
@@ -21564,7 +21394,6 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -21573,6 +21402,7 @@ class Overlay(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -21765,7 +21595,7 @@ class OverlayLayoutChild(LayoutChild):
     def set_clip_overlay(self, clip_overlay: bool) -> None: ...
     def set_measure(self, measure: bool) -> None: ...
 
-class OverlayLayoutChildClass(GObject.GPointer):
+class OverlayLayoutChildClass(_gi.Struct):
     """
     :Constructors:
 
@@ -21776,7 +21606,7 @@ class OverlayLayoutChildClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutChildClass: ...
 
-class OverlayLayoutClass(GObject.GPointer):
+class OverlayLayoutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -21787,7 +21617,7 @@ class OverlayLayoutClass(GObject.GPointer):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class PadActionEntry(GObject.GPointer):
+class PadActionEntry(_gi.Struct):
     """
     :Constructors:
 
@@ -21854,9 +21684,9 @@ class PadController(EventController):
     ) -> None: ...
     def set_action_entries(self, entries: Sequence[PadActionEntry]) -> None: ...
 
-class PadControllerClass(GObject.GPointer): ...
+class PadControllerClass(_gi.Struct): ...
 
-class PageRange(GObject.GPointer):
+class PageRange(_gi.Struct):
     """
     :Constructors:
 
@@ -21923,9 +21753,7 @@ class PageSetup(GObject.Object):
         self, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> None: ...
 
-class PageSetupUnixDialog(
-    Dialog, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class PageSetupUnixDialog(Dialog):
     """
     :Constructors:
 
@@ -21944,9 +21772,9 @@ class PageSetupUnixDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -21979,7 +21807,6 @@ class PageSetupUnixDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -21988,6 +21815,7 @@ class PageSetupUnixDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -22171,9 +21999,7 @@ class PageSetupUnixDialog(
         self, print_settings: PrintSettings | None = None
     ) -> None: ...
 
-class Paned(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class Paned(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -22206,7 +22032,6 @@ class Paned(
       end-child -> GtkWidget: end-child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -22215,6 +22040,7 @@ class Paned(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -22442,7 +22268,7 @@ class ParamSpecExpression(GObject.ParamSpec):
     @property
     def parent_instance(self) -> GObject.ParamSpec: ...
 
-class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
+class PasswordEntry(Widget, Editable):
     """
     :Constructors:
 
@@ -22468,7 +22294,6 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       delete-text (gint, gint)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -22477,6 +22302,7 @@ class PasswordEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -22660,7 +22486,7 @@ class PasswordEntryBuffer(EntryBuffer):
     @classmethod
     def new(cls) -> PasswordEntryBuffer: ...
 
-class PasswordEntryBufferClass(GObject.GPointer):
+class PasswordEntryBufferClass(_gi.Struct):
     """
     :Constructors:
 
@@ -22671,9 +22497,9 @@ class PasswordEntryBufferClass(GObject.GPointer):
     @property
     def parent_class(self) -> EntryBufferClass: ...
 
-class PasswordEntryClass(GObject.GPointer): ...
+class PasswordEntryClass(_gi.Struct): ...
 
-class Picture(Widget, Accessible, Buildable, ConstraintTarget):
+class Picture(Widget):
     """
     :Constructors:
 
@@ -22696,10 +22522,8 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
       keep-aspect-ratio -> gboolean: keep-aspect-ratio
       can-shrink -> gboolean: can-shrink
       content-fit -> GtkContentFit: content-fit
-      isolate-contents -> gboolean: isolate-contents
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -22708,6 +22532,7 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -22758,7 +22583,6 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         can_shrink: bool
         content_fit: ContentFit
         file: Gio.File | None
-        isolate_contents: bool
         keep_aspect_ratio: bool
         paintable: _Gdk4.Paintable | None
         can_focus: bool
@@ -22807,7 +22631,6 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
         can_shrink: bool = ...,
         content_fit: ContentFit = ...,
         file: Gio.File | None = ...,
-        isolate_contents: bool = ...,
         keep_aspect_ratio: bool = ...,
         paintable: _Gdk4.Paintable | None = ...,
         can_focus: bool = ...,
@@ -22846,7 +22669,6 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     def get_can_shrink(self) -> bool: ...
     def get_content_fit(self) -> ContentFit: ...
     def get_file(self) -> Gio.File | None: ...
-    def get_isolate_contents(self) -> bool: ...
     def get_keep_aspect_ratio(self) -> bool: ...
     def get_paintable(self) -> _Gdk4.Paintable | None: ...
     @classmethod
@@ -22866,13 +22688,12 @@ class Picture(Widget, Accessible, Buildable, ConstraintTarget):
     def set_content_fit(self, content_fit: ContentFit) -> None: ...
     def set_file(self, file: Gio.File | None = None) -> None: ...
     def set_filename(self, filename: str | None = None) -> None: ...
-    def set_isolate_contents(self, isolate_contents: bool) -> None: ...
     def set_keep_aspect_ratio(self, keep_aspect_ratio: bool) -> None: ...
     def set_paintable(self, paintable: _Gdk4.Paintable | None = None) -> None: ...
     def set_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf | None = None) -> None: ...
     def set_resource(self, resource_path: str | None = None) -> None: ...
 
-class PictureClass(GObject.GPointer):
+class PictureClass(_gi.Struct):
     """
     :Constructors:
 
@@ -22883,7 +22704,7 @@ class PictureClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutManager):
+class Popover(Widget, Native, ShortcutManager):
     """
     :Constructors:
 
@@ -22909,7 +22730,6 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
       cascade-popdown -> gboolean: cascade-popdown
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -22918,6 +22738,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -23081,186 +22902,7 @@ class Popover(Widget, Accessible, Buildable, ConstraintTarget, Native, ShortcutM
     def set_pointing_to(self, rect: _Gdk4.Rectangle | None = None) -> None: ...
     def set_position(self, position: PositionType) -> None: ...
 
-class PopoverBin(Widget, Accessible, Buildable, ConstraintTarget):
-    """
-    :Constructors:
-
-    ::
-
-        PopoverBin(**properties)
-        new() -> Gtk.Widget
-
-    Object GtkPopoverBin
-
-    Properties from GtkPopoverBin:
-      child -> GtkWidget: child
-      popover -> GtkPopover: popover
-      menu-model -> GMenuModel: menu-model
-      handle-input -> gboolean: handle-input
-
-    Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
-      destroy ()
-      show ()
-      hide ()
-      map ()
-      unmap ()
-      realize ()
-      unrealize ()
-      state-flags-changed (GtkStateFlags)
-      mnemonic-activate (gboolean) -> gboolean
-      move-focus (GtkDirectionType)
-      keynav-failed (GtkDirectionType) -> gboolean
-      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
-
-    Properties from GtkWidget:
-      name -> gchararray: name
-      parent -> GtkWidget: parent
-      root -> GtkRoot: root
-      width-request -> gint: width-request
-      height-request -> gint: height-request
-      visible -> gboolean: visible
-      sensitive -> gboolean: sensitive
-      can-focus -> gboolean: can-focus
-      has-focus -> gboolean: has-focus
-      can-target -> gboolean: can-target
-      focus-on-click -> gboolean: focus-on-click
-      focusable -> gboolean: focusable
-      has-default -> gboolean: has-default
-      receives-default -> gboolean: receives-default
-      cursor -> GdkCursor: cursor
-      has-tooltip -> gboolean: has-tooltip
-      tooltip-markup -> gchararray: tooltip-markup
-      tooltip-text -> gchararray: tooltip-text
-      opacity -> gdouble: opacity
-      overflow -> GtkOverflow: overflow
-      halign -> GtkAlign: halign
-      valign -> GtkAlign: valign
-      margin-start -> gint: margin-start
-      margin-end -> gint: margin-end
-      margin-top -> gint: margin-top
-      margin-bottom -> gint: margin-bottom
-      hexpand -> gboolean: hexpand
-      vexpand -> gboolean: vexpand
-      hexpand-set -> gboolean: hexpand-set
-      vexpand-set -> gboolean: vexpand-set
-      scale-factor -> gint: scale-factor
-      css-name -> gchararray: css-name
-      css-classes -> GStrv: css-classes
-      layout-manager -> GtkLayoutManager: layout-manager
-      limit-events -> gboolean: limit-events
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(Widget.Props):
-        child: Widget | None
-        handle_input: bool
-        menu_model: Gio.MenuModel | None
-        popover: Popover | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-
-    @property
-    def props(self) -> Props: ...
-    def __init__(
-        self,
-        *,
-        child: Widget | None = ...,
-        handle_input: bool = ...,
-        menu_model: Gio.MenuModel | None = ...,
-        popover: Popover | None = ...,
-        can_focus: bool = ...,
-        can_target: bool = ...,
-        css_classes: Sequence[str] = ...,
-        css_name: str = ...,
-        cursor: _Gdk4.Cursor | None = ...,
-        focus_on_click: bool = ...,
-        focusable: bool = ...,
-        halign: Align = ...,
-        has_tooltip: bool = ...,
-        height_request: int = ...,
-        hexpand: bool = ...,
-        hexpand_set: bool = ...,
-        layout_manager: LayoutManager | None = ...,
-        limit_events: bool = ...,
-        margin_bottom: int = ...,
-        margin_end: int = ...,
-        margin_start: int = ...,
-        margin_top: int = ...,
-        name: str = ...,
-        opacity: float = ...,
-        overflow: Overflow = ...,
-        receives_default: bool = ...,
-        sensitive: bool = ...,
-        tooltip_markup: str | None = ...,
-        tooltip_text: str | None = ...,
-        valign: Align = ...,
-        vexpand: bool = ...,
-        vexpand_set: bool = ...,
-        visible: bool = ...,
-        width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-    ) -> None: ...
-    def get_child(self) -> Widget | None: ...
-    def get_handle_input(self) -> bool: ...
-    def get_menu_model(self) -> Gio.MenuModel | None: ...
-    def get_popover(self) -> Popover | None: ...
-    @classmethod
-    def new(cls) -> PopoverBin: ...
-    def popdown(self) -> None: ...
-    def popup(self) -> None: ...
-    def set_child(self, child: Widget | None = None) -> None: ...
-    def set_handle_input(self, handle_input: bool) -> None: ...
-    def set_menu_model(self, model: Gio.MenuModel | None = None) -> None: ...
-    def set_popover(self, popover: Popover | None = None) -> None: ...
-
-class PopoverBinClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        PopoverBinClass()
-    """
-    @property
-    def parent_class(self) -> WidgetClass: ...
-
-class PopoverClass(GObject.GPointer):
+class PopoverClass(_gi.Struct):
     """
     :Constructors:
 
@@ -23277,9 +22919,7 @@ class PopoverClass(GObject.GPointer):
     @property
     def reserved(self) -> list[None]: ...
 
-class PopoverMenu(
-    Popover, Accessible, Buildable, ConstraintTarget, Native, ShortcutManager
-):
+class PopoverMenu(Popover):
     """
     :Constructors:
 
@@ -23311,7 +22951,6 @@ class PopoverMenu(
       cascade-popdown -> gboolean: cascade-popdown
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -23320,6 +22959,7 @@ class PopoverMenu(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -23475,7 +23115,7 @@ class PopoverMenu(
     def set_flags(self, flags: PopoverMenuFlags) -> None: ...
     def set_menu_model(self, model: Gio.MenuModel | None = None) -> None: ...
 
-class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
+class PopoverMenuBar(Widget):
     """
     :Constructors:
 
@@ -23490,7 +23130,6 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
       menu-model -> GMenuModel: menu-model
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -23499,6 +23138,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -23628,7 +23268,7 @@ class PopoverMenuBar(Widget, Accessible, Buildable, ConstraintTarget):
     def remove_child(self, child: Widget) -> bool: ...
     def set_menu_model(self, model: Gio.MenuModel | None = None) -> None: ...
 
-class PrintBackend(GObject.GPointer): ...
+class PrintBackend(_gi.Struct): ...
 
 class PrintContext(GObject.Object):
     """
@@ -23736,7 +23376,7 @@ class PrintDialog(GObject.Object):
     ) -> None: ...
     def setup_finish(self, result: Gio.AsyncResult) -> PrintSetup: ...
 
-class PrintDialogClass(GObject.GPointer):
+class PrintDialogClass(_gi.Struct):
     """
     :Constructors:
 
@@ -23978,7 +23618,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     def set_unit(self, unit: Unit) -> None: ...
     def set_use_full_page(self, full_page: bool) -> None: ...
 
-class PrintOperationClass(GObject.GPointer):
+class PrintOperationClass(_gi.Struct):
     """
     :Constructors:
 
@@ -24032,7 +23672,7 @@ class PrintOperationPreview(GObject.GInterface, Protocol):
     def is_selected(self, page_nr: int) -> bool: ...
     def render_page(self, page_nr: int) -> None: ...
 
-class PrintOperationPreviewIface(GObject.GPointer):
+class PrintOperationPreviewIface(_gi.Struct):
     """
     :Constructors:
 
@@ -24055,7 +23695,7 @@ class PrintOperationPreviewIface(GObject.GPointer):
     @property
     def end_preview(self) -> Callable[[PrintOperationPreview], None]: ...
 
-class PrintOperationPrivate(GObject.GPointer): ...
+class PrintOperationPrivate(_gi.Struct): ...
 
 class PrintSettings(GObject.Object):
     """
@@ -24167,9 +23807,7 @@ class PrintSetup(GObject.GBoxed):
     def ref(self) -> PrintSetup: ...
     def unref(self) -> None: ...
 
-class PrintUnixDialog(
-    Dialog, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class PrintUnixDialog(Dialog):
     """
     :Constructors:
 
@@ -24198,9 +23836,9 @@ class PrintUnixDialog(
       use-header-bar -> gint: use-header-bar
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -24233,7 +23871,6 @@ class PrintUnixDialog(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -24242,6 +23879,7 @@ class PrintUnixDialog(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -24530,9 +24168,7 @@ class Printer(GObject.Object):
     def new(cls, name: str, backend: PrintBackend, virtual_: bool) -> Printer: ...
     def request_details(self) -> None: ...
 
-class ProgressBar(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class ProgressBar(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -24552,7 +24188,6 @@ class ProgressBar(
       ellipsize -> PangoEllipsizeMode: ellipsize
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -24561,6 +24196,7 @@ class ProgressBar(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -24734,9 +24370,7 @@ class PropertyExpression(Expression):
 
 class PyGTKDeprecationWarning(_gi.PyGIDeprecationWarning): ...
 
-class Range(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class Range(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -24761,7 +24395,6 @@ class Range(
       round-digits -> gint: round-digits
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -24770,6 +24403,7 @@ class Range(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -24934,7 +24568,7 @@ class Range(
     def set_slider_size_fixed(self, size_fixed: bool) -> None: ...
     def set_value(self, value: float) -> None: ...
 
-class RangeClass(GObject.GPointer):
+class RangeClass(_gi.Struct):
     """
     :Constructors:
 
@@ -24957,7 +24591,7 @@ class RangeClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class RecentData(GObject.GPointer):
+class RecentData(_gi.Struct):
     """
     :Constructors:
 
@@ -25048,7 +24682,7 @@ class RecentManager(GObject.Object):
     def purge_items(self) -> int: ...
     def remove_item(self, uri: str) -> bool: ...
 
-class RecentManagerClass(GObject.GPointer):
+class RecentManagerClass(_gi.Struct):
     """
     :Constructors:
 
@@ -25061,9 +24695,9 @@ class RecentManagerClass(GObject.GPointer):
     @property
     def changed(self) -> Callable[[RecentManager], None]: ...
 
-class RecentManagerPrivate(GObject.GPointer): ...
+class RecentManagerPrivate(_gi.Struct): ...
 
-class RequestedSize(GObject.GPointer):
+class RequestedSize(_gi.Struct):
     """
     :Constructors:
 
@@ -25095,7 +24729,7 @@ class Requisition(GObject.GBoxed):
     @classmethod
     def new(cls) -> Requisition: ...
 
-class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
+class Revealer(Widget):
     """
     :Constructors:
 
@@ -25114,7 +24748,6 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -25123,6 +24756,7 @@ class Revealer(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -25275,11 +24909,9 @@ class Root(GObject.GInterface, Protocol):
     def get_focus(self) -> Widget | None: ...
     def set_focus(self, focus: Widget | None = None) -> None: ...
 
-class RootInterface(GObject.GPointer): ...
+class RootInterface(_gi.Struct): ...
 
-class Scale(
-    Range, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class Scale(Range):
     """
     :Constructors:
 
@@ -25312,7 +24944,6 @@ class Scale(
       round-digits -> gint: round-digits
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -25321,6 +24952,7 @@ class Scale(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -25492,9 +25124,7 @@ class Scale(
     def set_has_origin(self, has_origin: bool) -> None: ...
     def set_value_pos(self, pos: PositionType) -> None: ...
 
-class ScaleButton(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class ScaleButton(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -25518,7 +25148,6 @@ class ScaleButton(
       has-frame -> gboolean: has-frame
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -25527,6 +25156,7 @@ class ScaleButton(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -25677,7 +25307,7 @@ class ScaleButton(
     def set_icons(self, icons: Sequence[str]) -> None: ...
     def set_value(self, value: float) -> None: ...
 
-class ScaleButtonClass(GObject.GPointer):
+class ScaleButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -25692,7 +25322,7 @@ class ScaleButtonClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class ScaleClass(GObject.GPointer):
+class ScaleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -25743,7 +25373,7 @@ class Scrollable(GObject.GInterface, Protocol):
     def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
     def set_vscroll_policy(self, policy: ScrollablePolicy) -> None: ...
 
-class ScrollableInterface(GObject.GPointer):
+class ScrollableInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -25756,9 +25386,7 @@ class ScrollableInterface(GObject.GPointer):
     @property
     def get_border(self) -> Callable[[Scrollable], tuple[bool, Border]]: ...
 
-class Scrollbar(
-    Widget, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class Scrollbar(Widget, AccessibleRange, Orientable):
     """
     :Constructors:
 
@@ -25773,7 +25401,6 @@ class Scrollbar(
       adjustment -> GtkAdjustment: adjustment
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -25782,6 +25409,7 @@ class Scrollbar(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -25913,7 +25541,7 @@ class Scrollbar(
     ) -> Scrollbar: ...
     def set_adjustment(self, adjustment: Adjustment | None = None) -> None: ...
 
-class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
+class ScrolledWindow(Widget):
     """
     :Constructors:
 
@@ -25948,7 +25576,6 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -25957,6 +25584,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -26143,7 +25771,7 @@ class ScrolledWindow(Widget, Accessible, Buildable, ConstraintTarget):
     def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
     def unset_placement(self) -> None: ...
 
-class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
+class SearchBar(Widget):
     """
     :Constructors:
 
@@ -26161,7 +25789,6 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
       key-capture-widget -> GtkWidget: key-capture-widget
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -26170,6 +25797,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -26310,7 +25938,7 @@ class SearchBar(Widget, Accessible, Buildable, ConstraintTarget):
     def set_search_mode(self, search_mode: bool) -> None: ...
     def set_show_close_button(self, visible: bool) -> None: ...
 
-class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
+class SearchEntry(Widget, Editable):
     """
     :Constructors:
 
@@ -26335,7 +25963,6 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       input-hints -> GtkInputHints: input-hints
       activates-default -> gboolean: activates-default
       search-delay -> guint: search-delay
-      key-capture-widget -> GtkWidget: key-capture-widget
 
     Signals from GtkEditable:
       changed ()
@@ -26343,7 +25970,6 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       delete-text (gint, gint)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -26352,6 +25978,7 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -26401,7 +26028,6 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         activates_default: bool
         input_hints: InputHints
         input_purpose: InputPurpose
-        key_capture_widget: Widget | None
         placeholder_text: str | None
         search_delay: int
         can_focus: bool
@@ -26457,7 +26083,6 @@ class SearchEntry(Widget, Accessible, Buildable, ConstraintTarget, Editable):
         activates_default: bool = ...,
         input_hints: InputHints = ...,
         input_purpose: InputPurpose = ...,
-        key_capture_widget: Widget | None = ...,
         placeholder_text: str | None = ...,
         search_delay: int = ...,
         can_focus: bool = ...,
@@ -26521,7 +26146,7 @@ class SectionModel(GObject.GInterface, Protocol):
     def get_section(self, position: int) -> tuple[int, int]: ...
     def sections_changed(self, position: int, n_items: int) -> None: ...
 
-class SectionModelInterface(GObject.GPointer):
+class SectionModelInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -26569,7 +26194,7 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
     def new(cls, model: SelectionModel | None = None) -> SelectionFilterModel: ...
     def set_model(self, model: SelectionModel | None = None) -> None: ...
 
-class SelectionFilterModelClass(GObject.GPointer):
+class SelectionFilterModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -26601,7 +26226,7 @@ class SelectionModel(GObject.GInterface, Protocol):
     def unselect_item(self, position: int) -> bool: ...
     def unselect_range(self, position: int, n_items: int) -> bool: ...
 
-class SelectionModelInterface(GObject.GPointer):
+class SelectionModelInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -26632,7 +26257,7 @@ class SelectionModelInterface(GObject.GPointer):
     @property
     def set_selection(self) -> Callable[[SelectionModel, Bitset, Bitset], bool]: ...
 
-class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class Separator(Widget, Orientable):
     """
     :Constructors:
 
@@ -26644,7 +26269,6 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
     Object GtkSeparator
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -26653,6 +26277,7 @@ class Separator(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -26843,7 +26468,6 @@ class Settings(GObject.Object, StyleProvider):
       gtk-font-rendering -> GtkFontRendering: gtk-font-rendering
       gtk-interface-color-scheme -> GtkInterfaceColorScheme: gtk-interface-color-scheme
       gtk-interface-contrast -> GtkInterfaceContrast: gtk-interface-contrast
-      gtk-interface-reduced-motion -> GtkReducedMotion: gtk-interface-reduced-motion
 
     Signals from GtkStyleProvider:
       gtk-private-changed ()
@@ -26882,7 +26506,6 @@ class Settings(GObject.Object, StyleProvider):
         gtk_im_module: str
         gtk_interface_color_scheme: InterfaceColorScheme
         gtk_interface_contrast: InterfaceContrast
-        gtk_interface_reduced_motion: ReducedMotion
         gtk_keynav_use_caret: bool
         gtk_label_select_on_focus: bool
         gtk_long_press_time: int
@@ -26943,7 +26566,6 @@ class Settings(GObject.Object, StyleProvider):
         gtk_im_module: str = ...,
         gtk_interface_color_scheme: InterfaceColorScheme = ...,
         gtk_interface_contrast: InterfaceContrast = ...,
-        gtk_interface_reduced_motion: ReducedMotion = ...,
         gtk_keynav_use_caret: bool = ...,
         gtk_label_select_on_focus: bool = ...,
         gtk_long_press_time: int = ...,
@@ -27046,9 +26668,9 @@ class ShortcutAction(GObject.Object):
     def print_(self, string: GLib.String) -> None: ...
     def to_string(self) -> str: ...
 
-class ShortcutActionClass(GObject.GPointer): ...
+class ShortcutActionClass(_gi.Struct): ...
 
-class ShortcutClass(GObject.GPointer):
+class ShortcutClass(_gi.Struct):
     """
     :Constructors:
 
@@ -27124,9 +26746,9 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
     def set_mnemonics_modifiers(self, modifiers: _Gdk4.ModifierType) -> None: ...
     def set_scope(self, scope: ShortcutScope) -> None: ...
 
-class ShortcutControllerClass(GObject.GPointer): ...
+class ShortcutControllerClass(_gi.Struct): ...
 
-class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
+class ShortcutLabel(Widget):
     """
     :Constructors:
 
@@ -27142,7 +26764,6 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
       disabled-text -> gchararray: disabled-text
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -27151,6 +26772,7 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -27282,10 +26904,10 @@ class ShortcutLabel(Widget, Accessible, Buildable, ConstraintTarget):
     def set_accelerator(self, accelerator: str) -> None: ...
     def set_disabled_text(self, disabled_text: str) -> None: ...
 
-class ShortcutLabelClass(GObject.GPointer): ...
+class ShortcutLabelClass(_gi.Struct): ...
 class ShortcutManager(GObject.GInterface, Protocol): ...
 
-class ShortcutManagerInterface(GObject.GPointer):
+class ShortcutManagerInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -27329,9 +26951,9 @@ class ShortcutTrigger(GObject.Object):
     def to_string(self) -> str: ...
     def trigger(self, event: _Gdk4.Event, enable_mnemonics: bool) -> _Gdk4.KeyMatch: ...
 
-class ShortcutTriggerClass(GObject.GPointer): ...
+class ShortcutTriggerClass(_gi.Struct): ...
 
-class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
+class ShortcutsGroup(Box):
     """
     :Constructors:
 
@@ -27355,7 +26977,6 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -27364,6 +26985,7 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -27505,9 +27127,9 @@ class ShortcutsGroup(Box, Accessible, Buildable, ConstraintTarget, Orientable):
     ) -> None: ...
     def add_shortcut(self, shortcut: ShortcutsShortcut) -> None: ...
 
-class ShortcutsGroupClass(GObject.GPointer): ...
+class ShortcutsGroupClass(_gi.Struct): ...
 
-class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable):
+class ShortcutsSection(Box):
     """
     :Constructors:
 
@@ -27533,7 +27155,6 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
       baseline-position -> GtkBaselinePosition: baseline-position
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -27542,6 +27163,7 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -27682,9 +27304,9 @@ class ShortcutsSection(Box, Accessible, Buildable, ConstraintTarget, Orientable)
     ) -> None: ...
     def add_group(self, group: ShortcutsGroup) -> None: ...
 
-class ShortcutsSectionClass(GObject.GPointer): ...
+class ShortcutsSectionClass(_gi.Struct): ...
 
-class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
+class ShortcutsShortcut(Widget):
     """
     :Constructors:
 
@@ -27708,7 +27330,6 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
       action-name -> gchararray: action-name
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -27717,6 +27338,7 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -27860,11 +27482,9 @@ class ShortcutsShortcut(Widget, Accessible, Buildable, ConstraintTarget):
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
 
-class ShortcutsShortcutClass(GObject.GPointer): ...
+class ShortcutsShortcutClass(_gi.Struct): ...
 
-class ShortcutsWindow(
-    Window, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class ShortcutsWindow(Window):
     """
     :Constructors:
 
@@ -27883,9 +27503,9 @@ class ShortcutsWindow(
       view-name -> gchararray: view-name
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -27918,7 +27538,6 @@ class ShortcutsWindow(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -27927,6 +27546,7 @@ class ShortcutsWindow(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -28130,7 +27750,7 @@ class SignalAction(ShortcutAction):
     @classmethod
     def new(cls, signal_name: str) -> SignalAction: ...
 
-class SignalActionClass(GObject.GPointer): ...
+class SignalActionClass(_gi.Struct): ...
 
 class SignalListItemFactory(ListItemFactory):
     """
@@ -28155,7 +27775,7 @@ class SignalListItemFactory(ListItemFactory):
     @classmethod
     def new(cls) -> SignalListItemFactory: ...
 
-class SignalListItemFactoryClass(GObject.GPointer): ...
+class SignalListItemFactoryClass(_gi.Struct): ...
 
 class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     """
@@ -28220,7 +27840,7 @@ class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionMode
     def set_model(self, model: Gio.ListModel | None = None) -> None: ...
     def set_selected(self, position: int) -> None: ...
 
-class SingleSelectionClass(GObject.GPointer):
+class SingleSelectionClass(_gi.Struct):
     """
     :Constructors:
 
@@ -28314,7 +27934,7 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     def set_offset(self, offset: int) -> None: ...
     def set_size(self, size: int) -> None: ...
 
-class SliceListModelClass(GObject.GPointer):
+class SliceListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -28384,7 +28004,6 @@ class Snapshot(_Gdk4.Snapshot):
         spread: float,
         blur_radius: float,
     ) -> None: ...
-    def append_paste(self, bounds: Graphene.Rect, nth: int) -> None: ...
     def append_radial_gradient(
         self,
         bounds: Graphene.Rect,
@@ -28437,14 +28056,11 @@ class Snapshot(_Gdk4.Snapshot):
         blue: Gsk.ComponentTransfer,
         alpha: Gsk.ComponentTransfer,
     ) -> None: ...
-    def push_composite(self, op: Gsk.PorterDuff) -> None: ...
-    def push_copy(self) -> None: ...
     def push_cross_fade(self, progress: float) -> None: ...
     def push_fill(self, path: Gsk.Path, fill_rule: Gsk.FillRule) -> None: ...
     def push_gl_shader(
         self, shader: Gsk.GLShader, bounds: Graphene.Rect, take_args: GLib.Bytes
     ) -> None: ...
-    def push_isolation(self, features: Gsk.Isolation) -> None: ...
     def push_mask(self, mask_mode: Gsk.MaskMode) -> None: ...
     def push_opacity(self, opacity: float) -> None: ...
     def push_repeat(
@@ -28489,7 +28105,7 @@ class Snapshot(_Gdk4.Snapshot):
     def translate(self, point: Graphene.Point) -> None: ...
     def translate_3d(self, point: Graphene.Point3D) -> None: ...
 
-class SnapshotClass(GObject.GPointer): ...
+class SnapshotClass(_gi.Struct): ...
 
 class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     """
@@ -28553,7 +28169,7 @@ class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     def set_section_sorter(self, sorter: Sorter | None = None) -> None: ...
     def set_sorter(self, sorter: Sorter | None = None) -> None: ...
 
-class SortListModelClass(GObject.GPointer):
+class SortListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -28590,7 +28206,7 @@ class Sorter(GObject.Object):
     def do_get_order(self) -> SorterOrder: ...
     def get_order(self) -> SorterOrder: ...
 
-class SorterClass(GObject.GPointer):
+class SorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -28607,16 +28223,7 @@ class SorterClass(GObject.GPointer):
     @property
     def get_order(self) -> Callable[[Sorter], SorterOrder]: ...
 
-class SpinButton(
-    Widget,
-    Accessible,
-    AccessibleRange,
-    Buildable,
-    CellEditable,
-    ConstraintTarget,
-    Editable,
-    Orientable,
-):
+class SpinButton(Widget, AccessibleRange, CellEditable, Editable, Orientable):
     """
     :Constructors:
 
@@ -28657,7 +28264,6 @@ class SpinButton(
       remove-widget ()
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -28666,6 +28272,7 @@ class SpinButton(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -28857,7 +28464,7 @@ class SpinButton(
     def spin(self, direction: SpinType, increment: float) -> None: ...
     def update(self) -> None: ...
 
-class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
+class Spinner(Widget):
     """
     :Constructors:
 
@@ -28872,7 +28479,6 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
       spinning -> gboolean: spinning
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -28881,6 +28487,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -29010,7 +28617,7 @@ class Spinner(Widget, Accessible, Buildable, ConstraintTarget):
     def start(self) -> None: ...
     def stop(self) -> None: ...
 
-class Stack(Widget, Accessible, Buildable, ConstraintTarget):
+class Stack(Widget):
     """
     :Constructors:
 
@@ -29033,7 +28640,6 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -29042,6 +28648,7 @@ class Stack(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -29266,7 +28873,7 @@ class StackPage(GObject.Object, Accessible):
     def set_use_underline(self, setting: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
 
-class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
+class StackSidebar(Widget):
     """
     :Constructors:
 
@@ -29281,7 +28888,6 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
       stack -> GtkStack: stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -29290,6 +28896,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -29417,7 +29024,7 @@ class StackSidebar(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls) -> StackSidebar: ...
     def set_stack(self, stack: Stack) -> None: ...
 
-class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable):
+class StackSwitcher(Widget, Orientable):
     """
     :Constructors:
 
@@ -29432,7 +29039,6 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
       stack -> GtkStack: stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -29441,6 +29047,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -29570,7 +29177,7 @@ class StackSwitcher(Widget, Accessible, Buildable, ConstraintTarget, Orientable)
     def new(cls) -> StackSwitcher: ...
     def set_stack(self, stack: Stack | None = None) -> None: ...
 
-class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
+class Statusbar(Widget):
     """
     :Constructors:
 
@@ -29586,7 +29193,6 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
       text-popped (guint, gchararray)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -29595,6 +29201,7 @@ class Statusbar(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -29773,7 +29380,7 @@ class StringFilter(Filter):
     def set_match_mode(self, mode: StringFilterMatchMode) -> None: ...
     def set_search(self, search: str | None = None) -> None: ...
 
-class StringFilterClass(GObject.GPointer):
+class StringFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -29825,7 +29432,7 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
     ) -> None: ...
     def take(self, string: str) -> None: ...
 
-class StringListClass(GObject.GPointer):
+class StringListClass(_gi.Struct):
     """
     :Constructors:
 
@@ -29862,7 +29469,7 @@ class StringObject(GObject.Object):
     @classmethod
     def new(cls, string: str) -> StringObject: ...
 
-class StringObjectClass(GObject.GPointer):
+class StringObjectClass(_gi.Struct):
     """
     :Constructors:
 
@@ -29918,7 +29525,7 @@ class StringSorter(Sorter):
     def set_expression(self, expression: Expression | None = None) -> None: ...
     def set_ignore_case(self, ignore_case: bool) -> None: ...
 
-class StringSorterClass(GObject.GPointer):
+class StringSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -29982,7 +29589,7 @@ class StyleContext(GObject.Object):
     def set_state(self, flags: StateFlags) -> None: ...
     def to_string(self, flags: StyleContextPrintFlags) -> str: ...
 
-class StyleContextClass(GObject.GPointer):
+class StyleContextClass(_gi.Struct):
     """
     :Constructors:
 
@@ -29997,100 +29604,7 @@ class StyleContextClass(GObject.GPointer):
 
 class StyleProvider(GObject.GInterface, Protocol): ...
 
-class Svg(GObject.Object, _Gdk4.Paintable, SymbolicPaintable):
-    """
-    :Constructors:
-
-    ::
-
-        Svg(**properties)
-        new() -> Gtk.Svg
-        new_from_bytes(bytes:GLib.Bytes) -> Gtk.Svg
-        new_from_resource(path:str) -> Gtk.Svg
-
-    Object GtkSvg
-
-    Signals from GtkSvg:
-      error (GError)
-
-    Properties from GtkSvg:
-      resource -> gchararray: resource
-      features -> GtkSvgFeatures: features
-      playing -> gboolean: playing
-      weight -> gdouble: weight
-      state -> guint: state
-
-    Signals from GdkPaintable:
-      invalidate-contents ()
-      invalidate-size ()
-
-    Signals from GObject:
-      notify (GParam)
-    """
-    class Props(GObject.Object.Props):
-        features: SvgFeatures
-        playing: bool
-        resource: str
-        state: int
-        weight: float
-
-    @property
-    def props(self) -> Props: ...
-    def __init__(
-        self,
-        *,
-        features: SvgFeatures = ...,
-        playing: bool = ...,
-        resource: str = ...,
-        state: int = ...,
-        weight: float = ...,
-    ) -> None: ...
-    def get_features(self) -> SvgFeatures: ...
-    def get_state(self) -> int: ...
-    def get_state_names(self) -> tuple[list[str] | None, int]: ...
-    def get_weight(self) -> float: ...
-    def load_from_bytes(self, bytes: GLib.Bytes) -> None: ...
-    def load_from_resource(self, path: str) -> None: ...
-    @classmethod
-    def new(cls) -> Svg: ...
-    @classmethod
-    def new_from_bytes(cls, bytes: GLib.Bytes) -> Svg: ...
-    @classmethod
-    def new_from_resource(cls, path: str) -> Svg: ...
-    def pause(self) -> None: ...
-    def play(self) -> None: ...
-    def serialize(self) -> GLib.Bytes: ...
-    def set_features(self, features: SvgFeatures) -> None: ...
-    def set_frame_clock(self, clock: _Gdk4.FrameClock) -> None: ...
-    def set_state(self, state: int) -> None: ...
-    def set_weight(self, weight: float) -> None: ...
-    def write_to_file(self, filename: str) -> bool: ...
-
-class SvgClass(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        SvgClass()
-    """
-    @property
-    def parent_class(self) -> GObject.ObjectClass: ...
-
-class SvgLocation(GObject.GPointer):
-    """
-    :Constructors:
-
-    ::
-
-        SvgLocation()
-    """
-
-    bytes: int
-    lines: int
-    line_chars: int
-
-class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
+class Switch(Widget, Actionable):
     """
     :Constructors:
 
@@ -30110,7 +29624,6 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       state -> gboolean: state
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -30119,6 +29632,7 @@ class Switch(Widget, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -30268,16 +29782,8 @@ class SymbolicPaintable(GObject.GInterface, Protocol):
         height: float,
         colors: Sequence[_Gdk4.RGBA],
     ) -> None: ...
-    def snapshot_with_weight(
-        self,
-        snapshot: _Gdk4.Snapshot,
-        width: float,
-        height: float,
-        colors: Sequence[_Gdk4.RGBA],
-        weight: float,
-    ) -> None: ...
 
-class SymbolicPaintableInterface(GObject.GPointer):
+class SymbolicPaintableInterface(_gi.Struct):
     """
     :Constructors:
 
@@ -30293,38 +29799,10 @@ class SymbolicPaintableInterface(GObject.GPointer):
     ) -> Callable[
         [SymbolicPaintable, _Gdk4.Snapshot, float, float, Sequence[_Gdk4.RGBA]], None
     ]: ...
-    @property
-    def snapshot_with_weight(
-        self,
-    ) -> Callable[
-        [SymbolicPaintable, _Gdk4.Snapshot, float, float, Sequence[_Gdk4.RGBA], float],
-        None,
-    ]: ...
 
-# override
-class Template:
-    def __init__(
-        self,
-        filename: str | os.PathLike[str] = ...,
-        resource_path: str = ...,
-        string: str | bytes = ...,
-    ) -> None: ...
-    @classmethod
-    def from_file(cls, filename: str | os.PathLike[str]) -> Template: ...
-    @classmethod
-    def from_resource(cls, resource_path: str) -> Template: ...
-    @classmethod
-    def from_string(cls, string: str | bytes) -> Template: ...
-    def __call__(self, cls: T) -> T: ...
+Template = _gtktemplate.Template
 
-    class Callback:
-        def __init__(self, name: str | None = ...) -> None: ...
-        def __call__(self, func: Callable[..., Any]) -> Any: ...
-
-    @classmethod
-    def Child(cls: Any, name: str | None = ...) -> Any: ...
-
-class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Editable):
+class Text(Widget, AccessibleText, Editable):
     """
     :Constructors:
 
@@ -30375,7 +29853,6 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
       delete-text (gint, gint)
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -30384,6 +29861,7 @@ class Text(Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Edit
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -30791,10 +30269,10 @@ class TextBuffer(GObject.Object):
     def set_max_undo_levels(self, max_undo_levels: int) -> None: ...
     def set_modified(self, setting: bool) -> None: ...
     # override
-    def set_text(self, text: str, len: int = -1) -> None: ...
+    def set_text(self, text: str, len: int = 1) -> None: ...
     def undo(self) -> None: ...
 
-class TextBufferClass(GObject.GPointer):
+class TextBufferClass(_gi.Struct):
     """
     :Constructors:
 
@@ -30843,7 +30321,7 @@ class TextBufferClass(GObject.GPointer):
     @property
     def redo(self) -> Callable[[TextBuffer], None]: ...
 
-class TextBufferPrivate(GObject.GPointer): ...
+class TextBufferPrivate(_gi.Struct): ...
 
 class TextChildAnchor(GObject.Object):
     """
@@ -30871,7 +30349,7 @@ class TextChildAnchor(GObject.Object):
     @classmethod
     def new_with_replacement(cls, character: str) -> TextChildAnchor: ...
 
-class TextChildAnchorClass(GObject.GPointer):
+class TextChildAnchorClass(_gi.Struct):
     """
     :Constructors:
 
@@ -31055,7 +30533,7 @@ class TextMark(GObject.Object):
     def new(cls, name: str | None, left_gravity: bool) -> TextMark: ...
     def set_visible(self, setting: bool) -> None: ...
 
-class TextMarkClass(GObject.GPointer):
+class TextMarkClass(_gi.Struct):
     """
     :Constructors:
 
@@ -31369,7 +30847,7 @@ class TextTag(GObject.Object):
     def new(cls, name: str | None = None) -> TextTag: ...
     def set_priority(self, priority: int) -> None: ...
 
-class TextTagClass(GObject.GPointer):
+class TextTagClass(_gi.Struct):
     """
     :Constructors:
 
@@ -31382,7 +30860,7 @@ class TextTagClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class TextTagPrivate(GObject.GPointer): ...
+class TextTagPrivate(_gi.Struct): ...
 
 class TextTagTable(GObject.Object, Buildable):
     """
@@ -31411,9 +30889,7 @@ class TextTagTable(GObject.Object, Buildable):
     def new(cls) -> TextTagTable: ...
     def remove(self, tag: TextTag) -> None: ...
 
-class TextView(
-    Widget, Accessible, AccessibleText, Buildable, ConstraintTarget, Scrollable
-):
+class TextView(Widget, AccessibleText, Scrollable):
     """
     :Constructors:
 
@@ -31466,7 +30942,6 @@ class TextView(
       extra-menu -> GMenuModel: extra-menu
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -31475,6 +30950,7 @@ class TextView(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -31526,7 +31002,7 @@ class TextView(
         buffer: TextBuffer
         cursor_visible: bool
         editable: bool
-        extra_menu: Gio.MenuModel | None
+        extra_menu: Gio.MenuModel
         im_module: str
         indent: int
         input_hints: InputHints
@@ -31686,7 +31162,7 @@ class TextView(
     ) -> tuple[_Gdk4.Rectangle, _Gdk4.Rectangle]: ...
     def get_cursor_visible(self) -> bool: ...
     def get_editable(self) -> bool: ...
-    def get_extra_menu(self) -> Gio.MenuModel | None: ...
+    def get_extra_menu(self) -> Gio.MenuModel: ...
     def get_gutter(self, win: TextWindowType) -> Widget | None: ...
     def get_indent(self) -> int: ...
     def get_input_hints(self) -> InputHints: ...
@@ -31766,7 +31242,7 @@ class TextView(
         self, win: TextWindowType, window_x: int, window_y: int
     ) -> tuple[int, int]: ...
 
-class TextViewClass(GObject.GPointer):
+class TextViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -31809,9 +31285,9 @@ class TextViewClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class TextViewPrivate(GObject.GPointer): ...
+class TextViewPrivate(_gi.Struct): ...
 
-class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
+class ToggleButton(Button):
     """
     :Constructors:
 
@@ -31844,7 +31320,6 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -31853,6 +31328,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -32007,7 +31483,7 @@ class ToggleButton(Button, Accessible, Actionable, Buildable, ConstraintTarget):
     def set_group(self, group: ToggleButton | None = None) -> None: ...
     def toggled(self) -> None: ...
 
-class ToggleButtonClass(GObject.GPointer):
+class ToggleButtonClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32050,7 +31526,7 @@ class TreeDragDest(GObject.GInterface, Protocol):
     def drag_data_received(self, dest: TreePath, value: Any) -> bool: ...
     def row_drop_possible(self, dest_path: TreePath, value: Any) -> bool: ...
 
-class TreeDragDestIface(GObject.GPointer):
+class TreeDragDestIface(_gi.Struct):
     """
     :Constructors:
 
@@ -32073,7 +31549,7 @@ class TreeDragSource(GObject.GInterface, Protocol):
     def drag_data_get(self, path: TreePath) -> _Gdk4.ContentProvider | None: ...
     def row_draggable(self, path: TreePath) -> bool: ...
 
-class TreeDragSourceIface(GObject.GPointer):
+class TreeDragSourceIface(_gi.Struct):
     """
     :Constructors:
 
@@ -32092,7 +31568,7 @@ class TreeDragSourceIface(GObject.GPointer):
     @property
     def drag_data_delete(self) -> Callable[[TreeDragSource, TreePath], bool]: ...
 
-class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
+class TreeExpander(Widget):
     """
     :Constructors:
 
@@ -32112,7 +31588,6 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
       list-row -> GtkTreeListRow: list-row
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -32121,6 +31596,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -32266,7 +31742,7 @@ class TreeExpander(Widget, Accessible, Buildable, ConstraintTarget):
     def set_indent_for_icon(self, indent_for_icon: bool) -> None: ...
     def set_list_row(self, list_row: TreeListRow | None = None) -> None: ...
 
-class TreeExpanderClass(GObject.GPointer):
+class TreeExpanderClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32343,7 +31819,7 @@ class TreeListModel(GObject.Object, Gio.ListModel):
     ) -> TreeListModel: ...
     def set_autoexpand(self, autoexpand: bool) -> None: ...
 
-class TreeListModelClass(GObject.GPointer):
+class TreeListModelClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32394,7 +31870,7 @@ class TreeListRow(GObject.Object):
     def is_expandable(self) -> bool: ...
     def set_expanded(self, expanded: bool) -> None: ...
 
-class TreeListRowClass(GObject.GPointer):
+class TreeListRowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32436,7 +31912,7 @@ class TreeListRowSorter(Sorter):
     def new(cls, sorter: Sorter | None = None) -> TreeListRowSorter: ...
     def set_sorter(self, sorter: Sorter | None = None) -> None: ...
 
-class TreeListRowSorterClass(GObject.GPointer):
+class TreeListRowSorterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32555,7 +32031,7 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
         data: Any | None = ...,
     ) -> None: ...
 
-class TreeModelFilterClass(GObject.GPointer):
+class TreeModelFilterClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32574,9 +32050,9 @@ class TreeModelFilterClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class TreeModelFilterPrivate(GObject.GPointer): ...
+class TreeModelFilterPrivate(_gi.Struct): ...
 
-class TreeModelIface(GObject.GPointer):
+class TreeModelIface(_gi.Struct):
     """
     :Constructors:
 
@@ -32706,7 +32182,7 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     def new_with_model(cls, child_model: TreeModel) -> TreeModelSort: ...
     def reset_default_sort_func(self) -> None: ...
 
-class TreeModelSortClass(GObject.GPointer):
+class TreeModelSortClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32719,7 +32195,7 @@ class TreeModelSortClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class TreeModelSortPrivate(GObject.GPointer): ...
+class TreeModelSortPrivate(_gi.Struct): ...
 
 class TreePath(GObject.GBoxed):
     """
@@ -32863,7 +32339,7 @@ class TreeSortable(GObject.GInterface, Protocol):
     ) -> None: ...
     def sort_column_changed(self) -> None: ...
 
-class TreeSortableIface(GObject.GPointer):
+class TreeSortableIface(_gi.Struct):
     """
     :Constructors:
 
@@ -32903,14 +32379,14 @@ class TreeStore(
     Object GtkTreeStore
 
     Signals from GtkTreeModel:
-      row-changed (GtkTreePath, GtkTreeIter)
-      row-inserted (GtkTreePath, GtkTreeIter)
-      row-has-child-toggled (GtkTreePath, GtkTreeIter)
-      row-deleted (GtkTreePath)
-      rows-reordered (GtkTreePath, GtkTreeIter, gpointer)
+      rowchanged (GtkTreePath, GtkTreeIter)
+      rowinserted (GtkTreePath, GtkTreeIter)
+      rowhaschildtoggled (GtkTreePath, GtkTreeIter)
+      rowdeleted (GtkTreePath)
+      rowsreordered (GtkTreePath, GtkTreeIter, gpointer)
 
     Signals from GtkTreeSortable:
-      sort-column-changed ()
+      sortcolumnchanged ()
 
     Signals from GObject:
       notify (GParam)
@@ -32949,7 +32425,7 @@ class TreeStore(
     def set_value(self, treeiter, column, value): ...
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
-class TreeStoreClass(GObject.GPointer):
+class TreeStoreClass(_gi.Struct):
     """
     :Constructors:
 
@@ -32962,9 +32438,9 @@ class TreeStoreClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class TreeStorePrivate(GObject.GPointer): ...
+class TreeStorePrivate(_gi.Struct): ...
 
-class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
+class TreeView(Widget, Scrollable):
     """
     :Constructors:
 
@@ -33013,7 +32489,6 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       activate-on-single-click -> gboolean: activate-on-single-click
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -33022,6 +32497,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -33377,7 +32853,7 @@ class TreeView(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def unset_rows_drag_dest(self) -> None: ...
     def unset_rows_drag_source(self) -> None: ...
 
-class TreeViewClass(GObject.GPointer):
+class TreeViewClass(_gi.Struct):
     """
     :Constructors:
 
@@ -33443,23 +32919,23 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     Properties from GtkTreeViewColumn:
       visible -> gboolean: visible
       resizable -> gboolean: resizable
-      x-offset -> gint: x-offset
+      xoffset -> gint: xoffset
       width -> gint: width
       spacing -> gint: spacing
       sizing -> GtkTreeViewColumnSizing: sizing
-      fixed-width -> gint: fixed-width
-      min-width -> gint: min-width
-      max-width -> gint: max-width
+      fixedwidth -> gint: fixedwidth
+      minwidth -> gint: minwidth
+      maxwidth -> gint: maxwidth
       title -> gchararray: title
       expand -> gboolean: expand
       clickable -> gboolean: clickable
       widget -> GtkWidget: widget
       alignment -> gfloat: alignment
       reorderable -> gboolean: reorderable
-      sort-indicator -> gboolean: sort-indicator
-      sort-order -> GtkSortType: sort-order
-      sort-column-id -> gint: sort-column-id
-      cell-area -> GtkCellArea: cell-area
+      sortindicator -> gboolean: sortindicator
+      sortorder -> GtkSortType: sortorder
+      sortcolumnid -> gint: sortcolumnid
+      cellarea -> GtkCellArea: cellarea
 
     Signals from GObject:
       notify (GParam)
@@ -33566,18 +33042,6 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def set_visible(self, visible: bool) -> None: ...
     def set_widget(self, widget: Widget | None = None) -> None: ...
 
-class TryExpression(Expression):
-    """
-    :Constructors:
-
-    ::
-
-        TryExpression(**properties)
-        new(expressions:list) -> Gtk.TryExpression
-    """
-    @classmethod
-    def new(cls, expressions: Sequence[Expression]) -> TryExpression: ...
-
 class UriLauncher(GObject.Object):
     """
     :Constructors:
@@ -33615,7 +33079,7 @@ class UriLauncher(GObject.Object):
     def new(cls, uri: str | None = None) -> UriLauncher: ...
     def set_uri(self, uri: str | None = None) -> None: ...
 
-class UriLauncherClass(GObject.GPointer):
+class UriLauncherClass(_gi.Struct):
     """
     :Constructors:
 
@@ -33626,7 +33090,7 @@ class UriLauncherClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class Video(Widget, Accessible, Buildable, ConstraintTarget):
+class Video(Widget):
     """
     :Constructors:
 
@@ -33649,7 +33113,6 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
       graphics-offload -> GtkGraphicsOffloadEnabled: graphics-offload
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -33658,6 +33121,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -33811,7 +33275,7 @@ class Video(Widget, Accessible, Buildable, ConstraintTarget):
     def set_media_stream(self, stream: MediaStream | None = None) -> None: ...
     def set_resource(self, resource_path: str | None = None) -> None: ...
 
-class VideoClass(GObject.GPointer):
+class VideoClass(_gi.Struct):
     """
     :Constructors:
 
@@ -33822,7 +33286,7 @@ class VideoClass(GObject.GPointer):
     @property
     def parent_class(self) -> WidgetClass: ...
 
-class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
+class Viewport(Widget, Scrollable):
     """
     :Constructors:
 
@@ -33838,7 +33302,6 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -33847,6 +33310,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -33993,9 +33457,7 @@ class Viewport(Widget, Accessible, Buildable, ConstraintTarget, Scrollable):
     def set_child(self, child: Widget | None = None) -> None: ...
     def set_scroll_to_focus(self, scroll_to_focus: bool) -> None: ...
 
-class VolumeButton(
-    ScaleButton, Accessible, AccessibleRange, Buildable, ConstraintTarget, Orientable
-):
+class VolumeButton(ScaleButton):
     """
     :Constructors:
 
@@ -34022,7 +33484,6 @@ class VolumeButton(
       has-frame -> gboolean: has-frame
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -34031,6 +33492,7 @@ class VolumeButton(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -34180,7 +33642,6 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     Object GtkWidget
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -34189,6 +33650,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -34313,6 +33775,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         width_request: int = ...,
         accessible_role: AccessibleRole = ...,
     ) -> None: ...
+    def __contains__(self, child): ...  # FIXME: Override is missing typing annotation
     def __iter__(self): ...  # FIXME: Override is missing typing annotation
     def action_set_enabled(self, action_name: str, enabled: bool) -> None: ...
     def activate(self) -> bool: ...
@@ -34601,7 +34064,7 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     def unrealize(self) -> None: ...
     def unset_state_flags(self, flags: StateFlags) -> None: ...
 
-class WidgetClass(GObject.GPointer):
+class WidgetClass(_gi.Struct):
     """
     :Constructors:
 
@@ -34701,7 +34164,7 @@ class WidgetClass(GObject.GPointer):
     def set_template_from_resource(self, resource_name: str) -> None: ...
     def set_template_scope(self, scope: BuilderScope) -> None: ...
 
-class WidgetClassPrivate(GObject.GPointer): ...
+class WidgetClassPrivate(_gi.Struct): ...
 
 class WidgetPaintable(GObject.Object, _Gdk4.Paintable):
     """
@@ -34735,7 +34198,7 @@ class WidgetPaintable(GObject.Object, _Gdk4.Paintable):
     def new(cls, widget: Widget | None = None) -> WidgetPaintable: ...
     def set_widget(self, widget: Widget | None = None) -> None: ...
 
-class WidgetPaintableClass(GObject.GPointer):
+class WidgetPaintableClass(_gi.Struct):
     """
     :Constructors:
 
@@ -34746,11 +34209,9 @@ class WidgetPaintableClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class WidgetPrivate(GObject.GPointer): ...
+class WidgetPrivate(_gi.Struct): ...
 
-class Window(
-    Widget, Accessible, Buildable, ConstraintTarget, Native, Root, ShortcutManager
-):
+class Window(Widget, Native, Root, ShortcutManager):
     """
     :Constructors:
 
@@ -34762,9 +34223,9 @@ class Window(
     Object GtkWindow
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
 
@@ -34797,7 +34258,6 @@ class Window(
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -34806,6 +34266,7 @@ class Window(
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -35056,7 +34517,7 @@ class Window(
     def unmaximize(self) -> None: ...
     def unminimize(self) -> None: ...
 
-class WindowClass(GObject.GPointer):
+class WindowClass(_gi.Struct):
     """
     :Constructors:
 
@@ -35079,7 +34540,7 @@ class WindowClass(GObject.GPointer):
     @property
     def padding(self) -> list[None]: ...
 
-class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
+class WindowControls(Widget):
     """
     :Constructors:
 
@@ -35097,7 +34558,6 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
       empty -> gboolean: empty
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -35106,6 +34566,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -35243,7 +34704,7 @@ class WindowControls(Widget, Accessible, Buildable, ConstraintTarget):
     def set_side(self, side: PackType) -> None: ...
     def set_use_native_controls(self, setting: bool) -> None: ...
 
-class WindowControlsClass(GObject.GPointer):
+class WindowControlsClass(_gi.Struct):
     """
     :Constructors:
 
@@ -35278,7 +34739,7 @@ class WindowGroup(GObject.Object):
     def new(cls) -> WindowGroup: ...
     def remove_window(self, window: Window) -> None: ...
 
-class WindowGroupClass(GObject.GPointer):
+class WindowGroupClass(_gi.Struct):
     """
     :Constructors:
 
@@ -35289,9 +34750,9 @@ class WindowGroupClass(GObject.GPointer):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class WindowGroupPrivate(GObject.GPointer): ...
+class WindowGroupPrivate(_gi.Struct): ...
 
-class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
+class WindowHandle(Widget):
     """
     :Constructors:
 
@@ -35306,7 +34767,6 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -35315,6 +34775,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -35442,7 +34903,7 @@ class WindowHandle(Widget, Accessible, Buildable, ConstraintTarget):
     def new(cls) -> WindowHandle: ...
     def set_child(self, child: Widget | None = None) -> None: ...
 
-class WindowHandleClass(GObject.GPointer):
+class WindowHandleClass(_gi.Struct):
     """
     :Constructors:
 
@@ -35489,7 +34950,6 @@ class DebugFlags(GObject.GFlags):
     MODULES = 8
     NO_CSS_CACHE = 512
     PRINTING = 64
-    SESSION = 4194304
     SIZE_REQUEST = 256
     SNAPSHOT = 16384
     TEXT = 1
@@ -35590,13 +35050,6 @@ class StyleContextPrintFlags(GObject.GFlags):
     RECURSE = 1
     SHOW_CHANGE = 4
     SHOW_STYLE = 2
-
-class SvgFeatures(GObject.GFlags):
-    ANIMATIONS = 1
-    EXTENSIONS = 8
-    EXTERNAL_RESOURCES = 4
-    SYSTEM_RESOURCES = 2
-    TRADITIONAL_SYMBOLIC = 16
 
 class TextBufferNotifyFlags(GObject.GFlags):
     AFTER_DELETE = 8
@@ -35917,12 +35370,12 @@ class ConstraintStrength(GObject.GEnum):
     WEAK = 1
 
 class ConstraintVflParserError(GObject.GEnum):
-    INVALID_ATTRIBUTE = 1
-    INVALID_METRIC = 3
-    INVALID_PRIORITY = 4
-    INVALID_RELATION = 5
-    INVALID_SYMBOL = 0
-    INVALID_VIEW = 2
+    ATTRIBUTE = 1
+    METRIC = 3
+    PRIORITY = 4
+    RELATION = 5
+    SYMBOL = 0
+    VIEW = 2
     @staticmethod
     def quark() -> int: ...
 
@@ -36285,10 +35738,6 @@ class RecentManagerError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
-class ReducedMotion(GObject.GEnum):
-    NO_PREFERENCE = 0
-    REDUCE = 1
-
 class ResponseType(GObject.GEnum):
     ACCEPT = -3
     APPLY = -10
@@ -36304,10 +35753,6 @@ class ResponseType(GObject.GEnum):
 
 class RevealerTransitionType(GObject.GEnum):
     CROSSFADE = 1
-    FADE_SLIDE_DOWN = 13
-    FADE_SLIDE_LEFT = 11
-    FADE_SLIDE_RIGHT = 10
-    FADE_SLIDE_UP = 12
     NONE = 0
     SLIDE_DOWN = 5
     SLIDE_LEFT = 3
@@ -36445,30 +35890,7 @@ class StringFilterMatchMode(GObject.GEnum):
     PREFIX = 2
     SUBSTRING = 1
 
-class SvgError(GObject.GEnum):
-    FAILED_RENDERING = 6
-    FAILED_UPDATE = 5
-    IGNORED_ELEMENT = 7
-    INVALID_ATTRIBUTE = 2
-    INVALID_ELEMENT = 1
-    INVALID_REFERENCE = 4
-    INVALID_SYNTAX = 0
-    LIMITS_EXCEEDED = 8
-    MISSING_ATTRIBUTE = 3
-    NOT_IMPLEMENTED = 9
-    @staticmethod
-    def get_attribute(error: GLib.Error) -> str | None: ...
-    @staticmethod
-    def get_element(error: GLib.Error) -> str | None: ...
-    @staticmethod
-    def get_end(error: GLib.Error) -> SvgLocation | None: ...
-    @staticmethod
-    def get_start(error: GLib.Error) -> SvgLocation | None: ...
-    @staticmethod
-    def quark() -> int: ...
-
 class SymbolicColor(GObject.GEnum):
-    ACCENT = 4
     ERROR = 1
     FOREGROUND = 0
     SUCCESS = 3

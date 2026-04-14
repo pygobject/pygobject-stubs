@@ -48,7 +48,7 @@ class ArgInfo(BaseInfo):
     def load_type_info(self) -> TypeInfo: ...
     def may_be_null(self) -> bool: ...
 
-class Argument(GObject.GPointer):
+class Argument(_gi.Struct):
     v_boolean = ...  # FIXME: Constant is missing typing annotation
     v_double = ...  # FIXME: Constant is missing typing annotation
     v_float = ...  # FIXME: Constant is missing typing annotation
@@ -71,7 +71,7 @@ class Argument(GObject.GPointer):
     v_ulong = ...  # FIXME: Constant is missing typing annotation
     v_ushort = ...  # FIXME: Constant is missing typing annotation
 
-class AttributeIter(GObject.GPointer):
+class AttributeIter(_gi.Struct):
     """
     :Constructors:
 
@@ -102,9 +102,9 @@ class BaseInfo(_gi.Fundamental):
     def ref(self) -> BaseInfo: ...
     def unref(self) -> None: ...
 
-class BaseInfoClass(GObject.GPointer): ...
+class BaseInfoClass(_gi.Struct): ...
 
-class BaseInfoStack(GObject.GPointer):
+class BaseInfoStack(_gi.Struct):
     """
     :Constructors:
 
@@ -112,7 +112,6 @@ class BaseInfoStack(GObject.GPointer):
 
         BaseInfoStack()
     """
-
     @property
     def parent_instance(self) -> GObject.TypeInstance: ...
     @property
@@ -143,16 +142,11 @@ class CallableInfo(BaseInfo):
     def get_return_type(self) -> TypeInfo: ...
     def get_sync_function(self) -> CallableInfo | None: ...
     def invoke(
-        self,
-        function: None,
-        in_args: Sequence[Argument],
-        out_args: Sequence[Argument],
+        self, function: None, in_args: Sequence[Argument], out_args: Sequence[Argument]
     ) -> tuple[bool, Argument]: ...
     def is_async(self) -> bool: ...
     def is_method(self) -> bool: ...
-    def iterate_return_attributes(
-        self,
-    ) -> tuple[bool, AttributeIter, str, str]: ...
+    def iterate_return_attributes(self) -> tuple[bool, AttributeIter, str, str]: ...
     def load_arg(self, n: int) -> ArgInfo: ...
     def load_return_type(self) -> TypeInfo: ...
     def may_return_null(self) -> bool: ...
@@ -363,7 +357,7 @@ class Repository(GObject.Object):
         flags: RepositoryLoadFlags,
     ) -> Typelib: ...
 
-class RepositoryClass(GObject.GPointer):
+class RepositoryClass(_gi.Struct):
     """
     :Constructors:
 
