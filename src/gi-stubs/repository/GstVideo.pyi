@@ -162,7 +162,7 @@ def buffer_add_video_region_of_interest_meta_id(
     buffer: Gst.Buffer, roi_type: int, x: int, y: int, w: int, h: int
 ) -> VideoRegionOfInterestMeta: ...
 def buffer_add_video_sei_user_data_unregistered_meta(
-    buffer: Gst.Buffer, uuid: int, data: int | None, size: int
+    buffer: Gst.Buffer, uuid: Sequence[int], data: Sequence[int] | None = None
 ) -> VideoSEIUserDataUnregisteredMeta: ...
 def buffer_add_video_time_code_meta(
     buffer: Gst.Buffer, tc: VideoTimeCode
@@ -231,8 +231,8 @@ def navigation_event_parse_command(
 ) -> tuple[bool, NavigationCommand]: ...
 def navigation_event_parse_key_event(event: Gst.Event) -> tuple[bool, str]: ...
 def navigation_event_parse_modifier_state(
-    event: Gst.Event, state: NavigationModifierType
-) -> bool: ...
+    event: Gst.Event,
+) -> tuple[bool, NavigationModifierType]: ...
 def navigation_event_parse_mouse_button_event(
     event: Gst.Event,
 ) -> tuple[bool, int, float, float]: ...
@@ -341,9 +341,7 @@ def video_convert_sample_async(
 ) -> None: ...
 def video_crop_meta_api_get_type() -> type[Any]: ...
 def video_crop_meta_get_info() -> Gst.MetaInfo: ...
-def video_dma_drm_format_from_gst_format(
-    format: VideoFormat, modifier: int | None = None
-) -> int: ...
+def video_dma_drm_format_from_gst_format(format: VideoFormat) -> tuple[int, int]: ...
 def video_dma_drm_format_to_gst_format(fourcc: int, modifier: int) -> VideoFormat: ...
 def video_dma_drm_fourcc_from_format(format: VideoFormat) -> int: ...
 def video_dma_drm_fourcc_from_string(format_str: str) -> tuple[int, int]: ...
@@ -415,6 +413,7 @@ def video_mastering_display_info_from_string(
 ) -> tuple[bool, VideoMasteringDisplayInfo]: ...
 def video_meta_api_get_type() -> type[Any]: ...
 def video_meta_get_info() -> Gst.MetaInfo: ...
+def video_meta_transform_matrix_get_quark() -> int: ...
 def video_meta_transform_scale_get_quark() -> int: ...
 def video_multiview_get_doubled_height_modes() -> Any: ...
 def video_multiview_get_doubled_size_modes() -> Any: ...
@@ -490,7 +489,7 @@ class AncillaryMeta(_gi.Struct):
     DID: int
     SDID_block_number: int
     data_count: int
-    data: int
+    data: list[int]
     checksum: int
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
@@ -635,8 +634,8 @@ class Navigation(GObject.GInterface, Protocol):
     def event_parse_key_event(event: Gst.Event) -> tuple[bool, str]: ...
     @staticmethod
     def event_parse_modifier_state(
-        event: Gst.Event, state: NavigationModifierType
-    ) -> bool: ...
+        event: Gst.Event,
+    ) -> tuple[bool, NavigationModifierType]: ...
     @staticmethod
     def event_parse_mouse_button_event(
         event: Gst.Event,
@@ -887,6 +886,12 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -919,6 +924,9 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
         max_last_buffer_repeat: int
         repeat_after_eos: bool
         zorder: int
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -993,6 +1001,12 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -1024,6 +1038,9 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
         max_last_buffer_repeat: int
         repeat_after_eos: bool
         zorder: int
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -1140,6 +1157,12 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -1172,6 +1195,9 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
         max_last_buffer_repeat: int
         repeat_after_eos: bool
         zorder: int
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -1466,6 +1492,7 @@ class VideoConverter(_gi.Struct):
     def get_in_info(self) -> VideoInfo: ...
     def get_out_info(self) -> VideoInfo: ...
     def set_config(self, config: Gst.Structure) -> bool: ...
+    def transform_metas(self, src: Gst.Buffer, dest: Gst.Buffer) -> bool: ...
 
 class VideoCropMeta(_gi.Struct):
     """
@@ -1731,6 +1758,50 @@ class VideoDirectionInterface(_gi.Struct):
 class VideoDither(_gi.Struct):
     def free(self) -> None: ...
     def line(self, line: None, x: int, y: int, width: int) -> None: ...
+
+class VideoDmabufPool(VideoBufferPool):
+    """
+    :Constructors:
+
+    ::
+
+        VideoDmabufPool(**properties)
+        new() -> Gst.BufferPool or None
+
+    Object GstVideoDmabufPool
+
+    Signals from GstObject:
+      deep-notify (GstObject, GParam)
+
+    Properties from GstObject:
+      name -> gchararray: Name
+        The name of the object
+      parent -> GstObject: Parent
+        The parent of the object
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    class Props(VideoBufferPool.Props):
+        name: str | None
+        parent: Gst.Object | None
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(self, *, name: str | None = ..., parent: Gst.Object = ...) -> None: ...
+    @classmethod
+    def new(cls) -> VideoDmabufPool: ...
+
+class VideoDmabufPoolClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        VideoDmabufPoolClass()
+    """
+    @property
+    def parent_class(self) -> VideoBufferPoolClass: ...
 
 class VideoEncoder(Gst.Element, Gst.Preset):
     """
@@ -2229,6 +2300,7 @@ class VideoMeta(_gi.Struct):
         self, plane: int, info: Gst.MapInfo, flags: Gst.MapFlags
     ) -> tuple[bool, None, int]: ...
     def set_alignment(self, alignment: VideoAlignment) -> bool: ...
+    def set_alignment_full(self, alignment: VideoAlignment) -> bool: ...
     def unmap(self, plane: int, info: Gst.MapInfo) -> bool: ...
 
 class VideoMetaTransform(_gi.Struct):
@@ -2244,6 +2316,34 @@ class VideoMetaTransform(_gi.Struct):
     out_info: VideoInfo
     @staticmethod
     def scale_get_quark() -> int: ...
+
+class VideoMetaTransformMatrix(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        VideoMetaTransformMatrix()
+    """
+
+    in_info: VideoInfo
+    in_rectangle: VideoRectangle
+    out_info: VideoInfo
+    out_rectangle: VideoRectangle
+    matrix: list[float]
+    @staticmethod
+    def get_quark() -> int: ...
+    def init(
+        self,
+        in_info: VideoInfo,
+        in_rectangle: VideoRectangle,
+        out_info: VideoInfo,
+        out_rectangle: VideoRectangle,
+    ) -> None: ...
+    def point(self) -> tuple[bool, int, int]: ...
+    def point_clipped(self) -> tuple[bool, int, int]: ...
+    def rectangle(self) -> tuple[bool, VideoRectangle]: ...
+    def rectangle_clipped(self) -> tuple[bool, VideoRectangle]: ...
 
 class VideoMultiviewFlagsSet(Gst.FlagSet): ...
 
@@ -2488,7 +2588,7 @@ class VideoSEIUserDataUnregisteredMeta(_gi.Struct):
 
 class VideoScaler(_gi.Struct):
     def free(self) -> None: ...
-    def get_coeff(self, out_offset: int) -> tuple[float, int, int]: ...
+    def get_coeff(self, out_offset: int) -> tuple[list[float], int]: ...
     def get_max_taps(self) -> int: ...
     def horizontal(
         self, format: VideoFormat, src: None, dest: None, dest_offset: int, width: int
@@ -2812,7 +2912,7 @@ class VideoVBIEncoder(GObject.GBoxed):
     def free(self) -> None: ...
     @classmethod
     def new(cls, format: VideoFormat, pixel_width: int) -> VideoVBIEncoder | None: ...
-    def write_line(self, data: int) -> None: ...
+    def write_line(self, data: Sequence[int]) -> None: ...
 
 class VideoVBIParser(GObject.GBoxed):
     """
@@ -3168,6 +3268,7 @@ class VideoFormat(GObject.GEnum):
     AYUV64 = 40
     BGR = 16
     BGR10A2_LE = 85
+    BGR10X2_LE = 140
     BGR15 = 32
     BGR16 = 30
     BGRA = 12
@@ -3219,6 +3320,7 @@ class VideoFormat(GObject.GEnum):
     NV12_8L128 = 111
     NV16 = 51
     NV16_10LE32 = 80
+    NV16_10LE40 = 139
     NV21 = 24
     NV24 = 52
     NV61 = 60
@@ -3232,6 +3334,7 @@ class VideoFormat(GObject.GEnum):
     RBGA = 133
     RGB = 15
     RGB10A2_LE = 86
+    RGB10X2_LE = 141
     RGB15 = 31
     RGB16 = 29
     RGB8P = 35

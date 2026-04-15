@@ -185,7 +185,15 @@ class Aggregator(Gst.Element):
         parent: Gst.Object = ...,
     ) -> None: ...
     def do_aggregate(self, timeout: bool) -> Gst.FlowReturn: ...
-    def do_clip(self, aggregator_pad: AggregatorPad, buf: Gst.Buffer) -> Gst.Buffer: ...
+    def do_clip(
+        self, aggregator_pad: AggregatorPad, buf: Gst.Buffer
+    ) -> Gst.Buffer | None: ...
+    def do_create_new_pad(
+        self,
+        templ: Gst.PadTemplate,
+        req_name: str | None = None,
+        caps: Gst.Caps | None = None,
+    ) -> AggregatorPad: ...
     def do_decide_allocation(self, query: Gst.Query) -> bool: ...
     def do_finish_buffer(self, buffer: Gst.Buffer) -> Gst.FlowReturn: ...
     def do_finish_buffer_list(self, bufferlist: Gst.BufferList) -> Gst.FlowReturn: ...
@@ -251,7 +259,9 @@ class AggregatorClass(_gi.Struct):
     @property
     def flush(self) -> Callable[[Aggregator], Gst.FlowReturn]: ...
     @property
-    def clip(self) -> Callable[[Aggregator, AggregatorPad, Gst.Buffer], Gst.Buffer]: ...
+    def clip(
+        self,
+    ) -> Callable[[Aggregator, AggregatorPad, Gst.Buffer], Gst.Buffer | None]: ...
     @property
     def finish_buffer(self) -> Callable[[Aggregator, Gst.Buffer], Gst.FlowReturn]: ...
     @property
@@ -273,7 +283,11 @@ class AggregatorClass(_gi.Struct):
     @property
     def get_next_time(self) -> Callable[[Aggregator], int]: ...
     @property
-    def create_new_pad(self) -> None: ...
+    def create_new_pad(
+        self,
+    ) -> Callable[
+        [Aggregator, Gst.PadTemplate, str | None, Gst.Caps | None], AggregatorPad
+    ]: ...
     @property
     def update_src_caps(
         self,
@@ -323,6 +337,12 @@ class AggregatorPad(Gst.Pad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -351,6 +371,9 @@ class AggregatorPad(Gst.Pad):
       notify (GParam)
     """
     class Props(Gst.Pad.Props):
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -419,6 +442,8 @@ class BaseParse(Gst.Element):
     Properties from GstBaseParse:
       disable-passthrough -> gboolean: Disable passthrough
         Force processing (disables passthrough)
+      disable-clip -> gboolean: Disable Clip
+        Disable buffer dropping that are out of segment
 
     Signals from GstElement:
       pad-added (GstPad)
@@ -438,6 +463,7 @@ class BaseParse(Gst.Element):
       notify (GParam)
     """
     class Props(Gst.Element.Props):
+        disable_clip: bool
         disable_passthrough: bool
         name: str | None
         parent: Gst.Object | None
@@ -459,6 +485,7 @@ class BaseParse(Gst.Element):
     def __init__(
         self,
         *,
+        disable_clip: bool = ...,
         disable_passthrough: bool = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
@@ -1363,7 +1390,7 @@ class ByteWriter(_gi.Struct):
     def fill(self, value: int, size: int) -> bool: ...
     def free(self) -> None: ...
     def free_and_get_buffer(self) -> Gst.Buffer: ...
-    def free_and_get_data(self) -> int: ...
+    def free_and_get_data(self) -> bytes: ...
     def get_remaining(self) -> int: ...
     def init(self) -> None: ...
     def init_with_data(self, data: Sequence[int], initialized: bool) -> None: ...
@@ -1711,5 +1738,6 @@ class CollectPadsStateFlags(IntFlag):
 
 class AggregatorStartTimeSelection(GObject.GEnum):
     FIRST = 1
+    NOW = 3
     SET = 2
     ZERO = 0

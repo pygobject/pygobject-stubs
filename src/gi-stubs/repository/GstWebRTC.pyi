@@ -223,6 +223,7 @@ class WebRTCICE(Gst.Object):
     ) -> None: ...
     def add_stream(self, session_id: int) -> WebRTCICEStream | None: ...
     def add_turn_server(self, uri: str) -> bool: ...
+    def close(self, promise: Gst.Promise | None = None) -> None: ...
     def do_add_candidate(
         self,
         stream: WebRTCICEStream,
@@ -231,6 +232,7 @@ class WebRTCICE(Gst.Object):
     ) -> None: ...
     def do_add_stream(self, session_id: int) -> WebRTCICEStream | None: ...
     def do_add_turn_server(self, uri: str) -> bool: ...
+    def do_close(self, promise: Gst.Promise | None = None) -> None: ...
     def do_find_transport(
         self, stream: WebRTCICEStream, component: WebRTCICEComponent
     ) -> WebRTCICETransport | None: ...
@@ -295,6 +297,37 @@ class WebRTCICE(Gst.Object):
     def set_stun_server(self, uri: str | None = None) -> None: ...
     def set_tos(self, stream: WebRTCICEStream, tos: int) -> None: ...
     def set_turn_server(self, uri: str | None = None) -> None: ...
+
+class WebRTCICECandidate(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        WebRTCICECandidate()
+    """
+
+    candidate: str
+    component: int
+    sdp_mid: str
+    sdp_mline_index: int
+    stats: WebRTCICECandidateStats
+    def copy(self) -> WebRTCICECandidate: ...
+    def free(self) -> None: ...
+
+class WebRTCICECandidatePair(GObject.GBoxed):
+    """
+    :Constructors:
+
+    ::
+
+        WebRTCICECandidatePair()
+    """
+
+    local: WebRTCICECandidate
+    remote: WebRTCICECandidate
+    def copy(self) -> WebRTCICECandidatePair: ...
+    def free(self) -> None: ...
 
 class WebRTCICECandidateStats(GObject.GBoxed):
     """
@@ -387,6 +420,8 @@ class WebRTCICEClass(_gi.Struct):
         [WebRTCICE, WebRTCICEStream],
         tuple[bool, WebRTCICECandidateStats, WebRTCICECandidateStats],
     ]: ...
+    @property
+    def close(self) -> Callable[[WebRTCICE, Gst.Promise | None], None]: ...
 
 class WebRTCICEStream(Gst.Object):
     """
@@ -520,7 +555,9 @@ class WebRTCICETransport(Gst.Object):
     ) -> None: ...
     def connection_state_change(self, new_state: WebRTCICEConnectionState) -> None: ...
     def do_gather_candidates(self) -> bool: ...
+    def do_get_selected_candidate_pair(self) -> WebRTCICECandidatePair | None: ...
     def gathering_state_change(self, new_state: WebRTCICEGatheringState) -> None: ...
+    def get_selected_candidate_pair(self) -> WebRTCICECandidatePair | None: ...
     def new_candidate(
         self, stream_id: int, component: WebRTCICEComponent, attr: str
     ) -> None: ...
@@ -538,6 +575,10 @@ class WebRTCICETransportClass(_gi.Struct):
     def parent_class(self) -> Gst.ObjectClass: ...
     @property
     def gather_candidates(self) -> Callable[[WebRTCICETransport], bool]: ...
+    @property
+    def get_selected_candidate_pair(
+        self,
+    ) -> Callable[[WebRTCICETransport], WebRTCICECandidatePair | None]: ...
 
 class WebRTCRTPReceiver(Gst.Object):
     """
@@ -762,6 +803,11 @@ class WebRTCBundlePolicy(GObject.GEnum):
     MAX_COMPAT = 2
     NONE = 0
 
+class WebRTCDTLSRole(GObject.GEnum):
+    CLIENT = 0
+    SERVER = 1
+    UNKNOWN = 2
+
 class WebRTCDTLSSetup(GObject.GEnum):
     ACTIVE = 2
     ACTPASS = 1
@@ -800,6 +846,16 @@ class WebRTCFECType(GObject.GEnum):
     NONE = 0
     ULP_RED = 1
 
+class WebRTCICECandidateProtocolType(GObject.GEnum):
+    TCP = 0
+    UDP = 1
+
+class WebRTCICECandidateType(GObject.GEnum):
+    HOST = 0
+    PEER_REFLEXIVE = 2
+    RELAYED = 3
+    SERVER_REFLEXIVE = 1
+
 class WebRTCICEComponent(GObject.GEnum):
     RTCP = 1
     RTP = 0
@@ -821,6 +877,12 @@ class WebRTCICEGatheringState(GObject.GEnum):
 class WebRTCICERole(GObject.GEnum):
     CONTROLLED = 0
     CONTROLLING = 1
+
+class WebRTCICETcpCandidateType(GObject.GEnum):
+    ACTIVE = 0
+    NONE = 3
+    PASSIVE = 1
+    SO = 2
 
 class WebRTCICETransportPolicy(GObject.GEnum):
     ALL = 0

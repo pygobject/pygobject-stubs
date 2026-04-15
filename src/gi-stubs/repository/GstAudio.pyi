@@ -153,39 +153,32 @@ def audio_resampler_options_set_quality(
 def buffer_add_audio_clipping_meta(
     buffer: Gst.Buffer, format: Gst.Format, start: int, end: int
 ) -> AudioClippingMeta: ...
-def buffer_add_audio_downmix_meta(
-    buffer: Gst.Buffer,
-    from_position: Sequence[AudioChannelPosition],
-    to_position: Sequence[AudioChannelPosition],
-    matrix: float,
-) -> AudioDownmixMeta: ...
 def buffer_add_audio_level_meta(
     buffer: Gst.Buffer, level: int, voice_activity: bool
 ) -> AudioLevelMeta | None: ...
 def buffer_add_audio_meta(
-    buffer: Gst.Buffer, info: AudioInfo, samples: int, offsets: int | None = None
+    buffer: Gst.Buffer,
+    info: AudioInfo,
+    samples: int,
+    offsets: Sequence[int] | None = None,
 ) -> AudioMeta: ...
 def buffer_add_dsd_plane_offset_meta(
-    buffer: Gst.Buffer,
-    num_channels: int,
-    num_bytes_per_channel: int,
-    offsets: int | None = None,
+    buffer: Gst.Buffer, num_bytes_per_channel: int, offsets: Sequence[int] | None = None
 ) -> DsdPlaneOffsetMeta: ...
 def buffer_get_audio_downmix_meta_for_channels(
     buffer: Gst.Buffer, to_position: Sequence[AudioChannelPosition]
 ) -> AudioDownmixMeta: ...
 def buffer_get_audio_level_meta(buffer: Gst.Buffer) -> AudioLevelMeta | None: ...
 def dsd_convert(
-    input_data: int,
-    output_data: int,
+    input_data: Sequence[int],
+    output_data: Sequence[int],
     input_format: DsdFormat,
     output_format: DsdFormat,
     input_layout: AudioLayout,
     output_layout: AudioLayout,
-    input_plane_offsets: int,
-    output_plane_offsets: int,
+    input_plane_offsets: Sequence[int] | None,
+    output_plane_offsets: Sequence[int] | None,
     num_dsd_bytes: int,
-    num_channels: int,
     reverse_byte_bits: bool,
 ) -> None: ...
 def dsd_format_from_string(str: str) -> DsdFormat: ...
@@ -351,6 +344,12 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -381,6 +380,9 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     class Props(AudioAggregatorPad.Props):
         converter_config: Gst.Structure
         qos_messages: bool
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -441,6 +443,12 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
     Properties from GstAggregatorPad:
       emit-signals -> gboolean: Emit signals
         Send signals to signal data consumption
+      current-level-time -> guint64: Current Level Time
+        The amount of currently queued time
+      current-level-buffers -> guint64: Current Level Buffers
+        The number of currently queued buffers
+      current-level-bytes -> guint64: Current Level Bytes
+        The number of currently queued bytes
 
     Signals from GstPad:
       linked (GstPad)
@@ -470,6 +478,9 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
     """
     class Props(GstBase.AggregatorPad.Props):
         qos_messages: bool
+        current_level_buffers: int
+        current_level_bytes: int
+        current_level_time: int
         emit_signals: bool
         caps: Gst.Caps
         direction: Gst.PadDirection
@@ -985,7 +996,6 @@ class AudioCdSrcTrack(_gi.Struct):
 class AudioChannelMixer(_gi.Struct):
     def free(self) -> None: ...
     def is_passthrough(self) -> bool: ...
-    def samples(self, in_: None, out: None, samples: int) -> None: ...
 
 class AudioClippingMeta(_gi.Struct):
     """
@@ -1127,14 +1137,6 @@ class AudioConverter(GObject.GBoxed):
         config: Gst.Structure | None = None,
     ) -> AudioConverter | None: ...
     def reset(self) -> None: ...
-    def samples(
-        self,
-        flags: AudioConverterFlags,
-        in_: None,
-        in_frames: int,
-        out: None,
-        out_frames: int,
-    ) -> bool: ...
     def supports_inplace(self) -> bool: ...
     def update_config(
         self, in_rate: int, out_rate: int, config: Gst.Structure | None = None
@@ -1329,11 +1331,11 @@ class AudioDownmixMeta(_gi.Struct):
     """
 
     meta: Gst.Meta
-    from_position: AudioChannelPosition
-    to_position: AudioChannelPosition
+    from_position: list[AudioChannelPosition]
+    to_position: list[AudioChannelPosition]
     from_channels: int
     to_channels: int
-    matrix: float
+    matrix: list[float]
     @staticmethod
     def get_info() -> Gst.MetaInfo: ...
 
@@ -1669,7 +1671,7 @@ class AudioMeta(_gi.Struct):
     meta: Gst.Meta
     info: AudioInfo
     samples: int
-    offsets: int
+    offsets: list[int]
     @property
     def priv_offsets_arr(self) -> list[int]: ...
     @staticmethod
@@ -1678,7 +1680,6 @@ class AudioMeta(_gi.Struct):
 class AudioQuantize(_gi.Struct):
     def free(self) -> None: ...
     def reset(self) -> None: ...
-    def samples(self, in_: None, out: None, samples: int) -> None: ...
 
 class AudioResampler(_gi.Struct):
     def free(self) -> None: ...
@@ -2437,6 +2438,9 @@ class AudioFormat(GObject.GEnum):
     S20 = 20
     S20BE = 21
     S20LE = 20
+    S20_32 = 32
+    S20_32BE = 33
+    S20_32LE = 32
     S24 = 16
     S24BE = 17
     S24LE = 16
@@ -2456,6 +2460,9 @@ class AudioFormat(GObject.GEnum):
     U20 = 22
     U20BE = 23
     U20LE = 22
+    U20_32 = 34
+    U20_32BE = 35
+    U20_32LE = 34
     U24 = 18
     U24BE = 19
     U24LE = 18
