@@ -1968,7 +1968,8 @@ class IOChannel(GObject.GBoxed):
     def reserved1(self) -> None: ...
     @property
     def reserved2(self) -> None: ...
-    def __iter__(self): ...  # FIXME: Override is missing typing annotation
+    # override
+    def __iter__(self) -> Self: ...
     @staticmethod
     def __new__(
         cls: type[Self],
@@ -1977,6 +1978,7 @@ class IOChannel(GObject.GBoxed):
         mode: str | None = None,
         hwnd: int | None = None,
     ) -> Self: ...
+    def __next__(self) -> str: ...
     def add_watch(
         self,
         condition: IOCondition,

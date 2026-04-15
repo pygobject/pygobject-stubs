@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -708,12 +709,18 @@ class FontFamily(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        is_monospace: bool
-        is_variable: bool
-        item_type: type[Any]
-        n_items: int
-        name: str
+        @property
+        def is_monospace(self) -> bool: ...
+        @property
+        def is_variable(self) -> bool: ...
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
+        @property
+        def name(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -773,9 +780,12 @@ class FontMap(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
-        n_items: int
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...

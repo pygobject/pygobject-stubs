@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -795,15 +796,10 @@ class VideoAggregator(GstBase.Aggregator):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.Aggregator.Props):
-        force_live: bool
-        emit_signals: bool
-        latency: int
-        min_upstream_latency: int
-        start_time: int
-        start_time_selection: GstBase.AggregatorStartTimeSelection
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def force_live(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -919,21 +915,9 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(VideoAggregatorPad.Props):
         converter_config: Gst.Structure
-        max_last_buffer_repeat: int
-        repeat_after_eos: bool
-        zorder: int
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1034,20 +1018,11 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.AggregatorPad.Props):
         max_last_buffer_repeat: int
         repeat_after_eos: bool
         zorder: int
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1190,24 +1165,6 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(VideoAggregatorConvertPad.Props):
-        converter_config: Gst.Structure
-        max_last_buffer_repeat: int
-        repeat_after_eos: bool
-        zorder: int
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> VideoAggregatorConvertPad: ...
     def __init__(
@@ -1308,12 +1265,6 @@ class VideoBufferPool(Gst.BufferPool):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gst.BufferPool.Props):
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def bufferpool(self) -> Gst.BufferPool: ...
     @property
@@ -1552,6 +1503,7 @@ class VideoDecoder(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         automatic_request_sync_point_flags: VideoDecoderRequestSyncPointFlags
         automatic_request_sync_points: bool
@@ -1559,8 +1511,6 @@ class VideoDecoder(Gst.Element):
         max_errors: int
         min_force_key_unit_interval: int
         qos: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1742,7 +1692,11 @@ class VideoDecoderClass(_gi.Struct):
     def padding(self) -> list[None]: ...
 
 class VideoDecoderPrivate(_gi.Struct): ...
-class VideoDirection(GObject.GInterface, Protocol): ...
+
+class VideoDirection(GObject.GInterface, Protocol):
+    """
+    Interface GstVideoDirection
+    """
 
 class VideoDirectionInterface(_gi.Struct):
     """
@@ -1782,12 +1736,6 @@ class VideoDmabufPool(VideoBufferPool):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(VideoBufferPool.Props):
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Gst.Object = ...) -> None: ...
     @classmethod
     def new(cls) -> VideoDmabufPool: ...
@@ -1836,11 +1784,10 @@ class VideoEncoder(Gst.Element, Gst.Preset):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         min_force_key_unit_interval: int
         qos: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -2004,13 +1951,6 @@ class VideoFilter(GstBase.BaseTransform):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GstBase.BaseTransform.Props):
-        qos: bool
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def element(self) -> GstBase.BaseTransform: ...
     @property
@@ -2345,7 +2285,14 @@ class VideoMetaTransformMatrix(_gi.Struct):
     def rectangle(self) -> tuple[bool, VideoRectangle]: ...
     def rectangle_clipped(self) -> tuple[bool, VideoRectangle]: ...
 
-class VideoMultiviewFlagsSet(Gst.FlagSet): ...
+class VideoMultiviewFlagsSet(Gst.FlagSet):
+    """
+    :Constructors:
+
+    ::
+
+        VideoMultiviewFlagsSet(**properties)
+    """
 
 class VideoOrientation(GObject.GInterface, Protocol):
     """
@@ -2661,22 +2608,9 @@ class VideoSink(GstBase.BaseSink):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.BaseSink.Props):
         show_preroll_frame: bool
-        blocksize: int
-        enable_last_sample: bool
-        last_sample: Gst.Sample | None
-        max_bitrate: int
-        max_lateness: int
-        processing_deadline: int
-        qos: bool
-        render_delay: int
-        stats: Gst.Structure
-        sync: bool
-        throttle_time: int
-        ts_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...

@@ -1,4 +1,5 @@
 from typing import Any
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -95,12 +96,6 @@ class BroadwayRenderer(Renderer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Renderer.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> BroadwayRenderer: ...
 
@@ -138,12 +133,6 @@ class CairoRenderer(Renderer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Renderer.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> CairoRenderer: ...
 
@@ -361,12 +350,6 @@ class GLRenderer(Renderer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Renderer.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> GLRenderer: ...
 
@@ -391,9 +374,12 @@ class GLShader(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        resource: str | None
-        source: GLib.Bytes
+        @property
+        def resource(self) -> str | None: ...
+        @property
+        def source(self) -> GLib.Bytes: ...
 
     @property
     def props(self) -> Props: ...
@@ -542,12 +528,6 @@ class NglRenderer(Renderer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Renderer.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> NglRenderer: ...
 
@@ -807,9 +787,12 @@ class Renderer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
+        @property
+        def realized(self) -> bool: ...
+        @property
+        def surface(self) -> _Gdk4.Surface | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -1172,12 +1155,6 @@ class VulkanRenderer(Renderer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Renderer.Props):
-        realized: bool
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> VulkanRenderer: ...
 

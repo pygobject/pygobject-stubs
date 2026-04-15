@@ -2,6 +2,7 @@ from typing import Any
 from typing import Final
 from typing import overload
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -11,6 +12,7 @@ from collections.abc import Sequence
 
 import cairo
 from gi import _gi
+from gi import _gtktemplate
 from gi.repository import _Gdk3
 from gi.repository import Atk
 from gi.repository import GdkPixbuf
@@ -1252,98 +1254,23 @@ class AboutDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         artists: list[str]
         authors: list[str]
-        comments: str
-        copyright: str
+        comments: str | None
+        copyright: str | None
         documenters: list[str]
-        license: str
+        license: str | None
         license_type: License
-        logo: GdkPixbuf.Pixbuf
-        logo_icon_name: str
+        logo: GdkPixbuf.Pixbuf | None
+        logo_icon_name: str | None
         program_name: str
-        translator_credits: str
-        version: str
-        website: str
+        translator_credits: str | None
+        version: str | None
+        website: str | None
         website_label: str
         wrap_license: bool
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -1513,9 +1440,12 @@ class AccelGroup(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        is_locked: bool
-        modifier_mask: _Gdk3.ModifierType
+        @property
+        def is_locked(self) -> bool: ...
+        @property
+        def modifier_mask(self) -> _Gdk3.ModifierType: ...
 
     @property
     def props(self) -> Props: ...
@@ -1838,72 +1768,10 @@ class AccelLabel(Label):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Label.Props):
         accel_closure: Callable[..., Any] | None
         accel_widget: Widget | None
-        angle: float
-        attributes: Pango.AttrList | None
-        cursor_position: int
-        ellipsize: Pango.EllipsizeMode
-        justify: Justification
-        label: str
-        lines: int
-        max_width_chars: int
-        mnemonic_keyval: int
-        mnemonic_widget: Widget | None
-        selectable: bool
-        selection_bound: int
-        single_line_mode: bool
-        track_visited_links: bool
-        use_markup: bool
-        use_underline: bool
-        width_chars: int
-        wrap: bool
-        wrap_mode: Pango.WrapMode
-        xalign: float
-        yalign: float
-        xpad: int
-        ypad: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        pattern: str
 
     @property
     def props(self) -> Props: ...
@@ -2134,25 +2002,9 @@ class Accessible(Atk.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Atk.Object.Props):
         widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
 
     @property
     def props(self) -> Props: ...
@@ -2256,6 +2108,7 @@ class Action(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         action_group: ActionGroup
         always_show_image: bool
@@ -2264,7 +2117,8 @@ class Action(GObject.Object, Buildable):
         icon_name: str
         is_important: bool
         label: str
-        name: str
+        @property
+        def name(self) -> str: ...
         sensitive: bool
         short_label: str
         stock_id: str
@@ -2535,52 +2389,6 @@ class ActionBar(Bin):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Bin.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def bin(self) -> Bin: ...
     def __init__(
@@ -2719,9 +2527,11 @@ class ActionGroup(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        accel_group: AccelGroup
-        name: str
+        accel_group: AccelGroup | None
+        @property
+        def name(self) -> str: ...
         sensitive: bool
         visible: bool
 
@@ -2957,6 +2767,7 @@ class Adjustment(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         lower: float
         page_increment: float
@@ -3233,6 +3044,7 @@ class Alignment(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         bottom_padding: int
         left_padding: int
@@ -3242,48 +3054,6 @@ class Alignment(Bin):
         xscale: float
         yalign: float
         yscale: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -3621,70 +3391,14 @@ class AppChooserButton(ComboBox, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ComboBox.Props):
         heading: str | None
         show_default_item: bool
         show_dialog_item: bool
-        active: int
-        active_id: str | None
-        add_tearoffs: bool
-        button_sensitivity: SensitivityType
-        cell_area: CellArea
-        column_span_column: int
-        entry_text_column: int
-        has_entry: bool
-        has_frame: bool
-        id_column: int
-        model: TreeModel
-        popup_fixed_width: bool
-        popup_shown: bool
-        row_span_column: int
-        tearoff_title: str
-        wrap_width: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        content_type: str
+        @property
+        def content_type(self) -> str: ...
         editing_canceled: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -3698,6 +3412,8 @@ class AppChooserButton(ComboBox, AppChooser):
         heading: str = ...,
         show_default_item: bool = ...,
         show_dialog_item: bool = ...,
+        content_type: str = ...,
+        editing_canceled: bool = ...,
         active: int = ...,
         active_id: str | None = ...,
         add_tearoffs: bool = ...,
@@ -3752,8 +3468,6 @@ class AppChooserButton(ComboBox, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        content_type: str = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def append_custom_item(self, name: str, label: str, icon: Gio.Icon) -> None: ...
     def append_separator(self) -> None: ...
@@ -4054,86 +3768,13 @@ class AppChooserDialog(Dialog, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        gfile: Gio.File
+        @property
+        def gfile(self) -> Gio.File: ...
         heading: str | None
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        content_type: str
-        startup_id: str
-        child: Widget
+        @property
+        def content_type(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -4146,6 +3787,7 @@ class AppChooserDialog(Dialog, AppChooser):
         *,
         gfile: Gio.File = ...,
         heading: str = ...,
+        content_type: str = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -4215,7 +3857,6 @@ class AppChooserDialog(Dialog, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        content_type: str = ...,
     ) -> None: ...
     def get_heading(self) -> str | None: ...
     def get_widget(self) -> Widget: ...
@@ -4450,6 +4091,7 @@ class AppChooserWidget(Box, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         default_text: str
         show_all: bool
@@ -4457,53 +4099,9 @@ class AppChooserWidget(Box, AppChooser):
         show_fallback: bool
         show_other: bool
         show_recommended: bool
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        content_type: str
+        @property
+        def content_type(self) -> str: ...
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -4520,6 +4118,8 @@ class AppChooserWidget(Box, AppChooser):
         show_fallback: bool = ...,
         show_other: bool = ...,
         show_recommended: bool = ...,
+        content_type: str = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -4562,8 +4162,6 @@ class AppChooserWidget(Box, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        content_type: str = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_application_activated(self, app_info: Gio.AppInfo) -> None: ...
     def do_application_selected(self, app_info: Gio.AppInfo) -> None: ...
@@ -4673,21 +4271,15 @@ class Application(Gio.Application):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.Application.Props):
-        active_window: Window | None
+        @property
+        def active_window(self) -> Window | None: ...
         app_menu: Gio.MenuModel | None
-        menubar: Gio.MenuModel
+        menubar: Gio.MenuModel | None
         register_session: bool
-        screensaver_active: bool
-        application_id: str | None
-        flags: Gio.ApplicationFlags
-        inactivity_timeout: int
-        is_busy: bool
-        is_registered: bool
-        is_remote: bool
-        resource_base_path: str | None
-        version: str | None
-        action_group: Gio.ActionGroup | None
+        @property
+        def screensaver_active(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -5029,83 +4621,9 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         show_menubar: bool
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -5390,52 +4908,10 @@ class Arrow(Misc):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Misc.Props):
         arrow_type: ArrowType
         shadow_type: ShadowType
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -5563,28 +5039,6 @@ class ArrowAccessible(WidgetAccessible, Atk.Image):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -5836,58 +5290,12 @@ class AspectFrame(Frame):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Frame.Props):
         obey_child: bool
         ratio: float
         xalign: float
         yalign: float
-        label: str | None
-        label_widget: Widget | None
-        label_xalign: float
-        label_yalign: float
-        shadow_type: ShadowType
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -6238,83 +5646,10 @@ class Assistant(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
+        @property
+        def use_header_bar(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -6634,52 +5969,6 @@ class Bin(Container):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Container.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def container(self) -> Container: ...
     @property
@@ -6909,29 +6198,6 @@ class BooleanCellAccessible(RendererCellAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RendererCellAccessible.Props):
-        renderer: CellRenderer
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RendererCellAccessible: ...
     @property
@@ -7178,53 +6444,12 @@ class Box(Container, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -7238,6 +6463,7 @@ class Box(Container, Orientable):
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
+        orientation: Orientation = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -7277,7 +6503,6 @@ class Box(Container, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_center_widget(self) -> Widget | None: ...
@@ -7415,8 +6640,9 @@ class Builder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        translation_domain: str
+        translation_domain: str | None
 
     @property
     def props(self) -> Props: ...
@@ -7698,6 +6924,7 @@ class Button(Bin, Actionable, Activatable, Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         always_show_image: bool
         image: Widget | None
@@ -7708,52 +6935,10 @@ class Button(Bin, Actionable, Activatable, Container):
         use_underline: bool
         xalign: float
         yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -7773,6 +6958,10 @@ class Button(Bin, Actionable, Activatable, Container):
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -7812,10 +7001,6 @@ class Button(Bin, Actionable, Activatable, Container):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def clicked(self) -> None: ...
     def do_activate(self) -> None: ...
@@ -7935,28 +7120,6 @@ class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Image):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -8185,54 +7348,10 @@ class ButtonBox(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         layout_style: ButtonBoxStyle
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -8244,6 +7363,7 @@ class ButtonBox(Box):
         self,
         *,
         layout_style: ButtonBoxStyle = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -8286,7 +7406,6 @@ class ButtonBox(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_child_non_homogeneous(self, child: Widget) -> bool: ...
     def get_child_secondary(self, child: Widget) -> bool: ...
@@ -8533,6 +7652,7 @@ class Calendar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         day: int
         detail_height_rows: int
@@ -8544,45 +7664,6 @@ class Calendar(Widget):
         show_heading: bool
         show_week_numbers: bool
         year: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -8758,28 +7839,6 @@ class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Accessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Accessible: ...
     @property
@@ -8923,9 +7982,12 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
-        edit_widget: CellEditable
-        edited_cell: CellRenderer
+        @property
+        def edit_widget(self) -> CellEditable: ...
+        @property
+        def edited_cell(self) -> CellRenderer: ...
         focus_cell: CellRenderer
 
     @property
@@ -9175,11 +8237,9 @@ class CellAreaBox(CellArea, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellArea.Props):
         spacing: int
-        edit_widget: CellEditable
-        edited_cell: CellRenderer
-        focus_cell: CellRenderer
         orientation: Orientation
 
     @property
@@ -9192,8 +8252,8 @@ class CellAreaBox(CellArea, Orientable):
         self,
         *,
         spacing: int = ...,
-        focus_cell: CellRenderer = ...,
         orientation: Orientation = ...,
+        focus_cell: CellRenderer = ...,
     ) -> None: ...
     def get_spacing(self) -> int: ...
     @classmethod
@@ -9345,12 +8405,18 @@ class CellAreaContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        area: CellArea
-        minimum_height: int
-        minimum_width: int
-        natural_height: int
-        natural_width: int
+        @property
+        def area(self) -> CellArea: ...
+        @property
+        def minimum_height(self) -> int: ...
+        @property
+        def minimum_width(self) -> int: ...
+        @property
+        def natural_height(self) -> int: ...
+        @property
+        def natural_width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -9534,11 +8600,14 @@ class CellRenderer(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
+        cell_background: str
         cell_background_gdk: _Gdk3.Color
         cell_background_rgba: _Gdk3.RGBA
         cell_background_set: bool
-        editing: bool
+        @property
+        def editing(self) -> bool: ...
         height: int
         is_expanded: bool
         is_expander: bool
@@ -9550,7 +8619,6 @@ class CellRenderer(GObject.InitiallyUnowned):
         xpad: int
         yalign: float
         ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -9846,75 +8914,12 @@ class CellRendererAccel(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         accel_key: int
         accel_mode: CellRendererAccelMode
         accel_mods: _Gdk3.ModifierType
         keycode: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_gdk: _Gdk3.Color
-        foreground_rgba: _Gdk3.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -10281,74 +9286,11 @@ class CellRendererCombo(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         has_entry: bool
         model: TreeModel
         text_column: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_gdk: _Gdk3.Color
-        foreground_rgba: _Gdk3.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -10516,6 +9458,7 @@ class CellRendererPixbuf(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         follow_state: bool
         gicon: Gio.Icon
@@ -10527,22 +9470,6 @@ class CellRendererPixbuf(CellRenderer):
         stock_id: str
         stock_size: int
         surface: cairo.Surface
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -10662,6 +9589,7 @@ class CellRendererProgress(CellRenderer, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         inverted: bool
         pulse: int
@@ -10669,23 +9597,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float
         text_yalign: float
         value: int
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
         orientation: Orientation
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -10702,6 +9614,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float = ...,
         text_yalign: float = ...,
         value: int = ...,
+        orientation: Orientation = ...,
         cell_background: str = ...,
         cell_background_gdk: _Gdk3.Color = ...,
         cell_background_rgba: _Gdk3.RGBA = ...,
@@ -10717,7 +9630,6 @@ class CellRendererProgress(CellRenderer, Orientable):
         xpad: int = ...,
         yalign: float = ...,
         ypad: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> CellRendererProgress: ...
@@ -10896,74 +9808,11 @@ class CellRendererSpin(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         adjustment: Adjustment
         climb_rate: float
         digits: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_gdk: _Gdk3.Color
-        foreground_rgba: _Gdk3.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -11117,26 +9966,11 @@ class CellRendererSpinner(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         active: bool
         pulse: int
         size: IconSize
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -11335,10 +10169,12 @@ class CellRendererText(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
+        background: str
         background_gdk: _Gdk3.Color
         background_rgba: _Gdk3.RGBA
         background_set: bool
@@ -11350,11 +10186,13 @@ class CellRendererText(CellRenderer):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
+        foreground: str
         foreground_gdk: _Gdk3.Color
         foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
         language: str
         language_set: bool
+        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -11381,25 +10219,6 @@ class CellRendererText(CellRenderer):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -11561,28 +10380,13 @@ class CellRendererToggle(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         activatable: bool
         active: bool
         inconsistent: bool
         indicator_size: int
         radio: bool
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -11828,56 +10632,20 @@ class CellView(Widget, CellLayout, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
+        background: str
         background_gdk: _Gdk3.Color
         background_rgba: _Gdk3.RGBA
         background_set: bool
-        cell_area: CellArea
-        cell_area_context: CellAreaContext
+        @property
+        def cell_area(self) -> CellArea: ...
+        @property
+        def cell_area_context(self) -> CellAreaContext: ...
         draw_sensitive: bool
         fit_model: bool
         model: TreeModel | None
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        background: str
 
     @property
     def props(self) -> Props: ...
@@ -11897,6 +10665,7 @@ class CellView(Widget, CellLayout, Orientable):
         draw_sensitive: bool = ...,
         fit_model: bool = ...,
         model: TreeModel | None = ...,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -11933,7 +10702,6 @@ class CellView(Widget, CellLayout, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_displayed_row(self) -> TreePath | None: ...
     def get_draw_sensitive(self) -> bool: ...
@@ -12190,65 +10958,12 @@ class CheckButton(ToggleButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToggleButton.Props):
-        active: bool
-        draw_indicator: bool
-        inconsistent: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -12257,6 +10972,10 @@ class CheckButton(ToggleButton):
     def __init__(
         self,
         *,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         active: bool = ...,
         draw_indicator: bool = ...,
         inconsistent: bool = ...,
@@ -12308,10 +11027,6 @@ class CheckButton(ToggleButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_draw_indicator(self, cr: cairo.Context[_SomeSurface]) -> None: ...
     @classmethod
@@ -12548,61 +11263,15 @@ class CheckMenuItem(MenuItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuItem.Props):
         active: bool
         draw_as_radio: bool
         inconsistent: bool
-        accel_path: str | None
-        label: str
-        right_justified: bool
-        submenu: Menu | None
-        use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -12616,6 +11285,10 @@ class CheckMenuItem(MenuItem):
         active: bool = ...,
         draw_as_radio: bool = ...,
         inconsistent: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         accel_path: str | None = ...,
         label: str = ...,
         right_justified: bool = ...,
@@ -12660,10 +11333,6 @@ class CheckMenuItem(MenuItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_draw_indicator(self, cr: cairo.Context[_SomeSurface]) -> None: ...
     def do_toggled(self) -> None: ...
@@ -12763,28 +11432,6 @@ class CheckMenuItemAccessible(MenuItemAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(MenuItemAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> MenuItemAccessible: ...
     @property
@@ -13126,6 +11773,7 @@ class ColorButton(Button, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         alpha: int
         color: _Gdk3.Color
@@ -13133,61 +11781,10 @@ class ColorButton(Button, ColorChooser):
         show_editor: bool
         title: str
         use_alpha: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -13204,6 +11801,10 @@ class ColorButton(Button, ColorChooser):
         show_editor: bool = ...,
         title: str = ...,
         use_alpha: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -13252,10 +11853,6 @@ class ColorButton(Button, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_color_set(self) -> None: ...
     def get_alpha(self) -> int: ...
@@ -13575,86 +12172,11 @@ class ColorChooserDialog(Dialog, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         show_editor: bool
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         rgba: _Gdk3.RGBA
         use_alpha: bool
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -13666,6 +12188,8 @@ class ColorChooserDialog(Dialog, ColorChooser):
         self,
         *,
         show_editor: bool = ...,
+        rgba: _Gdk3.RGBA = ...,
+        use_alpha: bool = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -13735,8 +12259,6 @@ class ColorChooserDialog(Dialog, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        rgba: _Gdk3.RGBA = ...,
-        use_alpha: bool = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -13975,56 +12497,12 @@ class ColorChooserWidget(Box, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         show_editor: bool
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         rgba: _Gdk3.RGBA
         use_alpha: bool
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -14036,6 +12514,9 @@ class ColorChooserWidget(Box, ColorChooser):
         self,
         *,
         show_editor: bool = ...,
+        rgba: _Gdk3.RGBA = ...,
+        use_alpha: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -14078,9 +12559,6 @@ class ColorChooserWidget(Box, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        rgba: _Gdk3.RGBA = ...,
-        use_alpha: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> ColorChooserWidget: ...
@@ -14300,58 +12778,14 @@ class ColorSelection(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         current_alpha: int
         current_color: _Gdk3.Color
         current_rgba: _Gdk3.RGBA
         has_opacity_control: bool
         has_palette: bool
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -14367,6 +12801,7 @@ class ColorSelection(Box):
         current_rgba: _Gdk3.RGBA = ...,
         has_opacity_control: bool = ...,
         has_palette: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -14409,7 +12844,6 @@ class ColorSelection(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_color_changed(self) -> None: ...
     def get_current_alpha(self) -> int: ...
@@ -14721,87 +13155,16 @@ class ColorSelectionDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        cancel_button: Widget
-        color_selection: Widget
-        help_button: Widget
-        ok_button: Widget
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
+        @property
+        def cancel_button(self) -> Widget: ...
+        @property
+        def color_selection(self) -> Widget: ...
+        @property
+        def help_button(self) -> Widget: ...
+        @property
+        def ok_button(self) -> Widget: ...
 
     @property
     def props(self) -> Props: ...
@@ -15129,66 +13492,28 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         active: int
         active_id: str | None
         add_tearoffs: bool
         button_sensitivity: SensitivityType
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         column_span_column: int
         entry_text_column: int
-        has_entry: bool
+        @property
+        def has_entry(self) -> bool: ...
         has_frame: bool
         id_column: int
-        model: TreeModel
+        model: TreeModel | None
         popup_fixed_width: bool
-        popup_shown: bool
+        @property
+        def popup_shown(self) -> bool: ...
         row_span_column: int
         tearoff_title: str
         wrap_width: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         editing_canceled: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -15214,6 +13539,7 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         row_span_column: int = ...,
         tearoff_title: str = ...,
         wrap_width: int = ...,
+        editing_canceled: bool = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -15253,7 +13579,6 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def do_changed(self) -> None: ...
     def do_format_entry_text(self, path: str) -> str: ...
@@ -15380,28 +13705,6 @@ class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -15685,66 +13988,9 @@ class ComboBoxText(ComboBox):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ComboBox.Props):
-        active: int
-        active_id: str | None
-        add_tearoffs: bool
-        button_sensitivity: SensitivityType
-        cell_area: CellArea
-        column_span_column: int
-        entry_text_column: int
-        has_entry: bool
-        has_frame: bool
-        id_column: int
-        model: TreeModel
-        popup_fixed_width: bool
-        popup_shown: bool
-        row_span_column: int
-        tearoff_title: str
-        wrap_width: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         editing_canceled: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -15755,6 +14001,7 @@ class ComboBoxText(ComboBox):
     def __init__(
         self,
         *,
+        editing_canceled: bool = ...,
         active: int = ...,
         active_id: str | None = ...,
         add_tearoffs: bool = ...,
@@ -15809,7 +14056,6 @@ class ComboBoxText(ComboBox):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def append(self, id: str | None, text: str) -> None: ...
     def append_text(self, text: str) -> None: ...
@@ -15839,7 +14085,7 @@ class ComboBoxTextClass(_gi.Struct):
 
 class ComboBoxTextPrivate(_gi.Struct): ...
 
-class Container(Widget, Widget):
+class Container(Widget):
     """
     :Constructors:
 
@@ -16017,49 +14263,11 @@ class Container(Widget, Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         child: Widget
+        resize_mode: ResizeMode
 
     @property
     def props(self) -> Props: ...
@@ -16255,28 +14463,6 @@ class ContainerAccessible(WidgetAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -16389,28 +14575,6 @@ class ContainerCellAccessible(CellAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(CellAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> CellAccessible: ...
     @property
@@ -16825,83 +14989,10 @@ class Dialog(Window, Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
+        @property
+        def use_header_bar(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -17200,49 +15291,6 @@ class DrawingArea(Widget):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Widget.Props):
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def widget(self) -> Widget: ...
     @property
@@ -17650,13 +15698,15 @@ class Entry(Widget, CellEditable, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
         buffer: EntryBuffer
         caps_lock_warning: bool
-        completion: EntryCompletion
-        cursor_position: int
+        completion: EntryCompletion | None
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_emoji_completion: bool
         has_frame: bool
@@ -17669,7 +15719,7 @@ class Entry(Widget, CellEditable, Editable):
         max_length: int
         max_width_chars: int
         overwrite_mode: bool
-        placeholder_text: str
+        placeholder_text: str | None
         populate_all: bool
         primary_icon_activatable: bool
         primary_icon_gicon: Gio.Icon
@@ -17677,70 +15727,36 @@ class Entry(Widget, CellEditable, Editable):
         primary_icon_pixbuf: GdkPixbuf.Pixbuf
         primary_icon_sensitive: bool
         primary_icon_stock: str
-        primary_icon_storage_type: ImageType
+        @property
+        def primary_icon_storage_type(self) -> ImageType: ...
         primary_icon_tooltip_markup: str
         primary_icon_tooltip_text: str
         progress_fraction: float
         progress_pulse_step: float
-        scroll_offset: int
+        @property
+        def scroll_offset(self) -> int: ...
         secondary_icon_activatable: bool
         secondary_icon_gicon: Gio.Icon
         secondary_icon_name: str
         secondary_icon_pixbuf: GdkPixbuf.Pixbuf
         secondary_icon_sensitive: bool
         secondary_icon_stock: str
-        secondary_icon_storage_type: ImageType
+        @property
+        def secondary_icon_storage_type(self) -> ImageType: ...
         secondary_icon_tooltip_markup: str
         secondary_icon_tooltip_text: str
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         shadow_type: ShadowType
         show_emoji_icon: bool
         tabs: Pango.TabArray | None
         text: str
-        text_length: int
+        @property
+        def text_length(self) -> int: ...
         truncate_multiline: bool
         visibility: bool
         width_chars: int
         xalign: float
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         editing_canceled: bool
 
     @property
@@ -17797,6 +15813,7 @@ class Entry(Widget, CellEditable, Editable):
         visibility: bool = ...,
         width_chars: int = ...,
         xalign: float = ...,
+        editing_canceled: bool = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -17833,7 +15850,6 @@ class Entry(Widget, CellEditable, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_backspace(self) -> None: ...
@@ -18033,28 +16049,6 @@ class EntryAccessible(WidgetAccessible, Atk.Action, Atk.EditableText, Atk.Text):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -18118,8 +16112,10 @@ class EntryBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        length: int
+        @property
+        def length(self) -> int: ...
         max_length: int
         text: str
 
@@ -18255,8 +16251,10 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
@@ -18410,27 +16408,6 @@ class EntryIconAccessible(Atk.Object, Atk.Action, Atk.Component):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Atk.Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -18637,51 +16614,10 @@ class EventBox(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         above_child: bool
         visible_window: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -18773,9 +16709,11 @@ class EventController(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         propagation_phase: PropagationPhase
-        widget: Widget
+        @property
+        def widget(self) -> Widget: ...
 
     @property
     def props(self) -> Props: ...
@@ -18818,12 +16756,6 @@ class EventControllerKey(EventController):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EventController.Props):
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, propagation_phase: PropagationPhase = ..., widget: Widget = ...
     ) -> None: ...
@@ -18861,12 +16793,6 @@ class EventControllerMotion(EventController):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EventController.Props):
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, propagation_phase: PropagationPhase = ..., widget: Widget = ...
     ) -> None: ...
@@ -18905,10 +16831,9 @@ class EventControllerScroll(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
         flags: EventControllerScrollFlags
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     @property
     def props(self) -> Props: ...
@@ -19129,6 +17054,7 @@ class Expander(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         expanded: bool
         label: str | None
@@ -19138,48 +17064,6 @@ class Expander(Bin):
         spacing: int
         use_markup: bool
         use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -19333,28 +17217,6 @@ class ExpanderAccessible(ContainerAccessible, Atk.Action):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -19692,53 +17554,10 @@ class FileChooserButton(Box, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         title: str
         width_chars: int
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -19751,8 +17570,6 @@ class FileChooserButton(Box, FileChooser):
         show_hidden: bool
         use_preview_label: bool
         orientation: Orientation
-        dialog: FileChooser
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -19766,6 +17583,18 @@ class FileChooserButton(Box, FileChooser):
         dialog: FileChooser = ...,
         title: str = ...,
         width_chars: int = ...,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        do_overwrite_confirmation: bool = ...,
+        extra_widget: Widget = ...,
+        filter: FileFilter = ...,
+        local_only: bool = ...,
+        preview_widget: Widget = ...,
+        preview_widget_active: bool = ...,
+        select_multiple: bool = ...,
+        show_hidden: bool = ...,
+        use_preview_label: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -19808,18 +17637,6 @@ class FileChooserButton(Box, FileChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action: FileChooserAction = ...,
-        create_folders: bool = ...,
-        do_overwrite_confirmation: bool = ...,
-        extra_widget: Widget = ...,
-        filter: FileFilter = ...,
-        local_only: bool = ...,
-        preview_widget: Widget = ...,
-        preview_widget_active: bool = ...,
-        select_multiple: bool = ...,
-        show_hidden: bool = ...,
-        use_preview_label: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_file_set(self) -> None: ...
     def get_focus_on_click(self) -> bool: ...
@@ -20116,81 +17933,8 @@ class FileChooserDialog(Dialog, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -20202,8 +17946,6 @@ class FileChooserDialog(Dialog, FileChooser):
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -20214,6 +17956,17 @@ class FileChooserDialog(Dialog, FileChooser):
     def __init__(
         self,
         *,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        do_overwrite_confirmation: bool = ...,
+        extra_widget: Widget = ...,
+        filter: FileFilter = ...,
+        local_only: bool = ...,
+        preview_widget: Widget = ...,
+        preview_widget_active: bool = ...,
+        select_multiple: bool = ...,
+        show_hidden: bool = ...,
+        use_preview_label: bool = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -20283,17 +18036,6 @@ class FileChooserDialog(Dialog, FileChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action: FileChooserAction = ...,
-        create_folders: bool = ...,
-        do_overwrite_confirmation: bool = ...,
-        extra_widget: Widget = ...,
-        filter: FileFilter = ...,
-        local_only: bool = ...,
-        preview_widget: Widget = ...,
-        preview_widget_active: bool = ...,
-        select_multiple: bool = ...,
-        show_hidden: bool = ...,
-        use_preview_label: bool = ...,
     ) -> None: ...
 
 class FileChooserDialogClass(_gi.Struct):
@@ -20349,13 +18091,10 @@ class FileChooserNative(NativeDialog, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(NativeDialog.Props):
         accept_label: str | None
         cancel_label: str | None
-        modal: bool
-        title: str | None
-        transient_for: Window | None
-        visible: bool
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -20375,10 +18114,6 @@ class FileChooserNative(NativeDialog, FileChooser):
         *,
         accept_label: str | None = ...,
         cancel_label: str | None = ...,
-        modal: bool = ...,
-        title: str = ...,
-        transient_for: Window | None = ...,
-        visible: bool = ...,
         action: FileChooserAction = ...,
         create_folders: bool = ...,
         do_overwrite_confirmation: bool = ...,
@@ -20390,6 +18125,10 @@ class FileChooserNative(NativeDialog, FileChooser):
         select_multiple: bool = ...,
         show_hidden: bool = ...,
         use_preview_label: bool = ...,
+        modal: bool = ...,
+        title: str = ...,
+        transient_for: Window | None = ...,
+        visible: bool = ...,
     ) -> None: ...
     def get_accept_label(self) -> str | None: ...
     def get_cancel_label(self) -> str | None: ...
@@ -20634,53 +18373,11 @@ class FileChooserWidget(Box, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         search_mode: bool
-        subtitle: str
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
+        @property
+        def subtitle(self) -> str: ...
         action: FileChooserAction
         create_folders: bool
         do_overwrite_confirmation: bool
@@ -20693,7 +18390,6 @@ class FileChooserWidget(Box, FileChooser):
         show_hidden: bool
         use_preview_label: bool
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -20705,6 +18401,18 @@ class FileChooserWidget(Box, FileChooser):
         self,
         *,
         search_mode: bool = ...,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        do_overwrite_confirmation: bool = ...,
+        extra_widget: Widget = ...,
+        filter: FileFilter = ...,
+        local_only: bool = ...,
+        preview_widget: Widget = ...,
+        preview_widget_active: bool = ...,
+        select_multiple: bool = ...,
+        show_hidden: bool = ...,
+        use_preview_label: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -20747,18 +18455,6 @@ class FileChooserWidget(Box, FileChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action: FileChooserAction = ...,
-        create_folders: bool = ...,
-        do_overwrite_confirmation: bool = ...,
-        extra_widget: Widget = ...,
-        filter: FileFilter = ...,
-        local_only: bool = ...,
-        preview_widget: Widget = ...,
-        preview_widget_active: bool = ...,
-        select_multiple: bool = ...,
-        show_hidden: bool = ...,
-        use_preview_label: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, action: FileChooserAction) -> FileChooserWidget: ...
@@ -20836,28 +18532,6 @@ class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -21133,52 +18807,6 @@ class Fixed(Container):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Container.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def container(self) -> Container: ...
     @property
@@ -21461,6 +19089,7 @@ class FlowBox(Container, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         activate_on_single_click: bool
         column_spacing: int
@@ -21469,49 +19098,7 @@ class FlowBox(Container, Orientable):
         min_children_per_line: int
         row_spacing: int
         selection_mode: SelectionMode
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -21527,6 +19114,7 @@ class FlowBox(Container, Orientable):
         min_children_per_line: int = ...,
         row_spacing: int = ...,
         selection_mode: SelectionMode = ...,
+        orientation: Orientation = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -21566,7 +19154,6 @@ class FlowBox(Container, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def bind_model(
         self,
@@ -21693,28 +19280,6 @@ class FlowBoxAccessible(ContainerAccessible, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -21934,52 +19499,6 @@ class FlowBoxChild(Bin):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Bin.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> Bin: ...
     def __init__(
@@ -22105,28 +19624,6 @@ class FlowBoxChildAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     def __init__(
@@ -22426,6 +19923,7 @@ class FontButton(Button, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         font_name: str
         show_size: bool
@@ -22433,68 +19931,18 @@ class FontButton(Button, FontChooser):
         title: str
         use_font: bool
         use_size: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -22511,6 +19959,16 @@ class FontButton(Button, FontChooser):
         title: str = ...,
         use_font: bool = ...,
         use_size: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -22559,16 +20017,6 @@ class FontButton(Button, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
     ) -> None: ...
     def do_font_set(self) -> None: ...
     def get_font_name(self) -> str: ...
@@ -22897,90 +20345,16 @@ class FontChooserDialog(Dialog, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -22991,6 +20365,12 @@ class FontChooserDialog(Dialog, FontChooser):
     def __init__(
         self,
         *,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -23060,12 +20440,6 @@ class FontChooserDialog(Dialog, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -23306,61 +20680,19 @@ class FontChooserWidget(Box, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        tweak_action: Gio.Action
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
+        @property
+        def tweak_action(self) -> Gio.Action: ...
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -23371,6 +20703,13 @@ class FontChooserWidget(Box, FontChooser):
     def __init__(
         self,
         *,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -23413,13 +20752,6 @@ class FontChooserWidget(Box, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> FontChooserWidget: ...
@@ -23630,55 +20962,11 @@ class FontSelection(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         font_name: str
         preview_text: str
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -23691,6 +20979,7 @@ class FontSelection(Box):
         *,
         font_name: str = ...,
         preview_text: str = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -23733,7 +21022,6 @@ class FontSelection(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_face(self) -> Pango.FontFace: ...
     def get_face_list(self) -> Widget: ...
@@ -24023,86 +21311,6 @@ class FontSelectionDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Dialog.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> Dialog: ...
     @property
@@ -24395,54 +21603,13 @@ class Frame(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         label: str | None
         label_widget: Widget | None
         label_xalign: float
         label_yalign: float
         shadow_type: ShadowType
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -24583,28 +21750,6 @@ class FrameAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -24841,52 +21986,15 @@ class GLArea(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         auto_render: bool
-        context: _Gdk3.GLContext
+        @property
+        def context(self) -> _Gdk3.GLContext: ...
         has_alpha: bool
         has_depth_buffer: bool
         has_stencil_buffer: bool
         use_es: bool
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -25009,11 +22117,11 @@ class Gesture(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        n_points: int
+        @property
+        def n_points(self) -> int: ...
         window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     @property
     def props(self) -> Props: ...
@@ -25101,17 +22209,6 @@ class GestureDrag(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25179,15 +22276,9 @@ class GestureLongPress(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureSingle.Props):
         delay_factor: float
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     @property
     def props(self) -> Props: ...
@@ -25254,17 +22345,6 @@ class GestureMultiPress(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25336,15 +22416,9 @@ class GesturePan(GestureDrag):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureDrag.Props):
         orientation: Orientation
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     @property
     def props(self) -> Props: ...
@@ -25403,14 +22477,6 @@ class GestureRotate(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gesture.Props):
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25465,14 +22531,11 @@ class GestureSingle(Gesture):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gesture.Props):
         button: int
         exclusive: bool
         touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
 
     @property
     def props(self) -> Props: ...
@@ -25545,17 +22608,6 @@ class GestureStylus(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25619,17 +22671,6 @@ class GestureSwipe(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25683,14 +22724,6 @@ class GestureZoom(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gesture.Props):
-        n_points: int
-        window: _Gdk3.Window | None
-        propagation_phase: PropagationPhase
-        widget: Widget
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -25918,55 +22951,14 @@ class Grid(Container, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         baseline_row: int
         column_homogeneous: bool
         column_spacing: int
         row_homogeneous: bool
         row_spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -25982,6 +22974,7 @@ class Grid(Container, Orientable):
         column_spacing: int = ...,
         row_homogeneous: bool = ...,
         row_spacing: int = ...,
+        orientation: Orientation = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -26021,7 +23014,6 @@ class Grid(Container, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def attach(
         self, child: Widget, left: int, top: int, width: int, height: int
@@ -26255,53 +23247,9 @@ class HBox(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -26310,6 +23258,7 @@ class HBox(Box):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -26352,7 +23301,6 @@ class HBox(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, homogeneous: bool, spacing: int) -> HBox: ...
@@ -26559,54 +23507,9 @@ class HButtonBox(ButtonBox):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ButtonBox.Props):
-        layout_style: ButtonBoxStyle
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -26615,6 +23518,7 @@ class HButtonBox(ButtonBox):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         layout_style: ButtonBoxStyle = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
@@ -26658,7 +23562,6 @@ class HButtonBox(ButtonBox):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> HButtonBox: ...
@@ -26873,55 +23776,9 @@ class HPaned(Paned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Paned.Props):
-        max_position: int
-        min_position: int
-        position: int
-        position_set: bool
-        wide_handle: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -26930,6 +23787,7 @@ class HPaned(Paned):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
@@ -26972,7 +23830,6 @@ class HPaned(Paned):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> HPaned: ...
@@ -27157,49 +24014,6 @@ class HSV(Widget):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Widget.Props):
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> Widget: ...
     @property
@@ -27476,58 +24290,8 @@ class HScale(Scale):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Scale.Props):
-        digits: int
-        draw_value: bool
-        has_origin: bool
-        value_pos: PositionType
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -27537,6 +24301,7 @@ class HScale(Scale):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         digits: int = ...,
         draw_value: bool = ...,
         has_origin: bool = ...,
@@ -27585,7 +24350,6 @@ class HScale(Scale):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, adjustment: Adjustment | None = None) -> HScale: ...
@@ -27792,54 +24556,8 @@ class HScrollbar(Scrollbar):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Scrollbar.Props):
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -27849,6 +24567,7 @@ class HScrollbar(Scrollbar):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
@@ -27893,7 +24612,6 @@ class HScrollbar(Scrollbar):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, adjustment: Adjustment | None = None) -> HScrollbar: ...
@@ -28074,46 +24792,8 @@ class HSeparator(Separator):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Separator.Props):
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -28123,6 +24803,7 @@ class HSeparator(Separator):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -28159,7 +24840,6 @@ class HSeparator(Separator):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> HSeparator: ...
@@ -28370,54 +25050,14 @@ class HandleBox(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
-        child_detached: bool
+        @property
+        def child_detached(self) -> bool: ...
         handle_position: PositionType
         shadow_type: ShadowType
         snap_edge: PositionType
         snap_edge_set: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -28698,57 +25338,16 @@ class HeaderBar(Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         custom_title: Widget | None
-        decoration_layout: str
+        decoration_layout: str | None
         decoration_layout_set: bool
         has_subtitle: bool
         show_close_button: bool
         spacing: int
         subtitle: str | None
         title: str | None
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -28895,28 +25494,6 @@ class HeaderBarAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     def __init__(
@@ -28992,6 +25569,7 @@ class IMContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
@@ -29119,12 +25697,6 @@ class IMContextSimple(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(IMContext.Props):
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> IMContext: ...
     @property
@@ -29177,12 +25749,6 @@ class IMMulticontext(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(IMContext.Props):
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> IMContext: ...
     @property
@@ -29721,9 +26287,11 @@ class IconView(Container, CellLayout, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         activate_on_single_click: bool
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         column_spacing: int
         columns: int
         item_orientation: Orientation
@@ -29739,51 +26307,10 @@ class IconView(Container, CellLayout, Scrollable):
         spacing: int
         text_column: int
         tooltip_column: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -29811,6 +26338,10 @@ class IconView(Container, CellLayout, Scrollable):
         spacing: int = ...,
         text_column: int = ...,
         tooltip_column: int = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -29849,10 +26380,6 @@ class IconView(Container, CellLayout, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def convert_widget_to_bin_window_coords(
         self, wx: int, wy: int
@@ -30033,28 +26560,6 @@ class IconViewAccessible(ContainerAccessible, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -30333,6 +26838,7 @@ class Image(Misc):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Misc.Props):
         file: str
         gicon: Gio.Icon
@@ -30344,52 +26850,10 @@ class Image(Misc):
         pixel_size: int
         resource: str
         stock: str
-        storage_type: ImageType
+        @property
+        def storage_type(self) -> ImageType: ...
         surface: cairo.Surface
         use_fallback: bool
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -30563,28 +27027,6 @@ class ImageAccessible(WidgetAccessible, Atk.Image):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -30699,29 +27141,6 @@ class ImageCellAccessible(RendererCellAccessible, Atk.Image):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RendererCellAccessible.Props):
-        renderer: CellRenderer
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RendererCellAccessible: ...
     @property
@@ -30983,62 +27402,16 @@ class ImageMenuItem(MenuItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuItem.Props):
+        accel_group: AccelGroup
         always_show_image: bool
-        image: Widget
+        image: Widget | None
         use_stock: bool
-        accel_path: str | None
-        label: str
-        right_justified: bool
-        submenu: Menu | None
-        use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        accel_group: AccelGroup
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -31053,6 +27426,10 @@ class ImageMenuItem(MenuItem):
         always_show_image: bool = ...,
         image: Widget | None = ...,
         use_stock: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         accel_path: str | None = ...,
         label: str = ...,
         right_justified: bool = ...,
@@ -31097,10 +27474,6 @@ class ImageMenuItem(MenuItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def get_always_show_image(self) -> bool: ...
     def get_image(self) -> Widget: ...
@@ -31333,56 +27706,12 @@ class InfoBar(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         message_type: MessageType
         revealed: bool
         show_close_button: bool
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -31396,6 +27725,7 @@ class InfoBar(Box):
         message_type: MessageType = ...,
         revealed: bool = ...,
         show_close_button: bool = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -31438,7 +27768,6 @@ class InfoBar(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
     def add_button(self, button_text: str, response_id: int) -> Button: ...
@@ -31645,47 +27974,9 @@ class Invisible(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         screen: _Gdk3.Screen
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -31983,19 +28274,24 @@ class Label(Misc):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Misc.Props):
         angle: float
         attributes: Pango.AttrList | None
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         ellipsize: Pango.EllipsizeMode
         justify: Justification
         label: str
         lines: int
         max_width_chars: int
-        mnemonic_keyval: int
+        @property
+        def mnemonic_keyval(self) -> int: ...
         mnemonic_widget: Widget | None
+        pattern: str
         selectable: bool
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         single_line_mode: bool
         track_visited_links: bool
         use_markup: bool
@@ -32005,48 +28301,6 @@ class Label(Misc):
         wrap_mode: Pango.WrapMode
         xalign: float
         yalign: float
-        xpad: int
-        ypad: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        pattern: str
 
     @property
     def props(self) -> Props: ...
@@ -32255,28 +28509,6 @@ class LabelAccessible(WidgetAccessible, Atk.Hypertext, Atk.Text):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -32521,55 +28753,14 @@ class Layout(Container, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         height: int
         width: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -32582,6 +28773,10 @@ class Layout(Container, Scrollable):
         *,
         height: int = ...,
         width: int = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -32621,10 +28816,6 @@ class Layout(Container, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_bin_window(self) -> _Gdk3.Window: ...
     def get_hadjustment(self) -> Adjustment: ...
@@ -32836,51 +29027,13 @@ class LevelBar(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         inverted: bool
         max_value: float
         min_value: float
         mode: LevelBarMode
         value: float
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -32897,6 +29050,7 @@ class LevelBar(Widget, Orientable):
         min_value: float = ...,
         mode: LevelBarMode = ...,
         value: float = ...,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -32933,7 +29087,6 @@ class LevelBar(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_offset_value(self, name: str, value: float) -> None: ...
     def do_offset_changed(self, name: str) -> None: ...
@@ -33027,28 +29180,6 @@ class LevelBarAccessible(WidgetAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -33320,64 +29451,14 @@ class LinkButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         uri: str
         visited: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -33390,6 +29471,10 @@ class LinkButton(Button):
         *,
         uri: str = ...,
         visited: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -33438,10 +29523,6 @@ class LinkButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_activate_link(self) -> bool: ...
     def get_uri(self) -> str: ...
@@ -33529,28 +29610,6 @@ class LinkButtonAccessible(ButtonAccessible, Atk.HyperlinkImpl):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ButtonAccessible: ...
     @property
@@ -33798,51 +29857,10 @@ class ListBox(Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         activate_on_single_click: bool
         selection_mode: SelectionMode
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -34019,28 +30037,6 @@ class ListBoxAccessible(ContainerAccessible, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -34293,53 +30289,12 @@ class ListBoxRow(Bin, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         activatable: bool
         selectable: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -34350,6 +30305,8 @@ class ListBoxRow(Bin, Actionable):
         *,
         activatable: bool = ...,
         selectable: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -34389,8 +30346,6 @@ class ListBoxRow(Bin, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def changed(self) -> None: ...
     def do_activate(self) -> None: ...
@@ -34478,28 +30433,6 @@ class ListBoxRowAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     def __init__(
@@ -34844,68 +30777,18 @@ class LockButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
-        permission: Gio.Permission
+        permission: Gio.Permission | None
         text_lock: str
         text_unlock: str
         tooltip_lock: str
         tooltip_not_authorized: str
         tooltip_unlock: str
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -34922,6 +30805,10 @@ class LockButton(Button):
         tooltip_lock: str = ...,
         tooltip_not_authorized: str = ...,
         tooltip_unlock: str = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -34970,10 +30857,6 @@ class LockButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def get_permission(self) -> Gio.Permission: ...
     @classmethod
@@ -35056,28 +30939,6 @@ class LockButtonAccessible(ButtonAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ButtonAccessible: ...
     @property
@@ -35368,9 +31229,10 @@ class Menu(MenuShell):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuShell.Props):
-        accel_group: AccelGroup
-        accel_path: str
+        accel_group: AccelGroup | None
+        accel_path: str | None
         active: int
         anchor_hints: _Gdk3.AnchorHints
         attach_widget: Widget
@@ -35381,49 +31243,6 @@ class Menu(MenuShell):
         reserve_toggle_size: bool
         tearoff_state: bool
         tearoff_title: str
-        take_focus: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -35646,28 +31465,6 @@ class MenuAccessible(MenuShellAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(MenuShellAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> MenuShellAccessible: ...
     @property
@@ -35905,52 +31702,10 @@ class MenuBar(MenuShell):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuShell.Props):
         child_pack_direction: PackDirection
         pack_direction: PackDirection
-        take_focus: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -36258,6 +32013,7 @@ class MenuButton(ToggleButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToggleButton.Props):
         align_widget: Container | None
         direction: ArrowType
@@ -36265,64 +32021,10 @@ class MenuButton(ToggleButton):
         popover: Popover | None
         popup: Menu | None
         use_popover: bool
-        active: bool
-        draw_indicator: bool
-        inconsistent: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -36339,6 +32041,10 @@ class MenuButton(ToggleButton):
         popover: Popover | None = ...,
         popup: Menu | None = ...,
         use_popover: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         active: bool = ...,
         draw_indicator: bool = ...,
         inconsistent: bool = ...,
@@ -36390,10 +32096,6 @@ class MenuButton(ToggleButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def get_align_widget(self) -> Widget | None: ...
     def get_direction(self) -> ArrowType: ...
@@ -36489,28 +32191,6 @@ class MenuButtonAccessible(ToggleButtonAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ToggleButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ToggleButtonAccessible: ...
     @property
@@ -36773,58 +32453,17 @@ class MenuItem(Bin, Actionable, Activatable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         accel_path: str | None
         label: str
         right_justified: bool
         submenu: Menu | None
         use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -36840,6 +32479,10 @@ class MenuItem(Bin, Actionable, Activatable):
         right_justified: bool = ...,
         submenu: Menu | None = ...,
         use_underline: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -36879,10 +32522,6 @@ class MenuItem(Bin, Actionable, Activatable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def activate(self) -> None: ...
     def deselect(self) -> None: ...
@@ -36992,28 +32631,6 @@ class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -37275,50 +32892,9 @@ class MenuShell(Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         take_focus: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -37475,28 +33051,6 @@ class MenuShellAccessible(ContainerAccessible, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -37783,63 +33337,13 @@ class MenuToolButton(ToolButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToolButton.Props):
         menu: Menu
-        icon_name: str | None
-        icon_widget: Widget | None
-        label: str | None
-        label_widget: Widget | None
-        stock_id: str
-        use_underline: bool
-        is_important: bool
-        visible_horizontal: bool
-        visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -37851,6 +33355,10 @@ class MenuToolButton(ToolButton):
         self,
         *,
         menu: Menu = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         icon_name: str | None = ...,
         icon_widget: Widget | None = ...,
         label: str | None = ...,
@@ -37899,10 +33407,6 @@ class MenuToolButton(ToolButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_show_menu(self) -> None: ...
     def get_menu(self) -> Widget: ...
@@ -37931,7 +33435,7 @@ class MenuToolButtonClass(_gi.Struct):
 
 class MenuToolButtonPrivate(_gi.Struct): ...
 
-class MessageDialog(Dialog, Dialog):
+class MessageDialog(Dialog):
     """
     :Constructors:
 
@@ -38210,91 +33714,16 @@ class MessageDialog(Dialog, Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         image: Widget
-        message_area: Widget
+        @property
+        def message_area(self) -> Widget: ...
         message_type: MessageType
         secondary_text: str
         secondary_use_markup: bool
         text: str
         use_markup: bool
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        buttons: ButtonsType
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -38578,50 +34007,12 @@ class Misc(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         xalign: float
         xpad: int
         yalign: float
         ypad: int
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -38918,6 +34309,7 @@ class ModelButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         active: bool
         centered: bool
@@ -38928,61 +34320,10 @@ class ModelButton(Button):
         role: ButtonRole
         text: str
         use_markup: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -38998,6 +34339,10 @@ class ModelButton(Button):
         role: ButtonRole = ...,
         text: str = ...,
         use_markup: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -39046,10 +34391,6 @@ class ModelButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> ModelButton: ...
@@ -39095,19 +34436,12 @@ class MountOperation(Gio.MountOperation):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.MountOperation.Props):
-        is_showing: bool
-        parent: Window
+        @property
+        def is_showing(self) -> bool: ...
+        parent: Window | None
         screen: _Gdk3.Screen
-        anonymous: bool
-        choice: int
-        domain: str | None
-        is_tcrypt_hidden_volume: bool
-        is_tcrypt_system_volume: bool
-        password: str | None
-        password_save: Gio.PasswordSave
-        pim: int
-        username: str | None
 
     @property
     def props(self) -> Props: ...
@@ -39177,6 +34511,7 @@ class NativeDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         modal: bool
         title: str | None
@@ -39434,6 +34769,7 @@ class Notebook(Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         enable_popup: bool
         group_name: str | None
@@ -39442,48 +34778,6 @@ class Notebook(Container):
         show_border: bool
         show_tabs: bool
         tab_pos: PositionType
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -39696,28 +34990,6 @@ class NotebookAccessible(ContainerAccessible, Atk.Selection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -39852,27 +35124,6 @@ class NotebookPageAccessible(Atk.Object, Atk.Component):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Atk.Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Atk.Object: ...
     @property
@@ -39943,13 +35194,13 @@ class NumerableIcon(Gio.EmblemedIcon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.EmblemedIcon.Props):
         background_icon: Gio.Icon
         background_icon_name: str | None
         count: int
         label: str | None
         style_context: StyleContext | None
-        gicon: Gio.Icon
 
     @property
     def props(self) -> Props: ...
@@ -40253,85 +35504,6 @@ class OffscreenWindow(Window):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Window.Props):
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_object(self) -> Window: ...
     def __init__(
@@ -40625,52 +35797,6 @@ class Overlay(Bin):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Bin.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Bin: ...
     @property
@@ -40786,11 +35912,12 @@ class PadController(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        action_group: Gio.ActionGroup
-        pad: _Gdk3.Device
-        propagation_phase: PropagationPhase
-        widget: Widget
+        @property
+        def action_group(self) -> Gio.ActionGroup: ...
+        @property
+        def pad(self) -> _Gdk3.Device: ...
 
     @property
     def props(self) -> Props: ...
@@ -41079,55 +36206,16 @@ class Paned(Container, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
-        max_position: int
-        min_position: int
+        @property
+        def max_position(self) -> int: ...
+        @property
+        def min_position(self) -> int: ...
         position: int
         position_set: bool
         wide_handle: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -41141,6 +36229,7 @@ class Paned(Container, Orientable):
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
+        orientation: Orientation = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -41180,7 +36269,6 @@ class Paned(Container, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add1(self, child: Widget) -> None: ...
     def add2(self, child: Widget) -> None: ...
@@ -41280,28 +36368,6 @@ class PanedAccessible(ContainerAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -41675,6 +36741,7 @@ class PlacesSidebar(ScrolledWindow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ScrolledWindow.Props):
         local_only: bool
         location: Gio.File | None
@@ -41687,63 +36754,6 @@ class PlacesSidebar(ScrolledWindow):
         show_recent: bool
         show_starred_location: bool
         show_trash: bool
-        hadjustment: Adjustment
-        hscrollbar_policy: PolicyType
-        kinetic_scrolling: bool
-        max_content_height: int
-        max_content_width: int
-        min_content_height: int
-        min_content_width: int
-        overlay_scrolling: bool
-        propagate_natural_height: bool
-        propagate_natural_width: bool
-        shadow_type: ShadowType
-        vadjustment: Adjustment
-        vscrollbar_policy: PolicyType
-        window_placement: CornerType
-        window_placement_set: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -42112,84 +37122,12 @@ class Plug(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
-        embedded: bool
-        socket_window: _Gdk3.Window | None
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
+        @property
+        def embedded(self) -> bool: ...
+        @property
+        def socket_window(self) -> _Gdk3.Window | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -42378,28 +37316,6 @@ class PlugAccessible(WindowAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WindowAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WindowAccessible: ...
     @property
@@ -42650,55 +37566,14 @@ class Popover(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         constrain_to: PopoverConstraint
         modal: bool
         pointing_to: _Gdk3.Rectangle
         position: PositionType
-        relative_to: Widget
+        relative_to: Widget | None
         transitions_enabled: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -42855,28 +37730,6 @@ class PopoverAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     def __init__(
@@ -43125,56 +37978,9 @@ class PopoverMenu(Popover):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Popover.Props):
         visible_submenu: str
-        constrain_to: PopoverConstraint
-        modal: bool
-        pointing_to: _Gdk3.Rectangle
-        position: PositionType
-        relative_to: Widget
-        transitions_enabled: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -43343,21 +38149,25 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         allow_async: bool
         current_page: int
         custom_tab_label: str | None
-        default_page_setup: PageSetup
+        default_page_setup: PageSetup | None
         embed_page_setup: bool
         export_filename: str
         has_selection: bool
         job_name: str
         n_pages: int
-        n_pages_to_print: int
-        print_settings: PrintSettings
+        @property
+        def n_pages_to_print(self) -> int: ...
+        print_settings: PrintSettings | None
         show_progress: bool
-        status: PrintStatus
-        status_string: str
+        @property
+        def status(self) -> PrintStatus: ...
+        @property
+        def status_string(self) -> str: ...
         support_selection: bool
         track_print_status: bool
         unit: Unit
@@ -43802,6 +38612,7 @@ class ProgressBar(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         ellipsize: Pango.EllipsizeMode
         fraction: float
@@ -43809,45 +38620,6 @@ class ProgressBar(Widget, Orientable):
         pulse_step: float
         show_text: bool
         text: str | None
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -43865,6 +38637,7 @@ class ProgressBar(Widget, Orientable):
         pulse_step: float = ...,
         show_text: bool = ...,
         text: str | None = ...,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -43901,7 +38674,6 @@ class ProgressBar(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_ellipsize(self) -> Pango.EllipsizeMode: ...
     def get_fraction(self) -> float: ...
@@ -43992,28 +38764,6 @@ class ProgressBarAccessible(WidgetAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -44136,28 +38886,11 @@ class RadioAction(ToggleAction):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToggleAction.Props):
         current_value: int
-        value: int
-        active: bool
-        draw_as_radio: bool
-        action_group: ActionGroup
-        always_show_image: bool
-        gicon: Gio.Icon
-        hide_if_empty: bool
-        icon_name: str
-        is_important: bool
-        label: str
-        name: str
-        sensitive: bool
-        short_label: str
-        stock_id: str
-        tooltip: str
-        visible: bool
-        visible_horizontal: bool
-        visible_overflown: bool
-        visible_vertical: bool
         group: RadioAction | None
+        value: int
 
     @property
     def props(self) -> Props: ...
@@ -44467,66 +39200,13 @@ class RadioButton(CheckButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CheckButton.Props):
-        active: bool
-        draw_indicator: bool
-        inconsistent: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
+        group: RadioButton | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        group: RadioButton | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -44538,6 +39218,10 @@ class RadioButton(CheckButton):
         self,
         *,
         group: RadioButton | None = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         active: bool = ...,
         draw_indicator: bool = ...,
         inconsistent: bool = ...,
@@ -44589,10 +39273,6 @@ class RadioButton(CheckButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_group_changed(self) -> None: ...
     def get_group(self) -> list[RadioButton]: ...
@@ -44700,28 +39380,6 @@ class RadioButtonAccessible(ToggleButtonAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ToggleButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ToggleButtonAccessible: ...
     @property
@@ -44996,62 +39654,13 @@ class RadioMenuItem(CheckMenuItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CheckMenuItem.Props):
-        active: bool
-        draw_as_radio: bool
-        inconsistent: bool
-        accel_path: str | None
-        label: str
-        right_justified: bool
-        submenu: Menu | None
-        use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
+        group: RadioMenuItem | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        group: RadioMenuItem | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -45063,6 +39672,10 @@ class RadioMenuItem(CheckMenuItem):
         self,
         *,
         group: RadioMenuItem | None = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         active: bool = ...,
         draw_as_radio: bool = ...,
         inconsistent: bool = ...,
@@ -45110,10 +39723,6 @@ class RadioMenuItem(CheckMenuItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_group_changed(self) -> None: ...
     def get_group(self) -> list[RadioMenuItem]: ...
@@ -45228,28 +39837,6 @@ class RadioMenuItemAccessible(CheckMenuItemAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(CheckMenuItemAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> CheckMenuItemAccessible: ...
     @property
@@ -45524,64 +40111,13 @@ class RadioToolButton(ToggleToolButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToggleToolButton.Props):
-        active: bool
-        icon_name: str | None
-        icon_widget: Widget | None
-        label: str | None
-        label_widget: Widget | None
-        stock_id: str
-        use_underline: bool
-        is_important: bool
-        visible_horizontal: bool
-        visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
+        group: RadioToolButton | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        group: RadioToolButton | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -45591,6 +40127,10 @@ class RadioToolButton(ToggleToolButton):
         self,
         *,
         group: RadioToolButton | None = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         active: bool = ...,
         icon_name: str | None = ...,
         icon_widget: Widget | None = ...,
@@ -45640,10 +40180,6 @@ class RadioToolButton(ToggleToolButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def get_group(self) -> list[RadioButton]: ...
     @classmethod
@@ -45861,6 +40397,7 @@ class Range(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         adjustment: Adjustment
         fill_level: float
@@ -45870,45 +40407,6 @@ class Range(Widget, Orientable):
         round_digits: int
         show_fill_level: bool
         upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -45928,6 +40426,7 @@ class Range(Widget, Orientable):
         round_digits: int = ...,
         show_fill_level: bool = ...,
         upper_stepper_sensitivity: SensitivityType = ...,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -45964,7 +40463,6 @@ class Range(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_adjust_bounds(self, new_value: float) -> None: ...
     def do_change_value(self, scroll: ScrollType, new_value: float) -> bool: ...
@@ -46076,28 +40574,6 @@ class RangeAccessible(WidgetAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -46330,25 +40806,10 @@ class RecentAction(Action, RecentChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Action.Props):
         show_numbers: bool
-        action_group: ActionGroup
-        always_show_image: bool
-        gicon: Gio.Icon
-        hide_if_empty: bool
-        icon_name: str
-        is_important: bool
-        label: str
-        name: str
-        sensitive: bool
-        short_label: str
-        stock_id: str
-        tooltip: str
-        visible: bool
-        visible_horizontal: bool
-        visible_overflown: bool
-        visible_vertical: bool
-        filter: RecentFilter
+        filter: RecentFilter | None
         limit: int
         local_only: bool
         select_multiple: bool
@@ -46357,7 +40818,6 @@ class RecentAction(Action, RecentChooser):
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
-        recent_manager: RecentManager
 
     @property
     def props(self) -> Props: ...
@@ -46369,6 +40829,16 @@ class RecentAction(Action, RecentChooser):
         self,
         *,
         show_numbers: bool = ...,
+        filter: RecentFilter | None = ...,
+        limit: int = ...,
+        local_only: bool = ...,
+        recent_manager: RecentManager = ...,
+        select_multiple: bool = ...,
+        show_icons: bool = ...,
+        show_not_found: bool = ...,
+        show_private: bool = ...,
+        show_tips: bool = ...,
+        sort_type: RecentSortType = ...,
         action_group: ActionGroup = ...,
         always_show_image: bool = ...,
         gicon: Gio.Icon = ...,
@@ -46385,16 +40855,6 @@ class RecentAction(Action, RecentChooser):
         visible_horizontal: bool = ...,
         visible_overflown: bool = ...,
         visible_vertical: bool = ...,
-        filter: RecentFilter | None = ...,
-        limit: int = ...,
-        local_only: bool = ...,
-        recent_manager: RecentManager = ...,
-        select_multiple: bool = ...,
-        show_icons: bool = ...,
-        show_not_found: bool = ...,
-        show_private: bool = ...,
-        show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
     ) -> None: ...
     def get_show_numbers(self) -> bool: ...
     @classmethod
@@ -46733,82 +41193,9 @@ class RecentChooserDialog(Dialog, RecentChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        filter: RecentFilter
+        filter: RecentFilter | None
         limit: int
         local_only: bool
         select_multiple: bool
@@ -46817,9 +41204,6 @@ class RecentChooserDialog(Dialog, RecentChooser):
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
-        startup_id: str
-        child: Widget
-        recent_manager: RecentManager
 
     @property
     def props(self) -> Props: ...
@@ -46830,6 +41214,16 @@ class RecentChooserDialog(Dialog, RecentChooser):
     def __init__(
         self,
         *,
+        filter: RecentFilter | None = ...,
+        limit: int = ...,
+        local_only: bool = ...,
+        recent_manager: RecentManager = ...,
+        select_multiple: bool = ...,
+        show_icons: bool = ...,
+        show_not_found: bool = ...,
+        show_private: bool = ...,
+        show_tips: bool = ...,
+        sort_type: RecentSortType = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -46899,16 +41293,6 @@ class RecentChooserDialog(Dialog, RecentChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        filter: RecentFilter | None = ...,
-        limit: int = ...,
-        local_only: bool = ...,
-        recent_manager: RecentManager = ...,
-        select_multiple: bool = ...,
-        show_icons: bool = ...,
-        show_not_found: bool = ...,
-        show_private: bool = ...,
-        show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
     ) -> None: ...
 
 class RecentChooserDialogClass(_gi.Struct):
@@ -47195,65 +41579,12 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Menu.Props):
         show_numbers: bool
-        accel_group: AccelGroup
-        accel_path: str
-        active: int
-        anchor_hints: _Gdk3.AnchorHints
-        attach_widget: Widget
-        menu_type_hint: _Gdk3.WindowTypeHint
-        monitor: int
-        rect_anchor_dx: int
-        rect_anchor_dy: int
-        reserve_toggle_size: bool
-        tearoff_state: bool
-        tearoff_title: str
-        take_focus: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
-        filter: RecentFilter
+        filter: RecentFilter | None
         limit: int
         local_only: bool
         select_multiple: bool
@@ -47262,8 +41593,6 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
-        child: Widget
-        recent_manager: RecentManager
 
     @property
     def props(self) -> Props: ...
@@ -47275,6 +41604,18 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         self,
         *,
         show_numbers: bool = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
+        filter: RecentFilter | None = ...,
+        limit: int = ...,
+        local_only: bool = ...,
+        recent_manager: RecentManager = ...,
+        select_multiple: bool = ...,
+        show_icons: bool = ...,
+        show_not_found: bool = ...,
+        show_private: bool = ...,
+        show_tips: bool = ...,
+        sort_type: RecentSortType = ...,
         accel_group: AccelGroup | None = ...,
         accel_path: str | None = ...,
         active: int = ...,
@@ -47327,18 +41668,6 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
-        filter: RecentFilter | None = ...,
-        limit: int = ...,
-        local_only: bool = ...,
-        recent_manager: RecentManager = ...,
-        select_multiple: bool = ...,
-        show_icons: bool = ...,
-        show_not_found: bool = ...,
-        show_private: bool = ...,
-        show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
     ) -> None: ...
     def get_show_numbers(self) -> bool: ...
     @classmethod
@@ -47560,53 +41889,10 @@ class RecentChooserWidget(Box, RecentChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        filter: RecentFilter
+        filter: RecentFilter | None
         limit: int
         local_only: bool
         select_multiple: bool
@@ -47615,8 +41901,6 @@ class RecentChooserWidget(Box, RecentChooser):
         show_private: bool
         show_tips: bool
         sort_type: RecentSortType
-        child: Widget
-        recent_manager: RecentManager
 
     @property
     def props(self) -> Props: ...
@@ -47627,6 +41911,17 @@ class RecentChooserWidget(Box, RecentChooser):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
+        filter: RecentFilter | None = ...,
+        limit: int = ...,
+        local_only: bool = ...,
+        recent_manager: RecentManager = ...,
+        select_multiple: bool = ...,
+        show_icons: bool = ...,
+        show_not_found: bool = ...,
+        show_private: bool = ...,
+        show_tips: bool = ...,
+        sort_type: RecentSortType = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -47669,17 +41964,6 @@ class RecentChooserWidget(Box, RecentChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
-        filter: RecentFilter | None = ...,
-        limit: int = ...,
-        local_only: bool = ...,
-        recent_manager: RecentManager = ...,
-        select_multiple: bool = ...,
-        show_icons: bool = ...,
-        show_not_found: bool = ...,
-        show_private: bool = ...,
-        show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> RecentChooserWidget: ...
@@ -47815,9 +42099,12 @@ class RecentManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        filename: str
-        size: int
+        @property
+        def filename(self) -> str: ...
+        @property
+        def size(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -47930,26 +42217,10 @@ class RendererCellAccessible(CellAccessible):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellAccessible.Props):
-        renderer: CellRenderer
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
+        @property
+        def renderer(self) -> CellRenderer: ...
 
     @property
     def props(self) -> Props: ...
@@ -48214,53 +42485,13 @@ class Revealer(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
-        child_revealed: bool
+        @property
+        def child_revealed(self) -> bool: ...
         reveal_child: bool
         transition_duration: int
         transition_type: RevealerTransitionType
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -48536,58 +42767,12 @@ class Scale(Range):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Range.Props):
         digits: int
         draw_value: bool
         has_origin: bool
         value_pos: PositionType
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -48603,6 +42788,7 @@ class Scale(Range):
         draw_value: bool = ...,
         has_origin: bool = ...,
         value_pos: PositionType = ...,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
@@ -48647,7 +42833,6 @@ class Scale(Range):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_mark(
         self, value: float, position: PositionType, markup: str | None = None
@@ -48754,28 +42939,6 @@ class ScaleAccessible(RangeAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RangeAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RangeAccessible: ...
     @property
@@ -49035,67 +43198,17 @@ class ScaleButton(Button, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         adjustment: Adjustment
         icons: list[str]
         size: IconSize
         value: float
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -49110,6 +43223,11 @@ class ScaleButton(Button, Orientable):
         icons: Sequence[str] = ...,
         size: IconSize = ...,
         value: float = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
+        orientation: Orientation = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -49158,11 +43276,6 @@ class ScaleButton(Button, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_value_changed(self, value: float) -> None: ...
     def get_adjustment(self) -> Adjustment: ...
@@ -49262,28 +43375,6 @@ class ScaleButtonAccessible(ButtonAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ButtonAccessible: ...
     @property
@@ -49574,54 +43665,8 @@ class Scrollbar(Range):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Range.Props):
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -49631,6 +43676,7 @@ class Scrollbar(Range):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
@@ -49675,7 +43721,6 @@ class Scrollbar(Range):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -49910,8 +43955,9 @@ class ScrolledWindow(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscrollbar_policy: PolicyType
         kinetic_scrolling: bool
         max_content_height: int
@@ -49922,52 +43968,10 @@ class ScrolledWindow(Bin):
         propagate_natural_height: bool
         propagate_natural_width: bool
         shadow_type: ShadowType
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscrollbar_policy: PolicyType
         window_placement: CornerType
         window_placement_set: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -50149,28 +44153,6 @@ class ScrolledWindowAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -50412,51 +44394,10 @@ class SearchBar(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         search_mode_enabled: bool
         show_close_button: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -50837,97 +44778,8 @@ class SearchEntry(Entry):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Entry.Props):
-        activates_default: bool
-        attributes: Pango.AttrList | None
-        buffer: EntryBuffer
-        caps_lock_warning: bool
-        completion: EntryCompletion
-        cursor_position: int
-        editable: bool
-        enable_emoji_completion: bool
-        has_frame: bool
-        im_module: str
-        inner_border: Border | None
-        input_hints: InputHints
-        input_purpose: InputPurpose
-        invisible_char: int
-        invisible_char_set: bool
-        max_length: int
-        max_width_chars: int
-        overwrite_mode: bool
-        placeholder_text: str
-        populate_all: bool
-        primary_icon_activatable: bool
-        primary_icon_gicon: Gio.Icon
-        primary_icon_name: str
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf
-        primary_icon_sensitive: bool
-        primary_icon_stock: str
-        primary_icon_storage_type: ImageType
-        primary_icon_tooltip_markup: str
-        primary_icon_tooltip_text: str
-        progress_fraction: float
-        progress_pulse_step: float
-        scroll_offset: int
-        secondary_icon_activatable: bool
-        secondary_icon_gicon: Gio.Icon
-        secondary_icon_name: str
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf
-        secondary_icon_sensitive: bool
-        secondary_icon_stock: str
-        secondary_icon_storage_type: ImageType
-        secondary_icon_tooltip_markup: str
-        secondary_icon_tooltip_text: str
-        selection_bound: int
-        shadow_type: ShadowType
-        show_emoji_icon: bool
-        tabs: Pango.TabArray | None
-        text: str
-        text_length: int
-        truncate_multiline: bool
-        visibility: bool
-        width_chars: int
-        xalign: float
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         editing_canceled: bool
 
     @property
@@ -50937,6 +44789,7 @@ class SearchEntry(Entry):
     def __init__(
         self,
         *,
+        editing_canceled: bool = ...,
         activates_default: bool = ...,
         attributes: Pango.AttrList = ...,
         buffer: EntryBuffer = ...,
@@ -51018,7 +44871,6 @@ class SearchEntry(Entry):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def do_next_match(self) -> None: ...
     def do_previous_match(self) -> None: ...
@@ -51235,46 +45087,8 @@ class Separator(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -51286,6 +45100,7 @@ class Separator(Widget, Orientable):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -51322,7 +45137,6 @@ class Separator(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, orientation: Orientation) -> Separator: ...
@@ -51537,58 +45351,12 @@ class SeparatorMenuItem(MenuItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuItem.Props):
-        accel_path: str | None
-        label: str
-        right_justified: bool
-        submenu: Menu | None
-        use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -51597,6 +45365,10 @@ class SeparatorMenuItem(MenuItem):
     def __init__(
         self,
         *,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         accel_path: str | None = ...,
         label: str = ...,
         right_justified: bool = ...,
@@ -51641,10 +45413,6 @@ class SeparatorMenuItem(MenuItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> SeparatorMenuItem: ...
@@ -51857,55 +45625,11 @@ class SeparatorToolItem(ToolItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToolItem.Props):
         draw: bool
-        is_important: bool
-        visible_horizontal: bool
-        visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -51917,6 +45641,8 @@ class SeparatorToolItem(ToolItem):
         self,
         *,
         draw: bool = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         is_important: bool = ...,
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
@@ -51959,8 +45685,6 @@ class SeparatorToolItem(ToolItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def get_draw(self) -> bool: ...
     @classmethod
@@ -52168,8 +45892,10 @@ class Settings(GObject.Object, StyleProvider):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        color_hash: dict[str, _Gdk3.Color]
+        @property
+        def color_hash(self) -> dict[str, _Gdk3.Color]: ...
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
         gtk_application_prefer_dark_theme: bool
@@ -52584,55 +46310,11 @@ class ShortcutLabel(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         accelerator: str | None
         disabled_text: str | None
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -52641,6 +46323,7 @@ class ShortcutLabel(Box):
         *,
         accelerator: str = ...,
         disabled_text: str = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -52683,7 +46366,6 @@ class ShortcutLabel(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_accelerator(self) -> str | None: ...
     def get_disabled_text(self) -> str | None: ...
@@ -52892,58 +46574,15 @@ class ShortcutsGroup(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        height: int
-        title: str
-        view: str
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        orientation: Orientation
         accel_size_group: SizeGroup
+        @property
+        def height(self) -> int: ...
+        title: str
         title_size_group: SizeGroup
-        child: Widget
+        view: str
+        orientation: Orientation
 
     @property
     def props(self) -> Props: ...
@@ -52954,6 +46593,7 @@ class ShortcutsGroup(Box):
         title: str = ...,
         title_size_group: SizeGroup = ...,
         view: str = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -52996,7 +46636,6 @@ class ShortcutsGroup(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
 
 class ShortcutsGroupClass(_gi.Struct): ...
@@ -53200,57 +46839,13 @@ class ShortcutsSection(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         max_height: int
         section_name: str
         title: str
         view_name: str
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -53261,6 +46856,7 @@ class ShortcutsSection(Box):
         section_name: str = ...,
         title: str = ...,
         view_name: str = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -53303,7 +46899,6 @@ class ShortcutsSection(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
 
 class ShortcutsSectionClass(_gi.Struct): ...
@@ -53518,7 +47113,9 @@ class ShortcutsShortcut(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
+        accel_size_group: SizeGroup
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -53528,54 +47125,8 @@ class ShortcutsShortcut(Box):
         subtitle: str
         subtitle_set: bool
         title: str
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        orientation: Orientation
-        accel_size_group: SizeGroup
         title_size_group: SizeGroup
-        child: Widget
+        orientation: Orientation
 
     @property
     def props(self) -> Props: ...
@@ -53593,6 +47144,7 @@ class ShortcutsShortcut(Box):
         subtitle_set: bool = ...,
         title: str = ...,
         title_size_group: SizeGroup = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -53635,7 +47187,6 @@ class ShortcutsShortcut(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
 
 class ShortcutsShortcutClass(_gi.Struct): ...
@@ -53903,84 +47454,10 @@ class ShortcutsWindow(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         section_name: str
         view_name: str
-        accept_focus: bool
-        application: Application | None
-        attached_to: Widget | None
-        decorated: bool
-        default_height: int
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        focus_on_map: bool
-        focus_visible: bool
-        gravity: _Gdk3.Gravity
-        has_resize_grip: bool
-        has_toplevel_focus: bool
-        hide_titlebar_when_maximized: bool
-        icon: GdkPixbuf.Pixbuf | None
-        icon_name: str | None
-        is_active: bool
-        is_maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        resize_grip_visible: bool
-        role: str | None
-        screen: _Gdk3.Screen
-        skip_pager_hint: bool
-        skip_taskbar_hint: bool
-        title: str | None
-        transient_for: Window | None
-        type: WindowType
-        type_hint: _Gdk3.WindowTypeHint
-        urgency_hint: bool
-        window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -54098,6 +47575,7 @@ class SizeGroup(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         ignore_hidden: bool
         mode: SizeGroupMode
@@ -54317,52 +47795,6 @@ class Socket(Container):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Container.Props):
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
-
-    @property
-    def props(self) -> Props: ...
     @property
     def container(self) -> Container: ...
     @property
@@ -54491,28 +47923,6 @@ class SocketAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -54898,6 +48308,7 @@ class SpinButton(Entry, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Entry.Props):
         adjustment: Adjustment
         climb_rate: float
@@ -54907,96 +48318,6 @@ class SpinButton(Entry, Orientable):
         update_policy: SpinButtonUpdatePolicy
         value: float
         wrap: bool
-        activates_default: bool
-        attributes: Pango.AttrList | None
-        buffer: EntryBuffer
-        caps_lock_warning: bool
-        completion: EntryCompletion
-        cursor_position: int
-        editable: bool
-        enable_emoji_completion: bool
-        has_frame: bool
-        im_module: str
-        inner_border: Border | None
-        input_hints: InputHints
-        input_purpose: InputPurpose
-        invisible_char: int
-        invisible_char_set: bool
-        max_length: int
-        max_width_chars: int
-        overwrite_mode: bool
-        placeholder_text: str
-        populate_all: bool
-        primary_icon_activatable: bool
-        primary_icon_gicon: Gio.Icon
-        primary_icon_name: str
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf
-        primary_icon_sensitive: bool
-        primary_icon_stock: str
-        primary_icon_storage_type: ImageType
-        primary_icon_tooltip_markup: str
-        primary_icon_tooltip_text: str
-        progress_fraction: float
-        progress_pulse_step: float
-        scroll_offset: int
-        secondary_icon_activatable: bool
-        secondary_icon_gicon: Gio.Icon
-        secondary_icon_name: str
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf
-        secondary_icon_sensitive: bool
-        secondary_icon_stock: str
-        secondary_icon_storage_type: ImageType
-        secondary_icon_tooltip_markup: str
-        secondary_icon_tooltip_text: str
-        selection_bound: int
-        shadow_type: ShadowType
-        show_emoji_icon: bool
-        tabs: Pango.TabArray | None
-        text: str
-        text_length: int
-        truncate_multiline: bool
-        visibility: bool
-        width_chars: int
-        xalign: float
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         editing_canceled: bool
         orientation: Orientation
 
@@ -55017,6 +48338,8 @@ class SpinButton(Entry, Orientable):
         update_policy: SpinButtonUpdatePolicy = ...,
         value: float = ...,
         wrap: bool = ...,
+        editing_canceled: bool = ...,
+        orientation: Orientation = ...,
         activates_default: bool = ...,
         attributes: Pango.AttrList = ...,
         buffer: EntryBuffer = ...,
@@ -55098,8 +48421,6 @@ class SpinButton(Entry, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        editing_canceled: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def configure(
         self, adjustment: Adjustment | None, climb_rate: float, digits: int
@@ -55229,28 +48550,6 @@ class SpinButtonAccessible(EntryAccessible, Atk.Value):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EntryAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> EntryAccessible: ...
     @property
@@ -55480,47 +48779,9 @@ class Spinner(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: bool
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
 
     @property
     def props(self) -> Props: ...
@@ -55644,28 +48905,6 @@ class SpinnerAccessible(WidgetAccessible, Atk.Image):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -55915,58 +49154,18 @@ class Stack(Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         hhomogeneous: bool
         homogeneous: bool
         interpolate_size: bool
         transition_duration: int
-        transition_running: bool
+        @property
+        def transition_running(self) -> bool: ...
         transition_type: StackTransitionType
         vhomogeneous: bool
         visible_child: Widget | None
         visible_child_name: str | None
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -56122,28 +49321,6 @@ class StackAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     def __init__(
@@ -56371,50 +49548,9 @@ class StackSidebar(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         stack: Stack | None
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -56675,55 +49811,11 @@ class StackSwitcher(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         icon_size: int
         stack: Stack | None
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -56734,6 +49826,7 @@ class StackSwitcher(Box):
         *,
         icon_size: int = ...,
         stack: Stack | None = ...,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -56776,7 +49869,6 @@ class StackSwitcher(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_stack(self) -> Stack | None: ...
     @classmethod
@@ -56854,22 +49946,27 @@ class StatusIcon(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        embedded: bool
+        @property
+        def embedded(self) -> bool: ...
+        file: str
         gicon: Gio.Icon | None
         has_tooltip: bool
         icon_name: str | None
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
         pixbuf: GdkPixbuf.Pixbuf | None
         screen: _Gdk3.Screen
-        size: int
+        @property
+        def size(self) -> int: ...
         stock: str | None
-        storage_type: ImageType
+        @property
+        def storage_type(self) -> ImageType: ...
         title: str
         tooltip_markup: str | None
         tooltip_text: str | None
         visible: bool
-        file: str
 
     @property
     def props(self) -> Props: ...
@@ -57167,53 +50264,9 @@ class Statusbar(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -57224,6 +50277,7 @@ class Statusbar(Box):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -57266,7 +50320,6 @@ class Statusbar(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_text_popped(self, context_id: int, text: str) -> None: ...
     def do_text_pushed(self, context_id: int, text: str) -> None: ...
@@ -57352,28 +50405,6 @@ class StatusbarAccessible(ContainerAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -57468,8 +50499,10 @@ class Style(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        context: StyleContext
+        @property
+        def context(self) -> StyleContext: ...
 
     @property
     def props(self) -> Props: ...
@@ -58208,6 +51241,7 @@ class StyleContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         direction: TextDirection
         paint_clock: _Gdk3.FrameClock
@@ -58562,48 +51596,10 @@ class Switch(Widget, Actionable, Activatable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: bool
         state: bool
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
@@ -58620,6 +51616,10 @@ class Switch(Widget, Actionable, Activatable):
         *,
         active: bool = ...,
         state: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -58656,10 +51656,6 @@ class Switch(Widget, Actionable, Activatable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_state_set(self, state: bool) -> bool: ...
@@ -58740,28 +51736,6 @@ class SwitchAccessible(WidgetAccessible, Atk.Action):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(WidgetAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> WidgetAccessible: ...
     @property
@@ -58850,7 +51824,7 @@ class SymbolicColor(GObject.GBoxed):
     def to_string(self) -> str: ...
     def unref(self) -> None: ...
 
-class Table(Container, Container):
+class Table(Container):
     """
     :Constructors:
 
@@ -59041,54 +52015,13 @@ class Table(Container, Container):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         column_spacing: int
         homogeneous: bool
         n_columns: int
         n_rows: int
         row_spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -59491,58 +52424,12 @@ class TearoffMenuItem(MenuItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MenuItem.Props):
-        accel_path: str | None
-        label: str
-        right_justified: bool
-        submenu: Menu | None
-        use_underline: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -59553,6 +52440,10 @@ class TearoffMenuItem(MenuItem):
     def __init__(
         self,
         *,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         accel_path: str | None = ...,
         label: str = ...,
         right_justified: bool = ...,
@@ -59597,10 +52488,6 @@ class TearoffMenuItem(MenuItem):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> TearoffMenuItem: ...
@@ -59618,24 +52505,7 @@ class TearoffMenuItemClass(_gi.Struct):
 
 class TearoffMenuItemPrivate(_gi.Struct): ...
 
-# override
-class Template:
-    def __init__(
-        self, filename: str = ..., resource_path: str = ..., string: str = ...
-    ) -> None: ...
-    @classmethod
-    def from_file(cls, filename: str): ...
-    @classmethod
-    def from_resource(cls, resource_path: str): ...
-    @classmethod
-    def from_string(cls, string: str): ...
-    def __call__(self, cls): ...
-
-    class Callback:
-        def __init__(self, name: str = ...) -> None: ...
-        def __call__(self, func: Callable[..., Any]) -> Any: ...
-
-    class Child: ...
+Template = _gtktemplate.Template
 
 class TextAppearance(_gi.Struct):
     """
@@ -59743,12 +52613,18 @@ class TextBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        copy_target_list: TargetList
-        cursor_position: int
-        has_selection: bool
-        paste_target_list: TargetList
-        tag_table: TextTagTable
+        @property
+        def copy_target_list(self) -> TargetList: ...
+        @property
+        def cursor_position(self) -> int: ...
+        @property
+        def has_selection(self) -> bool: ...
+        @property
+        def paste_target_list(self) -> TargetList: ...
+        @property
+        def tag_table(self) -> TextTagTable: ...
         text: str
 
     @property
@@ -60039,29 +52915,6 @@ class TextCellAccessible(RendererCellAccessible, Atk.Text):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RendererCellAccessible.Props):
-        renderer: CellRenderer
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RendererCellAccessible: ...
     @property
@@ -60291,9 +53144,12 @@ class TextMark(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        left_gravity: bool
-        name: str | None
+        @property
+        def left_gravity(self) -> bool: ...
+        @property
+        def name(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -60489,8 +53345,10 @@ class TextTag(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accumulative_margin: bool
+        background: str
         background_full_height: bool
         background_full_height_set: bool
         background_gdk: _Gdk3.Color
@@ -60507,6 +53365,7 @@ class TextTag(GObject.Object):
         font_desc: Pango.FontDescription
         font_features: str
         font_features_set: bool
+        foreground: str
         foreground_gdk: _Gdk3.Color
         foreground_rgba: _Gdk3.RGBA
         foreground_set: bool
@@ -60522,7 +53381,9 @@ class TextTag(GObject.Object):
         left_margin_set: bool
         letter_spacing: int
         letter_spacing_set: bool
-        name: str
+        @property
+        def name(self) -> str: ...
+        paragraph_background: str
         paragraph_background_gdk: _Gdk3.Color
         paragraph_background_rgba: _Gdk3.RGBA
         paragraph_background_set: bool
@@ -60561,9 +53422,6 @@ class TextTag(GObject.Object):
         weight_set: bool
         wrap_mode: WrapMode
         wrap_mode_set: bool
-        background: str
-        foreground: str
-        paragraph_background: str
 
     @property
     def props(self) -> Props: ...
@@ -60973,10 +53831,11 @@ class TextView(Container, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         accepts_tab: bool
         bottom_margin: int
-        buffer: TextBuffer
+        buffer: TextBuffer | None
         cursor_visible: bool
         editable: bool
         im_module: str
@@ -60995,52 +53854,10 @@ class TextView(Container, Scrollable):
         tabs: Pango.TabArray | None
         top_margin: int
         wrap_mode: WrapMode
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -61072,6 +53889,10 @@ class TextView(Container, Scrollable):
         tabs: Pango.TabArray = ...,
         top_margin: int = ...,
         wrap_mode: WrapMode = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -61111,10 +53932,6 @@ class TextView(Container, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def add_child_at_anchor(self, child: Widget, anchor: TextChildAnchor) -> None: ...
     def add_child_in_window(
@@ -61320,28 +54137,6 @@ class TextViewAccessible(
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -61444,8 +54239,10 @@ class ThemingEngine(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        name: str
+        @property
+        def name(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -61804,25 +54601,10 @@ class ToggleAction(Action):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Action.Props):
         active: bool
         draw_as_radio: bool
-        action_group: ActionGroup
-        always_show_image: bool
-        gicon: Gio.Icon
-        hide_if_empty: bool
-        icon_name: str
-        is_important: bool
-        label: str
-        name: str
-        sensitive: bool
-        short_label: str
-        stock_id: str
-        tooltip: str
-        visible: bool
-        visible_horizontal: bool
-        visible_overflown: bool
-        visible_vertical: bool
 
     @property
     def props(self) -> Props: ...
@@ -62119,65 +54901,15 @@ class ToggleButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         active: bool
         draw_indicator: bool
         inconsistent: bool
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -62191,6 +54923,10 @@ class ToggleButton(Button):
         active: bool = ...,
         draw_indicator: bool = ...,
         inconsistent: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
         image_position: PositionType = ...,
@@ -62239,10 +54975,6 @@ class ToggleButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_toggled(self) -> None: ...
     def get_active(self) -> bool: ...
@@ -62335,28 +55067,6 @@ class ToggleButtonAccessible(ButtonAccessible):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ButtonAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ButtonAccessible: ...
     @property
@@ -62625,63 +55335,13 @@ class ToggleToolButton(ToolButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToolButton.Props):
         active: bool
-        icon_name: str | None
-        icon_widget: Widget | None
-        label: str | None
-        label_widget: Widget | None
-        stock_id: str
-        use_underline: bool
-        is_important: bool
-        visible_horizontal: bool
-        visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -62693,6 +55353,10 @@ class ToggleToolButton(ToolButton):
         self,
         *,
         active: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         icon_name: str | None = ...,
         icon_widget: Widget | None = ...,
         label: str | None = ...,
@@ -62741,10 +55405,6 @@ class ToggleToolButton(ToolButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_toggled(self) -> None: ...
     def get_active(self) -> bool: ...
@@ -62978,62 +55638,18 @@ class ToolButton(ToolItem, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ToolItem.Props):
         icon_name: str | None
         icon_widget: Widget | None
         label: str | None
         label_widget: Widget | None
-        stock_id: str
+        stock_id: str | None
         use_underline: bool
-        is_important: bool
-        visible_horizontal: bool
-        visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -63050,6 +55666,10 @@ class ToolButton(ToolItem, Actionable):
         label_widget: Widget | None = ...,
         stock_id: str | None = ...,
         use_underline: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         is_important: bool = ...,
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
@@ -63092,10 +55712,6 @@ class ToolButton(ToolItem, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_clicked(self) -> None: ...
     def get_icon_name(self) -> str | None: ...
@@ -63325,54 +55941,13 @@ class ToolItem(Bin, Activatable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         is_important: bool
         visible_horizontal: bool
         visible_vertical: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         related_action: Action
         use_action_appearance: bool
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -63386,6 +55961,8 @@ class ToolItem(Bin, Activatable):
         is_important: bool = ...,
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -63425,8 +56002,6 @@ class ToolItem(Bin, Activatable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
     ) -> None: ...
     def do_create_menu_proxy(self) -> bool: ...
     def do_toolbar_reconfigured(self) -> None: ...
@@ -63668,54 +56243,13 @@ class ToolItemGroup(Container, ToolShell):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         collapsed: bool
         ellipsize: Pango.EllipsizeMode
         header_relief: ReliefStyle
         label: str
         label_widget: Widget
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -63991,57 +56525,16 @@ class ToolPalette(Container, Orientable, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         icon_size: IconSize
         icon_size_set: bool
         toolbar_style: ToolbarStyle
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -64055,6 +56548,11 @@ class ToolPalette(Container, Orientable, Scrollable):
         icon_size: IconSize = ...,
         icon_size_set: bool = ...,
         toolbar_style: ToolbarStyle = ...,
+        orientation: Orientation = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -64094,11 +56592,6 @@ class ToolPalette(Container, Orientable, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def add_drag_dest(
         self,
@@ -64386,54 +56879,13 @@ class Toolbar(Container, Orientable, ToolShell):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Container.Props):
         icon_size: IconSize
         icon_size_set: bool
         show_arrow: bool
         toolbar_style: ToolbarStyle
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -64448,6 +56900,7 @@ class Toolbar(Container, Orientable, ToolShell):
         icon_size_set: bool = ...,
         show_arrow: bool = ...,
         toolbar_style: ToolbarStyle = ...,
+        orientation: Orientation = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -64487,7 +56940,6 @@ class Toolbar(Container, Orientable, ToolShell):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_orientation_changed(self, orientation: Orientation) -> None: ...
     def do_popup_context_menu(self, x: int, y: int, button_number: int) -> bool: ...
@@ -64615,27 +57067,6 @@ class ToplevelAccessible(Atk.Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Atk.Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Atk.Object: ...
     @property
@@ -64816,9 +57247,12 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child_model: TreeModel
-        virtual_root: TreePath
+        @property
+        def child_model(self) -> TreeModel: ...
+        @property
+        def virtual_root(self) -> TreePath: ...
 
     @property
     def props(self) -> Props: ...
@@ -64983,8 +57417,10 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        model: TreeModel
+        @property
+        def model(self) -> TreeModel: ...
 
     @property
     def props(self) -> Props: ...
@@ -65107,6 +57543,7 @@ class TreeSelection(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         mode: SelectionMode
 
@@ -65207,14 +57644,7 @@ class TreeSortableIface(_gi.Struct):
     def has_default_sort_func(self) -> Callable[[TreeSortable], bool]: ...
 
 class TreeStore(
-    GObject.Object,
-    Buildable,
-    TreeDragDest,
-    TreeDragSource,
-    TreeModel,
-    TreeSortable,
-    TreeModel,
-    TreeSortable,
+    GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
     """
     :Constructors:
@@ -65949,28 +58379,6 @@ class TreeViewAccessible(
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property
@@ -66109,9 +58517,11 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         alignment: float
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         clickable: bool
         expand: bool
         fixed_width: int
@@ -66127,8 +58537,10 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         title: str
         visible: bool
         widget: Widget | None
-        width: int
-        x_offset: int
+        @property
+        def width(self) -> int: ...
+        @property
+        def x_offset(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -66263,9 +58675,11 @@ class UIManager(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         add_tearoffs: bool
-        ui: str
+        @property
+        def ui(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -66530,53 +58944,9 @@ class VBox(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -66585,6 +58955,7 @@ class VBox(Box):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
@@ -66627,7 +58998,6 @@ class VBox(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, homogeneous: bool, spacing: int) -> VBox: ...
@@ -66834,54 +59204,9 @@ class VButtonBox(ButtonBox):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ButtonBox.Props):
-        layout_style: ButtonBoxStyle
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -66890,6 +59215,7 @@ class VButtonBox(ButtonBox):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         layout_style: ButtonBoxStyle = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
@@ -66933,7 +59259,6 @@ class VButtonBox(ButtonBox):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> VButtonBox: ...
@@ -67148,55 +59473,9 @@ class VPaned(Paned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Paned.Props):
-        max_position: int
-        min_position: int
-        position: int
-        position_set: bool
-        wide_handle: bool
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -67205,6 +59484,7 @@ class VPaned(Paned):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
@@ -67247,7 +59527,6 @@ class VPaned(Paned):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> VPaned: ...
@@ -67466,58 +59745,8 @@ class VScale(Scale):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Scale.Props):
-        digits: int
-        draw_value: bool
-        has_origin: bool
-        value_pos: PositionType
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -67527,6 +59756,7 @@ class VScale(Scale):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         digits: int = ...,
         draw_value: bool = ...,
         has_origin: bool = ...,
@@ -67575,7 +59805,6 @@ class VScale(Scale):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, adjustment: Adjustment) -> VScale: ...
@@ -67782,54 +60011,8 @@ class VScrollbar(Scrollbar):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Scrollbar.Props):
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        lower_stepper_sensitivity: SensitivityType
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -67839,6 +60022,7 @@ class VScrollbar(Scrollbar):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
@@ -67883,7 +60067,6 @@ class VScrollbar(Scrollbar):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, adjustment: Adjustment | None = None) -> VScrollbar: ...
@@ -68064,46 +60247,8 @@ class VSeparator(Separator):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Separator.Props):
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         orientation: Orientation
 
     @property
@@ -68113,6 +60258,7 @@ class VSeparator(Separator):
     def __init__(
         self,
         *,
+        orientation: Orientation = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
@@ -68149,7 +60295,6 @@ class VSeparator(Separator):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> VSeparator: ...
@@ -68348,54 +60493,13 @@ class Viewport(Bin, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         shadow_type: ShadowType
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscroll_policy: ScrollablePolicy
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -68407,6 +60511,10 @@ class Viewport(Bin, Scrollable):
         self,
         *,
         shadow_type: ShadowType = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         border_width: int = ...,
         child: Widget = ...,
         resize_mode: ResizeMode = ...,
@@ -68446,10 +60554,6 @@ class Viewport(Bin, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_bin_window(self) -> _Gdk3.Window: ...
     def get_hadjustment(self) -> Adjustment: ...
@@ -68705,68 +60809,14 @@ class VolumeButton(ScaleButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ScaleButton.Props):
         use_symbolic: bool
-        adjustment: Adjustment
-        icons: list[str]
-        size: IconSize
-        value: float
-        always_show_image: bool
-        image: Widget | None
-        image_position: PositionType
-        label: str
-        relief: ReliefStyle
-        use_stock: bool
-        use_underline: bool
-        xalign: float
-        yalign: float
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
         action_name: str | None
         action_target: GLib.Variant
         related_action: Action
         use_action_appearance: bool
         orientation: Orientation
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -68776,6 +60826,11 @@ class VolumeButton(ScaleButton):
         self,
         *,
         use_symbolic: bool = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        related_action: Action = ...,
+        use_action_appearance: bool = ...,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         icons: Sequence[str] = ...,
         size: IconSize = ...,
@@ -68828,11 +60883,6 @@ class VolumeButton(ScaleButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        related_action: Action = ...,
-        use_action_appearance: bool = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> VolumeButton: ...
@@ -69012,11 +61062,13 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         app_paintable: bool
         can_default: bool
         can_focus: bool
-        composite_child: bool
+        @property
+        def composite_child(self) -> bool: ...
         double_buffered: bool
         events: _Gdk3.EventMask
         expand: bool
@@ -69041,9 +61093,10 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         opacity: float
         parent: Container | None
         receives_default: bool
-        scale_factor: int
+        @property
+        def scale_factor(self) -> int: ...
         sensitive: bool
-        style: Style
+        style: Style | None
         tooltip_markup: str | None
         tooltip_text: str | None
         valign: Align
@@ -69051,7 +61104,8 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         vexpand_set: bool
         visible: bool
         width_request: int
-        window: _Gdk3.Window | None
+        @property
+        def window(self) -> _Gdk3.Window | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -69668,28 +61722,6 @@ class WidgetAccessible(Accessible, Atk.Component):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Accessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Accessible: ...
     @property
@@ -70270,6 +62302,7 @@ class Window(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         accept_focus: bool
         application: Application | None
@@ -70283,69 +62316,32 @@ class Window(Bin):
         focus_visible: bool
         gravity: _Gdk3.Gravity
         has_resize_grip: bool
-        has_toplevel_focus: bool
+        @property
+        def has_toplevel_focus(self) -> bool: ...
         hide_titlebar_when_maximized: bool
         icon: GdkPixbuf.Pixbuf | None
         icon_name: str | None
-        is_active: bool
-        is_maximized: bool
+        @property
+        def is_active(self) -> bool: ...
+        @property
+        def is_maximized(self) -> bool: ...
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        resize_grip_visible: bool
+        @property
+        def resize_grip_visible(self) -> bool: ...
         role: str | None
         screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
+        startup_id: str
         title: str | None
         transient_for: Window | None
-        type: WindowType
+        @property
+        def type(self) -> WindowType: ...
         type_hint: _Gdk3.WindowTypeHint
         urgency_hint: bool
         window_position: WindowPosition
-        border_width: int
-        resize_mode: ResizeMode
-        app_paintable: bool
-        can_default: bool
-        can_focus: bool
-        composite_child: bool
-        double_buffered: bool
-        events: _Gdk3.EventMask
-        expand: bool
-        focus_on_click: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        is_focus: bool
-        margin: int
-        margin_bottom: int
-        margin_end: int
-        margin_left: int
-        margin_right: int
-        margin_start: int
-        margin_top: int
-        name: str
-        no_show_all: bool
-        opacity: float
-        parent: Container | None
-        receives_default: bool
-        scale_factor: int
-        sensitive: bool
-        style: Style
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        window: _Gdk3.Window | None
-        startup_id: str
-        child: Widget
 
     @property
     def props(self) -> Props: ...
@@ -70658,28 +62654,6 @@ class WindowAccessible(ContainerAccessible, Atk.Window):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ContainerAccessible.Props):
-        widget: Widget | None
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Atk.Object
-        accessible_role: Atk.Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Atk.Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Atk.Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Atk.Object
-        accessible_table_summary: Atk.Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> ContainerAccessible: ...
     @property

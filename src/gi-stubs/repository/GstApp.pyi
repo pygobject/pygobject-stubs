@@ -1,4 +1,5 @@
 from typing import Any
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -114,37 +115,30 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.BaseSink.Props):
         buffer_list: bool
         caps: Gst.Caps | None
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
+        @property
+        def current_level_buffers(self) -> int: ...
+        @property
+        def current_level_bytes(self) -> int: ...
+        @property
+        def current_level_time(self) -> int: ...
         drop: bool
-        dropped: int
+        @property
+        def dropped(self) -> int: ...
         emit_signals: bool
-        eos: bool
+        @property
+        def eos(self) -> bool: ...
         leaky_type: AppLeakyType
         max_buffers: int
         max_bytes: int
         max_time: int
-        out: int
+        @property
+        def out(self) -> int: ...
         silent: bool
         wait_on_eos: bool
-        blocksize: int
-        enable_last_sample: bool
-        last_sample: Gst.Sample | None
-        max_bitrate: int
-        max_lateness: int
-        processing_deadline: int
-        qos: bool
-        render_delay: int
-        stats: Gst.Structure
-        sync: bool
-        throttle_time: int
-        ts_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -371,13 +365,18 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.BaseSrc.Props):
         block: bool
         caps: Gst.Caps | None
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        dropped: int
+        @property
+        def current_level_buffers(self) -> int: ...
+        @property
+        def current_level_bytes(self) -> int: ...
+        @property
+        def current_level_time(self) -> int: ...
+        @property
+        def dropped(self) -> int: ...
         duration: int
         emit_signals: bool
         format: Gst.Format
@@ -390,17 +389,11 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         max_time: int
         min_latency: int
         min_percent: int
-        out: int
+        @property
+        def out(self) -> int: ...
         silent: bool
         size: int
         stream_type: AppStreamType
-        automatic_eos: bool
-        blocksize: int
-        do_timestamp: bool
-        num_buffers: int
-        typefind: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...

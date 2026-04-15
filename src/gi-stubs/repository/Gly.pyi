@@ -1,4 +1,5 @@
 from typing import Any
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -48,8 +49,10 @@ class Creator(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        mime_type: str
+        @property
+        def mime_type(self) -> str: ...
         sandbox_selector: SandboxSelector
 
     @property
@@ -110,8 +113,10 @@ class EncodedImage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        data: GLib.Bytes
+        @property
+        def data(self) -> GLib.Bytes: ...
 
     @property
     def props(self) -> Props: ...
@@ -179,10 +184,13 @@ class FrameRequest(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         loop_animation: bool
-        scale_height: int
-        scale_width: int
+        @property
+        def scale_height(self) -> int: ...
+        @property
+        def scale_width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -276,14 +284,18 @@ class Loader(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         apply_transformation: bool
-        bytes: GLib.Bytes
+        @property
+        def bytes(self) -> GLib.Bytes: ...
         cancellable: Gio.Cancellable
-        file: Gio.File
+        @property
+        def file(self) -> Gio.File: ...
         memory_format_selection: MemoryFormatSelection
         sandbox_selector: SandboxSelector
-        stream: Gio.InputStream
+        @property
+        def stream(self) -> Gio.InputStream: ...
 
     @property
     def props(self) -> Props: ...

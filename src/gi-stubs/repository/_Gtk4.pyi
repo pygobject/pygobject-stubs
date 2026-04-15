@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -384,8 +385,10 @@ class ATContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        accessible: Accessible
+        @property
+        def accessible(self) -> Accessible: ...
         accessible_role: AccessibleRole
         display: _Gdk4.Display
 
@@ -532,6 +535,7 @@ class AboutDialog(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         artists: list[str]
         authors: list[str]
@@ -549,68 +553,7 @@ class AboutDialog(Window):
         website: str | None
         website_label: str | None
         wrap_license: bool
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -633,6 +576,7 @@ class AboutDialog(Window):
         website: str | None = ...,
         website_label: str = ...,
         wrap_license: bool = ...,
+        accessible_role: AccessibleRole = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
         decorated: bool = ...,
@@ -687,7 +631,6 @@ class AboutDialog(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_credit_section(self, section_name: str, people: Sequence[str]) -> None: ...
     def get_artists(self) -> list[str]: ...
@@ -806,7 +749,13 @@ class AccessibleList(GObject.GBoxed):
     @classmethod
     def new_from_list(cls, list: list[Accessible]) -> AccessibleList: ...
 
-class AccessibleRange(GObject.GInterface, Protocol): ...
+class AccessibleRange(GObject.GInterface, Protocol):
+    """
+    Interface GtkAccessibleRange
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class AccessibleRangeInterface(_gi.Struct):
     """
@@ -959,43 +908,9 @@ class ActionBar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         revealed: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -1004,6 +919,7 @@ class ActionBar(Widget):
         self,
         *,
         revealed: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -1034,7 +950,6 @@ class ActionBar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_center_widget(self) -> Widget | None: ...
     def get_revealed(self) -> bool: ...
@@ -1128,6 +1043,7 @@ class Adjustment(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         lower: float
         page_increment: float
@@ -1222,6 +1138,7 @@ class AlertDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         buttons: list[str] | None
         cancel_button: int
@@ -1293,9 +1210,12 @@ class AlternativeTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ShortcutTrigger.Props):
-        first: ShortcutTrigger
-        second: ShortcutTrigger
+        @property
+        def first(self) -> ShortcutTrigger: ...
+        @property
+        def second(self) -> ShortcutTrigger: ...
 
     @property
     def props(self) -> Props: ...
@@ -1338,12 +1258,6 @@ class AnyFilter(MultiFilter):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(MultiFilter.Props):
-        item_type: type[Any]
-        n_items: int
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> AnyFilter: ...
 
@@ -1437,48 +1351,15 @@ class AppChooserButton(Widget, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         heading: str | None
         modal: bool
         show_default_item: bool
         show_dialog_item: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        content_type: str
+        @property
+        def content_type(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -1489,6 +1370,8 @@ class AppChooserButton(Widget, AppChooser):
         modal: bool = ...,
         show_default_item: bool = ...,
         show_dialog_item: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        content_type: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -1519,8 +1402,6 @@ class AppChooserButton(Widget, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        content_type: str = ...,
     ) -> None: ...
     def append_custom_item(self, name: str, label: str, icon: Gio.Icon) -> None: ...
     def append_separator(self) -> None: ...
@@ -1649,73 +1530,14 @@ class AppChooserDialog(Dialog, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        gfile: Gio.File
+        @property
+        def gfile(self) -> Gio.File: ...
         heading: str | None
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        content_type: str
-        startup_id: str
+        @property
+        def content_type(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -1724,6 +1546,8 @@ class AppChooserDialog(Dialog, AppChooser):
         *,
         gfile: Gio.File = ...,
         heading: str = ...,
+        accessible_role: AccessibleRole = ...,
+        content_type: str = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -1779,8 +1603,6 @@ class AppChooserDialog(Dialog, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        content_type: str = ...,
     ) -> None: ...
     def get_heading(self) -> str | None: ...
     def get_widget(self) -> Widget: ...
@@ -1872,6 +1694,7 @@ class AppChooserWidget(Widget, AppChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         default_text: str | None
         show_all: bool
@@ -1879,43 +1702,9 @@ class AppChooserWidget(Widget, AppChooser):
         show_fallback: bool
         show_other: bool
         show_recommended: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        content_type: str
+        @property
+        def content_type(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -1928,6 +1717,8 @@ class AppChooserWidget(Widget, AppChooser):
         show_fallback: bool = ...,
         show_other: bool = ...,
         show_recommended: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        content_type: str = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -1958,8 +1749,6 @@ class AppChooserWidget(Widget, AppChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        content_type: str = ...,
     ) -> None: ...
     def get_default_text(self) -> str | None: ...
     def get_show_all(self) -> bool: ...
@@ -2033,20 +1822,14 @@ class Application(Gio.Application):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.Application.Props):
-        active_window: Window | None
+        @property
+        def active_window(self) -> Window | None: ...
         menubar: Gio.MenuModel | None
         register_session: bool
-        screensaver_active: bool
-        application_id: str | None
-        flags: Gio.ApplicationFlags
-        inactivity_timeout: int
-        is_busy: bool
-        is_registered: bool
-        is_remote: bool
-        resource_base_path: str | None
-        version: str | None
-        action_group: Gio.ActionGroup | None
+        @property
+        def screensaver_active(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -2219,70 +2002,10 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         show_menubar: bool
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -2292,6 +2015,7 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         self,
         *,
         show_menubar: bool = ...,
+        accessible_role: AccessibleRole = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
         decorated: bool = ...,
@@ -2346,7 +2070,6 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_help_overlay(self) -> ShortcutsWindow | None: ...
     def get_id(self) -> int: ...
@@ -2442,47 +2165,13 @@ class AspectFrame(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         obey_child: bool
         ratio: float
         xalign: float
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -2495,6 +2184,7 @@ class AspectFrame(Widget):
         ratio: float = ...,
         xalign: float = ...,
         yalign: float = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2525,7 +2215,6 @@ class AspectFrame(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_obey_child(self) -> bool: ...
@@ -2654,71 +2343,13 @@ class Assistant(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
-        pages: Gio.ListModel
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def pages(self) -> Gio.ListModel: ...
+        @property
+        def use_header_bar(self) -> int: ...
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -2726,6 +2357,7 @@ class Assistant(Window):
         self,
         *,
         use_header_bar: int = ...,
+        accessible_role: AccessibleRole = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
         decorated: bool = ...,
@@ -2780,7 +2412,6 @@ class Assistant(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_action_widget(self, child: Widget) -> None: ...
     def append_page(self, page: Widget) -> int: ...
@@ -2829,8 +2460,10 @@ class AssistantPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: Widget
+        @property
+        def child(self) -> Widget: ...
         complete: bool
         page_type: AssistantPageType
         title: str
@@ -2966,13 +2599,18 @@ class BookmarkList(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         attributes: str | None
-        filename: str
+        @property
+        def filename(self) -> str: ...
         io_priority: int
-        item_type: type[Any]
-        loading: bool
-        n_items: int
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def loading(self) -> bool: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -3026,6 +2664,7 @@ class BoolFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Filter.Props):
         expression: Expression | None
         invert: bool
@@ -3146,46 +2785,12 @@ class Box(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         baseline_child: int
         baseline_position: BaselinePosition
         homogeneous: bool
         spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -3200,6 +2805,8 @@ class Box(Widget, Orientable):
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3230,8 +2837,6 @@ class Box(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def append(self, child: Widget) -> None: ...
     def get_baseline_child(self) -> int: ...
@@ -3286,6 +2891,7 @@ class BoxLayout(LayoutManager, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutManager.Props):
         baseline_child: int
         baseline_position: BaselinePosition
@@ -3429,9 +3035,10 @@ class Builder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         current_object: GObject.Object | None
-        scope: BuilderScope
+        scope: BuilderScope | None
         translation_domain: str | None
 
     @property
@@ -3545,10 +3152,14 @@ class BuilderListItemFactory(ListItemFactory):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ListItemFactory.Props):
-        bytes: GLib.Bytes
-        resource: str | None
-        scope: BuilderScope | None
+        @property
+        def bytes(self) -> GLib.Bytes: ...
+        @property
+        def resource(self) -> str | None: ...
+        @property
+        def scope(self) -> BuilderScope | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3568,7 +3179,14 @@ class BuilderListItemFactory(ListItemFactory):
     ) -> BuilderListItemFactory: ...
 
 class BuilderListItemFactoryClass(_gi.Struct): ...
-class BuilderScope(GObject.GInterface, Protocol): ...
+
+class BuilderScope(GObject.GInterface, Protocol):
+    """
+    Interface GtkBuilderScope
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class BuilderScopeInterface(_gi.Struct):
     """
@@ -3677,6 +3295,7 @@ class Button(Widget, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         can_shrink: bool
         child: Widget | None
@@ -3684,41 +3303,6 @@ class Button(Widget, Actionable):
         icon_name: str | None
         label: str | None
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -3736,6 +3320,9 @@ class Button(Widget, Actionable):
         icon_name: str = ...,
         label: str = ...,
         use_underline: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3766,9 +3353,6 @@ class Button(Widget, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_clicked(self) -> None: ...
@@ -3916,6 +3500,7 @@ class Calendar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         date: GLib.DateTime
         day: int
@@ -3924,41 +3509,6 @@ class Calendar(Widget):
         show_heading: bool
         show_week_numbers: bool
         year: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -3973,6 +3523,7 @@ class Calendar(Widget):
         show_heading: bool = ...,
         show_week_numbers: bool = ...,
         year: int = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -4003,7 +3554,6 @@ class Calendar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def clear_marks(self) -> None: ...
     def get_date(self) -> GLib.DateTime: ...
@@ -4070,9 +3620,12 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
-        edit_widget: CellEditable | None
-        edited_cell: CellRenderer | None
+        @property
+        def edit_widget(self) -> CellEditable | None: ...
+        @property
+        def edited_cell(self) -> CellRenderer | None: ...
         focus_cell: CellRenderer | None
 
     @property
@@ -4319,11 +3872,9 @@ class CellAreaBox(CellArea, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellArea.Props):
         spacing: int
-        edit_widget: CellEditable | None
-        edited_cell: CellRenderer | None
-        focus_cell: CellRenderer | None
         orientation: Orientation
 
     @property
@@ -4332,8 +3883,8 @@ class CellAreaBox(CellArea, Orientable):
         self,
         *,
         spacing: int = ...,
-        focus_cell: CellRenderer | None = ...,
         orientation: Orientation = ...,
+        focus_cell: CellRenderer | None = ...,
     ) -> None: ...
     def get_spacing(self) -> int: ...
     @classmethod
@@ -4469,12 +4020,18 @@ class CellAreaContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        area: CellArea
-        minimum_height: int
-        minimum_width: int
-        natural_height: int
-        natural_width: int
+        @property
+        def area(self) -> CellArea: ...
+        @property
+        def minimum_height(self) -> int: ...
+        @property
+        def minimum_width(self) -> int: ...
+        @property
+        def natural_height(self) -> int: ...
+        @property
+        def natural_width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -4640,10 +4197,13 @@ class CellRenderer(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
+        cell_background: str
         cell_background_rgba: _Gdk4.RGBA
         cell_background_set: bool
-        editing: bool
+        @property
+        def editing(self) -> bool: ...
         height: int
         is_expanded: bool
         is_expander: bool
@@ -4655,7 +4215,6 @@ class CellRenderer(GObject.InitiallyUnowned):
         xpad: int
         yalign: float
         ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -4876,72 +4435,12 @@ class CellRendererAccel(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         accel_key: int
         accel_mode: CellRendererAccelMode
         accel_mods: _Gdk4.ModifierType
         keycode: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: _Gdk4.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: _Gdk4.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5197,71 +4696,11 @@ class CellRendererCombo(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         has_entry: bool
         model: TreeModel
         text_column: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: _Gdk4.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: _Gdk4.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5379,29 +4818,15 @@ class CellRendererPixbuf(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         gicon: Gio.Icon
         icon_name: str
         icon_size: IconSize
+        pixbuf: GdkPixbuf.Pixbuf
         pixbuf_expander_closed: GdkPixbuf.Pixbuf
         pixbuf_expander_open: GdkPixbuf.Pixbuf
         texture: _Gdk4.Texture
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        pixbuf: GdkPixbuf.Pixbuf
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5478,6 +4903,7 @@ class CellRendererProgress(CellRenderer, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         inverted: bool
         pulse: int
@@ -5485,22 +4911,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float
         text_yalign: float
         value: int
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
         orientation: Orientation
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5513,6 +4924,7 @@ class CellRendererProgress(CellRenderer, Orientable):
         text_xalign: float = ...,
         text_yalign: float = ...,
         value: int = ...,
+        orientation: Orientation = ...,
         cell_background: str = ...,
         cell_background_rgba: _Gdk4.RGBA = ...,
         cell_background_set: bool = ...,
@@ -5527,7 +4939,6 @@ class CellRendererProgress(CellRenderer, Orientable):
         xpad: int = ...,
         yalign: float = ...,
         ypad: int = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> CellRendererProgress: ...
@@ -5623,71 +5034,11 @@ class CellRendererSpin(CellRendererText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRendererText.Props):
         adjustment: Adjustment
         climb_rate: float
         digits: int
-        align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background_rgba: _Gdk4.RGBA
-        background_set: bool
-        editable: bool
-        editable_set: bool
-        ellipsize: Pango.EllipsizeMode
-        ellipsize_set: bool
-        family: str
-        family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground_rgba: _Gdk4.RGBA
-        foreground_set: bool
-        language: str
-        language_set: bool
-        max_width_chars: int
-        placeholder_text: str
-        rise: int
-        rise_set: bool
-        scale: float
-        scale_set: bool
-        single_paragraph_mode: bool
-        size: int
-        size_points: float
-        size_set: bool
-        stretch: Pango.Stretch
-        stretch_set: bool
-        strikethrough: bool
-        strikethrough_set: bool
-        style: Pango.Style
-        style_set: bool
-        text: str
-        underline: Pango.Underline
-        underline_set: bool
-        variant: Pango.Variant
-        variant_set: bool
-        weight: int
-        weight_set: bool
-        width_chars: int
-        wrap_mode: Pango.WrapMode
-        wrap_width: int
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5801,25 +5152,11 @@ class CellRendererSpinner(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         active: bool
         pulse: int
         size: IconSize
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -5933,10 +5270,12 @@ class CellRendererText(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         align_set: bool
         alignment: Pango.Alignment
         attributes: Pango.AttrList
+        background: str
         background_rgba: _Gdk4.RGBA
         background_set: bool
         editable: bool
@@ -5947,10 +5286,12 @@ class CellRendererText(CellRenderer):
         family_set: bool
         font: str
         font_desc: Pango.FontDescription
+        foreground: str
         foreground_rgba: _Gdk4.RGBA
         foreground_set: bool
         language: str
         language_set: bool
+        markup: str
         max_width_chars: int
         placeholder_text: str
         rise: int
@@ -5977,24 +5318,6 @@ class CellRendererText(CellRenderer):
         width_chars: int
         wrap_mode: Pango.WrapMode
         wrap_width: int
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        background: str
-        foreground: str
-        markup: str
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -6128,26 +5451,12 @@ class CellRendererToggle(CellRenderer):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(CellRenderer.Props):
         activatable: bool
         active: bool
         inconsistent: bool
         radio: bool
-        cell_background_rgba: _Gdk4.RGBA
-        cell_background_set: bool
-        editing: bool
-        height: int
-        is_expanded: bool
-        is_expander: bool
-        mode: CellRendererMode
-        sensitive: bool
-        visible: bool
-        width: int
-        xalign: float
-        xpad: int
-        yalign: float
-        ypad: int
-        cell_background: str
 
     @property
     def props(self) -> Props: ...
@@ -6259,47 +5568,15 @@ class CellView(Widget, CellLayout, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        cell_area: CellArea
-        cell_area_context: CellAreaContext
+        @property
+        def cell_area(self) -> CellArea: ...
+        @property
+        def cell_area_context(self) -> CellAreaContext: ...
         draw_sensitive: bool
         fit_model: bool
         model: TreeModel | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -6313,6 +5590,8 @@ class CellView(Widget, CellLayout, Orientable):
         draw_sensitive: bool = ...,
         fit_model: bool = ...,
         model: TreeModel | None = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6343,8 +5622,6 @@ class CellView(Widget, CellLayout, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_displayed_row(self) -> TreePath | None: ...
     def get_draw_sensitive(self) -> bool: ...
@@ -6438,47 +5715,13 @@ class CenterBox(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         baseline_position: BaselinePosition
         center_widget: Widget | None
         end_widget: Widget | None
         shrink_center_last: bool
         start_widget: Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -6492,6 +5735,8 @@ class CenterBox(Widget, Orientable):
         end_widget: Widget | None = ...,
         shrink_center_last: bool = ...,
         start_widget: Widget | None = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6522,8 +5767,6 @@ class CenterBox(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_baseline_position(self) -> BaselinePosition: ...
     def get_center_widget(self) -> Widget | None: ...
@@ -6557,6 +5800,7 @@ class CenterLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutManager.Props):
         shrink_center_last: bool
 
@@ -6669,51 +5913,17 @@ class CheckButton(Widget, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: bool
         child: Widget | None
+        group: CheckButton | None
         inconsistent: bool
         label: str | None
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
-        group: CheckButton | None
 
     @property
     def props(self) -> Props: ...
@@ -6728,6 +5938,9 @@ class CheckButton(Widget, Actionable):
         inconsistent: bool = ...,
         label: str | None = ...,
         use_underline: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6758,9 +5971,6 @@ class CheckButton(Widget, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_toggled(self) -> None: ...
@@ -6895,45 +6105,11 @@ class ColorButton(Widget, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         modal: bool
         show_editor: bool
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         rgba: _Gdk4.RGBA
         use_alpha: bool
@@ -6946,6 +6122,9 @@ class ColorButton(Widget, ColorChooser):
         modal: bool = ...,
         show_editor: bool = ...,
         title: str = ...,
+        accessible_role: AccessibleRole = ...,
+        rgba: _Gdk4.RGBA = ...,
+        use_alpha: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6976,9 +6155,6 @@ class ColorButton(Widget, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        rgba: _Gdk4.RGBA = ...,
-        use_alpha: bool = ...,
     ) -> None: ...
     def get_modal(self) -> bool: ...
     def get_title(self) -> str: ...
@@ -7121,73 +6297,12 @@ class ColorChooserDialog(Dialog, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         show_editor: bool
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         rgba: _Gdk4.RGBA
         use_alpha: bool
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -7195,6 +6310,9 @@ class ColorChooserDialog(Dialog, ColorChooser):
         self,
         *,
         show_editor: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        rgba: _Gdk4.RGBA = ...,
+        use_alpha: bool = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -7250,9 +6368,6 @@ class ColorChooserDialog(Dialog, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        rgba: _Gdk4.RGBA = ...,
-        use_alpha: bool = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -7356,43 +6471,9 @@ class ColorChooserWidget(Widget, ColorChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         show_editor: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         rgba: _Gdk4.RGBA
         use_alpha: bool
@@ -7403,6 +6484,9 @@ class ColorChooserWidget(Widget, ColorChooser):
         self,
         *,
         show_editor: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        rgba: _Gdk4.RGBA = ...,
+        use_alpha: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7433,9 +6517,6 @@ class ColorChooserWidget(Widget, ColorChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        rgba: _Gdk4.RGBA = ...,
-        use_alpha: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> ColorChooserWidget: ...
@@ -7459,6 +6540,7 @@ class ColorDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         modal: bool
         title: str
@@ -7560,44 +6642,10 @@ class ColorDialogButton(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         dialog: ColorDialog | None
         rgba: _Gdk4.RGBA
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -7607,6 +6655,7 @@ class ColorDialogButton(Widget):
         *,
         dialog: ColorDialog = ...,
         rgba: _Gdk4.RGBA = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7637,7 +6686,6 @@ class ColorDialogButton(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_dialog(self) -> ColorDialog | None: ...
     def get_rgba(self) -> _Gdk4.RGBA: ...
@@ -7750,8 +6798,10 @@ class ColumnView(Widget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        columns: Gio.ListModel
+        @property
+        def columns(self) -> Gio.ListModel: ...
         enable_rubberband: bool
         header_factory: ListItemFactory | None
         model: SelectionModel | None
@@ -7760,43 +6810,9 @@ class ColumnView(Widget, Scrollable):
         show_column_separators: bool
         show_row_separators: bool
         single_click_activate: bool
-        sorter: Sorter | None
+        @property
+        def sorter(self) -> Sorter | None: ...
         tab_behavior: ListTabBehavior
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -7817,6 +6833,11 @@ class ColumnView(Widget, Scrollable):
         show_row_separators: bool = ...,
         single_click_activate: bool = ...,
         tab_behavior: ListTabBehavior = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7847,11 +6868,6 @@ class ColumnView(Widget, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def append_column(self, column: ColumnViewColumn) -> None: ...
     def get_columns(self) -> Gio.ListModel: ...
@@ -7920,16 +6936,16 @@ class ColumnViewCell(ListItem):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ListItem.Props):
         child: Widget | None
         focusable: bool
-        item: GObject.Object | None
-        position: int
-        selected: bool
-        accessible_description: str
-        accessible_label: str
-        activatable: bool
-        selectable: bool
+        @property
+        def item(self) -> GObject.Object | None: ...
+        @property
+        def position(self) -> int: ...
+        @property
+        def selected(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -7980,8 +6996,10 @@ class ColumnViewColumn(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        column_view: ColumnView | None
+        @property
+        def column_view(self) -> ColumnView | None: ...
         expand: bool
         factory: ListItemFactory | None
         fixed_width: int
@@ -8056,15 +7074,19 @@ class ColumnViewRow(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accessible_description: str
         accessible_label: str
         activatable: bool
         focusable: bool
-        item: GObject.Object | None
-        position: int
+        @property
+        def item(self) -> GObject.Object | None: ...
+        @property
+        def position(self) -> int: ...
         selectable: bool
-        selected: bool
+        @property
+        def selected(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -8113,9 +7135,12 @@ class ColumnViewSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Sorter.Props):
-        primary_sort_column: ColumnViewColumn | None
-        primary_sort_order: SortType
+        @property
+        def primary_sort_column(self) -> ColumnViewColumn | None: ...
+        @property
+        def primary_sort_order(self) -> SortType: ...
 
     @property
     def props(self) -> Props: ...
@@ -8231,53 +7256,21 @@ class ComboBox(Widget, CellEditable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: int
         active_id: str | None
         button_sensitivity: SensitivityType
         child: Widget | None
         entry_text_column: int
-        has_entry: bool
+        @property
+        def has_entry(self) -> bool: ...
         has_frame: bool
         id_column: int
         model: TreeModel | None
         popup_fixed_width: bool
-        popup_shown: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def popup_shown(self) -> bool: ...
         accessible_role: AccessibleRole
         editing_canceled: bool
 
@@ -8298,6 +7291,8 @@ class ComboBox(Widget, CellEditable, CellLayout):
         id_column: int = ...,
         model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editing_canceled: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -8328,8 +7323,6 @@ class ComboBox(Widget, CellEditable, CellLayout):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def do_changed(self) -> None: ...
@@ -8483,53 +7476,8 @@ class ComboBoxText(ComboBox):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ComboBox.Props):
-        active: int
-        active_id: str | None
-        button_sensitivity: SensitivityType
-        child: Widget | None
-        entry_text_column: int
-        has_entry: bool
-        has_frame: bool
-        id_column: int
-        model: TreeModel | None
-        popup_fixed_width: bool
-        popup_shown: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         editing_canceled: bool
 
@@ -8538,6 +7486,8 @@ class ComboBoxText(ComboBox):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
+        editing_canceled: bool = ...,
         active: int = ...,
         active_id: str | None = ...,
         button_sensitivity: SensitivityType = ...,
@@ -8578,8 +7528,6 @@ class ComboBoxText(ComboBox):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editing_canceled: bool = ...,
     ) -> None: ...
     def append(self, id: str | None, text: str) -> None: ...
     def append_text(self, text: str) -> None: ...
@@ -8633,15 +7581,24 @@ class Constraint(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        constant: float
-        multiplier: float
-        relation: ConstraintRelation
-        source: ConstraintTarget | None
-        source_attribute: ConstraintAttribute
-        strength: int
-        target: ConstraintTarget | None
-        target_attribute: ConstraintAttribute
+        @property
+        def constant(self) -> float: ...
+        @property
+        def multiplier(self) -> float: ...
+        @property
+        def relation(self) -> ConstraintRelation: ...
+        @property
+        def source(self) -> ConstraintTarget | None: ...
+        @property
+        def source_attribute(self) -> ConstraintAttribute: ...
+        @property
+        def strength(self) -> int: ...
+        @property
+        def target(self) -> ConstraintTarget | None: ...
+        @property
+        def target_attribute(self) -> ConstraintAttribute: ...
 
     @property
     def props(self) -> Props: ...
@@ -8725,6 +7682,7 @@ class ConstraintGuide(GObject.Object, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         max_height: int
         max_width: int
@@ -8821,12 +7779,6 @@ class ConstraintLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(LayoutChild.Props):
-        child_widget: Widget
-        layout_manager: LayoutManager
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, child_widget: Widget = ..., layout_manager: LayoutManager = ...
     ) -> None: ...
@@ -8853,7 +7805,14 @@ class ConstraintLayoutClass(_gi.Struct):
     @property
     def parent_class(self) -> LayoutManagerClass: ...
 
-class ConstraintTarget(GObject.GInterface, Protocol): ...
+class ConstraintTarget(GObject.GInterface, Protocol):
+    """
+    Interface GtkConstraintTarget
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
 class ConstraintTargetInterface(_gi.Struct): ...
 
 class CssLocation(_gi.Struct):
@@ -8895,6 +7854,7 @@ class CssProvider(GObject.Object, StyleProvider):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         prefers_color_scheme: InterfaceColorScheme
         prefers_contrast: InterfaceContrast
@@ -9181,70 +8141,11 @@ class Dialog(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def use_header_bar(self) -> int: ...
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -9254,6 +8155,7 @@ class Dialog(Window):
         self,
         *,
         use_header_bar: int = ...,
+        accessible_role: AccessibleRole = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
         decorated: bool = ...,
@@ -9308,7 +8210,6 @@ class Dialog(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
     def add_button(self, button_text: str, response_id: int) -> Widget: ...
@@ -9382,15 +8283,20 @@ class DirectoryList(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         attributes: str | None
-        error: GLib.Error | None
+        @property
+        def error(self) -> GLib.Error | None: ...
         file: Gio.File | None
         io_priority: int
-        item_type: type[Any]
-        loading: bool
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def loading(self) -> bool: ...
         monitored: bool
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -9497,43 +8403,9 @@ class DragIcon(Widget, Native, Root):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -9542,6 +8414,7 @@ class DragIcon(Widget, Native, Root):
         self,
         *,
         child: Widget | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -9572,7 +8445,6 @@ class DragIcon(Widget, Native, Root):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     @staticmethod
     def create_widget_for_value(value: Any) -> Widget | None: ...
@@ -9641,17 +8513,10 @@ class DragSource(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureSingle.Props):
         actions: _Gdk4.DragAction
         content: _Gdk4.ContentProvider | None
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -9755,44 +8620,10 @@ class DrawingArea(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         content_height: int
         content_width: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -9804,6 +8635,7 @@ class DrawingArea(Widget):
         *,
         content_height: int = ...,
         content_width: int = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -9834,7 +8666,6 @@ class DrawingArea(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def do_resize(self, width: int, height: int) -> None: ...
     def get_content_height(self) -> int: ...
@@ -9892,14 +8723,14 @@ class DropControllerMotion(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        contains_pointer: bool
-        drop: _Gdk4.Drop | None
-        is_pointer: bool
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def contains_pointer(self) -> bool: ...
+        @property
+        def drop(self) -> _Gdk4.Drop | None: ...
+        @property
+        def is_pointer(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -10000,6 +8831,7 @@ class DropDown(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         enable_search: bool
         expression: Expression | None
@@ -10009,50 +8841,16 @@ class DropDown(Widget):
         model: Gio.ListModel | None
         search_match_mode: StringFilterMatchMode
         selected: int
-        selected_item: GObject.Object | None
+        @property
+        def selected_item(self) -> GObject.Object | None: ...
         show_arrow: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(
         self,
+        *,
         enable_search: bool = ...,
         expression: Expression | None = ...,
         factory: ListItemFactory | None = ...,
@@ -10062,6 +8860,7 @@ class DropDown(Widget):
         search_match_mode: StringFilterMatchMode = ...,
         selected: int = ...,
         show_arrow: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10092,7 +8891,6 @@ class DropDown(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_enable_search(self) -> bool: ...
     def get_expression(self) -> Expression | None: ...
@@ -10168,17 +8966,18 @@ class DropTarget(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
         actions: _Gdk4.DragAction
-        current_drop: _Gdk4.Drop | None
-        drop: _Gdk4.Drop | None
-        formats: _Gdk4.ContentFormats | None
+        @property
+        def current_drop(self) -> _Gdk4.Drop | None: ...
+        @property
+        def drop(self) -> _Gdk4.Drop | None: ...
+        @property
+        def formats(self) -> _Gdk4.ContentFormats | None: ...
         preload: bool
-        value: Any | None
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def value(self) -> Any | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10238,13 +9037,10 @@ class DropTargetAsync(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
         actions: _Gdk4.DragAction
         formats: _Gdk4.ContentFormats | None
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -10423,49 +9219,17 @@ class EditableLabel(Widget, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         editing: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -10476,6 +9240,13 @@ class EditableLabel(Widget, Editable):
         self,
         *,
         editing: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10506,13 +9277,6 @@ class EditableLabel(Widget, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def get_editing(self) -> bool: ...
     @classmethod
@@ -10614,50 +9378,8 @@ class EmojiChooser(Popover):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Popover.Props):
-        autohide: bool
-        cascade_popdown: bool
-        child: Widget | None
-        default_widget: Widget | None
-        has_arrow: bool
-        mnemonics_visible: bool
-        pointing_to: _Gdk4.Rectangle
-        position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -10665,6 +9387,7 @@ class EmojiChooser(Popover):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
         autohide: bool = ...,
         cascade_popdown: bool = ...,
         child: Widget | None = ...,
@@ -10703,7 +9426,6 @@ class EmojiChooser(Popover):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> EmojiChooser: ...
@@ -10834,6 +9556,7 @@ class Entry(Widget, CellEditable, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
@@ -10857,67 +9580,38 @@ class Entry(Widget, CellEditable, Editable):
         primary_icon_name: str
         primary_icon_paintable: _Gdk4.Paintable
         primary_icon_sensitive: bool
-        primary_icon_storage_type: ImageType
+        @property
+        def primary_icon_storage_type(self) -> ImageType: ...
         primary_icon_tooltip_markup: str
         primary_icon_tooltip_text: str
         progress_fraction: float
         progress_pulse_step: float
-        scroll_offset: int
+        @property
+        def scroll_offset(self) -> int: ...
         secondary_icon_activatable: bool
         secondary_icon_gicon: Gio.Icon
         secondary_icon_name: str
         secondary_icon_paintable: _Gdk4.Paintable
         secondary_icon_sensitive: bool
-        secondary_icon_storage_type: ImageType
+        @property
+        def secondary_icon_storage_type(self) -> ImageType: ...
         secondary_icon_tooltip_markup: str
         secondary_icon_tooltip_text: str
         show_emoji_icon: bool
         tabs: Pango.TabArray | None
-        text_length: int
+        @property
+        def text_length(self) -> int: ...
         truncate_multiline: bool
         visibility: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         editing_canceled: bool
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -10966,6 +9660,14 @@ class Entry(Widget, CellEditable, Editable):
         tabs: Pango.TabArray | None = ...,
         truncate_multiline: bool = ...,
         visibility: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editing_canceled: bool = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10996,14 +9698,6 @@ class Entry(Widget, CellEditable, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editing_canceled: bool = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def do_activate(self) -> None: ...
     def get_activates_default(self) -> bool: ...
@@ -11117,8 +9811,10 @@ class EntryBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        length: int
+        @property
+        def length(self) -> int: ...
         max_length: int
         text: str
 
@@ -11216,8 +9912,10 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
@@ -11288,11 +9986,13 @@ class EventController(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         name: str | None
         propagation_limit: PropagationLimit
         propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def widget(self) -> Widget | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -11347,13 +10047,12 @@ class EventControllerFocus(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        contains_focus: bool
-        is_focus: bool
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def contains_focus(self) -> bool: ...
+        @property
+        def is_focus(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -11397,14 +10096,6 @@ class EventControllerKey(EventController):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EventController.Props):
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -11444,14 +10135,6 @@ class EventControllerLegacy(EventController):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EventController.Props):
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -11493,13 +10176,12 @@ class EventControllerMotion(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        contains_pointer: bool
-        is_pointer: bool
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def contains_pointer(self) -> bool: ...
+        @property
+        def is_pointer(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -11546,12 +10228,9 @@ class EventControllerScroll(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
         flags: EventControllerScrollFlags
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -11598,12 +10277,6 @@ class EveryFilter(MultiFilter):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(MultiFilter.Props):
-        item_type: type[Any]
-        n_items: int
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls) -> EveryFilter: ...
 
@@ -11688,6 +10361,7 @@ class Expander(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         expanded: bool
@@ -11696,41 +10370,6 @@ class Expander(Widget):
         resize_toplevel: bool
         use_markup: bool
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -11745,6 +10384,7 @@ class Expander(Widget):
         resize_toplevel: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -11775,7 +10415,6 @@ class Expander(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_expanded(self) -> bool: ...
@@ -11969,82 +10608,28 @@ class FileChooserDialog(Dialog, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
         filter: FileFilter | None
-        filters: Gio.ListModel
+        @property
+        def filters(self) -> Gio.ListModel: ...
         select_multiple: bool
-        shortcut_folders: Gio.ListModel
-        startup_id: str
+        @property
+        def shortcut_folders(self) -> Gio.ListModel: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        filter: FileFilter = ...,
+        select_multiple: bool = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -12100,11 +10685,6 @@ class FileChooserDialog(Dialog, FileChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action: FileChooserAction = ...,
-        create_folders: bool = ...,
-        filter: FileFilter = ...,
-        select_multiple: bool = ...,
     ) -> None: ...
 
 class FileChooserNative(NativeDialog, FileChooser):
@@ -12134,19 +10714,18 @@ class FileChooserNative(NativeDialog, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(NativeDialog.Props):
         accept_label: str | None
         cancel_label: str | None
-        modal: bool
-        title: str | None
-        transient_for: Window | None
-        visible: bool
         action: FileChooserAction
         create_folders: bool
         filter: FileFilter | None
-        filters: Gio.ListModel
+        @property
+        def filters(self) -> Gio.ListModel: ...
         select_multiple: bool
-        shortcut_folders: Gio.ListModel
+        @property
+        def shortcut_folders(self) -> Gio.ListModel: ...
 
     @property
     def props(self) -> Props: ...
@@ -12155,14 +10734,14 @@ class FileChooserNative(NativeDialog, FileChooser):
         *,
         accept_label: str | None = ...,
         cancel_label: str | None = ...,
-        modal: bool = ...,
-        title: str = ...,
-        transient_for: Window | None = ...,
-        visible: bool = ...,
         action: FileChooserAction = ...,
         create_folders: bool = ...,
         filter: FileFilter = ...,
         select_multiple: bool = ...,
+        modal: bool = ...,
+        title: str = ...,
+        transient_for: Window | None = ...,
+        visible: bool = ...,
     ) -> None: ...
     def get_accept_label(self) -> str | None: ...
     def get_cancel_label(self) -> str | None: ...
@@ -12274,52 +10853,22 @@ class FileChooserWidget(Widget, FileChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         search_mode: bool
-        show_time: bool
-        subtitle: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def show_time(self) -> bool: ...
+        @property
+        def subtitle(self) -> str: ...
         accessible_role: AccessibleRole
         action: FileChooserAction
         create_folders: bool
         filter: FileFilter | None
-        filters: Gio.ListModel
+        @property
+        def filters(self) -> Gio.ListModel: ...
         select_multiple: bool
-        shortcut_folders: Gio.ListModel
+        @property
+        def shortcut_folders(self) -> Gio.ListModel: ...
 
     @property
     def props(self) -> Props: ...
@@ -12327,6 +10876,11 @@ class FileChooserWidget(Widget, FileChooser):
         self,
         *,
         search_mode: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action: FileChooserAction = ...,
+        create_folders: bool = ...,
+        filter: FileFilter = ...,
+        select_multiple: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12357,11 +10911,6 @@ class FileChooserWidget(Widget, FileChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action: FileChooserAction = ...,
-        create_folders: bool = ...,
-        filter: FileFilter = ...,
-        select_multiple: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls, action: FileChooserAction) -> FileChooserWidget: ...
@@ -12390,6 +10939,7 @@ class FileDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accept_label: str | None
         default_filter: FileFilter | None
@@ -12402,12 +10952,12 @@ class FileDialog(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(
         self,
+        *,
         accept_label: str | None = ...,
         default_filter: FileFilter | None = ...,
-        filters: Gio.ListModel[FileFilter] | None = ...,
+        filters: Gio.ListModel | None = ...,
         initial_file: Gio.File | None = ...,
         initial_folder: Gio.File | None = ...,
         initial_name: str | None = ...,
@@ -12542,11 +11092,9 @@ class FileFilter(Filter, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Filter.Props):
         name: str | None
-        mime_types: list[str]
-        patterns: list[str]
-        suffixes: list[str]
 
     @property
     def props(self) -> Props: ...
@@ -12590,6 +11138,7 @@ class FileLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         always_ask: bool
         file: Gio.File | None
@@ -12708,13 +11257,17 @@ class FilterListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         filter: Filter | None
         incremental: bool
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
-        pending: int
+        @property
+        def n_items(self) -> int: ...
+        @property
+        def pending(self) -> int: ...
         watch_items: bool
 
     @property
@@ -12818,42 +11371,8 @@ class Fixed(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -12863,6 +11382,7 @@ class Fixed(Widget):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12893,7 +11413,6 @@ class Fixed(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child_position(self, widget: Widget) -> tuple[float, float]: ...
     def get_child_transform(self, widget: Widget) -> Gsk.Transform | None: ...
@@ -12956,10 +11475,9 @@ class FixedLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutChild.Props):
         transform: Gsk.Transform | None
-        child_widget: Widget
-        layout_manager: LayoutManager
 
     @property
     def props(self) -> Props: ...
@@ -13020,10 +11538,13 @@ class FlattenListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -13130,6 +11651,7 @@ class FlowBox(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         accept_unpaired_release: bool
         activate_on_single_click: bool
@@ -13139,41 +11661,6 @@ class FlowBox(Widget, Orientable):
         min_children_per_line: int
         row_spacing: int
         selection_mode: SelectionMode
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -13190,6 +11677,8 @@ class FlowBox(Widget, Orientable):
         min_children_per_line: int = ...,
         row_spacing: int = ...,
         selection_mode: SelectionMode = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13220,8 +11709,6 @@ class FlowBox(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def append(self, child: Widget) -> None: ...
     def bind_model(
@@ -13341,43 +11828,9 @@ class FlowBoxChild(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -13388,6 +11841,7 @@ class FlowBoxChild(Widget):
         self,
         *,
         child: Widget | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13418,7 +11872,6 @@ class FlowBoxChild(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def changed(self) -> None: ...
     def do_activate(self) -> None: ...
@@ -13524,50 +11977,17 @@ class FontButton(Widget, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         modal: bool
         title: str
         use_font: bool
         use_size: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
@@ -13582,6 +12002,13 @@ class FontButton(Widget, FontChooser):
         title: str = ...,
         use_font: bool = ...,
         use_size: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13612,13 +12039,6 @@ class FontButton(Widget, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
     ) -> None: ...
     def get_modal(self) -> bool: ...
     def get_title(self) -> str: ...
@@ -13773,83 +12193,30 @@ class FontChooserDialog(Dialog, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
         show_preview_entry: bool
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -13905,13 +12272,6 @@ class FontChooserDialog(Dialog, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -14017,47 +12377,15 @@ class FontChooserWidget(Widget, FontChooser):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        tweak_action: Gio.Action
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def tweak_action(self) -> Gio.Action: ...
         accessible_role: AccessibleRole
         font: str | None
         font_desc: Pango.FontDescription | None
-        font_features: str
+        @property
+        def font_features(self) -> str: ...
         language: str
         level: FontChooserLevel
         preview_text: str
@@ -14068,6 +12396,13 @@ class FontChooserWidget(Widget, FontChooser):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
+        font: str = ...,
+        font_desc: Pango.FontDescription = ...,
+        language: str = ...,
+        level: FontChooserLevel = ...,
+        preview_text: str = ...,
+        show_preview_entry: bool = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14098,13 +12433,6 @@ class FontChooserWidget(Widget, FontChooser):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        language: str = ...,
-        level: FontChooserLevel = ...,
-        preview_text: str = ...,
-        show_preview_entry: bool = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> FontChooserWidget: ...
@@ -14130,6 +12458,7 @@ class FontDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         filter: Filter | None
         font_map: Pango.FontMap | None
@@ -14277,6 +12606,7 @@ class FontDialogButton(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         dialog: FontDialog | None
         font_desc: Pango.FontDescription | None
@@ -14285,41 +12615,6 @@ class FontDialogButton(Widget):
         level: FontLevel
         use_font: bool
         use_size: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -14334,6 +12629,7 @@ class FontDialogButton(Widget):
         level: FontLevel = ...,
         use_font: bool = ...,
         use_size: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14364,7 +12660,6 @@ class FontDialogButton(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_dialog(self) -> FontDialog | None: ...
     def get_font_desc(self) -> Pango.FontDescription | None: ...
@@ -14477,46 +12772,12 @@ class Frame(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         label: str | None
         label_widget: Widget | None
         label_xalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -14530,6 +12791,7 @@ class Frame(Widget):
         label: str | None = ...,
         label_widget: Widget | None = ...,
         label_xalign: float = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14560,7 +12822,6 @@ class Frame(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def do_compute_child_allocation(self, allocation: _Gdk4.Rectangle) -> None: ...
     def get_child(self) -> Widget | None: ...
@@ -14669,49 +12930,17 @@ class GLArea(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         allowed_apis: _Gdk4.GLAPI
-        api: _Gdk4.GLAPI
+        @property
+        def api(self) -> _Gdk4.GLAPI: ...
         auto_render: bool
-        context: _Gdk4.GLContext | None
+        @property
+        def context(self) -> _Gdk4.GLContext | None: ...
         has_depth_buffer: bool
         has_stencil_buffer: bool
         use_es: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -14726,6 +12955,7 @@ class GLArea(Widget):
         has_depth_buffer: bool = ...,
         has_stencil_buffer: bool = ...,
         use_es: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14756,7 +12986,6 @@ class GLArea(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def attach_buffers(self) -> None: ...
     def do_render(self, context: _Gdk4.GLContext) -> bool: ...
@@ -14828,12 +13057,10 @@ class Gesture(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def n_points(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -14914,18 +13141,6 @@ class GestureClick(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -14982,18 +13197,6 @@ class GestureDrag(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -15054,16 +13257,9 @@ class GestureLongPress(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureSingle.Props):
         delay_factor: float
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -15132,16 +13328,9 @@ class GesturePan(GestureDrag):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureDrag.Props):
         orientation: Orientation
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -15197,15 +13386,6 @@ class GestureRotate(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gesture.Props):
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -15254,15 +13434,11 @@ class GestureSingle(Gesture):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gesture.Props):
         button: int
         exclusive: bool
         touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -15332,16 +13508,9 @@ class GestureStylus(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GestureSingle.Props):
         stylus_only: bool
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
 
     @property
     def props(self) -> Props: ...
@@ -15406,18 +13575,6 @@ class GestureSwipe(GestureSingle):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GestureSingle.Props):
-        button: int
-        exclusive: bool
-        touch_only: bool
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -15468,15 +13625,6 @@ class GestureZoom(Gesture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gesture.Props):
-        n_points: int
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -15562,45 +13710,11 @@ class GraphicsOffload(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         black_background: bool
         child: Widget | None
         enabled: GraphicsOffloadEnabled
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -15611,6 +13725,7 @@ class GraphicsOffload(Widget):
         black_background: bool = ...,
         child: Widget | None = ...,
         enabled: GraphicsOffloadEnabled = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -15641,7 +13756,6 @@ class GraphicsOffload(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_black_background(self) -> bool: ...
     def get_child(self) -> Widget | None: ...
@@ -15736,47 +13850,13 @@ class Grid(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         baseline_row: int
         column_homogeneous: bool
         column_spacing: int
         row_homogeneous: bool
         row_spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -15792,6 +13872,8 @@ class Grid(Widget, Orientable):
         column_spacing: int = ...,
         row_homogeneous: bool = ...,
         row_spacing: int = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -15822,8 +13904,6 @@ class Grid(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def attach(
         self, child: Widget, column: int, row: int, width: int, height: int
@@ -15893,6 +13973,7 @@ class GridLayout(LayoutManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutManager.Props):
         baseline_row: int
         column_homogeneous: bool
@@ -15949,13 +14030,12 @@ class GridLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutChild.Props):
         column: int
         column_span: int
         row: int
         row_span: int
-        child_widget: Widget
-        layout_manager: LayoutManager
 
     @property
     def props(self) -> Props: ...
@@ -16081,6 +14161,7 @@ class GridView(ListBase):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ListBase.Props):
         enable_rubberband: bool
         factory: ListItemFactory | None
@@ -16089,43 +14170,8 @@ class GridView(ListBase):
         model: SelectionModel | None
         single_click_activate: bool
         tab_behavior: ListTabBehavior
-        orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
+        orientation: Orientation
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment | None
@@ -16143,7 +14189,12 @@ class GridView(ListBase):
         model: SelectionModel | None = ...,
         single_click_activate: bool = ...,
         tab_behavior: ListTabBehavior = ...,
+        accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -16174,11 +14225,6 @@ class GridView(ListBase):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_enable_rubberband(self) -> bool: ...
     def get_factory(self) -> ListItemFactory | None: ...
@@ -16276,46 +14322,12 @@ class HeaderBar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         decoration_layout: str | None
         show_title_buttons: bool
         title_widget: Widget | None
         use_native_controls: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -16327,6 +14339,7 @@ class HeaderBar(Widget):
         show_title_buttons: bool = ...,
         title_widget: Widget | None = ...,
         use_native_controls: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -16357,7 +14370,6 @@ class HeaderBar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_decoration_layout(self) -> str | None: ...
     def get_show_title_buttons(self) -> bool: ...
@@ -16398,6 +14410,7 @@ class IMContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         input_hints: InputHints
         input_purpose: InputPurpose
@@ -16541,12 +14554,6 @@ class IMContextSimple(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(IMContext.Props):
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> IMContext: ...
     @property
@@ -16597,12 +14604,6 @@ class IMMulticontext(IMContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(IMContext.Props):
-        input_hints: InputHints
-        input_purpose: InputPurpose
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> IMContext: ...
     @property
@@ -16653,9 +14654,12 @@ class IconPaintable(GObject.Object, _Gdk4.Paintable, SymbolicPaintable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        file: Gio.File | None
-        icon_name: str | None
+        @property
+        def file(self) -> Gio.File | None: ...
+        @property
+        def icon_name(self) -> str | None: ...
         is_symbolic: bool
         scale: int
         size: int
@@ -16712,12 +14716,14 @@ class IconTheme(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         display: _Gdk4.Display | None
-        icon_names: list[str]
+        @property
+        def icon_names(self) -> list[str]: ...
         resource_path: list[str] | None
         search_path: list[str] | None
-        theme_name: str
+        theme_name: str | None
 
     @property
     def props(self) -> Props: ...
@@ -16861,9 +14867,11 @@ class IconView(Widget, CellLayout, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activate_on_single_click: bool
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         column_spacing: int
         columns: int
         item_orientation: Orientation
@@ -16879,41 +14887,6 @@ class IconView(Widget, CellLayout, Scrollable):
         spacing: int
         text_column: int
         tooltip_column: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -16942,6 +14915,11 @@ class IconView(Widget, CellLayout, Scrollable):
         spacing: int = ...,
         text_column: int = ...,
         tooltip_column: int = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -16972,11 +14950,6 @@ class IconView(Widget, CellLayout, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def create_drag_icon(self, path: TreePath) -> _Gdk4.Paintable | None: ...
     def enable_model_drag_dest(
@@ -17153,6 +15126,7 @@ class Image(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         file: str
         gicon: Gio.Icon | None
@@ -17161,43 +15135,9 @@ class Image(Widget):
         paintable: _Gdk4.Paintable | None
         pixel_size: int
         resource: str
-        storage_type: ImageType
+        @property
+        def storage_type(self) -> ImageType: ...
         use_fallback: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -17213,6 +15153,7 @@ class Image(Widget):
         pixel_size: int = ...,
         resource: str = ...,
         use_fallback: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -17243,7 +15184,6 @@ class Image(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def clear(self) -> None: ...
     def get_gicon(self) -> Gio.Icon | None: ...
@@ -17350,45 +15290,11 @@ class InfoBar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         message_type: MessageType
         revealed: bool
         show_close_button: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -17399,6 +15305,7 @@ class InfoBar(Widget):
         message_type: MessageType = ...,
         revealed: bool = ...,
         show_close_button: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -17429,7 +15336,6 @@ class InfoBar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_action_widget(self, child: Widget, response_id: int) -> None: ...
     def add_button(self, button_text: str, response_id: int) -> Button: ...
@@ -17527,8 +15433,10 @@ class Inscription(Widget, AccessibleText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         attributes: Pango.AttrList | None
+        markup: str | None
         min_chars: int
         min_lines: int
         nat_chars: int
@@ -17538,43 +15446,7 @@ class Inscription(Widget, AccessibleText):
         wrap_mode: Pango.WrapMode
         xalign: float
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        markup: str | None
 
     @property
     def props(self) -> Props: ...
@@ -17592,6 +15464,7 @@ class Inscription(Widget, AccessibleText):
         wrap_mode: Pango.WrapMode = ...,
         xalign: float = ...,
         yalign: float = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -17622,7 +15495,6 @@ class Inscription(Widget, AccessibleText):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_attributes(self) -> Pango.AttrList | None: ...
     def get_min_chars(self) -> int: ...
@@ -17677,9 +15549,12 @@ class KeyvalTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ShortcutTrigger.Props):
-        keyval: int
-        modifiers: _Gdk4.ModifierType
+        @property
+        def keyval(self) -> int: ...
+        @property
+        def modifiers(self) -> _Gdk4.ModifierType: ...
 
     @property
     def props(self) -> Props: ...
@@ -17788,6 +15663,7 @@ class Label(Widget, AccessibleText):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         attributes: Pango.AttrList | None
         ellipsize: Pango.EllipsizeMode
@@ -17796,7 +15672,8 @@ class Label(Widget, AccessibleText):
         label: str
         lines: int
         max_width_chars: int
-        mnemonic_keyval: int
+        @property
+        def mnemonic_keyval(self) -> int: ...
         mnemonic_widget: Widget | None
         natural_wrap_mode: NaturalWrapMode
         selectable: bool
@@ -17809,41 +15686,6 @@ class Label(Widget, AccessibleText):
         wrap_mode: Pango.WrapMode
         xalign: float
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -17870,6 +15712,7 @@ class Label(Widget, AccessibleText):
         wrap_mode: Pango.WrapMode = ...,
         xalign: float = ...,
         yalign: float = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -17900,7 +15743,6 @@ class Label(Widget, AccessibleText):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_attributes(self) -> Pango.AttrList | None: ...
     def get_current_uri(self) -> str | None: ...
@@ -17973,9 +15815,12 @@ class LayoutChild(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child_widget: Widget
-        layout_manager: LayoutManager
+        @property
+        def child_widget(self) -> Widget: ...
+        @property
+        def layout_manager(self) -> LayoutManager: ...
 
     @property
     def props(self) -> Props: ...
@@ -18146,47 +15991,13 @@ class LevelBar(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         inverted: bool
         max_value: float
         min_value: float
         mode: LevelBarMode
         value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -18200,6 +16011,8 @@ class LevelBar(Widget, AccessibleRange, Orientable):
         min_value: float = ...,
         mode: LevelBarMode = ...,
         value: float = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -18230,8 +16043,6 @@ class LevelBar(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_offset_value(self, name: str, value: float) -> None: ...
     def get_inverted(self) -> bool: ...
@@ -18337,50 +16148,10 @@ class LinkButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         uri: str
         visited: bool
-        can_shrink: bool
-        child: Widget | None
-        has_frame: bool
-        icon_name: str | None
-        label: str | None
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -18392,6 +16163,9 @@ class LinkButton(Button):
         *,
         uri: str = ...,
         visited: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_shrink: bool = ...,
         child: Widget | None = ...,
         has_frame: bool = ...,
@@ -18428,9 +16202,6 @@ class LinkButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_uri(self) -> str: ...
     def get_visited(self) -> bool: ...
@@ -18509,43 +16280,9 @@ class ListBase(Widget, Orientable, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -18558,6 +16295,11 @@ class ListBase(Widget, Orientable, Scrollable):
         self,
         *,
         orientation: Orientation = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -18588,11 +16330,6 @@ class ListBase(Widget, Orientable, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
 
 class ListBaseClass(_gi.Struct): ...
@@ -18680,47 +16417,13 @@ class ListBox(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         accept_unpaired_release: bool
         activate_on_single_click: bool
         selection_mode: SelectionMode
         show_separators: bool
         tab_behavior: ListTabBehavior
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -18733,6 +16436,7 @@ class ListBox(Widget):
         selection_mode: SelectionMode = ...,
         show_separators: bool = ...,
         tab_behavior: ListTabBehavior = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -18763,7 +16467,6 @@ class ListBox(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def append(self, child: Widget) -> None: ...
     def bind_model(
@@ -18887,45 +16590,11 @@ class ListBoxRow(Widget, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activatable: bool
         child: Widget | None
         selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -18940,6 +16609,9 @@ class ListBoxRow(Widget, Actionable):
         activatable: bool = ...,
         child: Widget | None = ...,
         selectable: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -18970,9 +16642,6 @@ class ListBoxRow(Widget, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def changed(self) -> None: ...
     def do_activate(self) -> None: ...
@@ -19024,12 +16693,17 @@ class ListHeader(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         child: Widget | None
-        end: int
-        item: GObject.Object | None
-        n_items: int
-        start: int
+        @property
+        def end(self) -> int: ...
+        @property
+        def item(self) -> GObject.Object | None: ...
+        @property
+        def n_items(self) -> int: ...
+        @property
+        def start(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -19067,16 +16741,20 @@ class ListItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accessible_description: str
         accessible_label: str
         activatable: bool
         child: Widget | None
         focusable: bool
-        item: GObject.Object | None
-        position: int
+        @property
+        def item(self) -> GObject.Object | None: ...
+        @property
+        def position(self) -> int: ...
         selectable: bool
-        selected: bool
+        @property
+        def selected(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -19107,10 +16785,23 @@ class ListItem(GObject.Object):
     def set_selectable(self, selectable: bool) -> None: ...
 
 class ListItemClass(_gi.Struct): ...
-class ListItemFactory(GObject.Object): ...
+
+class ListItemFactory(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        ListItemFactory(**properties)
+
+    Object GtkListItemFactory
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
 class ListItemFactoryClass(_gi.Struct): ...
 
-# override
 class ListStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -19120,37 +16811,39 @@ class ListStore(
     ::
 
         ListStore(**properties)
-        new(types:list) -> ListStore
+        new(types:list) -> Gtk.ListStore
 
     Object GtkListStore
 
     Signals from GtkTreeModel:
-      rowchanged (GtkTreePath, GtkTreeIter)
-      rowinserted (GtkTreePath, GtkTreeIter)
-      rowhaschildtoggled (GtkTreePath, GtkTreeIter)
-      rowdeleted (GtkTreePath)
-      rowsreordered (GtkTreePath, GtkTreeIter, gpointer)
+      row-changed (GtkTreePath, GtkTreeIter)
+      row-inserted (GtkTreePath, GtkTreeIter)
+      row-has-child-toggled (GtkTreePath, GtkTreeIter)
+      row-deleted (GtkTreePath)
+      rows-reordered (GtkTreePath, GtkTreeIter, gpointer)
 
     Signals from GtkTreeSortable:
-      sortcolumnchanged ()
+      sort-column-changed ()
 
     Signals from GObject:
       notify (GParam)
     """
-
-    parent: GObject.Object = ...
-
+    @property
+    def parent(self) -> GObject.Object: ...
     @property
     def priv(self) -> ListStorePrivate: ...
-    def __init__(self, *args: Any) -> None: ...
+    # override
     def append(self, row: list[Any] | tuple[Any, ...] | None = None) -> TreeIter: ...
     def clear(self) -> None: ...
+    # override
     def insert(
         self, position: int, row: list[Any] | tuple[Any, ...] | None = None
     ) -> TreeIter: ...
+    # override
     def insert_after(
         self, sibling: TreeIter, row: list[Any] | tuple[Any, ...] | None = None
     ) -> TreeIter: ...
+    # override
     def insert_before(
         self, sibling: TreeIter, row: list[Any] | tuple[Any, ...] | None = None
     ) -> TreeIter: ...
@@ -19165,11 +16858,14 @@ class ListStore(
     def move_before(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
     @classmethod
     def new(cls, types: Sequence[type[Any]]) -> ListStore: ...
+    # override
     def prepend(self, row: list[Any] | tuple[Any, ...] | None = None) -> TreeIter: ...
     def remove(self, iter: TreeIter) -> bool: ...
     def reorder(self, new_order: Sequence[int]) -> None: ...
+    # override
     def set(self, treeiter: TreeIter, *args: dict[int, Any]) -> None: ...
     def set_column_types(self, types: Sequence[type[Any]]) -> None: ...
+    # override
     def set_value(self, treeiter: TreeIter, column: int, value: Any) -> None: ...
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
@@ -19269,6 +16965,7 @@ class ListView(ListBase):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ListBase.Props):
         enable_rubberband: bool
         factory: ListItemFactory | None
@@ -19277,43 +16974,8 @@ class ListView(ListBase):
         show_separators: bool
         single_click_activate: bool
         tab_behavior: ListTabBehavior
-        orientation: Orientation
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
+        orientation: Orientation
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
         vadjustment: Adjustment | None
@@ -19331,7 +16993,12 @@ class ListView(ListBase):
         show_separators: bool = ...,
         single_click_activate: bool = ...,
         tab_behavior: ListTabBehavior = ...,
+        accessible_role: AccessibleRole = ...,
         orientation: Orientation = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -19362,11 +17029,6 @@ class ListView(ListBase):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_enable_rubberband(self) -> bool: ...
     def get_factory(self) -> ListItemFactory | None: ...
@@ -19478,6 +17140,7 @@ class LockButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         permission: Gio.Permission | None
         text_lock: str
@@ -19485,47 +17148,6 @@ class LockButton(Button):
         tooltip_lock: str
         tooltip_not_authorized: str
         tooltip_unlock: str
-        can_shrink: bool
-        child: Widget | None
-        has_frame: bool
-        icon_name: str | None
-        label: str | None
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -19541,6 +17163,9 @@ class LockButton(Button):
         tooltip_lock: str = ...,
         tooltip_not_authorized: str = ...,
         tooltip_unlock: str = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_shrink: bool = ...,
         child: Widget | None = ...,
         has_frame: bool = ...,
@@ -19577,9 +17202,6 @@ class LockButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_permission(self) -> Gio.Permission | None: ...
     @classmethod
@@ -19612,11 +17234,15 @@ class MapListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        has_map: bool
-        item_type: type[Any]
+        @property
+        def has_map(self) -> bool: ...
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -19715,43 +17341,9 @@ class MediaControls(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         media_stream: MediaStream | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -19760,6 +17352,7 @@ class MediaControls(Widget):
         self,
         *,
         media_stream: MediaStream | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -19790,7 +17383,6 @@ class MediaControls(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_media_stream(self) -> MediaStream | None: ...
     @classmethod
@@ -19853,22 +17445,10 @@ class MediaFile(MediaStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(MediaStream.Props):
         file: Gio.File | None
         input_stream: Gio.InputStream | None
-        duration: int
-        ended: bool
-        error: GLib.Error | None
-        has_audio: bool
-        has_video: bool
-        loop: bool
-        muted: bool
-        playing: bool
-        prepared: bool
-        seekable: bool
-        seeking: bool
-        timestamp: int
-        volume: float
 
     @property
     def props(self) -> Props: ...
@@ -19951,19 +17531,29 @@ class MediaStream(GObject.Object, _Gdk4.Paintable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        duration: int
-        ended: bool
-        error: GLib.Error | None
-        has_audio: bool
-        has_video: bool
+        @property
+        def duration(self) -> int: ...
+        @property
+        def ended(self) -> bool: ...
+        @property
+        def error(self) -> GLib.Error | None: ...
+        @property
+        def has_audio(self) -> bool: ...
+        @property
+        def has_video(self) -> bool: ...
         loop: bool
         muted: bool
         playing: bool
-        prepared: bool
-        seekable: bool
-        seeking: bool
-        timestamp: int
+        @property
+        def prepared(self) -> bool: ...
+        @property
+        def seekable(self) -> bool: ...
+        @property
+        def seeking(self) -> bool: ...
+        @property
+        def timestamp(self) -> int: ...
         volume: float
 
     @property
@@ -20122,6 +17712,7 @@ class MenuButton(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: bool
         always_show_arrow: bool
@@ -20135,41 +17726,6 @@ class MenuButton(Widget):
         popover: Popover | None
         primary: bool
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -20189,6 +17745,7 @@ class MenuButton(Widget):
         popover: Popover | None = ...,
         primary: bool = ...,
         use_underline: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -20219,7 +17776,6 @@ class MenuButton(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_active(self) -> bool: ...
     def get_always_show_arrow(self) -> bool: ...
@@ -20369,77 +17925,16 @@ class MessageDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        message_area: Widget
+        @property
+        def message_area(self) -> Widget: ...
         message_type: MessageType
         secondary_text: str
         secondary_use_markup: bool
         text: str
         use_markup: bool
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        buttons: ButtonsType
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -20454,6 +17949,7 @@ class MessageDialog(Dialog):
         secondary_use_markup: bool = ...,
         text: str = ...,
         use_markup: bool = ...,
+        accessible_role: AccessibleRole = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -20509,7 +18005,6 @@ class MessageDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_message_area(self) -> Widget: ...
     def set_markup(self, str: str) -> None: ...
@@ -20551,8 +18046,10 @@ class MnemonicTrigger(ShortcutTrigger):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ShortcutTrigger.Props):
-        keyval: int
+        @property
+        def keyval(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -20601,19 +18098,12 @@ class MountOperation(Gio.MountOperation):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.MountOperation.Props):
         display: _Gdk4.Display
-        is_showing: bool
+        @property
+        def is_showing(self) -> bool: ...
         parent: Window | None
-        anonymous: bool
-        choice: int
-        domain: str | None
-        is_tcrypt_hidden_volume: bool
-        is_tcrypt_system_volume: bool
-        password: str | None
-        password_save: Gio.PasswordSave
-        pim: int
-        username: str | None
 
     @property
     def props(self) -> Props: ...
@@ -20680,9 +18170,12 @@ class MultiFilter(Filter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Filter.Props):
-        item_type: type[Any]
-        n_items: int
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -20719,10 +18212,13 @@ class MultiSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -20767,9 +18263,12 @@ class MultiSorter(Sorter, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Sorter.Props):
-        item_type: type[Any]
-        n_items: int
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -20806,8 +18305,10 @@ class NamedAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ShortcutAction.Props):
-        action_name: str
+        @property
+        def action_name(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -20855,6 +18356,7 @@ class NativeDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         modal: bool
         title: str | None
@@ -20952,10 +18454,13 @@ class NoSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -21064,50 +18569,17 @@ class Notebook(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         enable_popup: bool
         group_name: str | None
         page: int
-        pages: Gio.ListModel
+        @property
+        def pages(self) -> Gio.ListModel: ...
         scrollable: bool
         show_border: bool
         show_tabs: bool
         tab_pos: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -21122,6 +18594,7 @@ class Notebook(Widget):
         show_border: bool = ...,
         show_tabs: bool = ...,
         tab_pos: PositionType = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -21152,7 +18625,6 @@ class Notebook(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def append_page(self, child: Widget, tab_label: Widget | None = None) -> int: ...
     def append_page_menu(
@@ -21246,14 +18718,18 @@ class NotebookPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: Widget
+        @property
+        def child(self) -> Widget: ...
         detachable: bool
-        menu: Widget
+        @property
+        def menu(self) -> Widget: ...
         menu_label: str
         position: int
         reorderable: bool
-        tab: Widget
+        @property
+        def tab(self) -> Widget: ...
         tab_expand: bool
         tab_fill: bool
         tab_label: str
@@ -21315,6 +18791,7 @@ class NumericSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Sorter.Props):
         expression: Expression | None
         sort_order: SortType
@@ -21448,43 +18925,9 @@ class Overlay(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -21493,6 +18936,7 @@ class Overlay(Widget):
         self,
         *,
         child: Widget | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -21523,7 +18967,6 @@ class Overlay(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_overlay(self, widget: Widget) -> None: ...
     def get_child(self) -> Widget | None: ...
@@ -21574,11 +19017,10 @@ class OverlayLayoutChild(LayoutChild):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(LayoutChild.Props):
         clip_overlay: bool
         measure: bool
-        child_widget: Widget
-        layout_manager: LayoutManager
 
     @property
     def props(self) -> Props: ...
@@ -21656,13 +19098,12 @@ class PadController(EventController):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        action_group: Gio.ActionGroup
-        pad: _Gdk4.Device
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
+        @property
+        def action_group(self) -> Gio.ActionGroup: ...
+        @property
+        def pad(self) -> _Gdk4.Device: ...
 
     @property
     def props(self) -> Props: ...
@@ -21861,76 +19302,16 @@ class PageSetupUnixDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -21986,7 +19367,6 @@ class PageSetupUnixDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_page_setup(self) -> PageSetup: ...
     def get_print_settings(self) -> PrintSettings | None: ...
@@ -22086,10 +19466,13 @@ class Paned(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         end_child: Widget | None
-        max_position: int
-        min_position: int
+        @property
+        def max_position(self) -> int: ...
+        @property
+        def min_position(self) -> int: ...
         position: int
         position_set: bool
         resize_end_child: bool
@@ -22098,41 +19481,6 @@ class Paned(Widget, AccessibleRange, Orientable):
         shrink_start_child: bool
         start_child: Widget | None
         wide_handle: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -22150,6 +19498,8 @@ class Paned(Widget, AccessibleRange, Orientable):
         shrink_start_child: bool = ...,
         start_child: Widget | None = ...,
         wide_handle: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -22180,8 +19530,6 @@ class Paned(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_end_child(self) -> Widget | None: ...
     def get_position(self) -> int: ...
@@ -22348,52 +19696,20 @@ class PasswordEntry(Widget, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         extra_menu: Gio.MenuModel | None
         placeholder_text: str
         show_peek_icon: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -22407,6 +19723,13 @@ class PasswordEntry(Widget, Editable):
         extra_menu: Gio.MenuModel | None = ...,
         placeholder_text: str = ...,
         show_peek_icon: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -22437,13 +19760,6 @@ class PasswordEntry(Widget, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def get_extra_menu(self) -> Gio.MenuModel | None: ...
     def get_show_peek_icon(self) -> bool: ...
@@ -22475,13 +19791,6 @@ class PasswordEntryBuffer(EntryBuffer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EntryBuffer.Props):
-        length: int
-        max_length: int
-        text: str
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, max_length: int = ..., text: str = ...) -> None: ...
     @classmethod
     def new(cls) -> PasswordEntryBuffer: ...
@@ -22578,6 +19887,7 @@ class Picture(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         alternative_text: str | None
         can_shrink: bool
@@ -22585,41 +19895,6 @@ class Picture(Widget):
         file: Gio.File | None
         keep_aspect_ratio: bool
         paintable: _Gdk4.Paintable | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -22633,6 +19908,7 @@ class Picture(Widget):
         file: Gio.File | None = ...,
         keep_aspect_ratio: bool = ...,
         paintable: _Gdk4.Paintable | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -22663,7 +19939,6 @@ class Picture(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_alternative_text(self) -> str | None: ...
     def get_can_shrink(self) -> bool: ...
@@ -22784,6 +20059,7 @@ class Popover(Widget, Native, ShortcutManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         autohide: bool
         cascade_popdown: bool
@@ -22791,43 +20067,8 @@ class Popover(Widget, Native, ShortcutManager):
         default_widget: Widget | None
         has_arrow: bool
         mnemonics_visible: bool
-        pointing_to: _Gdk4.Rectangle
+        pointing_to: _Gdk4.Rectangle | None
         position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -22845,6 +20086,7 @@ class Popover(Widget, Native, ShortcutManager):
         mnemonics_visible: bool = ...,
         pointing_to: _Gdk4.Rectangle | None = ...,
         position: PositionType = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -22875,7 +20117,6 @@ class Popover(Widget, Native, ShortcutManager):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def do_activate_default(self) -> None: ...
     def do_closed(self) -> None: ...
@@ -23005,53 +20246,11 @@ class PopoverMenu(Popover):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Popover.Props):
         flags: PopoverMenuFlags
         menu_model: Gio.MenuModel | None
         visible_submenu: str
-        autohide: bool
-        cascade_popdown: bool
-        child: Widget | None
-        default_widget: Widget | None
-        has_arrow: bool
-        mnemonics_visible: bool
-        pointing_to: _Gdk4.Rectangle
-        position: PositionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -23062,6 +20261,7 @@ class PopoverMenu(Popover):
         flags: PopoverMenuFlags = ...,
         menu_model: Gio.MenuModel | None = ...,
         visible_submenu: str = ...,
+        accessible_role: AccessibleRole = ...,
         autohide: bool = ...,
         cascade_popdown: bool = ...,
         child: Widget | None = ...,
@@ -23100,7 +20300,6 @@ class PopoverMenu(Popover):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_child(self, child: Widget, id: str) -> bool: ...
     def get_flags(self) -> PopoverMenuFlags: ...
@@ -23184,43 +20383,9 @@ class PopoverMenuBar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         menu_model: Gio.MenuModel | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -23229,6 +20394,7 @@ class PopoverMenuBar(Widget):
         self,
         *,
         menu_model: Gio.MenuModel | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -23259,7 +20425,6 @@ class PopoverMenuBar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_child(self, child: Widget, id: str) -> bool: ...
     def get_menu_model(self) -> Gio.MenuModel | None: ...
@@ -23318,6 +20483,7 @@ class PrintDialog(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accept_label: str
         modal: bool
@@ -23411,11 +20577,16 @@ class PrintJob(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        page_setup: PageSetup
-        printer: Printer
-        settings: PrintSettings
-        title: str
+        @property
+        def page_setup(self) -> PageSetup: ...
+        @property
+        def printer(self) -> Printer: ...
+        @property
+        def settings(self) -> PrintSettings: ...
+        @property
+        def title(self) -> str: ...
         track_print_status: bool
 
     @property
@@ -23519,21 +20690,25 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         allow_async: bool
         current_page: int
         custom_tab_label: str | None
-        default_page_setup: PageSetup
+        default_page_setup: PageSetup | None
         embed_page_setup: bool
         export_filename: str
         has_selection: bool
         job_name: str
         n_pages: int
-        n_pages_to_print: int
+        @property
+        def n_pages_to_print(self) -> int: ...
         print_settings: PrintSettings | None
         show_progress: bool
-        status: PrintStatus
-        status_string: str
+        @property
+        def status(self) -> PrintStatus: ...
+        @property
+        def status_string(self) -> str: ...
         support_selection: bool
         track_print_status: bool
         unit: Unit
@@ -23925,78 +21100,18 @@ class PrintUnixDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         current_page: int
         embed_page_setup: bool
         has_selection: bool
         manual_capabilities: PrintCapabilities
         page_setup: PageSetup
-        print_settings: PrintSettings
-        selected_printer: Printer | None
+        print_settings: PrintSettings | None
+        @property
+        def selected_printer(self) -> Printer | None: ...
         support_selection: bool
-        use_header_bar: int
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -24010,6 +21125,7 @@ class PrintUnixDialog(Dialog):
         page_setup: PageSetup = ...,
         print_settings: PrintSettings | None = ...,
         support_selection: bool = ...,
+        accessible_role: AccessibleRole = ...,
         use_header_bar: int = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
@@ -24065,7 +21181,6 @@ class PrintUnixDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_custom_tab(self, child: Widget, tab_label: Widget) -> None: ...
     def get_current_page(self) -> int: ...
@@ -24119,17 +21234,28 @@ class Printer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        accepting_jobs: bool
-        accepts_pdf: bool
-        accepts_ps: bool
-        icon_name: str
-        is_virtual: bool
-        job_count: int
-        location: str
-        name: str
-        paused: bool
-        state_message: str
+        @property
+        def accepting_jobs(self) -> bool: ...
+        @property
+        def accepts_pdf(self) -> bool: ...
+        @property
+        def accepts_ps(self) -> bool: ...
+        @property
+        def icon_name(self) -> str: ...
+        @property
+        def is_virtual(self) -> bool: ...
+        @property
+        def job_count(self) -> int: ...
+        @property
+        def location(self) -> str: ...
+        @property
+        def name(self) -> str: ...
+        @property
+        def paused(self) -> bool: ...
+        @property
+        def state_message(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -24242,6 +21368,7 @@ class ProgressBar(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         ellipsize: Pango.EllipsizeMode
         fraction: float
@@ -24249,41 +21376,6 @@ class ProgressBar(Widget, AccessibleRange, Orientable):
         pulse_step: float
         show_text: bool
         text: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -24298,6 +21390,8 @@ class ProgressBar(Widget, AccessibleRange, Orientable):
         pulse_step: float = ...,
         show_text: bool = ...,
         text: str | None = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -24328,8 +21422,6 @@ class ProgressBar(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_ellipsize(self) -> Pango.EllipsizeMode: ...
     def get_fraction(self) -> float: ...
@@ -24449,6 +21541,7 @@ class Range(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         adjustment: Adjustment
         fill_level: float
@@ -24456,41 +21549,6 @@ class Range(Widget, AccessibleRange, Orientable):
         restrict_to_fill_level: bool
         round_digits: int
         show_fill_level: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -24507,6 +21565,8 @@ class Range(Widget, AccessibleRange, Orientable):
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -24537,8 +21597,6 @@ class Range(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_adjust_bounds(self, new_value: float) -> None: ...
     def do_change_value(self, scroll: ScrollType, new_value: float) -> bool: ...
@@ -24657,9 +21715,12 @@ class RecentManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        filename: str
-        size: int
+        @property
+        def filename(self) -> str: ...
+        @property
+        def size(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -24802,47 +21863,14 @@ class Revealer(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        child_revealed: bool
+        @property
+        def child_revealed(self) -> bool: ...
         reveal_child: bool
         transition_duration: int
         transition_type: RevealerTransitionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -24854,6 +21882,7 @@ class Revealer(Widget):
         reveal_child: bool = ...,
         transition_duration: int = ...,
         transition_type: RevealerTransitionType = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -24884,7 +21913,6 @@ class Revealer(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_child_revealed(self) -> bool: ...
@@ -24998,52 +22026,12 @@ class Scale(Range):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Range.Props):
         digits: int
         draw_value: bool
         has_origin: bool
         value_pos: PositionType
-        adjustment: Adjustment
-        fill_level: float
-        inverted: bool
-        restrict_to_fill_level: bool
-        round_digits: int
-        show_fill_level: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -25058,6 +22046,8 @@ class Scale(Range):
         draw_value: bool = ...,
         has_origin: bool = ...,
         value_pos: PositionType = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
@@ -25094,8 +22084,6 @@ class Scale(Range):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_mark(
         self, value: float, position: PositionType, markup: str | None = None
@@ -25202,47 +22190,14 @@ class ScaleButton(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        active: bool
+        @property
+        def active(self) -> bool: ...
         adjustment: Adjustment
         has_frame: bool
         icons: list[str]
         value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -25257,6 +22212,8 @@ class ScaleButton(Widget, AccessibleRange, Orientable):
         has_frame: bool = ...,
         icons: Sequence[str] = ...,
         value: float = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -25287,8 +22244,6 @@ class ScaleButton(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def do_value_changed(self, value: float) -> None: ...
     def get_active(self) -> bool: ...
@@ -25455,43 +22410,9 @@ class Scrollbar(Widget, AccessibleRange, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        adjustment: Adjustment
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        adjustment: Adjustment | None
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -25501,6 +22422,8 @@ class Scrollbar(Widget, AccessibleRange, Orientable):
         self,
         *,
         adjustment: Adjustment | None = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -25531,8 +22454,6 @@ class Scrollbar(Widget, AccessibleRange, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_adjustment(self) -> Adjustment: ...
     @classmethod
@@ -25630,9 +22551,10 @@ class ScrolledWindow(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        hadjustment: Adjustment
+        hadjustment: Adjustment | None
         has_frame: bool
         hscrollbar_policy: PolicyType
         kinetic_scrolling: bool
@@ -25643,44 +22565,9 @@ class ScrolledWindow(Widget):
         overlay_scrolling: bool
         propagate_natural_height: bool
         propagate_natural_width: bool
-        vadjustment: Adjustment
+        vadjustment: Adjustment | None
         vscrollbar_policy: PolicyType
         window_placement: CornerType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -25703,6 +22590,7 @@ class ScrolledWindow(Widget):
         vadjustment: Adjustment | None = ...,
         vscrollbar_policy: PolicyType = ...,
         window_placement: CornerType = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -25733,7 +22621,6 @@ class ScrolledWindow(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_hadjustment(self) -> Adjustment: ...
@@ -25843,46 +22730,12 @@ class SearchBar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         key_capture_widget: Widget | None
         search_mode_enabled: bool
         show_close_button: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -25894,6 +22747,7 @@ class SearchBar(Widget):
         key_capture_widget: Widget | None = ...,
         search_mode_enabled: bool = ...,
         show_close_button: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -25924,7 +22778,6 @@ class SearchBar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def connect_entry(self, entry: Editable) -> None: ...
     def get_child(self) -> Widget | None: ...
@@ -26024,53 +22877,21 @@ class SearchEntry(Widget, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         input_hints: InputHints
         input_purpose: InputPurpose
         placeholder_text: str | None
         search_delay: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -26085,6 +22906,13 @@ class SearchEntry(Widget, Editable):
         input_purpose: InputPurpose = ...,
         placeholder_text: str | None = ...,
         search_delay: int = ...,
+        accessible_role: AccessibleRole = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -26115,13 +22943,6 @@ class SearchEntry(Widget, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
@@ -26181,10 +23002,13 @@ class SelectionFilterModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: SelectionModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -26323,42 +23147,8 @@ class Separator(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -26367,6 +23157,8 @@ class Separator(Widget, Orientable):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -26397,8 +23189,6 @@ class Separator(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls, orientation: Orientation) -> Separator: ...
@@ -26475,6 +23265,7 @@ class Settings(GObject.Object, StyleProvider):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
@@ -26616,6 +23407,7 @@ class Shortcut(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         action: ShortcutAction | None
         arguments: GLib.Variant | None
@@ -26712,16 +23504,14 @@ class ShortcutController(EventController, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EventController.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         mnemonic_modifiers: _Gdk4.ModifierType
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
         scope: ShortcutScope
-        name: str | None
-        propagation_limit: PropagationLimit
-        propagation_phase: PropagationPhase
-        widget: Widget | None
-        model: Gio.ListModel
 
     @property
     def props(self) -> Props: ...
@@ -26818,44 +23608,10 @@ class ShortcutLabel(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         accelerator: str | None
         disabled_text: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -26865,6 +23621,7 @@ class ShortcutLabel(Widget):
         *,
         accelerator: str = ...,
         disabled_text: str = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -26895,7 +23652,6 @@ class ShortcutLabel(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_accelerator(self) -> str | None: ...
     def get_disabled_text(self) -> str | None: ...
@@ -26905,7 +23661,14 @@ class ShortcutLabel(Widget):
     def set_disabled_text(self, disabled_text: str) -> None: ...
 
 class ShortcutLabelClass(_gi.Struct): ...
-class ShortcutManager(GObject.GInterface, Protocol): ...
+
+class ShortcutManager(GObject.GInterface, Protocol):
+    """
+    Interface GtkShortcutManager
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class ShortcutManagerInterface(_gi.Struct):
     """
@@ -27031,53 +23794,16 @@ class ShortcutsGroup(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
-        height: int
+        accel_size_group: SizeGroup
+        @property
+        def height(self) -> int: ...
         title: str
+        title_size_group: SizeGroup
         view: str
-        baseline_child: int
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
-        accel_size_group: SizeGroup
-        title_size_group: SizeGroup
 
     @property
     def props(self) -> Props: ...
@@ -27088,6 +23814,8 @@ class ShortcutsGroup(Box):
         title: str = ...,
         title_size_group: SizeGroup = ...,
         view: str = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
@@ -27122,8 +23850,6 @@ class ShortcutsGroup(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_shortcut(self, shortcut: ShortcutsShortcut) -> None: ...
 
@@ -27209,50 +23935,12 @@ class ShortcutsSection(Box):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Box.Props):
         max_height: int
         section_name: str
         title: str
         view_name: str
-        baseline_child: int
-        baseline_position: BaselinePosition
-        homogeneous: bool
-        spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -27265,6 +23953,8 @@ class ShortcutsSection(Box):
         section_name: str = ...,
         title: str = ...,
         view_name: str = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         baseline_child: int = ...,
         baseline_position: BaselinePosition = ...,
         homogeneous: bool = ...,
@@ -27299,8 +23989,6 @@ class ShortcutsSection(Box):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def add_group(self, group: ShortcutsGroup) -> None: ...
 
@@ -27384,7 +24072,9 @@ class ShortcutsShortcut(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
+        accel_size_group: SizeGroup
         accelerator: str
         action_name: str
         direction: TextDirection
@@ -27394,44 +24084,8 @@ class ShortcutsShortcut(Widget):
         subtitle: str
         subtitle_set: bool
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
-        accessible_role: AccessibleRole
-        accel_size_group: SizeGroup
         title_size_group: SizeGroup
+        accessible_role: AccessibleRole
 
     @property
     def props(self) -> Props: ...
@@ -27449,6 +24103,7 @@ class ShortcutsShortcut(Widget):
         subtitle_set: bool = ...,
         title: str = ...,
         title_size_group: SizeGroup = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -27479,7 +24134,6 @@ class ShortcutsShortcut(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
 
 class ShortcutsShortcutClass(_gi.Struct): ...
@@ -27592,71 +24246,11 @@ class ShortcutsWindow(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         section_name: str
         view_name: str
-        application: Application | None
-        child: Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: Widget | None
-        fullscreened: bool
-        gravity: WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: Widget | None
-        transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -27665,6 +24259,7 @@ class ShortcutsWindow(Window):
         *,
         section_name: str = ...,
         view_name: str = ...,
+        accessible_role: AccessibleRole = ...,
         application: Application | None = ...,
         child: Widget | None = ...,
         decorated: bool = ...,
@@ -27719,7 +24314,6 @@ class ShortcutsWindow(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_section(self, section: ShortcutsSection) -> None: ...
 
@@ -27740,8 +24334,10 @@ class SignalAction(ShortcutAction):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ShortcutAction.Props):
-        signal_name: str
+        @property
+        def signal_name(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -27809,14 +24405,18 @@ class SingleSelection(GObject.Object, Gio.ListModel, SectionModel, SelectionMode
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         autoselect: bool
         can_unselect: bool
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
         selected: int
-        selected_item: GObject.Object | None
+        @property
+        def selected_item(self) -> GObject.Object | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -27868,6 +24468,7 @@ class SizeGroup(GObject.Object, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         mode: SizeGroupMode
 
@@ -27911,10 +24512,13 @@ class SliceListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
+        @property
+        def n_items(self) -> int: ...
         offset: int
         size: int
 
@@ -28136,12 +24740,16 @@ class SortListModel(GObject.Object, Gio.ListModel, SectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         incremental: bool
-        item_type: type[Any]
+        @property
+        def item_type(self) -> type[Any]: ...
         model: Gio.ListModel | None
-        n_items: int
-        pending: int
+        @property
+        def n_items(self) -> int: ...
+        @property
+        def pending(self) -> int: ...
         section_sorter: Sorter | None
         sorter: Sorter | None
 
@@ -28318,6 +24926,7 @@ class SpinButton(Widget, AccessibleRange, CellEditable, Editable, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         adjustment: Adjustment
@@ -28328,48 +24937,15 @@ class SpinButton(Widget, AccessibleRange, CellEditable, Editable, Orientable):
         update_policy: SpinButtonUpdatePolicy
         value: float
         wrap: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         editing_canceled: bool
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -28389,6 +24965,15 @@ class SpinButton(Widget, AccessibleRange, CellEditable, Editable, Orientable):
         update_policy: SpinButtonUpdatePolicy = ...,
         value: float = ...,
         wrap: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editing_canceled: bool = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -28419,15 +25004,6 @@ class SpinButton(Widget, AccessibleRange, CellEditable, Editable, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editing_canceled: bool = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def configure(
         self, adjustment: Adjustment | None, climb_rate: float, digits: int
@@ -28533,43 +25109,9 @@ class Spinner(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         spinning: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -28578,6 +25120,7 @@ class Spinner(Widget):
         self,
         *,
         spinning: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -28608,7 +25151,6 @@ class Spinner(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_spinning(self) -> bool: ...
     @classmethod
@@ -28694,51 +25236,19 @@ class Stack(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         hhomogeneous: bool
         interpolate_size: bool
-        pages: SelectionModel
+        @property
+        def pages(self) -> SelectionModel: ...
         transition_duration: int
-        transition_running: bool
+        @property
+        def transition_running(self) -> bool: ...
         transition_type: StackTransitionType
         vhomogeneous: bool
         visible_child: Widget | None
         visible_child_name: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -28753,6 +25263,7 @@ class Stack(Widget):
         vhomogeneous: bool = ...,
         visible_child: Widget = ...,
         visible_child_name: str = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -28783,7 +25294,6 @@ class Stack(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def add_child(self, child: Widget) -> StackPage: ...
     def add_named(self, child: Widget, name: str | None = None) -> StackPage: ...
@@ -28835,8 +25345,10 @@ class StackPage(GObject.Object, Accessible):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: Widget
+        @property
+        def child(self) -> Widget: ...
         icon_name: str | None
         name: str | None
         needs_attention: bool
@@ -28942,43 +25454,9 @@ class StackSidebar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         stack: Stack | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -28987,6 +25465,7 @@ class StackSidebar(Widget):
         self,
         *,
         stack: Stack = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -29017,7 +25496,6 @@ class StackSidebar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_stack(self) -> Stack | None: ...
     @classmethod
@@ -29093,43 +25571,9 @@ class StackSwitcher(Widget, Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         stack: Stack | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -29139,6 +25583,8 @@ class StackSwitcher(Widget, Orientable):
         self,
         *,
         stack: Stack | None = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -29169,8 +25615,6 @@ class StackSwitcher(Widget, Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     def get_stack(self) -> Stack | None: ...
     @classmethod
@@ -29247,42 +25691,8 @@ class Statusbar(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -29290,6 +25700,7 @@ class Statusbar(Widget):
     def __init__(
         self,
         *,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -29320,7 +25731,6 @@ class Statusbar(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_context_id(self, context_description: str) -> int: ...
     @classmethod
@@ -29353,6 +25763,7 @@ class StringFilter(Filter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Filter.Props):
         expression: Expression | None
         ignore_case: bool
@@ -29413,10 +25824,12 @@ class StringList(GObject.Object, Gio.ListModel, Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        item_type: type[Any]
-        n_items: int
-        strings: list[str]
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -29460,8 +25873,10 @@ class StringObject(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        string: str
+        @property
+        def string(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -29502,6 +25917,7 @@ class StringSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Sorter.Props):
         collation: Collation
         expression: Expression | None
@@ -29552,6 +25968,7 @@ class StyleContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         display: _Gdk4.Display
 
@@ -29602,7 +26019,13 @@ class StyleContextClass(_gi.Struct):
     @property
     def changed(self) -> Callable[[StyleContext], None]: ...
 
-class StyleProvider(GObject.GInterface, Protocol): ...
+class StyleProvider(GObject.GInterface, Protocol):
+    """
+    Interface GtkStyleProvider
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class Switch(Widget, Actionable):
     """
@@ -29678,44 +26101,10 @@ class Switch(Widget, Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         active: bool
         state: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -29727,6 +26116,9 @@ class Switch(Widget, Actionable):
         *,
         active: bool = ...,
         state: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -29757,9 +26149,6 @@ class Switch(Widget, Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_active(self) -> bool: ...
     def get_state(self) -> bool: ...
@@ -29907,6 +26296,7 @@ class Text(Widget, AccessibleText, Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
@@ -29922,51 +26312,19 @@ class Text(Widget, AccessibleText, Editable):
         overwrite_mode: bool
         placeholder_text: str | None
         propagate_text_width: bool
-        scroll_offset: int
+        @property
+        def scroll_offset(self) -> int: ...
         tabs: Pango.TabArray | None
         truncate_multiline: bool
         visibility: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -29995,6 +26353,13 @@ class Text(Widget, AccessibleText, Editable):
         tabs: Pango.TabArray | None = ...,
         truncate_multiline: bool = ...,
         visibility: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -30025,13 +26390,6 @@ class Text(Widget, AccessibleText, Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def compute_cursor_extents(
         self, position: int
@@ -30114,13 +26472,19 @@ class TextBuffer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        can_redo: bool
-        can_undo: bool
-        cursor_position: int
+        @property
+        def can_redo(self) -> bool: ...
+        @property
+        def can_undo(self) -> bool: ...
+        @property
+        def cursor_position(self) -> int: ...
         enable_undo: bool
-        has_selection: bool
-        tag_table: TextTagTable
+        @property
+        def has_selection(self) -> bool: ...
+        @property
+        def tag_table(self) -> TextTagTable: ...
         text: str
 
     @property
@@ -30513,9 +26877,12 @@ class TextMark(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        left_gravity: bool
-        name: str | None
+        @property
+        def left_gravity(self) -> bool: ...
+        @property
+        def name(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -30651,10 +27018,12 @@ class TextTag(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accumulative_margin: bool
         allow_breaks: bool
         allow_breaks_set: bool
+        background: str
         background_full_height: bool
         background_full_height_set: bool
         background_rgba: _Gdk4.RGBA
@@ -30670,6 +27039,7 @@ class TextTag(GObject.Object):
         font_desc: Pango.FontDescription
         font_features: str
         font_features_set: bool
+        foreground: str
         foreground_rgba: _Gdk4.RGBA
         foreground_set: bool
         indent: int
@@ -30688,11 +27058,13 @@ class TextTag(GObject.Object):
         letter_spacing_set: bool
         line_height: float
         line_height_set: bool
-        name: str
+        @property
+        def name(self) -> str: ...
         overline: Pango.Overline
         overline_rgba: _Gdk4.RGBA
         overline_rgba_set: bool
         overline_set: bool
+        paragraph_background: str
         paragraph_background_rgba: _Gdk4.RGBA
         paragraph_background_set: bool
         pixels_above_lines: int
@@ -30738,9 +27110,6 @@ class TextTag(GObject.Object):
         word_set: bool
         wrap_mode: WrapMode
         wrap_mode_set: bool
-        background: str
-        foreground: str
-        paragraph_background: str
 
     @property
     def props(self) -> Props: ...
@@ -30996,13 +27365,14 @@ class TextView(Widget, AccessibleText, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         accepts_tab: bool
         bottom_margin: int
-        buffer: TextBuffer
+        buffer: TextBuffer | None
         cursor_visible: bool
         editable: bool
-        extra_menu: Gio.MenuModel
+        extra_menu: Gio.MenuModel | None
         im_module: str
         indent: int
         input_hints: InputHints
@@ -31018,41 +27388,6 @@ class TextView(Widget, AccessibleText, Scrollable):
         tabs: Pango.TabArray | None
         top_margin: int
         wrap_mode: WrapMode
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -31089,6 +27424,11 @@ class TextView(Widget, AccessibleText, Scrollable):
         tabs: Pango.TabArray = ...,
         top_margin: int = ...,
         wrap_mode: WrapMode = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -31119,11 +27459,6 @@ class TextView(Widget, AccessibleText, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def add_child_at_anchor(self, child: Widget, anchor: TextChildAnchor) -> None: ...
     def add_overlay(self, child: Widget, xpos: int, ypos: int) -> None: ...
@@ -31374,53 +27709,13 @@ class ToggleButton(Button):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Button.Props):
         active: bool
-        can_shrink: bool
-        child: Widget | None
-        has_frame: bool
-        icon_name: str | None
-        label: str | None
-        use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        group: ToggleButton | None
         accessible_role: AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
-        group: ToggleButton | None
 
     @property
     def props(self) -> Props: ...
@@ -31431,6 +27726,9 @@ class ToggleButton(Button):
         *,
         active: bool = ...,
         group: ToggleButton | None = ...,
+        accessible_role: AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_shrink: bool = ...,
         child: Widget | None = ...,
         has_frame: bool = ...,
@@ -31467,9 +27765,6 @@ class ToggleButton(Button):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def do_toggled(self) -> None: ...
     def get_active(self) -> bool: ...
@@ -31642,48 +27937,15 @@ class TreeExpander(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         hide_expander: bool
         indent_for_depth: bool
         indent_for_icon: bool
-        item: GObject.Object | None
+        @property
+        def item(self) -> GObject.Object | None: ...
         list_row: TreeListRow | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -31696,6 +27958,7 @@ class TreeExpander(Widget):
         indent_for_depth: bool = ...,
         indent_for_icon: bool = ...,
         list_row: TreeListRow | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -31726,7 +27989,6 @@ class TreeExpander(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_hide_expander(self) -> bool: ...
@@ -31793,12 +28055,17 @@ class TreeListModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         autoexpand: bool
-        item_type: type[Any]
-        model: Gio.ListModel
-        n_items: int
-        passthrough: bool
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def model(self) -> Gio.ListModel: ...
+        @property
+        def n_items(self) -> int: ...
+        @property
+        def passthrough(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -31850,12 +28117,17 @@ class TreeListRow(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        children: Gio.ListModel | None
-        depth: int
-        expandable: bool
+        @property
+        def children(self) -> Gio.ListModel | None: ...
+        @property
+        def depth(self) -> int: ...
+        @property
+        def expandable(self) -> bool: ...
         expanded: bool
-        item: GObject.Object | None
+        @property
+        def item(self) -> GObject.Object | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -31901,6 +28173,7 @@ class TreeListRowSorter(Sorter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Sorter.Props):
         sorter: Sorter | None
 
@@ -31991,9 +28264,12 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child_model: TreeModel
-        virtual_root: TreePath
+        @property
+        def child_model(self) -> TreeModel: ...
+        @property
+        def virtual_root(self) -> TreePath: ...
 
     @property
     def props(self) -> Props: ...
@@ -32111,25 +28387,41 @@ class TreeModelIface(_gi.Struct):
     @property
     def unref_node(self) -> Callable[[TreeModel, TreeIter], None]: ...
 
-# override
 class TreeModelRow:
-    iter: TreeIter
-    model: TreeModel
-    next = ...
-    parent = ...
-    path = ...
-    previous = ...
+    # override
+    def __init__(self, model: TreeModel, iter_or_path: TreeIter | TreePath) -> None: ...
+    # override
+    @property
+    def next(self) -> TreeModelRow | None: ...
+    # override
+    @property
+    def parent(self) -> TreeModelRow | None: ...
+    # override
+    @property
+    def path(self) -> TreePath: ...
+    # override
+    @property
+    def previous(self) -> TreeModelRow | None: ...
 
-    def get_next(self): ...
-    def get_parent(self): ...
-    def get_previous(self): ...
-    def iterchildren(self) -> Iterator[TreeModelRow]: ...
+    # override
     def __getitem__(self, key: int) -> Any: ...
+    # override
     def __setitem__(self, key: int, value: Any) -> None: ...
+    # override
+    def get_next(self) -> TreeModelRow | None: ...
+    # override
+    def get_parent(self) -> TreeModelRow | None: ...
+    # override
+    def get_previous(self) -> TreeModelRow | None: ...
+    # override
+    def iterchildren(self) -> Iterator[TreeModelRow]: ...
 
-# override
 class TreeModelRowIter:
-    def next(self) -> TreeModelRow: ...
+    # override
+    def __init__(self, model: TreeModelRow, aiter: TreeModelRowIter | None) -> None: ...
+    # override
+    def __iter__(self) -> Self: ...
+    # override
     def __next__(self) -> TreeModelRow: ...
 
 class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
@@ -32159,8 +28451,10 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        model: TreeModel
+        @property
+        def model(self) -> TreeModel: ...
 
     @property
     def props(self) -> Props: ...
@@ -32238,18 +28532,17 @@ class TreePath(GObject.GBoxed):
 
 class TreeRowData(GObject.GBoxed): ...
 
-# override
 class TreeRowReference(GObject.GBoxed):
     """
     :Constructors:
 
     ::
 
-        new(model:TreeModel, path:TreePath) -> TreeRowReference or None
-        new_proxy(proxy:GObject.Object, model:TreeModel, path:TreePath) -> TreeRowReference or None
+        new(model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
+        new_proxy(proxy:GObject.Object, model:Gtk.TreeModel, path:Gtk.TreePath) -> Gtk.TreeRowReference or None
     """
-
-    def __init__(self, model: TreeModel, path: TreePath) -> None: ...
+    @staticmethod
+    def __new__(cls: type[Self], model: TreeModel, path: TreePath) -> Self: ...
     def copy(self) -> TreeRowReference: ...
     @staticmethod
     def deleted(proxy: GObject.Object, path: TreePath) -> None: ...
@@ -32285,6 +28578,7 @@ class TreeSelection(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         mode: SelectionMode
 
@@ -32364,7 +28658,6 @@ class TreeSortableIface(_gi.Struct):
     @property
     def has_default_sort_func(self) -> Callable[[TreeSortable], bool]: ...
 
-# override
 class TreeStore(
     GObject.Object, Buildable, TreeDragDest, TreeDragSource, TreeModel, TreeSortable
 ):
@@ -32374,36 +28667,41 @@ class TreeStore(
     ::
 
         TreeStore(**properties)
-        new(types:list) -> TreeStore
+        new(types:list) -> Gtk.TreeStore
 
     Object GtkTreeStore
 
     Signals from GtkTreeModel:
-      rowchanged (GtkTreePath, GtkTreeIter)
-      rowinserted (GtkTreePath, GtkTreeIter)
-      rowhaschildtoggled (GtkTreePath, GtkTreeIter)
-      rowdeleted (GtkTreePath)
-      rowsreordered (GtkTreePath, GtkTreeIter, gpointer)
+      row-changed (GtkTreePath, GtkTreeIter)
+      row-inserted (GtkTreePath, GtkTreeIter)
+      row-has-child-toggled (GtkTreePath, GtkTreeIter)
+      row-deleted (GtkTreePath)
+      rows-reordered (GtkTreePath, GtkTreeIter, gpointer)
 
     Signals from GtkTreeSortable:
-      sortcolumnchanged ()
+      sort-column-changed ()
 
     Signals from GObject:
       notify (GParam)
     """
-
-    parent: GObject.Object = ...
-
+    @property
+    def parent(self) -> GObject.Object: ...
     @property
     def priv(self) -> TreeStorePrivate: ...
-    def __init__(self, *column_types: Any) -> None: ...
+    # override
     def append(
         self, parent: TreeIter | None, row: list[Any] | None = None
     ) -> TreeIter: ...
     def clear(self) -> None: ...
-    def insert(self, parent, position, row=None): ...
-    def insert_after(self, parent, sibling, row=None): ...
-    def insert_before(self, parent, sibling, row=None): ...
+    def insert(
+        self, parent, position, row=None
+    ): ...  # FIXME: Override is missing typing annotation
+    def insert_after(
+        self, parent, sibling, row=None
+    ): ...  # FIXME: Override is missing typing annotation
+    def insert_before(
+        self, parent, sibling, row=None
+    ): ...  # FIXME: Override is missing typing annotation
     def insert_with_values(
         self,
         parent: TreeIter | None,
@@ -32418,11 +28716,15 @@ class TreeStore(
     def move_before(self, iter: TreeIter, position: TreeIter | None = None) -> None: ...
     @classmethod
     def new(cls, types: Sequence[type[Any]]) -> TreeStore: ...
-    def prepend(self, parent, row=None): ...
+    def prepend(
+        self, parent, row=None
+    ): ...  # FIXME: Override is missing typing annotation
     def remove(self, iter: TreeIter) -> bool: ...
-    def set(self, treeiter, *args): ...
+    def set(self, treeiter, *args): ...  # FIXME: Override is missing typing annotation
     def set_column_types(self, types: Sequence[type[Any]]) -> None: ...
-    def set_value(self, treeiter, column, value): ...
+    def set_value(
+        self, treeiter, column, value
+    ): ...  # FIXME: Override is missing typing annotation
     def swap(self, a: TreeIter, b: TreeIter) -> None: ...
 
 class TreeStoreClass(_gi.Struct):
@@ -32543,6 +28845,7 @@ class TreeView(Widget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         activate_on_single_click: bool
         enable_grid_lines: TreeViewGridLines
@@ -32561,41 +28864,6 @@ class TreeView(Widget, Scrollable):
         search_column: int
         show_expanders: bool
         tooltip_column: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -32626,6 +28894,11 @@ class TreeView(Widget, Scrollable):
         search_column: int = ...,
         show_expanders: bool = ...,
         tooltip_column: int = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -32656,11 +28929,6 @@ class TreeView(Widget, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def append_column(self, column: TreeViewColumn) -> int: ...
     def collapse_all(self) -> None: ...
@@ -32900,7 +29168,6 @@ class TreeViewClass(_gi.Struct):
     @property
     def start_interactive_search(self) -> Callable[[TreeView], bool]: ...
 
-# override
 class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     """
     :Constructors:
@@ -32908,8 +29175,8 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     ::
 
         TreeViewColumn(**properties)
-        new() -> TreeViewColumn
-        new_with_area(area:CellArea) -> TreeViewColumn
+        new() -> Gtk.TreeViewColumn
+        new_with_area(area:Gtk.CellArea) -> Gtk.TreeViewColumn
 
     Object GtkTreeViewColumn
 
@@ -32919,31 +29186,32 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     Properties from GtkTreeViewColumn:
       visible -> gboolean: visible
       resizable -> gboolean: resizable
-      xoffset -> gint: xoffset
+      x-offset -> gint: x-offset
       width -> gint: width
       spacing -> gint: spacing
       sizing -> GtkTreeViewColumnSizing: sizing
-      fixedwidth -> gint: fixedwidth
-      minwidth -> gint: minwidth
-      maxwidth -> gint: maxwidth
+      fixed-width -> gint: fixed-width
+      min-width -> gint: min-width
+      max-width -> gint: max-width
       title -> gchararray: title
       expand -> gboolean: expand
       clickable -> gboolean: clickable
       widget -> GtkWidget: widget
       alignment -> gfloat: alignment
       reorderable -> gboolean: reorderable
-      sortindicator -> gboolean: sortindicator
-      sortorder -> GtkSortType: sortorder
-      sortcolumnid -> gint: sortcolumnid
-      cellarea -> GtkCellArea: cellarea
+      sort-indicator -> gboolean: sort-indicator
+      sort-order -> GtkSortType: sort-order
+      sort-column-id -> gint: sort-column-id
+      cell-area -> GtkCellArea: cell-area
 
     Signals from GObject:
       notify (GParam)
     """
-
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         alignment: float
-        cell_area: CellArea
+        @property
+        def cell_area(self) -> CellArea: ...
         clickable: bool
         expand: bool
         fixed_width: int
@@ -32959,20 +29227,38 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         title: str
         visible: bool
         widget: Widget | None
-        width: int
-        x_offset: int
+        @property
+        def width(self) -> int: ...
+        @property
+        def x_offset(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
+        *,
+        alignment: float = ...,
+        cell_area: CellArea = ...,
+        clickable: bool = ...,
+        expand: bool = ...,
+        fixed_width: int = ...,
+        max_width: int = ...,
+        min_width: int = ...,
+        reorderable: bool = ...,
+        resizable: bool = ...,
+        sizing: TreeViewColumnSizing = ...,
+        sort_column_id: int = ...,
+        sort_indicator: bool = ...,
+        sort_order: SortType = ...,
+        spacing: int = ...,
         title: str = ...,
-        cell_renderer: CellRenderer | None = None,
-        **attributes: Any,
+        visible: bool = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
     ) -> None: ...
+    # override
     def cell_get_position(
         self, cell_renderer: CellRenderer
     ) -> tuple[int, int] | None: ...
@@ -33017,9 +29303,11 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def pack_start(self, cell: CellRenderer, expand: bool) -> None: ...
     def queue_resize(self) -> None: ...
     def set_alignment(self, xalign: float) -> None: ...
+    # override
     def set_attributes(
         self, cell_renderer: CellRenderer, **attributes: Any
     ) -> None: ...
+    # override
     def set_cell_data_func(
         self,
         cell_renderer: CellRendererT,
@@ -33059,6 +29347,7 @@ class UriLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         uri: str | None
 
@@ -33167,47 +29456,13 @@ class Video(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         autoplay: bool
         file: Gio.File | None
         graphics_offload: GraphicsOffloadEnabled
         loop: bool
         media_stream: MediaStream | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -33220,6 +29475,7 @@ class Video(Widget):
         graphics_offload: GraphicsOffloadEnabled = ...,
         loop: bool = ...,
         media_stream: MediaStream | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -33250,7 +29506,6 @@ class Video(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_autoplay(self) -> bool: ...
     def get_file(self) -> Gio.File | None: ...
@@ -33356,44 +29611,10 @@ class Viewport(Widget, Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
         scroll_to_focus: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         hadjustment: Adjustment | None
         hscroll_policy: ScrollablePolicy
@@ -33407,6 +29628,11 @@ class Viewport(Widget, Scrollable):
         *,
         child: Widget | None = ...,
         scroll_to_focus: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        hadjustment: Adjustment | None = ...,
+        hscroll_policy: ScrollablePolicy = ...,
+        vadjustment: Adjustment | None = ...,
+        vscroll_policy: ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -33437,11 +29663,6 @@ class Viewport(Widget, Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
-        vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     def get_scroll_to_focus(self) -> bool: ...
@@ -33538,48 +29759,9 @@ class VolumeButton(ScaleButton):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ScaleButton.Props):
         use_symbolic: bool
-        active: bool
-        adjustment: Adjustment
-        has_frame: bool
-        icons: list[str]
-        value: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
         orientation: Orientation
 
@@ -33591,6 +29773,8 @@ class VolumeButton(ScaleButton):
         self,
         *,
         use_symbolic: bool = ...,
+        accessible_role: AccessibleRole = ...,
+        orientation: Orientation = ...,
         adjustment: Adjustment = ...,
         has_frame: bool = ...,
         icons: Sequence[str] = ...,
@@ -33625,8 +29809,6 @@ class VolumeButton(ScaleButton):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
-        orientation: Orientation = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> VolumeButton: ...
@@ -33696,17 +29878,21 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         can_focus: bool
         can_target: bool
         css_classes: list[str]
-        css_name: str
+        @property
+        def css_name(self) -> str: ...
         cursor: _Gdk4.Cursor | None
         focus_on_click: bool
         focusable: bool
         halign: Align
-        has_default: bool
-        has_focus: bool
+        @property
+        def has_default(self) -> bool: ...
+        @property
+        def has_focus(self) -> bool: ...
         has_tooltip: bool
         height_request: int
         hexpand: bool
@@ -33720,10 +29906,13 @@ class Widget(GObject.InitiallyUnowned, Accessible, Buildable, ConstraintTarget):
         name: str
         opacity: float
         overflow: Overflow
-        parent: Widget | None
+        @property
+        def parent(self) -> Widget | None: ...
         receives_default: bool
-        root: Root | None
-        scale_factor: int
+        @property
+        def root(self) -> Root | None: ...
+        @property
+        def scale_factor(self) -> int: ...
         sensitive: bool
         tooltip_markup: str | None
         tooltip_text: str | None
@@ -34187,6 +30376,7 @@ class WidgetPaintable(GObject.Object, _Gdk4.Paintable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         widget: Widget | None
 
@@ -34312,6 +30502,7 @@ class Window(Widget, Native, Root, ShortcutManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         application: Application | None
         child: Widget | None
@@ -34329,52 +30520,19 @@ class Window(Widget, Native, Root, ShortcutManager):
         handle_menubar_accel: bool
         hide_on_close: bool
         icon_name: str | None
-        is_active: bool
+        @property
+        def is_active(self) -> bool: ...
         maximized: bool
         mnemonics_visible: bool
         modal: bool
         resizable: bool
-        suspended: bool
+        startup_id: str
+        @property
+        def suspended(self) -> bool: ...
         title: str | None
         titlebar: Widget | None
         transient_for: Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -34407,6 +30565,7 @@ class Window(Widget, Native, Root, ShortcutManager):
         title: str | None = ...,
         titlebar: Widget | None = ...,
         transient_for: Window | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -34437,7 +30596,6 @@ class Window(Widget, Native, Root, ShortcutManager):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def close(self) -> None: ...
     def destroy(self) -> None: ...
@@ -34612,46 +30770,13 @@ class WindowControls(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         decoration_layout: str | None
-        empty: bool
+        @property
+        def empty(self) -> bool: ...
         side: PackType
         use_native_controls: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -34662,6 +30787,7 @@ class WindowControls(Widget):
         decoration_layout: str | None = ...,
         side: PackType = ...,
         use_native_controls: bool = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -34692,7 +30818,6 @@ class WindowControls(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_decoration_layout(self) -> str | None: ...
     def get_empty(self) -> bool: ...
@@ -34821,43 +30946,9 @@ class WindowHandle(Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Widget.Props):
         child: Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: Overflow
-        parent: Widget | None
-        receives_default: bool
-        root: Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: AccessibleRole
 
     @property
@@ -34866,6 +30957,7 @@ class WindowHandle(Widget):
         self,
         *,
         child: Widget | None = ...,
+        accessible_role: AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -34896,7 +30988,6 @@ class WindowHandle(Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> Widget | None: ...
     @classmethod

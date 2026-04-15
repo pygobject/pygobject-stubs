@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -189,11 +190,10 @@ class AudioVisualizer(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         shade_amount: int
         shader: AudioVisualizerShader
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -267,6 +267,7 @@ class Discoverer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         timeout: int
         use_cache: bool
@@ -471,12 +472,6 @@ class EncodingAudioProfile(EncodingProfile):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EncodingProfile.Props):
-        element_properties: Gst.Structure | None
-        restriction_caps: Gst.Caps
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -514,12 +509,6 @@ class EncodingContainerProfile(EncodingProfile):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EncodingProfile.Props):
-        element_properties: Gst.Structure | None
-        restriction_caps: Gst.Caps
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -559,6 +548,7 @@ class EncodingProfile(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         element_properties: Gst.Structure | None
         restriction_caps: Gst.Caps
@@ -662,12 +652,6 @@ class EncodingVideoProfile(EncodingProfile):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(EncodingProfile.Props):
-        element_properties: Gst.Structure | None
-        restriction_caps: Gst.Caps
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,

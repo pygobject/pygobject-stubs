@@ -1,3 +1,4 @@
+from typing import type_check_only
 from typing import TypeVar
 
 from enum import IntEnum
@@ -5,7 +6,6 @@ from enum import IntEnum
 from gi import _gi
 from gi.repository import _Gdk4
 from gi.repository import GObject
-from gi.repository import Pango
 from gi.repository import xlib
 
 T = TypeVar("T")
@@ -43,11 +43,6 @@ class X11AppLaunchContext(_Gdk4.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.AppLaunchContext.Props):
-        display: _Gdk4.Display
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
 
 class X11AppLaunchContextClass(_gi.Struct): ...
@@ -71,11 +66,16 @@ class X11DeviceManagerXI2(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: _Gdk4.Display
-        major: int
-        minor: int
-        opcode: int
+        @property
+        def display(self) -> _Gdk4.Display: ...
+        @property
+        def major(self) -> int: ...
+        @property
+        def minor(self) -> int: ...
+        @property
+        def opcode(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -130,26 +130,10 @@ class X11DeviceXI2(_Gdk4.Device):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gdk4.Device.Props):
-        device_id: int
-        active_layout_index: int
-        caps_lock_state: bool
-        direction: Pango.Direction
-        display: _Gdk4.Display
-        has_bidi_layouts: bool
-        has_cursor: bool
-        layout_names: list[str] | None
-        modifier_state: _Gdk4.ModifierType
-        n_axes: int
-        name: str
-        num_lock_state: bool
-        num_touches: int
-        product_id: str | None
-        scroll_lock_state: bool
-        seat: _Gdk4.Seat
-        source: _Gdk4.InputSource
-        tool: _Gdk4.DeviceTool | None
-        vendor_id: str | None
+        @property
+        def device_id(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -199,15 +183,6 @@ class X11Display(_Gdk4.Display):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Display.Props):
-        composited: bool
-        dmabuf_formats: _Gdk4.DmabufFormats
-        input_shapes: bool
-        rgba: bool
-        shadow_width: bool
-
-    @property
-    def props(self) -> Props: ...
     def error_trap_pop(self) -> int: ...
     def error_trap_pop_ignored(self) -> None: ...
     def error_trap_push(self) -> None: ...
@@ -267,17 +242,6 @@ class X11Drag(_Gdk4.Drag):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Drag.Props):
-        actions: _Gdk4.DragAction
-        content: _Gdk4.ContentProvider
-        device: _Gdk4.Device
-        display: _Gdk4.Display
-        formats: _Gdk4.ContentFormats
-        selected_action: _Gdk4.DragAction
-        surface: _Gdk4.Surface
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -313,15 +277,6 @@ class X11GLContext(_Gdk4.GLContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.GLContext.Props):
-        allowed_apis: _Gdk4.GLAPI
-        api: _Gdk4.GLAPI
-        shared_context: _Gdk4.GLContext | None
-        display: _Gdk4.Display | None
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
@@ -364,23 +319,6 @@ class X11Monitor(_Gdk4.Monitor):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Monitor.Props):
-        connector: str | None
-        description: str | None
-        display: _Gdk4.Display
-        geometry: _Gdk4.Rectangle
-        height_mm: int
-        manufacturer: str | None
-        model: str | None
-        refresh_rate: int
-        scale: float
-        scale_factor: int
-        subpixel_layout: _Gdk4.SubpixelLayout
-        valid: bool
-        width_mm: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
     def get_output(self) -> int: ...
     def get_workarea(self) -> _Gdk4.Rectangle: ...
@@ -443,18 +381,6 @@ class X11Surface(_Gdk4.Surface):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Surface.Props):
-        cursor: _Gdk4.Cursor | None
-        display: _Gdk4.Display
-        frame_clock: _Gdk4.FrameClock
-        height: int
-        mapped: bool
-        scale: float
-        scale_factor: int
-        width: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,

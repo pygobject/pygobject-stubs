@@ -3,6 +3,7 @@ from typing import Final
 from typing import Generic
 from typing import overload
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -989,16 +990,20 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
+        action_group: ActionGroup | None
         application_id: str | None
         flags: ApplicationFlags
         inactivity_timeout: int
-        is_busy: bool
-        is_registered: bool
-        is_remote: bool
+        @property
+        def is_busy(self) -> bool: ...
+        @property
+        def is_registered(self) -> bool: ...
+        @property
+        def is_remote(self) -> bool: ...
         resource_base_path: str | None
         version: str | None
-        action_group: ActionGroup | None
 
     @property
     def props(self) -> Props: ...
@@ -1178,11 +1183,10 @@ class ApplicationCommandLine(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        is_remote: bool
-        arguments: GLib.Variant
-        options: GLib.Variant
-        platform_data: GLib.Variant
+        @property
+        def is_remote(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -1333,10 +1337,9 @@ class BufferedInputStream(FilterInputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(FilterInputStream.Props):
         buffer_size: int
-        base_stream: InputStream
-        close_base_stream: bool
 
     @property
     def props(self) -> Props: ...
@@ -1424,11 +1427,10 @@ class BufferedOutputStream(FilterOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(FilterOutputStream.Props):
         auto_grow: bool
         buffer_size: int
-        base_stream: OutputStream
-        close_base_stream: bool
 
     @property
     def props(self) -> Props: ...
@@ -1485,8 +1487,10 @@ class BytesIcon(GObject.Object, Icon, LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        bytes: GLib.Bytes
+        @property
+        def bytes(self) -> GLib.Bytes: ...
 
     @property
     def props(self) -> Props: ...
@@ -1569,9 +1573,12 @@ class CharsetConverter(GObject.Object, Converter, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        from_charset: str
-        to_charset: str
+        @property
+        def from_charset(self) -> str: ...
+        @property
+        def to_charset(self) -> str: ...
         use_fallback: bool
 
     @property
@@ -1654,10 +1661,10 @@ class ConverterInputStream(FilterInputStream, PollableInputStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(FilterInputStream.Props):
-        converter: Converter
-        base_stream: InputStream
-        close_base_stream: bool
+        @property
+        def converter(self) -> Converter: ...
 
     @property
     def props(self) -> Props: ...
@@ -1712,10 +1719,10 @@ class ConverterOutputStream(FilterOutputStream, PollableOutputStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(FilterOutputStream.Props):
-        converter: Converter
-        base_stream: OutputStream
-        close_base_stream: bool
+        @property
+        def converter(self) -> Converter: ...
 
     @property
     def props(self) -> Props: ...
@@ -1896,16 +1903,21 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        capabilities: DBusCapabilityFlags
-        closed: bool
+        @property
+        def capabilities(self) -> DBusCapabilityFlags: ...
+        @property
+        def closed(self) -> bool: ...
         exit_on_close: bool
-        flags: DBusConnectionFlags
-        guid: str
-        stream: IOStream
-        unique_name: str | None
-        address: str
-        authentication_observer: DBusAuthObserver
+        @property
+        def flags(self) -> DBusConnectionFlags: ...
+        @property
+        def guid(self) -> str: ...
+        @property
+        def stream(self) -> IOStream: ...
+        @property
+        def unique_name(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2215,6 +2227,7 @@ class DBusInterfaceSkeleton(GObject.Object, DBusInterface):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         g_flags: DBusInterfaceSkeletonFlags
 
@@ -2329,8 +2342,10 @@ class DBusMessage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        locked: bool
+        @property
+        def locked(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -2559,16 +2574,24 @@ class DBusObjectManagerClient(
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        connection: DBusConnection
-        flags: DBusObjectManagerClientFlags
-        get_proxy_type_destroy_notify: None
-        get_proxy_type_func: None
-        get_proxy_type_user_data: None
-        name: str
-        name_owner: str | None
-        object_path: str
-        bus_type: BusType
+        @property
+        def connection(self) -> DBusConnection: ...
+        @property
+        def flags(self) -> DBusObjectManagerClientFlags: ...
+        @property
+        def get_proxy_type_destroy_notify(self) -> None: ...
+        @property
+        def get_proxy_type_func(self) -> None: ...
+        @property
+        def get_proxy_type_user_data(self) -> None: ...
+        @property
+        def name(self) -> str: ...
+        @property
+        def name_owner(self) -> str | None: ...
+        @property
+        def object_path(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -2741,9 +2764,11 @@ class DBusObjectManagerServer(GObject.Object, DBusObjectManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         connection: DBusConnection | None
-        object_path: str
+        @property
+        def object_path(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -2800,9 +2825,12 @@ class DBusObjectProxy(GObject.Object, DBusObject):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        g_connection: DBusConnection
-        g_object_path: str
+        @property
+        def g_connection(self) -> DBusConnection: ...
+        @property
+        def g_object_path(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -2856,6 +2884,7 @@ class DBusObjectSkeleton(GObject.Object, DBusObject):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         g_object_path: str
 
@@ -3026,16 +3055,22 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        g_connection: DBusConnection
+        @property
+        def g_connection(self) -> DBusConnection: ...
         g_default_timeout: int
-        g_flags: DBusProxyFlags
+        @property
+        def g_flags(self) -> DBusProxyFlags: ...
         g_interface_info: DBusInterfaceInfo
-        g_interface_name: str
-        g_name: str
-        g_name_owner: str
-        g_object_path: str
-        g_bus_type: BusType
+        @property
+        def g_interface_name(self) -> str: ...
+        @property
+        def g_name(self) -> str: ...
+        @property
+        def g_name_owner(self) -> str: ...
+        @property
+        def g_object_path(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -3215,13 +3250,20 @@ class DBusServer(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        active: bool
-        address: str
-        authentication_observer: DBusAuthObserver
-        client_address: str
-        flags: DBusServerFlags
-        guid: str
+        @property
+        def active(self) -> bool: ...
+        @property
+        def address(self) -> str: ...
+        @property
+        def authentication_observer(self) -> DBusAuthObserver: ...
+        @property
+        def client_address(self) -> str: ...
+        @property
+        def flags(self) -> DBusServerFlags: ...
+        @property
+        def guid(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -3308,12 +3350,10 @@ class DataInputStream(BufferedInputStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(BufferedInputStream.Props):
         byte_order: DataStreamByteOrder
         newline_type: DataStreamNewlineType
-        buffer_size: int
-        base_stream: InputStream
-        close_base_stream: bool
 
     @property
     def props(self) -> Props: ...
@@ -3330,7 +3370,10 @@ class DataInputStream(BufferedInputStream):
         base_stream: InputStream = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
-    def __iter__(self): ...  # FIXME: Override is missing typing annotation
+    # override
+    def __iter__(self) -> Self: ...
+    # override
+    def __next__(self) -> str: ...
     def get_byte_order(self) -> DataStreamByteOrder: ...
     def get_newline_type(self) -> DataStreamNewlineType: ...
     @classmethod
@@ -3422,10 +3465,9 @@ class DataOutputStream(FilterOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(FilterOutputStream.Props):
         byte_order: DataStreamByteOrder
-        base_stream: OutputStream
-        close_base_stream: bool
 
     @property
     def props(self) -> Props: ...
@@ -3565,8 +3607,10 @@ class DebugControllerDBus(GObject.Object, DebugController, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        connection: DBusConnection
+        @property
+        def connection(self) -> DBusConnection: ...
         debug_enabled: bool
 
     @property
@@ -3932,9 +3976,12 @@ class Emblem(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        icon: GObject.Object
-        origin: EmblemOrigin
+        @property
+        def icon(self) -> GObject.Object: ...
+        @property
+        def origin(self) -> EmblemOrigin: ...
 
     @property
     def props(self) -> Props: ...
@@ -3968,8 +4015,10 @@ class EmblemedIcon(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        gicon: Icon
+        @property
+        def gicon(self) -> Icon: ...
 
     @property
     def props(self) -> Props: ...
@@ -4617,17 +4666,15 @@ class FileEnumerator(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GObject.Object.Props):
-        container: File
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> FileEnumeratorPrivate: ...
     def __init__(self, *, container: File = ...) -> None: ...
-    def __iter__(self): ...  # FIXME: Override is missing typing annotation
+    # override
+    def __iter__(self) -> Self: ...
+    # override
+    def __next__(self) -> FileInfo: ...
     def close(self, cancellable: Cancellable | None = None) -> bool: ...
     def close_async(
         self,
@@ -4724,13 +4771,6 @@ class FileIOStream(IOStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(IOStream.Props):
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> IOStream: ...
     @property
@@ -4825,8 +4865,10 @@ class FileIcon(GObject.Object, Icon, LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        file: File
+        @property
+        def file(self) -> File: ...
 
     @property
     def props(self) -> Props: ...
@@ -5299,8 +5341,10 @@ class FileMonitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        cancelled: bool
+        @property
+        def cancelled(self) -> bool: ...
         rate_limit: int
 
     @property
@@ -5486,8 +5530,10 @@ class FilterInputStream(InputStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(InputStream.Props):
-        base_stream: InputStream
+        @property
+        def base_stream(self) -> InputStream: ...
         close_base_stream: bool
 
     @property
@@ -5531,9 +5577,12 @@ class FilterOutputStream(OutputStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(OutputStream.Props):
-        base_stream: OutputStream
-        close_base_stream: bool
+        @property
+        def base_stream(self) -> OutputStream: ...
+        @property
+        def close_base_stream(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -5627,10 +5676,14 @@ class IOStream(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
+        @property
+        def closed(self) -> bool: ...
+        @property
+        def input_stream(self) -> InputStream: ...
+        @property
+        def output_stream(self) -> OutputStream: ...
 
     @property
     def props(self) -> Props: ...
@@ -5772,21 +5825,36 @@ class InetAddress(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        bytes: None
-        family: SocketFamily
-        flowinfo: int
-        is_any: bool
-        is_link_local: bool
-        is_loopback: bool
-        is_mc_global: bool
-        is_mc_link_local: bool
-        is_mc_node_local: bool
-        is_mc_org_local: bool
-        is_mc_site_local: bool
-        is_multicast: bool
-        is_site_local: bool
-        scope_id: int
+        @property
+        def bytes(self) -> None: ...
+        @property
+        def family(self) -> SocketFamily: ...
+        @property
+        def flowinfo(self) -> int: ...
+        @property
+        def is_any(self) -> bool: ...
+        @property
+        def is_link_local(self) -> bool: ...
+        @property
+        def is_loopback(self) -> bool: ...
+        @property
+        def is_mc_global(self) -> bool: ...
+        @property
+        def is_mc_link_local(self) -> bool: ...
+        @property
+        def is_mc_node_local(self) -> bool: ...
+        @property
+        def is_mc_org_local(self) -> bool: ...
+        @property
+        def is_mc_site_local(self) -> bool: ...
+        @property
+        def is_multicast(self) -> bool: ...
+        @property
+        def is_site_local(self) -> bool: ...
+        @property
+        def scope_id(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -5869,9 +5937,11 @@ class InetAddressMask(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         address: InetAddress
-        family: SocketFamily
+        @property
+        def family(self) -> SocketFamily: ...
         length: int
 
     @property
@@ -5930,12 +6000,16 @@ class InetSocketAddress(SocketAddress):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketAddress.Props):
-        address: InetAddress
-        flowinfo: int
-        port: int
-        scope_id: int
-        family: SocketFamily
+        @property
+        def address(self) -> InetAddress: ...
+        @property
+        def flowinfo(self) -> int: ...
+        @property
+        def port(self) -> int: ...
+        @property
+        def scope_id(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -6412,10 +6486,14 @@ class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(OutputStream.Props):
-        data: None | None
-        data_size: int
-        size: int
+        @property
+        def data(self) -> None | None: ...
+        @property
+        def data_size(self) -> int: ...
+        @property
+        def size(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -6878,6 +6956,7 @@ class MountOperation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         anonymous: bool
         choice: int
@@ -6994,11 +7073,6 @@ class NativeSocketAddress(SocketAddress):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(SocketAddress.Props):
-        family: SocketFamily
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> SocketAddress: ...
     @property
@@ -7082,10 +7156,14 @@ class NetworkAddress(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        hostname: str
-        port: int
-        scheme: str | None
+        @property
+        def hostname(self) -> str: ...
+        @property
+        def port(self) -> int: ...
+        @property
+        def scheme(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -7186,11 +7264,15 @@ class NetworkService(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        domain: str
-        protocol: str
+        @property
+        def domain(self) -> str: ...
+        @property
+        def protocol(self) -> str: ...
         scheme: str
-        service: str
+        @property
+        def service(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -7536,10 +7618,14 @@ class Permission(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        allowed: bool
-        can_acquire: bool
-        can_release: bool
+        @property
+        def allowed(self) -> bool: ...
+        @property
+        def can_acquire(self) -> bool: ...
+        @property
+        def can_release(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -7742,15 +7828,20 @@ class PropertyAction(GObject.Object, Action):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        enabled: bool
-        invert_boolean: bool
-        name: str
-        parameter_type: GLib.VariantType
-        state: GLib.Variant
-        state_type: GLib.VariantType
-        object: GObject.Object
-        property_name: str
+        @property
+        def enabled(self) -> bool: ...
+        @property
+        def invert_boolean(self) -> bool: ...
+        @property
+        def name(self) -> str: ...
+        @property
+        def parameter_type(self) -> GLib.VariantType: ...
+        @property
+        def state(self) -> GLib.Variant: ...
+        @property
+        def state_type(self) -> GLib.VariantType: ...
 
     @property
     def props(self) -> Props: ...
@@ -7825,19 +7916,22 @@ class ProxyAddress(InetSocketAddress):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(InetSocketAddress.Props):
-        destination_hostname: str
-        destination_port: int
-        destination_protocol: str
-        password: str | None
-        protocol: str
-        uri: str | None
-        username: str | None
-        address: InetAddress
-        flowinfo: int
-        port: int
-        scope_id: int
-        family: SocketFamily
+        @property
+        def destination_hostname(self) -> str: ...
+        @property
+        def destination_port(self) -> int: ...
+        @property
+        def destination_protocol(self) -> str: ...
+        @property
+        def password(self) -> str | None: ...
+        @property
+        def protocol(self) -> str: ...
+        @property
+        def uri(self) -> str | None: ...
+        @property
+        def username(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -7909,11 +8003,15 @@ class ProxyAddressEnumerator(SocketAddressEnumerator):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketAddressEnumerator.Props):
-        connectable: SocketConnectable
-        default_port: int
+        @property
+        def connectable(self) -> SocketConnectable: ...
+        @property
+        def default_port(self) -> int: ...
         proxy_resolver: ProxyResolver
-        uri: str
+        @property
+        def uri(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -8063,6 +8161,7 @@ class Resolver(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         timeout: int
 
@@ -8370,14 +8469,22 @@ class Settings(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        backend: SettingsBackend
-        delay_apply: bool
-        has_unapplied: bool
-        path: str
-        schema: str
-        schema_id: str
-        settings_schema: SettingsSchema
+        @property
+        def backend(self) -> SettingsBackend: ...
+        @property
+        def delay_apply(self) -> bool: ...
+        @property
+        def has_unapplied(self) -> bool: ...
+        @property
+        def path(self) -> str: ...
+        @property
+        def schema(self) -> str: ...
+        @property
+        def schema_id(self) -> str: ...
+        @property
+        def settings_schema(self) -> SettingsSchema: ...
 
     @property
     def props(self) -> Props: ...
@@ -8658,12 +8765,16 @@ class SimpleAction(GObject.Object, Action):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         enabled: bool
-        name: str
-        parameter_type: GLib.VariantType
+        @property
+        def name(self) -> str: ...
+        @property
+        def parameter_type(self) -> GLib.VariantType: ...
         state: GLib.Variant
-        state_type: GLib.VariantType
+        @property
+        def state_type(self) -> GLib.VariantType: ...
 
     @property
     def props(self) -> Props: ...
@@ -8806,10 +8917,12 @@ class SimpleIOStream(IOStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(IOStream.Props):
-        input_stream: InputStream
-        output_stream: OutputStream
-        closed: bool
+        @property
+        def input_stream(self) -> InputStream: ...
+        @property
+        def output_stream(self) -> OutputStream: ...
 
     @property
     def props(self) -> Props: ...
@@ -8840,13 +8953,6 @@ class SimplePermission(Permission):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Permission.Props):
-        allowed: bool
-        can_acquire: bool
-        can_release: bool
-
-    @property
-    def props(self) -> Props: ...
     @classmethod
     def new(cls, allowed: bool) -> SimplePermission: ...
 
@@ -8867,6 +8973,7 @@ class SimpleProxyResolver(GObject.Object, ProxyResolver):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         default_proxy: str | None
         ignore_hosts: list[str]
@@ -8932,21 +9039,28 @@ class Socket(GObject.Object, DatagramBased, Initable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         blocking: bool
         broadcast: bool
-        family: SocketFamily
-        fd: int
+        @property
+        def family(self) -> SocketFamily: ...
+        @property
+        def fd(self) -> int: ...
         keepalive: bool
         listen_backlog: int
-        local_address: SocketAddress
+        @property
+        def local_address(self) -> SocketAddress: ...
         multicast_loopback: bool
         multicast_ttl: int
-        protocol: SocketProtocol
-        remote_address: SocketAddress
+        @property
+        def protocol(self) -> SocketProtocol: ...
+        @property
+        def remote_address(self) -> SocketAddress: ...
         timeout: int
         ttl: int
-        type: SocketType
+        @property
+        def type(self) -> SocketType: ...
 
     @property
     def props(self) -> Props: ...
@@ -9121,8 +9235,10 @@ class SocketAddress(GObject.Object, SocketConnectable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        family: SocketFamily
+        @property
+        def family(self) -> SocketFamily: ...
 
     @property
     def props(self) -> Props: ...
@@ -9250,12 +9366,13 @@ class SocketClient(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         enable_proxy: bool
         family: SocketFamily
         local_address: SocketAddress | None
         protocol: SocketProtocol
-        proxy_resolver: ProxyResolver
+        proxy_resolver: ProxyResolver | None
         timeout: int
         tls: bool
         tls_validation_flags: TlsCertificateFlags
@@ -9430,11 +9547,10 @@ class SocketConnection(IOStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(IOStream.Props):
-        socket: Socket
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
+        @property
+        def socket(self) -> Socket: ...
 
     @property
     def props(self) -> Props: ...
@@ -9553,6 +9669,7 @@ class SocketListener(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         listen_backlog: int
 
@@ -9654,9 +9771,9 @@ class SocketService(SocketListener):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketListener.Props):
         active: bool
-        listen_backlog: int
 
     @property
     def props(self) -> Props: ...
@@ -9752,12 +9869,6 @@ class Subprocess(GObject.Object, Initable):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GObject.Object.Props):
-        argv: list[str]
-        flags: SubprocessFlags
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, argv: Sequence[str] = ..., flags: SubprocessFlags = ...
     ) -> None: ...
@@ -9835,11 +9946,6 @@ class SubprocessLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GObject.Object.Props):
-        flags: SubprocessFlags
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, flags: SubprocessFlags = ...) -> None: ...
     def close(self) -> None: ...
     def getenv(self, variable: str) -> str | None: ...
@@ -9876,8 +9982,10 @@ class Task(GObject.Object, AsyncResult):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        completed: bool
+        @property
+        def completed(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -9971,12 +10079,9 @@ class TcpConnection(SocketConnection):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketConnection.Props):
         graceful_disconnect: bool
-        socket: Socket
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
 
     @property
     def props(self) -> Props: ...
@@ -10031,13 +10136,10 @@ class TcpWrapperConnection(TcpConnection):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(TcpConnection.Props):
-        base_io_stream: IOStream
-        graceful_disconnect: bool
-        socket: Socket
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
+        @property
+        def base_io_stream(self) -> IOStream: ...
 
     @property
     def props(self) -> Props: ...
@@ -10086,8 +10188,10 @@ class TestDBus(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        flags: TestDBusFlags
+        @property
+        def flags(self) -> TestDBusFlags: ...
 
     @property
     def props(self) -> Props: ...
@@ -10124,10 +10228,12 @@ class ThemedIcon(GObject.Object, Icon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        names: list[str]
-        use_default_fallbacks: bool
-        name: str
+        @property
+        def names(self) -> list[str]: ...
+        @property
+        def use_default_fallbacks(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -10170,11 +10276,6 @@ class ThreadedResolver(Resolver):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Resolver.Props):
-        timeout: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, timeout: int = ...) -> None: ...
 
 class ThreadedResolverClass(_gi.Struct):
@@ -10220,10 +10321,10 @@ class ThreadedSocketService(SocketService):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketService.Props):
-        max_threads: int
-        active: bool
-        listen_backlog: int
+        @property
+        def max_threads(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -10342,22 +10443,34 @@ class TlsCertificate(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        certificate: bytes
-        certificate_pem: str
-        dns_names: list[None] | None
-        ip_addresses: list[None] | None
-        issuer: TlsCertificate | None
-        issuer_name: str | None
-        not_valid_after: GLib.DateTime | None
-        not_valid_before: GLib.DateTime | None
-        pkcs11_uri: str
-        private_key: bytes
-        private_key_pem: str
-        private_key_pkcs11_uri: str
-        subject_name: str | None
-        password: str
-        pkcs12_data: bytes
+        @property
+        def certificate(self) -> bytes: ...
+        @property
+        def certificate_pem(self) -> str: ...
+        @property
+        def dns_names(self) -> list[None] | None: ...
+        @property
+        def ip_addresses(self) -> list[None] | None: ...
+        @property
+        def issuer(self) -> TlsCertificate | None: ...
+        @property
+        def issuer_name(self) -> str | None: ...
+        @property
+        def not_valid_after(self) -> GLib.DateTime | None: ...
+        @property
+        def not_valid_before(self) -> GLib.DateTime | None: ...
+        @property
+        def pkcs11_uri(self) -> str: ...
+        @property
+        def private_key(self) -> bytes: ...
+        @property
+        def private_key_pem(self) -> str: ...
+        @property
+        def private_key_pkcs11_uri(self) -> str: ...
+        @property
+        def subject_name(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10510,23 +10623,27 @@ class TlsConnection(IOStream):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(IOStream.Props):
         advertised_protocols: list[str] | None
-        base_io_stream: IOStream
+        @property
+        def base_io_stream(self) -> IOStream: ...
         certificate: TlsCertificate | None
-        ciphersuite_name: str | None
+        @property
+        def ciphersuite_name(self) -> str | None: ...
         database: TlsDatabase | None
         interaction: TlsInteraction | None
-        negotiated_protocol: str | None
-        peer_certificate: TlsCertificate | None
-        peer_certificate_errors: TlsCertificateFlags
-        protocol_version: TlsProtocolVersion
+        @property
+        def negotiated_protocol(self) -> str | None: ...
+        @property
+        def peer_certificate(self) -> TlsCertificate | None: ...
+        @property
+        def peer_certificate_errors(self) -> TlsCertificateFlags: ...
+        @property
+        def protocol_version(self) -> TlsProtocolVersion: ...
         rehandshake_mode: TlsRehandshakeMode
         require_close_notify: bool
         use_system_certdb: bool
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
 
     @property
     def props(self) -> Props: ...
@@ -11069,6 +11186,7 @@ class TlsPassword(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         description: str
         flags: TlsPasswordFlags
@@ -11175,14 +11293,6 @@ class UnixConnection(SocketConnection):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(SocketConnection.Props):
-        socket: Socket
-        closed: bool
-        input_stream: InputStream
-        output_stream: OutputStream
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent_instance(self) -> SocketConnection: ...
     @property
@@ -11240,8 +11350,10 @@ class UnixCredentialsMessage(SocketControlMessage):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketControlMessage.Props):
-        credentials: Credentials
+        @property
+        def credentials(self) -> Credentials: ...
 
     @property
     def props(self) -> Props: ...
@@ -11358,12 +11470,16 @@ class UnixSocketAddress(SocketAddress):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(SocketAddress.Props):
-        abstract: bool
-        address_type: UnixSocketAddressType
-        path: str
-        path_as_array: bytes
-        family: SocketFamily
+        @property
+        def abstract(self) -> bool: ...
+        @property
+        def address_type(self) -> UnixSocketAddressType: ...
+        @property
+        def path(self) -> str: ...
+        @property
+        def path_as_array(self) -> bytes: ...
 
     @property
     def props(self) -> Props: ...
@@ -11745,10 +11861,13 @@ class ZlibCompressor(GObject.Object, Converter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         file_info: FileInfo | None
-        format: ZlibCompressorFormat
-        level: int
+        @property
+        def format(self) -> ZlibCompressorFormat: ...
+        @property
+        def level(self) -> int: ...
         os: int
 
     @property
@@ -11797,9 +11916,12 @@ class ZlibDecompressor(GObject.Object, Converter):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        file_info: FileInfo | None
-        format: ZlibCompressorFormat
+        @property
+        def file_info(self) -> FileInfo | None: ...
+        @property
+        def format(self) -> ZlibCompressorFormat: ...
 
     @property
     def props(self) -> Props: ...

@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -150,6 +151,7 @@ class AboutDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         application_icon: str
         application_name: str
@@ -171,51 +173,6 @@ class AboutDialog(Dialog):
         translator_credits: str
         version: str
         website: str
-        can_close: bool
-        child: _Gtk4.Widget | None
-        content_height: int
-        content_width: int
-        current_breakpoint: Breakpoint | None
-        default_widget: _Gtk4.Widget | None
-        focus_widget: _Gtk4.Widget | None
-        follows_content_size: bool
-        presentation_mode: DialogPresentationMode
-        title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -243,6 +200,7 @@ class AboutDialog(Dialog):
         translator_credits: str = ...,
         version: str = ...,
         website: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -282,7 +240,6 @@ class AboutDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_acknowledgement_section(
         self, name: str | None, people: Sequence[str]
@@ -489,6 +446,7 @@ class AboutWindow(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         application_icon: str
         application_name: str
@@ -510,73 +468,7 @@ class AboutWindow(Window):
         translator_credits: str
         version: str
         website: str
-        adaptive_preview: bool
-        content: _Gtk4.Widget | None
-        current_breakpoint: Breakpoint | None
-        dialogs: Gio.ListModel
-        visible_dialog: Dialog | None
-        application: _Gtk4.Application | None
-        child: _Gtk4.Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: _Gtk4.Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: _Gtk4.Widget | None
-        fullscreened: bool
-        gravity: _Gtk4.WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: _Gtk4.Widget | None
-        transient_for: _Gtk4.Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -603,6 +495,7 @@ class AboutWindow(Window):
         translator_credits: str = ...,
         version: str = ...,
         website: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
         application: _Gtk4.Application | None = ...,
@@ -659,7 +552,6 @@ class AboutWindow(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_acknowledgement_section(
         self, name: str | None, people: Sequence[str]
@@ -822,6 +714,7 @@ class ActionRow(PreferencesRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(PreferencesRow.Props):
         activatable_widget: _Gtk4.Widget | None
         icon_name: str | None
@@ -829,48 +722,6 @@ class ActionRow(PreferencesRow):
         subtitle_lines: int
         subtitle_selectable: bool
         title_lines: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -888,6 +739,9 @@ class ActionRow(PreferencesRow):
         subtitle_lines: int = ...,
         subtitle_selectable: bool = ...,
         title_lines: int = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
@@ -925,9 +779,6 @@ class ActionRow(PreferencesRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def activate(self) -> None: ...
     def add_prefix(self, widget: _Gtk4.Widget) -> None: ...
@@ -1059,6 +910,7 @@ class AlertDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         body: str
         body_use_markup: bool
@@ -1068,51 +920,6 @@ class AlertDialog(Dialog):
         heading: str | None
         heading_use_markup: bool
         prefer_wide_layout: bool
-        can_close: bool
-        child: _Gtk4.Widget | None
-        content_height: int
-        content_width: int
-        current_breakpoint: Breakpoint | None
-        default_widget: _Gtk4.Widget | None
-        focus_widget: _Gtk4.Widget | None
-        follows_content_size: bool
-        presentation_mode: DialogPresentationMode
-        title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -1130,6 +937,7 @@ class AlertDialog(Dialog):
         heading: str | None = ...,
         heading_use_markup: bool = ...,
         prefer_wide_layout: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -1169,7 +977,6 @@ class AlertDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
     def choose(
@@ -1250,12 +1057,16 @@ class Animation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         follow_enable_animations_setting: bool
-        state: AnimationState
+        @property
+        def state(self) -> AnimationState: ...
         target: AnimationTarget
-        value: float
-        widget: _Gtk4.Widget
+        @property
+        def value(self) -> float: ...
+        @property
+        def widget(self) -> _Gtk4.Widget: ...
 
     @property
     def props(self) -> Props: ...
@@ -1282,7 +1093,21 @@ class Animation(GObject.Object):
     def skip(self) -> None: ...
 
 class AnimationClass(_gi.Struct): ...
-class AnimationTarget(GObject.Object): ...
+
+class AnimationTarget(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        AnimationTarget(**properties)
+
+    Object AdwAnimationTarget
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
 class AnimationTargetClass(_gi.Struct): ...
 
 class Application(_Gtk4.Application):
@@ -1351,21 +1176,10 @@ class Application(_Gtk4.Application):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Application.Props):
-        style_manager: StyleManager
-        active_window: _Gtk4.Window | None
-        menubar: Gio.MenuModel | None
-        register_session: bool
-        screensaver_active: bool
-        application_id: str | None
-        flags: Gio.ApplicationFlags
-        inactivity_timeout: int
-        is_busy: bool
-        is_registered: bool
-        is_remote: bool
-        resource_base_path: str | None
-        version: str | None
-        action_group: Gio.ActionGroup | None
+        @property
+        def style_manager(self) -> StyleManager: ...
 
     @property
     def props(self) -> Props: ...
@@ -1525,75 +1339,17 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.ApplicationWindow.Props):
         adaptive_preview: bool
         content: _Gtk4.Widget | None
-        current_breakpoint: Breakpoint | None
-        dialogs: Gio.ListModel
-        visible_dialog: Dialog | None
-        show_menubar: bool
-        application: _Gtk4.Application | None
-        child: _Gtk4.Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: _Gtk4.Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: _Gtk4.Widget | None
-        fullscreened: bool
-        gravity: _Gtk4.WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: _Gtk4.Widget | None
-        transient_for: _Gtk4.Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def current_breakpoint(self) -> Breakpoint | None: ...
+        @property
+        def dialogs(self) -> Gio.ListModel: ...
+        @property
+        def visible_dialog(self) -> Dialog | None: ...
         accessible_role: _Gtk4.AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -1604,6 +1360,7 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
         *,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         show_menubar: bool = ...,
         application: _Gtk4.Application | None = ...,
         child: _Gtk4.Widget | None = ...,
@@ -1659,7 +1416,6 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def get_adaptive_preview(self) -> bool: ...
@@ -1758,47 +1514,13 @@ class Avatar(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         custom_image: _Gdk4.Paintable | None
         icon_name: str | None
         show_initials: bool
         size: int
         text: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -1811,6 +1533,7 @@ class Avatar(_Gtk4.Widget):
         show_initials: bool = ...,
         size: int = ...,
         text: str | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -1841,7 +1564,6 @@ class Avatar(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def draw_to_texture(self, scale_factor: int) -> _Gdk4.Texture: ...
     def get_custom_image(self) -> _Gdk4.Paintable | None: ...
@@ -1944,47 +1666,13 @@ class Banner(_Gtk4.Widget, _Gtk4.Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         button_label: str | None
         button_style: BannerButtonStyle
         revealed: bool
         title: str
         use_markup: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -1999,6 +1687,9 @@ class Banner(_Gtk4.Widget, _Gtk4.Actionable):
         revealed: bool = ...,
         title: str = ...,
         use_markup: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2029,9 +1720,6 @@ class Banner(_Gtk4.Widget, _Gtk4.Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_button_label(self) -> str | None: ...
     def get_button_style(self) -> BannerButtonStyle: ...
@@ -2126,43 +1814,9 @@ class Bin(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -2173,6 +1827,7 @@ class Bin(_Gtk4.Widget):
         self,
         *,
         child: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2203,7 +1858,6 @@ class Bin(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
     @classmethod
@@ -2305,10 +1959,12 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         align: float
         bottom_bar: _Gtk4.Widget | None
-        bottom_bar_height: int
+        @property
+        def bottom_bar_height(self) -> int: ...
         can_close: bool
         can_open: bool
         content: _Gtk4.Widget | None
@@ -2317,43 +1973,9 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
         open: bool
         reveal_bottom_bar: bool
         sheet: _Gtk4.Widget | None
-        sheet_height: int
+        @property
+        def sheet_height(self) -> int: ...
         show_drag_handle: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -2372,6 +1994,7 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
         reveal_bottom_bar: bool = ...,
         sheet: _Gtk4.Widget | None = ...,
         show_drag_handle: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2402,7 +2025,6 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_align(self) -> float: ...
     def get_bottom_bar(self) -> _Gtk4.Widget | None: ...
@@ -2463,6 +2085,7 @@ class Breakpoint(GObject.Object, _Gtk4.Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         condition: BreakpointCondition | None
 
@@ -2553,44 +2176,11 @@ class BreakpointBin(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
-        current_breakpoint: Breakpoint | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def current_breakpoint(self) -> Breakpoint | None: ...
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -2601,6 +2191,7 @@ class BreakpointBin(_Gtk4.Widget):
         self,
         *,
         child: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2631,7 +2222,6 @@ class BreakpointBin(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
@@ -2770,46 +2360,12 @@ class ButtonContent(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_shrink: bool
         icon_name: str
         label: str
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -2821,6 +2377,7 @@ class ButtonContent(_Gtk4.Widget):
         icon_name: str = ...,
         label: str = ...,
         use_underline: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -2851,7 +2408,6 @@ class ButtonContent(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_can_shrink(self) -> bool: ...
     def get_icon_name(self) -> str: ...
@@ -2962,51 +2518,10 @@ class ButtonRow(PreferencesRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(PreferencesRow.Props):
         end_icon_name: str | None
         start_icon_name: str | None
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -3018,6 +2533,9 @@ class ButtonRow(PreferencesRow):
         *,
         end_icon_name: str | None = ...,
         start_icon_name: str | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
@@ -3055,9 +2573,6 @@ class ButtonRow(PreferencesRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_end_icon_name(self) -> str | None: ...
     def get_start_icon_name(self) -> str | None: ...
@@ -3178,51 +2693,19 @@ class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
         allow_scroll_wheel: bool
         interactive: bool
-        n_pages: int
-        position: float
+        @property
+        def n_pages(self) -> int: ...
+        @property
+        def position(self) -> float: ...
         reveal_duration: int
         scroll_params: SpringParams
         spacing: int
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -3238,6 +2721,8 @@ class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         reveal_duration: int = ...,
         scroll_params: SpringParams = ...,
         spacing: int = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3268,8 +2753,6 @@ class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def append(self, child: _Gtk4.Widget) -> None: ...
     def get_allow_long_swipes(self) -> bool: ...
@@ -3377,43 +2860,9 @@ class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         carousel: Carousel | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -3423,6 +2872,8 @@ class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
         self,
         *,
         carousel: Carousel | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3453,8 +2904,6 @@ class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def get_carousel(self) -> Carousel | None: ...
     @classmethod
@@ -3541,43 +2990,9 @@ class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         carousel: Carousel | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -3587,6 +3002,8 @@ class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
         self,
         *,
         carousel: Carousel | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3617,8 +3034,6 @@ class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def get_carousel(self) -> Carousel | None: ...
     @classmethod
@@ -3708,46 +3123,12 @@ class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
         maximum_size: int
         tightening_threshold: int
         unit: LengthUnit
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -3760,6 +3141,8 @@ class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -3790,8 +3173,6 @@ class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
     def get_maximum_size(self) -> int: ...
@@ -3834,6 +3215,7 @@ class ClampLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.LayoutManager.Props):
         maximum_size: int
         tightening_threshold: int
@@ -3942,46 +3324,12 @@ class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
         maximum_size: int
         tightening_threshold: int
         unit: LengthUnit
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
         hadjustment: _Gtk4.Adjustment | None
@@ -3998,6 +3346,12 @@ class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
         maximum_size: int = ...,
         tightening_threshold: int = ...,
         unit: LengthUnit = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
+        hadjustment: _Gtk4.Adjustment | None = ...,
+        hscroll_policy: _Gtk4.ScrollablePolicy = ...,
+        vadjustment: _Gtk4.Adjustment | None = ...,
+        vscroll_policy: _Gtk4.ScrollablePolicy = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -4028,12 +3382,6 @@ class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
-        hadjustment: _Gtk4.Adjustment | None = ...,
-        hscroll_policy: _Gtk4.ScrollablePolicy = ...,
-        vadjustment: _Gtk4.Adjustment | None = ...,
-        vscroll_policy: _Gtk4.ScrollablePolicy = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
     def get_maximum_size(self) -> int: ...
@@ -4161,6 +3509,7 @@ class ComboRow(ActionRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ActionRow.Props):
         enable_search: bool
         expression: _Gtk4.Expression | None
@@ -4170,56 +3519,9 @@ class ComboRow(ActionRow):
         model: Gio.ListModel | None
         search_match_mode: _Gtk4.StringFilterMatchMode
         selected: int
-        selected_item: GObject.Object | None
+        @property
+        def selected_item(self) -> GObject.Object | None: ...
         use_subtitle: bool
-        activatable_widget: _Gtk4.Widget | None
-        icon_name: str | None
-        subtitle: str | None
-        subtitle_lines: int
-        subtitle_selectable: bool
-        title_lines: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -4240,6 +3542,9 @@ class ComboRow(ActionRow):
         search_match_mode: _Gtk4.StringFilterMatchMode = ...,
         selected: int = ...,
         use_subtitle: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         activatable_widget: _Gtk4.Widget | None = ...,
         icon_name: str | None = ...,
         subtitle: str = ...,
@@ -4283,9 +3588,6 @@ class ComboRow(ActionRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_enable_search(self) -> bool: ...
     def get_expression(self) -> _Gtk4.Expression | None: ...
@@ -4410,52 +3712,19 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_close: bool
         child: _Gtk4.Widget | None
         content_height: int
         content_width: int
-        current_breakpoint: Breakpoint | None
+        @property
+        def current_breakpoint(self) -> Breakpoint | None: ...
         default_widget: _Gtk4.Widget | None
         focus_widget: _Gtk4.Widget | None
         follows_content_size: bool
         presentation_mode: DialogPresentationMode
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -4474,6 +3743,7 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
         follows_content_size: bool = ...,
         presentation_mode: DialogPresentationMode = ...,
         title: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -4504,7 +3774,6 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def close(self) -> bool: ...
@@ -4654,6 +3923,7 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(PreferencesRow.Props):
         activates_default: bool
         attributes: Pango.AttrList | None
@@ -4662,57 +3932,18 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
         input_purpose: _Gtk4.InputPurpose
         max_length: int
         show_apply_button: bool
-        text_length: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def text_length(self) -> int: ...
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -4731,6 +3962,15 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
         input_purpose: _Gtk4.InputPurpose = ...,
         max_length: int = ...,
         show_apply_button: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
@@ -4768,15 +4008,6 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def add_prefix(self, widget: _Gtk4.Widget) -> None: ...
     def add_suffix(self, widget: _Gtk4.Widget) -> None: ...
@@ -4829,10 +4060,14 @@ class EnumListItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        name: str
-        nick: str
-        value: int
+        @property
+        def name(self) -> str: ...
+        @property
+        def nick(self) -> str: ...
+        @property
+        def value(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -4871,8 +4106,10 @@ class EnumListModel(GObject.Object, Gio.ListModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        enum_type: type[Any]
+        @property
+        def enum_type(self) -> type[Any]: ...
 
     @property
     def props(self) -> Props: ...
@@ -4982,6 +4219,7 @@ class ExpanderRow(PreferencesRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(PreferencesRow.Props):
         enable_expansion: bool
         expanded: bool
@@ -4990,48 +4228,6 @@ class ExpanderRow(PreferencesRow):
         subtitle: str
         subtitle_lines: int
         title_lines: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -5050,6 +4246,9 @@ class ExpanderRow(PreferencesRow):
         subtitle: str = ...,
         subtitle_lines: int = ...,
         title_lines: int = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         title: str = ...,
         title_selectable: bool = ...,
         use_markup: bool = ...,
@@ -5087,9 +4286,6 @@ class ExpanderRow(PreferencesRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def add_action(self, widget: _Gtk4.Widget) -> None: ...
     def add_prefix(self, widget: _Gtk4.Widget) -> None: ...
@@ -5210,6 +4406,7 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         content: _Gtk4.Widget | None
         flap: _Gtk4.Widget | None
@@ -5217,51 +4414,18 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         fold_duration: int
         fold_policy: FlapFoldPolicy
         fold_threshold_policy: FoldThresholdPolicy
-        folded: bool
+        @property
+        def folded(self) -> bool: ...
         locked: bool
         modal: bool
         reveal_flap: bool
         reveal_params: SpringParams
-        reveal_progress: float
+        @property
+        def reveal_progress(self) -> float: ...
         separator: _Gtk4.Widget | None
         swipe_to_close: bool
         swipe_to_open: bool
         transition_type: FlapTransitionType
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -5284,6 +4448,8 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         swipe_to_close: bool = ...,
         swipe_to_open: bool = ...,
         transition_type: FlapTransitionType = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -5314,8 +4480,6 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def get_content(self) -> _Gtk4.Widget | None: ...
     def get_flap(self) -> _Gtk4.Widget | None: ...
@@ -5436,6 +4600,7 @@ class HeaderBar(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         centering_policy: CenteringPolicy
         decoration_layout: str | None
@@ -5444,41 +4609,6 @@ class HeaderBar(_Gtk4.Widget):
         show_start_title_buttons: bool
         show_title: bool
         title_widget: _Gtk4.Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -5493,6 +4623,7 @@ class HeaderBar(_Gtk4.Widget):
         show_start_title_buttons: bool = ...,
         show_title: bool = ...,
         title_widget: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -5523,7 +4654,6 @@ class HeaderBar(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_centering_policy(self) -> CenteringPolicy: ...
     def get_decoration_layout(self) -> str | None: ...
@@ -5628,46 +4758,12 @@ class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_shrink: bool
         display_mode: InlineViewSwitcherDisplayMode
         homogeneous: bool
         stack: ViewStack | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -5680,6 +4776,8 @@ class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
         display_mode: InlineViewSwitcherDisplayMode = ...,
         homogeneous: bool = ...,
         stack: ViewStack | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -5710,8 +4808,6 @@ class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def get_can_shrink(self) -> bool: ...
     def get_display_mode(self) -> InlineViewSwitcherDisplayMode: ...
@@ -5753,8 +4849,10 @@ class Layout(GObject.Object, _Gtk4.Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        content: _Gtk4.Widget
+        @property
+        def content(self) -> _Gtk4.Widget: ...
         name: str | None
 
     @property
@@ -5848,43 +4946,10 @@ class LayoutSlot(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
-        id: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def id(self) -> str: ...
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -5893,6 +4958,7 @@ class LayoutSlot(_Gtk4.Widget):
         self,
         *,
         id: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -5923,7 +4989,6 @@ class LayoutSlot(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_slot_id(self) -> str: ...
     @classmethod
@@ -6021,55 +5086,24 @@ class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_navigate_back: bool
         can_navigate_forward: bool
         can_unfold: bool
         child_transition_params: SpringParams
-        child_transition_running: bool
+        @property
+        def child_transition_running(self) -> bool: ...
         fold_threshold_policy: FoldThresholdPolicy
-        folded: bool
+        @property
+        def folded(self) -> bool: ...
         homogeneous: bool
         mode_transition_duration: int
-        pages: _Gtk4.SelectionModel
+        @property
+        def pages(self) -> _Gtk4.SelectionModel: ...
         transition_type: LeafletTransitionType
         visible_child: _Gtk4.Widget | None
         visible_child_name: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -6088,6 +5122,8 @@ class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         transition_type: LeafletTransitionType = ...,
         visible_child: _Gtk4.Widget = ...,
         visible_child_name: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6118,8 +5154,6 @@ class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def append(self, child: _Gtk4.Widget) -> LeafletPage: ...
     def get_adjacent_child(
@@ -6191,8 +5225,10 @@ class LeafletPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: _Gtk4.Widget
+        @property
+        def child(self) -> _Gtk4.Widget: ...
         name: str | None
         navigatable: bool
 
@@ -6335,6 +5371,7 @@ class MessageDialog(_Gtk4.Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Window.Props):
         body: str
         body_use_markup: bool
@@ -6343,68 +5380,7 @@ class MessageDialog(_Gtk4.Window):
         extra_child: _Gtk4.Widget | None
         heading: str | None
         heading_use_markup: bool
-        application: _Gtk4.Application | None
-        child: _Gtk4.Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: _Gtk4.Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: _Gtk4.Widget | None
-        fullscreened: bool
-        gravity: _Gtk4.WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: _Gtk4.Widget | None
-        transient_for: _Gtk4.Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -6420,6 +5396,7 @@ class MessageDialog(_Gtk4.Window):
         extra_child: _Gtk4.Widget | None = ...,
         heading: str | None = ...,
         heading_use_markup: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         application: _Gtk4.Application | None = ...,
         child: _Gtk4.Widget | None = ...,
         decorated: bool = ...,
@@ -6474,7 +5451,6 @@ class MessageDialog(_Gtk4.Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
     def choose(
@@ -6603,44 +5579,10 @@ class MultiLayoutView(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         layout: Layout | None
         layout_name: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -6650,6 +5592,7 @@ class MultiLayoutView(_Gtk4.Widget):
         *,
         layout: Layout = ...,
         layout_name: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6680,7 +5623,6 @@ class MultiLayoutView(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_layout(self, layout: Layout) -> None: ...
     def get_child(self, id: str) -> _Gtk4.Widget | None: ...
@@ -6784,46 +5726,12 @@ class NavigationPage(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_pop: bool
         child: _Gtk4.Widget | None
         tag: str | None
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -6837,6 +5745,7 @@ class NavigationPage(_Gtk4.Widget):
         child: _Gtk4.Widget | None = ...,
         tag: str | None = ...,
         title: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -6867,7 +5776,6 @@ class NavigationPage(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def do_hidden(self) -> None: ...
     def do_hiding(self) -> None: ...
@@ -6986,6 +5894,7 @@ class NavigationSplitView(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         collapsed: bool
         content: NavigationPage | None
@@ -6996,41 +5905,6 @@ class NavigationSplitView(_Gtk4.Widget):
         sidebar_position: _Gtk4.PackType
         sidebar_width_fraction: float
         sidebar_width_unit: LengthUnit
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -7047,6 +5921,7 @@ class NavigationSplitView(_Gtk4.Widget):
         sidebar_position: _Gtk4.PackType = ...,
         sidebar_width_fraction: float = ...,
         sidebar_width_unit: LengthUnit = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7077,7 +5952,6 @@ class NavigationSplitView(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_collapsed(self) -> bool: ...
     def get_content(self) -> NavigationPage | None: ...
@@ -7192,49 +6066,18 @@ class NavigationView(_Gtk4.Widget, Swipeable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         animate_transitions: bool
         hhomogeneous: bool
-        navigation_stack: Gio.ListModel
+        @property
+        def navigation_stack(self) -> Gio.ListModel: ...
         pop_on_escape: bool
         vhomogeneous: bool
-        visible_page: NavigationPage | None
-        visible_page_tag: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def visible_page(self) -> NavigationPage | None: ...
+        @property
+        def visible_page_tag(self) -> str | None: ...
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -7246,6 +6089,7 @@ class NavigationView(_Gtk4.Widget, Swipeable):
         hhomogeneous: bool = ...,
         pop_on_escape: bool = ...,
         vhomogeneous: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7276,7 +6120,6 @@ class NavigationView(_Gtk4.Widget, Swipeable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, page: NavigationPage) -> None: ...
     def find_page(self, tag: str) -> NavigationPage | None: ...
@@ -7394,6 +6237,7 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         collapsed: bool
         content: _Gtk4.Widget | None
@@ -7407,41 +6251,6 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
         sidebar_position: _Gtk4.PackType
         sidebar_width_fraction: float
         sidebar_width_unit: LengthUnit
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -7461,6 +6270,7 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
         sidebar_position: _Gtk4.PackType = ...,
         sidebar_width_fraction: float = ...,
         sidebar_width_unit: LengthUnit = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -7491,7 +6301,6 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_collapsed(self) -> bool: ...
     def get_content(self) -> _Gtk4.Widget | None: ...
@@ -7635,65 +6444,18 @@ class PasswordEntryRow(EntryRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(EntryRow.Props):
-        activates_default: bool
-        attributes: Pango.AttrList | None
-        enable_emoji_completion: bool
-        input_hints: _Gtk4.InputHints
-        input_purpose: _Gtk4.InputPurpose
-        max_length: int
-        show_apply_button: bool
-        text_length: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -7703,6 +6465,15 @@ class PasswordEntryRow(EntryRow):
     def __init__(
         self,
         *,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         activates_default: bool = ...,
         attributes: Pango.AttrList | None = ...,
         enable_emoji_completion: bool = ...,
@@ -7747,15 +6518,6 @@ class PasswordEntryRow(EntryRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> PasswordEntryRow: ...
@@ -7858,55 +6620,11 @@ class PreferencesDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
         search_enabled: bool
         visible_page: _Gtk4.Widget | None
         visible_page_name: str | None
-        can_close: bool
-        child: _Gtk4.Widget | None
-        content_height: int
-        content_width: int
-        current_breakpoint: Breakpoint | None
-        default_widget: _Gtk4.Widget | None
-        focus_widget: _Gtk4.Widget | None
-        follows_content_size: bool
-        presentation_mode: DialogPresentationMode
-        title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -7919,6 +6637,7 @@ class PreferencesDialog(Dialog):
         search_enabled: bool = ...,
         visible_page: _Gtk4.Widget = ...,
         visible_page_name: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -7958,7 +6677,6 @@ class PreferencesDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, page: PreferencesPage) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
@@ -8059,46 +6777,12 @@ class PreferencesGroup(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         description: str | None
         header_suffix: _Gtk4.Widget | None
         separate_rows: bool
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -8112,6 +6796,7 @@ class PreferencesGroup(_Gtk4.Widget):
         header_suffix: _Gtk4.Widget | None = ...,
         separate_rows: bool = ...,
         title: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -8142,7 +6827,6 @@ class PreferencesGroup(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, child: _Gtk4.Widget) -> None: ...
     def bind_model(
@@ -8252,6 +6936,7 @@ class PreferencesPage(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         banner: Banner | None
         description: str
@@ -8260,40 +6945,6 @@ class PreferencesPage(_Gtk4.Widget):
         name: str | None
         title: str
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -8310,6 +6961,7 @@ class PreferencesPage(_Gtk4.Widget):
         name: str | None = ...,
         title: str = ...,
         use_underline: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -8339,7 +6991,6 @@ class PreferencesPage(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, group: PreferencesGroup) -> None: ...
     def get_banner(self) -> Banner | None: ...
@@ -8456,49 +7107,12 @@ class PreferencesRow(_Gtk4.ListBoxRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.ListBoxRow.Props):
         title: str
         title_selectable: bool
         use_markup: bool
         use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -8514,6 +7128,9 @@ class PreferencesRow(_Gtk4.ListBoxRow):
         title_selectable: bool = ...,
         use_markup: bool = ...,
         use_underline: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         activatable: bool = ...,
         child: _Gtk4.Widget | None = ...,
         selectable: bool = ...,
@@ -8547,9 +7164,6 @@ class PreferencesRow(_Gtk4.ListBoxRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_title(self) -> str: ...
     def get_title_selectable(self) -> bool: ...
@@ -8689,78 +7303,13 @@ class PreferencesWindow(Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Window.Props):
         can_navigate_back: bool
         search_enabled: bool
         visible_page: _Gtk4.Widget | None
         visible_page_name: str | None
-        adaptive_preview: bool
-        content: _Gtk4.Widget | None
-        current_breakpoint: Breakpoint | None
-        dialogs: Gio.ListModel
-        visible_dialog: Dialog | None
-        application: _Gtk4.Application | None
-        child: _Gtk4.Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: _Gtk4.Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: _Gtk4.Widget | None
-        fullscreened: bool
-        gravity: _Gtk4.WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: _Gtk4.Widget | None
-        transient_for: _Gtk4.Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -8773,6 +7322,7 @@ class PreferencesWindow(Window):
         search_enabled: bool = ...,
         visible_page: _Gtk4.Widget = ...,
         visible_page_name: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
         application: _Gtk4.Application | None = ...,
@@ -8829,7 +7379,6 @@ class PreferencesWindow(Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, page: PreferencesPage) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
@@ -8881,9 +7430,12 @@ class PropertyAnimationTarget(AnimationTarget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(AnimationTarget.Props):
-        object: GObject.Object
-        pspec: GObject.ParamSpec
+        @property
+        def object(self) -> GObject.Object: ...
+        @property
+        def pspec(self) -> GObject.ParamSpec: ...
 
     @property
     def props(self) -> Props: ...
@@ -8973,44 +7525,10 @@ class ShortcutLabel(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         accelerator: str
         disabled_text: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -9020,6 +7538,7 @@ class ShortcutLabel(_Gtk4.Widget):
         *,
         accelerator: str = ...,
         disabled_text: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -9050,7 +7569,6 @@ class ShortcutLabel(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_accelerator(self) -> str: ...
     def get_disabled_text(self) -> str: ...
@@ -9152,52 +7670,8 @@ class ShortcutsDialog(Dialog):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Dialog.Props):
-        can_close: bool
-        child: _Gtk4.Widget | None
-        content_height: int
-        content_width: int
-        current_breakpoint: Breakpoint | None
-        default_widget: _Gtk4.Widget | None
-        focus_widget: _Gtk4.Widget | None
-        follows_content_size: bool
-        presentation_mode: DialogPresentationMode
-        title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -9205,6 +7679,7 @@ class ShortcutsDialog(Dialog):
     def __init__(
         self,
         *,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_close: bool = ...,
         child: _Gtk4.Widget | None = ...,
         content_height: int = ...,
@@ -9244,7 +7719,6 @@ class ShortcutsDialog(Dialog):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, section: ShortcutsSection) -> None: ...
     @classmethod
@@ -9283,6 +7757,7 @@ class ShortcutsItem(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         accelerator: str
         action_name: str
@@ -9347,6 +7822,7 @@ class ShortcutsSection(GObject.Object, Gio.ListModel, _Gtk4.Buildable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         title: str | None
 
@@ -9482,8 +7958,9 @@ class SpinRow(ActionRow, _Gtk4.Editable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ActionRow.Props):
-        adjustment: _Gtk4.Adjustment
+        adjustment: _Gtk4.Adjustment | None
         climb_rate: float
         digits: int
         numeric: bool
@@ -9491,62 +7968,16 @@ class SpinRow(ActionRow, _Gtk4.Editable):
         update_policy: _Gtk4.SpinButtonUpdatePolicy
         value: float
         wrap: bool
-        activatable_widget: _Gtk4.Widget | None
-        icon_name: str | None
-        subtitle: str | None
-        subtitle_lines: int
-        subtitle_selectable: bool
-        title_lines: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
-        cursor_position: int
+        @property
+        def cursor_position(self) -> int: ...
         editable: bool
         enable_undo: bool
         max_width_chars: int
-        selection_bound: int
+        @property
+        def selection_bound(self) -> int: ...
         text: str
         width_chars: int
         xalign: float
@@ -9564,6 +7995,15 @@ class SpinRow(ActionRow, _Gtk4.Editable):
         update_policy: _Gtk4.SpinButtonUpdatePolicy = ...,
         value: float = ...,
         wrap: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
+        editable: bool = ...,
+        enable_undo: bool = ...,
+        max_width_chars: int = ...,
+        text: str = ...,
+        width_chars: int = ...,
+        xalign: float = ...,
         activatable_widget: _Gtk4.Widget | None = ...,
         icon_name: str | None = ...,
         subtitle: str = ...,
@@ -9607,15 +8047,6 @@ class SpinRow(ActionRow, _Gtk4.Editable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
-        editable: bool = ...,
-        enable_undo: bool = ...,
-        max_width_chars: int = ...,
-        text: str = ...,
-        width_chars: int = ...,
-        xalign: float = ...,
     ) -> None: ...
     def configure(
         self, adjustment: _Gtk4.Adjustment | None, climb_rate: float, digits: int
@@ -9722,42 +8153,8 @@ class Spinner(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -9765,6 +8162,7 @@ class Spinner(_Gtk4.Widget):
     def __init__(
         self,
         *,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -9795,7 +8193,6 @@ class Spinner(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     @classmethod
     def new(cls) -> Spinner: ...
@@ -9832,6 +8229,7 @@ class SpinnerPaintable(GObject.Object, _Gdk4.Paintable, _Gtk4.SymbolicPaintable)
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         widget: _Gtk4.Widget | None
 
@@ -9935,6 +8333,7 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         can_shrink: bool
         child: _Gtk4.Widget | None
@@ -9945,41 +8344,6 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
         menu_model: Gio.MenuModel | None
         popover: _Gtk4.Popover | None
         use_underline: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -9998,6 +8362,9 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
         menu_model: Gio.MenuModel | None = ...,
         popover: _Gtk4.Popover | None = ...,
         use_underline: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10028,9 +8395,6 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_can_shrink(self) -> bool: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
@@ -10100,20 +8464,18 @@ class SpringAnimation(Animation):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Animation.Props):
         clamp: bool
         epsilon: float
-        estimated_duration: int
+        @property
+        def estimated_duration(self) -> int: ...
         initial_velocity: float
         spring_params: SpringParams
         value_from: float
         value_to: float
-        velocity: float
-        follow_enable_animations_setting: bool
-        state: AnimationState
-        target: AnimationTarget
-        value: float
-        widget: _Gtk4.Widget
+        @property
+        def velocity(self) -> float: ...
 
     @property
     def props(self) -> Props: ...
@@ -10265,53 +8627,22 @@ class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         allow_none: bool
         homogeneous: bool
         interpolate_size: bool
-        pages: _Gtk4.SelectionModel
+        @property
+        def pages(self) -> _Gtk4.SelectionModel: ...
         switch_threshold_policy: FoldThresholdPolicy
         transition_duration: int
-        transition_running: bool
+        @property
+        def transition_running(self) -> bool: ...
         transition_type: SqueezerTransitionType
-        visible_child: _Gtk4.Widget | None
+        @property
+        def visible_child(self) -> _Gtk4.Widget | None: ...
         xalign: float
         yalign: float
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -10328,6 +8659,8 @@ class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
         transition_type: SqueezerTransitionType = ...,
         xalign: float = ...,
         yalign: float = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10358,8 +8691,6 @@ class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def add(self, child: _Gtk4.Widget) -> SqueezerPage: ...
     def get_allow_none(self) -> bool: ...
@@ -10414,8 +8745,10 @@ class SqueezerPage(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: _Gtk4.Widget
+        @property
+        def child(self) -> _Gtk4.Widget: ...
         enabled: bool
 
     @property
@@ -10509,47 +8842,13 @@ class StatusPage(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
         description: str | None
         icon_name: str | None
         paintable: _Gdk4.Paintable | None
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -10562,6 +8861,7 @@ class StatusPage(_Gtk4.Widget):
         icon_name: str | None = ...,
         paintable: _Gdk4.Paintable | None = ...,
         title: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -10592,7 +8892,6 @@ class StatusPage(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
     def get_description(self) -> str | None: ...
@@ -10643,17 +8942,27 @@ class StyleManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        accent_color: AccentColor
-        accent_color_rgba: _Gdk4.RGBA
+        @property
+        def accent_color(self) -> AccentColor: ...
+        @property
+        def accent_color_rgba(self) -> _Gdk4.RGBA: ...
         color_scheme: ColorScheme
-        dark: bool
-        display: _Gdk4.Display | None
-        document_font_name: str
-        high_contrast: bool
-        monospace_font_name: str
-        system_supports_accent_colors: bool
-        system_supports_color_schemes: bool
+        @property
+        def dark(self) -> bool: ...
+        @property
+        def display(self) -> _Gdk4.Display | None: ...
+        @property
+        def document_font_name(self) -> str: ...
+        @property
+        def high_contrast(self) -> bool: ...
+        @property
+        def monospace_font_name(self) -> str: ...
+        @property
+        def system_supports_accent_colors(self) -> bool: ...
+        @property
+        def system_supports_color_schemes(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -10717,6 +9026,7 @@ class SwipeTracker(GObject.Object, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         allow_long_swipes: bool
         allow_mouse_drag: bool
@@ -10724,7 +9034,8 @@ class SwipeTracker(GObject.Object, _Gtk4.Orientable):
         enabled: bool
         lower_overshoot: bool
         reversed: bool
-        swipeable: Swipeable
+        @property
+        def swipeable(self) -> Swipeable: ...
         upper_overshoot: bool
         orientation: _Gtk4.Orientation
 
@@ -10907,56 +9218,9 @@ class SwitchRow(ActionRow):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(ActionRow.Props):
         active: bool
-        activatable_widget: _Gtk4.Widget | None
-        icon_name: str | None
-        subtitle: str | None
-        subtitle_lines: int
-        subtitle_selectable: bool
-        title_lines: int
-        title: str
-        title_selectable: bool
-        use_markup: bool
-        use_underline: bool
-        activatable: bool
-        child: _Gtk4.Widget | None
-        selectable: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -10967,6 +9231,9 @@ class SwitchRow(ActionRow):
         self,
         *,
         active: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         activatable_widget: _Gtk4.Widget | None = ...,
         icon_name: str | None = ...,
         subtitle: str = ...,
@@ -11010,9 +9277,6 @@ class SwitchRow(ActionRow):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_active(self) -> bool: ...
     @classmethod
@@ -11112,52 +9376,21 @@ class TabBar(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         autohide: bool
         end_action_widget: _Gtk4.Widget | None
         expand_tabs: bool
-        extra_drag_preferred_action: _Gdk4.DragAction
+        @property
+        def extra_drag_preferred_action(self) -> _Gdk4.DragAction: ...
         extra_drag_preload: bool
         inverted: bool
-        is_overflowing: bool
+        @property
+        def is_overflowing(self) -> bool: ...
         start_action_widget: _Gtk4.Widget | None
-        tabs_revealed: bool
+        @property
+        def tabs_revealed(self) -> bool: ...
         view: TabView | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -11172,6 +9405,7 @@ class TabBar(_Gtk4.Widget):
         inverted: bool = ...,
         start_action_widget: _Gtk4.Widget | None = ...,
         view: TabView | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -11202,7 +9436,6 @@ class TabBar(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_autohide(self) -> bool: ...
     def get_end_action_widget(self) -> _Gtk4.Widget | None: ...
@@ -11311,43 +9544,9 @@ class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         view: TabView | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         action_name: str | None
         action_target: GLib.Variant
@@ -11358,6 +9557,9 @@ class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
         self,
         *,
         view: TabView | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        action_name: str | None = ...,
+        action_target: GLib.Variant = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -11388,9 +9590,6 @@ class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        action_name: str | None = ...,
-        action_target: GLib.Variant = ...,
     ) -> None: ...
     def get_view(self) -> TabView | None: ...
     @classmethod
@@ -11493,54 +9692,22 @@ class TabOverview(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
         enable_new_tab: bool
         enable_search: bool
-        extra_drag_preferred_action: _Gdk4.DragAction
+        @property
+        def extra_drag_preferred_action(self) -> _Gdk4.DragAction: ...
         extra_drag_preload: bool
         inverted: bool
         open: bool
-        search_active: bool
+        @property
+        def search_active(self) -> bool: ...
         secondary_menu: Gio.MenuModel | None
         show_end_title_buttons: bool
         show_start_title_buttons: bool
         view: TabView | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -11558,6 +9725,7 @@ class TabOverview(_Gtk4.Widget):
         show_end_title_buttons: bool = ...,
         show_start_title_buttons: bool = ...,
         view: TabView | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -11588,7 +9756,6 @@ class TabOverview(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
     def get_enable_new_tab(self) -> bool: ...
@@ -11662,8 +9829,10 @@ class TabPage(GObject.Object, _Gtk4.Accessible):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        child: _Gtk4.Widget
+        @property
+        def child(self) -> _Gtk4.Widget: ...
         icon: Gio.Icon | None
         indicator_activatable: bool
         indicator_icon: Gio.Icon | None
@@ -11672,9 +9841,12 @@ class TabPage(GObject.Object, _Gtk4.Accessible):
         live_thumbnail: bool
         loading: bool
         needs_attention: bool
-        parent: TabPage | None
-        pinned: bool
-        selected: bool
+        @property
+        def parent(self) -> TabPage | None: ...
+        @property
+        def pinned(self) -> bool: ...
+        @property
+        def selected(self) -> bool: ...
         thumbnail_xalign: float
         thumbnail_yalign: float
         title: str
@@ -11828,50 +10000,20 @@ class TabView(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         default_icon: Gio.Icon
-        is_transferring_page: bool
+        @property
+        def is_transferring_page(self) -> bool: ...
         menu_model: Gio.MenuModel | None
-        n_pages: int
-        n_pinned_pages: int
-        pages: _Gtk4.SelectionModel
+        @property
+        def n_pages(self) -> int: ...
+        @property
+        def n_pinned_pages(self) -> int: ...
+        @property
+        def pages(self) -> _Gtk4.SelectionModel: ...
         selected_page: TabPage | None
         shortcuts: TabViewShortcuts
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -11883,6 +10025,7 @@ class TabView(_Gtk4.Widget):
         menu_model: Gio.MenuModel | None = ...,
         selected_page: TabPage = ...,
         shortcuts: TabViewShortcuts = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -11913,7 +10056,6 @@ class TabView(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_page(
         self, child: _Gtk4.Widget, parent: TabPage | None = None
@@ -12005,6 +10147,7 @@ class TimedAnimation(Animation):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Animation.Props):
         alternate: bool
         duration: int
@@ -12013,11 +10156,6 @@ class TimedAnimation(Animation):
         reverse: bool
         value_from: float
         value_to: float
-        follow_enable_animations_setting: bool
-        state: AnimationState
-        target: AnimationTarget
-        value: float
-        widget: _Gtk4.Widget
 
     @property
     def props(self) -> Props: ...
@@ -12089,6 +10227,7 @@ class Toast(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         action_name: str | None
         action_target: GLib.Variant | None
@@ -12218,43 +10357,9 @@ class ToastOverlay(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         child: _Gtk4.Widget | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -12263,6 +10368,7 @@ class ToastOverlay(_Gtk4.Widget):
         self,
         *,
         child: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12293,7 +10399,6 @@ class ToastOverlay(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_toast(self, toast: Toast) -> None: ...
     def dismiss_all(self) -> None: ...
@@ -12336,12 +10441,13 @@ class Toggle(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         child: _Gtk4.Widget | None
         enabled: bool
         icon_name: str | None
         label: str | None
-        name: str
+        name: str | None
         tooltip: str
         use_underline: bool
 
@@ -12461,48 +10567,16 @@ class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         active: int
         active_name: str | None
         can_shrink: bool
         homogeneous: bool
-        n_toggles: int
-        toggles: _Gtk4.SelectionModel
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def n_toggles(self) -> int: ...
+        @property
+        def toggles(self) -> _Gtk4.SelectionModel: ...
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -12515,6 +10589,8 @@ class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
         active_name: str | None = ...,
         can_shrink: bool = ...,
         homogeneous: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12545,8 +10621,6 @@ class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def add(self, toggle: Toggle) -> None: ...
     def get_active(self) -> int: ...
@@ -12654,51 +10728,19 @@ class ToolbarView(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
-        bottom_bar_height: int
+        @property
+        def bottom_bar_height(self) -> int: ...
         bottom_bar_style: ToolbarStyle
         content: _Gtk4.Widget | None
         extend_content_to_bottom_edge: bool
         extend_content_to_top_edge: bool
         reveal_bottom_bars: bool
         reveal_top_bars: bool
-        top_bar_height: int
+        @property
+        def top_bar_height(self) -> int: ...
         top_bar_style: ToolbarStyle
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -12713,6 +10755,7 @@ class ToolbarView(_Gtk4.Widget):
         reveal_bottom_bars: bool = ...,
         reveal_top_bars: bool = ...,
         top_bar_style: ToolbarStyle = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12743,7 +10786,6 @@ class ToolbarView(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_bottom_bar(self, widget: _Gtk4.Widget) -> None: ...
     def add_top_bar(self, widget: _Gtk4.Widget) -> None: ...
@@ -12854,50 +10896,18 @@ class ViewStack(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         enable_transitions: bool
         hhomogeneous: bool
-        pages: _Gtk4.SelectionModel
+        @property
+        def pages(self) -> _Gtk4.SelectionModel: ...
         transition_duration: int
-        transition_running: bool
+        @property
+        def transition_running(self) -> bool: ...
         vhomogeneous: bool
         visible_child: _Gtk4.Widget | None
         visible_child_name: str | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -12911,6 +10921,7 @@ class ViewStack(_Gtk4.Widget):
         vhomogeneous: bool = ...,
         visible_child: _Gtk4.Widget = ...,
         visible_child_name: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -12941,7 +10952,6 @@ class ViewStack(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add(self, child: _Gtk4.Widget) -> ViewStackPage: ...
     def add_named(
@@ -13007,9 +11017,11 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         badge_number: int
-        child: _Gtk4.Widget
+        @property
+        def child(self) -> _Gtk4.Widget: ...
         icon_name: str | None
         name: str | None
         needs_attention: bool
@@ -13082,6 +11094,7 @@ class ViewStackPages(GObject.Object, Gio.ListModel, _Gtk4.SelectionModel):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         selected_page: ViewStackPage | None
 
@@ -13172,44 +11185,10 @@ class ViewSwitcher(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         policy: ViewSwitcherPolicy
         stack: ViewStack | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -13219,6 +11198,7 @@ class ViewSwitcher(_Gtk4.Widget):
         *,
         policy: ViewSwitcherPolicy = ...,
         stack: ViewStack | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13249,7 +11229,6 @@ class ViewSwitcher(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_policy(self) -> ViewSwitcherPolicy: ...
     def get_stack(self) -> ViewStack | None: ...
@@ -13328,44 +11307,10 @@ class ViewSwitcherBar(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         reveal: bool
         stack: ViewStack | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -13375,6 +11320,7 @@ class ViewSwitcherBar(_Gtk4.Widget):
         *,
         reveal: bool = ...,
         stack: ViewStack | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13405,7 +11351,6 @@ class ViewSwitcherBar(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_reveal(self) -> bool: ...
     def get_stack(self) -> ViewStack | None: ...
@@ -13509,47 +11454,14 @@ class ViewSwitcherTitle(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         stack: ViewStack | None
         subtitle: str
         title: str
-        title_visible: bool
+        @property
+        def title_visible(self) -> bool: ...
         view_switcher_enabled: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -13561,6 +11473,7 @@ class ViewSwitcherTitle(_Gtk4.Widget):
         subtitle: str = ...,
         title: str = ...,
         view_switcher_enabled: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -13591,7 +11504,6 @@ class ViewSwitcherTitle(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_stack(self) -> ViewStack | None: ...
     def get_subtitle(self) -> str: ...
@@ -13724,74 +11636,17 @@ class Window(_Gtk4.Window):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Window.Props):
         adaptive_preview: bool
         content: _Gtk4.Widget | None
-        current_breakpoint: Breakpoint | None
-        dialogs: Gio.ListModel
-        visible_dialog: Dialog | None
-        application: _Gtk4.Application | None
-        child: _Gtk4.Widget | None
-        decorated: bool
-        default_height: int
-        default_widget: _Gtk4.Widget | None
-        default_width: int
-        deletable: bool
-        destroy_with_parent: bool
-        display: _Gdk4.Display
-        focus_visible: bool
-        focus_widget: _Gtk4.Widget | None
-        fullscreened: bool
-        gravity: _Gtk4.WindowGravity
-        handle_menubar_accel: bool
-        hide_on_close: bool
-        icon_name: str | None
-        is_active: bool
-        maximized: bool
-        mnemonics_visible: bool
-        modal: bool
-        resizable: bool
-        suspended: bool
-        title: str | None
-        titlebar: _Gtk4.Widget | None
-        transient_for: _Gtk4.Window | None
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
+        @property
+        def current_breakpoint(self) -> Breakpoint | None: ...
+        @property
+        def dialogs(self) -> Gio.ListModel: ...
+        @property
+        def visible_dialog(self) -> Dialog | None: ...
         accessible_role: _Gtk4.AccessibleRole
-        startup_id: str
 
     @property
     def props(self) -> Props: ...
@@ -13802,6 +11657,7 @@ class Window(_Gtk4.Window):
         *,
         adaptive_preview: bool = ...,
         content: _Gtk4.Widget | None = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         application: _Gtk4.Application | None = ...,
         child: _Gtk4.Widget | None = ...,
         decorated: bool = ...,
@@ -13856,7 +11712,6 @@ class Window(_Gtk4.Window):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def add_breakpoint(self, breakpoint: Breakpoint) -> None: ...
     def get_adaptive_preview(self) -> bool: ...
@@ -13952,44 +11807,10 @@ class WindowTitle(_Gtk4.Widget):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         subtitle: str
         title: str
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
 
     @property
@@ -13999,6 +11820,7 @@ class WindowTitle(_Gtk4.Widget):
         *,
         subtitle: str = ...,
         title: str = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14029,7 +11851,6 @@ class WindowTitle(_Gtk4.Widget):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
     ) -> None: ...
     def get_subtitle(self) -> str: ...
     def get_title(self) -> str: ...
@@ -14130,6 +11951,7 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.Widget.Props):
         align: float
         child_spacing: int
@@ -14144,41 +11966,6 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
         pack_direction: PackDirection
         wrap_policy: WrapPolicy
         wrap_reverse: bool
-        can_focus: bool
-        can_target: bool
-        css_classes: list[str]
-        css_name: str
-        cursor: _Gdk4.Cursor | None
-        focus_on_click: bool
-        focusable: bool
-        halign: _Gtk4.Align
-        has_default: bool
-        has_focus: bool
-        has_tooltip: bool
-        height_request: int
-        hexpand: bool
-        hexpand_set: bool
-        layout_manager: _Gtk4.LayoutManager | None
-        limit_events: bool
-        margin_bottom: int
-        margin_end: int
-        margin_start: int
-        margin_top: int
-        name: str
-        opacity: float
-        overflow: _Gtk4.Overflow
-        parent: _Gtk4.Widget | None
-        receives_default: bool
-        root: _Gtk4.Root | None
-        scale_factor: int
-        sensitive: bool
-        tooltip_markup: str | None
-        tooltip_text: str | None
-        valign: _Gtk4.Align
-        vexpand: bool
-        vexpand_set: bool
-        visible: bool
-        width_request: int
         accessible_role: _Gtk4.AccessibleRole
         orientation: _Gtk4.Orientation
 
@@ -14200,6 +11987,8 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
         pack_direction: PackDirection = ...,
         wrap_policy: WrapPolicy = ...,
         wrap_reverse: bool = ...,
+        accessible_role: _Gtk4.AccessibleRole = ...,
+        orientation: _Gtk4.Orientation = ...,
         can_focus: bool = ...,
         can_target: bool = ...,
         css_classes: Sequence[str] = ...,
@@ -14230,8 +12019,6 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
-        accessible_role: _Gtk4.AccessibleRole = ...,
-        orientation: _Gtk4.Orientation = ...,
     ) -> None: ...
     def append(self, child: _Gtk4.Widget) -> None: ...
     def get_align(self) -> float: ...
@@ -14312,6 +12099,7 @@ class WrapLayout(_Gtk4.LayoutManager, _Gtk4.Orientable):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gtk4.LayoutManager.Props):
         align: float
         child_spacing: int

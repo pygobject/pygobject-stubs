@@ -152,7 +152,14 @@ class CallableInfo(BaseInfo):
     def may_return_null(self) -> bool: ...
     def skip_return(self) -> bool: ...
 
-class CallbackInfo(CallableInfo): ...
+class CallbackInfo(CallableInfo):
+    """
+    :Constructors:
+
+    ::
+
+        CallbackInfo(**properties)
+    """
 
 class ConstantInfo(BaseInfo):
     """
@@ -192,7 +199,14 @@ class FieldInfo(BaseInfo):
     def get_size(self) -> int: ...
     def get_type_info(self) -> TypeInfo: ...
 
-class FlagsInfo(EnumInfo): ...
+class FlagsInfo(EnumInfo):
+    """
+    :Constructors:
+
+    ::
+
+        FlagsInfo(**properties)
+    """
 
 class FunctionInfo(CallableInfo):
     """
@@ -462,7 +476,14 @@ class UnionInfo(RegisteredTypeInfo):
     def get_size(self) -> int: ...
     def is_discriminated(self) -> bool: ...
 
-class UnresolvedInfo(BaseInfo): ...
+class UnresolvedInfo(BaseInfo):
+    """
+    :Constructors:
+
+    ::
+
+        UnresolvedInfo(**properties)
+    """
 
 class VFuncInfo(CallableInfo):
     """

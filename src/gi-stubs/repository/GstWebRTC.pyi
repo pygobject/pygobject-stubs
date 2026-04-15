@@ -1,4 +1,5 @@
 from typing import Any
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -50,15 +51,18 @@ class WebRTCDTLSTransport(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
         certificate: str
         client: bool
-        remote_certificate: str
-        session_id: int
-        state: WebRTCDTLSTransportState
-        transport: WebRTCICETransport
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def remote_certificate(self) -> str: ...
+        @property
+        def session_id(self) -> int: ...
+        @property
+        def state(self) -> WebRTCDTLSTransportState: ...
+        @property
+        def transport(self) -> WebRTCICETransport: ...
 
     @property
     def props(self) -> Props: ...
@@ -122,18 +126,29 @@ class WebRTCDataChannel(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        buffered_amount: int
+        @property
+        def buffered_amount(self) -> int: ...
         buffered_amount_low_threshold: int
-        id: int
-        label: str
-        max_packet_lifetime: int
-        max_retransmits: int
-        negotiated: bool
-        ordered: bool
-        priority: WebRTCPriorityType
-        protocol: str
-        ready_state: WebRTCDataChannelState
+        @property
+        def id(self) -> int: ...
+        @property
+        def label(self) -> str: ...
+        @property
+        def max_packet_lifetime(self) -> int: ...
+        @property
+        def max_retransmits(self) -> int: ...
+        @property
+        def negotiated(self) -> bool: ...
+        @property
+        def ordered(self) -> bool: ...
+        @property
+        def priority(self) -> WebRTCPriorityType: ...
+        @property
+        def protocol(self) -> str: ...
+        @property
+        def ready_state(self) -> WebRTCDataChannelState: ...
 
     @property
     def props(self) -> Props: ...
@@ -189,11 +204,10 @@ class WebRTCICE(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
         max_rtp_port: int
         min_rtp_port: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -449,10 +463,10 @@ class WebRTCICEStream(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
-        stream_id: int
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def stream_id(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -523,12 +537,14 @@ class WebRTCICETransport(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
-        component: WebRTCICEComponent
-        gathering_state: WebRTCICEGatheringState
-        state: WebRTCICEConnectionState
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def component(self) -> WebRTCICEComponent: ...
+        @property
+        def gathering_state(self) -> WebRTCICEGatheringState: ...
+        @property
+        def state(self) -> WebRTCICEConnectionState: ...
 
     @property
     def props(self) -> Props: ...
@@ -606,10 +622,10 @@ class WebRTCRTPReceiver(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
-        transport: WebRTCDTLSTransport
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def transport(self) -> WebRTCDTLSTransport: ...
 
     @property
     def props(self) -> Props: ...
@@ -645,11 +661,11 @@ class WebRTCRTPSender(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
         priority: WebRTCPriorityType
-        transport: WebRTCDTLSTransport
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def transport(self) -> WebRTCDTLSTransport: ...
 
     @property
     def props(self) -> Props: ...
@@ -704,17 +720,22 @@ class WebRTCRTPTransceiver(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
         codec_preferences: Gst.Caps
-        current_direction: WebRTCRTPTransceiverDirection
+        @property
+        def current_direction(self) -> WebRTCRTPTransceiverDirection: ...
         direction: WebRTCRTPTransceiverDirection
-        kind: WebRTCKind
-        mid: str
-        mlineindex: int
-        receiver: WebRTCRTPReceiver
-        sender: WebRTCRTPSender
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def kind(self) -> WebRTCKind: ...
+        @property
+        def mid(self) -> str: ...
+        @property
+        def mlineindex(self) -> int: ...
+        @property
+        def receiver(self) -> WebRTCRTPReceiver: ...
+        @property
+        def sender(self) -> WebRTCRTPSender: ...
 
     @property
     def props(self) -> Props: ...
@@ -764,13 +785,16 @@ class WebRTCSCTPTransport(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Object.Props):
-        max_channels: int
-        max_message_size: int
-        state: WebRTCSCTPTransportState
-        transport: WebRTCDTLSTransport
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def max_channels(self) -> int: ...
+        @property
+        def max_message_size(self) -> int: ...
+        @property
+        def state(self) -> WebRTCSCTPTransportState: ...
+        @property
+        def transport(self) -> WebRTCDTLSTransport: ...
 
     @property
     def props(self) -> Props: ...

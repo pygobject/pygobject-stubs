@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -331,27 +332,6 @@ class GObjectAccessible(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Object
-        accessible_role: Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Object
-        accessible_table_summary: Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     def __init__(
@@ -417,11 +397,16 @@ class Hyperlink(GObject.Object, Action):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        end_index: int
-        number_of_anchors: int
-        selected_link: bool
-        start_index: int
+        @property
+        def end_index(self) -> int: ...
+        @property
+        def number_of_anchors(self) -> int: ...
+        @property
+        def selected_link(self) -> bool: ...
+        @property
+        def start_index(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -556,7 +541,10 @@ class ImageIface(_gi.Struct):
 class Implementor(_gi.Struct):
     def ref_accessible(self) -> Object: ...
 
-class ImplementorIface(GObject.GInterface, Protocol): ...
+class ImplementorIface(GObject.GInterface, Protocol):
+    """
+    Interface AtkImplementorIface
+    """
 
 class KeyEventStruct(_gi.Struct):
     """
@@ -736,27 +724,6 @@ class NoOpObject(
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Object
-        accessible_role: Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Object
-        accessible_table_summary: Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     def __init__(
@@ -881,12 +848,16 @@ class Object(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
+        @property
+        def accessible_component_layer(self) -> int: ...
+        @property
+        def accessible_component_mdi_zorder(self) -> int: ...
         accessible_description: str
         accessible_help_text: str
-        accessible_hypertext_nlinks: int
+        @property
+        def accessible_hypertext_nlinks(self) -> int: ...
         accessible_id: str
         accessible_name: str
         accessible_parent: Object
@@ -1158,27 +1129,6 @@ class Plug(Object, Component):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Object
-        accessible_role: Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Object
-        accessible_table_summary: Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     def __init__(
@@ -1319,6 +1269,7 @@ class Relation(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         relation_type: RelationType
         target: GObject.ValueArray
@@ -1501,27 +1452,6 @@ class Socket(Object, Component):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        accessible_component_layer: int
-        accessible_component_mdi_zorder: int
-        accessible_description: str
-        accessible_help_text: str
-        accessible_hypertext_nlinks: int
-        accessible_id: str
-        accessible_name: str
-        accessible_parent: Object
-        accessible_role: Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Object
-        accessible_table_summary: Object
-        accessible_value: float
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     @property
@@ -2062,7 +1992,13 @@ class ValueIface(_gi.Struct):
     @property
     def set_value(self) -> Callable[[Value, float], None]: ...
 
-class Window(GObject.GInterface, Protocol): ...
+class Window(GObject.GInterface, Protocol):
+    """
+    Interface AtkWindow
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class WindowIface(_gi.Struct):
     """
