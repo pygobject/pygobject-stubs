@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -156,14 +157,13 @@ class Aggregator(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         emit_signals: bool
         latency: int
         min_upstream_latency: int
         start_time: int
         start_time_selection: AggregatorStartTimeSelection
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -370,17 +370,15 @@ class AggregatorPad(Gst.Pad):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Pad.Props):
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
+        @property
+        def current_level_buffers(self) -> int: ...
+        @property
+        def current_level_bytes(self) -> int: ...
+        @property
+        def current_level_time(self) -> int: ...
         emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -462,11 +460,10 @@ class BaseParse(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         disable_clip: bool
         disable_passthrough: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -653,21 +650,22 @@ class BaseSink(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         blocksize: int
         enable_last_sample: bool
-        last_sample: Gst.Sample | None
+        @property
+        def last_sample(self) -> Gst.Sample | None: ...
         max_bitrate: int
         max_lateness: int
         processing_deadline: int
         qos: bool
         render_delay: int
-        stats: Gst.Structure
+        @property
+        def stats(self) -> Gst.Structure: ...
         sync: bool
         throttle_time: int
         ts_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -865,14 +863,13 @@ class BaseSrc(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         automatic_eos: bool
         blocksize: int
         do_timestamp: bool
         num_buffers: int
         typefind: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1057,10 +1054,9 @@ class BaseTransform(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         qos: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1470,12 +1466,6 @@ class CollectPads(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gst.Object.Props):
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Gst.Object: ...
     @property
@@ -1577,10 +1567,14 @@ class DataQueue(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        current_level_bytes: int
-        current_level_time: int
-        current_level_visible: int
+        @property
+        def current_level_bytes(self) -> int: ...
+        @property
+        def current_level_time(self) -> int: ...
+        @property
+        def current_level_visible(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -1669,17 +1663,6 @@ class PushSrc(BaseSrc):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(BaseSrc.Props):
-        automatic_eos: bool
-        blocksize: int
-        do_timestamp: bool
-        num_buffers: int
-        typefind: bool
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> BaseSrc: ...
     def __init__(

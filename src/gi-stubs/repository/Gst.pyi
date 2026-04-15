@@ -2,6 +2,7 @@ from typing import Any
 from typing import Final
 from typing import Generic
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -653,12 +654,6 @@ class Allocator(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -777,11 +772,10 @@ class Bin(Element, ChildProxy):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Element.Props):
         async_handling: bool
         message_forward: bool
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1070,12 +1064,6 @@ class BufferPool(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -1236,13 +1224,6 @@ class Bus(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-        enable_async: bool
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -1524,12 +1505,11 @@ class Clock(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         timeout: int
         window_size: int
         window_threshold: int
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1728,10 +1708,12 @@ class ControlBinding(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
-        name: str
-        object: Object
-        parent: Object | None
+        @property
+        def name(self) -> str: ...
+        @property
+        def object(self) -> Object: ...
 
     @property
     def props(self) -> Props: ...
@@ -1808,12 +1790,6 @@ class ControlSource(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     @property
@@ -2004,13 +1980,16 @@ class Device(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
-        caps: Caps | None
-        device_class: str
-        display_name: str
-        properties: Structure | None
-        name: str | None
-        parent: Object | None
+        @property
+        def caps(self) -> Caps | None: ...
+        @property
+        def device_class(self) -> str: ...
+        @property
+        def display_name(self) -> str: ...
+        @property
+        def properties(self) -> Structure | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2081,10 +2060,9 @@ class DeviceMonitor(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         show_all: bool
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -2149,12 +2127,6 @@ class DeviceProvider(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Object: ...
     @property
@@ -2243,12 +2215,6 @@ class DeviceProviderFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     @staticmethod
     def find(name: str) -> DeviceProviderFactory | None: ...
@@ -2304,12 +2270,6 @@ class DynamicTypeFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     @staticmethod
     def load(factoryname: str) -> type[Any]: ...
@@ -2343,12 +2303,6 @@ class Element(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -2663,12 +2617,6 @@ class ElementFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     def can_sink_all_caps(self, caps: Caps) -> bool: ...
     def can_sink_any_caps(self, caps: Caps) -> bool: ...
@@ -2882,7 +2830,11 @@ class FlagSet:
     @staticmethod
     def register(flags_type: type[Any]) -> type[Any]: ...
 
-class Float(float): ...
+class Float(float):
+    """
+    A wrapper to force conversion to G_TYPE_FLOAT instead of G_TYPE_DOUBLE when
+    used in e.g. Gst.ValueArray.
+    """
 
 class FormatDefinition(_gi.Struct):
     """
@@ -2971,16 +2923,6 @@ class GhostPad(ProxyPad):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(ProxyPad.Props):
-        caps: Caps
-        direction: PadDirection
-        offset: int
-        template: PadTemplate
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def pad(self) -> ProxyPad: ...
     @property
@@ -3568,12 +3510,6 @@ class MetaFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     @staticmethod
     def load(factoryname: str) -> MetaInfo: ...
@@ -3688,6 +3624,7 @@ class Object(GObject.InitiallyUnowned):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         name: str | None
         parent: Object | None
@@ -3808,13 +3745,14 @@ class Pad(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
-        caps: Caps
-        direction: PadDirection
+        @property
+        def caps(self) -> Caps: ...
+        @property
+        def direction(self) -> PadDirection: ...
         offset: int
         template: PadTemplate
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -4154,14 +4092,18 @@ class PadTemplate(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
-        caps: Caps
-        direction: PadDirection
-        gtype: type[Any]
-        name_template: str
-        presence: PadPresence
-        name: str | None
-        parent: Object | None
+        @property
+        def caps(self) -> Caps: ...
+        @property
+        def direction(self) -> PadDirection: ...
+        @property
+        def gtype(self) -> type[Any]: ...
+        @property
+        def name_template(self) -> str: ...
+        @property
+        def presence(self) -> PadPresence: ...
 
     @property
     def props(self) -> Props: ...
@@ -4226,8 +4168,23 @@ class PadTemplateClass(_gi.Struct):
     @property
     def pad_created(self) -> Callable[[PadTemplate, Pad], None]: ...
 
-class ParamArray(GObject.ParamSpec): ...
-class ParamFraction(GObject.ParamSpec): ...
+class ParamArray(GObject.ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamArray(**properties)
+    """
+
+class ParamFraction(GObject.ParamSpec):
+    """
+    :Constructors:
+
+    ::
+
+        ParamFraction(**properties)
+    """
 
 class ParamSpecArray(_gi.Struct):
     """
@@ -4345,14 +4302,11 @@ class Pipeline(Bin):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Bin.Props):
         auto_flush_bus: bool
         delay: int
         latency: int
-        async_handling: bool
-        message_forward: bool
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -4427,12 +4381,6 @@ class Plugin(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     def add_dependency(
         self,
@@ -4546,12 +4494,6 @@ class PluginFeature(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     def check_version(self, min_major: int, min_minor: int, min_micro: int) -> bool: ...
     def get_plugin(self) -> Plugin | None: ...
@@ -4728,16 +4670,6 @@ class ProxyPad(Pad):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Pad.Props):
-        caps: Caps
-        direction: PadDirection
-        offset: int
-        template: PadTemplate
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def pad(self) -> Pad: ...
     @property
@@ -5004,12 +4936,6 @@ class Registry(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -5176,12 +5102,6 @@ class SharedTaskPool(TaskPool):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(TaskPool.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> TaskPool: ...
     @property
@@ -5270,14 +5190,14 @@ class Stream(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         caps: Caps | None
         stream_flags: StreamFlags
-        stream_id: str | None
+        @property
+        def stream_id(self) -> str | None: ...
         stream_type: StreamType
         tags: TagList | None
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -5357,10 +5277,9 @@ class StreamCollection(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         upstream_id: str | None
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -5577,13 +5496,9 @@ class SystemClock(Clock):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Clock.Props):
         clock_type: ClockType
-        timeout: int
-        window_size: int
-        window_threshold: int
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -5738,12 +5653,6 @@ class Task(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -5822,12 +5731,6 @@ class TaskPool(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Object: ...
     @property
@@ -5978,10 +5881,9 @@ class Tracer(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         params: str
-        name: str | None
-        parent: Object | None
 
     @property
     def props(self) -> Props: ...
@@ -6032,12 +5934,6 @@ class TracerFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     @staticmethod
     def get_list() -> list[TracerFactory]: ...
@@ -6068,12 +5964,6 @@ class TracerRecord(Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Object.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
 
 class TracerRecordClass(_gi.Struct): ...
@@ -6125,12 +6015,6 @@ class TypeFindFactory(PluginFeature):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(PluginFeature.Props):
-        name: str | None
-        parent: Object | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, name: str | None = ..., parent: Object = ...) -> None: ...
     def call_function(self, find: TypeFind) -> None: ...
     def get_caps(self) -> Caps | None: ...

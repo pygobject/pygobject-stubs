@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -67,16 +68,26 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        bits_per_sample: int
-        colorspace: Colorspace
-        has_alpha: bool
-        height: int
-        n_channels: int
-        pixel_bytes: GLib.Bytes
-        pixels: None
-        rowstride: int
-        width: int
+        @property
+        def bits_per_sample(self) -> int: ...
+        @property
+        def colorspace(self) -> Colorspace: ...
+        @property
+        def has_alpha(self) -> bool: ...
+        @property
+        def height(self) -> int: ...
+        @property
+        def n_channels(self) -> int: ...
+        @property
+        def pixel_bytes(self) -> GLib.Bytes: ...
+        @property
+        def pixels(self) -> None: ...
+        @property
+        def rowstride(self) -> int: ...
+        @property
+        def width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -626,6 +637,7 @@ class PixbufSimpleAnim(PixbufAnimation):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(PixbufAnimation.Props):
         loop: bool
 
@@ -639,7 +651,20 @@ class PixbufSimpleAnim(PixbufAnimation):
     def set_loop(self, loop: bool) -> None: ...
 
 class PixbufSimpleAnimClass(_gi.Struct): ...
-class PixbufSimpleAnimIter(PixbufAnimationIter): ...
+
+class PixbufSimpleAnimIter(PixbufAnimationIter):
+    """
+    :Constructors:
+
+    ::
+
+        PixbufSimpleAnimIter(**properties)
+
+    Object GdkPixbufSimpleAnimIter
+
+    Signals from GObject:
+      notify (GParam)
+    """
 
 class PixbufFormatFlags(IntFlag):
     SCALABLE = 2

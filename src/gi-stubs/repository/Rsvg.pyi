@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -75,18 +76,27 @@ class Handle(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         base_uri: str
-        desc: str | None
+        @property
+        def desc(self) -> str | None: ...
         dpi_x: float
         dpi_y: float
-        em: float
-        ex: float
-        flags: HandleFlags
-        height: int
-        metadata: str | None
-        title: str | None
-        width: int
+        @property
+        def em(self) -> float: ...
+        @property
+        def ex(self) -> float: ...
+        @property
+        def flags(self) -> HandleFlags: ...
+        @property
+        def height(self) -> int: ...
+        @property
+        def metadata(self) -> str | None: ...
+        @property
+        def title(self) -> str | None: ...
+        @property
+        def width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...

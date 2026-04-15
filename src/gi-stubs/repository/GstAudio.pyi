@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -248,20 +249,15 @@ class AudioAggregator(GstBase.Aggregator):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.Aggregator.Props):
         alignment_threshold: int
         discont_wait: int
-        force_live: bool
+        @property
+        def force_live(self) -> bool: ...
         ignore_inactive_pads: bool
         output_buffer_duration: int
         output_buffer_duration_fraction: Gst.Fraction
-        emit_signals: bool
-        latency: int
-        min_upstream_latency: int
-        start_time: int
-        start_time_selection: GstBase.AggregatorStartTimeSelection
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -377,19 +373,9 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(AudioAggregatorPad.Props):
         converter_config: Gst.Structure
-        qos_messages: bool
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -476,18 +462,9 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.AggregatorPad.Props):
         qos_messages: bool
-        current_level_buffers: int
-        current_level_bytes: int
-        current_level_time: int
-        emit_signals: bool
-        caps: Gst.Caps
-        direction: Gst.PadDirection
-        offset: int
-        template: Gst.PadTemplate
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -608,6 +585,7 @@ class AudioBaseSink(GstBase.BaseSink):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.BaseSink.Props):
         alignment_threshold: int
         buffer_time: int
@@ -617,20 +595,6 @@ class AudioBaseSink(GstBase.BaseSink):
         latency_time: int
         provide_clock: bool
         slave_method: AudioBaseSinkSlaveMethod
-        blocksize: int
-        enable_last_sample: bool
-        last_sample: Gst.Sample | None
-        max_bitrate: int
-        max_lateness: int
-        processing_deadline: int
-        qos: bool
-        render_delay: int
-        stats: Gst.Structure
-        sync: bool
-        throttle_time: int
-        ts_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -764,20 +728,16 @@ class AudioBaseSrc(GstBase.PushSrc):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.PushSrc.Props):
-        actual_buffer_time: int
-        actual_latency_time: int
+        @property
+        def actual_buffer_time(self) -> int: ...
+        @property
+        def actual_latency_time(self) -> int: ...
         buffer_time: int
         latency_time: int
         provide_clock: bool
         slave_method: AudioBaseSrcSlaveMethod
-        automatic_eos: bool
-        blocksize: int
-        do_timestamp: bool
-        num_buffers: int
-        typefind: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -920,17 +880,11 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GstBase.PushSrc.Props):
         device: str
         mode: AudioCdSrcMode
         track: int
-        automatic_eos: bool
-        blocksize: int
-        do_timestamp: bool
-        num_buffers: int
-        typefind: bool
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1051,16 +1005,6 @@ class AudioClock(Gst.SystemClock):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gst.SystemClock.Props):
-        clock_type: Gst.ClockType
-        timeout: int
-        window_size: int
-        window_threshold: int
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def clock(self) -> Gst.SystemClock: ...
     @property
@@ -1179,13 +1123,12 @@ class AudioDecoder(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         max_errors: int
         min_latency: int
         plc: bool
         tolerance: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1376,13 +1319,13 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         hard_resync: bool
-        mark_granule: bool
+        @property
+        def mark_granule(self) -> bool: ...
         perfect_timestamp: bool
         tolerance: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -1545,13 +1488,6 @@ class AudioFilter(GstBase.BaseTransform):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(GstBase.BaseTransform.Props):
-        qos: bool
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def basetransform(self) -> GstBase.BaseTransform: ...
     @property
@@ -1732,12 +1668,6 @@ class AudioRingBuffer(Gst.Object):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gst.Object.Props):
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def object(self) -> Gst.Object: ...
     @property
@@ -1972,32 +1902,6 @@ class AudioSink(AudioBaseSink):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(AudioBaseSink.Props):
-        alignment_threshold: int
-        buffer_time: int
-        can_activate_pull: bool
-        discont_wait: int
-        drift_tolerance: int
-        latency_time: int
-        provide_clock: bool
-        slave_method: AudioBaseSinkSlaveMethod
-        blocksize: int
-        enable_last_sample: bool
-        last_sample: Gst.Sample | None
-        max_bitrate: int
-        max_lateness: int
-        processing_deadline: int
-        qos: bool
-        render_delay: int
-        stats: Gst.Structure
-        sync: bool
-        throttle_time: int
-        ts_offset: int
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def element(self) -> AudioBaseSink: ...
     @property
@@ -2134,23 +2038,6 @@ class AudioSrc(AudioBaseSrc):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(AudioBaseSrc.Props):
-        actual_buffer_time: int
-        actual_latency_time: int
-        buffer_time: int
-        latency_time: int
-        provide_clock: bool
-        slave_method: AudioBaseSrcSlaveMethod
-        automatic_eos: bool
-        blocksize: int
-        do_timestamp: bool
-        num_buffers: int
-        typefind: bool
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def element(self) -> AudioBaseSrc: ...
     @property

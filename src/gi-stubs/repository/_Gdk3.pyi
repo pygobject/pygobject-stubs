@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -2557,8 +2558,10 @@ class AppLaunchContext(Gio.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.AppLaunchContext.Props):
-        display: Display
+        @property
+        def display(self) -> Display: ...
 
     @property
     def props(self) -> Props: ...
@@ -2641,9 +2644,12 @@ class Cursor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        cursor_type: CursorType
-        display: Display
+        @property
+        def cursor_type(self) -> CursorType: ...
+        @property
+        def display(self) -> Display: ...
 
     @property
     def props(self) -> Props: ...
@@ -2724,22 +2730,36 @@ class Device(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        associated_device: Device | None
-        axes: AxisFlags
-        device_manager: DeviceManager
-        display: Display
-        has_cursor: bool
+        @property
+        def associated_device(self) -> Device | None: ...
+        @property
+        def axes(self) -> AxisFlags: ...
+        @property
+        def device_manager(self) -> DeviceManager: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def has_cursor(self) -> bool: ...
         input_mode: InputMode
-        input_source: InputSource
-        n_axes: int
-        name: str
-        num_touches: int
-        product_id: str | None
+        @property
+        def input_source(self) -> InputSource: ...
+        @property
+        def n_axes(self) -> int: ...
+        @property
+        def name(self) -> str: ...
+        @property
+        def num_touches(self) -> int: ...
+        @property
+        def product_id(self) -> str | None: ...
         seat: Seat
-        tool: DeviceTool
-        type: DeviceType
-        vendor_id: str | None
+        @property
+        def tool(self) -> DeviceTool: ...
+        @property
+        def type(self) -> DeviceType: ...
+        @property
+        def vendor_id(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2821,8 +2841,10 @@ class DeviceManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display | None
+        @property
+        def display(self) -> Display | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2868,11 +2890,16 @@ class DeviceTool(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        axes: AxisFlags
-        hardware_id: int
-        serial: int
-        tool_type: DeviceToolType
+        @property
+        def axes(self) -> AxisFlags: ...
+        @property
+        def hardware_id(self) -> int: ...
+        @property
+        def serial(self) -> int: ...
+        @property
+        def tool_type(self) -> DeviceToolType: ...
 
     @property
     def props(self) -> Props: ...
@@ -2986,6 +3013,7 @@ class DisplayManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         default_display: Display | None
 
@@ -3053,9 +3081,12 @@ class DrawingContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        clip: cairo.Region | None
-        window: Window
+        @property
+        def clip(self) -> cairo.Region | None: ...
+        @property
+        def window(self) -> Window: ...
 
     @property
     def props(self) -> Props: ...
@@ -3475,10 +3506,14 @@ class GLContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display | None
-        shared_context: GLContext | None
-        window: Window | None
+        @property
+        def display(self) -> Display | None: ...
+        @property
+        def shared_context(self) -> GLContext | None: ...
+        @property
+        def window(self) -> Window | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3621,17 +3656,28 @@ class Monitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display
-        geometry: Rectangle
-        height_mm: int
-        manufacturer: str | None
-        model: str | None
-        refresh_rate: int
-        scale_factor: int
-        subpixel_layout: SubpixelLayout
-        width_mm: int
-        workarea: Rectangle
+        @property
+        def display(self) -> Display: ...
+        @property
+        def geometry(self) -> Rectangle: ...
+        @property
+        def height_mm(self) -> int: ...
+        @property
+        def manufacturer(self) -> str | None: ...
+        @property
+        def model(self) -> str | None: ...
+        @property
+        def refresh_rate(self) -> int: ...
+        @property
+        def scale_factor(self) -> int: ...
+        @property
+        def subpixel_layout(self) -> SubpixelLayout: ...
+        @property
+        def width_mm(self) -> int: ...
+        @property
+        def workarea(self) -> Rectangle: ...
 
     @property
     def props(self) -> Props: ...
@@ -3738,6 +3784,7 @@ class Screen(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         font_options: None | None
         resolution: float
@@ -3811,8 +3858,10 @@ class Seat(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display
+        @property
+        def display(self) -> Display: ...
 
     @property
     def props(self) -> Props: ...
@@ -3910,6 +3959,7 @@ class Window(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         cursor: Cursor | None
 

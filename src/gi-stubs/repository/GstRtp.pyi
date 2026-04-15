@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -373,27 +374,9 @@ class RTPBaseAudioPayload(RTPBasePayload):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(RTPBasePayload.Props):
         buffer_list: bool
-        auto_header_extension: bool
-        extensions: Gst.ValueArray
-        max_ptime: int
-        min_ptime: int
-        mtu: int
-        onvif_no_rate_control: bool
-        perfect_rtptime: bool
-        pt: int
-        ptime_multiple: int
-        scale_rtptime: bool
-        seqnum: int
-        seqnum_offset: int
-        source_info: bool
-        ssrc: int
-        stats: Gst.Structure
-        timestamp: int
-        timestamp_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -495,14 +478,15 @@ class RTPBaseDepayload(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         auto_header_extension: bool
-        extensions: Gst.ValueArray
+        @property
+        def extensions(self) -> Gst.ValueArray: ...
         max_reorder: int
         source_info: bool
-        stats: Gst.Structure
-        name: str | None
-        parent: Gst.Object | None
+        @property
+        def stats(self) -> Gst.Structure: ...
 
     @property
     def props(self) -> Props: ...
@@ -637,9 +621,11 @@ class RTPBasePayload(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gst.Element.Props):
         auto_header_extension: bool
-        extensions: Gst.ValueArray
+        @property
+        def extensions(self) -> Gst.ValueArray: ...
         max_ptime: int
         min_ptime: int
         mtu: int
@@ -648,15 +634,16 @@ class RTPBasePayload(Gst.Element):
         pt: int
         ptime_multiple: int
         scale_rtptime: bool
-        seqnum: int
+        @property
+        def seqnum(self) -> int: ...
         seqnum_offset: int
         source_info: bool
         ssrc: int
-        stats: Gst.Structure
-        timestamp: int
+        @property
+        def stats(self) -> Gst.Structure: ...
+        @property
+        def timestamp(self) -> int: ...
         timestamp_offset: int
-        name: str | None
-        parent: Gst.Object | None
 
     @property
     def props(self) -> Props: ...
@@ -884,12 +871,6 @@ class RTPHeaderExtension(Gst.Element):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Gst.Element.Props):
-        name: str | None
-        parent: Gst.Object | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> Gst.Element: ...
     def __init__(self, *, name: str | None = ..., parent: Gst.Object = ...) -> None: ...

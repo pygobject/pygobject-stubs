@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Final
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -249,6 +250,7 @@ class RTSPClient(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         drop_backlog: bool
         mount_points: RTSPMountPoints | None
@@ -583,12 +585,14 @@ class RTSPMedia(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         bind_mcast_address: bool
         buffer_size: int
         clock: Gst.Clock | None
         dscp_qos: int
-        element: Gst.Element
+        @property
+        def element(self) -> Gst.Element: ...
         ensure_keyunit_on_start: bool
         ensure_keyunit_on_start_timeout: int
         eos_shutdown: bool
@@ -848,6 +852,7 @@ class RTSPMediaFactory(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         bind_mcast_address: bool
         buffer_size: int
@@ -1045,26 +1050,10 @@ class RTSPMediaFactoryURI(RTSPMediaFactory):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(RTSPMediaFactory.Props):
         uri: str
         use_gstpay: bool
-        bind_mcast_address: bool
-        buffer_size: int
-        clock: Gst.Clock | None
-        dscp_qos: int
-        enable_rtcp: bool
-        ensure_keyunit_on_start: bool
-        ensure_keyunit_on_start_timeout: int
-        eos_shutdown: bool
-        latency: int
-        launch: str | None
-        max_mcast_ttl: int
-        profiles: GstRtsp.RTSPProfile
-        protocols: GstRtsp.RTSPLowerTrans
-        shared: bool
-        stop_on_disconnect: bool
-        suspend_mode: RTSPSuspendMode
-        transport_mode: RTSPTransportMode
 
     @property
     def props(self) -> Props: ...
@@ -1207,14 +1196,6 @@ class RTSPOnvifClient(RTSPClient):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RTSPClient.Props):
-        drop_backlog: bool
-        mount_points: RTSPMountPoints | None
-        post_session_timeout: int
-        session_pool: RTSPSessionPool | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RTSPClient: ...
     def __init__(
@@ -1299,28 +1280,6 @@ class RTSPOnvifMedia(RTSPMedia):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RTSPMedia.Props):
-        bind_mcast_address: bool
-        buffer_size: int
-        clock: Gst.Clock | None
-        dscp_qos: int
-        element: Gst.Element
-        ensure_keyunit_on_start: bool
-        ensure_keyunit_on_start_timeout: int
-        eos_shutdown: bool
-        latency: int
-        max_mcast_ttl: int
-        profiles: GstRtsp.RTSPProfile
-        protocols: GstRtsp.RTSPLowerTrans
-        reusable: bool
-        shared: bool
-        stop_on_disconnect: bool
-        suspend_mode: RTSPSuspendMode
-        time_provider: bool | None
-        transport_mode: RTSPTransportMode
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RTSPMedia: ...
     @property
@@ -1416,27 +1375,6 @@ class RTSPOnvifMediaFactory(RTSPMediaFactory):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RTSPMediaFactory.Props):
-        bind_mcast_address: bool
-        buffer_size: int
-        clock: Gst.Clock | None
-        dscp_qos: int
-        enable_rtcp: bool
-        ensure_keyunit_on_start: bool
-        ensure_keyunit_on_start_timeout: int
-        eos_shutdown: bool
-        latency: int
-        launch: str | None
-        max_mcast_ttl: int
-        profiles: GstRtsp.RTSPProfile
-        protocols: GstRtsp.RTSPLowerTrans
-        shared: bool
-        stop_on_disconnect: bool
-        suspend_mode: RTSPSuspendMode
-        transport_mode: RTSPTransportMode
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RTSPMediaFactory: ...
     @property
@@ -1531,17 +1469,6 @@ class RTSPOnvifServer(RTSPServer):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(RTSPServer.Props):
-        address: str | None
-        backlog: int
-        bound_port: int
-        content_length_limit: int
-        mount_points: RTSPMountPoints | None
-        service: str
-        session_pool: RTSPSessionPool | None
-
-    @property
-    def props(self) -> Props: ...
     @property
     def parent(self) -> RTSPServer: ...
     def __init__(
@@ -1625,10 +1552,12 @@ class RTSPServer(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         address: str | None
         backlog: int
-        bound_port: int
+        @property
+        def bound_port(self) -> int: ...
         content_length_limit: int
         mount_points: RTSPMountPoints | None
         service: str
@@ -1729,9 +1658,11 @@ class RTSPSession(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         extra_timeout: int
-        sessionid: str | None
+        @property
+        def sessionid(self) -> str | None: ...
         timeout: int
         timeout_always_visible: bool
 
@@ -1849,6 +1780,7 @@ class RTSPSessionPool(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         max_sessions: int
 
@@ -1922,6 +1854,7 @@ class RTSPStream(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         control: str | None
         profiles: GstRtsp.RTSPProfile
@@ -2077,8 +2010,10 @@ class RTSPStreamTransport(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        timed_out: bool
+        @property
+        def timed_out(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -2178,6 +2113,7 @@ class RTSPThreadPool(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         max_threads: int
 

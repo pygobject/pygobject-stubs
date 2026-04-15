@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 from typing_extensions import Self
 
@@ -2579,8 +2580,10 @@ class AppLaunchContext(Gio.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.AppLaunchContext.Props):
-        display: Display
+        @property
+        def display(self) -> Display: ...
 
     @property
     def props(self) -> Props: ...
@@ -2618,12 +2621,6 @@ class CairoContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(DrawContext.Props):
-        display: Display | None
-        surface: Surface | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, display: Display = ..., surface: Surface = ...) -> None: ...
     def cairo_create(self) -> cairo.Context | None: ...
 
@@ -2647,6 +2644,7 @@ class CicpParams(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         color_primaries: int
         matrix_coefficients: int
@@ -2699,11 +2697,16 @@ class Clipboard(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        content: ContentProvider | None
-        display: Display
-        formats: ContentFormats
-        local: bool
+        @property
+        def content(self) -> ContentProvider | None: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def formats(self) -> ContentFormats: ...
+        @property
+        def local(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -2880,9 +2883,12 @@ class ContentProvider(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        formats: ContentFormats
-        storable_formats: ContentFormats
+        @property
+        def formats(self) -> ContentFormats: ...
+        @property
+        def storable_formats(self) -> ContentFormats: ...
 
     @property
     def props(self) -> Props: ...
@@ -3018,12 +3024,18 @@ class Cursor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        fallback: Cursor | None
-        hotspot_x: int
-        hotspot_y: int
-        name: str | None
-        texture: Texture | None
+        @property
+        def fallback(self) -> Cursor | None: ...
+        @property
+        def hotspot_x(self) -> int: ...
+        @property
+        def hotspot_y(self) -> int: ...
+        @property
+        def name(self) -> str | None: ...
+        @property
+        def texture(self) -> Texture | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3071,7 +3083,14 @@ class DNDEvent(Event):
     """
     def get_drop(self) -> Drop | None: ...
 
-class DeleteEvent(Event): ...
+class DeleteEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        DeleteEvent(**properties)
+    """
 
 class Device(GObject.Object):
     """
@@ -3110,25 +3129,43 @@ class Device(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        active_layout_index: int
-        caps_lock_state: bool
-        direction: Pango.Direction
-        display: Display
-        has_bidi_layouts: bool
-        has_cursor: bool
-        layout_names: list[str] | None
-        modifier_state: ModifierType
-        n_axes: int
-        name: str
-        num_lock_state: bool
-        num_touches: int
-        product_id: str | None
-        scroll_lock_state: bool
+        @property
+        def active_layout_index(self) -> int: ...
+        @property
+        def caps_lock_state(self) -> bool: ...
+        @property
+        def direction(self) -> Pango.Direction: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def has_bidi_layouts(self) -> bool: ...
+        @property
+        def has_cursor(self) -> bool: ...
+        @property
+        def layout_names(self) -> list[str] | None: ...
+        @property
+        def modifier_state(self) -> ModifierType: ...
+        @property
+        def n_axes(self) -> int: ...
+        @property
+        def name(self) -> str: ...
+        @property
+        def num_lock_state(self) -> bool: ...
+        @property
+        def num_touches(self) -> int: ...
+        @property
+        def product_id(self) -> str | None: ...
+        @property
+        def scroll_lock_state(self) -> bool: ...
         seat: Seat
-        source: InputSource
-        tool: DeviceTool | None
-        vendor_id: str | None
+        @property
+        def source(self) -> InputSource: ...
+        @property
+        def tool(self) -> DeviceTool | None: ...
+        @property
+        def vendor_id(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3197,11 +3234,16 @@ class DeviceTool(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        axes: AxisFlags
-        hardware_id: int
-        serial: int
-        tool_type: DeviceToolType
+        @property
+        def axes(self) -> AxisFlags: ...
+        @property
+        def hardware_id(self) -> int: ...
+        @property
+        def serial(self) -> int: ...
+        @property
+        def tool_type(self) -> DeviceToolType: ...
 
     @property
     def props(self) -> Props: ...
@@ -3245,12 +3287,18 @@ class Display(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        composited: bool
-        dmabuf_formats: DmabufFormats
-        input_shapes: bool
-        rgba: bool
-        shadow_width: bool
+        @property
+        def composited(self) -> bool: ...
+        @property
+        def dmabuf_formats(self) -> DmabufFormats: ...
+        @property
+        def input_shapes(self) -> bool: ...
+        @property
+        def rgba(self) -> bool: ...
+        @property
+        def shadow_width(self) -> bool: ...
 
     @property
     def props(self) -> Props: ...
@@ -3309,6 +3357,7 @@ class DisplayManager(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         default_display: Display | None
 
@@ -3356,13 +3405,6 @@ class DmabufTexture(Texture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Texture.Props):
-        color_state: ColorState
-        height: int
-        width: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
     ) -> None: ...
@@ -3393,6 +3435,7 @@ class DmabufTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         color_state: ColorState | None
         display: Display
@@ -3483,14 +3526,20 @@ class Drag(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         actions: DragAction
-        content: ContentProvider
-        device: Device
-        display: Display
-        formats: ContentFormats
+        @property
+        def content(self) -> ContentProvider: ...
+        @property
+        def device(self) -> Device: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def formats(self) -> ContentFormats: ...
         selected_action: DragAction
-        surface: Surface
+        @property
+        def surface(self) -> Surface: ...
 
     @property
     def props(self) -> Props: ...
@@ -3555,9 +3604,12 @@ class DrawContext(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display | None
-        surface: Surface | None
+        @property
+        def display(self) -> Display | None: ...
+        @property
+        def surface(self) -> Surface | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3590,13 +3642,20 @@ class Drop(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        actions: DragAction
-        device: Device
-        display: Display
-        drag: Drag | None
-        formats: ContentFormats
-        surface: Surface
+        @property
+        def actions(self) -> DragAction: ...
+        @property
+        def device(self) -> Device: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def drag(self) -> Drag | None: ...
+        @property
+        def formats(self) -> ContentFormats: ...
+        @property
+        def surface(self) -> Surface: ...
 
     @property
     def props(self) -> Props: ...
@@ -3762,12 +3821,13 @@ class GLContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(DrawContext.Props):
         allowed_apis: GLAPI
-        api: GLAPI
-        shared_context: GLContext | None
-        display: Display | None
-        surface: Surface | None
+        @property
+        def api(self) -> GLAPI: ...
+        @property
+        def shared_context(self) -> GLContext | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3830,13 +3890,6 @@ class GLTexture(Texture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Texture.Props):
-        color_state: ColorState
-        height: int
-        width: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
     ) -> None: ...
@@ -3878,6 +3931,7 @@ class GLTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         color_state: ColorState
         context: GLContext | None
@@ -4001,13 +4055,6 @@ class MemoryTexture(Texture):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(Texture.Props):
-        color_state: ColorState
-        height: int
-        width: int
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
     ) -> None: ...
@@ -4045,6 +4092,7 @@ class MemoryTextureBuilder(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         bytes: GLib.Bytes | None
         color_state: ColorState
@@ -4127,20 +4175,34 @@ class Monitor(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        connector: str | None
-        description: str | None
-        display: Display
-        geometry: Rectangle
-        height_mm: int
-        manufacturer: str | None
-        model: str | None
-        refresh_rate: int
-        scale: float
-        scale_factor: int
-        subpixel_layout: SubpixelLayout
-        valid: bool
-        width_mm: int
+        @property
+        def connector(self) -> str | None: ...
+        @property
+        def description(self) -> str | None: ...
+        @property
+        def display(self) -> Display: ...
+        @property
+        def geometry(self) -> Rectangle: ...
+        @property
+        def height_mm(self) -> int: ...
+        @property
+        def manufacturer(self) -> str | None: ...
+        @property
+        def model(self) -> str | None: ...
+        @property
+        def refresh_rate(self) -> int: ...
+        @property
+        def scale(self) -> float: ...
+        @property
+        def scale_factor(self) -> int: ...
+        @property
+        def subpixel_layout(self) -> SubpixelLayout: ...
+        @property
+        def valid(self) -> bool: ...
+        @property
+        def width_mm(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -4160,7 +4222,15 @@ class Monitor(GObject.Object):
     def is_valid(self) -> bool: ...
 
 class MonitorClass(_gi.Struct): ...
-class MotionEvent(Event): ...
+
+class MotionEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        MotionEvent(**properties)
+    """
 
 class PadEvent(Event):
     """
@@ -4277,7 +4347,14 @@ class PopupLayout(GObject.GBoxed):
     def set_surface_anchor(self, anchor: Gravity) -> None: ...
     def unref(self) -> None: ...
 
-class ProximityEvent(Event): ...
+class ProximityEvent(Event):
+    """
+    :Constructors:
+
+    ::
+
+        ProximityEvent(**properties)
+    """
 
 class RGBA(GObject.GBoxed):
     """
@@ -4366,8 +4443,10 @@ class Seat(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        display: Display
+        @property
+        def display(self) -> Display: ...
 
     @property
     def props(self) -> Props: ...
@@ -4381,7 +4460,20 @@ class Seat(GObject.Object):
     def get_pointer(self) -> Device | None: ...
     def get_tools(self) -> list[DeviceTool]: ...
 
-class Snapshot(GObject.Object): ...
+class Snapshot(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        Snapshot(**properties)
+
+    Object GdkSnapshot
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
 class SnapshotClass(_gi.Struct): ...
 
 class Surface(GObject.Object):
@@ -4416,15 +4508,23 @@ class Surface(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
         cursor: Cursor | None
-        display: Display
-        frame_clock: FrameClock
-        height: int
-        mapped: bool
-        scale: float
-        scale_factor: int
-        width: int
+        @property
+        def display(self) -> Display: ...
+        @property
+        def frame_clock(self) -> FrameClock: ...
+        @property
+        def height(self) -> int: ...
+        @property
+        def mapped(self) -> bool: ...
+        @property
+        def scale(self) -> float: ...
+        @property
+        def scale_factor(self) -> int: ...
+        @property
+        def width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -4498,10 +4598,14 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        color_state: ColorState
-        height: int
-        width: int
+        @property
+        def color_state(self) -> ColorState: ...
+        @property
+        def height(self) -> int: ...
+        @property
+        def width(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -4687,12 +4791,6 @@ class VulkanContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(DrawContext.Props):
-        display: Display | None
-        surface: Surface | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(self, *, display: Display = ..., surface: Surface = ...) -> None: ...
 
 class AnchorHints(GObject.GFlags):

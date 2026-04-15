@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 
 from builtins import property as _property
@@ -837,12 +838,18 @@ class Binding(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
-        flags: BindingFlags
-        source: Object | None
-        source_property: str
-        target: Object | None
-        target_property: str
+        @_property
+        def flags(self) -> BindingFlags: ...
+        @_property
+        def source(self) -> Object | None: ...
+        @_property
+        def source_property(self) -> str: ...
+        @_property
+        def target(self) -> Object | None: ...
+        @_property
+        def target_property(self) -> str: ...
 
     @_property
     def props(self) -> Props: ...
@@ -881,6 +888,7 @@ class BindingGroup(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         source: Object | None
 
@@ -1252,7 +1260,11 @@ class FlagsValue(_gi.Struct):
     value_name: str
     value_nick: str
 
-class Float(float): ...
+class Float(float):
+    """
+    A wrapper to force conversion to G_TYPE_FLOAT instead of G_TYPE_DOUBLE when
+    used in GValue APIs.
+    """
 
 GBoxed = _gi.GBoxed
 GError = GLib.GError
@@ -1956,9 +1968,11 @@ class SignalGroup(Object):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Object.Props):
         target: Object | None
-        target_type: type[Any]
+        @_property
+        def target_type(self) -> type[Any]: ...
 
     @_property
     def props(self) -> Props: ...

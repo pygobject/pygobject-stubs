@@ -25,6 +25,8 @@ import pprint
 import re
 import textwrap
 from collections.abc import Callable
+from collections.abc import Iterable
+from collections.abc import Iterator
 from dataclasses import dataclass
 from dataclasses import field
 from dataclasses import InitVar
@@ -72,6 +74,7 @@ ALLOWED_FUNCTIONS = {
     "__enter__",
     "__exit__",
     "__iter__",
+    "__next__",
     "__getitem__",
     "__setitem__",
     "__len__",
@@ -91,58 +94,6 @@ def fix_argument_name(name: str) -> str:
     if name in RESERVED_KEYWORDS:
         name = f"_{name}"
     return name.replace("-", "_")
-
-
-def _object_get_props(
-    repo: GIRepository.Repository,
-    obj: GI.ObjectInfo,
-) -> tuple[list[GIRepository.PropertyInfo], list[GIRepository.PropertyInfo]]:
-    parents: list[GI.ObjectInfo] = []
-    parent: GI.ObjectInfo | None = obj.get_parent()
-    while parent:
-        parents.append(parent)
-        parent = parent.get_parent()
-
-    interfaces = list(obj.get_interfaces())
-
-    subclasses = parents + interfaces
-
-    props = list(obj.get_properties())
-    for s in subclasses:
-        props.extend(s.get_properties())
-
-    readable_props: list[GIRepository.PropertyInfo] = []
-    writable_props: list[GIRepository.PropertyInfo] = []
-
-    for prop in props:
-        namespace = prop.get_namespace()
-        container = prop.get_container()
-
-        class_info = repo.find_by_name(namespace, container.get_name())
-        if class_info is None:
-            raise Exception(f"Unable to find {namespace}.{container}")
-
-        if isinstance(class_info, GIRepository.ObjectInfo):
-            for i in range(class_info.get_n_properties()):
-                p = class_info.get_property(i)
-                if p.get_name() == prop.get_name():
-                    flags = p.get_flags()
-                    if flags & GObject.ParamFlags.READABLE:
-                        readable_props.append(p)
-                    if flags & GObject.ParamFlags.WRITABLE:
-                        writable_props.append(p)
-
-        if isinstance(class_info, GIRepository.InterfaceInfo):
-            for i in range(class_info.get_n_properties()):
-                p = class_info.get_property(i)
-                if p.get_name() == prop.get_name():
-                    flags = p.get_flags()
-                    if flags & GObject.ParamFlags.READABLE:
-                        readable_props.append(p)
-                    if flags & GObject.ParamFlags.WRITABLE:
-                        writable_props.append(p)
-
-    return (readable_props, writable_props)
 
 
 def _callable_get_arguments(
@@ -361,10 +312,7 @@ def _type_to_python(
 
 
 def _generate_full_name(prefix: str, name: str) -> str:
-    full_name = name
-    if len(prefix) > 0:
-        full_name = f"{prefix}.{name}"
-    return full_name
+    return f"{prefix}.{name}" if prefix else name
 
 
 def _build_function_info(
@@ -588,6 +536,451 @@ def _replace_union(formatted: str) -> str:
 
 
 @dataclass(slots=True)
+class PropertyInfo:
+    stub: Stub
+    gir_info: GIRepository.PropertyInfo
+
+    gobject_name: str = field(init=False)
+    name: str = field(init=False)
+
+    _init_type: str | None = field(init=False, default=None)
+    _prop_type: str | None = field(init=False, default=None)
+
+    def __post_init__(self) -> None:
+        self.gobject_name = f"{self.gir_info.get_name()}"
+        self.name = fix_argument_name(self.gobject_name)
+
+    @property
+    def readable(self) -> bool:
+        return bool(self.gir_info.get_flags() & GObject.ParamFlags.READABLE)
+
+    @property
+    def writable(self) -> bool:
+        return bool(self.gir_info.get_flags() & GObject.ParamFlags.WRITABLE)
+
+    @property
+    def construct(self) -> bool:
+        return bool(self.gir_info.get_flags() & GObject.ParamFlags.CONSTRUCT)
+
+    @property
+    def construct_only(self) -> bool:
+        return bool(self.gir_info.get_flags() & GObject.ParamFlags.CONSTRUCT_ONLY)
+
+    @property
+    def prop_type(self) -> str:
+        if self._prop_type is not None:
+            return self._prop_type
+
+        py_type = _type_to_python(self.stub, self.gir_info.get_type_info(), True)
+        getter = self.gir_info.get_getter()
+        setter = self.gir_info.get_setter()
+
+        if (getter and getter.may_return_null()) or (
+            # If it is wratable only prop, check if setter can accept NULL
+            setter and setter.get_arg(0).may_be_null()
+        ):
+            py_type = f"{py_type} | None"
+
+        self._prop_type = py_type
+
+        return py_type
+
+    @property
+    def init_type(self) -> str:
+        if self._init_type is not None:
+            return self._init_type
+
+        py_type = _type_to_python(self.stub, self.gir_info.get_type_info())
+        setter = self.gir_info.get_setter()
+
+        if setter and setter.get_arg(0).may_be_null():
+            py_type = f"{py_type} | None"
+
+        self._init_type = py_type
+
+        return py_type
+
+
+PropertyInfoDict: TypeAlias = dict[str, PropertyInfo]
+_MISSING = object()
+
+
+@dataclass(slots=True)
+class ClassInfo:
+    stub: Stub
+    cls: type[Any]
+    name: str
+    prefix: str
+    in_class: Any | None
+    full_name: str = field(init=False)
+
+    _bases: tuple[type[Any], ...] | None = field(init=False, default=None)
+    _gi_info: GI.RegisteredTypeInfo | None = field(
+        init=False, default=cast(Any, _MISSING)
+    )
+    _class_properties: PropertyInfoDict | None = field(init=False, default=None)
+    _init_properties: PropertyInfoDict | None = field(init=False, default=None)
+    _class_content: str | None = field(init=False, default=None)
+    _fields: list[GI.FieldInfo] | None = field(init=False, default=None)
+
+    def __post_init__(self) -> None:
+        self.full_name = _generate_full_name(self.prefix, self.name)
+
+    @property
+    def is_interface(self) -> bool:
+        return isinstance(self.gi_info, GI.InterfaceInfo)
+
+    @property
+    def is_object(self) -> bool:
+        return isinstance(self.gi_info, GI.ObjectInfo)
+
+    @property
+    def bases(self) -> tuple[type[Any], ...]:
+        if self._bases is not None:
+            return self._bases
+
+        self._bases, self._gi_info = self.__get_bases_and_gi_info()
+
+        return self._bases
+
+    @property
+    def gi_info(self) -> GI.RegisteredTypeInfo | None:
+        if self._gi_info is not _MISSING:
+            return self._gi_info
+
+        self._bases, self._gi_info = self.__get_bases_and_gi_info()
+
+        return self._gi_info
+
+    @property
+    def properties(self) -> PropertyInfoDict:
+        if self._class_properties is not None:
+            return self._class_properties
+
+        self._class_properties, self._init_properties = self.__get_properties()
+
+        return self._class_properties
+
+    @property
+    def init_properties(self) -> PropertyInfoDict:
+        if self._init_properties is not None:
+            return self._init_properties
+
+        self._class_properties, self._init_properties = self.__get_properties()
+
+        return self._init_properties
+
+    @property
+    def contents(self) -> str:
+        if self._class_content is not None:
+            return self._class_content
+
+        self._class_content, self._fields = self.__get_contents_and_fields()
+
+        return self._class_content
+
+    @property
+    def fields(self) -> list[GI.FieldInfo]:
+        if self._fields is not None:
+            return self._fields
+
+        self._class_content, self._fields = self.__get_contents_and_fields()
+
+        return self._fields
+
+    def __get_bases_and_gi_info(
+        self,
+    ) -> tuple[tuple[type[Any], ...], GI.RegisteredTypeInfo | None]:
+        full_module_name = f"{self.cls.__module__}.{self.cls.__qualname__}"
+        object_info = self.cls.__dict__.get("__info__")
+        bases = list(get_original_bases(self.cls))
+
+        # Because we're generating types for gi.repository, we have to generate stubs for
+        # override classes that come from gi.repository and inherit from gi.repository classes.
+        # Effectively, we want to write the stubs as if the override class and repository class
+        # are one class in the MRO. What this means is that the following transformations need to
+        # happen:
+        # 1. For the following:
+        #    gi.repository.X.One(<One repository bases>)
+        #    gi.overrides.X.One(<One prefix override bases>, gi.repository.X.One, <One suffix override bases>) ->
+        #        gi.repository.X.One(<One prefix override bases>, <One repository bases>, <One override bases>)
+        # 2. gi.overrides.X.Two(float) -> gi.repository.X.Two(float)
+        # 3. gi.overrides.X.Three(gi.overrides.X.Four, ...) -> gi.repository.X.Three(gi.repository.X.Four, ...)
+        if full_module_name.startswith("gi.overrides.") and any(
+            base.__module__.startswith("gi.repository.") for base in bases
+        ):
+            bases: list[Any] = []
+            gi_repo_full_name = full_module_name.replace(
+                "gi.overrides.", "gi.repository.", 1
+            )
+
+            for base in get_original_bases(self.cls):
+                if f"{base.__module__}.{base.__qualname__}" == gi_repo_full_name:
+                    bases.extend(get_original_bases(base))
+
+                    if object_info is None:
+                        object_info = base.__dict__.get("__info__")
+                elif base is not object and base not in bases:
+                    bases.append(base)
+
+        if GI.GInterface in bases and not any(
+            get_origin(base) is Protocol for base in bases
+        ):
+            # Most overrides use Generic instead of Protocol for interfaces
+            index = next(
+                (
+                    i
+                    for i, base in enumerate(bases)
+                    if get_origin(base) is Generic and get_args(base)
+                ),
+                None,
+            )
+            if index is None:
+                bases.append(Protocol)
+            else:
+                args = get_args(bases[index])
+                bases[index] = GenericAlias(cast(Any, Protocol), args)
+
+        return tuple(bases), object_info
+
+    def __find_repo_property(
+        self, prop_info: GI.PropertyInfo, /
+    ) -> GIRepository.PropertyInfo | None:
+        class_info = self.stub.repo.find_by_name(
+            prop_info.get_namespace(), f"{prop_info.get_container().get_name()}"
+        )
+        prop_name = prop_info.get_name()
+
+        if isinstance(
+            class_info, (GIRepository.ObjectInfo, GIRepository.InterfaceInfo)
+        ):
+            for i in range(class_info.get_n_properties()):
+                property = class_info.get_property(i)
+                if property.get_name() == prop_name:
+                    return property
+
+        return None
+
+    def __iterate_class_properties(
+        self,
+        gi_info: GI.ObjectInfo | GI.InterfaceInfo,
+        *,
+        include_interfaces: bool = False,
+    ) -> Iterator[PropertyInfo]:
+        interface_properties: Iterable[tuple[GI.PropertyInfo, ...]] = (
+            (iface.get_properties() for iface in gi_info.get_interfaces())
+            if isinstance(gi_info, GI.ObjectInfo) and include_interfaces
+            else []
+        )
+
+        yield from (
+            PropertyInfo(self.stub, prop_info)
+            for prop in itertools.chain(gi_info.get_properties(), *interface_properties)
+            if (prop_info := self.__find_repo_property(prop)) is not None
+        )
+
+    def __iterate_parents(self) -> Iterator[GI.ObjectInfo]:
+        if not isinstance(self.gi_info, GI.ObjectInfo):
+            return
+
+        current = self.gi_info.get_parent()
+        while current is not None:
+            yield current
+            current = current.get_parent()
+
+    def __iterate_parent_class_properties(self) -> Iterator[PropertyInfo]:
+        for parent in self.__iterate_parents():
+            yield from self.__iterate_class_properties(parent)
+
+    def __get_properties(self) -> tuple[PropertyInfoDict, PropertyInfoDict]:
+        if not isinstance(self.gi_info, (GI.ObjectInfo, GI.InterfaceInfo)):
+            return {}, {}
+
+        names: set[str] = set()
+        class_props: PropertyInfoDict = {}
+        init_props: PropertyInfoDict = {}
+
+        for prop_info in self.__iterate_class_properties(
+            self.gi_info, include_interfaces=True
+        ):
+            if (name := prop_info.name) in names:
+                continue
+
+            names.add(name)
+
+            if prop_info.readable or (
+                prop_info.writable and not prop_info.construct_only
+            ):
+                class_props[name] = prop_info
+
+            if prop_info.writable or prop_info.construct or prop_info.construct_only:
+                init_props[name] = prop_info
+
+        for prop_info in self.__iterate_parent_class_properties():
+            if (name := prop_info.name) in names:
+                continue
+
+            names.add(name)
+
+            if prop_info.writable or prop_info.construct or prop_info.construct_only:
+                init_props[name] = prop_info
+
+        return class_props, init_props
+
+    def __get_contents_and_fields(self) -> tuple[str, list[GI.FieldInfo]]:
+        return _gi_build_stub_parts(
+            self.stub, self.cls, _find_attributes(self.cls), self.cls, self.full_name
+        )
+
+    def __build_docstring(self) -> str | None:
+        # extracting docs
+        docs = (
+            f"{(getattr(self.cls, '__doc__', '') or '').strip()}\n\n{
+                getattr(self.cls, '__gdoc__', '') or ''
+            }"
+        ).strip()
+
+        if docs:
+            docs = '"""\n' + docs.strip() + '\n"""'
+            return docs
+
+        return None
+
+    def __build_props_class(self) -> str | None:
+        if override := self.stub.check_override(self.full_name, "Props"):
+            return override
+
+        if (
+            not isinstance(self.gi_info, (GI.ObjectInfo, GI.InterfaceInfo))
+            or not self.properties
+        ):
+            return None
+
+        lines: list[str] = []
+
+        for name, prop_info in self.properties.items():
+            py_type = prop_info.prop_type
+
+            if prop_info.readable and (
+                not prop_info.writable or prop_info.construct_only
+            ):
+                lines.append(self.stub.get_property(name, py_type))
+            else:
+                lines.append(f"{name}: {py_type}")
+
+        props_string = "\n".join(lines) or "..."
+
+        parents_string = ""
+        if isinstance(self.gi_info, GI.ObjectInfo) and (
+            parent := self.gi_info.get_parent()
+        ):
+            parent_name = f"{parent.get_name()}"
+            parents_string = f"({self.stub.get_namespace_member(parent.get_namespace(), parent_name)}.Props)"
+
+        return f"""@{self.stub.get_import("typing", "type_check_only")}
+class Props{parents_string}:
+{textwrap.indent(props_string, "    ")}"""
+
+    def __build_props_property(self, props_class: str | None) -> str | None:
+        if override := self.stub.check_override(self.full_name, "props"):
+            return override
+
+        if isinstance(self.gi_info, GI.ObjectInfo) and props_class is not None:
+            return self.stub.get_property("props", "Props")
+
+        return None
+
+    def __build_props(self) -> str | None:
+        lines: list[str] = []
+
+        if (props_class := self.__build_props_class()) is not None:
+            lines.append(props_class)
+
+        if (props_property := self.__build_props_property(props_class)) is not None:
+            lines.append(props_property)
+
+        return "\n".join(lines) if lines else None
+
+    def __build_fields(self) -> str:
+        lines: list[str] = []
+
+        for field in self.fields:
+            name = f"{field.get_name()}"
+
+            if override := self.stub.check_override(self.full_name, name):
+                lines.append(override)
+            else:
+                py_type = _type_to_python(self.stub, field.get_type_info(), True)
+                flags = field.get_flags()
+                if not (flags & _IS_FIELD_WRITABLE):
+                    lines.append(self.stub.get_property(name, py_type))
+                else:
+                    lines.append(f"{name}: {py_type}")
+
+        return "\n".join(lines)
+
+    def __build_init(self) -> str | None:
+        if override := self.stub.check_override(self.full_name, "__init__"):
+            return override
+
+        if not isinstance(self.gi_info, GI.ObjectInfo) or not self.init_properties:
+            return None
+
+        args: list[str] = []
+
+        for name, init_prop in self.init_properties.items():
+            args.append(f"{name}: {init_prop.init_type} = ...")
+
+        return f"def __init__(self, *, {', '.join(args)}) -> None: ..."
+
+    def build(self) -> str:
+        if override := self.stub.check_override(self.prefix, self.name):
+            return override
+
+        if (
+            not self.in_class
+            and (alias := self.stub.get_alias(self.name, self.cls)) is not None
+        ):
+            # Set up a constant for classes that are aliases
+            # NOTE: this should not use `Final` because doing so turns the alias into
+            # a variable rather than a class
+            return f"{self.name} = {alias}"
+
+        string_parents = ""
+        if self.bases:
+            bases_strings = [
+                self.stub.get_class_import(base)
+                for base in self.bases
+                if base is not object
+            ]
+
+            string_parents = f"({', '.join(bases_strings)})"
+
+        lines = [f"class {self.name}{string_parents}:"]
+
+        if docs := self.__build_docstring():
+            lines.append(textwrap.indent(docs, "    "))
+
+        if self.is_object and (props := self.__build_props()) is not None:
+            lines.append(textwrap.indent(props, "    "))
+
+        if class_fields := self.__build_fields():
+            lines.append(textwrap.indent(class_fields, "    "))
+
+        if class_constructor := self.__build_init():
+            lines.append(textwrap.indent(class_constructor, "    "))
+
+        lines.append(textwrap.indent(self.contents, "    "))
+
+        class_string = "\n".join(lines).strip()
+
+        if class_string.endswith(":"):
+            class_string += " ..."
+
+        return class_string
+
+
+@dataclass(slots=True)
 class Stub:
     repo: GIRepository.Repository
     parent: ObjectT
@@ -714,7 +1107,7 @@ class Stub:
         self, name: str, return_annotation: str, /, *, indent: str = ""
     ) -> str:
         property_symbol = self.get_import("builtins", "property")
-        return f"{indent}@{property_symbol}\n{indent}def {name}(self) -> {return_annotation}: ...\n"
+        return f"{indent}@{property_symbol}\n{indent}def {name}(self) -> {return_annotation}: ..."
 
     def get_class_import(self, cls: Any, /) -> str:
         # Things like Generic and Protocol show up in the MRO as `Generic` rather than
@@ -746,59 +1139,6 @@ class Stub:
 
         module, name = full_name.rsplit(".", 1)
         return f"{self.get_import(module, name)}{args}"
-
-    def get_class_info(
-        self, cls: type[Any], /
-    ) -> tuple[tuple[type[Any], ...], GI.RegisteredTypeInfo | None]:
-        full_name = f"{cls.__module__}.{cls.__qualname__}"
-        object_info: GI.RegisteredTypeInfo | None = cls.__dict__.get("__info__")
-        bases = list(get_original_bases(cls))
-
-        # Because we're generating types for gi.repository, we have to generate stubs for
-        # override classes that come from gi.repository and inherit from gi.repository classes.
-        # Effectively, we want to write the stubs as if the override class and repository class
-        # are one class in the MRO. What this means is that the following transformations need to
-        # happen:
-        # 1. For the following:
-        #    gi.repository.X.One(<One repository bases>)
-        #    gi.overrides.X.One(<One prefix override bases>, gi.repository.X.One, <One suffix override bases>) ->
-        #        gi.repository.X.One(<One prefix override bases>, <One repository bases>, <One override bases>)
-        # 2. gi.overrides.X.Two(float) -> gi.repository.X.Two(float)
-        # 3. gi.overrides.X.Three(gi.overrides.X.Four, ...) -> gi.repository.X.Three(gi.repository.X.Four, ...)
-        if full_name.startswith("gi.overrides.") and any(
-            base.__module__.startswith("gi.repository.") for base in bases
-        ):
-            bases: list[Any] = []
-            gi_repo_full_name = full_name.replace("gi.overrides.", "gi.repository.", 1)
-
-            for base in get_original_bases(cls):
-                if f"{base.__module__}.{base.__qualname__}" == gi_repo_full_name:
-                    bases.extend(get_original_bases(base))
-
-                    if object_info is None:
-                        object_info = base.__dict__.get("__info__")
-                elif base is not object:
-                    bases.append(base)
-
-        if GI.GInterface in bases and not any(
-            get_origin(base) is Protocol for base in bases
-        ):
-            # Most overrides use Generic instead of Protocol for interfaces
-            index = next(
-                (
-                    i
-                    for i, base in enumerate(bases)
-                    if get_origin(base) is Generic and get_args(base)
-                ),
-                None,
-            )
-            if index is None:
-                bases.append(Protocol)
-            else:
-                args = get_args(bases[index])
-                bases[index] = GenericAlias(cast(Any, Protocol), args)
-
-        return tuple(bases), object_info
 
     def __replace_typing(self, match: re.Match[str]) -> str:
         match match.group("name"):
@@ -917,7 +1257,7 @@ def _gi_build_stub_parts(
     Inspect the passed module recursively and build stubs for functions,
     classes, etc.
     """
-    classes: dict[str, type[Any]] = {}
+    classes: dict[str, ClassInfo] = {}
     functions: dict[str, Callable[..., Any]] = {}
     constants: dict[str, Any] = {}
     flags: dict[str, type[Any]] = {}
@@ -944,7 +1284,7 @@ def _gi_build_stub_parts(
             elif issubclass(obj, IntEnum):
                 enums[name] = obj
             else:
-                classes[name] = obj
+                classes[name] = ClassInfo(stub, obj, name, prefix_name, in_class)
         elif inspect.isfunction(obj) or inspect.isbuiltin(obj):
             functions[name] = obj
         elif inspect.ismethoddescriptor(obj):
@@ -1040,167 +1380,9 @@ def _gi_build_stub_parts(
         ret += "\n"
 
     # Classes
-    for name, obj in sorted(classes.items()):
-        override = stub.check_override(prefix_name, name)
-        if override:
-            ret += override + "\n\n"
-            continue
-
-        if in_class is None and (alias := stub.get_alias(name, obj)) is not None:
-            # Set up a constant for classes that are aliases
-            # NOTE: this should not use `Final` because doing so turns the alias into
-            # a variable rather than a class
-            ret += f"{name} = {alias}\n"
-            continue
-
-        full_name = _generate_full_name(prefix_name, name)
-
-        classret, fields = _gi_build_stub_parts(
-            stub,
-            obj,
-            _find_attributes(obj),
-            obj,
-            full_name,
-        )
-
-        readable_props: list[GIRepository.PropertyInfo] = []
-        writable_props: list[GIRepository.PropertyInfo] = []
-        props_parents: list[str] = []
-        class_bases, class_object_info = stub.get_class_info(obj)
-
-        if class_object_info is not None:
-            if isinstance(class_object_info, GI.ObjectInfo):
-                p = class_object_info.get_parent()
-                if p:
-                    props_parents.append(
-                        f"{stub.get_namespace_member(p.get_namespace(), p.get_name())}.Props"
-                    )
-
-                # Properties
-                (rp, wp) = _object_get_props(stub.repo, class_object_info)
-                readable_props.extend(rp)
-                writable_props.extend(wp)
-
-        string_parents = ""
-        if class_bases:
-            bases_strings = [
-                stub.get_class_import(base)
-                for base in class_bases
-                if base is not object
-            ]
-
-            string_parents = f"({', '.join(bases_strings)})"
-
-        if (
-            not classret
-            and len(fields) == 0
-            and len(readable_props) == 0
-            and len(writable_props) == 0
-        ):
-            ret += f"class {name}{string_parents}: ...\n"
-        else:
-            ret += f"class {name}{string_parents}:\n"
-
-            # extracting docs
-            doc = getattr(obj, "__doc__", "") or ""
-            gdoc = getattr(obj, "__gdoc__", "") or ""
-
-            txt = doc.strip() + "\n\n" + gdoc.strip()
-            if not txt.isspace():
-                txt = '"""\n' + txt.strip() + '\n"""' + "\n"
-                txt = textwrap.indent(txt, "    ")
-                ret += txt
-
-        props_class_override = stub.check_override(full_name, "Props")
-        if props_class_override:
-            for line in props_class_override.splitlines():
-                ret += "    " + line + "\n"
-        elif readable_props or writable_props:
-            names: list[str] = []
-            s: list[str] = []
-            for p in itertools.chain(readable_props, writable_props):
-                n = fix_argument_name(p.get_name())
-                if n in names:
-                    # Avoid duplicates
-                    continue
-                names.append(n)
-                t = _type_to_python(stub, p.get_type_info(), True)
-
-                # Check getter/setter
-                getter = p.get_getter()
-                setter = p.get_setter()
-                if getter and getter.may_return_null():
-                    s.append(f"{n}: {t} | None")
-                elif setter and not getter:
-                    # If is writable only prop check if setter can accept NULL
-                    arg_info = setter.get_arg(0)
-                    if arg_info.may_be_null():
-                        s.append(f"{n}: {t} | None")
-                    else:
-                        s.append(f"{n}: {t}")
-                else:
-                    s.append(f"{n}: {t}")
-
-            props_string_parents = (
-                f"({', '.join(props_parents)})" if props_parents else ""
-            )
-
-            separator = "\n        "
-            ret += f"    class Props{props_string_parents}:{separator}"
-            ret += separator.join(s)
-            ret += "\n"
-
-        props_override = stub.check_override(full_name, "props")
-        if props_override:
-            for line in props_override.splitlines():
-                ret += "    " + line + "\n"
-        elif props_class_override or readable_props or writable_props:
-            ret += stub.get_property("props", "Props", indent="    ")
-
-        for f in fields:
-            t = _type_to_python(stub, f.get_type_info(), True)
-            n = f.get_name()
-            override = stub.check_override(full_name, n)
-            if override:
-                ret += f"    {override}\n"
-            else:
-                field_flags = f.get_flags()
-                if not (field_flags & _IS_FIELD_WRITABLE):
-                    ret += stub.get_property(n, t, indent="    ")
-                else:
-                    ret += f"    {n}: {t}\n"
-
-        class_constructor_override = stub.check_override(full_name, "__init__")
-        if class_constructor_override:
-            for line in class_constructor_override.splitlines():
-                ret += "    " + line + "\n"
-        elif len(writable_props) > 0:
-            names: list[str] = []
-            s: list[str] = []
-            for p in writable_props:
-                n = fix_argument_name(p.get_name())
-                if n in names:
-                    # Avoid duplicates
-                    continue
-                names.append(n)
-                t = _type_to_python(stub, p.get_type_info())
-                setter = p.get_setter()
-                if setter:
-                    arg_info = setter.get_arg(0)
-                    if arg_info.may_be_null():
-                        s.append(f"{n}: {t} | None = ...")
-                    else:
-                        s.append(f"{n}: {t} = ...")
-                else:
-                    s.append(f"{n}: {t} = ...")
-
-            separator = ",\n                 "
-            ret += f"    def __init__(self, *, {separator.join(s)}) -> None: ...\n"
-
-        for line in classret.splitlines():
-            ret += "    " + line + "\n"
-
-        ret += "\n"
+    for name, class_info in sorted(classes.items()):
+        if class_string := class_info.build():
+            ret += f"{class_string}\n"
 
     if ret and flags:
         ret += "\n"

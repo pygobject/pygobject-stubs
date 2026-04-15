@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Protocol
+from typing import type_check_only
 from typing import TypeVar
 
 from collections.abc import Callable
@@ -71,8 +72,10 @@ class DesktopAppInfo(GObject.Object, Gio.AppInfo):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(GObject.Object.Props):
-        filename: str | None
+        @property
+        def filename(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -182,8 +185,10 @@ class FDMessage(Gio.SocketControlMessage):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.SocketControlMessage.Props):
-        fd_list: Gio.UnixFDList
+        @property
+        def fd_list(self) -> Gio.UnixFDList: ...
 
     @property
     def props(self) -> Props: ...
@@ -253,9 +258,11 @@ class InputStream(Gio.InputStream, Gio.PollableInputStream, FileDescriptorBased)
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.InputStream.Props):
         close_fd: bool
-        fd: int
+        @property
+        def fd(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -366,9 +373,11 @@ class OutputStream(Gio.OutputStream, Gio.PollableOutputStream, FileDescriptorBas
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(Gio.OutputStream.Props):
         close_fd: bool
-        fd: int
+        @property
+        def fd(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
