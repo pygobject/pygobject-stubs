@@ -3,7 +3,6 @@ from typing import Final
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -1189,10 +1188,9 @@ class Range(GObject.GBoxed):
 
         new(lower_limit:float, upper_limit:float, description:str) -> Atk.Range
     """
-    @staticmethod
-    def __new__(
-        cls: type[Self], lower_limit: float, upper_limit: float, description: str
-    ) -> Self: ...
+    def __init__(
+        self, lower_limit: float, upper_limit: float, description: str
+    ) -> None: ...
     def copy(self) -> Range: ...
     def free(self) -> None: ...
     def get_description(self) -> str: ...

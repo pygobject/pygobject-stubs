@@ -1,6 +1,5 @@
 from typing import Final
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Sequence
 from enum import IntEnum
@@ -73,8 +72,7 @@ class MIKEYMessage(GObject.GBoxed):
     map_type: MIKEYMapType
     map_info: list[None]
     payloads: list[None]
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def add_cs_srtp(self, policy: int, ssrc: int, roc: int) -> bool: ...
     def add_payload(self, payload: MIKEYPayload) -> bool: ...
     def add_pke(self, C: MIKEYCacheType, data: Sequence[int]) -> bool: ...

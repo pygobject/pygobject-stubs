@@ -1820,7 +1820,7 @@ class DBusAnnotationInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     @staticmethod
     def lookup(
         annotations: Sequence[DBusAnnotationInfo] | None, name: str
@@ -1843,7 +1843,7 @@ class DBusArgInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     def ref(self) -> DBusArgInfo: ...
     def unref(self) -> None: ...
 
@@ -2198,7 +2198,7 @@ class DBusInterfaceInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     def cache_build(self) -> None: ...
     def cache_release(self) -> None: ...
     def generate_xml(self, indent: int, string_builder: GLib.String) -> None: ...
@@ -2429,7 +2429,7 @@ class DBusMethodInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     def ref(self) -> DBusMethodInfo: ...
     def unref(self) -> None: ...
 
@@ -2480,7 +2480,7 @@ class DBusNodeInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     def generate_xml(self, indent: int, string_builder: GLib.String) -> None: ...
     def lookup_interface(self, name: str) -> DBusInterfaceInfo | None: ...
     @classmethod
@@ -3306,7 +3306,7 @@ class DBusSignalInfo(GObject.GBoxed):
     annotations: list[DBusAnnotationInfo]
     def __init__(
         self, *args, **kwargs
-    ): ...  # FIXME: Override is missing typing annotation
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     def ref(self) -> DBusSignalInfo: ...
     def unref(self) -> None: ...
 
@@ -4613,8 +4613,7 @@ class FileAttributeInfoList(GObject.GBoxed):
 
     infos: FileAttributeInfo
     n_infos: int
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def add(
         self, name: str, type: FileAttributeType, flags: FileAttributeInfoFlags
     ) -> None: ...
@@ -4633,8 +4632,7 @@ class FileAttributeMatcher(GObject.GBoxed):
 
         new(attributes:str) -> Gio.FileAttributeMatcher
     """
-    @staticmethod
-    def __new__(cls: type[Self], attributes: str) -> Self: ...
+    def __init__(self, attributes: str) -> None: ...
     def enumerate_namespace(self, ns: str) -> bool: ...
     def enumerate_next(self) -> str | None: ...
     def matches(self, attribute: str) -> bool: ...
@@ -9816,10 +9814,9 @@ class SrvTarget(GObject.GBoxed):
 
         new(hostname:str, port:int, priority:int, weight:int) -> Gio.SrvTarget
     """
-    @staticmethod
-    def __new__(
-        cls: type[Self], hostname: str, port: int, priority: int, weight: int
-    ) -> Self: ...
+    def __init__(
+        self, hostname: str, port: int, priority: int, weight: int
+    ) -> None: ...
     def copy(self) -> SrvTarget: ...
     def free(self) -> None: ...
     def get_hostname(self) -> str: ...

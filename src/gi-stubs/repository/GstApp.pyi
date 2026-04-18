@@ -1,7 +1,6 @@
 from typing import Any
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 
@@ -249,8 +248,7 @@ class AppSinkSimpleCallbacks(GObject.GBoxed):
 
         new() -> GstApp.AppSinkSimpleCallbacks
     """
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     @classmethod
     def new(cls) -> AppSinkSimpleCallbacks: ...
     def ref(self) -> AppSinkSimpleCallbacks: ...
@@ -502,8 +500,7 @@ class AppSrcSimpleCallbacks(GObject.GBoxed):
 
         new() -> GstApp.AppSrcSimpleCallbacks
     """
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     @classmethod
     def new(cls) -> AppSrcSimpleCallbacks: ...
     def ref(self) -> AppSrcSimpleCallbacks: ...

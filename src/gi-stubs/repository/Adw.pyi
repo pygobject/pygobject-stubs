@@ -3,7 +3,6 @@ from typing import Final
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -8529,10 +8528,7 @@ class SpringParams(GObject.GBoxed):
         new(damping_ratio:float, mass:float, stiffness:float) -> Adw.SpringParams
         new_full(damping:float, mass:float, stiffness:float) -> Adw.SpringParams
     """
-    @staticmethod
-    def __new__(
-        cls: type[Self], damping_ratio: float, mass: float, stiffness: float
-    ) -> Self: ...
+    def __init__(self, damping_ratio: float, mass: float, stiffness: float) -> None: ...
     def get_damping(self) -> float: ...
     def get_damping_ratio(self) -> float: ...
     def get_mass(self) -> float: ...

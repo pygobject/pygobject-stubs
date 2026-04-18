@@ -3,7 +3,6 @@ from typing import Final
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -1055,14 +1054,13 @@ class AudioConverter(GObject.GBoxed):
 
         new(flags:GstAudio.AudioConverterFlags, in_info:GstAudio.AudioInfo, out_info:GstAudio.AudioInfo, config:Gst.Structure=None) -> GstAudio.AudioConverter or None
     """
-    @staticmethod
-    def __new__(
-        cls: type[Self],
+    def __init__(
+        self,
         flags: AudioConverterFlags,
         in_info: AudioInfo,
         out_info: AudioInfo,
         config: Gst.Structure | None = None,
-    ) -> Self: ...
+    ) -> None: ...
     def convert(
         self, flags: AudioConverterFlags, in_: Sequence[int]
     ) -> tuple[bool, bytes]: ...
@@ -1556,8 +1554,7 @@ class AudioInfo(GObject.GBoxed):
     channels: int
     bpf: int
     position: list[AudioChannelPosition]
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def convert(
         self, src_fmt: Gst.Format, src_val: int, dest_fmt: Gst.Format
     ) -> tuple[bool, int]: ...
@@ -2098,10 +2095,9 @@ class AudioStreamAlign(GObject.GBoxed):
 
         new(rate:int, alignment_threshold:int, discont_wait:int) -> GstAudio.AudioStreamAlign
     """
-    @staticmethod
-    def __new__(
-        cls: type[Self], rate: int, alignment_threshold: int, discont_wait: int
-    ) -> Self: ...
+    def __init__(
+        self, rate: int, alignment_threshold: int, discont_wait: int
+    ) -> None: ...
     def copy(self) -> AudioStreamAlign: ...
     def free(self) -> None: ...
     def get_alignment_threshold(self) -> int: ...
@@ -2139,8 +2135,7 @@ class DsdInfo(GObject.GBoxed):
     reversed_bytes: bool
     positions: list[AudioChannelPosition]
     flags: AudioFlags
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def copy(self) -> DsdInfo: ...
     def free(self) -> None: ...
     @staticmethod
