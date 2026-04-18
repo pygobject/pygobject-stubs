@@ -58,7 +58,7 @@ _identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
 _typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)\b")
 _free_typing_re: Final = re.compile(r"\b(?P<name>Any|Self)\b")
 _gi_repository_re: Final = re.compile(
-    r"\bgi\.repository\.(?P<namespace>\w+)\.(?P<name>.*)\b"
+    r"\bgi\.repository\.(?P<namespace>\w+)\.(?P<name>(?:\w+)(?:\.\w+)*)\b"
 )
 _type_vars_re: Final = re.compile(r"[~+-](?P<name>\w+)\b")
 
@@ -356,11 +356,11 @@ def _build_function_info(
     # Generate string
     prepend = ""
     if constructor:
-        if name == "__new__":
-            prepend = "@staticmethod\n"
-            self_symbol = stub.get_import("typing_extensions", "Self")
-            args_types.insert(0, f"cls: type[{self_symbol}]")
-            return_type = self_symbol
+        if name == "__init__":
+            # We pass the "new" constructor with the name __init__ because type checkers
+            # do better with __init__ signatures, so we have to change the signature a bit
+            args_types.insert(0, "self")
+            return_type = "None"
         else:
             prepend = "@classmethod\n"
             args_types.insert(0, "cls")
@@ -446,6 +446,15 @@ def _build_function(
     try:
         # TODO: handle @overload with get_overloads()
         signature = inspect.signature(function)
+
+        if name == "__init__" and signature.parameters:
+            # Since we pass in __new__ with the name __init__, we need to replace the
+            # `cls` parameter with `self` and set the return annotation to `None`
+            parameters = list(signature.parameters.values())
+            parameters[0] = parameters[0].replace(
+                name="self", annotation=inspect.Parameter.empty
+            )
+            signature = signature.replace(parameters=parameters, return_annotation=None)
         for param in signature.parameters.values():
             if param.name != "self" and param.annotation is inspect.Parameter.empty:
                 missing_annotation = True
@@ -468,7 +477,11 @@ def _build_function(
             function_name = function.__name__
 
         static_function = inspect.getattr_static(in_class, function_name, None)
-        if static_function and isinstance(static_function, staticmethod):
+        if (
+            static_function
+            and isinstance(static_function, staticmethod)
+            and name != "__init__"
+        ):
             definition += "@staticmethod\n"
     definition += f"def {name}{signature_string}:"
     docstring = (function.__doc__ or "").strip()
@@ -692,7 +705,7 @@ class ClassInfo:
         self,
     ) -> tuple[tuple[type[Any], ...], GI.RegisteredTypeInfo | None]:
         full_module_name = f"{self.cls.__module__}.{self.cls.__qualname__}"
-        object_info = self.cls.__dict__.get("__info__")
+        object_info: GI.RegisteredTypeInfo | None = self.cls.__dict__.get("__info__")
         bases = list(get_original_bases(self.cls))
 
         # Because we're generating types for gi.repository, we have to generate stubs for
@@ -923,7 +936,41 @@ class Props{parents_string}:
         if override := self.stub.check_override(self.full_name, "__init__"):
             return override
 
-        if not isinstance(self.gi_info, GI.ObjectInfo) or not self.init_properties:
+        # Structs and Boxed use __new__ as constructor with a dummy __init__, but
+        # overrides can introduce either __new__ or __init__. The priority below is:
+        # 1. __new__ is the same as the "new" method from __info__
+        # 2. __new__ exists on this class
+        # 3. __init__ exists on this class
+        if issubclass(self.cls, (GI.Boxed, GI.Struct)):
+            if isinstance(self.cls.__new__, GI.BaseInfo) and isinstance(
+                self.gi_info, (GI.StructInfo, GI.UnionInfo)
+            ):
+                for method_info in self.gi_info.get_methods():
+                    if method_info.equal(self.cls.__new__):
+                        return _build_function(
+                            self.stub, "__init__", method_info, self.cls
+                        )
+
+            if "__new__" in self.cls.__dict__:
+                return _build_function(
+                    self.stub, "__init__", self.cls.__new__, self.cls
+                )
+
+            if "__init__" in self.cls.__dict__:
+                return _build_function(
+                    self.stub, "__init__", self.cls.__init__, self.cls
+                )
+
+        if not isinstance(self.gi_info, GI.ObjectInfo):
+            return None
+
+        if not self.init_properties:
+            # Pango.Layout and Pango.FontDescription override __new__
+            if "__new__" in self.cls.__dict__:
+                return _build_function(
+                    self.stub, "__init__", self.cls.__new__, self.cls
+                )
+
             return None
 
         args: list[str] = []
@@ -968,7 +1015,7 @@ class Props{parents_string}:
             lines.append(textwrap.indent(class_fields, "    "))
 
         if class_constructor := self.__build_init():
-            lines.append(textwrap.indent(class_constructor, "    "))
+            lines.append(textwrap.indent(class_constructor.strip(), "    "))
 
         lines.append(textwrap.indent(self.contents, "    "))
 
@@ -1361,11 +1408,11 @@ def _gi_build_stub_parts(
         ret += "\n"
 
     # Functions
-    if (
-        "__new__" in functions
-        or (in_class and issubclass(in_class, GObject.GObject))
-        or stub.check_override(prefix_name, "__init__")
+    if (in_class and issubclass(in_class, (GI.Boxed, GI.Struct, GObject.Object))) or (
+        stub.check_override(prefix_name, "__init__")
     ):
+        # __new__ and __init__ are handled during class construction as __init__
+        functions.pop("__new__", None)
         functions.pop("__init__", None)
 
     for name, func in sorted(functions.items()):

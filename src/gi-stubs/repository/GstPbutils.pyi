@@ -2,7 +2,6 @@ from typing import Any
 from typing import Final
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -681,8 +680,7 @@ class InstallPluginsContext(GObject.GBoxed):
 
         new() -> GstPbutils.InstallPluginsContext
     """
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def copy(self) -> InstallPluginsContext: ...
     def free(self) -> None: ...
     @classmethod

@@ -2595,14 +2595,14 @@ class Color(GObject.GBoxed):
     red: int
     green: int
     blue: int
+    def __init__(
+        self, red, green, blue
+    ) -> None: ...  # FIXME: Override is missing typing annotation
     MAX_VALUE: Final[int]
     blue_float = ...  # FIXME: Constant is missing typing annotation
     green_float = ...  # FIXME: Constant is missing typing annotation
     red_float = ...  # FIXME: Constant is missing typing annotation
 
-    def __init__(
-        self, red, green, blue
-    ): ...  # FIXME: Override is missing typing annotation
     def copy(self) -> Color: ...
     def equal(self, colorb: Color) -> bool: ...
     def free(self) -> None: ...
@@ -2656,8 +2656,6 @@ class Cursor(GObject.Object):
     def __init__(
         self, *, cursor_type: CursorType = ..., display: Display = ...
     ) -> None: ...
-    @staticmethod
-    def __new__(cls, *args, **kwds): ...  # FIXME: Override is missing typing annotation
     def get_cursor_type(self) -> CursorType: ...
     def get_display(self) -> Display: ...
     def get_image(self) -> GdkPixbuf.Pixbuf | None: ...
@@ -3972,10 +3970,6 @@ class Window(GObject.Object):
         attributes: WindowAttr,
         attributes_mask: WindowAttributesType,
     ) -> None: ...
-    @staticmethod
-    def __new__(
-        cls, parent, attributes, attributes_mask
-    ): ...  # FIXME: Override is missing typing annotation
     @staticmethod
     def at_pointer() -> tuple[Window, int, int]: ...
     def beep(self) -> None: ...

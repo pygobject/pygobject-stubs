@@ -2,7 +2,6 @@ from typing import Any
 from typing import Final
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -1506,8 +1505,7 @@ class RTSPPermissions(GObject.GBoxed):
     """
 
     mini_object: Gst.MiniObject
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def add_permission_for_role(
         self, role: str, permission: str, allowed: bool
     ) -> None: ...
@@ -2178,8 +2176,7 @@ class RTSPToken(GObject.GBoxed):
     """
 
     mini_object: Gst.MiniObject
-    @staticmethod
-    def __new__(cls: type[Self]) -> Self: ...
+    def __init__(self) -> None: ...
     def get_string(self, field: str) -> str | None: ...
     def get_structure(self) -> Gst.Structure: ...
     def is_allowed(self, field: str) -> bool: ...
