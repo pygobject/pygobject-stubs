@@ -2,9 +2,9 @@ from typing import Any
 from typing import Final
 from typing import Generic
 from typing import Protocol
+from typing import Self
 from typing import type_check_only
 from typing import TypeVar
-from typing_extensions import Self
 
 from collections.abc import Callable
 from collections.abc import Iterable

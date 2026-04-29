@@ -1,7 +1,7 @@
 from typing import Any
 from typing import Literal
 from typing import overload
-from typing_extensions import Self
+from typing import Self
 
 from collections.abc import Callable
 from collections.abc import Sequence

@@ -2,8 +2,8 @@ from typing import Any
 from typing import ClassVar
 from typing import Final
 from typing import Protocol
+from typing import Self
 from typing import type_check_only
-from typing_extensions import Self
 
 from builtins import Warning as _Warning
 from collections.abc import Callable
