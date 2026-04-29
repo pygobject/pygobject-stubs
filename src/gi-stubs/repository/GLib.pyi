@@ -1,7 +1,8 @@
 from typing import Any
 from typing import Final
+from typing import Self
 from typing import TypeVar
-from typing_extensions import Self
+from typing import TypeVarTuple
 
 from collections.abc import Callable
 from collections.abc import Iterable
@@ -15,6 +16,7 @@ from gi._error import GError as _GError
 from gi.repository import GObject
 
 T = TypeVar("T")
+Ts = TypeVarTuple("Ts")
 
 ALLOCATOR_LIST: Final[int]
 ALLOCATOR_NODE: Final[int]
@@ -620,11 +622,13 @@ def int_equal(v1: None, v2: None) -> bool: ...
 def int_hash(v: None) -> int: ...
 def intern_static_string(string: str | None = None) -> str: ...
 def intern_string(string: str | None = None) -> str: ...
-def io_add_watch(*args, **kwargs) -> int:
-    """
-    io_add_watch(channel, priority, condition, func, *user_data) -> event_source_id.
-    """  # FIXME: Override is missing typing annotation
-
+def io_add_watch(
+    channel: IOChannel,
+    priority: int,
+    condition: IOChannel,
+    func: Callable[[IOChannel, IOCondition, *Ts], bool],
+    *user_data: *Ts,
+) -> int: ...
 def io_channel_error_from_errno(en: int) -> IOChannelError: ...
 def io_channel_error_quark() -> int: ...
 def io_create_watch(channel: IOChannel, condition: IOCondition) -> Source: ...
@@ -1022,15 +1026,15 @@ def threads_init(): ...  # FIXME: Override is missing typing annotation
 def time_val_from_iso8601(iso_date: str) -> tuple[bool, TimeVal]: ...
 def timeout_add(
     interval: int,
-    function: Callable[..., bool | None],
-    *user_data: Any,
-    priority: int = 0,
+    function: Callable[[*Ts], bool | None],
+    *user_data: *Ts,
+    priority: int = PRIORITY_DEFAULT,
 ) -> int: ...
 def timeout_add_seconds(
     interval: int,
-    function: Callable[..., bool | None],
-    *user_data: Any,
-    priority: int = 0,
+    function: Callable[[*Ts], bool | None],
+    *user_data: *Ts,
+    priority: int = PRIORITY_DEFAULT,
 ) -> int: ...
 def timeout_source_new(interval: int) -> Source: ...
 def timeout_source_new_seconds(interval: int) -> Source: ...

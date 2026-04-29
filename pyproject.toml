@@ -8,7 +8,7 @@ name = "PyGObject-stubs"
 version = "2.17.0"
 description = "Typing stubs for PyGObject"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "LGPL-2.1"}
 authors = [
   {email = "reiter.christoph@gmail.com"},
@@ -58,7 +58,7 @@ exclude = [
   ".venv",
 ]
 
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = [
@@ -88,4 +88,4 @@ section-order = ["future", "typing", "standard-library", "third-party", "first-p
 typing = ["_typeshed", "typing", "typing_extensions"]
 
 [tool.pyright]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
