@@ -4,8 +4,10 @@ from typing import Generic
 from typing import overload
 from typing import Protocol
 from typing import type_check_only
-from typing import TypeVar
 from typing_extensions import Self
+from typing_extensions import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 from collections.abc import Iterator
@@ -16,9 +18,9 @@ from gi.repository import GioUnix
 from gi.repository import GLib
 from gi.repository import GObject
 
-T = TypeVar("T")
 ObjectItemType = TypeVar("ObjectItemType", bound=GObject.Object, default=Any)
 ObjectPropsItemType = TypeVar("ObjectPropsItemType", bound=GObject.Object, default=Any)
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 DBUS_METHOD_INVOCATION_HANDLED: Final = True
 DBUS_METHOD_INVOCATION_UNHANDLED: Final = False
@@ -156,7 +158,7 @@ VOLUME_MONITOR_EXTENSION_POINT_NAME: Final = "gio-volume-monitor"
 def action_name_is_valid(action_name: str) -> bool: ...
 def action_parse_detailed_name(
     detailed_name: str,
-) -> tuple[bool, str, GLib.Variant]: ...
+) -> tuple[bool, str, GLib.Variant | None]: ...
 def action_print_detailed_name(
     action_name: str, target_value: GLib.Variant | None = None
 ) -> str: ...
@@ -172,16 +174,18 @@ def app_info_get_default_for_type_async(
     content_type: str,
     must_support_uris: bool,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def app_info_get_default_for_type_finish(result: AsyncResult) -> AppInfo: ...
 def app_info_get_default_for_uri_scheme(uri_scheme: str) -> AppInfo | None: ...
 def app_info_get_default_for_uri_scheme_async(
     uri_scheme: str,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def app_info_get_default_for_uri_scheme_finish(result: AsyncResult) -> AppInfo: ...
 def app_info_get_fallback_for_type(content_type: str) -> list[AppInfo]: ...
@@ -193,8 +197,9 @@ def app_info_launch_default_for_uri_async(
     uri: str,
     context: AppLaunchContext | None = None,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def app_info_launch_default_for_uri_finish(result: AsyncResult) -> bool: ...
 def app_info_reset_type_associations(content_type: str) -> None: ...
@@ -204,14 +209,16 @@ def async_initable_newv_async(
     parameters: GObject.Parameter,
     io_priority: int,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def bus_get(
     bus_type: BusType,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def bus_get_finish(res: AsyncResult) -> DBusConnection: ...
 def bus_get_sync(
@@ -273,13 +280,14 @@ def dbus_address_get_for_bus_sync(
 def dbus_address_get_stream(
     address: str,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
-def dbus_address_get_stream_finish(res: AsyncResult) -> tuple[IOStream, str]: ...
+def dbus_address_get_stream_finish(res: AsyncResult) -> tuple[IOStream, str | None]: ...
 def dbus_address_get_stream_sync(
     address: str, cancellable: Cancellable | None = None
-) -> tuple[IOStream, str]: ...
+) -> tuple[IOStream, str | None]: ...
 def dbus_annotation_info_lookup(
     annotations: Sequence[DBusAnnotationInfo] | None, name: str
 ) -> str | None: ...
@@ -313,7 +321,7 @@ def dbus_is_member_name(string: str) -> bool: ...
 def dbus_is_name(string: str) -> bool: ...
 def dbus_is_supported_address(string: str) -> bool: ...
 def dbus_is_unique_name(string: str) -> bool: ...
-def dbus_unescape_object_path(s: str) -> bytes | None: ...
+def dbus_unescape_object_path(s: str) -> bytes: ...
 def dtls_client_connection_new(
     base_socket: DatagramBased, server_identity: SocketConnectable | None = None
 ) -> DtlsClientConnection: ...
@@ -330,15 +338,17 @@ def file_new_tmp_async(
     tmpl: str | None,
     io_priority: int,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def file_new_tmp_dir_async(
     tmpl: str | None,
     io_priority: int,
     cancellable: Cancellable | None = None,
-    callback: Callable[..., None] | None = None,
-    *user_data: Any,
+    callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+    | None = None,
+    *user_data: Unpack[_DataTs],
 ) -> None: ...
 def file_new_tmp_dir_finish(result: AsyncResult) -> File: ...
 def file_new_tmp_finish(result: AsyncResult) -> tuple[File, FileIOStream]: ...
@@ -368,10 +378,10 @@ def io_modules_scan_all_in_directory_with_scope(
 ) -> None: ...
 def io_scheduler_cancel_all_jobs() -> None: ...
 def io_scheduler_push_job(
-    job_func: Callable[..., bool],
+    job_func: Callable[[IOSchedulerJob, Cancellable | None, Any | None], bool],
+    user_data: Any | None,
     io_priority: int,
     cancellable: Cancellable | None = None,
-    *user_data: Any,
 ) -> None: ...
 def keyfile_settings_backend_new(
     filename: str, root_path: str, root_group: str | None = None
@@ -429,9 +439,9 @@ def resources_unregister(resource: Resource) -> None: ...
 def settings_schema_source_get_default() -> SettingsSchemaSource | None: ...
 def simple_async_report_gerror_in_idle(
     object: GObject.Object | None,
-    callback: Callable[..., None] | None,
+    callback: Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+    user_data: Any | None,
     error: GLib.Error,
-    *user_data: Any,
 ) -> None: ...
 def tls_backend_get_default() -> TlsBackend: ...
 def tls_channel_binding_error_quark() -> int: ...
@@ -495,7 +505,9 @@ class Action(GObject.GInterface, Protocol):
     @staticmethod
     def name_is_valid(action_name: str) -> bool: ...
     @staticmethod
-    def parse_detailed_name(detailed_name: str) -> tuple[bool, str, GLib.Variant]: ...
+    def parse_detailed_name(
+        detailed_name: str,
+    ) -> tuple[bool, str, GLib.Variant | None]: ...
     @staticmethod
     def print_detailed_name(
         action_name: str, target_value: GLib.Variant | None = None
@@ -512,11 +524,13 @@ class ActionEntry(_gi.Struct):
 
     name: str
     @property
-    def activate(self) -> Callable[..., None]: ...
+    def activate(self) -> Callable[[SimpleAction, GLib.Variant, Any | None], None]: ...
     parameter_type: str
     state: str
     @property
-    def change_state(self) -> Callable[..., None]: ...
+    def change_state(
+        self,
+    ) -> Callable[[SimpleAction, GLib.Variant, Any | None], None]: ...
     @property
     def padding(self) -> list[int]: ...
 
@@ -728,8 +742,9 @@ class AppInfo(GObject.GInterface, Protocol):
         content_type: str,
         must_support_uris: bool,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def get_default_for_type_finish(result: AsyncResult) -> AppInfo: ...
@@ -739,8 +754,9 @@ class AppInfo(GObject.GInterface, Protocol):
     def get_default_for_uri_scheme_async(
         uri_scheme: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def get_default_for_uri_scheme_finish(result: AsyncResult) -> AppInfo: ...
@@ -767,8 +783,9 @@ class AppInfo(GObject.GInterface, Protocol):
         uri: str,
         context: AppLaunchContext | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def launch_default_for_uri_finish(result: AsyncResult) -> bool: ...
@@ -780,8 +797,9 @@ class AppInfo(GObject.GInterface, Protocol):
         uris: list[str] | None = None,
         context: AppLaunchContext | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def launch_uris_finish(self, result: AsyncResult) -> bool: ...
     def remove_supports_type(self, content_type: str) -> bool: ...
@@ -855,7 +873,19 @@ class AppInfoIface(_gi.Struct):
     @property
     def get_supported_types(self) -> Callable[[AppInfo], list[str]]: ...
     @property
-    def launch_uris_async(self) -> Callable[..., None]: ...
+    def launch_uris_async(
+        self,
+    ) -> Callable[
+        [
+            AppInfo,
+            list[str] | None,
+            AppLaunchContext | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def launch_uris_finish(self) -> Callable[[AppInfo, AsyncResult], bool]: ...
 
@@ -903,7 +933,7 @@ class AppLaunchContext(GObject.Object):
     def priv(self) -> AppLaunchContextPrivate: ...
     def do_get_display(self, info: AppInfo, files: list[File]) -> str | None: ...
     def do_get_startup_notify_id(
-        self, info: AppInfo | None = None, files: list[File] | None = None
+        self, info: AppInfo | None, files: list[File] | None
     ) -> str | None: ...
     def do_launch_failed(self, startup_notify_id: str) -> None: ...
     def do_launch_started(self, info: AppInfo, platform_data: GLib.Variant) -> None: ...
@@ -1062,7 +1092,9 @@ class Application(GObject.Object, ActionGroup, ActionMap):
         self, connection: DBusConnection, object_path: str
     ) -> None: ...
     def do_handle_local_options(self, options: GLib.VariantDict) -> int: ...
-    def do_local_command_line(self) -> tuple[bool, list[str], int]: ...
+    def do_local_command_line(
+        self, arguments: Sequence[str]
+    ) -> tuple[bool, list[str], int]: ...
     def do_name_lost(self) -> bool: ...
     # override
     def do_open(self, files: Sequence[File], n_files: int, hint: str) -> None: ...
@@ -1130,13 +1162,13 @@ class ApplicationClass(_gi.Struct):
     @property
     def activate(self) -> Callable[[Application], None]: ...
     @property
-    def open(self) -> Callable[[Application, Sequence[File], str], None]: ...
+    def open(self) -> Callable[[Application, Sequence[File], int, str], None]: ...
     @property
     def command_line(self) -> Callable[[Application, ApplicationCommandLine], int]: ...
     @property
     def local_command_line(
         self,
-    ) -> Callable[[Application], tuple[bool, list[str], int]]: ...
+    ) -> Callable[[Application, Sequence[str]], tuple[bool, list[str], int]]: ...
     @property
     def before_emit(self) -> Callable[[Application, GLib.Variant], None]: ...
     @property
@@ -1162,7 +1194,7 @@ class ApplicationClass(_gi.Struct):
     @property
     def name_lost(self) -> Callable[[Application], bool]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class ApplicationCommandLine(GObject.Object):
     """
@@ -1239,7 +1271,7 @@ class ApplicationCommandLineClass(_gi.Struct):
     @property
     def done(self) -> Callable[[ApplicationCommandLine], None]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class ApplicationCommandLinePrivate(_gi.Struct): ...
 class ApplicationPrivate(_gi.Struct): ...
@@ -1255,8 +1287,9 @@ class AsyncInitable(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def init_finish(self, res: AsyncResult) -> bool: ...
     def new_finish(self, res: AsyncResult) -> GObject.Object: ...
@@ -1267,8 +1300,9 @@ class AsyncInitable(GObject.GInterface, Protocol):
         parameters: GObject.Parameter,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
 
 class AsyncInitableIface(_gi.Struct):
@@ -1282,7 +1316,18 @@ class AsyncInitableIface(_gi.Struct):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
     @property
-    def init_async(self) -> Callable[..., None]: ...
+    def init_async(
+        self,
+    ) -> Callable[
+        [
+            AsyncInitable,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def init_finish(self) -> Callable[[AsyncInitable, AsyncResult], bool]: ...
 
@@ -1294,8 +1339,8 @@ class AsyncResult(GObject.GInterface, Protocol):
       notify (GParam)
     """
     def get_source_object(self) -> GObject.Object | None: ...
-    def get_user_data(self) -> None: ...
-    def is_tagged(self, source_tag: None) -> bool: ...
+    def get_user_data(self) -> int: ...
+    def is_tagged(self, source_tag: int | Any | None = None) -> bool: ...
     def legacy_propagate_error(self) -> bool: ...
 
 class AsyncResultIface(_gi.Struct):
@@ -1309,11 +1354,11 @@ class AsyncResultIface(_gi.Struct):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
     @property
-    def get_user_data(self) -> Callable[[AsyncResult], None]: ...
+    def get_user_data(self) -> Callable[[AsyncResult], int]: ...
     @property
     def get_source_object(self) -> Callable[[AsyncResult], GObject.Object | None]: ...
     @property
-    def is_tagged(self) -> Callable[[AsyncResult, None], bool]: ...
+    def is_tagged(self) -> Callable[[AsyncResult, Any | None], bool]: ...
 
 class BufferedInputStream(FilterInputStream, Seekable):
     """
@@ -1354,14 +1399,15 @@ class BufferedInputStream(FilterInputStream, Seekable):
         base_stream: InputStream = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
-    def do_fill(self, count: int, cancellable: Cancellable | None = None) -> int: ...
+    def do_fill(self, count: int, cancellable: Cancellable | None) -> int: ...
     def do_fill_async(
         self,
         count: int,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_fill_finish(self, result: AsyncResult) -> int: ...
     def fill(self, count: int, cancellable: Cancellable | None = None) -> int: ...
@@ -1370,8 +1416,9 @@ class BufferedInputStream(FilterInputStream, Seekable):
         count: int,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def fill_finish(self, result: AsyncResult) -> int: ...
     def get_available(self) -> int: ...
@@ -1398,7 +1445,19 @@ class BufferedInputStreamClass(_gi.Struct):
     @property
     def fill(self) -> Callable[[BufferedInputStream, int, Cancellable | None], int]: ...
     @property
-    def fill_async(self) -> Callable[..., None]: ...
+    def fill_async(
+        self,
+    ) -> Callable[
+        [
+            BufferedInputStream,
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def fill_finish(self) -> Callable[[BufferedInputStream, AsyncResult], int]: ...
 
@@ -1494,7 +1553,6 @@ class BytesIcon(GObject.Object, Icon, LoadableIcon):
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(self, *, bytes: GLib.Bytes = ...) -> None: ...
     def get_bytes(self) -> GLib.Bytes: ...
     @classmethod
@@ -1522,7 +1580,7 @@ class Cancellable(GObject.Object):
     @property
     def priv(self) -> CancellablePrivate: ...
     def cancel(self) -> None: ...
-    def connect(self, callback: Callable[..., None], *data: Any) -> int: ...
+    def connect(self, callback: Callable[[], None], *data: Unpack[_DataTs]) -> int: ...
     def disconnect(self, handler_id: int) -> None: ...
     def do_cancelled(self) -> None: ...
     @staticmethod
@@ -1634,7 +1692,7 @@ class ConverterIface(_gi.Struct):
     def convert(
         self,
     ) -> Callable[
-        [Converter, Sequence[int] | None, Sequence[int], ConverterFlags],
+        [Converter, Sequence[int] | None, int, Sequence[int], int, ConverterFlags],
         tuple[ConverterResult, int, int],
     ]: ...
     @property
@@ -1775,7 +1833,9 @@ class Credentials(GObject.Object):
     def is_same_user(self, other_credentials: Credentials) -> bool: ...
     @classmethod
     def new(cls) -> Credentials: ...
-    def set_native(self, native_type: CredentialsType, native: None) -> None: ...
+    def set_native(
+        self, native_type: CredentialsType, native: int | Any | None
+    ) -> None: ...
     def set_unix_user(self, uid: int) -> bool: ...
     def to_string(self) -> str: ...
 
@@ -1932,7 +1992,11 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         stream: IOStream = ...,
     ) -> None: ...
     def add_filter(
-        self, filter_function: Callable[..., DBusMessage | None], *user_data: Any
+        self,
+        filter_function: Callable[
+            [DBusConnection, DBusMessage, bool, Unpack[_DataTs]], DBusMessage | None
+        ],
+        *user_data: Unpack[_DataTs],
     ) -> int: ...
     def call(
         self,
@@ -1945,8 +2009,9 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         flags: DBusCallFlags,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def call_finish(self, res: AsyncResult) -> GLib.Variant: ...
     def call_sync(
@@ -1973,12 +2038,13 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def call_with_unix_fd_list_finish(
         self, res: AsyncResult
-    ) -> tuple[GLib.Variant, UnixFDList]: ...
+    ) -> tuple[GLib.Variant, UnixFDList | None]: ...
     def call_with_unix_fd_list_sync(
         self,
         bus_name: str | None,
@@ -1991,12 +2057,13 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
-    ) -> tuple[GLib.Variant, UnixFDList]: ...
+    ) -> tuple[GLib.Variant, UnixFDList | None]: ...
     def close(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, res: AsyncResult) -> bool: ...
     def close_sync(self, cancellable: Cancellable | None = None) -> bool: ...
@@ -2015,8 +2082,9 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     def flush(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def flush_finish(self, res: AsyncResult) -> bool: ...
     def flush_sync(self, cancellable: Cancellable | None = None) -> bool: ...
@@ -2036,8 +2104,9 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         flags: DBusConnectionFlags,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_finish(cls, res: AsyncResult) -> DBusConnection: ...
@@ -2047,8 +2116,9 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         flags: DBusConnectionFlags,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_for_address_finish(cls, res: AsyncResult) -> DBusConnection: ...
@@ -2076,28 +2146,44 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         interface_info: DBusInterfaceInfo,
         method_call_closure: Callable[
             [DBusConnection, str, str, str, str, GLib.Variant, DBusMethodInvocation],
-            Any,
+            None,
         ]
         | None = None,
-        get_property_closure: Callable[[DBusConnection, str, str, str, str], Any]
+        get_property_closure: Callable[
+            [DBusConnection, str, str, str, str], GLib.Variant
+        ]
         | None = None,
-        set_property_closure: Callable[..., Any] | None = None,
+        set_property_closure: Callable[
+            [DBusConnection, str, str, str, str, GLib.Variant], bool
+        ]
+        | None = None,
     ) -> int: ...
+    # override
     def register_object_with_closures2(
         self,
         object_path: str,
         interface_info: DBusInterfaceInfo,
-        method_call_closure: Callable[..., Any] | None = None,
-        get_property_closure: Callable[..., Any] | None = None,
-        set_property_closure: Callable[..., Any] | None = None,
+        method_call_closure: Callable[
+            [DBusConnection, str, str, str, str, GLib.Variant, DBusMethodInvocation],
+            None,
+        ]
+        | None = None,
+        get_property_closure: Callable[
+            [DBusConnection, str, str, str, str], GLib.Variant
+        ]
+        | None = None,
+        set_property_closure: Callable[
+            [DBusConnection, str, str, str, str, GLib.Variant], bool
+        ]
+        | None = None,
     ) -> int: ...
     def register_subtree(
         self,
         object_path: str,
         vtable: DBusSubtreeVTable,
         flags: DBusSubtreeFlags,
-        user_data: None,
-        user_data_free_func: Callable[[None], None],
+        user_data: int | Any | None,
+        user_data_free_func: Callable[[Any | None], None],
     ) -> int: ...
     def remove_filter(self, filter_id: int) -> None: ...
     def send_message(
@@ -2109,8 +2195,9 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         flags: DBusSendMessageFlags,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> int: ...
     def send_message_with_reply_finish(self, res: AsyncResult) -> DBusMessage: ...
     def send_message_with_reply_sync(
@@ -2129,8 +2216,11 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         object_path: str | None,
         arg0: str | None,
         flags: DBusSignalFlags,
-        callback: Callable[..., None],
-        *user_data: Any,
+        callback: Callable[
+            [DBusConnection, str | None, str, str, str, GLib.Variant, Unpack[_DataTs]],
+            None,
+        ],
+        *user_data: Unpack[_DataTs],
     ) -> int: ...
     def signal_unsubscribe(self, subscription_id: int) -> None: ...
     def start_message_processing(self) -> None: ...
@@ -2276,13 +2366,13 @@ class DBusInterfaceSkeletonClass(_gi.Struct):
     @property
     def flush(self) -> Callable[[DBusInterfaceSkeleton], None]: ...
     @property
-    def vfunc_padding(self) -> list[None]: ...
+    def vfunc_padding(self) -> list[int]: ...
     @property
     def g_authorize_method(
         self,
     ) -> Callable[[DBusInterfaceSkeleton, DBusMethodInvocation], bool]: ...
     @property
-    def signal_padding(self) -> list[None]: ...
+    def signal_padding(self) -> list[int]: ...
 
 class DBusInterfaceSkeletonPrivate(_gi.Struct): ...
 
@@ -2295,11 +2385,38 @@ class DBusInterfaceVTable(_gi.Struct):
         DBusInterfaceVTable()
     """
 
-    method_call: Callable[..., None]
-    get_property: Callable[..., GLib.Variant]
-    set_property: Callable[..., bool]
+    method_call: Callable[
+        [
+            DBusConnection,
+            str | None,
+            str,
+            str | None,
+            str,
+            GLib.Variant,
+            DBusMethodInvocation,
+            Any | None,
+        ],
+        None,
+    ]
+    get_property: Callable[
+        [DBusConnection, str | None, str, str, str, GLib.Error, Any | None],
+        GLib.Variant,
+    ]
+    set_property: Callable[
+        [
+            DBusConnection,
+            str | None,
+            str,
+            str,
+            str,
+            GLib.Variant,
+            GLib.Error,
+            Any | None,
+        ],
+        bool,
+    ]
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusMenuModel(MenuModel):
     """
@@ -2581,11 +2698,11 @@ class DBusObjectManagerClient(
         @property
         def flags(self) -> DBusObjectManagerClientFlags: ...
         @property
-        def get_proxy_type_destroy_notify(self) -> None: ...
+        def get_proxy_type_destroy_notify(self) -> int: ...
         @property
-        def get_proxy_type_func(self) -> None: ...
+        def get_proxy_type_func(self) -> int: ...
         @property
-        def get_proxy_type_user_data(self) -> None: ...
+        def get_proxy_type_user_data(self) -> int: ...
         @property
         def name(self) -> str: ...
         @property
@@ -2605,9 +2722,9 @@ class DBusObjectManagerClient(
         bus_type: BusType = ...,
         connection: DBusConnection = ...,
         flags: DBusObjectManagerClientFlags = ...,
-        get_proxy_type_destroy_notify: None = ...,
-        get_proxy_type_func: None = ...,
-        get_proxy_type_user_data: None = ...,
+        get_proxy_type_destroy_notify: int | Any | None = ...,
+        get_proxy_type_func: int | Any | None = ...,
+        get_proxy_type_user_data: int | Any | None = ...,
         name: str = ...,
         object_path: str = ...,
     ) -> None: ...
@@ -2636,10 +2753,15 @@ class DBusObjectManagerClient(
         flags: DBusObjectManagerClientFlags,
         name: str,
         object_path: str,
-        get_proxy_type_func: Callable[..., type[Any]] | None = None,
+        get_proxy_type_func: Callable[
+            [DBusObjectManagerClient, str, str | None, Any | None], type[Any]
+        ]
+        | None = None,
+        get_proxy_type_user_data: Any | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_finish(cls, res: AsyncResult) -> DBusObjectManagerClient: ...
@@ -2649,10 +2771,15 @@ class DBusObjectManagerClient(
         flags: DBusObjectManagerClientFlags,
         name: str,
         object_path: str,
-        get_proxy_type_func: Callable[..., type[Any]] | None = None,
+        get_proxy_type_func: Callable[
+            [DBusObjectManagerClient, str, str | None, Any | None], type[Any]
+        ]
+        | None = None,
+        get_proxy_type_user_data: Any | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_for_bus_finish(cls, res: AsyncResult) -> DBusObjectManagerClient: ...
@@ -2663,9 +2790,12 @@ class DBusObjectManagerClient(
         flags: DBusObjectManagerClientFlags,
         name: str,
         object_path: str,
-        get_proxy_type_func: Callable[..., type[Any]] | None = None,
+        get_proxy_type_func: Callable[
+            [DBusObjectManagerClient, str, str | None, Any | None], type[Any]
+        ]
+        | None = None,
+        get_proxy_type_user_data: Any | None = None,
         cancellable: Cancellable | None = None,
-        *get_proxy_type_user_data: Any,
     ) -> DBusObjectManagerClient: ...
     @classmethod
     def new_sync(
@@ -2674,9 +2804,12 @@ class DBusObjectManagerClient(
         flags: DBusObjectManagerClientFlags,
         name: str | None,
         object_path: str,
-        get_proxy_type_func: Callable[..., type[Any]] | None = None,
+        get_proxy_type_func: Callable[
+            [DBusObjectManagerClient, str, str | None, Any | None], type[Any]
+        ]
+        | None = None,
+        get_proxy_type_user_data: Any | None = None,
         cancellable: Cancellable | None = None,
-        *get_proxy_type_user_data: Any,
     ) -> DBusObjectManagerClient: ...
 
 class DBusObjectManagerClientClass(_gi.Struct):
@@ -2703,7 +2836,7 @@ class DBusObjectManagerClientClass(_gi.Struct):
         [DBusObjectManagerClient, DBusObjectProxy, DBusProxy, GLib.Variant, str], None
     ]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusObjectManagerClientPrivate(_gi.Struct): ...
 
@@ -2799,7 +2932,7 @@ class DBusObjectManagerServerClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusObjectManagerServerPrivate(_gi.Struct): ...
 
@@ -2856,7 +2989,7 @@ class DBusObjectProxyClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusObjectProxyPrivate(_gi.Struct): ...
 
@@ -2923,7 +3056,7 @@ class DBusObjectSkeletonClass(_gi.Struct):
         [DBusObjectSkeleton, DBusInterfaceSkeleton, DBusMethodInvocation], bool
     ]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusObjectSkeletonPrivate(_gi.Struct): ...
 
@@ -3097,8 +3230,9 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         flags: DBusCallFlags,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def call_finish(self, res: AsyncResult) -> GLib.Variant: ...
     def call_sync(
@@ -3117,12 +3251,13 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def call_with_unix_fd_list_finish(
         self, res: AsyncResult
-    ) -> tuple[GLib.Variant, UnixFDList]: ...
+    ) -> tuple[GLib.Variant, UnixFDList | None]: ...
     def call_with_unix_fd_list_sync(
         self,
         method_name: str,
@@ -3131,7 +3266,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
-    ) -> tuple[GLib.Variant, UnixFDList]: ...
+    ) -> tuple[GLib.Variant, UnixFDList | None]: ...
     def do_g_properties_changed(
         self, changed_properties: GLib.Variant, invalidated_properties: str
     ) -> None: ...
@@ -3139,7 +3274,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         self, sender_name: str, signal_name: str, parameters: GLib.Variant
     ) -> None: ...
     def get_cached_property(self, property_name: str) -> GLib.Variant | None: ...
-    def get_cached_property_names(self) -> list[str] | None: ...
+    def get_cached_property_names(self) -> list[str]: ...
     def get_connection(self) -> DBusConnection: ...
     def get_default_timeout(self) -> int: ...
     def get_flags(self) -> DBusProxyFlags: ...
@@ -3157,8 +3292,9 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         object_path: str,
         interface_name: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_finish(cls, res: AsyncResult) -> DBusProxy: ...
@@ -3171,8 +3307,9 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         object_path: str,
         interface_name: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_for_bus_finish(cls, res: AsyncResult) -> DBusProxy: ...
@@ -3221,7 +3358,7 @@ class DBusProxyClass(_gi.Struct):
     @property
     def g_signal(self) -> Callable[[DBusProxy, str, str, GLib.Variant], None]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DBusProxyPrivate(_gi.Struct): ...
 
@@ -3319,11 +3456,16 @@ class DBusSubtreeVTable(_gi.Struct):
         DBusSubtreeVTable()
     """
 
-    enumerate: Callable[..., list[str]]
-    introspect: Callable[..., list[DBusInterfaceInfo] | None]
-    dispatch: Callable[..., DBusInterfaceVTable | None]
+    enumerate: Callable[[DBusConnection, str, str, Any | None], list[str]]
+    introspect: Callable[
+        [DBusConnection, str, str, str, Any | None], list[DBusInterfaceInfo]
+    ]
+    dispatch: Callable[
+        [DBusConnection, str, str, str, str, int | Any | None, Any | None],
+        DBusInterfaceVTable | None,
+    ]
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DataInputStream(BufferedInputStream):
     """
@@ -3384,15 +3526,16 @@ class DataInputStream(BufferedInputStream):
     def read_int64(self, cancellable: Cancellable | None = None) -> int: ...
     def read_line(
         self, cancellable: Cancellable | None = None
-    ) -> tuple[bytes | None, int]: ...
+    ) -> tuple[bytes, int]: ...
     def read_line_async(
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def read_line_finish(self, result: AsyncResult) -> tuple[bytes | None, int]: ...
+    def read_line_finish(self, result: AsyncResult) -> tuple[bytes, int]: ...
     def read_line_finish_utf8(self, result: AsyncResult) -> tuple[str | None, int]: ...
     def read_line_utf8(
         self, cancellable: Cancellable | None = None
@@ -3408,8 +3551,9 @@ class DataInputStream(BufferedInputStream):
         stop_chars: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_until_finish(self, result: AsyncResult) -> tuple[str, int]: ...
     def read_upto(
@@ -3424,8 +3568,9 @@ class DataInputStream(BufferedInputStream):
         stop_chars_len: int,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_upto_finish(self, result: AsyncResult) -> tuple[str, int]: ...
     def set_byte_order(self, order: DataStreamByteOrder) -> None: ...
@@ -3554,13 +3699,13 @@ class DatagramBasedInterface(_gi.Struct):
     def receive_messages(
         self,
     ) -> Callable[
-        [DatagramBased, Sequence[InputMessage], int, int, Cancellable | None], int
+        [DatagramBased, Sequence[InputMessage], int, int, int, Cancellable | None], int
     ]: ...
     @property
     def send_messages(
         self,
     ) -> Callable[
-        [DatagramBased, Sequence[OutputMessage], int, int, Cancellable | None], int
+        [DatagramBased, Sequence[OutputMessage], int, int, int, Cancellable | None], int
     ]: ...
     @property
     def create_source(
@@ -3642,7 +3787,7 @@ class DebugControllerDBusClass(_gi.Struct):
         self,
     ) -> Callable[[DebugControllerDBus, DBusMethodInvocation], bool]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class DebugControllerInterface(_gi.Struct):
     """
@@ -3674,8 +3819,9 @@ class Drive(GObject.GInterface, Protocol):
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
@@ -3683,8 +3829,9 @@ class Drive(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_with_operation_finish(self, result: AsyncResult) -> bool: ...
     def enumerate_identifiers(self) -> list[str]: ...
@@ -3703,8 +3850,9 @@ class Drive(GObject.GInterface, Protocol):
     def poll_for_media(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def poll_for_media_finish(self, result: AsyncResult) -> bool: ...
     def start(
@@ -3712,8 +3860,9 @@ class Drive(GObject.GInterface, Protocol):
         flags: DriveStartFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def start_finish(self, result: AsyncResult) -> bool: ...
     def stop(
@@ -3721,8 +3870,9 @@ class Drive(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def stop_finish(self, result: AsyncResult) -> bool: ...
 
@@ -3761,11 +3911,32 @@ class DriveIface(_gi.Struct):
     @property
     def can_poll_for_media(self) -> Callable[[Drive], bool]: ...
     @property
-    def eject(self) -> Callable[..., None]: ...
+    def eject(
+        self,
+    ) -> Callable[
+        [
+            Drive,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_finish(self) -> Callable[[Drive, AsyncResult], bool]: ...
     @property
-    def poll_for_media(self) -> Callable[..., None]: ...
+    def poll_for_media(
+        self,
+    ) -> Callable[
+        [
+            Drive,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def poll_for_media_finish(self) -> Callable[[Drive, AsyncResult], bool]: ...
     @property
@@ -3779,19 +3950,55 @@ class DriveIface(_gi.Struct):
     @property
     def can_start_degraded(self) -> Callable[[Drive], bool]: ...
     @property
-    def start(self) -> Callable[..., None]: ...
+    def start(
+        self,
+    ) -> Callable[
+        [
+            Drive,
+            DriveStartFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def start_finish(self) -> Callable[[Drive, AsyncResult], bool]: ...
     @property
     def can_stop(self) -> Callable[[Drive], bool]: ...
     @property
-    def stop(self) -> Callable[..., None]: ...
+    def stop(
+        self,
+    ) -> Callable[
+        [
+            Drive,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def stop_finish(self) -> Callable[[Drive, AsyncResult], bool]: ...
     @property
     def stop_button(self) -> Callable[[Drive], None]: ...
     @property
-    def eject_with_operation(self) -> Callable[..., None]: ...
+    def eject_with_operation(
+        self,
+    ) -> Callable[
+        [
+            Drive,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_with_operation_finish(self) -> Callable[[Drive, AsyncResult], bool]: ...
     @property
@@ -3808,7 +4015,7 @@ class DtlsClientConnection(GObject.GInterface, Protocol):
     Signals from GObject:
       notify (GParam)
     """
-    def get_accepted_cas(self) -> list[Sequence[int]]: ...
+    def get_accepted_cas(self) -> list[bytes]: ...
     def get_server_identity(self) -> SocketConnectable: ...
     def get_validation_flags(self) -> TlsCertificateFlags: ...
     @staticmethod
@@ -3841,8 +4048,9 @@ class DtlsConnection(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def emit_accept_certificate(
@@ -3866,8 +4074,9 @@ class DtlsConnection(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def handshake_finish(self, result: AsyncResult) -> bool: ...
     def set_advertised_protocols(
@@ -3890,8 +4099,9 @@ class DtlsConnection(GObject.GInterface, Protocol):
         shutdown_write: bool,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def shutdown_finish(self, result: AsyncResult) -> bool: ...
 
@@ -3912,7 +4122,18 @@ class DtlsConnectionInterface(_gi.Struct):
     @property
     def handshake(self) -> Callable[[DtlsConnection, Cancellable | None], bool]: ...
     @property
-    def handshake_async(self) -> Callable[..., None]: ...
+    def handshake_async(
+        self,
+    ) -> Callable[
+        [
+            DtlsConnection,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def handshake_finish(self) -> Callable[[DtlsConnection, AsyncResult], bool]: ...
     @property
@@ -3920,7 +4141,20 @@ class DtlsConnectionInterface(_gi.Struct):
         self,
     ) -> Callable[[DtlsConnection, bool, bool, Cancellable | None], bool]: ...
     @property
-    def shutdown_async(self) -> Callable[..., None]: ...
+    def shutdown_async(
+        self,
+    ) -> Callable[
+        [
+            DtlsConnection,
+            bool,
+            bool,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def shutdown_finish(self) -> Callable[[DtlsConnection, AsyncResult], bool]: ...
     @property
@@ -3985,7 +4219,6 @@ class Emblem(GObject.Object, Icon):
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(
         self, *, icon: GObject.Object = ..., origin: EmblemOrigin = ...
     ) -> None: ...
@@ -4026,7 +4259,6 @@ class EmblemedIcon(GObject.Object, Icon):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> EmblemedIconPrivate: ...
-    # override
     def __init__(self, *, gicon: Icon = ...) -> None: ...
     def add_emblem(self, emblem: Emblem) -> None: ...
     def clear_emblems(self) -> None: ...
@@ -4063,8 +4295,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileCreateFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def append_to_finish(self, res: AsyncResult) -> FileOutputStream: ...
     def build_attribute_list_for_copy(
@@ -4075,8 +4308,8 @@ class File(GObject.GInterface, Protocol):
         destination: File,
         flags: FileCopyFlags,
         cancellable: Cancellable | None = None,
-        progress_callback: Callable[..., None] | None = None,
-        *progress_callback_data: Any,
+        progress_callback: Callable[[int, int, Unpack[_DataTs]], None] | None = None,
+        *progress_callback_data: Unpack[_DataTs],
     ) -> bool: ...
     def copy_async(
         self,
@@ -4102,8 +4335,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileCreateFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def create_finish(self, res: AsyncResult) -> FileOutputStream: ...
     def create_readwrite(
@@ -4114,8 +4348,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileCreateFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def create_readwrite_finish(self, res: AsyncResult) -> FileIOStream: ...
     def delete(self, cancellable: Cancellable | None = None) -> bool: ...
@@ -4123,8 +4358,9 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def delete_finish(self, result: AsyncResult) -> bool: ...
     def dup(self) -> File: ...
@@ -4132,8 +4368,9 @@ class File(GObject.GInterface, Protocol):
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_mountable_finish(self, result: AsyncResult) -> bool: ...
     def eject_mountable_with_operation(
@@ -4141,8 +4378,9 @@ class File(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_mountable_with_operation_finish(self, result: AsyncResult) -> bool: ...
     def enumerate_children(
@@ -4157,8 +4395,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileQueryInfoFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def enumerate_children_finish(self, res: AsyncResult) -> FileEnumerator: ...
     def equal(self, file2: File) -> bool: ...
@@ -4167,8 +4406,9 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def find_enclosing_mount_finish(self, res: AsyncResult) -> Mount: ...
     def get_basename(self) -> str | None: ...
@@ -4187,34 +4427,41 @@ class File(GObject.GInterface, Protocol):
     def is_native(self) -> bool: ...
     def load_bytes(
         self, cancellable: Cancellable | None = None
-    ) -> tuple[GLib.Bytes, str]: ...
+    ) -> tuple[GLib.Bytes, str | None]: ...
     def load_bytes_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def load_bytes_finish(self, result: AsyncResult) -> tuple[GLib.Bytes, str]: ...
+    def load_bytes_finish(
+        self, result: AsyncResult
+    ) -> tuple[GLib.Bytes, str | None]: ...
     def load_contents(
         self, cancellable: Cancellable | None = None
-    ) -> tuple[bool, bytes, str]: ...
+    ) -> tuple[bool, bytes, str | None]: ...
     def load_contents_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def load_contents_finish(self, res: AsyncResult) -> tuple[bool, bytes, str]: ...
+    def load_contents_finish(
+        self, res: AsyncResult
+    ) -> tuple[bool, bytes, str | None]: ...
     def load_partial_contents_finish(
         self, res: AsyncResult
-    ) -> tuple[bool, bytes, str]: ...
+    ) -> tuple[bool, bytes, str | None]: ...
     def make_directory(self, cancellable: Cancellable | None = None) -> bool: ...
     def make_directory_async(
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def make_directory_finish(self, result: AsyncResult) -> bool: ...
     def make_directory_with_parents(
@@ -4228,16 +4475,18 @@ class File(GObject.GInterface, Protocol):
         symlink_value: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def make_symbolic_link_finish(self, result: AsyncResult) -> bool: ...
     def measure_disk_usage(
         self,
         flags: FileMeasureFlags,
         cancellable: Cancellable | None = None,
-        progress_callback: Callable[..., None] | None = None,
-        *progress_data: Any,
+        progress_callback: Callable[[bool, int, int, int, Unpack[_DataTs]], None]
+        | None = None,
+        *progress_data: Unpack[_DataTs],
     ) -> tuple[bool, int, int, int]: ...
     def measure_disk_usage_finish(
         self, result: AsyncResult
@@ -4256,8 +4505,9 @@ class File(GObject.GInterface, Protocol):
         flags: MountMountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def mount_enclosing_volume_finish(self, result: AsyncResult) -> bool: ...
     def mount_mountable(
@@ -4265,8 +4515,9 @@ class File(GObject.GInterface, Protocol):
         flags: MountMountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def mount_mountable_finish(self, result: AsyncResult) -> File: ...
     def move(
@@ -4274,8 +4525,8 @@ class File(GObject.GInterface, Protocol):
         destination: File,
         flags: FileCopyFlags,
         cancellable: Cancellable | None = None,
-        progress_callback: Callable[..., None] | None = None,
-        *progress_callback_data: Any,
+        progress_callback: Callable[[int, int, Unpack[_DataTs]], None] | None = None,
+        *progress_callback_data: Unpack[_DataTs],
     ) -> bool: ...
     def move_async(
         self,
@@ -4304,16 +4555,18 @@ class File(GObject.GInterface, Protocol):
         tmpl: str | None,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def new_tmp_dir_async(
         tmpl: str | None,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def new_tmp_dir_finish(result: AsyncResult) -> File: ...
@@ -4326,8 +4579,9 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def open_readwrite_finish(self, res: AsyncResult) -> FileIOStream: ...
     @staticmethod
@@ -4336,8 +4590,9 @@ class File(GObject.GInterface, Protocol):
     def poll_mountable(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def poll_mountable_finish(self, result: AsyncResult) -> bool: ...
     def query_default_handler(
@@ -4347,8 +4602,9 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_default_handler_finish(self, result: AsyncResult) -> AppInfo: ...
     def query_exists(self, cancellable: Cancellable | None = None) -> bool: ...
@@ -4363,8 +4619,9 @@ class File(GObject.GInterface, Protocol):
         attributes: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_filesystem_info_finish(self, res: AsyncResult) -> FileInfo: ...
     def query_info(
@@ -4379,8 +4636,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileQueryInfoFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_info_finish(self, res: AsyncResult) -> FileInfo: ...
     def query_settable_attributes(
@@ -4394,8 +4652,9 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_finish(self, res: AsyncResult) -> FileInputStream: ...
     def replace(
@@ -4412,8 +4671,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileCreateFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def replace_contents(
         self,
@@ -4422,7 +4682,7 @@ class File(GObject.GInterface, Protocol):
         make_backup: bool,
         flags: FileCreateFlags,
         cancellable: Cancellable | None = None,
-    ) -> tuple[bool, str]: ...
+    ) -> tuple[bool, str | None]: ...
     def replace_contents_async(
         self,
         contents: Sequence[int],
@@ -4430,8 +4690,9 @@ class File(GObject.GInterface, Protocol):
         make_backup: bool,
         flags: FileCreateFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def replace_contents_bytes_async(
         self,
@@ -4440,10 +4701,11 @@ class File(GObject.GInterface, Protocol):
         make_backup: bool,
         flags: FileCreateFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def replace_contents_finish(self, res: AsyncResult) -> tuple[bool, str]: ...
+    def replace_contents_finish(self, res: AsyncResult) -> tuple[bool, str | None]: ...
     def replace_finish(self, res: AsyncResult) -> FileOutputStream: ...
     def replace_readwrite(
         self,
@@ -4459,8 +4721,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileCreateFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def replace_readwrite_finish(self, res: AsyncResult) -> FileIOStream: ...
     def resolve_relative_path(self, relative_path: str) -> File: ...
@@ -4468,7 +4731,7 @@ class File(GObject.GInterface, Protocol):
         self,
         attribute: str,
         type: FileAttributeType,
-        value_p: None,
+        value_p: int | Any | None,
         flags: FileQueryInfoFlags,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
@@ -4520,8 +4783,9 @@ class File(GObject.GInterface, Protocol):
         flags: FileQueryInfoFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_attributes_finish(self, result: AsyncResult) -> tuple[bool, FileInfo]: ...
     def set_attributes_from_info(
@@ -4538,8 +4802,9 @@ class File(GObject.GInterface, Protocol):
         display_name: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_display_name_finish(self, res: AsyncResult) -> File: ...
     def start_mountable(
@@ -4547,8 +4812,9 @@ class File(GObject.GInterface, Protocol):
         flags: DriveStartFlags,
         start_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def start_mountable_finish(self, result: AsyncResult) -> bool: ...
     def stop_mountable(
@@ -4556,8 +4822,9 @@ class File(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def stop_mountable_finish(self, result: AsyncResult) -> bool: ...
     def supports_thread_contexts(self) -> bool: ...
@@ -4566,16 +4833,18 @@ class File(GObject.GInterface, Protocol):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def trash_finish(self, result: AsyncResult) -> bool: ...
     def unmount_mountable(
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unmount_mountable_finish(self, result: AsyncResult) -> bool: ...
     def unmount_mountable_with_operation(
@@ -4583,8 +4852,9 @@ class File(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unmount_mountable_with_operation_finish(self, result: AsyncResult) -> bool: ...
 
@@ -4678,29 +4948,30 @@ class FileEnumerator(GObject.Object):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def do_close_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_close_finish(self, result: AsyncResult) -> bool: ...
-    def do_close_fn(self, cancellable: Cancellable | None = None) -> bool: ...
-    def do_next_file(
-        self, cancellable: Cancellable | None = None
-    ) -> FileInfo | None: ...
+    def do_close_fn(self, cancellable: Cancellable | None) -> bool: ...
+    def do_next_file(self, cancellable: Cancellable | None) -> FileInfo | None: ...
     def do_next_files_async(
         self,
         num_files: int,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_next_files_finish(self, result: AsyncResult) -> list[FileInfo]: ...
     def get_child(self, info: FileInfo) -> File: ...
@@ -4716,8 +4987,9 @@ class FileEnumerator(GObject.Object):
         num_files: int,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def next_files_finish(self, result: AsyncResult) -> list[FileInfo]: ...
     def set_pending(self, pending: bool) -> None: ...
@@ -4739,13 +5011,36 @@ class FileEnumeratorClass(_gi.Struct):
     @property
     def close_fn(self) -> Callable[[FileEnumerator, Cancellable | None], bool]: ...
     @property
-    def next_files_async(self) -> Callable[..., None]: ...
+    def next_files_async(
+        self,
+    ) -> Callable[
+        [
+            FileEnumerator,
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def next_files_finish(
         self,
     ) -> Callable[[FileEnumerator, AsyncResult], list[FileInfo]]: ...
     @property
-    def close_async(self) -> Callable[..., None]: ...
+    def close_async(
+        self,
+    ) -> Callable[
+        [
+            FileEnumerator,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def close_finish(self) -> Callable[[FileEnumerator, AsyncResult], bool]: ...
 
@@ -4777,24 +5072,23 @@ class FileIOStream(IOStream, Seekable):
     def do_can_truncate(self) -> bool: ...
     def do_get_etag(self) -> str | None: ...
     def do_query_info(
-        self, attributes: str, cancellable: Cancellable | None = None
+        self, attributes: str, cancellable: Cancellable | None
     ) -> FileInfo: ...
     def do_query_info_async(
         self,
         attributes: str,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_query_info_finish(self, result: AsyncResult) -> FileInfo: ...
     def do_seek(
-        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None = None
+        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None
     ) -> bool: ...
     def do_tell(self) -> int: ...
-    def do_truncate_fn(
-        self, size: int, cancellable: Cancellable | None = None
-    ) -> bool: ...
+    def do_truncate_fn(self, size: int, cancellable: Cancellable | None) -> bool: ...
     def get_etag(self) -> str | None: ...
     def query_info(
         self, attributes: str, cancellable: Cancellable | None = None
@@ -4804,8 +5098,9 @@ class FileIOStream(IOStream, Seekable):
         attributes: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_info_finish(self, result: AsyncResult) -> FileInfo: ...
 
@@ -4838,7 +5133,19 @@ class FileIOStreamClass(_gi.Struct):
         self,
     ) -> Callable[[FileIOStream, str, Cancellable | None], FileInfo]: ...
     @property
-    def query_info_async(self) -> Callable[..., None]: ...
+    def query_info_async(
+        self,
+    ) -> Callable[
+        [
+            FileIOStream,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def query_info_finish(self) -> Callable[[FileIOStream, AsyncResult], FileInfo]: ...
     @property
@@ -4870,7 +5177,6 @@ class FileIcon(GObject.Object, Icon, LoadableIcon):
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(self, *, file: File = ...) -> None: ...
     def get_file(self) -> File: ...
     @classmethod
@@ -4925,7 +5231,20 @@ class FileIface(_gi.Struct):
         [File, str, FileQueryInfoFlags, Cancellable | None], FileEnumerator
     ]: ...
     @property
-    def enumerate_children_async(self) -> Callable[..., None]: ...
+    def enumerate_children_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str,
+            FileQueryInfoFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def enumerate_children_finish(
         self,
@@ -4935,7 +5254,20 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, str, FileQueryInfoFlags, Cancellable | None], FileInfo]: ...
     @property
-    def query_info_async(self) -> Callable[..., None]: ...
+    def query_info_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str,
+            FileQueryInfoFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def query_info_finish(self) -> Callable[[File, AsyncResult], FileInfo]: ...
     @property
@@ -4943,7 +5275,19 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, str, Cancellable | None], FileInfo]: ...
     @property
-    def query_filesystem_info_async(self) -> Callable[..., None]: ...
+    def query_filesystem_info_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def query_filesystem_info_finish(
         self,
@@ -4951,13 +5295,36 @@ class FileIface(_gi.Struct):
     @property
     def find_enclosing_mount(self) -> Callable[[File, Cancellable | None], Mount]: ...
     @property
-    def find_enclosing_mount_async(self) -> Callable[..., None]: ...
+    def find_enclosing_mount_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def find_enclosing_mount_finish(self) -> Callable[[File, AsyncResult], Mount]: ...
     @property
     def set_display_name(self) -> Callable[[File, str, Cancellable | None], File]: ...
     @property
-    def set_display_name_async(self) -> Callable[..., None]: ...
+    def set_display_name_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def set_display_name_finish(self) -> Callable[[File, AsyncResult], File]: ...
     @property
@@ -4972,7 +5339,14 @@ class FileIface(_gi.Struct):
     def set_attribute(
         self,
     ) -> Callable[
-        [File, str, FileAttributeType, None, FileQueryInfoFlags, Cancellable | None],
+        [
+            File,
+            str,
+            FileAttributeType,
+            Any | None,
+            FileQueryInfoFlags,
+            Cancellable | None,
+        ],
         bool,
     ]: ...
     @property
@@ -4980,7 +5354,20 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, FileInfo, FileQueryInfoFlags, Cancellable | None], bool]: ...
     @property
-    def set_attributes_async(self) -> Callable[..., None]: ...
+    def set_attributes_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            FileInfo,
+            FileQueryInfoFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def set_attributes_finish(
         self,
@@ -4988,7 +5375,18 @@ class FileIface(_gi.Struct):
     @property
     def read_fn(self) -> Callable[[File, Cancellable | None], FileInputStream]: ...
     @property
-    def read_async(self) -> Callable[..., None]: ...
+    def read_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def read_finish(self) -> Callable[[File, AsyncResult], FileInputStream]: ...
     @property
@@ -4996,7 +5394,19 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileOutputStream]: ...
     @property
-    def append_to_async(self) -> Callable[..., None]: ...
+    def append_to_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            FileCreateFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def append_to_finish(self) -> Callable[[File, AsyncResult], FileOutputStream]: ...
     @property
@@ -5004,7 +5414,19 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileOutputStream]: ...
     @property
-    def create_async(self) -> Callable[..., None]: ...
+    def create_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            FileCreateFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def create_finish(self) -> Callable[[File, AsyncResult], FileOutputStream]: ...
     @property
@@ -5014,59 +5436,218 @@ class FileIface(_gi.Struct):
         [File, str | None, bool, FileCreateFlags, Cancellable | None], FileOutputStream
     ]: ...
     @property
-    def replace_async(self) -> Callable[..., None]: ...
+    def replace_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str | None,
+            bool,
+            FileCreateFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def replace_finish(self) -> Callable[[File, AsyncResult], FileOutputStream]: ...
     @property
     def delete_file(self) -> Callable[[File, Cancellable | None], bool]: ...
     @property
-    def delete_file_async(self) -> Callable[..., None]: ...
+    def delete_file_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def delete_file_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
     def trash(self) -> Callable[[File, Cancellable | None], bool]: ...
     @property
-    def trash_async(self) -> Callable[..., None]: ...
+    def trash_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def trash_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
     def make_directory(self) -> Callable[[File, Cancellable | None], bool]: ...
     @property
-    def make_directory_async(self) -> Callable[..., None]: ...
+    def make_directory_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def make_directory_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
     def make_symbolic_link(self) -> Callable[[File, str, Cancellable | None], bool]: ...
     @property
-    def make_symbolic_link_async(self) -> Callable[..., None]: ...
+    def make_symbolic_link_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def make_symbolic_link_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def copy(self) -> Callable[..., bool]: ...
+    def copy(
+        self,
+    ) -> Callable[
+        [
+            File,
+            File,
+            FileCopyFlags,
+            Cancellable | None,
+            Callable[[int, int, Any | None], None] | None,
+            Any | None,
+        ],
+        bool,
+    ]: ...
     @property
-    def copy_async(self) -> Callable[..., None]: ...
+    def copy_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            File,
+            FileCopyFlags,
+            int,
+            Cancellable | None,
+            Callable[[int, int, Any | None], None] | None,
+            int | Any | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def copy_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def move(self) -> Callable[..., bool]: ...
+    def move(
+        self,
+    ) -> Callable[
+        [
+            File,
+            File,
+            FileCopyFlags,
+            Cancellable | None,
+            Callable[[int, int, Any | None], None] | None,
+            Any | None,
+        ],
+        bool,
+    ]: ...
     @property
-    def move_async(self) -> Callable[..., None]: ...
+    def move_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            File,
+            FileCopyFlags,
+            int,
+            Cancellable | None,
+            Callable[[int, int, Any | None], None] | None,
+            int | Any | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def move_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def mount_mountable(self) -> Callable[..., None]: ...
+    def mount_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountMountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def mount_mountable_finish(self) -> Callable[[File, AsyncResult], File]: ...
     @property
-    def unmount_mountable(self) -> Callable[..., None]: ...
+    def unmount_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def unmount_mountable_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def eject_mountable(self) -> Callable[..., None]: ...
+    def eject_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_mountable_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def mount_enclosing_volume(self) -> Callable[..., None]: ...
+    def mount_enclosing_volume(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountMountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def mount_enclosing_volume_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
@@ -5080,7 +5661,18 @@ class FileIface(_gi.Struct):
     @property
     def open_readwrite(self) -> Callable[[File, Cancellable | None], FileIOStream]: ...
     @property
-    def open_readwrite_async(self) -> Callable[..., None]: ...
+    def open_readwrite_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def open_readwrite_finish(self) -> Callable[[File, AsyncResult], FileIOStream]: ...
     @property
@@ -5088,7 +5680,19 @@ class FileIface(_gi.Struct):
         self,
     ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileIOStream]: ...
     @property
-    def create_readwrite_async(self) -> Callable[..., None]: ...
+    def create_readwrite_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            FileCreateFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def create_readwrite_finish(
         self,
@@ -5100,41 +5704,124 @@ class FileIface(_gi.Struct):
         [File, str | None, bool, FileCreateFlags, Cancellable | None], FileIOStream
     ]: ...
     @property
-    def replace_readwrite_async(self) -> Callable[..., None]: ...
+    def replace_readwrite_async(
+        self,
+    ) -> Callable[
+        [
+            File,
+            str | None,
+            bool,
+            FileCreateFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def replace_readwrite_finish(
         self,
     ) -> Callable[[File, AsyncResult], FileIOStream]: ...
     @property
-    def start_mountable(self) -> Callable[..., None]: ...
+    def start_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            DriveStartFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def start_mountable_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def stop_mountable(self) -> Callable[..., None]: ...
+    def stop_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def stop_mountable_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
     def supports_thread_contexts(self) -> bool: ...
     @property
-    def unmount_mountable_with_operation(self) -> Callable[..., None]: ...
+    def unmount_mountable_with_operation(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def unmount_mountable_with_operation_finish(
         self,
     ) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def eject_mountable_with_operation(self) -> Callable[..., None]: ...
+    def eject_mountable_with_operation(
+        self,
+    ) -> Callable[
+        [
+            File,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_mountable_with_operation_finish(
         self,
     ) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def poll_mountable(self) -> Callable[..., None]: ...
+    def poll_mountable(
+        self,
+    ) -> Callable[
+        [
+            File,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def poll_mountable_finish(self) -> Callable[[File, AsyncResult], bool]: ...
     @property
-    def measure_disk_usage(self) -> Callable[..., tuple[bool, int, int, int]]: ...
+    def measure_disk_usage(
+        self,
+    ) -> Callable[
+        [
+            File,
+            FileMeasureFlags,
+            Cancellable | None,
+            Callable[[bool, int, int, int, Any | None], None] | None,
+            Any | None,
+        ],
+        tuple[bool, int, int, int],
+    ]: ...
     @property
-    def measure_disk_usage_async(self) -> None: ...
+    def measure_disk_usage_async(self) -> int: ...
     @property
     def measure_disk_usage_finish(
         self,
@@ -5165,14 +5852,14 @@ class FileInfo(GObject.Object):
     def get_attribute_byte_string(self, attribute: str) -> str | None: ...
     def get_attribute_data(
         self, attribute: str
-    ) -> tuple[bool, FileAttributeType, None, FileAttributeStatus]: ...
+    ) -> tuple[bool, FileAttributeType, int, FileAttributeStatus]: ...
     def get_attribute_file_path(self, attribute: str) -> str | None: ...
     def get_attribute_int32(self, attribute: str) -> int: ...
     def get_attribute_int64(self, attribute: str) -> int: ...
     def get_attribute_object(self, attribute: str) -> GObject.Object | None: ...
     def get_attribute_status(self, attribute: str) -> FileAttributeStatus: ...
     def get_attribute_string(self, attribute: str) -> str | None: ...
-    def get_attribute_stringv(self, attribute: str) -> list[str] | None: ...
+    def get_attribute_stringv(self, attribute: str) -> list[str]: ...
     def get_attribute_type(self, attribute: str) -> FileAttributeType: ...
     def get_attribute_uint32(self, attribute: str) -> int: ...
     def get_attribute_uint64(self, attribute: str) -> int: ...
@@ -5196,13 +5883,13 @@ class FileInfo(GObject.Object):
     def get_symlink_target(self) -> str | None: ...
     def has_attribute(self, attribute: str) -> bool: ...
     def has_namespace(self, name_space: str) -> bool: ...
-    def list_attributes(self, name_space: str | None = None) -> list[str] | None: ...
+    def list_attributes(self, name_space: str | None = None) -> list[str]: ...
     @classmethod
     def new(cls) -> FileInfo: ...
     def remove_attribute(self, attribute: str) -> None: ...
     def set_access_date_time(self, atime: GLib.DateTime) -> None: ...
     def set_attribute(
-        self, attribute: str, type: FileAttributeType, value_p: None
+        self, attribute: str, type: FileAttributeType, value_p: int | Any | None
     ) -> None: ...
     def set_attribute_boolean(self, attribute: str, attr_value: bool) -> None: ...
     def set_attribute_byte_string(self, attribute: str, attr_value: str) -> None: ...
@@ -5260,19 +5947,20 @@ class FileInputStream(InputStream, Seekable):
     def priv(self) -> FileInputStreamPrivate: ...
     def do_can_seek(self) -> bool: ...
     def do_query_info(
-        self, attributes: str, cancellable: Cancellable | None = None
+        self, attributes: str, cancellable: Cancellable | None
     ) -> FileInfo: ...
     def do_query_info_async(
         self,
         attributes: str,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_query_info_finish(self, result: AsyncResult) -> FileInfo: ...
     def do_seek(
-        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None = None
+        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None
     ) -> bool: ...
     def do_tell(self) -> int: ...
     def query_info(
@@ -5283,8 +5971,9 @@ class FileInputStream(InputStream, Seekable):
         attributes: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_info_finish(self, result: AsyncResult) -> FileInfo: ...
 
@@ -5311,7 +6000,19 @@ class FileInputStreamClass(_gi.Struct):
         self,
     ) -> Callable[[FileInputStream, str, Cancellable | None], FileInfo]: ...
     @property
-    def query_info_async(self) -> Callable[..., None]: ...
+    def query_info_async(
+        self,
+    ) -> Callable[
+        [
+            FileInputStream,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def query_info_finish(
         self,
@@ -5403,24 +6104,23 @@ class FileOutputStream(OutputStream, Seekable):
     def do_can_truncate(self) -> bool: ...
     def do_get_etag(self) -> str | None: ...
     def do_query_info(
-        self, attributes: str, cancellable: Cancellable | None = None
+        self, attributes: str, cancellable: Cancellable | None
     ) -> FileInfo: ...
     def do_query_info_async(
         self,
         attributes: str,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_query_info_finish(self, result: AsyncResult) -> FileInfo: ...
     def do_seek(
-        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None = None
+        self, offset: int, type: GLib.SeekType, cancellable: Cancellable | None
     ) -> bool: ...
     def do_tell(self) -> int: ...
-    def do_truncate_fn(
-        self, size: int, cancellable: Cancellable | None = None
-    ) -> bool: ...
+    def do_truncate_fn(self, size: int, cancellable: Cancellable | None) -> bool: ...
     def get_etag(self) -> str | None: ...
     def query_info(
         self, attributes: str, cancellable: Cancellable | None = None
@@ -5430,8 +6130,9 @@ class FileOutputStream(OutputStream, Seekable):
         attributes: str,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def query_info_finish(self, result: AsyncResult) -> FileInfo: ...
 
@@ -5464,7 +6165,19 @@ class FileOutputStreamClass(_gi.Struct):
         self,
     ) -> Callable[[FileOutputStream, str, Cancellable | None], FileInfo]: ...
     @property
-    def query_info_async(self) -> Callable[..., None]: ...
+    def query_info_async(
+        self,
+    ) -> Callable[
+        [
+            FileOutputStream,
+            str,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def query_info_finish(
         self,
@@ -5651,9 +6364,11 @@ class IOModuleScope(_gi.Struct):
     def free(self) -> None: ...
 
 class IOSchedulerJob(_gi.Struct):
-    def send_to_mainloop(self, func: Callable[..., bool], *user_data: Any) -> bool: ...
+    def send_to_mainloop(
+        self, func: Callable[[Unpack[_DataTs]], bool], *user_data: Unpack[_DataTs]
+    ) -> bool: ...
     def send_to_mainloop_async(
-        self, func: Callable[..., bool], *user_data: Any
+        self, func: Callable[[Unpack[_DataTs]], bool], *user_data: Unpack[_DataTs]
     ) -> None: ...
 
 class IOStream(GObject.Object):
@@ -5695,19 +6410,21 @@ class IOStream(GObject.Object):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def do_close_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_close_finish(self, result: AsyncResult) -> bool: ...
-    def do_close_fn(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_close_fn(self, cancellable: Cancellable | None) -> bool: ...
     def do_get_input_stream(self) -> InputStream: ...
     def do_get_output_stream(self) -> OutputStream: ...
     def get_input_stream(self) -> InputStream: ...
@@ -5721,8 +6438,9 @@ class IOStream(GObject.Object):
         flags: IOStreamSpliceFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def splice_finish(result: AsyncResult) -> bool: ...
@@ -5746,7 +6464,18 @@ class IOStreamClass(_gi.Struct):
     @property
     def close_fn(self) -> Callable[[IOStream, Cancellable | None], bool]: ...
     @property
-    def close_async(self) -> Callable[..., None]: ...
+    def close_async(
+        self,
+    ) -> Callable[
+        [
+            IOStream,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def close_finish(self) -> Callable[[IOStream, AsyncResult], bool]: ...
 
@@ -5785,7 +6514,7 @@ class IconIface(_gi.Struct):
     @property
     def to_tokens(self) -> Callable[[Icon], tuple[bool, list[str], int]]: ...
     @property
-    def from_tokens(self) -> None: ...
+    def from_tokens(self) -> int: ...
     @property
     def serialize(self) -> Callable[[Icon], GLib.Variant | None]: ...
 
@@ -5826,7 +6555,7 @@ class InetAddress(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def bytes(self) -> None: ...
+        def bytes(self) -> int: ...
         @property
         def family(self) -> SocketFamily: ...
         @property
@@ -5863,7 +6592,7 @@ class InetAddress(GObject.Object):
     def __init__(
         self,
         *,
-        bytes: None = ...,
+        bytes: int | Any | None = ...,
         family: SocketFamily = ...,
         flowinfo: int = ...,
         scope_id: int = ...,
@@ -6113,38 +6842,42 @@ class InputStream(GObject.Object):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def do_close_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_close_finish(self, result: AsyncResult) -> bool: ...
-    def do_close_fn(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_close_fn(self, cancellable: Cancellable | None) -> bool: ...
     def do_read_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> bytes: ...
     def do_read_finish(self, result: AsyncResult) -> int: ...
     def do_read_fn(
-        self, buffer: None, count: int, cancellable: Cancellable | None = None
+        self, buffer: int | Any | None, count: int, cancellable: Cancellable | None
     ) -> int: ...
-    def do_skip(self, count: int, cancellable: Cancellable | None = None) -> int: ...
+    def do_skip(self, count: int, cancellable: Cancellable | None) -> int: ...
     def do_skip_async(
         self,
         count: int,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_skip_finish(self, result: AsyncResult) -> int: ...
     def has_pending(self) -> bool: ...
@@ -6157,16 +6890,18 @@ class InputStream(GObject.Object):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> bytes: ...
     def read_all_finish(self, result: AsyncResult) -> tuple[bool, int]: ...
     def read_async(
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> bytes: ...
     def read_bytes(
         self, count: int, cancellable: Cancellable | None = None
@@ -6176,8 +6911,9 @@ class InputStream(GObject.Object):
         count: int,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_bytes_finish(self, result: AsyncResult) -> GLib.Bytes: ...
     def read_finish(self, result: AsyncResult) -> int: ...
@@ -6188,8 +6924,9 @@ class InputStream(GObject.Object):
         count: int,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def skip_finish(self, result: AsyncResult) -> int: ...
 
@@ -6206,21 +6943,56 @@ class InputStreamClass(_gi.Struct):
     @property
     def read_fn(
         self,
-    ) -> Callable[[InputStream, None, int, Cancellable | None], int]: ...
+    ) -> Callable[[InputStream, Any | None, int, Cancellable | None], int]: ...
     @property
     def skip(self) -> Callable[[InputStream, int, Cancellable | None], int]: ...
     @property
     def close_fn(self) -> Callable[[InputStream, Cancellable | None], bool]: ...
     @property
-    def read_async(self) -> Callable[..., bytes]: ...
+    def read_async(
+        self,
+    ) -> Callable[
+        [
+            InputStream,
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        bytes,
+    ]: ...
     @property
     def read_finish(self) -> Callable[[InputStream, AsyncResult], int]: ...
     @property
-    def skip_async(self) -> Callable[..., None]: ...
+    def skip_async(
+        self,
+    ) -> Callable[
+        [
+            InputStream,
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def skip_finish(self) -> Callable[[InputStream, AsyncResult], int]: ...
     @property
-    def close_async(self) -> Callable[..., None]: ...
+    def close_async(
+        self,
+    ) -> Callable[
+        [
+            InputStream,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def close_finish(self) -> Callable[[InputStream, AsyncResult], bool]: ...
 
@@ -6235,10 +7007,9 @@ class InputVector(_gi.Struct):
         InputVector()
     """
 
-    buffer: None
+    buffer: int
     size: int
 
-# override
 class ListModel(GObject.GInterface, Protocol[ObjectItemType]):
     """
     Interface GListModel
@@ -6246,15 +7017,16 @@ class ListModel(GObject.GInterface, Protocol[ObjectItemType]):
     Signals from GObject:
       notify (GParam)
     """
-
+    def __contains__(self, item: ObjectItemType) -> bool: ...
     @overload
     def __getitem__(self, key: slice) -> list[ObjectItemType]: ...
     @overload
     def __getitem__(self, key: int) -> ObjectItemType: ...
-    def __contains__(self, item: ObjectItemType) -> bool: ...
     def __iter__(self) -> Iterator[ObjectItemType]: ...
     def __len__(self) -> int: ...
+    # override
     def get_item(self, position: int) -> ObjectItemType | None: ...
+    # override
     def get_item_type(self) -> type[ObjectItemType]: ...
     def get_n_items(self) -> int: ...
     def items_changed(self, position: int, removed: int, added: int) -> None: ...
@@ -6299,9 +7071,12 @@ class ListStore(GObject.Object, ListModel[ObjectItemType], Generic[ObjectItemTyp
       notify (GParam)
     """
 
+    @type_check_only
     class Props(GObject.Object.Props, Generic[ObjectPropsItemType]):
-        item_type: type[ObjectPropsItemType]
-        n_items: int
+        @property
+        def item_type(self) -> type[ObjectPropsItemType]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props[ObjectItemType]: ...
@@ -6315,28 +7090,40 @@ class ListStore(GObject.Object, ListModel[ObjectItemType], Generic[ObjectItemTyp
     def find(self, item: ObjectItemType) -> tuple[bool, int]: ...
     def find_with_equal_func(
         self,
-        item: ObjectItemType,
-        equal_func: Callable[[ObjectItemType | None, ObjectItemType | None], bool],
-        *user_data: Any,
+        item: ObjectItemType | None,
+        equal_func: Callable[
+            [ObjectItemType | None, ObjectItemType | None, Unpack[_DataTs]], bool
+        ],
+        *user_data: Unpack[_DataTs],
     ) -> tuple[bool, int]: ...
     def find_with_equal_func_full(
         self,
-        item: ObjectItemType,
-        equal_func: Callable[[ObjectItemType | None, ObjectItemType | None, Any], bool],
-        *user_data: Any,
+        item: ObjectItemType | None,
+        equal_func: Callable[
+            [ObjectItemType | None, ObjectItemType | None, Unpack[_DataTs]], bool
+        ],
+        *user_data: Unpack[_DataTs],
     ) -> tuple[bool, int]: ...
     def insert(self, position: int, item: ObjectItemType) -> None: ...
     def insert_sorted(
         self,
         item: ObjectItemType,
-        compare_func: Callable[[ObjectItemType, ObjectItemType, Any], int],
-        *user_data: Any,
+        compare_func: Callable[
+            [ObjectItemType | None, ObjectItemType | None, Unpack[_DataTs]], int
+        ],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new(cls, item_type: type[ObjectItemType]) -> ListStore[ObjectItemType]: ...
     def remove(self, position: int) -> None: ...
     def remove_all(self) -> None: ...
-    def sort(self, compare_func: Callable[..., int], *user_data: Any) -> None: ...
+    def sort(
+        self,
+        compare_func: Callable[
+            [ObjectItemType | None, ObjectItemType | None, Unpack[_DataTs]], int
+        ],
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
     def splice(
         self, position: int, n_removals: int, additions: Sequence[ObjectItemType]
     ) -> None: ...
@@ -6366,8 +7153,9 @@ class LoadableIcon(GObject.GInterface, Protocol):
         self,
         size: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def load_finish(self, res: AsyncResult) -> tuple[InputStream, str]: ...
 
@@ -6386,7 +7174,18 @@ class LoadableIconIface(_gi.Struct):
         self,
     ) -> Callable[[LoadableIcon, int, Cancellable | None], tuple[InputStream, str]]: ...
     @property
-    def load_async(self) -> Callable[..., None]: ...
+    def load_async(
+        self,
+    ) -> Callable[
+        [
+            LoadableIcon,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def load_finish(
         self,
@@ -6414,7 +7213,7 @@ class MemoryInputStream(InputStream, PollableInputStream, Seekable):
     def priv(self) -> MemoryInputStreamPrivate: ...
     def add_bytes(self, bytes: GLib.Bytes) -> None: ...
     def add_data(
-        self, data: Sequence[int], destroy: Callable[[None], None] | None = None
+        self, data: Sequence[int], destroy: Callable[[Any | None], None] | None = None
     ) -> None: ...
     @classmethod
     def new(cls) -> MemoryInputStream: ...
@@ -6422,7 +7221,7 @@ class MemoryInputStream(InputStream, PollableInputStream, Seekable):
     def new_from_bytes(cls, bytes: GLib.Bytes) -> MemoryInputStream: ...
     @classmethod
     def new_from_data(
-        cls, data: Sequence[int], destroy: Callable[[None], None] | None = None
+        cls, data: Sequence[int], destroy: Callable[[Any | None], None] | None = None
     ) -> MemoryInputStream: ...
 
 class MemoryInputStreamClass(_gi.Struct):
@@ -6487,7 +7286,7 @@ class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     @type_check_only
     class Props(OutputStream.Props):
         @property
-        def data(self) -> None | None: ...
+        def data(self) -> int | None: ...
         @property
         def data_size(self) -> int: ...
         @property
@@ -6499,14 +7298,14 @@ class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     def parent_instance(self) -> OutputStream: ...
     @property
     def priv(self) -> MemoryOutputStreamPrivate: ...
-    def __init__(self, *, data: None = ..., size: int = ...) -> None: ...
-    def get_data(self) -> None: ...
+    def __init__(self, *, data: int | Any | None = ..., size: int = ...) -> None: ...
+    def get_data(self) -> int: ...
     def get_data_size(self) -> int: ...
     def get_size(self) -> int: ...
     @classmethod
     def new_resizable(cls) -> MemoryOutputStream: ...
     def steal_as_bytes(self) -> GLib.Bytes: ...
-    def steal_data(self) -> None: ...
+    def steal_data(self) -> int: ...
 
 class MemoryOutputStreamClass(_gi.Struct):
     """
@@ -6714,10 +7513,7 @@ class MenuModel(GObject.Object):
     @property
     def priv(self) -> MenuModelPrivate: ...
     def do_get_item_attribute_value(
-        self,
-        item_index: int,
-        attribute: str,
-        expected_type: GLib.VariantType | None = None,
+        self, item_index: int, attribute: str, expected_type: GLib.VariantType | None
     ) -> GLib.Variant | None: ...
     def do_get_item_attributes(self, item_index: int) -> dict[str, GLib.Variant]: ...
     def do_get_item_link(self, item_index: int, link: str) -> MenuModel | None: ...
@@ -6789,8 +7585,9 @@ class Mount(GObject.GInterface, Protocol):
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
@@ -6798,8 +7595,9 @@ class Mount(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_with_operation_finish(self, result: AsyncResult) -> bool: ...
     def get_default_location(self) -> File: ...
@@ -6815,8 +7613,9 @@ class Mount(GObject.GInterface, Protocol):
         self,
         force_rescan: bool,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def guess_content_type_finish(self, result: AsyncResult) -> list[str]: ...
     def guess_content_type_sync(
@@ -6828,8 +7627,9 @@ class Mount(GObject.GInterface, Protocol):
         flags: MountMountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def remount_finish(self, result: AsyncResult) -> bool: ...
     def shadow(self) -> None: ...
@@ -6837,8 +7637,9 @@ class Mount(GObject.GInterface, Protocol):
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unmount_finish(self, result: AsyncResult) -> bool: ...
     def unmount_with_operation(
@@ -6846,8 +7647,9 @@ class Mount(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unmount_with_operation_finish(self, result: AsyncResult) -> bool: ...
     def unshadow(self) -> None: ...
@@ -6883,19 +7685,64 @@ class MountIface(_gi.Struct):
     @property
     def can_eject(self) -> Callable[[Mount], bool]: ...
     @property
-    def unmount(self) -> Callable[..., None]: ...
+    def unmount(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def unmount_finish(self) -> Callable[[Mount, AsyncResult], bool]: ...
     @property
-    def eject(self) -> Callable[..., None]: ...
+    def eject(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_finish(self) -> Callable[[Mount, AsyncResult], bool]: ...
     @property
-    def remount(self) -> Callable[..., None]: ...
+    def remount(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            MountMountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def remount_finish(self) -> Callable[[Mount, AsyncResult], bool]: ...
     @property
-    def guess_content_type(self) -> Callable[..., None]: ...
+    def guess_content_type(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            bool,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def guess_content_type_finish(
         self,
@@ -6907,11 +7754,35 @@ class MountIface(_gi.Struct):
     @property
     def pre_unmount(self) -> Callable[[Mount], None]: ...
     @property
-    def unmount_with_operation(self) -> Callable[..., None]: ...
+    def unmount_with_operation(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def unmount_with_operation_finish(self) -> Callable[[Mount, AsyncResult], bool]: ...
     @property
-    def eject_with_operation(self) -> Callable[..., None]: ...
+    def eject_with_operation(
+        self,
+    ) -> Callable[
+        [
+            Mount,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_with_operation_finish(self) -> Callable[[Mount, AsyncResult], bool]: ...
     @property
@@ -7076,7 +7947,7 @@ class NativeSocketAddress(SocketAddress):
     @property
     def priv(self) -> NativeSocketAddressPrivate: ...
     @classmethod
-    def new(cls, native: None, len: int) -> NativeSocketAddress: ...
+    def new(cls, native: int | Any | None, len: int) -> NativeSocketAddress: ...
 
 class NativeSocketAddressClass(_gi.Struct):
     """
@@ -7132,7 +8003,7 @@ class NativeVolumeMonitorClass(_gi.Struct):
     @property
     def parent_class(self) -> VolumeMonitorClass: ...
     @property
-    def get_mount_for_mount_path(self) -> None: ...
+    def get_mount_for_mount_path(self) -> int: ...
 
 class NetworkAddress(GObject.Object, SocketConnectable):
     """
@@ -7211,8 +8082,9 @@ class NetworkMonitor(GObject.GInterface, Protocol):
         self,
         connectable: SocketConnectable,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def can_reach_finish(self, result: AsyncResult) -> bool: ...
     def get_connectivity(self) -> NetworkConnectivity: ...
@@ -7238,7 +8110,18 @@ class NetworkMonitorInterface(_gi.Struct):
         self,
     ) -> Callable[[NetworkMonitor, SocketConnectable, Cancellable | None], bool]: ...
     @property
-    def can_reach_async(self) -> Callable[..., None]: ...
+    def can_reach_async(
+        self,
+    ) -> Callable[
+        [
+            NetworkMonitor,
+            SocketConnectable,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def can_reach_finish(self) -> Callable[[NetworkMonitor, AsyncResult], bool]: ...
 
@@ -7377,77 +8260,82 @@ class OutputStream(GObject.Object):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def do_close_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_close_finish(self, result: AsyncResult) -> bool: ...
-    def do_close_fn(self, cancellable: Cancellable | None = None) -> bool: ...
-    def do_flush(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_close_fn(self, cancellable: Cancellable | None) -> bool: ...
+    def do_flush(self, cancellable: Cancellable | None) -> bool: ...
     def do_flush_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_flush_finish(self, result: AsyncResult) -> bool: ...
     def do_splice(
         self,
         source: InputStream,
         flags: OutputStreamSpliceFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> int: ...
     def do_splice_async(
         self,
         source: InputStream,
         flags: OutputStreamSpliceFlags,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_splice_finish(self, result: AsyncResult) -> int: ...
     def do_write_async(
         self,
         buffer: Sequence[int] | None,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_write_finish(self, result: AsyncResult) -> int: ...
     def do_write_fn(
-        self,
-        buffer: Sequence[int] | None = None,
-        cancellable: Cancellable | None = None,
+        self, buffer: Sequence[int] | None, cancellable: Cancellable | None
     ) -> int: ...
     def do_writev_async(
         self,
         vectors: Sequence[OutputVector],
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_writev_finish(self, result: AsyncResult) -> tuple[bool, int]: ...
     def do_writev_fn(
-        self, vectors: Sequence[OutputVector], cancellable: Cancellable | None = None
+        self, vectors: Sequence[OutputVector], cancellable: Cancellable | None
     ) -> tuple[bool, int]: ...
     def flush(self, cancellable: Cancellable | None = None) -> bool: ...
     def flush_async(
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def flush_finish(self, result: AsyncResult) -> bool: ...
     def has_pending(self) -> bool: ...
@@ -7466,8 +8354,9 @@ class OutputStream(GObject.Object):
         flags: OutputStreamSpliceFlags,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def splice_finish(self, result: AsyncResult) -> int: ...
     def write(
@@ -7481,8 +8370,9 @@ class OutputStream(GObject.Object):
         buffer: Sequence[int],
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def write_all_finish(self, result: AsyncResult) -> tuple[bool, int]: ...
     def write_async(
@@ -7490,8 +8380,9 @@ class OutputStream(GObject.Object):
         buffer: Sequence[int],
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def write_bytes(
         self, bytes: GLib.Bytes, cancellable: Cancellable | None = None
@@ -7501,8 +8392,9 @@ class OutputStream(GObject.Object):
         bytes: GLib.Bytes,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def write_bytes_finish(self, result: AsyncResult) -> int: ...
     def write_finish(self, result: AsyncResult) -> int: ...
@@ -7517,8 +8409,9 @@ class OutputStream(GObject.Object):
         vectors: Sequence[OutputVector],
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def writev_all_finish(self, result: AsyncResult) -> tuple[bool, int]: ...
     def writev_async(
@@ -7526,8 +8419,9 @@ class OutputStream(GObject.Object):
         vectors: Sequence[OutputVector],
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def writev_finish(self, result: AsyncResult) -> tuple[bool, int]: ...
 
@@ -7544,7 +8438,9 @@ class OutputStreamClass(_gi.Struct):
     @property
     def write_fn(
         self,
-    ) -> Callable[[OutputStream, Sequence[int] | None, Cancellable | None], int]: ...
+    ) -> Callable[
+        [OutputStream, Sequence[int] | None, int, Cancellable | None], int
+    ]: ...
     @property
     def splice(
         self,
@@ -7556,29 +8452,91 @@ class OutputStreamClass(_gi.Struct):
     @property
     def close_fn(self) -> Callable[[OutputStream, Cancellable | None], bool]: ...
     @property
-    def write_async(self) -> Callable[..., None]: ...
+    def write_async(
+        self,
+    ) -> Callable[
+        [
+            OutputStream,
+            Sequence[int] | None,
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def write_finish(self) -> Callable[[OutputStream, AsyncResult], int]: ...
     @property
-    def splice_async(self) -> Callable[..., None]: ...
+    def splice_async(
+        self,
+    ) -> Callable[
+        [
+            OutputStream,
+            InputStream,
+            OutputStreamSpliceFlags,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def splice_finish(self) -> Callable[[OutputStream, AsyncResult], int]: ...
     @property
-    def flush_async(self) -> Callable[..., None]: ...
+    def flush_async(
+        self,
+    ) -> Callable[
+        [
+            OutputStream,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def flush_finish(self) -> Callable[[OutputStream, AsyncResult], bool]: ...
     @property
-    def close_async(self) -> Callable[..., None]: ...
+    def close_async(
+        self,
+    ) -> Callable[
+        [
+            OutputStream,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def close_finish(self) -> Callable[[OutputStream, AsyncResult], bool]: ...
     @property
     def writev_fn(
         self,
     ) -> Callable[
-        [OutputStream, Sequence[OutputVector], Cancellable | None], tuple[bool, int]
+        [OutputStream, Sequence[OutputVector], int, Cancellable | None],
+        tuple[bool, int],
     ]: ...
     @property
-    def writev_async(self) -> Callable[..., None]: ...
+    def writev_async(
+        self,
+    ) -> Callable[
+        [
+            OutputStream,
+            Sequence[OutputVector],
+            int,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def writev_finish(
         self,
@@ -7595,7 +8553,7 @@ class OutputVector(_gi.Struct):
         OutputVector()
     """
 
-    buffer: None
+    buffer: int
     size: int
 
 class Permission(GObject.Object):
@@ -7635,24 +8593,27 @@ class Permission(GObject.Object):
     def acquire_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def acquire_finish(self, result: AsyncResult) -> bool: ...
-    def do_acquire(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_acquire(self, cancellable: Cancellable | None) -> bool: ...
     def do_acquire_async(
         self,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_acquire_finish(self, result: AsyncResult) -> bool: ...
-    def do_release(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_release(self, cancellable: Cancellable | None) -> bool: ...
     def do_release_async(
         self,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_release_finish(self, result: AsyncResult) -> bool: ...
     def get_allowed(self) -> bool: ...
@@ -7665,8 +8626,9 @@ class Permission(GObject.Object):
     def release_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def release_finish(self, result: AsyncResult) -> bool: ...
 
@@ -7683,17 +8645,37 @@ class PermissionClass(_gi.Struct):
     @property
     def acquire(self) -> Callable[[Permission, Cancellable | None], bool]: ...
     @property
-    def acquire_async(self) -> Callable[..., None]: ...
+    def acquire_async(
+        self,
+    ) -> Callable[
+        [
+            Permission,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def acquire_finish(self) -> Callable[[Permission, AsyncResult], bool]: ...
     @property
     def release(self) -> Callable[[Permission, Cancellable | None], bool]: ...
     @property
-    def release_async(self) -> Callable[..., None]: ...
+    def release_async(
+        self,
+    ) -> Callable[
+        [
+            Permission,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def release_finish(self) -> Callable[[Permission, AsyncResult], bool]: ...
     @property
-    def reserved(self) -> list[None]: ...
+    def reserved(self) -> list[int]: ...
 
 class PermissionPrivate(_gi.Struct): ...
 
@@ -7732,7 +8714,7 @@ class PollableInputStreamInterface(_gi.Struct):
     @property
     def read_nonblocking(
         self,
-    ) -> Callable[[PollableInputStream], tuple[int, bytes]]: ...
+    ) -> Callable[[PollableInputStream, int], tuple[int, bytes]]: ...
 
 class PollableOutputStream(GObject.GInterface, Protocol):
     """
@@ -7772,12 +8754,12 @@ class PollableOutputStreamInterface(_gi.Struct):
     @property
     def write_nonblocking(
         self,
-    ) -> Callable[[PollableOutputStream, Sequence[int] | None], int]: ...
+    ) -> Callable[[PollableOutputStream, Sequence[int] | None, int], int]: ...
     @property
     def writev_nonblocking(
         self,
     ) -> Callable[
-        [PollableOutputStream, Sequence[OutputVector]], tuple[PollableReturn, int]
+        [PollableOutputStream, Sequence[OutputVector], int], tuple[PollableReturn, int]
     ]: ...
 
 class PowerProfileMonitor(GObject.GInterface, Protocol):
@@ -7874,8 +8856,9 @@ class Proxy(GObject.GInterface, Protocol):
         connection: IOStream,
         proxy_address: ProxyAddress,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_finish(self, result: AsyncResult) -> IOStream: ...
     @staticmethod
@@ -8055,7 +9038,19 @@ class ProxyInterface(_gi.Struct):
         self,
     ) -> Callable[[Proxy, IOStream, ProxyAddress, Cancellable | None], IOStream]: ...
     @property
-    def connect_async(self) -> Callable[..., None]: ...
+    def connect_async(
+        self,
+    ) -> Callable[
+        [
+            Proxy,
+            IOStream,
+            ProxyAddress,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def connect_finish(self) -> Callable[[Proxy, AsyncResult], IOStream]: ...
     @property
@@ -8076,8 +9071,9 @@ class ProxyResolver(GObject.GInterface, Protocol):
         self,
         uri: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_finish(self, result: AsyncResult) -> list[str]: ...
 
@@ -8098,7 +9094,18 @@ class ProxyResolverInterface(_gi.Struct):
         self,
     ) -> Callable[[ProxyResolver, str, Cancellable | None], list[str]]: ...
     @property
-    def lookup_async(self) -> Callable[..., None]: ...
+    def lookup_async(
+        self,
+    ) -> Callable[
+        [
+            ProxyResolver,
+            str,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_finish(self) -> Callable[[ProxyResolver, AsyncResult], list[str]]: ...
 
@@ -8171,40 +9178,43 @@ class Resolver(GObject.Object):
     def priv(self) -> ResolverPrivate: ...
     def __init__(self, *, timeout: int = ...) -> None: ...
     def do_lookup_by_address(
-        self, address: InetAddress, cancellable: Cancellable | None = None
+        self, address: InetAddress, cancellable: Cancellable | None
     ) -> str: ...
     def do_lookup_by_address_async(
         self,
         address: InetAddress,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_by_address_finish(self, result: AsyncResult) -> str: ...
     def do_lookup_by_name(
-        self, hostname: str, cancellable: Cancellable | None = None
+        self, hostname: str, cancellable: Cancellable | None
     ) -> list[InetAddress]: ...
     def do_lookup_by_name_async(
         self,
         hostname: str,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_by_name_finish(self, result: AsyncResult) -> list[InetAddress]: ...
     def do_lookup_by_name_with_flags(
         self,
         hostname: str,
         flags: ResolverNameLookupFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> list[InetAddress]: ...
     def do_lookup_by_name_with_flags_async(
         self,
         hostname: str,
         flags: ResolverNameLookupFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_by_name_with_flags_finish(
         self, result: AsyncResult
@@ -8213,23 +9223,25 @@ class Resolver(GObject.Object):
         self,
         rrname: str,
         record_type: ResolverRecordType,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> list[GLib.Variant]: ...
     def do_lookup_records_async(
         self,
         rrname: str,
         record_type: ResolverRecordType,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_records_finish(self, result: AsyncResult) -> list[GLib.Variant]: ...
     def do_lookup_service_async(
         self,
         rrname: str,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_service_finish(self, result: AsyncResult) -> list[SrvTarget]: ...
     def do_reload(self) -> None: ...
@@ -8243,8 +9255,9 @@ class Resolver(GObject.Object):
         self,
         address: InetAddress,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_by_address_finish(self, result: AsyncResult) -> str: ...
     def lookup_by_name(
@@ -8254,8 +9267,9 @@ class Resolver(GObject.Object):
         self,
         hostname: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_by_name_finish(self, result: AsyncResult) -> list[InetAddress]: ...
     def lookup_by_name_with_flags(
@@ -8269,8 +9283,9 @@ class Resolver(GObject.Object):
         hostname: str,
         flags: ResolverNameLookupFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_by_name_with_flags_finish(
         self, result: AsyncResult
@@ -8286,8 +9301,9 @@ class Resolver(GObject.Object):
         rrname: str,
         record_type: ResolverRecordType,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_records_finish(self, result: AsyncResult) -> list[GLib.Variant]: ...
     def lookup_service(
@@ -8303,8 +9319,9 @@ class Resolver(GObject.Object):
         protocol: str,
         domain: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_service_finish(self, result: AsyncResult) -> list[SrvTarget]: ...
     def set_default(self) -> None: ...
@@ -8327,7 +9344,18 @@ class ResolverClass(_gi.Struct):
         self,
     ) -> Callable[[Resolver, str, Cancellable | None], list[InetAddress]]: ...
     @property
-    def lookup_by_name_async(self) -> Callable[..., None]: ...
+    def lookup_by_name_async(
+        self,
+    ) -> Callable[
+        [
+            Resolver,
+            str,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_by_name_finish(
         self,
@@ -8337,13 +9365,35 @@ class ResolverClass(_gi.Struct):
         self,
     ) -> Callable[[Resolver, InetAddress, Cancellable | None], str]: ...
     @property
-    def lookup_by_address_async(self) -> Callable[..., None]: ...
+    def lookup_by_address_async(
+        self,
+    ) -> Callable[
+        [
+            Resolver,
+            InetAddress,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_by_address_finish(self) -> Callable[[Resolver, AsyncResult], str]: ...
     @property
-    def lookup_service(self) -> None: ...
+    def lookup_service(self) -> int: ...
     @property
-    def lookup_service_async(self) -> Callable[..., None]: ...
+    def lookup_service_async(
+        self,
+    ) -> Callable[
+        [
+            Resolver,
+            str,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_service_finish(
         self,
@@ -8355,13 +9405,37 @@ class ResolverClass(_gi.Struct):
         [Resolver, str, ResolverRecordType, Cancellable | None], list[GLib.Variant]
     ]: ...
     @property
-    def lookup_records_async(self) -> Callable[..., None]: ...
+    def lookup_records_async(
+        self,
+    ) -> Callable[
+        [
+            Resolver,
+            str,
+            ResolverRecordType,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_records_finish(
         self,
     ) -> Callable[[Resolver, AsyncResult], list[GLib.Variant]]: ...
     @property
-    def lookup_by_name_with_flags_async(self) -> Callable[..., None]: ...
+    def lookup_by_name_with_flags_async(
+        self,
+    ) -> Callable[
+        [
+            Resolver,
+            str,
+            ResolverNameLookupFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_by_name_with_flags_finish(
         self,
@@ -8539,8 +9613,11 @@ class Settings(GObject.Object):
     def get_int(self, key: str) -> int: ...
     def get_int64(self, key: str) -> int: ...
     def get_mapped(
-        self, key: str, mapping: Callable[..., tuple[bool, None]], *user_data: Any
-    ) -> None: ...
+        self,
+        key: str,
+        mapping: Callable[[GLib.Variant | None, Unpack[_DataTs]], tuple[bool, int]],
+        *user_data: Unpack[_DataTs],
+    ) -> int: ...
     def get_range(self, key: str) -> GLib.Variant: ...
     def get_string(self, key: str) -> str: ...
     def get_strv(self, key: str) -> list[str]: ...
@@ -8609,8 +9686,10 @@ class SettingsBackend(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> SettingsBackendPrivate: ...
-    def changed(self, key: str, origin_tag: None) -> None: ...
-    def changed_tree(self, tree: GLib.Tree, origin_tag: None) -> None: ...
+    def changed(self, key: str, origin_tag: int | Any | None = None) -> None: ...
+    def changed_tree(
+        self, tree: GLib.Tree, origin_tag: int | Any | None = None
+    ) -> None: ...
     def do_get_writable(self, key: str) -> bool: ...
     def do_read(
         self, key: str, expected_type: GLib.VariantType, default_value: bool
@@ -8618,20 +9697,22 @@ class SettingsBackend(GObject.Object):
     def do_read_user_value(
         self, key: str, expected_type: GLib.VariantType
     ) -> GLib.Variant: ...
-    def do_reset(self, key: str, origin_tag: None) -> None: ...
+    def do_reset(self, key: str, origin_tag: int | Any | None) -> None: ...
     def do_subscribe(self, name: str) -> None: ...
     def do_sync(self) -> None: ...
     def do_unsubscribe(self, name: str) -> None: ...
-    def do_write(self, key: str, value: GLib.Variant, origin_tag: None) -> bool: ...
-    def do_write_tree(self, tree: GLib.Tree, origin_tag: None) -> bool: ...
+    def do_write(
+        self, key: str, value: GLib.Variant, origin_tag: int | Any | None
+    ) -> bool: ...
+    def do_write_tree(self, tree: GLib.Tree, origin_tag: int | Any | None) -> bool: ...
     @staticmethod
     def flatten_tree(tree: GLib.Tree) -> tuple[str, list[str], list[GLib.Variant]]: ...
     @staticmethod
     def get_default() -> SettingsBackend: ...
     def keys_changed(
-        self, path: str, items: Sequence[str], origin_tag: None
+        self, path: str, items: Sequence[str], origin_tag: int | Any | None = None
     ) -> None: ...
-    def path_changed(self, path: str, origin_tag: None) -> None: ...
+    def path_changed(self, path: str, origin_tag: int | Any | None = None) -> None: ...
     def path_writable_changed(self, path: str) -> None: ...
     def writable_changed(self, key: str) -> None: ...
 
@@ -8652,11 +9733,15 @@ class SettingsBackendClass(_gi.Struct):
     @property
     def get_writable(self) -> Callable[[SettingsBackend, str], bool]: ...
     @property
-    def write(self) -> Callable[[SettingsBackend, str, GLib.Variant, None], bool]: ...
+    def write(
+        self,
+    ) -> Callable[[SettingsBackend, str, GLib.Variant, Any | None], bool]: ...
     @property
-    def write_tree(self) -> Callable[[SettingsBackend, GLib.Tree, None], bool]: ...
+    def write_tree(
+        self,
+    ) -> Callable[[SettingsBackend, GLib.Tree, Any | None], bool]: ...
     @property
-    def reset(self) -> Callable[[SettingsBackend, str, None], None]: ...
+    def reset(self) -> Callable[[SettingsBackend, str, Any | None], None]: ...
     @property
     def subscribe(self) -> Callable[[SettingsBackend, str], None]: ...
     @property
@@ -8664,13 +9749,13 @@ class SettingsBackendClass(_gi.Struct):
     @property
     def sync(self) -> Callable[[SettingsBackend], None]: ...
     @property
-    def get_permission(self) -> None: ...
+    def get_permission(self) -> int: ...
     @property
     def read_user_value(
         self,
     ) -> Callable[[SettingsBackend, str, GLib.VariantType], GLib.Variant]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class SettingsBackendPrivate(_gi.Struct): ...
 
@@ -8693,7 +9778,7 @@ class SettingsClass(_gi.Struct):
     @property
     def change_event(self) -> Callable[[Settings, int, int], bool]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class SettingsPrivate(_gi.Struct): ...
 
@@ -8820,7 +9905,9 @@ class SimpleActionGroup(GObject.Object, ActionGroup, ActionMap):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> SimpleActionGroupPrivate: ...
-    def add_entries(self, entries: Sequence[ActionEntry], user_data: None) -> None: ...
+    def add_entries(
+        self, entries: Sequence[ActionEntry], user_data: int | Any | None = None
+    ) -> None: ...
     def insert(self, action: Action) -> None: ...
     def lookup(self, action_name: str) -> Action: ...
     @classmethod
@@ -8838,7 +9925,7 @@ class SimpleActionGroupClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class SimpleActionGroupPrivate(_gi.Struct): ...
 
@@ -8863,23 +9950,27 @@ class SimpleAsyncResult(GObject.Object, AsyncResult):
     def get_op_res_gssize(self) -> int: ...
     @staticmethod
     def is_valid(
-        result: AsyncResult, source: GObject.Object | None, source_tag: None
+        result: AsyncResult,
+        source: GObject.Object | None = None,
+        source_tag: int | Any | None = None,
     ) -> bool: ...
     @classmethod
     def new(
         cls,
-        source_object: GObject.Object | None,
-        callback: Callable[..., None] | None,
-        source_tag: None,
-        *user_data: Any,
+        source_object: GObject.Object | None = None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Any | None], None]
+        | None = None,
+        user_data: Any | None = None,
+        source_tag: int | Any | None = None,
     ) -> SimpleAsyncResult: ...
     @classmethod
     def new_from_error(
         cls,
         source_object: GObject.Object | None,
-        callback: Callable[..., None] | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Any | None], None]
+        | None,
+        user_data: Any | None,
         error: GLib.Error,
-        *user_data: Any,
     ) -> SimpleAsyncResult: ...
     def propagate_error(self) -> bool: ...
     def set_check_cancellable(
@@ -9155,7 +10246,10 @@ class Socket(GObject.Object, DatagramBased, Initable):
         self, cancellable: Cancellable | None = None
     ) -> tuple[int, SocketAddress, bytes]: ...
     def receive_message(
-        self, vectors: Sequence[InputVector], cancellable: Cancellable | None = None
+        self,
+        vectors: Sequence[InputVector],
+        flags: int,
+        cancellable: Cancellable | None = None,
     ) -> tuple[int, SocketAddress, list[SocketControlMessage], int]: ...
     def receive_messages(
         self,
@@ -9244,12 +10338,12 @@ class SocketAddress(GObject.Object, SocketConnectable):
     def parent_instance(self) -> GObject.Object: ...
     def do_get_family(self) -> SocketFamily: ...
     def do_get_native_size(self) -> int: ...
-    def do_to_native(self, dest: None, destlen: int) -> bool: ...
+    def do_to_native(self, dest: int | Any | None, destlen: int) -> bool: ...
     def get_family(self) -> SocketFamily: ...
     def get_native_size(self) -> int: ...
     @classmethod
-    def new_from_native(cls, native: None, len: int) -> SocketAddress: ...
-    def to_native(self, dest: None, destlen: int) -> bool: ...
+    def new_from_native(cls, native: int | Any | None, len: int) -> SocketAddress: ...
+    def to_native(self, dest: int | Any | None, destlen: int) -> bool: ...
 
 class SocketAddressClass(_gi.Struct):
     """
@@ -9266,7 +10360,7 @@ class SocketAddressClass(_gi.Struct):
     @property
     def get_native_size(self) -> Callable[[SocketAddress], int]: ...
     @property
-    def to_native(self) -> Callable[[SocketAddress, None, int], bool]: ...
+    def to_native(self) -> Callable[[SocketAddress, Any | None, int], bool]: ...
 
 class SocketAddressEnumerator(GObject.Object):
     """
@@ -9283,22 +10377,22 @@ class SocketAddressEnumerator(GObject.Object):
     """
     @property
     def parent_instance(self) -> GObject.Object: ...
-    def do_next(
-        self, cancellable: Cancellable | None = None
-    ) -> SocketAddress | None: ...
+    def do_next(self, cancellable: Cancellable | None) -> SocketAddress | None: ...
     def do_next_async(
         self,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_next_finish(self, result: AsyncResult) -> SocketAddress | None: ...
     def next(self, cancellable: Cancellable | None = None) -> SocketAddress | None: ...
     def next_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def next_finish(self, result: AsyncResult) -> SocketAddress | None: ...
 
@@ -9319,7 +10413,17 @@ class SocketAddressEnumeratorClass(_gi.Struct):
         [SocketAddressEnumerator, Cancellable | None], SocketAddress | None
     ]: ...
     @property
-    def next_async(self) -> Callable[..., None]: ...
+    def next_async(
+        self,
+    ) -> Callable[
+        [
+            SocketAddressEnumerator,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def next_finish(
         self,
@@ -9403,8 +10507,9 @@ class SocketClient(GObject.Object):
         self,
         connectable: SocketConnectable,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_finish(self, result: AsyncResult) -> SocketConnection: ...
     def connect_to_host(
@@ -9418,8 +10523,9 @@ class SocketClient(GObject.Object):
         host_and_port: str,
         default_port: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_to_host_finish(self, result: AsyncResult) -> SocketConnection: ...
     def connect_to_service(
@@ -9430,8 +10536,9 @@ class SocketClient(GObject.Object):
         domain: str,
         service: str,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_to_service_finish(self, result: AsyncResult) -> SocketConnection: ...
     def connect_to_uri(
@@ -9442,8 +10549,9 @@ class SocketClient(GObject.Object):
         uri: str,
         default_port: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_to_uri_finish(self, result: AsyncResult) -> SocketConnection: ...
     def do_event(
@@ -9564,8 +10672,9 @@ class SocketConnection(IOStream):
         self,
         address: SocketAddress,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def connect_finish(self, result: AsyncResult) -> bool: ...
     @staticmethod
@@ -9618,11 +10727,11 @@ class SocketControlMessage(GObject.Object):
     def do_get_level(self) -> int: ...
     def do_get_size(self) -> int: ...
     def do_get_type(self) -> int: ...
-    def do_serialize(self, data: None) -> None: ...
+    def do_serialize(self, data: int | Any | None) -> None: ...
     def get_level(self) -> int: ...
     def get_msg_type(self) -> int: ...
     def get_size(self) -> int: ...
-    def serialize(self, data: None) -> None: ...
+    def serialize(self, data: int | Any | None) -> None: ...
 
 class SocketControlMessageClass(_gi.Struct):
     """
@@ -9641,9 +10750,9 @@ class SocketControlMessageClass(_gi.Struct):
     @property
     def get_type(self) -> Callable[[SocketControlMessage], int]: ...
     @property
-    def serialize(self) -> Callable[[SocketControlMessage, None], None]: ...
+    def serialize(self) -> Callable[[SocketControlMessage, Any | None], None]: ...
     @property
-    def deserialize(self) -> None: ...
+    def deserialize(self) -> int: ...
 
 class SocketControlMessagePrivate(_gi.Struct): ...
 
@@ -9680,28 +10789,30 @@ class SocketListener(GObject.Object):
     def __init__(self, *, listen_backlog: int = ...) -> None: ...
     def accept(
         self, cancellable: Cancellable | None = None
-    ) -> tuple[SocketConnection, GObject.Object]: ...
+    ) -> tuple[SocketConnection, GObject.Object | None]: ...
     def accept_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def accept_finish(
         self, result: AsyncResult
-    ) -> tuple[SocketConnection, GObject.Object]: ...
+    ) -> tuple[SocketConnection, GObject.Object | None]: ...
     def accept_socket(
         self, cancellable: Cancellable | None = None
-    ) -> tuple[Socket, GObject.Object]: ...
+    ) -> tuple[Socket, GObject.Object | None]: ...
     def accept_socket_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def accept_socket_finish(
         self, result: AsyncResult
-    ) -> tuple[Socket, GObject.Object]: ...
+    ) -> tuple[Socket, GObject.Object | None]: ...
     def add_address(
         self,
         address: SocketAddress,
@@ -9843,7 +10954,7 @@ class StaticResource(_gi.Struct):
     @property
     def next(self) -> StaticResource: ...
     @property
-    def padding(self) -> None: ...
+    def padding(self) -> int: ...
     def fini(self) -> None: ...
     def get_resource(self) -> Resource: ...
     def init(self) -> None: ...
@@ -9873,28 +10984,32 @@ class Subprocess(GObject.Object, Initable):
         self,
         stdin_buf: GLib.Bytes | None = None,
         cancellable: Cancellable | None = None,
-    ) -> tuple[bool, GLib.Bytes, GLib.Bytes]: ...
+    ) -> tuple[bool, GLib.Bytes | None, GLib.Bytes | None]: ...
     def communicate_async(
         self,
         stdin_buf: GLib.Bytes | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def communicate_finish(
         self, result: AsyncResult
-    ) -> tuple[bool, GLib.Bytes, GLib.Bytes]: ...
+    ) -> tuple[bool, GLib.Bytes | None, GLib.Bytes | None]: ...
     def communicate_utf8(
         self, stdin_buf: str | None = None, cancellable: Cancellable | None = None
-    ) -> tuple[bool, str, str]: ...
+    ) -> tuple[bool, str | None, str | None]: ...
     def communicate_utf8_async(
         self,
         stdin_buf: str | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def communicate_utf8_finish(self, result: AsyncResult) -> tuple[bool, str, str]: ...
+    def communicate_utf8_finish(
+        self, result: AsyncResult
+    ) -> tuple[bool, str | None, str | None]: ...
     def force_exit(self) -> None: ...
     def get_exit_status(self) -> int: ...
     def get_identifier(self) -> str | None: ...
@@ -9913,15 +11028,17 @@ class Subprocess(GObject.Object, Initable):
     def wait_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def wait_check(self, cancellable: Cancellable | None = None) -> bool: ...
     def wait_check_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def wait_check_finish(self, result: AsyncResult) -> bool: ...
     def wait_finish(self, result: AsyncResult) -> bool: ...
@@ -9994,8 +11111,8 @@ class Task(GObject.Object, AsyncResult):
     def get_priority(self) -> int: ...
     def get_return_on_cancel(self) -> bool: ...
     def get_source_object(self) -> GObject.Object | None: ...
-    def get_source_tag(self) -> None: ...
-    def get_task_data(self) -> None: ...
+    def get_source_tag(self) -> int: ...
+    def get_task_data(self) -> int: ...
     def had_error(self) -> bool: ...
     @staticmethod
     def is_valid(
@@ -10006,20 +11123,22 @@ class Task(GObject.Object, AsyncResult):
         cls,
         source_object: GObject.Object | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *callback_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *callback_data: Unpack[_DataTs],
     ) -> Task: ...
     def propagate_boolean(self) -> bool: ...
     def propagate_int(self) -> int: ...
-    def propagate_pointer(self) -> None: ...
+    def propagate_pointer(self) -> int: ...
     def propagate_value(self) -> tuple[bool, Any]: ...
     @staticmethod
     def report_error(
         source_object: GObject.Object | None,
-        callback: Callable[..., None] | None,
-        source_tag: None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Any | None], None]
+        | None,
+        callback_data: Any | None,
+        source_tag: int | Any | None,
         error: GLib.Error,
-        *callback_data: Any,
     ) -> None: ...
     def return_boolean(self, result: bool) -> None: ...
     def return_error(self, error: GLib.Error) -> None: ...
@@ -10029,25 +11148,33 @@ class Task(GObject.Object, AsyncResult):
         self, domain: int, code: int, message: str
     ) -> None: ...
     def return_pointer(
-        self, result: None, result_destroy: Callable[[None], None] | None = None
+        self,
+        result: int | Any | None = None,
+        result_destroy: Callable[[Any | None], None] | None = None,
     ) -> None: ...
     def return_value(self, result: Any | None = None) -> None: ...
     def run_in_thread(
         self,
-        task_func: Callable[[Task, GObject.Object, None, Cancellable | None], None],
+        task_func: Callable[
+            [Task, GObject.Object, Any | None, Cancellable | None], None
+        ],
     ) -> None: ...
     def run_in_thread_sync(
         self,
-        task_func: Callable[[Task, GObject.Object, None, Cancellable | None], None],
+        task_func: Callable[
+            [Task, GObject.Object, Any | None, Cancellable | None], None
+        ],
     ) -> None: ...
     def set_check_cancellable(self, check_cancellable: bool) -> None: ...
     def set_name(self, name: str | None = None) -> None: ...
     def set_priority(self, priority: int) -> None: ...
     def set_return_on_cancel(self, return_on_cancel: bool) -> bool: ...
-    def set_source_tag(self, source_tag: None) -> None: ...
+    def set_source_tag(self, source_tag: int | Any | None = None) -> None: ...
     def set_static_name(self, name: str | None = None) -> None: ...
     def set_task_data(
-        self, task_data: None, task_data_destroy: Callable[[None], None] | None = None
+        self,
+        task_data: int | Any | None = None,
+        task_data_destroy: Callable[[Any | None], None] | None = None,
     ) -> None: ...
 
 class TaskClass(_gi.Struct): ...
@@ -10234,7 +11361,6 @@ class ThemedIcon(GObject.Object, Icon):
 
     @property
     def props(self) -> Props: ...
-    # override
     def __init__(
         self,
         *,
@@ -10447,9 +11573,9 @@ class TlsCertificate(GObject.Object):
         @property
         def certificate_pem(self) -> str: ...
         @property
-        def dns_names(self) -> list[None] | None: ...
+        def dns_names(self) -> list[int] | None: ...
         @property
-        def ip_addresses(self) -> list[None] | None: ...
+        def ip_addresses(self) -> list[int] | None: ...
         @property
         def issuer(self) -> TlsCertificate | None: ...
         @property
@@ -10489,12 +11615,10 @@ class TlsCertificate(GObject.Object):
         private_key_pkcs11_uri: str = ...,
     ) -> None: ...
     def do_verify(
-        self,
-        identity: SocketConnectable | None = None,
-        trusted_ca: TlsCertificate | None = None,
+        self, identity: SocketConnectable | None, trusted_ca: TlsCertificate | None
     ) -> TlsCertificateFlags: ...
-    def get_dns_names(self) -> list[GLib.Bytes] | None: ...
-    def get_ip_addresses(self) -> list[InetAddress] | None: ...
+    def get_dns_names(self) -> list[GLib.Bytes]: ...
+    def get_ip_addresses(self) -> list[InetAddress]: ...
     def get_issuer(self) -> TlsCertificate | None: ...
     def get_issuer_name(self) -> str | None: ...
     def get_not_valid_after(self) -> GLib.DateTime | None: ...
@@ -10545,7 +11669,7 @@ class TlsCertificateClass(_gi.Struct):
         TlsCertificateFlags,
     ]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsCertificatePrivate(_gi.Struct): ...
 
@@ -10557,7 +11681,7 @@ class TlsClientConnection(GObject.GInterface, Protocol):
       notify (GParam)
     """
     def copy_session_state(self, source: TlsClientConnection) -> None: ...
-    def get_accepted_cas(self) -> list[Sequence[int]]: ...
+    def get_accepted_cas(self) -> list[bytes]: ...
     def get_server_identity(self) -> SocketConnectable | None: ...
     def get_use_ssl3(self) -> bool: ...
     def get_validation_flags(self) -> TlsCertificateFlags: ...
@@ -10667,13 +11791,14 @@ class TlsConnection(IOStream):
         self, type: TlsChannelBindingType, data: Sequence[int]
     ) -> bool: ...
     def do_get_negotiated_protocol(self) -> str | None: ...
-    def do_handshake(self, cancellable: Cancellable | None = None) -> bool: ...
+    def do_handshake(self, cancellable: Cancellable | None) -> bool: ...
     def do_handshake_async(
         self,
         io_priority: int,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_handshake_finish(self, result: AsyncResult) -> bool: ...
     def emit_accept_certificate(
@@ -10698,8 +11823,9 @@ class TlsConnection(IOStream):
         self,
         io_priority: int,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def handshake_finish(self, result: AsyncResult) -> bool: ...
     def set_advertised_protocols(
@@ -10729,7 +11855,18 @@ class TlsConnectionClass(_gi.Struct):
     @property
     def handshake(self) -> Callable[[TlsConnection, Cancellable | None], bool]: ...
     @property
-    def handshake_async(self) -> Callable[..., None]: ...
+    def handshake_async(
+        self,
+    ) -> Callable[
+        [
+            TlsConnection,
+            int,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def handshake_finish(self) -> Callable[[TlsConnection, AsyncResult], bool]: ...
     @property
@@ -10739,7 +11876,7 @@ class TlsConnectionClass(_gi.Struct):
     @property
     def get_negotiated_protocol(self) -> Callable[[TlsConnection], str | None]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsConnectionPrivate(_gi.Struct): ...
 
@@ -10769,16 +11906,17 @@ class TlsDatabase(GObject.Object):
         handle: str,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> TlsCertificate | None: ...
     def do_lookup_certificate_for_handle_async(
         self,
         handle: str,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_certificate_for_handle_finish(
         self, result: AsyncResult
@@ -10788,16 +11926,17 @@ class TlsDatabase(GObject.Object):
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> TlsCertificate: ...
     def do_lookup_certificate_issuer_async(
         self,
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_certificate_issuer_finish(
         self, result: AsyncResult
@@ -10807,16 +11946,17 @@ class TlsDatabase(GObject.Object):
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> list[TlsCertificate]: ...
     def do_lookup_certificates_issued_by_async(
         self,
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_lookup_certificates_issued_by_finish(
         self, result: AsyncResult
@@ -10828,7 +11968,7 @@ class TlsDatabase(GObject.Object):
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseVerifyFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> TlsCertificateFlags: ...
     def do_verify_chain_async(
         self,
@@ -10837,9 +11977,10 @@ class TlsDatabase(GObject.Object):
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
         flags: TlsDatabaseVerifyFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_verify_chain_finish(self, result: AsyncResult) -> TlsCertificateFlags: ...
     def lookup_certificate_for_handle(
@@ -10855,8 +11996,9 @@ class TlsDatabase(GObject.Object):
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_certificate_for_handle_finish(
         self, result: AsyncResult
@@ -10874,8 +12016,9 @@ class TlsDatabase(GObject.Object):
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_certificate_issuer_finish(
         self, result: AsyncResult
@@ -10893,8 +12036,9 @@ class TlsDatabase(GObject.Object):
         interaction: TlsInteraction | None,
         flags: TlsDatabaseLookupFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def lookup_certificates_issued_by_finish(
         self, result: AsyncResult
@@ -10916,8 +12060,9 @@ class TlsDatabase(GObject.Object):
         interaction: TlsInteraction | None,
         flags: TlsDatabaseVerifyFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def verify_chain_finish(self, result: AsyncResult) -> TlsCertificateFlags: ...
 
@@ -10947,7 +12092,22 @@ class TlsDatabaseClass(_gi.Struct):
         TlsCertificateFlags,
     ]: ...
     @property
-    def verify_chain_async(self) -> Callable[..., None]: ...
+    def verify_chain_async(
+        self,
+    ) -> Callable[
+        [
+            TlsDatabase,
+            TlsCertificate,
+            str,
+            SocketConnectable | None,
+            TlsInteraction | None,
+            TlsDatabaseVerifyFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def verify_chain_finish(
         self,
@@ -10970,7 +12130,20 @@ class TlsDatabaseClass(_gi.Struct):
         TlsCertificate | None,
     ]: ...
     @property
-    def lookup_certificate_for_handle_async(self) -> Callable[..., None]: ...
+    def lookup_certificate_for_handle_async(
+        self,
+    ) -> Callable[
+        [
+            TlsDatabase,
+            str,
+            TlsInteraction | None,
+            TlsDatabaseLookupFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_certificate_for_handle_finish(
         self,
@@ -10989,7 +12162,20 @@ class TlsDatabaseClass(_gi.Struct):
         TlsCertificate,
     ]: ...
     @property
-    def lookup_certificate_issuer_async(self) -> Callable[..., None]: ...
+    def lookup_certificate_issuer_async(
+        self,
+    ) -> Callable[
+        [
+            TlsDatabase,
+            TlsCertificate,
+            TlsInteraction | None,
+            TlsDatabaseLookupFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_certificate_issuer_finish(
         self,
@@ -11008,13 +12194,26 @@ class TlsDatabaseClass(_gi.Struct):
         list[TlsCertificate],
     ]: ...
     @property
-    def lookup_certificates_issued_by_async(self) -> Callable[..., None]: ...
+    def lookup_certificates_issued_by_async(
+        self,
+    ) -> Callable[
+        [
+            TlsDatabase,
+            Sequence[int],
+            TlsInteraction | None,
+            TlsDatabaseLookupFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def lookup_certificates_issued_by_finish(
         self,
     ) -> Callable[[TlsDatabase, AsyncResult], list[TlsCertificate]]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsDatabasePrivate(_gi.Struct): ...
 
@@ -11039,7 +12238,7 @@ class TlsFileDatabaseInterface(_gi.Struct):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsInteraction(GObject.Object):
     """
@@ -11065,34 +12264,37 @@ class TlsInteraction(GObject.Object):
         self,
         password: TlsPassword,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def ask_password_finish(self, result: AsyncResult) -> TlsInteractionResult: ...
     def do_ask_password(
-        self, password: TlsPassword, cancellable: Cancellable | None = None
+        self, password: TlsPassword, cancellable: Cancellable | None
     ) -> TlsInteractionResult: ...
     def do_ask_password_async(
         self,
         password: TlsPassword,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_ask_password_finish(self, result: AsyncResult) -> TlsInteractionResult: ...
     def do_request_certificate(
         self,
         connection: TlsConnection,
         flags: TlsCertificateRequestFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> TlsInteractionResult: ...
     def do_request_certificate_async(
         self,
         connection: TlsConnection,
         flags: TlsCertificateRequestFlags,
-        cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        cancellable: Cancellable | None,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_request_certificate_finish(
         self, result: AsyncResult
@@ -11117,8 +12319,9 @@ class TlsInteraction(GObject.Object):
         connection: TlsConnection,
         flags: TlsCertificateRequestFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def request_certificate_finish(
         self, result: AsyncResult
@@ -11141,7 +12344,18 @@ class TlsInteractionClass(_gi.Struct):
         [TlsInteraction, TlsPassword, Cancellable | None], TlsInteractionResult
     ]: ...
     @property
-    def ask_password_async(self) -> Callable[..., None]: ...
+    def ask_password_async(
+        self,
+    ) -> Callable[
+        [
+            TlsInteraction,
+            TlsPassword,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def ask_password_finish(
         self,
@@ -11154,13 +12368,25 @@ class TlsInteractionClass(_gi.Struct):
         TlsInteractionResult,
     ]: ...
     @property
-    def request_certificate_async(self) -> Callable[..., None]: ...
+    def request_certificate_async(
+        self,
+    ) -> Callable[
+        [
+            TlsInteraction,
+            TlsConnection,
+            TlsCertificateRequestFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def request_certificate_finish(
         self,
     ) -> Callable[[TlsInteraction, AsyncResult], TlsInteractionResult]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsInteractionPrivate(_gi.Struct): ...
 
@@ -11205,7 +12431,7 @@ class TlsPassword(GObject.Object):
     def do_get_default_warning(self) -> str: ...
     def do_get_value(self) -> bytes: ...
     def do_set_value(
-        self, value: Sequence[int], destroy: Callable[[None], None] | None = None
+        self, value: Sequence[int], destroy: Callable[[Any | None], None] | None
     ) -> None: ...
     def get_description(self) -> str: ...
     def get_flags(self) -> TlsPasswordFlags: ...
@@ -11217,7 +12443,7 @@ class TlsPassword(GObject.Object):
     def set_flags(self, flags: TlsPasswordFlags) -> None: ...
     def set_value(self, value: Sequence[int]) -> None: ...
     def set_value_full(
-        self, value: Sequence[int], destroy: Callable[[None], None] | None = None
+        self, value: Sequence[int], destroy: Callable[[Any | None], None] | None = None
     ) -> None: ...
     def set_warning(self, warning: str) -> None: ...
 
@@ -11237,12 +12463,12 @@ class TlsPasswordClass(_gi.Struct):
     def set_value(
         self,
     ) -> Callable[
-        [TlsPassword, Sequence[int], Callable[[None], None] | None], None
+        [TlsPassword, Sequence[int], int, Callable[[Any | None], None] | None], None
     ]: ...
     @property
     def get_default_warning(self) -> Callable[[TlsPassword], str]: ...
     @property
-    def padding(self) -> list[None]: ...
+    def padding(self) -> list[int]: ...
 
 class TlsPasswordPrivate(_gi.Struct): ...
 
@@ -11301,8 +12527,9 @@ class UnixConnection(SocketConnection):
     def receive_credentials_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def receive_credentials_finish(self, result: AsyncResult) -> Credentials: ...
     def receive_fd(self, cancellable: Cancellable | None = None) -> int: ...
@@ -11310,8 +12537,9 @@ class UnixConnection(SocketConnection):
     def send_credentials_async(
         self,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def send_credentials_finish(self, result: AsyncResult) -> bool: ...
     def send_fd(self, fd: int, cancellable: Cancellable | None = None) -> bool: ...
@@ -11547,8 +12775,8 @@ class Vfs(GObject.Object):
         attribute_matcher: FileAttributeMatcher,
         info: FileInfo,
         cancellable: Cancellable | None,
-        extra_data: None,
-        free_extra_data: Callable[[None], None],
+        extra_data: int | Any | None,
+        free_extra_data: Callable[[Any | None], None],
     ) -> None: ...
     def do_local_file_moved(self, source: str, dest: str) -> None: ...
     def do_local_file_removed(self, filename: str) -> None: ...
@@ -11557,7 +12785,7 @@ class Vfs(GObject.Object):
         filename: str,
         info: FileInfo,
         flags: FileQueryInfoFlags,
-        cancellable: Cancellable | None = None,
+        cancellable: Cancellable | None,
     ) -> bool: ...
     def do_parse_name(self, parse_name: str) -> File: ...
     @staticmethod
@@ -11572,9 +12800,11 @@ class Vfs(GObject.Object):
     def register_uri_scheme(
         self,
         scheme: str,
-        uri_func: Callable[..., File | None] | None = None,
-        parse_name_func: Callable[..., File | None] | None = None,
-        *parse_name_data: Any,
+        uri_func: Callable[[Vfs, str, Any | None], File | None] | None = None,
+        uri_data: Any | None = None,
+        parse_name_func: Callable[[Vfs, str, Unpack[_DataTs]], File | None]
+        | None = None,
+        *parse_name_data: Unpack[_DataTs],
     ) -> bool: ...
     def unregister_uri_scheme(self, scheme: str) -> bool: ...
 
@@ -11609,8 +12839,8 @@ class VfsClass(_gi.Struct):
             FileAttributeMatcher,
             FileInfo,
             Cancellable | None,
-            None,
-            Callable[[None], None],
+            Any | None,
+            Callable[[Any | None], None],
         ],
         None,
     ]: ...
@@ -11629,7 +12859,7 @@ class VfsClass(_gi.Struct):
     @property
     def local_file_moved(self) -> Callable[[Vfs, str, str], None]: ...
     @property
-    def deserialize_icon(self) -> None: ...
+    def deserialize_icon(self) -> int: ...
 
 class Volume(GObject.GInterface, Protocol):
     """
@@ -11644,8 +12874,9 @@ class Volume(GObject.GInterface, Protocol):
         self,
         flags: MountUnmountFlags,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
@@ -11653,8 +12884,9 @@ class Volume(GObject.GInterface, Protocol):
         flags: MountUnmountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def eject_with_operation_finish(self, result: AsyncResult) -> bool: ...
     def enumerate_identifiers(self) -> list[str]: ...
@@ -11672,8 +12904,9 @@ class Volume(GObject.GInterface, Protocol):
         flags: MountMountFlags,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def mount_finish(self, result: AsyncResult) -> bool: ...
     def should_automount(self) -> bool: ...
@@ -11707,11 +12940,34 @@ class VolumeIface(_gi.Struct):
     @property
     def can_eject(self) -> Callable[[Volume], bool]: ...
     @property
-    def mount_fn(self) -> Callable[..., None]: ...
+    def mount_fn(
+        self,
+    ) -> Callable[
+        [
+            Volume,
+            MountMountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def mount_finish(self) -> Callable[[Volume, AsyncResult], bool]: ...
     @property
-    def eject(self) -> Callable[..., None]: ...
+    def eject(
+        self,
+    ) -> Callable[
+        [
+            Volume,
+            MountUnmountFlags,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_finish(self) -> Callable[[Volume, AsyncResult], bool]: ...
     @property
@@ -11723,7 +12979,19 @@ class VolumeIface(_gi.Struct):
     @property
     def get_activation_root(self) -> Callable[[Volume], File | None]: ...
     @property
-    def eject_with_operation(self) -> Callable[..., None]: ...
+    def eject_with_operation(
+        self,
+    ) -> Callable[
+        [
+            Volume,
+            MountUnmountFlags,
+            MountOperation | None,
+            Cancellable | None,
+            Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
+            Any | None,
+        ],
+        None,
+    ]: ...
     @property
     def eject_with_operation_finish(self) -> Callable[[Volume, AsyncResult], bool]: ...
     @property
@@ -11761,7 +13029,7 @@ class VolumeMonitor(GObject.Object):
     @property
     def parent_instance(self) -> GObject.Object: ...
     @property
-    def priv(self) -> None: ...
+    def priv(self) -> int: ...
     @staticmethod
     def adopt_orphan_mount(mount: Mount) -> Volume: ...
     def do_drive_changed(self, drive: Drive) -> None: ...
@@ -11832,7 +13100,7 @@ class VolumeMonitorClass(_gi.Struct):
     @property
     def get_mount_for_uuid(self) -> Callable[[VolumeMonitor, str], Mount | None]: ...
     @property
-    def adopt_orphan_mount(self) -> None: ...
+    def adopt_orphan_mount(self) -> int: ...
     @property
     def drive_eject_button(self) -> Callable[[VolumeMonitor, Drive], None]: ...
     @property

@@ -16,6 +16,8 @@ from typing import Protocol
 from typing import TYPE_CHECKING
 from typing import TypeAlias
 from typing_extensions import get_original_bases
+from typing_extensions import get_overloads
+from typing_extensions import Self
 
 import argparse
 import importlib
@@ -30,6 +32,7 @@ from collections.abc import Iterator
 from dataclasses import dataclass
 from dataclasses import field
 from dataclasses import InitVar
+from dataclasses import replace
 from enum import IntEnum
 from enum import IntFlag
 from types import GenericAlias
@@ -42,6 +45,9 @@ from parse import Import
 from parse import Imports
 from parse import Overrides
 from parse import parse
+from parse import TypeVarInfo
+from parse import TypeVars
+from parse import TypeVarTupleInfo
 
 gi.require_version("GIRepository", "3.0")
 
@@ -58,14 +64,13 @@ _identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
 _typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)\b")
 _free_typing_re: Final = re.compile(r"\b(?P<name>Any|Self)\b")
 _gi_repository_re: Final = re.compile(
-    r"\bgi\.repository\.(?P<namespace>\w+)\.(?P<name>(?:\w+)(?:\.\w+)*)\b"
+    r"\bgi\.(?:repository|overrides)\.(?P<namespace>\w+)\.(?P<name>(?:\w+)(?:\.\w+)*)\b"
 )
-_type_vars_re: Final = re.compile(r"[~+-](?P<name>\w+)\b")
-
-# GLib 2.86 added a new flag which changed the naming of WRITABLE to IS_WRITABLE
-_IS_FIELD_WRITABLE: Final[GIRepository.FieldInfoFlags] = getattr(
-    GIRepository.FieldInfoFlags, "IS_WRITABLE", None
-) or getattr(GIRepository.FieldInfoFlags, "WRITABLE")
+_import_re: Final = re.compile(
+    r"\b(?P<module>(?:[A-Za-z_]\w+\.)*[A-Za-z_]\w+)\.(?P<name>[A-Za-z_]\w+)\b"
+)
+_type_vars_re: Final = re.compile(r"(?<!\w)[~+-](?P<name>[A-Za-z_]\w*)\b")
+_strip_boolean_result_re: Final = re.compile(r"\bstrip_boolean_result\b")
 
 RESERVED_KEYWORDS = {"async"}
 ALLOWED_FUNCTIONS = {
@@ -77,6 +82,7 @@ ALLOWED_FUNCTIONS = {
     "__next__",
     "__getitem__",
     "__setitem__",
+    "__delitem__",
     "__len__",
     "__int__",
     "__float__",
@@ -89,226 +95,416 @@ GI_IMPORT_ALIASES: Final = {
     "gobject.GInterface": ("GObject", "GInterface"),
 }
 
+EXCLUDED_VARARGS_CALLBACKS: Final = {
+    ("GLib", "DestroyNotify"),
+}
 
-def fix_argument_name(name: str) -> str:
+MODULE_NORMALIZATION: Final[dict[tuple[str, str | None], str]] = {
+    ("typing", "Self"): "typing_extensions",  # 3.11+
+    ("typing", "TypeVar"): "typing_extensions",  # default= 3.13+, infer_variance= 3.12+
+    ("typing", "Unpack"): "typing_extensions",  # 3.11+
+    ("typing", "TypeVarTuple"): "typing_extensions",  # 3.11+
+}
+
+
+def _normalize_module_name(module: str, name: str | None, /) -> str:
+    return MODULE_NORMALIZATION.get((module, name), module)
+
+
+def _fix_argument_name(name: str | None, /) -> str:
+    if name is None:
+        raise ValueError("Argument name cannot be None")
+
     if name in RESERVED_KEYWORDS:
         name = f"_{name}"
     return name.replace("-", "_")
 
 
-def _callable_get_arguments(
-    stub: Stub,
-    type: GI.CallableInfo,
-    can_default: bool = False,
-) -> tuple[list[str], list[str], list[str]]:
-    function_args = type.get_arguments()
-    accept_optional_args = False
-    optional_args_name = ""
-    dict_names: dict[int, str] = {}
-    dict_args: dict[int, GI.ArgInfo] = {}
-    str_args: list[str] = []
-    dict_return_args: dict[int, str] = {}
-    skip: list[int] = []
+def _get_return_type(return_args: list[str], /) -> str:
+    return (
+        "None"
+        if not return_args
+        else return_args[0]
+        if len(return_args) == 1
+        else f"tuple[{', '.join(return_args)}]"
+    )
 
-    # Filter out array length arguments for return type
-    ret_type = type.get_return_type()
-    if ret_type.get_array_length_index() >= 0:
-        skip.append(ret_type.get_array_length_index())
 
-    for i, arg in enumerate(function_args):
-        if i in skip:
-            continue
+def _make_nullable(py_type: str) -> str:
+    if not py_type.endswith(" | None") and py_type != "None":
+        return f"{py_type} | None"
 
-        def skip_arg(index: int) -> None:
-            if index < 0:
-                return
-            if index < i:
-                dict_names.pop(index, None)
-                dict_args.pop(index, None)
-                dict_return_args.pop(index, None)
-            elif index > i:
-                skip.append(index)
+    return py_type
 
-        if arg.get_closure_index() >= 0:
-            accept_optional_args = True
-            optional_args_name = function_args[arg.get_closure_index()].get_name()
-            skip_arg(arg.get_closure_index())
-            skip_arg(arg.get_destroy_index())
 
-        # Filter out array length args
-        arg_type = arg.get_type_info()
-        len_arg: int = arg_type.get_array_length_index()
-        skip_arg(len_arg)
+_FROM_PYTHON: Final = frozenset({GI.Direction.IN, GI.Direction.INOUT})
+_TO_PYTHON: Final = frozenset({GI.Direction.OUT, GI.Direction.INOUT})
 
-        # Need to check because user_data can be the first arg
-        if arg.get_closure_index() != i and arg.get_destroy_index() != i:
-            direction = arg.get_direction()
-            if direction == GI.Direction.OUT or direction == GI.Direction.INOUT:
-                t = _type_to_python(stub, arg.get_type_info(), True)
 
-                dict_return_args[i] = t
-            elif direction == GI.Direction.IN or direction == GI.Direction.INOUT:
-                dict_names[i] = arg.get_name()
-                dict_args[i] = arg
+@dataclass(slots=True, frozen=True)
+class _VisibleArgument:
+    info: GI.ArgInfo
+    c_index: int
+    direction: GI.Direction
+    required: bool
+    nullable: bool
+    is_closure_target: bool
+    is_varargs_slot: bool
+    is_varargs_callback: bool
 
-    # Traverse args in reverse to check for optional args
-    args = list(dict_args.values())
-    for a in reversed(args):
-        t = _type_to_python(
-            stub,
-            a.get_type_info(),
-            False,
-            a.get_closure_index() >= 0,  # True if function admits variable arguments
+
+@dataclass(slots=True, frozen=True)
+class _CallableArguments:
+    args: tuple[GI.ArgInfo, ...]
+    can_have_defaults: bool
+    hidden: frozenset[int]
+    closure_targets: frozenset[int]
+    varargs_index: int | None
+
+    @property
+    def varargs_info(self) -> GI.ArgInfo | None:
+        return self.args[self.varargs_index] if self.varargs_index is not None else None
+
+    def __iter__(self) -> Iterator[_VisibleArgument]:
+        for index, gi_arg in enumerate(self.args):
+            if index in self.hidden:
+                continue
+
+            direction = gi_arg.get_direction()
+            nullable = gi_arg.may_be_null()
+            closure_index = gi_arg.get_closure_index()
+
+            yield _VisibleArgument(
+                info=gi_arg,
+                c_index=index,
+                direction=direction,
+                # An arg is "required" (no `= ...` default) iff PyGObject's
+                # runtime would reject omitting it. The runtime accepts
+                # omission iff pygi_arg_cache_allow_none() is true, which
+                # boils down to may_be_null OR is_optional.
+                required=not (nullable or gi_arg.is_optional()),
+                nullable=nullable,
+                is_closure_target=index in self.closure_targets,
+                is_varargs_slot=index == self.varargs_index,
+                is_varargs_callback=closure_index == self.varargs_index,
+            )
+
+    @classmethod
+    def for_callable(
+        cls, info: GI.CallableInfo, /, *, allow_varargs: bool = True
+    ) -> Self:
+        gi_args = info.get_arguments()
+
+        hidden_indexes: set[int] = set()
+        closure_indexes: set[int] = set()
+        from_python_indexes: set[int] = set()
+
+        if (
+            return_array_length_index := info.get_return_type().get_array_length_index()
+        ) > -1:
+            hidden_indexes.add(return_array_length_index)
+
+        is_callback = isinstance(info, GI.CallbackInfo)
+
+        if is_callback:
+            # Callback arguments that are used for closure have a closure index
+            # that matches their argument index, so we can just check for that
+            # instead of checking the type and direction
+            for arg_index, arg in enumerate(gi_args):
+                if arg.get_closure_index() == arg_index:
+                    closure_indexes.add(arg_index)
+
+                from_python_indexes.add(arg_index)
+
+            # Apply PyGObject's user_data heuristic when no explicit closure
+            # annotation is present. This mirrors the auto-detection in
+            # pygi_closure_cache_new (pygi-cache.c lines 1092-1111), which
+            # picks the first IN-direction void-pointer arg and treats it
+            # as the user_data slot for the callback.
+            if not closure_indexes:
+                for arg_index, arg in enumerate(gi_args):
+                    if arg.get_direction() != GI.Direction.IN:
+                        continue
+                    type_info = arg.get_type_info()
+                    if (
+                        type_info.get_tag() == GI.TypeTag.VOID
+                        and type_info.is_pointer()
+                    ):
+                        closure_indexes.add(arg_index)
+                        break
+        else:
+            for arg_index, arg in enumerate(gi_args):
+                type_info = arg.get_type_info()
+                tag = type_info.get_tag()
+                is_from_python = arg.get_direction() in _FROM_PYTHON
+
+                # Hide array length args
+                if (
+                    tag == GI.TypeTag.ARRAY
+                    and (array_length_index := type_info.get_array_length_index()) > -1
+                ):
+                    hidden_indexes.add(array_length_index)
+
+                # Hide destroy and closure args for callbacks
+                if (
+                    tag == GI.TypeTag.INTERFACE
+                    and isinstance(type_info.get_interface(), GI.CallbackInfo)
+                    and arg_index not in hidden_indexes
+                    and arg_index not in closure_indexes
+                ):
+                    if (
+                        closure_index := arg.get_closure_index()
+                    ) > -1 and is_from_python:
+                        closure_indexes.add(closure_index)
+
+                    if (destroy_index := arg.get_destroy_index()) > -1:
+                        hidden_indexes.add(destroy_index)
+
+                if is_from_python:
+                    from_python_indexes.add(arg_index)
+
+        # Find the last closure argument whether it comes before or after the callback.
+        last_visible_from_python = max(from_python_indexes - hidden_indexes, default=-1)
+
+        # Treat a user_data slot as the *varargs argument iff it is the
+        # trailing FROM_PYTHON arg in C-arg order (i.e. no other visible
+        # FROM_PYTHON arg has a higher C-arg index). This mirrors
+        # PyGObject's runtime varargs detection in the reverse loop of
+        # _callable_cache_generate_args_cache_real, which picks the last
+        # FROM_PYTHON arg and only treats it as varargs when it is a
+        # CHILD_WITH_PYARG (i.e. a user_data slot).
+        varargs_index = (
+            last_visible_from_python
+            if allow_varargs and last_visible_from_python in closure_indexes
+            else None
         )
 
-        if a.may_be_null() and t != "None":
-            if can_default:
-                str_args.append(f"{t} | None = None")
-            else:
-                str_args.append(f"{t} | None")
-        else:
-            can_default = False
-            str_args.append(t)
-
-    str_args = list(reversed(str_args))
-    names = list(dict_names.values())
-
-    # We need this info to filter out None as return arg for methods
-    # that process Gio.AsyncResult. In python this method raises always.
-    is_async_res = "Gio.AsyncResult" in str_args
-
-    if accept_optional_args:
-        names.append(f"*{optional_args_name}")
-        str_args.append(stub.get_import("typing", "Any"))
-
-    return_type = _type_to_python(stub, type.get_return_type(), True)
-    if type.may_return_null() and return_type != "None" and not is_async_res:
-        return_type = f"{return_type} | None"
-
-    return_args = list(dict_return_args.values())
-    if return_type != "None" or len(return_args) == 0:
-        return_args.insert(0, return_type)
-
-    return (names, str_args, return_args)
+        return cls(
+            args=gi_args,
+            can_have_defaults=isinstance(info, GI.FunctionInfo),
+            hidden=frozenset(hidden_indexes),
+            closure_targets=frozenset(closure_indexes),
+            varargs_index=varargs_index,
+        )
 
 
-def _type_to_python(
-    stub: Stub,
-    type: GI.TypeInfo | GIRepository.TypeInfo,
-    out_arg: bool = False,
-    varargs: bool = False,
-) -> str:
-    tag = type.get_tag()
-    tags = GI.TypeTag
+def _get_callable_arguments(
+    stub: Stub, info: GI.CallableInfo, /, *, allow_varargs: bool = True
+) -> tuple[dict[str, str], list[str]]:
+    arguments = _CallableArguments.for_callable(info, allow_varargs=allow_varargs)
 
-    if tag == tags.ARRAY:
-        array_type = type.get_param_type(0)
+    py_args: list[_VisibleArgument] = []
+    return_args: list[str] = []
+    required_indexes: set[int] = set()
 
-        if TYPE_CHECKING:
-            assert array_type is not None
+    for arg in arguments:
+        if arg.direction in _FROM_PYTHON and not arg.is_varargs_slot:
+            py_args.append(arg)
 
-        t = _type_to_python(stub, array_type)
-        if out_arg:
-            # As output argument array of type uint8 are returned as bytes
-            if array_type.get_tag() == GI.TypeTag.UINT8:
-                return f"bytes"
-            return f"list[{t}]"
+            if arg.required:
+                required_indexes.add(arg.c_index)
 
-        # As input arguments array can be generated by any sequence
-        return f"{stub.get_import('collections.abc', 'Sequence')}[{t}]"
+        if arg.direction in _TO_PYTHON:
+            return_args.append(
+                _type_info_to_python(
+                    stub, arg.info.get_type_info(), out=True, nullable=arg.nullable
+                )
+            )
 
-    if tag in (tags.GLIST, tags.GSLIST):
-        array_type = type.get_param_type(0)
+    last_required = max(required_indexes, default=-1)
+    args: dict[str, str] = {}
 
-        if TYPE_CHECKING:
-            assert array_type is not None
+    for py_arg in py_args:
+        arg_type = _type_info_to_python(
+            stub,
+            py_arg.info.get_type_info(),
+            nullable=py_arg.nullable,
+            varargs_callback=py_arg.is_varargs_callback,
+            closure_argument=py_arg.is_closure_target,
+        )
 
-        t = _type_to_python(stub, array_type)
-        return f"list[{t}]"
+        if arguments.can_have_defaults and py_arg.c_index > last_required:
+            arg_type = f"{arg_type} = {'None' if py_arg.nullable else '...'}"
 
-    if tag == tags.BOOLEAN:
-        return "bool"
+        args[_fix_argument_name(py_arg.info.get_name())] = arg_type
 
-    if tag in (tags.DOUBLE, tags.FLOAT):
-        return "float"
+    if (varargs_info := arguments.varargs_info) is not None:
+        args[f"*{_fix_argument_name(varargs_info.get_name())}"] = (
+            f"{stub.get_import('typing', 'Unpack')}[{stub.get_callback_typevar_tuple()}]"
+        )
 
-    if tag == tags.ERROR:
-        return stub.get_namespace_member("GLib", "Error")
-
-    if tag == tags.GHASH:
-        key_type = type.get_param_type(0)
-        value_type = type.get_param_type(1)
-
-        if TYPE_CHECKING:
-            assert key_type is not None
-            assert value_type is not None
-
-        kt = _type_to_python(stub, key_type)
-        vt = _type_to_python(stub, value_type)
-        return f"dict[{kt}, {vt}]"
-
-    if tag in (tags.FILENAME, tags.UTF8, tags.UNICHAR):
-        return "str"
-
-    if tag == tags.GTYPE:
-        return f"type[{stub.get_import('typing', 'Any')}]"
-
-    if tag in (
-        tags.INT8,
-        tags.INT16,
-        tags.INT32,
-        tags.INT64,
-        tags.UINT8,
-        tags.UINT16,
-        tags.UINT32,
-        tags.UINT64,
+    return_type = info.get_return_type()
+    if not info.skip_return() and (
+        return_type.get_tag() != GI.TypeTag.VOID or return_type.is_pointer()
     ):
-        return "int"
+        return_args = [
+            _type_info_to_python(
+                stub, return_type, out=True, nullable=info.may_return_null()
+            ),
+            *return_args,
+        ]
 
-    if tag == tags.INTERFACE:
-        interface = type.get_interface()
-        if isinstance(interface, GI.CallbackInfo):
-            (names, args, return_args) = _callable_get_arguments(stub, interface)
+    return args, return_args
 
-            return_type = ""
-            if len(return_args) == 1:
-                return_type = return_args[0]
+
+def _type_info_to_python(
+    stub: Stub,
+    info: GI.TypeInfo,
+    /,
+    *,
+    out: bool = False,
+    nullable: bool = False,
+    varargs_callback: bool = False,
+    closure_argument: bool = False,
+) -> str:
+    tag = info.get_tag()
+
+    py_type: str | None = None
+
+    match tag:
+        case GI.TypeTag.BOOLEAN:
+            py_type = "bool"
+        case (
+            GI.TypeTag.INT8
+            | GI.TypeTag.INT16
+            | GI.TypeTag.INT32
+            | GI.TypeTag.INT64
+            | GI.TypeTag.UINT8
+            | GI.TypeTag.UINT16
+            | GI.TypeTag.UINT32
+            | GI.TypeTag.UINT64
+        ):
+            py_type = "int"
+        case GI.TypeTag.DOUBLE | GI.TypeTag.FLOAT:
+            py_type = "float"
+        case GI.TypeTag.UTF8 | GI.TypeTag.FILENAME | GI.TypeTag.UNICHAR:
+            py_type = "str"
+        case GI.TypeTag.ARRAY | GI.TypeTag.GLIST | GI.TypeTag.GSLIST:
+            value_info = info.get_param_type(0)
+
+            if TYPE_CHECKING:
+                assert value_info is not None
+
+            value_type = _type_info_to_python(stub, value_info, out=out)
+
+            if tag == GI.TypeTag.ARRAY:
+                if out:
+                    # As output argument array of type uint8 are returned as bytes
+                    if value_info.get_tag() == GI.TypeTag.UINT8:
+                        py_type = f"bytes"
+                    else:
+                        py_type = f"list[{value_type}]"
+                else:
+                    # As input arguments array can be generated by any sequence
+                    py_type = f"{stub.get_import('collections.abc', 'Sequence')}[{value_type}]"
             else:
-                return_type = f"tuple[{', '.join(return_args)}]"
+                py_type = f"list[{value_type}]"
 
-            # FIXME, how to express Callable with variable arguments?
-            if (len(names) > 0 and names[-1].startswith("*")) or varargs:
-                return f"{stub.get_import('collections.abc', 'Callable')}[..., {return_type}]"
-            else:
-                return f"{stub.get_import('collections.abc', 'Callable')}[[{', '.join(args)}], {return_type}]"
-        elif interface is not None:
-            namespace = interface.get_namespace()
-            name = interface.get_name()
+            # All return/out/inout arrays/lists get marshalled as a list, regardless of nullable
+            nullable = nullable and not out
+        case GI.TypeTag.GHASH:
+            key_info = info.get_param_type(0)
+            value_info = info.get_param_type(1)
 
-            if name is not None and not _identifier_re.match(name):
-                # Convert Flags and Enums with invalid name to int
-                # Example NM 1.0 library
-                if interface.get_type() in (
-                    GIRepository.InfoType.FLAGS,
-                    GIRepository.InfoType.ENUM,
+            if TYPE_CHECKING:
+                assert key_info is not None
+                assert value_info is not None
+
+            key_type = _type_info_to_python(stub, key_info, out=out)
+            value_type = _type_info_to_python(stub, value_info, out=out)
+            collection_type = (
+                "dict" if out else stub.get_import("collections.abc", "Mapping")
+            )
+
+            py_type = f"{collection_type}[{key_type}, {value_type}]"
+        case GI.TypeTag.INTERFACE:
+            interface_info = info.get_interface()
+
+            if isinstance(interface_info, GI.CallbackInfo):
+                # TODO: enable this when PyGObject exposes CallbackInfos
+                # if (
+                #     callback_name := interface_info.get_name()
+                # ) and not interface_info.get_container():
+                #     # Reference named callbacks directly
+                #     py_type = stub.get_namespace_member(
+                #         interface_info.get_namespace(), callback_name
+                #     )
+
+                #     if (
+                #         varargs_callback
+                #         and (interface_info.get_namespace(), interface_info.get_name())
+                #         not in EXCLUDED_VARARGS_CALLBACKS
+                #     ):
+                #         py_type = f"{py_type}[{stub.get_import('typing', 'Unpack')}[{stub.get_callback_typevar_tuple()}]]"
+                # else:
+                #    # Generate the `Callable[]` annotation for anonymous callbacks
+                #    (callback_args, callback_return_args) = _get_callable_arguments(
+                #        stub, interface_info, allow_varargs=varargs_callback
+                #    )
+                #    callback_return_type = _get_return_type(callback_return_args)
+
+                #    py_type = f"{stub.get_import('collections.abc', 'Callable')}[[{', '.join(callback_args.values())}], {callback_return_type}]"
+                (callback_args, callback_return_args) = _get_callable_arguments(
+                    stub, interface_info, allow_varargs=varargs_callback
+                )
+                callback_return_type = _get_return_type(callback_return_args)
+
+                py_type = f"{stub.get_import('collections.abc', 'Callable')}[[{', '.join(callback_args.values())}], {callback_return_type}]"
+            elif interface_info is not None:
+                interface_namespace = interface_info.get_namespace()
+                interface_name = interface_info.get_name()
+
+                if interface_namespace == "GObject" and interface_name == "Value":
+                    py_type = stub.get_import("typing", "Any")
+
+                elif interface_namespace == "GObject" and interface_name == "Closure":
+                    py_type = f"{stub.get_import('collections.abc', 'Callable')}[..., {stub.get_import('typing', 'Any')}]"
+
+                elif (
+                    interface_namespace == "cairo"
+                    and interface_name == "Context"
+                    and not out
                 ):
-                    return "int"
+                    some_surface = stub.get_typevar(
+                        "_SomeSurface",
+                        bound=f"{stub.get_namespace_member('cairo', 'Surface')}",
+                    )
+                    py_type = f"{stub.get_namespace_member('cairo', 'Context')}[{some_surface}]"
+                else:
+                    py_type = stub.get_namespace_member(
+                        interface_namespace, f"{interface_name}"
+                    )
+        case GI.TypeTag.VOID:
+            if info.is_pointer():
+                if closure_argument:
+                    # Arguments passed to callbacks are specially handled by the PyGObject marshalling code,
+                    # so they can be anything
+                    py_type = f"{stub.get_import('typing', 'Any')} | None"
+                else:
+                    # Pointers can be int | CapsuleType | None, but we don't have CapsuleType until 3.13
+                    # This is what typeshed did until 3.13
+                    py_type = (
+                        "int"
+                        if out
+                        else f"int | {stub.get_import('typing', 'Any')} | None"
+                    )
 
-            if namespace == "GObject" and name == "Value":
-                return stub.get_import("typing", "Any")
+                # All return/out/inout pointers get marshalled as int, regardless of nullable
+                nullable = nullable and not out
+            else:
+                py_type = "None"
+        case GI.TypeTag.GTYPE:
+            py_type = f"type[{stub.get_import('typing', 'Any')}]"
+        case GI.TypeTag.ERROR:
+            py_type = stub.get_namespace_member("GLib", "Error")
 
-            if namespace == "GObject" and name == "Closure":
-                return f"{stub.get_import('collections.abc', 'Callable')}[..., {stub.get_import('typing', 'Any')}]"
+    if py_type is None:
+        raise ValueError(f"Unsupported GI type tag: {tag}")
 
-            if namespace == "cairo" and name == "Context" and not out_arg:
-                return f"{stub.get_namespace_member('cairo', 'Context')}[_SomeSurface]"
+    if nullable:
+        py_type = _make_nullable(py_type)
 
-            return stub.get_namespace_member(namespace, name)
-
-    if tag == tags.VOID:
-        return "None"
-
-    raise ValueError("TODO")
+    return py_type
 
 
 def _generate_full_name(prefix: str, name: str) -> str:
@@ -330,28 +526,22 @@ def _build_function_info(
     # Flags
     function_flags = function.get_flags()
 
-    if function_flags & GIRepository.FunctionInfoFlags.IS_CONSTRUCTOR:
+    if function_flags & GI.FunctionInfoFlags.IS_CONSTRUCTOR:
         constructor = True
 
-    if function_flags & GIRepository.FunctionInfoFlags.IS_METHOD:
+    if function_flags & GI.FunctionInfoFlags.IS_METHOD:
         method = True
 
     if in_class and not method and not constructor:
         static = True
 
     # Arguments
-    (names, args, return_args) = _callable_get_arguments(stub, function, True)
-    args_types = [
-        f"{fix_argument_name(name)}: {args[i]}" for (i, name) in enumerate(names)
-    ]
+    args, return_args = _get_callable_arguments(stub, function)
+    args_types = [f"{_fix_argument_name(name)}: {arg}" for name, arg in args.items()]
 
-    # Return type
-    if return_signature:
-        return_type = return_signature
-    elif len(return_args) > 1:
-        return_type = f"tuple[{', '.join(return_args)}]"
-    else:
-        return_type = f"{return_args[0]}"
+    return_type = (
+        return_signature if return_signature else _get_return_type(return_args)
+    )
 
     # Generate string
     prepend = ""
@@ -388,16 +578,13 @@ def _wrapped_strip_boolean_result(
     real_function = function.__wrapped__
     fail_ret = inspect.getclosurevars(function).nonlocals.get("fail_ret")
 
-    (_, _, return_args) = _callable_get_arguments(stub, real_function)
+    _, return_args = _get_callable_arguments(stub, real_function)
     return_args = return_args[1:]  # Strip first return value
 
-    if len(return_args) > 1:
-        return_signature = f"tuple[{', '.join(return_args)}]"
-    else:
-        return_signature = f"{return_args[0]}"
+    return_signature = _get_return_type(return_args)
 
     if fail_ret is None:
-        return_signature = f"{return_signature} | None"
+        return_signature = _make_nullable(f"{return_signature}")
     else:
         if type(fail_ret) is tuple:
             if len(fail_ret) > 0:
@@ -422,18 +609,21 @@ def _build_function(
     name: str,
     function: Any,
     in_class: Any | None,
+    *,
+    is_overload: bool = False,
 ) -> str:
     if name.startswith("_") and name not in ALLOWED_FUNCTIONS:
         return ""
 
-    if hasattr(function, "__wrapped__"):
-        if "strip_boolean_result" in str(function):
-            return _wrapped_strip_boolean_result(stub, name, function, in_class)
+    if hasattr(function, "__wrapped__") and _strip_boolean_result_re.search(
+        str(function)
+    ):
+        return _wrapped_strip_boolean_result(stub, name, function, in_class)
 
     if isinstance(function, GI.FunctionInfo) or isinstance(function, GI.VFuncInfo):
         if in_class is None and function.get_namespace() != stub.namespace:
             # Set up a constant for functions that are aliases
-            return f"{name}: {stub.get_final()} = {stub.get_namespace_member(function.get_namespace(), function.get_name())}\n"
+            return f"{name}: {stub.get_final()} = {stub.get_namespace_member(function.get_namespace(), f'{function.get_name()}')}\n"
 
         return _build_function_info(stub, name, function, in_class)
 
@@ -443,8 +633,15 @@ def _build_function(
 
     signature_string: str
     missing_annotation = False
+
+    if not is_overload and (overloads := get_overloads(function)):
+        lines = [
+            f"@{stub.get_import('typing', 'overload')}\n{_build_function(stub, name, overload, in_class, is_overload=True)}"
+            for overload in overloads
+        ]
+        return "\n".join(lines)
+
     try:
-        # TODO: handle @overload with get_overloads()
         signature = inspect.signature(function)
 
         if name == "__init__" and signature.parameters:
@@ -551,6 +748,9 @@ def _replace_union(formatted: str) -> str:
 @dataclass(slots=True)
 class PropertyInfo:
     stub: Stub
+    gi_info: GI.PropertyInfo
+
+    # Needed for get_getter() and get_setter() because GI.PropertyInfo doesn't have them
     gir_info: GIRepository.PropertyInfo
 
     gobject_name: str = field(init=False)
@@ -560,31 +760,33 @@ class PropertyInfo:
     _prop_type: str | None = field(init=False, default=None)
 
     def __post_init__(self) -> None:
-        self.gobject_name = f"{self.gir_info.get_name()}"
-        self.name = fix_argument_name(self.gobject_name)
+        self.gobject_name = f"{self.gi_info.get_name()}"
+        self.name = _fix_argument_name(self.gobject_name)
 
     @property
     def readable(self) -> bool:
-        return bool(self.gir_info.get_flags() & GObject.ParamFlags.READABLE)
+        return bool(self.gi_info.get_flags() & GObject.ParamFlags.READABLE)
 
     @property
     def writable(self) -> bool:
-        return bool(self.gir_info.get_flags() & GObject.ParamFlags.WRITABLE)
+        return bool(self.gi_info.get_flags() & GObject.ParamFlags.WRITABLE)
 
     @property
     def construct(self) -> bool:
-        return bool(self.gir_info.get_flags() & GObject.ParamFlags.CONSTRUCT)
+        return bool(self.gi_info.get_flags() & GObject.ParamFlags.CONSTRUCT)
 
     @property
     def construct_only(self) -> bool:
-        return bool(self.gir_info.get_flags() & GObject.ParamFlags.CONSTRUCT_ONLY)
+        return bool(self.gi_info.get_flags() & GObject.ParamFlags.CONSTRUCT_ONLY)
 
     @property
     def prop_type(self) -> str:
         if self._prop_type is not None:
             return self._prop_type
 
-        py_type = _type_to_python(self.stub, self.gir_info.get_type_info(), True)
+        py_type = _type_info_to_python(
+            self.stub, self.gi_info.get_type_info(), out=True
+        )
         getter = self.gir_info.get_getter()
         setter = self.gir_info.get_setter()
 
@@ -592,7 +794,7 @@ class PropertyInfo:
             # If it is wratable only prop, check if setter can accept NULL
             setter and setter.get_arg(0).may_be_null()
         ):
-            py_type = f"{py_type} | None"
+            py_type = _make_nullable(py_type)
 
         self._prop_type = py_type
 
@@ -603,11 +805,12 @@ class PropertyInfo:
         if self._init_type is not None:
             return self._init_type
 
-        py_type = _type_to_python(self.stub, self.gir_info.get_type_info())
         setter = self.gir_info.get_setter()
-
-        if setter and setter.get_arg(0).may_be_null():
-            py_type = f"{py_type} | None"
+        py_type = _type_info_to_python(
+            self.stub,
+            self.gi_info.get_type_info(),
+            nullable=bool(setter and setter.get_arg(0).may_be_null()),
+        )
 
         self._init_type = py_type
 
@@ -787,7 +990,7 @@ class ClassInfo:
         )
 
         yield from (
-            PropertyInfo(self.stub, prop_info)
+            PropertyInfo(self.stub, prop, prop_info)
             for prop in itertools.chain(gi_info.get_properties(), *interface_properties)
             if (prop_info := self.__find_repo_property(prop)) is not None
         )
@@ -923,9 +1126,11 @@ class Props{parents_string}:
             if override := self.stub.check_override(self.full_name, name):
                 lines.append(override)
             else:
-                py_type = _type_to_python(self.stub, field.get_type_info(), True)
+                py_type = _type_info_to_python(
+                    self.stub, field.get_type_info(), out=True
+                )
                 flags = field.get_flags()
-                if not (flags & _IS_FIELD_WRITABLE):
+                if not (flags & GI.FieldInfoFlags.IS_WRITABLE):
                     lines.append(self.stub.get_property(name, py_type))
                 else:
                     lines.append(f"{name}: {py_type}")
@@ -1034,24 +1239,47 @@ class Stub:
     namespace: str
     overrides: Overrides
     imports: InitVar[Imports]
+    typevars: InitVar[TypeVars]
     needed_imports: dict[tuple[str, str | None], FromImport | Import] = field(
         init=False
     )
+    needed_typevars: list[TypeVarInfo | TypeVarTupleInfo] = field(
+        init=False, default_factory=list
+    )
+    known_namespaces: set[str] = field(init=False, default_factory=set)
+    known_namespaces_prefixes: tuple[str, ...] = field(
+        init=False, default_factory=tuple
+    )
 
-    def __post_init__(self, imports: Imports) -> None:
-        self.needed_imports = {
-            (
-                _import.module,
+    def __post_init__(self, imports: Imports, typevars: TypeVars) -> None:
+        self.needed_imports = {}
+
+        for _import in imports:
+            name = (
                 (
                     _import.import_as or _import.name
                     if _import.module == "gi.repository"
                     else _import.name
                 )
                 if isinstance(_import, FromImport)
-                else None,
-            ): _import
-            for _import in imports
-        }
+                else None
+            )
+            module = _normalize_module_name(_import.module, name)
+
+            self.needed_imports[(module, name)] = replace(_import, module=module)
+
+        self.known_namespaces = {
+            dependency.rsplit("-", 1)[0]
+            for dependency in self.repo.get_dependencies(self.namespace)
+        } | {self.namespace}
+        self.known_namespaces_prefixes = tuple(
+            f"{namespace}." for namespace in self.known_namespaces
+        )
+
+        self.needed_typevars = list(typevars)
+
+        if self.namespace == "Gtk":
+            self.get_import("os")
 
     def check_override(self, prefix: str, name: str) -> str | None:
         full_name = _generate_full_name(prefix, name)
@@ -1062,6 +1290,7 @@ class Stub:
     def __get_import(
         self, module: str, /, name: str | None = None
     ) -> FromImport | Import | None:
+        module = _normalize_module_name(module, name)
         return self.needed_imports.get((module, name))
 
     def __add_import(
@@ -1071,6 +1300,8 @@ class Stub:
         name: str | None = None,
         import_as: str | None = None,
     ) -> Import | FromImport:
+        module = _normalize_module_name(module, name)
+
         import_object = (
             Import(module, import_as)
             if name is None
@@ -1122,6 +1353,56 @@ class Stub:
             _import = self.__add_import("gi.repository", namespace)
 
         return f"{_import.symbol}.{name}"
+
+    def get_typevar(
+        self,
+        name: str,
+        /,
+        *constraints: str,
+        default: str | None = None,
+        bound: str | None = None,
+        covariant: bool = False,
+        contravariant: bool = False,
+        # TODO: https://github.com/python/mypy/issues/17811
+        # Since mypy doesn't support infer_variance, we'll disable this for now and enable
+        # it when/if it's supported (or when 3.11 is dropped)
+        # infer_variance: bool = False,
+    ) -> str:
+        if covariant and not contravariant:
+            name = f"{name}_co"
+
+        if contravariant and not covariant:
+            name = f"{name}_contra"
+
+        typevar = TypeVarInfo(
+            name,
+            default,
+            constraints if constraints else None,
+            bound,
+            contravariant=contravariant,
+            covariant=covariant,
+            # infer_variance=infer_variance,
+        )
+
+        if typevar not in self.needed_typevars:
+            self.needed_typevars.append(typevar)
+
+        return name
+
+    def get_typevar_tuple(self, name: str, /, *, default: str | None = None) -> str:
+        if default is not None:
+            unpack_symbol = self.get_import("typing", "Unpack")
+            default = f"{unpack_symbol}[{default}]"
+
+        typevar_tuple = TypeVarTupleInfo(name, default)
+
+        if typevar_tuple not in self.needed_typevars:
+            self.needed_typevars.append(typevar_tuple)
+
+        return name
+
+    def get_callback_typevar_tuple(self) -> str:
+        return self.get_typevar_tuple("_DataTs", default=f"tuple[()]")
 
     def get_final(self, annotation: str | None = None) -> str:
         final_symbol = self.get_import("typing", "Final")
@@ -1202,23 +1483,55 @@ class Stub:
 
     def __replace_free_typing(self, match: re.Match[str]) -> str:
         name = match.group("name")
-        return self.get_import("typing" if name == "Any" else "typing_extensions", name)
+        return self.get_import("typing", name)
+
+    def __replace_import(self, match: re.Match[str]) -> str:
+        module = match.group("module")
+        name = match.group("name")
+
+        if module.startswith(
+            ("gi.repository.", "gi.overrides.", "_gi.")
+        ) or module.startswith(self.known_namespaces_prefixes):
+            if module.startswith(f"{self.namespace}."):
+                return f"{module.split('.', 1)[1]}.{name}"
+            return f"{module}.{name}"
+
+        if module in self.known_namespaces:
+            if module == self.namespace:
+                return name
+            return f"{module}.{name}"
+
+        if module in {"gi", "gobject"}:
+            if name == "Struct":
+                return self.get_namespace_member("_gi", "Struct")
+            return f"gi.repository.GObject.{name}"
+
+        return self.get_import(module, name)
 
     def __replace_gi_repository(self, match: re.Match[str]) -> str:
         namespace = match.group("namespace")
         symbol = self.get_namespace_member(namespace, match.group("name"))
         return f"{symbol}"
 
-    def __fix_annotations(self, formatted: str) -> str:
+    def __fix_annotations(self, formatted: str, /, *, fix_imports: bool = False) -> str:
         formatted = _replace_optional(formatted)
         formatted = _replace_union(formatted)
         formatted = _typing_re.sub(self.__replace_typing, formatted)
         formatted = _free_typing_re.sub(self.__replace_free_typing, formatted)
+        formatted = re.sub(
+            rf"\b{self.get_import('typing', 'Generator')}\[(.*?), None, None\]",
+            rf"{self.get_import('collections.abc', 'Iterator')}[\1]",
+            formatted,
+        )
+        if fix_imports:
+            formatted = _import_re.sub(self.__replace_import, formatted)
         formatted = _gi_repository_re.sub(self.__replace_gi_repository, formatted)
         formatted = _type_vars_re.sub(r"\g<name>", formatted)
         return re.sub(rf"\b{self.namespace}\.", r"", formatted)
 
-    def format_annotation(self, annotation: Any) -> str:
+    def format_annotation(
+        self, annotation: Any, /, *, fix_imports: bool = False
+    ) -> str:
         try:
             # This requires Python 3.14
             formatted = inspect.formatannotation(
@@ -1231,7 +1544,7 @@ class Stub:
                 inspect.formatannotation(annotation).replace('"', "").replace("'", "")
             )
 
-        return self.__fix_annotations(formatted)
+        return self.__fix_annotations(formatted, fix_imports=fix_imports)
 
     def format_signature(self, signature: inspect.Signature) -> str:
         try:
@@ -1241,16 +1554,67 @@ class Stub:
             # This should be a good enough fallback for older Pythons
             formatted = str(signature).replace('"', "").replace("'", "")
 
-        return self.__fix_annotations(formatted)
+        return self.__fix_annotations(formatted, fix_imports=True)
+
+    # TODO: enable this when PyGObject exposes CallbackInfos
+    # def __build_callback_type(self, callback_info: GI.CallbackInfo) -> str:
+    #     name = f"{callback_info.get_name()}"
+    #
+    #     if override := self.check_override("", name):
+    #         return override
+    #
+    #     # NOTE: Use `type X =` when 3.11 is dropped
+    #     type_alias = self.get_import("typing", "TypeAlias")
+    #     signature = callback_info.__signature__
+    #
+    #     callback_data_arg_name = next(
+    #         (
+    #             arg.get_name()
+    #             for arg in callback_info.get_arguments()
+    #             if arg.get_closure_index() > -1
+    #         ),
+    #         None,
+    #     )
+    #
+    #     annotation = self.format_annotation(
+    #         Callable[
+    #             [
+    #                 self.get_callback_typevar_tuple()
+    #                 if param.name == callback_data_arg_name
+    #                 else param.annotation
+    #                 for param in signature.parameters.values()
+    #             ],
+    #             signature.return_annotation,
+    #         ],
+    #         fix_imports=True,
+    #     )
+    #
+    #     if callback_data_arg_name is not None:
+    #         unpack_symbol = self.get_import("typing", "Unpack")
+    #         annotation = re.sub(
+    #             r"""['"]_DataTs['"]""",
+    #             f"{unpack_symbol}[_DataTs]",
+    #             annotation,
+    #         )
+    #
+    #     return f"""{name}: {type_alias} = {annotation}"""
+    #
+    # def __build_callback_types(self) -> str:
+    #     lines: list[str] = []
+    #
+    #     gi_repo = gi.Repository.get_default()
+    #     for callback_info in gi_repo.get_infos(self.namespace):
+    #         if not isinstance(callback_info, GI.CallbackInfo):
+    #             continue
+    #
+    #         lines.append(self.__build_callback_type(callback_info))
+    #
+    #     return "\n".join(lines)
 
     def build(self) -> str:
         ret = _gi_build_stub_parts(self, self.parent, dir(self.parent), None, "")[0]
 
-        _TypeVar = self.get_import("typing", "TypeVar")
-
-        typevars: list[str] = [
-            f'T = {_TypeVar}("T")',
-        ]
+        extras: list[str] = []
 
         if self.namespace == "GObject":
             # TODO: find a better way to keep things (like protocols) that aren't in the actual module
@@ -1258,39 +1622,38 @@ class Stub:
             object_protocol = self.check_override("", "ObjectProtocol")
 
             if object_protocol is not None:
-                typevars.append(object_protocol)
-        elif self.namespace == "Gtk":
-            self.get_import("os")
-            typevars.append(
-                f"""CellRendererT = {_TypeVar}(
-    "CellRendererT",
-    CellRendererCombo,
-    CellRendererPixbuf,
-    CellRendererProgress,
-    CellRendererSpin,
-    CellRendererSpinner,
-    CellRendererText,
-    CellRendererToggle,
-)
-WidgetT = {_TypeVar}("WidgetT", bound=Widget)"""
-            )
-        elif self.namespace == "Gio":
-            any_symbol = self.get_import("typing", "Any")
-            typevars.extend(
-                [
-                    f'ObjectItemType = {_TypeVar}("ObjectItemType", bound=GObject.Object, default={any_symbol})',
-                    f'ObjectPropsItemType = {_TypeVar}("ObjectPropsItemType", bound=GObject.Object, default={any_symbol})',
-                ]
-            )
+                extras.append(object_protocol)
 
-        if ("cairo", None) in self.needed_imports:
-            typevars.append(
-                f'_SomeSurface = {_TypeVar}("_SomeSurface", bound=cairo.Surface)'
-            )
+        # TODO: enable this when PyGObject exposes CallbackInfos
+        # This must be called before generating the imports
+        # callbacks = self.__build_callback_types()
 
         imports = [f"{_import}" for _import in self.needed_imports.values()]
+        extras_str = "\n".join(extras)
 
-        return "\n".join(imports) + "\n" + "\n".join(typevars) + "\n\n" + ret
+        # Only keep the typevars that are actually used in the generated stubs
+        used_typevars: list[str] = []
+        for typevar in self.needed_typevars:
+            typevar_re = re.compile(rf"\b{typevar.name}\b")
+
+            if (
+                typevar_re.search(extras_str) is not None
+                or typevar_re.search(ret) is not None
+            ):
+                used_typevars.append(typevar.build(self))
+
+        return (
+            "\n".join(imports)
+            + "\n"
+            + "\n".join(used_typevars)
+            + "\n\n"
+            + extras_str
+            # TODO: enable this when PyGObject exposes CallbackInfos
+            # + "\n\n"
+            # + callbacks
+            + "\n\n"
+            + ret
+        )
 
 
 def _gi_build_stub_parts(
@@ -1545,7 +1908,12 @@ def _find_attributes(obj: type[Any]) -> list[str]:
 
 
 def start(
-    module: str, version: str, init: str | None, overrides: Overrides, imports: Imports
+    module: str,
+    version: str,
+    init: str | None,
+    overrides: Overrides,
+    imports: Imports,
+    typevars: TypeVars,
 ) -> str:
     repo = GIRepository.Repository()
     repo.require(module, version, 0)  # type: ignore
@@ -1555,7 +1923,7 @@ def start(
 
     if init:
         exec(init)
-    stub = Stub(repo, m, module, overrides, imports)
+    stub = Stub(repo, m, module, overrides, imports, typevars)
     return stub.build()
 
 
@@ -1577,18 +1945,21 @@ def main() -> None:
     if args.update:
         overrides: Overrides = {}
         imports: Imports = []
+        typevars: TypeVars = []
         try:
             with open(args.update) as file:
-                overrides, imports = parse(file.read())
+                overrides, imports, typevars = parse(file.read())
         except FileNotFoundError:
             pass
-        output = start(args.module, args.version, args.init, overrides, imports)
+        output = start(
+            args.module, args.version, args.init, overrides, imports, typevars
+        )
         print("Running with these overrides:")
         pprint.pprint(overrides)
         with open(args.update, "w+") as file:
             file.write(output)
     else:
-        print(start(args.module, args.version, args.init, {}, []))
+        print(start(args.module, args.version, args.init, {}, [], []))
 
 
 if __name__ == "__main__":

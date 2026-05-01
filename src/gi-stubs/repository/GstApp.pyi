@@ -1,6 +1,6 @@
-from typing import Any
 from typing import type_check_only
-from typing import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 
@@ -9,7 +9,7 @@ from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GstBase
 
-T = TypeVar("T")
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 class AppSink(GstBase.BaseSink, Gst.URIHandler):
     """
@@ -252,18 +252,30 @@ class AppSinkSimpleCallbacks(GObject.GBoxed):
     @classmethod
     def new(cls) -> AppSinkSimpleCallbacks: ...
     def ref(self) -> AppSinkSimpleCallbacks: ...
-    def set_eos(self, eos_cb: Callable[..., None], *user_data: Any) -> None: ...
+    def set_eos(
+        self,
+        eos_cb: Callable[[AppSink, Unpack[_DataTs]], None],
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
     def set_new_event(
-        self, new_event_cb: Callable[..., bool], *user_data: Any
+        self,
+        new_event_cb: Callable[[AppSink, Unpack[_DataTs]], bool],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_new_preroll(
-        self, new_preroll_cb: Callable[..., Gst.FlowReturn], *user_data: Any
+        self,
+        new_preroll_cb: Callable[[AppSink, Unpack[_DataTs]], Gst.FlowReturn],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_new_sample(
-        self, new_sample_cb: Callable[..., Gst.FlowReturn], *user_data: Any
+        self,
+        new_sample_cb: Callable[[AppSink, Unpack[_DataTs]], Gst.FlowReturn],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_propose_allocation(
-        self, propose_allocation_cb: Callable[..., bool], *user_data: Any
+        self,
+        propose_allocation_cb: Callable[[AppSink, Gst.Query, Unpack[_DataTs]], bool],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unref(self) -> None: ...
 
@@ -505,13 +517,19 @@ class AppSrcSimpleCallbacks(GObject.GBoxed):
     def new(cls) -> AppSrcSimpleCallbacks: ...
     def ref(self) -> AppSrcSimpleCallbacks: ...
     def set_enough_data(
-        self, enough_data_cb: Callable[..., None], *user_data: Any
+        self,
+        enough_data_cb: Callable[[AppSrc, Unpack[_DataTs]], None],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_need_data(
-        self, need_data_cb: Callable[..., None], *user_data: Any
+        self,
+        need_data_cb: Callable[[AppSrc, int, Unpack[_DataTs]], None],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_seek_data(
-        self, seek_data_cb: Callable[..., bool], *user_data: Any
+        self,
+        seek_data_cb: Callable[[AppSrc, int, Unpack[_DataTs]], bool],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def unref(self) -> None: ...
 

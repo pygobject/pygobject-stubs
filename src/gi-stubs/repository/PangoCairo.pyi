@@ -1,6 +1,7 @@
-from typing import Any
 from typing import Protocol
-from typing import TypeVar
+from typing_extensions import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 
@@ -8,7 +9,7 @@ import cairo
 from gi.repository import GObject
 from gi.repository import Pango
 
-T = TypeVar("T")
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
 def context_get_font_options(context: Pango.Context) -> cairo.FontOptions | None: ...
@@ -18,7 +19,12 @@ def context_set_font_options(
 ) -> None: ...
 def context_set_resolution(context: Pango.Context, dpi: float) -> None: ...
 def context_set_shape_renderer(
-    context: Pango.Context, func: Callable[..., None] | None = None, *data: Any
+    context: Pango.Context,
+    func: Callable[
+        [cairo.Context[_SomeSurface], Pango.AttrShape, bool, Unpack[_DataTs]], None
+    ]
+    | None = None,
+    *data: Unpack[_DataTs],
 ) -> None: ...
 def create_context(cr: cairo.Context[_SomeSurface]) -> Pango.Context: ...
 def create_layout(cr: cairo.Context[_SomeSurface]) -> Pango.Layout: ...

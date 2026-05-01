@@ -1,12 +1,9 @@
 from typing import Final
-from typing import TypeVar
 
 from enum import IntEnum
 from enum import IntFlag
 
 from gi import _gi
-
-T = TypeVar("T")
 
 MODULE_IMPL_AR: Final[int]
 MODULE_IMPL_DL: Final[int]
@@ -30,7 +27,7 @@ class Module(_gi.Struct):
     def name(self) -> str: ...
     @staticmethod
     def supported() -> bool: ...
-    def symbol(self, symbol_name: str) -> tuple[bool, None]: ...
+    def symbol(self, symbol_name: str) -> tuple[bool, int]: ...
 
 class ModuleFlags(IntFlag):
     LAZY = 1

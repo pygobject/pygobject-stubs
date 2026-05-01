@@ -1,5 +1,4 @@
 from typing import Final
-from typing import TypeVar
 
 from collections.abc import Sequence
 from enum import IntEnum
@@ -8,8 +7,6 @@ from gi import _gi
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
-
-T = TypeVar("T")
 
 MIKEY_VERSION: Final[int]
 SDP_BWTYPE_AS: Final = "AS"
@@ -70,8 +67,8 @@ class MIKEYMessage(GObject.GBoxed):
     prf_func: MIKEYPRFFunc
     CSB_id: int
     map_type: MIKEYMapType
-    map_info: list[None]
-    payloads: list[None]
+    map_info: list[int]
+    payloads: list[int]
     def __init__(self) -> None: ...
     def add_cs_srtp(self, policy: int, ssrc: int, roc: int) -> bool: ...
     def add_payload(self, payload: MIKEYPayload) -> bool: ...
@@ -165,7 +162,7 @@ class MIKEYPayloadKEMAC(_gi.Struct):
     pt: MIKEYPayload
     enc_alg: MIKEYEncAlg
     mac_alg: MIKEYMacAlg
-    subpayloads: list[None]
+    subpayloads: list[int]
 
 class MIKEYPayloadKeyData(_gi.Struct):
     """
@@ -225,7 +222,7 @@ class MIKEYPayloadSP(_gi.Struct):
     pt: MIKEYPayload
     policy: int
     proto: MIKEYSecProto
-    params: list[None]
+    params: list[int]
 
 class MIKEYPayloadSPParam(_gi.Struct):
     """
@@ -325,12 +322,12 @@ class SDPMedia(_gi.Struct):
     port: int
     num_ports: int
     proto: str
-    fmts: list[None]
+    fmts: list[int]
     information: str
-    connections: list[None]
-    bandwidths: list[None]
+    connections: list[int]
+    bandwidths: list[int]
     key: SDPKey
-    attributes: list[None]
+    attributes: list[int]
     def add_attribute(self, key: str, value: str | None = None) -> SDPResult: ...
     def add_bandwidth(self, bwtype: str, bandwidth: int) -> SDPResult: ...
     def add_connection(
@@ -402,15 +399,15 @@ class SDPMessage(GObject.GBoxed):
     session_name: str
     information: str
     uri: str
-    emails: list[None]
-    phones: list[None]
+    emails: list[int]
+    phones: list[int]
     connection: SDPConnection
-    bandwidths: list[None]
-    times: list[None]
-    zones: list[None]
+    bandwidths: list[int]
+    times: list[int]
+    zones: list[int]
     key: SDPKey
-    attributes: list[None]
-    medias: list[None]
+    attributes: list[int]
+    medias: list[int]
     def add_attribute(self, key: str, value: str | None = None) -> SDPResult: ...
     def add_bandwidth(self, bwtype: str, bandwidth: int) -> SDPResult: ...
     def add_email(self, email: str) -> SDPResult: ...
@@ -524,7 +521,7 @@ class SDPTime(_gi.Struct):
 
     start: str
     stop: str
-    repeat: list[None]
+    repeat: list[int]
     def clear(self) -> SDPResult: ...
     def set(self, start: str, stop: str, repeat: Sequence[str]) -> SDPResult: ...
 

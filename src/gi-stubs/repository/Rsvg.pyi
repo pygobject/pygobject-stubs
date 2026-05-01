@@ -1,7 +1,8 @@
-from typing import Any
 from typing import Final
 from typing import type_check_only
-from typing import TypeVar
+from typing_extensions import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -12,8 +13,8 @@ from gi import _gi
 from gi.repository import Gio
 from gi.repository import GObject
 
-T = TypeVar("T")
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 HAVE_CSS: Final = True
 HAVE_PIXBUF: Final[int]
@@ -183,7 +184,9 @@ class Handle(GObject.Object):
     def set_dpi(self, dpi: float) -> None: ...
     def set_dpi_x_y(self, dpi_x: float, dpi_y: float) -> None: ...
     def set_size_callback(
-        self, size_func: Callable[..., tuple[int, int]] | None = None, *user_data: Any
+        self,
+        size_func: Callable[[Unpack[_DataTs]], tuple[int, int]] | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_stylesheet(self, css: Sequence[int]) -> bool: ...
     def write(self, buf: Sequence[int]) -> bool: ...

@@ -1,7 +1,8 @@
 from typing import Any
 from typing import Final
 from typing import type_check_only
-from typing import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -13,7 +14,7 @@ from gi.repository import Gst
 from gi.repository import GstAudio
 from gi.repository import GstVideo
 
-T = TypeVar("T")
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 ENCODING_CATEGORY_CAPTURE: Final = "capture"
 ENCODING_CATEGORY_DEVICE: Final = "device"
@@ -103,8 +104,8 @@ def init(): ...  # FIXME: Override is missing typing annotation
 def install_plugins_async(
     details: Sequence[str],
     ctx: InstallPluginsContext | None,
-    func: Callable[..., None],
-    *user_data: Any,
+    func: Callable[[InstallPluginsReturn, Unpack[_DataTs]], None],
+    *user_data: Unpack[_DataTs],
 ) -> InstallPluginsReturn: ...
 def install_plugins_installation_in_progress() -> bool: ...
 def install_plugins_return_get_name(ret: InstallPluginsReturn) -> str: ...

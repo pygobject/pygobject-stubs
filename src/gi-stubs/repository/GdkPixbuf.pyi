@@ -1,7 +1,8 @@
 from typing import Any
 from typing import Final
 from typing import type_check_only
-from typing import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -13,7 +14,7 @@ from gi.repository import GLib
 from gi.repository import GModule
 from gi.repository import GObject
 
-T = TypeVar("T")
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 PIXBUF_MAJOR: Final[int]
 PIXBUF_MICRO: Final[int]
@@ -83,7 +84,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         @property
         def pixel_bytes(self) -> GLib.Bytes: ...
         @property
-        def pixels(self) -> None: ...
+        def pixels(self) -> int: ...
         @property
         def rowstride(self) -> int: ...
         @property
@@ -100,7 +101,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         height: int = ...,
         n_channels: int = ...,
         pixel_bytes: GLib.Bytes = ...,
-        pixels: None = ...,
+        pixels: int | Any | None = ...,
         rowstride: int = ...,
         width: int = ...,
     ) -> None: ...
@@ -182,13 +183,16 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def get_file_info_async(
         filename: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @staticmethod
     def get_file_info_finish(
         async_result: Gio.AsyncResult,
-    ) -> tuple[PixbufFormat, int, int]: ...
+    ) -> tuple[PixbufFormat | None, int, int]: ...
     @staticmethod
     def get_formats() -> list[PixbufFormat]: ...
     def get_has_alpha(self) -> bool: ...
@@ -261,8 +265,11 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def new_from_stream_async(
         stream: Gio.InputStream,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_from_stream_at_scale(
@@ -280,11 +287,14 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         height: int,
         preserve_aspect_ratio: bool,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
-    def new_from_stream_finish(cls, async_result: Gio.AsyncResult) -> Pixbuf: ...
+    def new_from_stream_finish(cls, async_result: Gio.AsyncResult) -> Pixbuf | None: ...
     @classmethod
     def new_from_xpm_data(cls, data: Sequence[str]) -> Pixbuf | None: ...
     def new_subpixbuf(
@@ -305,11 +315,11 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     ) -> tuple[bool, bytes]: ...
     def save_to_callbackv(
         self,
-        save_func: Callable[..., tuple[bool, GLib.Error]],
+        save_func: Callable[[Sequence[int], int, Any | None], tuple[bool, GLib.Error]],
+        user_data: Any | None,
         type: str,
         option_keys: Sequence[str] | None = None,
         option_values: Sequence[str] | None = None,
-        *user_data: Any,
     ) -> bool: ...
     @staticmethod
     def save_to_stream_finish(async_result: Gio.AsyncResult) -> bool: ...
@@ -328,8 +338,11 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         option_keys: Sequence[str] | None = None,
         option_values: Sequence[str] | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def savev(
         self,
@@ -375,9 +388,7 @@ class PixbufAnimation(GObject.Object):
     """
     @property
     def parent_instance(self) -> GObject.Object: ...
-    def do_get_iter(
-        self, start_time: GLib.TimeVal | None = None
-    ) -> PixbufAnimationIter: ...
+    def do_get_iter(self, start_time: GLib.TimeVal | None) -> PixbufAnimationIter: ...
     def do_get_size(self, width: int, height: int) -> None: ...
     def do_get_static_image(self) -> Pixbuf: ...
     def do_is_static_image(self) -> bool: ...
@@ -400,13 +411,16 @@ class PixbufAnimation(GObject.Object):
     def new_from_stream_async(
         stream: Gio.InputStream,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[..., None] | None = None,
-        *user_data: Any,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None = None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     @classmethod
     def new_from_stream_finish(
         cls, async_result: Gio.AsyncResult
-    ) -> PixbufAnimation: ...
+    ) -> PixbufAnimation | None: ...
 
 class PixbufAnimationClass(_gi.Struct):
     """
@@ -445,7 +459,7 @@ class PixbufAnimationIter(GObject.Object):
     @property
     def parent_instance(self) -> GObject.Object: ...
     def advance(self, current_time: GLib.TimeVal | None = None) -> bool: ...
-    def do_advance(self, current_time: GLib.TimeVal | None = None) -> bool: ...
+    def do_advance(self, current_time: GLib.TimeVal | None) -> bool: ...
     def do_get_delay_time(self) -> int: ...
     def do_get_pixbuf(self) -> Pixbuf: ...
     def do_on_currently_loading_frame(self) -> bool: ...
@@ -493,9 +507,9 @@ class PixbufFormat(GObject.GBoxed):
     def copy(self) -> PixbufFormat | None: ...
     def free(self) -> None: ...
     def get_description(self) -> str | None: ...
-    def get_extensions(self) -> list[str] | None: ...
+    def get_extensions(self) -> list[str]: ...
     def get_license(self) -> str | None: ...
-    def get_mime_types(self) -> list[str] | None: ...
+    def get_mime_types(self) -> list[str]: ...
     def get_name(self) -> str | None: ...
     def is_disabled(self) -> bool: ...
     def is_save_option_supported(self, option_key: str) -> bool: ...
@@ -528,7 +542,7 @@ class PixbufLoader(GObject.Object):
     @property
     def parent_instance(self) -> GObject.Object: ...
     @property
-    def priv(self) -> None: ...
+    def priv(self) -> int: ...
     def close(self) -> bool: ...
     def do_area_prepared(self) -> None: ...
     def do_area_updated(self, x: int, y: int, width: int, height: int) -> None: ...
@@ -579,14 +593,16 @@ class PixbufModule(_gi.Struct):
     module_path: str
     module: GModule.Module
     info: PixbufFormat
-    load: Callable[[None], Pixbuf]
+    load: Callable[[Any | None], Pixbuf]
     load_xpm_data: Callable[[Sequence[str]], Pixbuf]
-    begin_load: None
-    stop_load: Callable[[None], bool]
-    load_increment: Callable[[None, Sequence[int]], bool]
-    load_animation: Callable[[None], PixbufAnimation]
-    save: Callable[[None, Pixbuf, Sequence[str] | None, Sequence[str] | None], bool]
-    save_to_callback: None
+    begin_load: int
+    stop_load: Callable[[Any | None], bool]
+    load_increment: Callable[[Any | None, Sequence[int], int], bool]
+    load_animation: Callable[[Any | None], PixbufAnimation]
+    save: Callable[
+        [Any | None, Pixbuf, Sequence[str] | None, Sequence[str] | None], bool
+    ]
+    save_to_callback: int
     is_save_option_supported: Callable[[str], bool]
 
 class PixbufModulePattern(_gi.Struct):
