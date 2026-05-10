@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+from typing import TYPE_CHECKING
 
 import itertools
 import logging
@@ -9,6 +10,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import setuptools.build_meta as _orig
+
+if TYPE_CHECKING:
+    from _typeshed import StrPath
 
 logging.basicConfig(level="INFO", format="%(levelname)s: %(message)s")
 log = logging.getLogger()
@@ -93,12 +97,14 @@ def _install_stubs(stub_config: list[LibVersion]) -> None:
         new_stub_path.write_text(f"from ._{lib} import *")
 
 
-def get_requires_for_build_editable(config_settings: Any | None = None) -> list[str]:
+def get_requires_for_build_editable(
+    config_settings: _orig._ConfigSettings | None = None,
+) -> list[str]:
     return _orig.get_requires_for_build_editable(config_settings)
 
 
 def prepare_metadata_for_build_editable(
-    metadata_directory: Any, config_settings: Any | None = None
+    metadata_directory: StrPath, config_settings: _orig._ConfigSettings | None = None
 ) -> str:
     return _orig.prepare_metadata_for_build_editable(
         metadata_directory, config_settings
@@ -113,19 +119,19 @@ def build_editable(
     return _orig.build_editable(wheel_directory, config_settings, metadata_directory)
 
 
-def get_requires_for_build_sdist(*args: Any, **kwargs: Any) -> str:
+def get_requires_for_build_sdist(*args: Any, **kwargs: Any) -> str:  # noqa: ANN401
     return _orig.get_requires_for_build_sdist(*args, **kwargs)
 
 
-def build_sdist(*args: Any, **kwargs: Any) -> str:
+def build_sdist(*args: Any, **kwargs: Any) -> str:  # noqa: ANN401
     return _orig.build_sdist(*args, **kwargs)
 
 
-def get_requires_for_build_wheel(*args: Any, **kwargs: Any) -> str:
+def get_requires_for_build_wheel(*args: Any, **kwargs: Any) -> str:  # noqa: ANN401
     return _orig.get_requires_for_build_wheel(*args, **kwargs)
 
 
-def prepare_metadata_for_build_wheel(*args: Any, **kwargs: Any) -> str:
+def prepare_metadata_for_build_wheel(*args: Any, **kwargs: Any) -> str:  # noqa: ANN401
     return _orig.prepare_metadata_for_build_wheel(*args, **kwargs)
 
 
@@ -141,10 +147,8 @@ def build_wheel(
     _check_config(stub_config)
     _install_stubs(stub_config)
 
-    basename = _orig.build_wheel(
+    return _orig.build_wheel(
         wheel_directory,
         config_settings=config_settings,
         metadata_directory=metadata_directory,
     )
-
-    return basename

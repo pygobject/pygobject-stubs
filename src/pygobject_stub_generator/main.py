@@ -84,7 +84,9 @@ def main() -> None:
     parser.add_argument(
         "--init",
         type=str,
-        help='Initialization code that must be evaluated first e.g. \'gi.require_version("Gst", "1.0"); from gi.repository import Gst; Gst.init(None)\'',
+        help="Initialization code that must be evaluated first e.g. "
+        '\'gi.require_version("Gst", "1.0"); from gi.repository import Gst; '
+        "Gst.init(None)'",
     )
     parser.add_argument(
         "--format",
