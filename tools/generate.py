@@ -25,6 +25,8 @@ import inspect
 import itertools
 import pprint
 import re
+import subprocess
+import sys
 import textwrap
 from collections.abc import Callable
 from collections.abc import Iterable
@@ -35,6 +37,7 @@ from dataclasses import InitVar
 from dataclasses import replace
 from enum import IntEnum
 from enum import IntFlag
+from pathlib import Path
 from types import GenericAlias
 from types import ModuleType
 
@@ -1927,39 +1930,79 @@ def start(
     return stub.build()
 
 
+def _format(output: str, formatters: list[str], /, *, file: Path | None = None) -> str:
+    for formatter in formatters:
+        if file is not None:
+            formatter = formatter.replace("%FILENAME%", str(file))
+
+        try:
+            proc = subprocess.run(
+                [formatter],
+                input=output,
+                capture_output=True,
+                shell=True,
+                text=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print(
+                f"Formatter '{formatter}' failed with exit code {e.returncode}",
+                file=sys.stderr,
+            )
+            print(e.stderr, file=sys.stderr)
+            exit(2)
+
+        output = proc.stdout
+
+    return output
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate module stubs")
     parser.add_argument("module", type=str, help="Gdk, Gtk, ...")
     parser.add_argument("version", type=str, help="3.0, 4.0, ...")
     parser.add_argument(
-        "-u", dest="update", type=str, help="Stub file to update e.g. -u Gdk.pyi"
+        "-u", dest="update", type=Path, help="Stub file to update e.g. -u Gdk.pyi"
     )
     parser.add_argument(
         "--init",
         type=str,
         help='Initialization code that must be evaluated first e.g. \'gi.require_version("Gst", "1.0"); from gi.repository import Gst; Gst.init(None)\'',
     )
+    parser.add_argument(
+        "--format",
+        type=str,
+        action="append",
+        default=[],
+        help='Formatter to run on generated stub (e.g. --format "black -q -")',
+    )
 
     args = parser.parse_args()
+    update_file: Path | None = args.update
 
-    if args.update:
+    if update_file is not None:
         overrides: Overrides = {}
         imports: Imports = []
         typevars: TypeVars = []
-        try:
-            with open(args.update) as file:
-                overrides, imports, typevars = parse(file.read())
-        except FileNotFoundError:
-            pass
+
+        if update_file.exists():
+            overrides, imports, typevars = parse(update_file.read_text())
+
         output = start(
             args.module, args.version, args.init, overrides, imports, typevars
         )
+
         print("Running with these overrides:")
         pprint.pprint(overrides)
-        with open(args.update, "w+") as file:
-            file.write(output)
+
+        output = _format(output, args.format, file=update_file)
+        update_file.write_text(output)
     else:
-        print(start(args.module, args.version, args.init, {}, [], []))
+        print(
+            _format(
+                start(args.module, args.version, args.init, {}, [], []), args.format
+            )
+        )
 
 
 if __name__ == "__main__":
