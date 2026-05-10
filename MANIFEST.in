@@ -1,3 +1,4 @@
 include CHANGELOG.md
 recursive-include pep517backend *
 prune */__pycache__
+prune */pygobject_stub_generator

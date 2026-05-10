@@ -3,18 +3,21 @@
 from __future__ import annotations
 
 from typing import Final
+from typing import TYPE_CHECKING
 
 import argparse
 import subprocess
 import sys
 from collections import defaultdict
-from collections.abc import Collection
-from collections.abc import Container
-from collections.abc import Iterator
-from collections.abc import Sequence
 from dataclasses import dataclass
 from dataclasses import field
 from pathlib import Path
+
+if TYPE_CHECKING:
+    from collections.abc import Collection
+    from collections.abc import Container
+    from collections.abc import Iterator
+    from collections.abc import Sequence
 
 
 @dataclass(slots=True, frozen=True)
@@ -298,7 +301,9 @@ def main() -> None:
 
         output_path = repo_path / typelib.filename
         cmd: list[str | Path] = [
-            Path(__file__).parent / "generate.py",
+            "python3",
+            "-m",
+            "pygobject_stub_generator",
             typelib.name,
             typelib.version,
             "-u",

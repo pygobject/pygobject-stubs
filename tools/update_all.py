@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from __future__ import annotations
+
 import argparse
 import subprocess
 import sys
@@ -123,7 +125,9 @@ if __name__ == "__main__":
 
         print(f"Generating {output_path}", file=sys.stderr)
         cmd: list[str | Path] = [
-            "tools/generate.py",
+            "python3",
+            "-m",
+            "pygobject_stub_generator",
             lib.name,
             lib.version,
             "-u",

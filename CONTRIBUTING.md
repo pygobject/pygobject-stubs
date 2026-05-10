@@ -2,30 +2,33 @@
 
 ## Generating base stubs for module
 
-You can generate stubs with `tools/generate.py`.
+You can generate stubs with `src/pygobject_stub_generator`.
 
 Usage:
 
 ```shellsession
-$ uv run tools/generate.py -h
-usage: generate.py [-h] [-u UPDATE] module version
+$ uv run python -m pygobject_stub_generator -h
+usage: pygobject_stub_generator [-h] [-u UPDATE] [--init INIT] [--format FORMAT] module version
 
 Generate module stubs
 
 positional arguments:
-  module      Gdk, Gtk, ...
-  version     3.0, 4.0, ...
+  module           Gdk, Gtk, ...
+  version          3.0, 4.0, ...
 
 options:
-  -h, --help  show this help message and exit
-  -u UPDATE   Stub file to update e.g. -u Gdk.pyi
+  -h, --help       show this help message and exit
+  -u UPDATE        Stub file to update e.g. -u Gdk.pyi
+  --init INIT      Initialization code that must be evaluated first e.g. 'gi.require_version("Gst",
+                   "1.0"); from gi.repository import Gst; Gst.init(None)'
+  --format FORMAT  Formatter to run on generated stub (e.g. --format "black -q -")
 ```
 
 Usage examples:
 
 ```shellsession
-uv run ./tools/generate.py GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
-uv run ./tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
+uv run python -m pygobject_stub_generator GtkSource 5 -u ./src/gi-stubs/repository/_GtkSource5.pyi
+uv run python -m pygobject_stub_generator Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
 uv run pre-commit run --all
 ```
 
