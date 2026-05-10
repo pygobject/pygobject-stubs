@@ -1,13 +1,10 @@
 from typing import Final
-from typing import TypeVar
 
 from collections.abc import Sequence
 from enum import IntEnum
 
 from gi import _gi
 from gi.repository import GObject
-
-T = TypeVar("T")
 
 PI: Final[float]
 PI_2: Final[float]

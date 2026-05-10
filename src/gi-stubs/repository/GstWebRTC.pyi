@@ -1,6 +1,7 @@
 from typing import Any
 from typing import type_check_only
-from typing import TypeVar
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 
@@ -10,7 +11,7 @@ from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GstSdp
 
-T = TypeVar("T")
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 def webrtc_error_quark() -> int: ...
 def webrtc_sdp_type_to_string(type: WebRTCSDPType) -> str: ...
@@ -239,14 +240,11 @@ class WebRTCICE(Gst.Object):
     def add_turn_server(self, uri: str) -> bool: ...
     def close(self, promise: Gst.Promise | None = None) -> None: ...
     def do_add_candidate(
-        self,
-        stream: WebRTCICEStream,
-        candidate: str,
-        promise: Gst.Promise | None = None,
+        self, stream: WebRTCICEStream, candidate: str, promise: Gst.Promise | None
     ) -> None: ...
     def do_add_stream(self, session_id: int) -> WebRTCICEStream | None: ...
     def do_add_turn_server(self, uri: str) -> bool: ...
-    def do_close(self, promise: Gst.Promise | None = None) -> None: ...
+    def do_close(self, promise: Gst.Promise | None) -> None: ...
     def do_find_transport(
         self, stream: WebRTCICEStream, component: WebRTCICEComponent
     ) -> WebRTCICETransport | None: ...
@@ -271,14 +269,16 @@ class WebRTCICE(Gst.Object):
         self, stream: WebRTCICEStream, ufrag: str, pwd: str
     ) -> bool: ...
     def do_set_on_ice_candidate(
-        self, func: Callable[..., None], *user_data: Any
+        self,
+        func: Callable[[WebRTCICE, int, str, Unpack[_DataTs]], None],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_set_remote_credentials(
         self, stream: WebRTCICEStream, ufrag: str, pwd: str
     ) -> bool: ...
-    def do_set_stun_server(self, uri: str | None = None) -> None: ...
+    def do_set_stun_server(self, uri: str | None) -> None: ...
     def do_set_tos(self, stream: WebRTCICEStream, tos: int) -> None: ...
-    def do_set_turn_server(self, uri: str | None = None) -> None: ...
+    def do_set_turn_server(self, uri: str | None) -> None: ...
     def find_transport(
         self, stream: WebRTCICEStream, component: WebRTCICEComponent
     ) -> WebRTCICETransport | None: ...
@@ -303,7 +303,9 @@ class WebRTCICE(Gst.Object):
         self, stream: WebRTCICEStream, ufrag: str, pwd: str
     ) -> bool: ...
     def set_on_ice_candidate(
-        self, func: Callable[..., None], *user_data: Any
+        self,
+        func: Callable[[WebRTCICE, int, str, Unpack[_DataTs]], None],
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_remote_credentials(
         self, stream: WebRTCICEStream, ufrag: str, pwd: str
@@ -418,7 +420,17 @@ class WebRTCICEClass(_gi.Struct):
     @property
     def set_tos(self) -> Callable[[WebRTCICE, WebRTCICEStream, int], None]: ...
     @property
-    def set_on_ice_candidate(self) -> Callable[..., None]: ...
+    def set_on_ice_candidate(
+        self,
+    ) -> Callable[
+        [
+            WebRTCICE,
+            Callable[[WebRTCICE, int, str, Any | None], None],
+            Any | None,
+            Callable[[Any | None], None],
+        ],
+        None,
+    ]: ...
     @property
     def get_local_candidates(
         self,

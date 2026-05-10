@@ -1,7 +1,8 @@
 from typing import Any
 from typing import Final
-from typing import overload
 from typing import Protocol
+from typing_extensions import TypeVarTuple
+from typing_extensions import Unpack
 
 from collections.abc import Callable
 
@@ -9,8 +10,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-SessionCallbackU = Callable[[Session, Message, Any], None]
-SessionCallback = Callable[[Session, Message], None]
+_DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 ADDRESS_ANY_PORT: Final[int]
 ADDRESS_FAMILY: Final = "family"
@@ -760,12 +760,12 @@ class Session:
     def pause_message(self, msg: Message) -> None: ...
     def prefetch_dns(*args, **kwargs): ...
     def prepare_for_uri(*args, **kwargs): ...
-    @overload
     def queue_message(
-        self, msg: Message, callback: SessionCallbackU | None, *user_data: Any
+        self,
+        msg: Message,
+        callback: Callable[[Session, Message, Unpack[_DataTs]], None] | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
-    @overload
-    def queue_message(self, msg: Message, callback: SessionCallback | None) -> None: ...
     def redirect_message(*args, **kwargs): ...
     def remove_feature(*args, **kwargs): ...
     def remove_feature_by_type(*args, **kwargs): ...
@@ -786,8 +786,11 @@ class Session:
         origin: str | None,
         protocols: list[str] | None,
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback | None,
-        *user_data: Any | None,
+        callback: Callable[
+            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
+        ]
+        | None,
+        *user_data: Unpack[_DataTs],
     ) -> None: ...
     def websocket_connect_finish(
         self, result: Gio.AsyncResult

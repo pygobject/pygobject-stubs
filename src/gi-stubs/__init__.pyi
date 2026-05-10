@@ -1,5 +1,10 @@
 from typing import Final
 
+from . import _gi as _gi
+from ._gi import PyGIDeprecationWarning as PyGIDeprecationWarning
+from ._gi import PyGIWarning as PyGIWarning
+from ._gi import Repository as Repository
+
 __version__: Final[str]
 version_info: Final[tuple[int, int, int]]
 
