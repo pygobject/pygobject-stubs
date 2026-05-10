@@ -229,14 +229,14 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     @classmethod
     def new_from_data(
         cls,
-        data: GLib.Bytes,
+        data: bytes,
         colorspace: Colorspace,
         has_alpha: bool,
         bits_per_sample: int,
         width: int,
         height: int,
         rowstride: int,
-        destroy_fn: Any,
+        destroy_fn: object = None,
         *destroy_fn_data: Any,
     ) -> Pixbuf: ...
     @classmethod
