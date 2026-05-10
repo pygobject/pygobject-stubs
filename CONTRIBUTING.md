@@ -29,8 +29,28 @@ uv run ./tools/generate.py Spelling 1 -u ./src/gi-stubs/repository/Spelling.pyi
 uv run pre-commit run --all
 ```
 
-To re-generate all known stubs, run `uv run ./tools/update_all.py`.
-You can comment out the libraries you are not interested in.
+To re-generate stubs:
+
+```shellsession
+# All stubs:
+uv run ./tools/update.py -a
+
+# A single stub:
+uv run ./tools/update.py -t Gtk-4.0
+
+# All versions of a stub:
+uv run ./tools/update.py -t Gtk
+
+# A collection of stubs:
+uv run ./tools/update.py -c glib  # GLib, GObject, GModule, GlibWin32, GIRepository, win32
+uv run ./tools/update.py -c gio-all  # Gio, GioUnix, GioWin32, and the glib collection
+
+# A collection of stubs, excluding some:
+uv run ./tools/update.py -c glib -x win32  # GLib, GObject, GModule, GlibWin32, GIRepository, win32
+
+# A collection of stubs, excluding some collections
+uv run ./tools/update.py -c gtk-all -e glib  # gtk, Rsvg, gdk, pango, gio, but not glib
+```
 
 ## Use pre-commit
 
