@@ -1,141 +1,17 @@
-from typing import cast
-from typing import Final
-from typing import Protocol
+from __future__ import annotations
+
 from typing import TypeAlias
-from typing_extensions import Self
 
 import ast
 import re
-from dataclasses import dataclass
-from dataclasses import field
 
-
-@dataclass(slots=True)
-class Import:
-    module: str
-    import_as: str | None = None
-
-    @property
-    def symbol(self) -> str:
-        return self.import_as or self.module
-
-    def __str__(self) -> str:
-        suffix = "" if self.import_as is None else f" as {self.import_as}"
-        return f"import {self.module}{suffix}"
-
-
-_versioned_import_re: Final = re.compile(r"^_(?P<name>\w+)\d+$")
-
-
-@dataclass(slots=True)
-class FromImport:
-    module: str
-    name: str
-    import_as: str | None = None
-    versioned_import: str | None = None
-
-    @property
-    def symbol(self) -> str:
-        return self.versioned_import or self.import_as or self.name
-
-    def __str__(self) -> str:
-        suffix = "" if self.import_as is None else f" as {self.import_as}"
-        return f"from {self.module} import {self.versioned_import or self.name}{suffix}"
-
-    @classmethod
-    def from_ast(cls, node: ast.ImportFrom, alias: ast.alias, /) -> Self:
-        name = alias.name
-        pyi_import: str | None = None
-
-        if node.module == "gi.repository" and (
-            match := _versioned_import_re.match(name)
-        ):
-            pyi_import = alias.name
-            name = match.group("name")
-
-        return cls(cast("str", node.module), name, alias.asname, pyi_import)
-
-
-class StubProtocol(Protocol):
-    def get_import(self, module: str, name: str | None = None) -> str: ...
-
-
-@dataclass(slots=True, frozen=True)
-class _BaseTypeVarInfo:
-    name: str
-    default: str | None = None
-
-
-@dataclass(slots=True, frozen=True)
-class TypeVarInfo(_BaseTypeVarInfo):
-    constraints: tuple[str, ...] | None = None
-    bound: str | None = None
-    contravariant: bool = field(kw_only=True, default=False)
-    covariant: bool = field(kw_only=True, default=False)
-    infer_variance: bool = field(kw_only=True, default=False)
-
-    def build(self, stub: StubProtocol, /) -> str:
-        args = [f'"{self.name}"']
-
-        if self.constraints:
-            args.extend(self.constraints)
-
-        if self.covariant and not self.contravariant:
-            args.append("covariant=True")
-
-        if self.contravariant and not self.covariant:
-            args.append("contravariant=True")
-
-        if self.infer_variance:
-            args.append("infer_variance=True")
-
-        if self.bound is not None:
-            args.append(f"bound={self.bound}")
-
-        if self.default is not None:
-            args.append(f"default={self.default}")
-
-        return (
-            f"{self.name} = {stub.get_import('typing', 'TypeVar')}({', '.join(args)})"
-        )
-
-    @classmethod
-    def from_call(cls, node: ast.Call, /) -> Self:
-        name, *args = node.args
-        kwargs = {kw.arg: ast.unparse(kw.value) for kw in node.keywords}
-        return cls(
-            name=cast(str, cast(ast.Constant, name).value),
-            default=kwargs.get("default"),
-            constraints=tuple(ast.unparse(arg) for arg in args) if args else None,
-            bound=kwargs.get("bound"),
-            contravariant=kwargs.get("contravariant", "False") == "True",
-            covariant=kwargs.get("covariant", "False") == "True",
-            infer_variance=kwargs.get("infer_variance", "False") == "True",
-        )
-
-
-@dataclass(slots=True, frozen=True)
-class TypeVarTupleInfo(_BaseTypeVarInfo):
-    def build(self, stub: StubProtocol, /) -> str:
-        args = [f'"{self.name}"']
-
-        if self.default is not None:
-            args.append(f"default={self.default}")
-
-        return f"{self.name} = {stub.get_import('typing', 'TypeVarTuple')}({', '.join(args)})"
-
-    @classmethod
-    def from_call(cls, node: ast.Call, /) -> Self:
-        name, *_ = node.args
-        kwargs = {kw.arg: ast.unparse(kw.value) for kw in node.keywords}
-        return cls(
-            name=cast(str, cast(ast.Constant, name).value),
-            default=kwargs.get("default"),
-        )
-
+from .import_info import FromImportInfo
+from .import_info import ImportInfo
+from .type_var_info import TypeVarInfo
+from .type_var_info import TypeVarTupleInfo
 
 Overrides: TypeAlias = dict[str, str]
-Imports: TypeAlias = list[Import | FromImport]
+Imports: TypeAlias = list[ImportInfo | FromImportInfo]
 TypeVars: TypeAlias = list[TypeVarInfo | TypeVarTupleInfo]
 ParseResult: TypeAlias = tuple[Overrides, Imports, TypeVars]
 
@@ -213,7 +89,7 @@ def _search_overridden_symbols(input: str) -> list[str]:
 
                 if is_override:
                     is_override = False
-                    full_list = parents + [symbol]
+                    full_list = [*parents, symbol]
                     symbols.append(".".join(full_list))
 
                 break
@@ -234,6 +110,8 @@ def _generate_result_node(
     node: OverridableSymbols,
     overridden_symbols: list[str],
     result: Overrides,
+    /,
+    *,
     typevars: TypeVars | None = None,
 ) -> None:
     parents = parents[:]
@@ -309,7 +187,7 @@ def _generate_result_node(
             return
 
 
-def _generate_result(root: ast.Module, overridden_symbols: list[str]) -> ParseResult:
+def _generate_result(root: ast.Module, overridden_symbols: list[str], /) -> ParseResult:
     result: Overrides = {}
     imports: Imports = []
     typevars: list[TypeVarInfo | TypeVarTupleInfo] = []
@@ -318,18 +196,24 @@ def _generate_result(root: ast.Module, overridden_symbols: list[str]) -> ParseRe
 
     for child in body:
         if isinstance(child, ast.Import):
-            imports.extend(Import(module.name, module.asname) for module in child.names)
+            imports.extend(
+                ImportInfo(module.name, module.asname) for module in child.names
+            )
         if isinstance(child, ast.ImportFrom):
-            imports.extend(FromImport.from_ast(child, alias) for alias in child.names)
+            imports.extend(
+                FromImportInfo.from_ast(child, alias) for alias in child.names
+            )
         if not isinstance(child, OverridableSymbols):
             print(f"Skipped root.{child}")
             continue
-        _generate_result_node(parents, child, overridden_symbols, result, typevars)
+        _generate_result_node(
+            parents, child, overridden_symbols, result, typevars=typevars
+        )
 
     return result, imports, typevars
 
 
-def parse(input: str) -> ParseResult:
+def parse(input: str, /) -> ParseResult:
     overridden_symbols = _search_overridden_symbols(input)
     root = ast.parse(input)
     return _generate_result(root, overridden_symbols)

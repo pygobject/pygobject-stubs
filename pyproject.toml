@@ -39,6 +39,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["pygobject_stub_generator"]
 
 [tool.setuptools.package-data]
 "*" = ["*.pyi"]
@@ -58,8 +59,6 @@ exclude = [
   ".venv",
 ]
 
-target-version = "py310"
-
 [tool.ruff.lint]
 select = [
     "PYI",   # flake8-pyi
@@ -77,6 +76,9 @@ ignore = [
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
   "PYI016",  # Duplicate union member `None`
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"src/pygobject_stub_generator/**/*.py" = ["PYI"]
 
 [tool.ruff.lint.isort]
 case-sensitive = false
