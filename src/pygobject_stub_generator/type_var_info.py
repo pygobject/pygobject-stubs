@@ -75,7 +75,9 @@ class TypeVarTupleInfo(_BaseTypeVarInfo):
         if self.default is not None:
             args.append(f"default={self.default}")
 
-        return f"{self.name} = {stub.get_import('typing', 'TypeVarTuple')}({', '.join(args)})"
+        return f"{self.name} = {stub.get_import('typing', 'TypeVarTuple')}({
+            ', '.join(args)
+        })"
 
     @classmethod
     def from_call(cls, node: ast.Call, /) -> Self:

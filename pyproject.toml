@@ -61,10 +61,27 @@ exclude = [
 
 [tool.ruff.lint]
 select = [
-    "PYI",   # flake8-pyi
-    "UP",
-    "I001",  # isort
-    "F401",  # unused imports
+    "ANN",  # flake8-annotations
+	"B",    # flake8-bugbear
+	"C4",   # flake8-comprehensions
+	"E",    # pycodestyle errors
+	"EXE",  # flake8-executable
+	"F",    # pyflakes
+    "I",    # isort
+	"INP",  # flake8-no-pep420
+	"ISC",  # flake8-implicit-str-concat
+	"PIE",  # flake8-pie
+	"PTH",  # flake8-use-pathlib
+    "PYI",  # flake8-pyi
+	"Q",    # flake8-quotes
+	"RET",  # flake8-return
+	"RSE",  # flake8-raise
+	"SIM",  # flake8-simplify
+    "T10",  # flake8-debugger
+    "TC",   # flake8-type-checking
+    "UP",   # pyupgrade
+	"W",    # pycodestyle warnings
+    "RUF",  # ruff-specific rules
 ]
 ignore = [
   "PYI001",  # Name of private `TypeVar` must start with `_`
@@ -78,13 +95,15 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"src/pygobject_stub_generator/**/*.py" = ["PYI"]
+"src/gi-stubs/*.pyi" = ["ANN", "E501", "E701", "E741", "F403", "F405", "F811", "F821", "I002", "PTH", "TC", "T10", "RUF002"]
+"src/pygobject_stub_generator/*.py" = ["PYI"]
 
 [tool.ruff.lint.isort]
 case-sensitive = false
 order-by-type = false
 force-single-line = true
 section-order = ["future", "typing", "standard-library", "third-party", "first-party", "local-folder"]
+required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.isort.sections]
 typing = ["_typeshed", "typing", "typing_extensions"]

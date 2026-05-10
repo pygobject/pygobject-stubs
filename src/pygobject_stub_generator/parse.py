@@ -64,7 +64,9 @@ def _search_overridden_symbols(input: str) -> list[str]:
                 ) / INDENTATION_SPACES
                 if indentation_level != int(indentation_level):
                     raise ParseError(
-                        f"Wrong indentation at line: {i}, {indentation_level} != {int(indentation_level)}"
+                        f"Wrong indentation at line: {i}, {indentation_level} != {
+                            int(indentation_level)
+                        }"
                     )
                 indentation_level = int(indentation_level)
 
@@ -75,12 +77,10 @@ def _search_overridden_symbols(input: str) -> list[str]:
                     else:
                         if index != CONSTANT_INDEX:
                             raise ParseError(f"Wrong indentation at line: {i}")
-                        else:
-                            # Regex for constant trigger also on functions arguments
-                            print(
-                                f"Wrong indentation for constant at line {i}, skipping"
-                            )
-                            continue
+
+                        # Regex for constant trigger also on functions arguments
+                        print(f"Wrong indentation for constant at line {i}, skipping")
+                        continue
                 elif indentation_level < last_indentation_level:
                     while indentation_level < last_indentation_level:
                         parents.pop()
@@ -93,7 +93,8 @@ def _search_overridden_symbols(input: str) -> list[str]:
                     symbols.append(".".join(full_list))
 
                 break
-            elif res:
+
+            if res:
                 raise ParseError(f"Unable to parse line {i}: '{line}'")
 
         class_res = re.match(CLASS_PATTERN, line)
@@ -166,15 +167,16 @@ def _generate_result_node(
             return
 
     if isinstance(node, ast.Assign):
-        if typevars is not None:
-            if isinstance(node.value, ast.Call) and isinstance(
-                node.value.func, ast.Name
-            ):
-                if node.value.func.id == "TypeVar":
-                    typevars.append(TypeVarInfo.from_call(node.value))
+        if (
+            typevars is not None
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Name)
+        ):
+            if node.value.func.id == "TypeVar":
+                typevars.append(TypeVarInfo.from_call(node.value))
 
-                if node.value.func.id == "TypeVarTuple":
-                    typevars.append(TypeVarTupleInfo.from_call(node.value))
+            if node.value.func.id == "TypeVarTuple":
+                typevars.append(TypeVarTupleInfo.from_call(node.value))
 
         if not hasattr(node.targets[0], "id"):
             print(f"Skipping {'.'.join(parents)} {node} no id attribute")

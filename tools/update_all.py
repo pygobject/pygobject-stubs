@@ -28,7 +28,8 @@ GST_INIT = (
 )
 
 
-# Add libraries below. When multiple versions are available, specify the output argument.
+# Add libraries below. When multiple versions are available, specify the output
+# argument.
 libraries = [
     Lib("Adw", "1"),
     Lib("AppIndicator3", "0.1"),

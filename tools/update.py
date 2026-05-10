@@ -183,12 +183,12 @@ def _get_typelibs(
     collection_exclusions: Collection[str],
     /,
 ) -> Iterator[TypeLib]:
-    typelibs_to_update: set[TypeLib] = set(
+    typelibs_to_update: set[TypeLib] = {
         typelib
         for typelib in _TYPELIBS
         if typelib.name in typelib_names
         or f"{typelib.name}-{typelib.version}" in typelib_names
-    )
+    }
 
     collections: dict[str, list[TypeLib]] = (
         _build_collection_mapping() if collection_names or collection_exclusions else {}
@@ -245,7 +245,8 @@ def main() -> None:
         type=str,
         action="append",
         default=[],
-        help="Update only modules with the given typelib name and optional version, e.g. Gdk or Gdk-3.0. Can be specified multiple times.",
+        help="Update only modules with the given typelib name and optional version, "
+        "e.g. Gdk or Gdk-3.0. Can be specified multiple times.",
     )
     parser.add_argument(
         "-x",
@@ -253,7 +254,8 @@ def main() -> None:
         type=str,
         action="append",
         default=[],
-        help="Exclude modules with the given typelib name and optional version, e.g. Gdk or Gdk-3.0. Can be specified multiple times.",
+        help="Exclude modules with the given typelib name and optional version, "
+        "e.g. Gdk or Gdk-3.0. Can be specified multiple times.",
     )
     parser.add_argument(
         "-c",
@@ -261,7 +263,8 @@ def main() -> None:
         type=str,
         action="append",
         default=[],
-        help="Update all modules in the given collection, e.g. gdk or gtk-all. Can be specified multiple times.",
+        help="Update all modules in the given collection, e.g. gdk or gtk-all. Can be "
+        "specified multiple times.",
     )
     parser.add_argument(
         "-e",
@@ -269,7 +272,8 @@ def main() -> None:
         type=str,
         action="append",
         default=[],
-        help="Exclude all modules in the given collection, e.g. gdk or gtk-all. Can be specified multiple times.",
+        help="Exclude all modules in the given collection, e.g. gdk or gtk-all. Can be "
+        "specified multiple times.",
     )
 
     if len(sys.argv) == 1:
@@ -309,7 +313,7 @@ def main() -> None:
             "-u",
             output_path,
             "--format",
-            "ruff check --select=I001 --select=F401 --stdin-filename %FILENAME% --fix -",
+            "ruff check --select=I001 --select=F401 --stdin-filename %FILENAME% --fix -",  # noqa: E501
             "--format",
             "ruff format --stdin-filename %FILENAME% -",
         ]

@@ -51,7 +51,7 @@ def _find_attributes(obj: type[Any]) -> list[str]:
             if "__info__" in base.__dict__:
                 obj_attrs.update(base.__dict__.keys())
 
-    return sorted(list(obj_attrs))
+    return sorted(obj_attrs)
 
 
 @dataclass(slots=True)
@@ -144,17 +144,26 @@ class ClassInfo:
         object_info: GI.RegisteredTypeInfo | None = self.cls.__dict__.get("__info__")
         bases = list(get_original_bases(self.cls))
 
-        # Because we're generating types for gi.repository, we have to generate stubs for
-        # override classes that come from gi.repository and inherit from gi.repository classes.
-        # Effectively, we want to write the stubs as if the override class and repository class
-        # are one class in the MRO. What this means is that the following transformations need to
-        # happen:
+        # Because we're generating types for gi.repository, we have to generate stubs
+        # for override classes that come from gi.repository and inherit from
+        # gi.repository classes. Effectively, we want to write the stubs as if the
+        # override class and repository class are one class in the MRO. What this means
+        # is that the following transformations need to happen:
         # 1. For the following:
         #    gi.repository.X.One(<One repository bases>)
-        #    gi.overrides.X.One(<One prefix override bases>, gi.repository.X.One, <One suffix override bases>) ->
-        #        gi.repository.X.One(<One prefix override bases>, <One repository bases>, <One override bases>)
+        #    gi.overrides.X.One(
+        #        <One prefix override bases>,
+        #        gi.repository.X.One,
+        #        <One suffix override bases>
+        #    ) -> gi.repository.X.One(
+        #        <One prefix override bases>,
+        #        <One repository bases>,
+        #        <One override bases>
+        #    )
         # 2. gi.overrides.X.Two(float) -> gi.repository.X.Two(float)
-        # 3. gi.overrides.X.Three(gi.overrides.X.Four, ...) -> gi.repository.X.Three(gi.repository.X.Four, ...)
+        # 3. gi.overrides.X.Three(gi.overrides.X.Four, ...) -> gi.repository.X.Three(
+        #        gi.repository.X.Four, ...
+        #    )
         if full_module_name.startswith("gi.overrides.") and any(
             base.__module__.startswith("gi.repository.") for base in bases
         ):
@@ -290,8 +299,7 @@ class ClassInfo:
         ).strip()
 
         if docs:
-            docs = '"""\n' + docs.strip() + '\n"""'
-            return docs
+            return '"""\n' + docs.strip() + '\n"""'
 
         return None
 
@@ -324,7 +332,9 @@ class ClassInfo:
             parent := self.gi_info.get_parent()
         ):
             parent_name = f"{parent.get_name()}"
-            parents_string = f"({self.stub.get_namespace_member(parent.get_namespace(), parent_name)}.Props)"
+            parents_string = f"({
+                self.stub.get_namespace_member(parent.get_namespace(), parent_name)
+            }.Props)"
 
         return f"""@{self.stub.get_import("typing", "type_check_only")}
 class Props{parents_string}:
@@ -353,7 +363,7 @@ class Props{parents_string}:
     def __build_fields(self) -> str:
         lines: list[str] = []
 
-        for field in self.fields:
+        for field in self.fields:  # noqa: F402
             name = f"{field.get_name()}"
 
             if override := self.stub.check_override(self.full_name, name):
