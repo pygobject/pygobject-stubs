@@ -316,16 +316,10 @@ class ClassInfo:
         lines: list[str] = []
 
         for name, prop_info in self.properties.items():
-            py_type = prop_info.prop_type
+            if prop_definition := self.stub.get_property(name, prop_info.prop_type):
+                lines.append(prop_definition)
 
-            if prop_info.readable and (
-                not prop_info.writable or prop_info.construct_only
-            ):
-                lines.append(self.stub.get_property(name, py_type))
-            else:
-                lines.append(f"{name}: {py_type}")
-
-        props_string = "\n".join(lines) or "..."
+        props_string = "\n".join(lines) if lines else "..."
 
         parents_string = ""
         if isinstance(self.gi_info, GI.ObjectInfo) and (
@@ -345,7 +339,7 @@ class Props{parents_string}:
             return override
 
         if isinstance(self.gi_info, GI.ObjectInfo) and props_class is not None:
-            return self.stub.get_property("props", "Props")
+            return self.stub.get_property("props", ("Props", None))
 
         return None
 
@@ -372,7 +366,7 @@ class Props{parents_string}:
                 py_type = self.stub.type_info_to_python(field.get_type_info(), out=True)
                 flags = field.get_flags()
                 if not (flags & GI.FieldInfoFlags.IS_WRITABLE):
-                    lines.append(self.stub.get_property(name, py_type))
+                    lines.append(self.stub.get_property(name, (py_type, None)))
                 else:
                     lines.append(f"{name}: {py_type}")
 

@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -858,11 +860,11 @@ class Binding(Object):
     def __init__(
         self,
         *,
-        flags: BindingFlags = ...,
-        source: Object = ...,
-        source_property: str = ...,
-        target: Object = ...,
-        target_property: str = ...,
+        flags: _BindingFlagsValueType = ...,
+        source: Object | None = ...,
+        source_property: str | None = ...,
+        target: Object | None = ...,
+        target_property: str | None = ...,
     ) -> None: ...
     def dup_source(self) -> Object | None: ...
     def dup_target(self) -> Object | None: ...
@@ -902,14 +904,14 @@ class BindingGroup(Object):
         source_property: str,
         target: Object,
         target_property: str,
-        flags: BindingFlags,
+        flags: _BindingFlagsValueType,
     ) -> None: ...
     def bind_full(
         self,
         source_property: str,
         target: Object,
         target_property: str,
-        flags: BindingFlags,
+        flags: _BindingFlagsValueType,
         transform_to: Callable[..., Any] | None = None,
         transform_from: Callable[..., Any] | None = None,
     ) -> None: ...
@@ -2441,6 +2443,20 @@ class BindingFlags(GFlags):
     DEFAULT = 0
     INVERT_BOOLEAN = 4
     SYNC_CREATE = 2
+
+_BindingFlagsLiteralType: TypeAlias = Literal[
+    "G_BINDING_BIDIRECTIONAL",
+    "G_BINDING_DEFAULT",
+    "G_BINDING_INVERT_BOOLEAN",
+    "G_BINDING_SYNC_CREATE",
+    "bidirectional",
+    "default",
+    "invert-boolean",
+    "sync-create",
+]
+_BindingFlagsValueType: TypeAlias = (
+    BindingFlags | _BindingFlagsLiteralType | tuple[_BindingFlagsLiteralType, ...]
+)
 
 class ConnectFlags(IntFlag):
     AFTER = 1

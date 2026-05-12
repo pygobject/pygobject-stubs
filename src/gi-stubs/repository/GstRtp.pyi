@@ -1,6 +1,8 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -69,7 +71,7 @@ def buffer_add_rtp_source_meta(
 ) -> RTPSourceMeta: ...
 def buffer_get_rtp_source_meta(buffer: Gst.Buffer) -> RTPSourceMeta | None: ...
 def rtcp_buffer_map(
-    buffer: Gst.Buffer, flags: Gst.MapFlags, rtcp: RTCPBuffer
+    buffer: Gst.Buffer, flags: Gst._MapFlagsValueType, rtcp: RTCPBuffer
 ) -> bool: ...
 def rtcp_buffer_new(mtu: int) -> Gst.Buffer: ...
 def rtcp_buffer_new_copy_data(data: Sequence[int]) -> Gst.Buffer: ...
@@ -80,7 +82,7 @@ def rtcp_buffer_validate_data_reduced(data: Sequence[int]) -> bool: ...
 def rtcp_buffer_validate_reduced(buffer: Gst.Buffer) -> bool: ...
 def rtcp_ntp_to_unix(ntptime: int) -> int: ...
 def rtcp_sdes_name_to_type(name: str) -> RTCPSDESType: ...
-def rtcp_sdes_type_to_name(type: RTCPSDESType) -> str: ...
+def rtcp_sdes_type_to_name(type: _RTCPSDESTypeValueType) -> str: ...
 def rtcp_unix_to_ntp(unixtime: int) -> int: ...
 def rtp_buffer_allocate_data(
     buffer: Gst.Buffer, payload_len: int, pad_len: int, csrc_count: int
@@ -99,7 +101,7 @@ def rtp_buffer_get_extension_onebyte_header_from_bytes(
     bytes: GLib.Bytes, bit_pattern: int, id: int, nth: int
 ) -> tuple[bool, bytes]: ...
 def rtp_buffer_map(
-    buffer: Gst.Buffer, flags: Gst.MapFlags
+    buffer: Gst.Buffer, flags: Gst._MapFlagsValueType
 ) -> tuple[bool, RTPBuffer]: ...
 def rtp_buffer_new_allocate(
     payload_len: int, pad_len: int, csrc_count: int
@@ -131,11 +133,13 @@ class RTCPBuffer(_gi.Struct):
     """
 
     buffer: Gst.Buffer
-    def add_packet(self, type: RTCPType, packet: RTCPPacket) -> bool: ...
+    def add_packet(self, type: _RTCPTypeValueType, packet: RTCPPacket) -> bool: ...
     def get_first_packet(self, packet: RTCPPacket) -> bool: ...
     def get_packet_count(self) -> int: ...
     @staticmethod
-    def map(buffer: Gst.Buffer, flags: Gst.MapFlags, rtcp: RTCPBuffer) -> bool: ...
+    def map(
+        buffer: Gst.Buffer, flags: Gst._MapFlagsValueType, rtcp: RTCPBuffer
+    ) -> bool: ...
     @staticmethod
     def new(mtu: int) -> Gst.Buffer: ...
     @staticmethod
@@ -213,7 +217,7 @@ class RTCPPacket(_gi.Struct):
     def fb_set_fci_length(self, wordlen: int) -> bool: ...
     def fb_set_media_ssrc(self, ssrc: int) -> None: ...
     def fb_set_sender_ssrc(self, ssrc: int) -> None: ...
-    def fb_set_type(self, type: RTCPFBType) -> None: ...
+    def fb_set_type(self, type: _RTCPFBTypeValueType) -> None: ...
     def get_count(self) -> int: ...
     def get_length(self) -> int: ...
     def get_padding(self) -> bool: ...
@@ -226,12 +230,14 @@ class RTCPPacket(_gi.Struct):
     def remove(self) -> bool: ...
     def rr_get_ssrc(self) -> int: ...
     def rr_set_ssrc(self, ssrc: int) -> None: ...
-    def sdes_add_entry(self, type: RTCPSDESType, data: Sequence[int]) -> bool: ...
+    def sdes_add_entry(
+        self, type: _RTCPSDESTypeValueType, data: Sequence[int]
+    ) -> bool: ...
     def sdes_add_item(self, ssrc: int) -> bool: ...
-    def sdes_copy_entry(self, type: RTCPSDESType) -> tuple[bool, bytes]: ...
+    def sdes_copy_entry(self, type: _RTCPSDESTypeValueType) -> tuple[bool, bytes]: ...
     def sdes_first_entry(self) -> bool: ...
     def sdes_first_item(self) -> bool: ...
-    def sdes_get_entry(self, type: RTCPSDESType) -> tuple[bool, bytes]: ...
+    def sdes_get_entry(self, type: _RTCPSDESTypeValueType) -> tuple[bool, bytes]: ...
     def sdes_get_item_count(self) -> int: ...
     def sdes_get_ssrc(self) -> int: ...
     def sdes_next_entry(self) -> bool: ...
@@ -479,11 +485,11 @@ class RTPBaseDepayload(Gst.Element):
     class Props(Gst.Element.Props):
         auto_header_extension: bool
         @property
-        def extensions(self) -> Gst.ValueArray: ...
+        def extensions(self) -> Gst.ValueArray | None: ...
         max_reorder: int
         source_info: bool
         @property
-        def stats(self) -> Gst.Structure: ...
+        def stats(self) -> Gst.Structure | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -622,7 +628,7 @@ class RTPBasePayload(Gst.Element):
     class Props(Gst.Element.Props):
         auto_header_extension: bool
         @property
-        def extensions(self) -> Gst.ValueArray: ...
+        def extensions(self) -> Gst.ValueArray | None: ...
         max_ptime: int
         min_ptime: int
         mtu: int
@@ -637,7 +643,7 @@ class RTPBasePayload(Gst.Element):
         source_info: bool
         ssrc: int
         @property
-        def stats(self) -> Gst.Structure: ...
+        def stats(self) -> Gst.Structure | None: ...
         @property
         def timestamp(self) -> int: ...
         timestamp_offset: int
@@ -815,7 +821,9 @@ class RTPBuffer(_gi.Struct):
     def get_timestamp(self) -> int: ...
     def get_version(self) -> int: ...
     @staticmethod
-    def map(buffer: Gst.Buffer, flags: Gst.MapFlags) -> tuple[bool, RTPBuffer]: ...
+    def map(
+        buffer: Gst.Buffer, flags: Gst._MapFlagsValueType
+    ) -> tuple[bool, RTPBuffer]: ...
     @staticmethod
     def new_allocate(payload_len: int, pad_len: int, csrc_count: int) -> Gst.Buffer: ...
     @staticmethod
@@ -877,12 +885,12 @@ class RTPHeaderExtension(Gst.Element):
     def do_get_supported_flags(self) -> RTPHeaderExtensionFlags: ...
     def do_read(
         self,
-        read_flags: RTPHeaderExtensionFlags,
+        read_flags: _RTPHeaderExtensionFlagsValueType,
         data: Sequence[int],
         buffer: Gst.Buffer,
     ) -> bool: ...
     def do_set_attributes(
-        self, direction: RTPHeaderExtensionDirection, attributes: str
+        self, direction: _RTPHeaderExtensionDirectionValueType, attributes: str
     ) -> bool: ...
     def do_set_caps_from_attributes(self, caps: Gst.Caps) -> bool: ...
     def do_set_non_rtp_sink_caps(self, caps: Gst.Caps) -> bool: ...
@@ -890,7 +898,7 @@ class RTPHeaderExtension(Gst.Element):
     def do_write(
         self,
         input_meta: Gst.Buffer,
-        write_flags: RTPHeaderExtensionFlags,
+        write_flags: _RTPHeaderExtensionFlagsValueType,
         output: Gst.Buffer,
         data: Sequence[int],
     ) -> int: ...
@@ -902,7 +910,7 @@ class RTPHeaderExtension(Gst.Element):
     def get_uri(self) -> str | None: ...
     def read(
         self,
-        read_flags: RTPHeaderExtensionFlags,
+        read_flags: _RTPHeaderExtensionFlagsValueType,
         data: Sequence[int],
         buffer: Gst.Buffer,
     ) -> bool: ...
@@ -911,7 +919,9 @@ class RTPHeaderExtension(Gst.Element):
     def set_caps_from_attributes_helper(
         self, caps: Gst.Caps, attributes: str
     ) -> bool: ...
-    def set_direction(self, direction: RTPHeaderExtensionDirection) -> None: ...
+    def set_direction(
+        self, direction: _RTPHeaderExtensionDirectionValueType
+    ) -> None: ...
     def set_id(self, ext_id: int) -> None: ...
     def set_non_rtp_sink_caps(self, caps: Gst.Caps) -> bool: ...
     def set_uri(self, uri: str) -> None: ...
@@ -921,7 +931,7 @@ class RTPHeaderExtension(Gst.Element):
     def write(
         self,
         input_meta: Gst.Buffer,
-        write_flags: RTPHeaderExtensionFlags,
+        write_flags: _RTPHeaderExtensionFlagsValueType,
         output: Gst.Buffer,
         data: Sequence[int],
     ) -> int: ...
@@ -949,7 +959,7 @@ class RTPHeaderExtensionClass(_gi.Struct):
         [
             RTPHeaderExtension,
             Gst.Buffer,
-            RTPHeaderExtensionFlags,
+            _RTPHeaderExtensionFlagsValueType,
             Gst.Buffer,
             Sequence[int],
             int,
@@ -960,7 +970,13 @@ class RTPHeaderExtensionClass(_gi.Struct):
     def read(
         self,
     ) -> Callable[
-        [RTPHeaderExtension, RTPHeaderExtensionFlags, Sequence[int], int, Gst.Buffer],
+        [
+            RTPHeaderExtension,
+            _RTPHeaderExtensionFlagsValueType,
+            Sequence[int],
+            int,
+            Gst.Buffer,
+        ],
         bool,
     ]: ...
     @property
@@ -974,7 +990,9 @@ class RTPHeaderExtensionClass(_gi.Struct):
     @property
     def set_attributes(
         self,
-    ) -> Callable[[RTPHeaderExtension, RTPHeaderExtensionDirection, str], bool]: ...
+    ) -> Callable[
+        [RTPHeaderExtension, _RTPHeaderExtensionDirectionValueType, str], bool
+    ]: ...
     @property
     def set_caps_from_attributes(
         self,
@@ -1026,9 +1044,33 @@ class RTPBufferFlags(GObject.GFlags):
     REDUNDANT = 2097152
     RETRANSMISSION = 1048576
 
+_RTPBufferFlagsLiteralType: TypeAlias = Literal[
+    "GST_RTP_BUFFER_FLAG_LAST",
+    "GST_RTP_BUFFER_FLAG_REDUNDANT",
+    "GST_RTP_BUFFER_FLAG_RETRANSMISSION",
+    "last",
+    "redundant",
+    "retransmission",
+]
+_RTPBufferFlagsValueType: TypeAlias = (
+    RTPBufferFlags | _RTPBufferFlagsLiteralType | tuple[_RTPBufferFlagsLiteralType, ...]
+)
+
 class RTPBufferMapFlags(GObject.GFlags):
     LAST = 16777216
     SKIP_PADDING = 65536
+
+_RTPBufferMapFlagsLiteralType: TypeAlias = Literal[
+    "GST_RTP_BUFFER_MAP_FLAG_LAST",
+    "GST_RTP_BUFFER_MAP_FLAG_SKIP_PADDING",
+    "last",
+    "skip-padding",
+]
+_RTPBufferMapFlagsValueType: TypeAlias = (
+    RTPBufferMapFlags
+    | _RTPBufferMapFlagsLiteralType
+    | tuple[_RTPBufferMapFlagsLiteralType, ...]
+)
 
 class RTPHeaderExtensionDirection(GObject.GFlags):
     INACTIVE = 0
@@ -1037,9 +1079,39 @@ class RTPHeaderExtensionDirection(GObject.GFlags):
     SENDONLY = 1
     SENDRECV = 3
 
+_RTPHeaderExtensionDirectionLiteralType: TypeAlias = Literal[
+    "GST_RTP_HEADER_EXTENSION_DIRECTION_INACTIVE",
+    "GST_RTP_HEADER_EXTENSION_DIRECTION_INHERITED",
+    "GST_RTP_HEADER_EXTENSION_DIRECTION_RECVONLY",
+    "GST_RTP_HEADER_EXTENSION_DIRECTION_SENDONLY",
+    "GST_RTP_HEADER_EXTENSION_DIRECTION_SENDRECV",
+    "inactive",
+    "inherited",
+    "recvonly",
+    "sendonly",
+    "sendrecv",
+]
+_RTPHeaderExtensionDirectionValueType: TypeAlias = (
+    RTPHeaderExtensionDirection
+    | _RTPHeaderExtensionDirectionLiteralType
+    | tuple[_RTPHeaderExtensionDirectionLiteralType, ...]
+)
+
 class RTPHeaderExtensionFlags(GObject.GFlags):
     ONE_BYTE = 1
     TWO_BYTE = 2
+
+_RTPHeaderExtensionFlagsLiteralType: TypeAlias = Literal[
+    "GST_RTP_HEADER_EXTENSION_ONE_BYTE",
+    "GST_RTP_HEADER_EXTENSION_TWO_BYTE",
+    "one-byte",
+    "two-byte",
+]
+_RTPHeaderExtensionFlagsValueType: TypeAlias = (
+    RTPHeaderExtensionFlags
+    | _RTPHeaderExtensionFlagsLiteralType
+    | tuple[_RTPHeaderExtensionFlagsLiteralType, ...]
+)
 
 class RTCPFBType(GObject.GEnum):
     FB_TYPE_INVALID = 0
@@ -1056,6 +1128,28 @@ class RTCPFBType(GObject.GEnum):
     RTPFB_TYPE_TMMBN = 4
     RTPFB_TYPE_TMMBR = 3
     RTPFB_TYPE_TWCC = 15
+
+_RTCPFBTypeLiteralType: TypeAlias = Literal[
+    "GST_RTCP_FB_TYPE_INVALID",
+    "GST_RTCP_PSFB_TYPE_SLI",
+    "GST_RTCP_PSFB_TYPE_TSTN",
+    "GST_RTCP_PSFB_TYPE_VBCN",
+    "GST_RTCP_RTPFB_TYPE_NACK",
+    "GST_RTCP_RTPFB_TYPE_RTCP_SR_REQ",
+    "GST_RTCP_RTPFB_TYPE_TMMBN",
+    "GST_RTCP_RTPFB_TYPE_TMMBR",
+    "GST_RTCP_RTPFB_TYPE_TWCC",
+    "fb-type-invalid",
+    "psfb-type-sli",
+    "psfb-type-tstn",
+    "psfb-type-vbcn",
+    "rtpfb-type-nack",
+    "rtpfb-type-rtcp-sr-req",
+    "rtpfb-type-tmmbn",
+    "rtpfb-type-tmmbr",
+    "rtpfb-type-twcc",
+]
+_RTCPFBTypeValueType: TypeAlias = RTCPFBType | _RTCPFBTypeLiteralType
 
 class RTCPSDESType(GObject.GEnum):
     APSI = 10
@@ -1076,6 +1170,44 @@ class RTCPSDESType(GObject.GEnum):
     RTP_STREAM_ID = 12
     TOOL = 6
 
+_RTCPSDESTypeLiteralType: TypeAlias = Literal[
+    "GST_RTCP_SDES_APSI",
+    "GST_RTCP_SDES_CCID",
+    "GST_RTCP_SDES_CNAME",
+    "GST_RTCP_SDES_EMAIL",
+    "GST_RTCP_SDES_END",
+    "GST_RTCP_SDES_H323_CADDR",
+    "GST_RTCP_SDES_INVALID",
+    "GST_RTCP_SDES_LOC",
+    "GST_RTCP_SDES_MID",
+    "GST_RTCP_SDES_NAME",
+    "GST_RTCP_SDES_NOTE",
+    "GST_RTCP_SDES_PHONE",
+    "GST_RTCP_SDES_PRIV",
+    "GST_RTCP_SDES_REPAIRED_RTP_STREAM_ID",
+    "GST_RTCP_SDES_RGRP",
+    "GST_RTCP_SDES_RTP_STREAM_ID",
+    "GST_RTCP_SDES_TOOL",
+    "apsi",
+    "ccid",
+    "cname",
+    "email",
+    "end",
+    "h323-caddr",
+    "invalid",
+    "loc",
+    "mid",
+    "name",
+    "note",
+    "phone",
+    "priv",
+    "repaired-rtp-stream-id",
+    "rgrp",
+    "rtp-stream-id",
+    "tool",
+]
+_RTCPSDESTypeValueType: TypeAlias = RTCPSDESType | _RTCPSDESTypeLiteralType
+
 class RTCPType(GObject.GEnum):
     APP = 204
     BYE = 203
@@ -1087,6 +1219,28 @@ class RTCPType(GObject.GEnum):
     SR = 200
     XR = 207
 
+_RTCPTypeLiteralType: TypeAlias = Literal[
+    "GST_RTCP_TYPE_APP",
+    "GST_RTCP_TYPE_BYE",
+    "GST_RTCP_TYPE_INVALID",
+    "GST_RTCP_TYPE_PSFB",
+    "GST_RTCP_TYPE_RR",
+    "GST_RTCP_TYPE_RTPFB",
+    "GST_RTCP_TYPE_SDES",
+    "GST_RTCP_TYPE_SR",
+    "GST_RTCP_TYPE_XR",
+    "app",
+    "bye",
+    "invalid",
+    "psfb",
+    "rr",
+    "rtpfb",
+    "sdes",
+    "sr",
+    "xr",
+]
+_RTCPTypeValueType: TypeAlias = RTCPType | _RTCPTypeLiteralType
+
 class RTCPXRType(GObject.GEnum):
     DLRR = 5
     DRLE = 2
@@ -1096,6 +1250,26 @@ class RTCPXRType(GObject.GEnum):
     RRT = 4
     SSUMM = 6
     VOIP_METRICS = 7
+
+_RTCPXRTypeLiteralType: TypeAlias = Literal[
+    "GST_RTCP_XR_TYPE_DLRR",
+    "GST_RTCP_XR_TYPE_DRLE",
+    "GST_RTCP_XR_TYPE_INVALID",
+    "GST_RTCP_XR_TYPE_LRLE",
+    "GST_RTCP_XR_TYPE_PRT",
+    "GST_RTCP_XR_TYPE_RRT",
+    "GST_RTCP_XR_TYPE_SSUMM",
+    "GST_RTCP_XR_TYPE_VOIP_METRICS",
+    "dlrr",
+    "drle",
+    "invalid",
+    "lrle",
+    "prt",
+    "rrt",
+    "ssumm",
+    "voip-metrics",
+]
+_RTCPXRTypeValueType: TypeAlias = RTCPXRType | _RTCPXRTypeLiteralType
 
 class RTPPayload(GObject.GEnum):
     CELLB = 25
@@ -1124,9 +1298,77 @@ class RTPPayload(GObject.GEnum):
     PCMU = 0
     QCELP = 12
 
+_RTPPayloadLiteralType: TypeAlias = Literal[
+    "GST_RTP_PAYLOAD_CELLB",
+    "GST_RTP_PAYLOAD_CN",
+    "GST_RTP_PAYLOAD_DVI4_11025",
+    "GST_RTP_PAYLOAD_DVI4_16000",
+    "GST_RTP_PAYLOAD_DVI4_22050",
+    "GST_RTP_PAYLOAD_DVI4_8000",
+    "GST_RTP_PAYLOAD_G721",
+    "GST_RTP_PAYLOAD_G722",
+    "GST_RTP_PAYLOAD_G723",
+    "GST_RTP_PAYLOAD_G728",
+    "GST_RTP_PAYLOAD_G729",
+    "GST_RTP_PAYLOAD_GSM",
+    "GST_RTP_PAYLOAD_H261",
+    "GST_RTP_PAYLOAD_H263",
+    "GST_RTP_PAYLOAD_JPEG",
+    "GST_RTP_PAYLOAD_L16_MONO",
+    "GST_RTP_PAYLOAD_L16_STEREO",
+    "GST_RTP_PAYLOAD_LPC",
+    "GST_RTP_PAYLOAD_MP2T",
+    "GST_RTP_PAYLOAD_MPA",
+    "GST_RTP_PAYLOAD_MPV",
+    "GST_RTP_PAYLOAD_NV",
+    "GST_RTP_PAYLOAD_PCMA",
+    "GST_RTP_PAYLOAD_PCMU",
+    "GST_RTP_PAYLOAD_QCELP",
+    "cellb",
+    "cn",
+    "dvi4-11025",
+    "dvi4-16000",
+    "dvi4-22050",
+    "dvi4-8000",
+    "g721",
+    "g722",
+    "g723",
+    "g728",
+    "g729",
+    "gsm",
+    "h261",
+    "h263",
+    "jpeg",
+    "l16-mono",
+    "l16-stereo",
+    "lpc",
+    "mp2t",
+    "mpa",
+    "mpv",
+    "nv",
+    "pcma",
+    "pcmu",
+    "qcelp",
+]
+_RTPPayloadValueType: TypeAlias = RTPPayload | _RTPPayloadLiteralType
+
 class RTPProfile(GObject.GEnum):
     AVP = 1
     AVPF = 3
     SAVP = 2
     SAVPF = 4
     UNKNOWN = 0
+
+_RTPProfileLiteralType: TypeAlias = Literal[
+    "GST_RTP_PROFILE_AVP",
+    "GST_RTP_PROFILE_AVPF",
+    "GST_RTP_PROFILE_SAVP",
+    "GST_RTP_PROFILE_SAVPF",
+    "GST_RTP_PROFILE_UNKNOWN",
+    "avp",
+    "avpf",
+    "savp",
+    "savpf",
+    "unknown",
+]
+_RTPProfileValueType: TypeAlias = RTPProfile | _RTPProfileLiteralType

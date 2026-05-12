@@ -1,6 +1,8 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -40,35 +42,41 @@ def rtsp_generate_digest_auth_response(
 def rtsp_generate_digest_auth_response_from_md5(
     algorithm: str | None, method: str, md5: str, uri: str, nonce: str
 ) -> str | None: ...
-def rtsp_header_allow_multiple(field: RTSPHeaderField) -> bool: ...
-def rtsp_header_as_text(field: RTSPHeaderField) -> str | None: ...
+def rtsp_header_allow_multiple(field: _RTSPHeaderFieldValueType) -> bool: ...
+def rtsp_header_as_text(field: _RTSPHeaderFieldValueType) -> str | None: ...
 def rtsp_message_new() -> tuple[RTSPResult, RTSPMessage]: ...
 def rtsp_message_new_data(channel: int) -> tuple[RTSPResult, RTSPMessage]: ...
 def rtsp_message_new_request(
-    method: RTSPMethod, uri: str
+    method: _RTSPMethodValueType, uri: str
 ) -> tuple[RTSPResult, RTSPMessage]: ...
 def rtsp_message_new_response(
-    code: RTSPStatusCode, reason: str | None = None, request: RTSPMessage | None = None
+    code: _RTSPStatusCodeValueType,
+    reason: str | None = None,
+    request: RTSPMessage | None = None,
 ) -> tuple[RTSPResult, RTSPMessage]: ...
-def rtsp_method_as_text(method: RTSPMethod) -> str | None: ...
-def rtsp_options_as_text(options: RTSPMethod) -> str: ...
+def rtsp_method_as_text(method: _RTSPMethodValueType) -> str | None: ...
+def rtsp_options_as_text(options: _RTSPMethodValueType) -> str: ...
 def rtsp_options_from_text(options: str) -> RTSPMethod: ...
-def rtsp_range_convert_units(range: RTSPTimeRange, unit: RTSPRangeUnit) -> bool: ...
+def rtsp_range_convert_units(
+    range: RTSPTimeRange, unit: _RTSPRangeUnitValueType
+) -> bool: ...
 def rtsp_range_free(range: RTSPTimeRange) -> None: ...
 def rtsp_range_get_times(range: RTSPTimeRange) -> tuple[bool, int, int]: ...
 def rtsp_range_parse(rangestr: str) -> tuple[RTSPResult, RTSPTimeRange]: ...
 def rtsp_range_to_string(range: RTSPTimeRange) -> str: ...
-def rtsp_status_as_text(code: RTSPStatusCode) -> str: ...
-def rtsp_strresult(result: RTSPResult) -> str: ...
+def rtsp_status_as_text(code: _RTSPStatusCodeValueType) -> str: ...
+def rtsp_strresult(result: _RTSPResultValueType) -> str: ...
 def rtsp_transport_get_manager(
-    trans: RTSPTransMode, option: int
+    trans: _RTSPTransModeValueType, option: int
 ) -> tuple[RTSPResult, str | None]: ...
-def rtsp_transport_get_mime(trans: RTSPTransMode) -> tuple[RTSPResult, str]: ...
+def rtsp_transport_get_mime(
+    trans: _RTSPTransModeValueType,
+) -> tuple[RTSPResult, str]: ...
 def rtsp_transport_init() -> tuple[RTSPResult, RTSPTransport]: ...
 def rtsp_transport_new() -> tuple[RTSPResult, RTSPTransport]: ...
 def rtsp_transport_parse(str: str) -> tuple[RTSPResult, RTSPTransport]: ...
 def rtsp_url_parse(urlstr: str) -> tuple[RTSPResult, RTSPUrl | None]: ...
-def rtsp_version_as_text(version: RTSPVersion) -> str: ...
+def rtsp_version_as_text(version: _RTSPVersionValueType) -> str: ...
 
 class RTSPAuthCredential(GObject.GBoxed):
     """
@@ -137,10 +145,10 @@ class RTSPConnection(_gi.Struct):
     def next_timeout(self, timeout: GLib.TimeVal) -> RTSPResult: ...
     def next_timeout_usec(self) -> int: ...
     def poll(
-        self, events: RTSPEvent, timeout: GLib.TimeVal
+        self, events: _RTSPEventValueType, timeout: GLib.TimeVal
     ) -> tuple[RTSPResult, RTSPEvent]: ...
     def poll_usec(
-        self, events: RTSPEvent, timeout: int
+        self, events: _RTSPEventValueType, timeout: int
     ) -> tuple[RTSPResult, RTSPEvent]: ...
     def read(self, data: Sequence[int], timeout: GLib.TimeVal) -> RTSPResult: ...
     def read_usec(self, data: Sequence[int], timeout: int) -> RTSPResult: ...
@@ -161,14 +169,16 @@ class RTSPConnection(_gi.Struct):
             [
                 Gio.TlsConnection,
                 Gio.TlsCertificate,
-                Gio.TlsCertificateFlags,
+                Gio._TlsCertificateFlagsValueType,
                 Unpack[_DataTs],
             ],
             bool,
         ],
         *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def set_auth(self, method: RTSPAuthMethod, user: str, pass_: str) -> RTSPResult: ...
+    def set_auth(
+        self, method: _RTSPAuthMethodValueType, user: str, pass_: str
+    ) -> RTSPResult: ...
     def set_auth_param(self, param: str, value: str) -> None: ...
     def set_content_length_limit(self, limit: int) -> None: ...
     def set_http_mode(self, enable: bool) -> None: ...
@@ -181,7 +191,9 @@ class RTSPConnection(_gi.Struct):
     def set_tls_interaction(
         self, interaction: Gio.TlsInteraction | None = None
     ) -> None: ...
-    def set_tls_validation_flags(self, flags: Gio.TlsCertificateFlags) -> bool: ...
+    def set_tls_validation_flags(
+        self, flags: Gio._TlsCertificateFlagsValueType
+    ) -> bool: ...
     def set_tunneled(self, tunneled: bool) -> None: ...
     def write(self, data: Sequence[int], timeout: GLib.TimeVal) -> RTSPResult: ...
     def write_usec(self, data: Sequence[int], timeout: int) -> RTSPResult: ...
@@ -195,7 +207,7 @@ class RTSPExtension(GObject.GInterface, Protocol):
     def configure_stream(self, caps: Gst.Caps) -> bool: ...
     def detect_server(self, resp: RTSPMessage) -> bool: ...
     def get_transports(
-        self, protocols: RTSPLowerTrans, transport: str
+        self, protocols: _RTSPLowerTransValueType, transport: str
     ) -> RTSPResult: ...
     def parse_sdp(self, sdp: GstSdp.SDPMessage, s: Gst.Structure) -> RTSPResult: ...
     def receive_request(self, req: RTSPMessage) -> RTSPResult: ...
@@ -232,7 +244,7 @@ class RTSPExtensionInterface(_gi.Struct):
     @property
     def get_transports(
         self,
-    ) -> Callable[[RTSPExtension, RTSPLowerTrans, str], RTSPResult]: ...
+    ) -> Callable[[RTSPExtension, _RTSPLowerTransValueType, str], RTSPResult]: ...
     @property
     def stream_select(self) -> Callable[[RTSPExtension, RTSPUrl], RTSPResult]: ...
     @property
@@ -260,7 +272,9 @@ class RTSPMessage(GObject.GBoxed):
     def body_size(self) -> int: ...
     @property
     def body_buffer(self) -> Gst.Buffer: ...
-    def add_header(self, field: RTSPHeaderField, value: str) -> RTSPResult: ...
+    def add_header(
+        self, field: _RTSPHeaderFieldValueType, value: str
+    ) -> RTSPResult: ...
     def add_header_by_name(self, header: str, value: str) -> RTSPResult: ...
     def append_headers(self, str: GLib.String) -> RTSPResult: ...
     def copy(self) -> tuple[RTSPResult, RTSPMessage | None]: ...
@@ -269,7 +283,7 @@ class RTSPMessage(GObject.GBoxed):
     def get_body(self) -> tuple[RTSPResult, bytes]: ...
     def get_body_buffer(self) -> tuple[RTSPResult, Gst.Buffer]: ...
     def get_header(
-        self, field: RTSPHeaderField, indx: int
+        self, field: _RTSPHeaderFieldValueType, indx: int
     ) -> tuple[RTSPResult, str | None]: ...
     def get_header_by_name(
         self, header: str, index: int
@@ -278,20 +292,22 @@ class RTSPMessage(GObject.GBoxed):
     def has_body_buffer(self) -> bool: ...
     def init(self) -> RTSPResult: ...
     def init_data(self, channel: int) -> RTSPResult: ...
-    def init_request(self, method: RTSPMethod, uri: str) -> RTSPResult: ...
+    def init_request(self, method: _RTSPMethodValueType, uri: str) -> RTSPResult: ...
     def init_response(
         self,
-        code: RTSPStatusCode,
+        code: _RTSPStatusCodeValueType,
         reason: str | None = None,
         request: RTSPMessage | None = None,
     ) -> RTSPResult: ...
     def parse_auth_credentials(
-        self, field: RTSPHeaderField
+        self, field: _RTSPHeaderFieldValueType
     ) -> list[RTSPAuthCredential]: ...
     def parse_data(self) -> tuple[RTSPResult, int]: ...
     def parse_request(self) -> tuple[RTSPResult, RTSPMethod, str, RTSPVersion]: ...
     def parse_response(self) -> tuple[RTSPResult, RTSPStatusCode, str, RTSPVersion]: ...
-    def remove_header(self, field: RTSPHeaderField, indx: int) -> RTSPResult: ...
+    def remove_header(
+        self, field: _RTSPHeaderFieldValueType, indx: int
+    ) -> RTSPResult: ...
     def remove_header_by_name(self, header: str, index: int) -> RTSPResult: ...
     def set_body(self, data: Sequence[int]) -> RTSPResult: ...
     def set_body_buffer(self, buffer: Gst.Buffer) -> RTSPResult: ...
@@ -299,7 +315,9 @@ class RTSPMessage(GObject.GBoxed):
     def steal_body_buffer(self) -> tuple[RTSPResult, Gst.Buffer]: ...
     def take_body(self, data: Sequence[int]) -> RTSPResult: ...
     def take_body_buffer(self, buffer: Gst.Buffer) -> RTSPResult: ...
-    def take_header(self, field: RTSPHeaderField, value: str) -> RTSPResult: ...
+    def take_header(
+        self, field: _RTSPHeaderFieldValueType, value: str
+    ) -> RTSPResult: ...
     def take_header_by_name(self, header: str, value: str) -> RTSPResult: ...
     def unset(self) -> RTSPResult: ...
 
@@ -315,7 +333,7 @@ class RTSPRange(_gi.Struct):
     min: int
     max: int
     @staticmethod
-    def convert_units(range: RTSPTimeRange, unit: RTSPRangeUnit) -> bool: ...
+    def convert_units(range: RTSPTimeRange, unit: _RTSPRangeUnitValueType) -> bool: ...
     @staticmethod
     def free(range: RTSPTimeRange) -> None: ...
     @staticmethod
@@ -394,11 +412,11 @@ class RTSPTransport(_gi.Struct):
     def free(self) -> RTSPResult: ...
     @staticmethod
     def get_manager(
-        trans: RTSPTransMode, option: int
+        trans: _RTSPTransModeValueType, option: int
     ) -> tuple[RTSPResult, str | None]: ...
     def get_media_type(self) -> tuple[RTSPResult, str]: ...
     @staticmethod
-    def get_mime(trans: RTSPTransMode) -> tuple[RTSPResult, str]: ...
+    def get_mime(trans: _RTSPTransModeValueType) -> tuple[RTSPResult, str]: ...
     @staticmethod
     def init() -> tuple[RTSPResult, RTSPTransport]: ...
     @staticmethod
@@ -465,7 +483,9 @@ class RTSPWatchFuncs(_gi.Struct):
     @property
     def closed(self) -> Callable[[RTSPWatch, Any | None], RTSPResult]: ...
     @property
-    def error(self) -> Callable[[RTSPWatch, RTSPResult, Any | None], RTSPResult]: ...
+    def error(
+        self,
+    ) -> Callable[[RTSPWatch, _RTSPResultValueType, Any | None], RTSPResult]: ...
     @property
     def tunnel_start(self) -> Callable[[RTSPWatch, Any | None], RTSPStatusCode]: ...
     @property
@@ -474,7 +494,7 @@ class RTSPWatchFuncs(_gi.Struct):
     def error_full(
         self,
     ) -> Callable[
-        [RTSPWatch, RTSPResult, RTSPMessage, int, Any | None], RTSPResult
+        [RTSPWatch, _RTSPResultValueType, RTSPMessage, int, Any | None], RTSPResult
     ]: ...
     @property
     def tunnel_lost(self) -> Callable[[RTSPWatch, Any | None], RTSPResult]: ...
@@ -487,6 +507,13 @@ class RTSPEvent(GObject.GFlags):
     READ = 1
     WRITE = 2
 
+_RTSPEventLiteralType: TypeAlias = Literal[
+    "GST_RTSP_EV_READ", "GST_RTSP_EV_WRITE", "read", "write"
+]
+_RTSPEventValueType: TypeAlias = (
+    RTSPEvent | _RTSPEventLiteralType | tuple[_RTSPEventLiteralType, ...]
+)
+
 class RTSPLowerTrans(GObject.GFlags):
     HTTP = 16
     TCP = 4
@@ -494,6 +521,24 @@ class RTSPLowerTrans(GObject.GFlags):
     UDP = 1
     UDP_MCAST = 2
     UNKNOWN = 0
+
+_RTSPLowerTransLiteralType: TypeAlias = Literal[
+    "GST_RTSP_LOWER_TRANS_HTTP",
+    "GST_RTSP_LOWER_TRANS_TCP",
+    "GST_RTSP_LOWER_TRANS_TLS",
+    "GST_RTSP_LOWER_TRANS_UDP",
+    "GST_RTSP_LOWER_TRANS_UDP_MCAST",
+    "GST_RTSP_LOWER_TRANS_UNKNOWN",
+    "http",
+    "tcp",
+    "tls",
+    "udp",
+    "udp-mcast",
+    "unknown",
+]
+_RTSPLowerTransValueType: TypeAlias = (
+    RTSPLowerTrans | _RTSPLowerTransLiteralType | tuple[_RTSPLowerTransLiteralType, ...]
+)
 
 class RTSPMethod(GObject.GFlags):
     ANNOUNCE = 2
@@ -511,7 +556,41 @@ class RTSPMethod(GObject.GFlags):
     SET_PARAMETER = 512
     TEARDOWN = 1024
     @staticmethod
-    def as_text(method: RTSPMethod) -> str | None: ...
+    def as_text(method: _RTSPMethodValueType) -> str | None: ...
+
+_RTSPMethodLiteralType: TypeAlias = Literal[
+    "GST_RTSP_ANNOUNCE",
+    "GST_RTSP_DESCRIBE",
+    "GST_RTSP_GET",
+    "GST_RTSP_GET_PARAMETER",
+    "GST_RTSP_INVALID",
+    "GST_RTSP_OPTIONS",
+    "GST_RTSP_PAUSE",
+    "GST_RTSP_PLAY",
+    "GST_RTSP_POST",
+    "GST_RTSP_RECORD",
+    "GST_RTSP_REDIRECT",
+    "GST_RTSP_SETUP",
+    "GST_RTSP_SET_PARAMETER",
+    "GST_RTSP_TEARDOWN",
+    "announce",
+    "describe",
+    "get",
+    "get-parameter",
+    "invalid",
+    "options",
+    "pause",
+    "play",
+    "post",
+    "record",
+    "redirect",
+    "set-parameter",
+    "setup",
+    "teardown",
+]
+_RTSPMethodValueType: TypeAlias = (
+    RTSPMethod | _RTSPMethodLiteralType | tuple[_RTSPMethodLiteralType, ...]
+)
 
 class RTSPProfile(GObject.GFlags):
     AVP = 1
@@ -520,20 +599,68 @@ class RTSPProfile(GObject.GFlags):
     SAVPF = 8
     UNKNOWN = 0
 
+_RTSPProfileLiteralType: TypeAlias = Literal[
+    "GST_RTSP_PROFILE_AVP",
+    "GST_RTSP_PROFILE_AVPF",
+    "GST_RTSP_PROFILE_SAVP",
+    "GST_RTSP_PROFILE_SAVPF",
+    "GST_RTSP_PROFILE_UNKNOWN",
+    "avp",
+    "avpf",
+    "savp",
+    "savpf",
+    "unknown",
+]
+_RTSPProfileValueType: TypeAlias = (
+    RTSPProfile | _RTSPProfileLiteralType | tuple[_RTSPProfileLiteralType, ...]
+)
+
 class RTSPTransMode(GObject.GFlags):
     RDT = 2
     RTP = 1
     UNKNOWN = 0
+
+_RTSPTransModeLiteralType: TypeAlias = Literal[
+    "GST_RTSP_TRANS_RDT",
+    "GST_RTSP_TRANS_RTP",
+    "GST_RTSP_TRANS_UNKNOWN",
+    "rdt",
+    "rtp",
+    "unknown",
+]
+_RTSPTransModeValueType: TypeAlias = (
+    RTSPTransMode | _RTSPTransModeLiteralType | tuple[_RTSPTransModeLiteralType, ...]
+)
 
 class RTSPAuthMethod(GObject.GEnum):
     BASIC = 1
     DIGEST = 2
     NONE = 0
 
+_RTSPAuthMethodLiteralType: TypeAlias = Literal[
+    "GST_RTSP_AUTH_BASIC",
+    "GST_RTSP_AUTH_DIGEST",
+    "GST_RTSP_AUTH_NONE",
+    "basic",
+    "digest",
+    "none",
+]
+_RTSPAuthMethodValueType: TypeAlias = RTSPAuthMethod | _RTSPAuthMethodLiteralType
+
 class RTSPFamily(GObject.GEnum):
     INET = 1
     INET6 = 2
     NONE = 0
+
+_RTSPFamilyLiteralType: TypeAlias = Literal[
+    "GST_RTSP_FAM_INET",
+    "GST_RTSP_FAM_INET6",
+    "GST_RTSP_FAM_NONE",
+    "inet",
+    "inet6",
+    "none",
+]
+_RTSPFamilyValueType: TypeAlias = RTSPFamily | _RTSPFamilyLiteralType
 
 class RTSPHeaderField(GObject.GEnum):
     ACCEPT = 1
@@ -627,6 +754,190 @@ class RTSPHeaderField(GObject.GEnum):
     X_SESSIONCOOKIE = 80
     X_STARTUPPROFILE = 74
 
+_RTSPHeaderFieldLiteralType: TypeAlias = Literal[
+    "GST_RTSP_HDR_ACCEPT",
+    "GST_RTSP_HDR_ACCEPT_CHARSET",
+    "GST_RTSP_HDR_ACCEPT_ENCODING",
+    "GST_RTSP_HDR_ACCEPT_LANGUAGE",
+    "GST_RTSP_HDR_ACCEPT_RANGES",
+    "GST_RTSP_HDR_ALERT",
+    "GST_RTSP_HDR_ALLOW",
+    "GST_RTSP_HDR_AUTHENTICATION_INFO",
+    "GST_RTSP_HDR_AUTHORIZATION",
+    "GST_RTSP_HDR_BANDWIDTH",
+    "GST_RTSP_HDR_BLOCKSIZE",
+    "GST_RTSP_HDR_CACHE_CONTROL",
+    "GST_RTSP_HDR_CLIENT_CHALLENGE",
+    "GST_RTSP_HDR_CLIENT_ID",
+    "GST_RTSP_HDR_COMPANY_ID",
+    "GST_RTSP_HDR_CONFERENCE",
+    "GST_RTSP_HDR_CONNECTION",
+    "GST_RTSP_HDR_CONTENT_BASE",
+    "GST_RTSP_HDR_CONTENT_ENCODING",
+    "GST_RTSP_HDR_CONTENT_LANGUAGE",
+    "GST_RTSP_HDR_CONTENT_LENGTH",
+    "GST_RTSP_HDR_CONTENT_LOCATION",
+    "GST_RTSP_HDR_CONTENT_TYPE",
+    "GST_RTSP_HDR_CSEQ",
+    "GST_RTSP_HDR_DATE",
+    "GST_RTSP_HDR_ETAG",
+    "GST_RTSP_HDR_EXPIRES",
+    "GST_RTSP_HDR_FRAMES",
+    "GST_RTSP_HDR_FROM",
+    "GST_RTSP_HDR_GUID",
+    "GST_RTSP_HDR_HOST",
+    "GST_RTSP_HDR_IF_MATCH",
+    "GST_RTSP_HDR_IF_MODIFIED_SINCE",
+    "GST_RTSP_HDR_INVALID",
+    "GST_RTSP_HDR_KEYMGMT",
+    "GST_RTSP_HDR_LANGUAGE",
+    "GST_RTSP_HDR_LAST",
+    "GST_RTSP_HDR_LAST_MODIFIED",
+    "GST_RTSP_HDR_LOCATION",
+    "GST_RTSP_HDR_MAX_ASM_WIDTH",
+    "GST_RTSP_HDR_MEDIA_PROPERTIES",
+    "GST_RTSP_HDR_PIPELINED_REQUESTS",
+    "GST_RTSP_HDR_PLAYER_START_TIME",
+    "GST_RTSP_HDR_PRAGMA",
+    "GST_RTSP_HDR_PROXY_AUTHENTICATE",
+    "GST_RTSP_HDR_PROXY_REQUIRE",
+    "GST_RTSP_HDR_PUBLIC",
+    "GST_RTSP_HDR_RANGE",
+    "GST_RTSP_HDR_RATE_CONTROL",
+    "GST_RTSP_HDR_REAL_CHALLENGE1",
+    "GST_RTSP_HDR_REAL_CHALLENGE2",
+    "GST_RTSP_HDR_REAL_CHALLENGE3",
+    "GST_RTSP_HDR_REFERER",
+    "GST_RTSP_HDR_REGION_DATA",
+    "GST_RTSP_HDR_REQUIRE",
+    "GST_RTSP_HDR_RETRY_AFTER",
+    "GST_RTSP_HDR_RTCP_INTERVAL",
+    "GST_RTSP_HDR_RTP_INFO",
+    "GST_RTSP_HDR_SCALE",
+    "GST_RTSP_HDR_SEEK_STYLE",
+    "GST_RTSP_HDR_SERVER",
+    "GST_RTSP_HDR_SESSION",
+    "GST_RTSP_HDR_SPEED",
+    "GST_RTSP_HDR_SUBSCRIBE",
+    "GST_RTSP_HDR_SUPPORTED",
+    "GST_RTSP_HDR_TIMESTAMP",
+    "GST_RTSP_HDR_TRANSPORT",
+    "GST_RTSP_HDR_UNSUPPORTED",
+    "GST_RTSP_HDR_USER_AGENT",
+    "GST_RTSP_HDR_VARY",
+    "GST_RTSP_HDR_VIA",
+    "GST_RTSP_HDR_WWW_AUTHENTICATE",
+    "GST_RTSP_HDR_X_ACCELERATE_STREAMING",
+    "GST_RTSP_HDR_X_ACCEPT_AUTHENT",
+    "GST_RTSP_HDR_X_ACCEPT_PROXY_AUTHENT",
+    "GST_RTSP_HDR_X_BROADCAST_ID",
+    "GST_RTSP_HDR_X_BURST_STREAMING",
+    "GST_RTSP_HDR_X_NOTICE",
+    "GST_RTSP_HDR_X_PLAYER_LAG_TIME",
+    "GST_RTSP_HDR_X_PLAYLIST",
+    "GST_RTSP_HDR_X_PLAYLIST_CHANGE_NOTICE",
+    "GST_RTSP_HDR_X_PLAYLIST_GEN_ID",
+    "GST_RTSP_HDR_X_PLAYLIST_SEEK_ID",
+    "GST_RTSP_HDR_X_PROXY_CLIENT_AGENT",
+    "GST_RTSP_HDR_X_PROXY_CLIENT_VERB",
+    "GST_RTSP_HDR_X_RECEDING_PLAYLISTCHANGE",
+    "GST_RTSP_HDR_X_RTP_INFO",
+    "GST_RTSP_HDR_X_SERVER_IP_ADDRESS",
+    "GST_RTSP_HDR_X_SESSIONCOOKIE",
+    "GST_RTSP_HDR_X_STARTUPPROFILE",
+    "accept",
+    "accept-charset",
+    "accept-encoding",
+    "accept-language",
+    "accept-ranges",
+    "alert",
+    "allow",
+    "authentication-info",
+    "authorization",
+    "bandwidth",
+    "blocksize",
+    "cache-control",
+    "client-challenge",
+    "client-id",
+    "company-id",
+    "conference",
+    "connection",
+    "content-base",
+    "content-encoding",
+    "content-language",
+    "content-length",
+    "content-location",
+    "content-type",
+    "cseq",
+    "date",
+    "etag",
+    "expires",
+    "frames",
+    "from",
+    "guid",
+    "host",
+    "if-match",
+    "if-modified-since",
+    "invalid",
+    "keymgmt",
+    "language",
+    "last",
+    "last-modified",
+    "location",
+    "max-asm-width",
+    "media-properties",
+    "pipelined-requests",
+    "player-start-time",
+    "pragma",
+    "proxy-authenticate",
+    "proxy-require",
+    "public",
+    "range",
+    "rate-control",
+    "real-challenge1",
+    "real-challenge2",
+    "real-challenge3",
+    "referer",
+    "region-data",
+    "require",
+    "retry-after",
+    "rtcp-interval",
+    "rtp-info",
+    "scale",
+    "seek-style",
+    "server",
+    "session",
+    "speed",
+    "subscribe",
+    "supported",
+    "timestamp",
+    "transport",
+    "unsupported",
+    "user-agent",
+    "vary",
+    "via",
+    "www-authenticate",
+    "x-accelerate-streaming",
+    "x-accept-authent",
+    "x-accept-proxy-authent",
+    "x-broadcast-id",
+    "x-burst-streaming",
+    "x-notice",
+    "x-player-lag-time",
+    "x-playlist",
+    "x-playlist-change-notice",
+    "x-playlist-gen-id",
+    "x-playlist-seek-id",
+    "x-proxy-client-agent",
+    "x-proxy-client-verb",
+    "x-receding-playlistchange",
+    "x-rtp-info",
+    "x-server-ip-address",
+    "x-sessioncookie",
+    "x-startupprofile",
+]
+_RTSPHeaderFieldValueType: TypeAlias = RTSPHeaderField | _RTSPHeaderFieldLiteralType
+
 class RTSPMsgType(GObject.GEnum):
     DATA = 5
     HTTP_REQUEST = 3
@@ -635,12 +946,42 @@ class RTSPMsgType(GObject.GEnum):
     REQUEST = 1
     RESPONSE = 2
 
+_RTSPMsgTypeLiteralType: TypeAlias = Literal[
+    "GST_RTSP_MESSAGE_DATA",
+    "GST_RTSP_MESSAGE_HTTP_REQUEST",
+    "GST_RTSP_MESSAGE_HTTP_RESPONSE",
+    "GST_RTSP_MESSAGE_INVALID",
+    "GST_RTSP_MESSAGE_REQUEST",
+    "GST_RTSP_MESSAGE_RESPONSE",
+    "data",
+    "http-request",
+    "http-response",
+    "invalid",
+    "request",
+    "response",
+]
+_RTSPMsgTypeValueType: TypeAlias = RTSPMsgType | _RTSPMsgTypeLiteralType
+
 class RTSPRangeUnit(GObject.GEnum):
     CLOCK = 4
     NPT = 3
     SMPTE = 0
     SMPTE_25 = 2
     SMPTE_30_DROP = 1
+
+_RTSPRangeUnitLiteralType: TypeAlias = Literal[
+    "GST_RTSP_RANGE_CLOCK",
+    "GST_RTSP_RANGE_NPT",
+    "GST_RTSP_RANGE_SMPTE",
+    "GST_RTSP_RANGE_SMPTE_25",
+    "GST_RTSP_RANGE_SMPTE_30_DROP",
+    "clock",
+    "npt",
+    "smpte",
+    "smpte-25",
+    "smpte-30-drop",
+]
+_RTSPRangeUnitValueType: TypeAlias = RTSPRangeUnit | _RTSPRangeUnitLiteralType
 
 class RTSPResult(GObject.GEnum):
     EEOF = -11
@@ -663,6 +1004,48 @@ class RTSPResult(GObject.GEnum):
     OK = 0
     OK_REDIRECT = 1
 
+_RTSPResultLiteralType: TypeAlias = Literal[
+    "GST_RTSP_EEOF",
+    "GST_RTSP_EINTR",
+    "GST_RTSP_EINVAL",
+    "GST_RTSP_ELAST",
+    "GST_RTSP_ENET",
+    "GST_RTSP_ENOMEM",
+    "GST_RTSP_ENOTIMPL",
+    "GST_RTSP_ENOTIP",
+    "GST_RTSP_EPARSE",
+    "GST_RTSP_ERESOLV",
+    "GST_RTSP_ERROR",
+    "GST_RTSP_ESYS",
+    "GST_RTSP_ETGET",
+    "GST_RTSP_ETIMEOUT",
+    "GST_RTSP_ETPOST",
+    "GST_RTSP_EWSASTART",
+    "GST_RTSP_EWSAVERSION",
+    "GST_RTSP_OK",
+    "GST_RTSP_OK_REDIRECT",
+    "eeof",
+    "eintr",
+    "einval",
+    "elast",
+    "enet",
+    "enomem",
+    "enotimpl",
+    "enotip",
+    "eparse",
+    "eresolv",
+    "error",
+    "esys",
+    "etget",
+    "etimeout",
+    "etpost",
+    "ewsastart",
+    "ewsaversion",
+    "ok",
+    "ok-redirect",
+]
+_RTSPResultValueType: TypeAlias = RTSPResult | _RTSPResultLiteralType
+
 class RTSPState(GObject.GEnum):
     INIT = 1
     INVALID = 0
@@ -670,6 +1053,22 @@ class RTSPState(GObject.GEnum):
     READY = 2
     RECORDING = 5
     SEEKING = 3
+
+_RTSPStateLiteralType: TypeAlias = Literal[
+    "GST_RTSP_STATE_INIT",
+    "GST_RTSP_STATE_INVALID",
+    "GST_RTSP_STATE_PLAYING",
+    "GST_RTSP_STATE_READY",
+    "GST_RTSP_STATE_RECORDING",
+    "GST_RTSP_STATE_SEEKING",
+    "init",
+    "invalid",
+    "playing",
+    "ready",
+    "recording",
+    "seeking",
+]
+_RTSPStateValueType: TypeAlias = RTSPState | _RTSPStateLiteralType
 
 class RTSPStatusCode(GObject.GEnum):
     AGGREGATE_OPERATION_NOT_ALLOWED = 459
@@ -721,6 +1120,106 @@ class RTSPStatusCode(GObject.GEnum):
     UNSUPPORTED_TRANSPORT = 461
     USE_PROXY = 305
 
+_RTSPStatusCodeLiteralType: TypeAlias = Literal[
+    "GST_RTSP_STS_AGGREGATE_OPERATION_NOT_ALLOWED",
+    "GST_RTSP_STS_BAD_GATEWAY",
+    "GST_RTSP_STS_BAD_REQUEST",
+    "GST_RTSP_STS_CONFERENCE_NOT_FOUND",
+    "GST_RTSP_STS_CONTINUE",
+    "GST_RTSP_STS_CREATED",
+    "GST_RTSP_STS_DESTINATION_UNREACHABLE",
+    "GST_RTSP_STS_FORBIDDEN",
+    "GST_RTSP_STS_GATEWAY_TIMEOUT",
+    "GST_RTSP_STS_GONE",
+    "GST_RTSP_STS_HEADER_FIELD_NOT_VALID_FOR_RESOURCE",
+    "GST_RTSP_STS_INTERNAL_SERVER_ERROR",
+    "GST_RTSP_STS_INVALID",
+    "GST_RTSP_STS_INVALID_RANGE",
+    "GST_RTSP_STS_KEY_MANAGEMENT_FAILURE",
+    "GST_RTSP_STS_LENGTH_REQUIRED",
+    "GST_RTSP_STS_LOW_ON_STORAGE",
+    "GST_RTSP_STS_METHOD_NOT_ALLOWED",
+    "GST_RTSP_STS_METHOD_NOT_VALID_IN_THIS_STATE",
+    "GST_RTSP_STS_MOVED_PERMANENTLY",
+    "GST_RTSP_STS_MOVE_TEMPORARILY",
+    "GST_RTSP_STS_MULTIPLE_CHOICES",
+    "GST_RTSP_STS_NOT_ACCEPTABLE",
+    "GST_RTSP_STS_NOT_ENOUGH_BANDWIDTH",
+    "GST_RTSP_STS_NOT_FOUND",
+    "GST_RTSP_STS_NOT_IMPLEMENTED",
+    "GST_RTSP_STS_NOT_MODIFIED",
+    "GST_RTSP_STS_OK",
+    "GST_RTSP_STS_ONLY_AGGREGATE_OPERATION_ALLOWED",
+    "GST_RTSP_STS_OPTION_NOT_SUPPORTED",
+    "GST_RTSP_STS_PARAMETER_IS_READONLY",
+    "GST_RTSP_STS_PARAMETER_NOT_UNDERSTOOD",
+    "GST_RTSP_STS_PAYMENT_REQUIRED",
+    "GST_RTSP_STS_PRECONDITION_FAILED",
+    "GST_RTSP_STS_PROXY_AUTH_REQUIRED",
+    "GST_RTSP_STS_REDIRECT_PERMANENTLY",
+    "GST_RTSP_STS_REDIRECT_TEMPORARILY",
+    "GST_RTSP_STS_REQUEST_ENTITY_TOO_LARGE",
+    "GST_RTSP_STS_REQUEST_TIMEOUT",
+    "GST_RTSP_STS_REQUEST_URI_TOO_LARGE",
+    "GST_RTSP_STS_RTSP_VERSION_NOT_SUPPORTED",
+    "GST_RTSP_STS_SEE_OTHER",
+    "GST_RTSP_STS_SERVICE_UNAVAILABLE",
+    "GST_RTSP_STS_SESSION_NOT_FOUND",
+    "GST_RTSP_STS_UNAUTHORIZED",
+    "GST_RTSP_STS_UNSUPPORTED_MEDIA_TYPE",
+    "GST_RTSP_STS_UNSUPPORTED_TRANSPORT",
+    "GST_RTSP_STS_USE_PROXY",
+    "aggregate-operation-not-allowed",
+    "bad-gateway",
+    "bad-request",
+    "conference-not-found",
+    "continue",
+    "created",
+    "destination-unreachable",
+    "forbidden",
+    "gateway-timeout",
+    "gone",
+    "header-field-not-valid-for-resource",
+    "internal-server-error",
+    "invalid",
+    "invalid-range",
+    "key-management-failure",
+    "length-required",
+    "low-on-storage",
+    "method-not-allowed",
+    "method-not-valid-in-this-state",
+    "move-temporarily",
+    "moved-permanently",
+    "multiple-choices",
+    "not-acceptable",
+    "not-enough-bandwidth",
+    "not-found",
+    "not-implemented",
+    "not-modified",
+    "ok",
+    "only-aggregate-operation-allowed",
+    "option-not-supported",
+    "parameter-is-readonly",
+    "parameter-not-understood",
+    "payment-required",
+    "precondition-failed",
+    "proxy-auth-required",
+    "redirect-permanently",
+    "redirect-temporarily",
+    "request-entity-too-large",
+    "request-timeout",
+    "request-uri-too-large",
+    "rtsp-version-not-supported",
+    "see-other",
+    "service-unavailable",
+    "session-not-found",
+    "unauthorized",
+    "unsupported-media-type",
+    "unsupported-transport",
+    "use-proxy",
+]
+_RTSPStatusCodeValueType: TypeAlias = RTSPStatusCode | _RTSPStatusCodeLiteralType
+
 class RTSPTimeType(GObject.GEnum):
     END = 2
     FRAMES = 3
@@ -728,7 +1227,24 @@ class RTSPTimeType(GObject.GEnum):
     SECONDS = 0
     UTC = 4
 
+_RTSPTimeTypeLiteralType: TypeAlias = Literal[
+    "GST_RTSP_TIME_END",
+    "GST_RTSP_TIME_FRAMES",
+    "GST_RTSP_TIME_NOW",
+    "GST_RTSP_TIME_SECONDS",
+    "GST_RTSP_TIME_UTC",
+    "end",
+    "frames",
+    "now",
+    "seconds",
+    "utc",
+]
+_RTSPTimeTypeValueType: TypeAlias = RTSPTimeType | _RTSPTimeTypeLiteralType
+
 class RTSPVersion(GObject.GEnum):
     INVALID = 0
     @staticmethod
-    def as_text(version: RTSPVersion) -> str: ...
+    def as_text(version: _RTSPVersionValueType) -> str: ...
+
+_RTSPVersionLiteralType: TypeAlias = Literal["GST_RTSP_VERSION_INVALID", "invalid"]
+_RTSPVersionValueType: TypeAlias = RTSPVersion | _RTSPVersionLiteralType

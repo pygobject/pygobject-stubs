@@ -1,8 +1,11 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import overload
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
+from typing_extensions import Never
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -300,34 +303,36 @@ TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: Final[int]
 TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID: Final[int]
 
 def accel_groups_activate(
-    object: GObject.Object, accel_key: int, accel_mods: _Gdk3.ModifierType
+    object: GObject.Object, accel_key: int, accel_mods: _Gdk3._ModifierTypeValueType
 ) -> bool: ...
 def accel_groups_from_object(object: GObject.Object) -> list[AccelGroup]: ...
 def accelerator_get_default_mod_mask() -> _Gdk3.ModifierType: ...
 def accelerator_get_label(
-    accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
+    accelerator_key: int, accelerator_mods: _Gdk3._ModifierTypeValueType
 ) -> str: ...
 def accelerator_get_label_with_keycode(
     display: _Gdk3.Display | None,
     accelerator_key: int,
     keycode: int,
-    accelerator_mods: _Gdk3.ModifierType,
+    accelerator_mods: _Gdk3._ModifierTypeValueType,
 ) -> str: ...
 def accelerator_name(
-    accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
+    accelerator_key: int, accelerator_mods: _Gdk3._ModifierTypeValueType
 ) -> str: ...
 def accelerator_name_with_keycode(
     display: _Gdk3.Display | None,
     accelerator_key: int,
     keycode: int,
-    accelerator_mods: _Gdk3.ModifierType,
+    accelerator_mods: _Gdk3._ModifierTypeValueType,
 ) -> str: ...
 def accelerator_parse(accelerator: str) -> tuple[int, _Gdk3.ModifierType]: ...
 def accelerator_parse_with_keycode(
     accelerator: str,
 ) -> tuple[int, list[int], _Gdk3.ModifierType]: ...
-def accelerator_set_default_mod_mask(default_mod_mask: _Gdk3.ModifierType) -> None: ...
-def accelerator_valid(keyval: int, modifiers: _Gdk3.ModifierType) -> bool: ...
+def accelerator_set_default_mod_mask(
+    default_mod_mask: _Gdk3._ModifierTypeValueType,
+) -> None: ...
+def accelerator_valid(keyval: int, modifiers: _Gdk3._ModifierTypeValueType) -> bool: ...
 def alternative_dialog_button_order(screen: _Gdk3.Screen | None = None) -> bool: ...
 def binding_entry_add_signal_from_string(
     binding_set: BindingSet, signal_desc: str
@@ -335,19 +340,19 @@ def binding_entry_add_signal_from_string(
 def binding_entry_add_signall(
     binding_set: BindingSet,
     keyval: int,
-    modifiers: _Gdk3.ModifierType,
+    modifiers: _Gdk3._ModifierTypeValueType,
     signal_name: str,
     binding_args: list[BindingArg],
 ) -> None: ...
 def binding_entry_remove(
-    binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
+    binding_set: BindingSet, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
 ) -> None: ...
 def binding_entry_skip(
-    binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
+    binding_set: BindingSet, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
 ) -> None: ...
 def binding_set_find(set_name: str) -> BindingSet | None: ...
 def bindings_activate(
-    object: GObject.Object, keyval: int, modifiers: _Gdk3.ModifierType
+    object: GObject.Object, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
 ) -> bool: ...
 def bindings_activate_event(object: GObject.Object, event: _Gdk3.EventKey) -> bool: ...
 def builder_error_quark() -> int: ...
@@ -398,7 +403,7 @@ def draw_insertion_cursor(
     cr: cairo.Context[_SomeSurface],
     location: _Gdk3.Rectangle,
     is_primary: bool,
-    direction: TextDirection,
+    direction: _TextDirectionValueType,
     draw_arrow: bool,
 ) -> None: ...
 def events_pending() -> bool: ...
@@ -450,11 +455,11 @@ def main_quit() -> None: ...
 def paint_arrow(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
-    arrow_type: ArrowType,
+    arrow_type: _ArrowTypeValueType,
     fill: bool,
     x: int,
     y: int,
@@ -464,8 +469,8 @@ def paint_arrow(
 def paint_box(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -476,23 +481,23 @@ def paint_box(
 def paint_box_gap(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
     width: int,
     height: int,
-    gap_side: PositionType,
+    gap_side: _PositionTypeValueType,
     gap_x: int,
     gap_width: int,
 ) -> None: ...
 def paint_check(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -503,8 +508,8 @@ def paint_check(
 def paint_diamond(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -515,31 +520,31 @@ def paint_diamond(
 def paint_expander(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
-    expander_style: ExpanderStyle,
+    expander_style: _ExpanderStyleValueType,
 ) -> None: ...
 def paint_extension(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
     width: int,
     height: int,
-    gap_side: PositionType,
+    gap_side: _PositionTypeValueType,
 ) -> None: ...
 def paint_flat_box(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -550,7 +555,7 @@ def paint_flat_box(
 def paint_focus(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -561,20 +566,20 @@ def paint_focus(
 def paint_handle(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
     width: int,
     height: int,
-    orientation: Orientation,
+    orientation: _OrientationValueType,
 ) -> None: ...
 def paint_hline(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x1: int,
@@ -584,7 +589,7 @@ def paint_hline(
 def paint_layout(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     use_text: bool,
     widget: Widget | None,
     detail: str | None,
@@ -595,8 +600,8 @@ def paint_layout(
 def paint_option(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -607,10 +612,10 @@ def paint_option(
 def paint_resize_grip(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
-    edge: _Gdk3.WindowEdge,
+    edge: _Gdk3._WindowEdgeValueType,
     x: int,
     y: int,
     width: int,
@@ -619,8 +624,8 @@ def paint_resize_grip(
 def paint_shadow(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -631,35 +636,35 @@ def paint_shadow(
 def paint_shadow_gap(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
     width: int,
     height: int,
-    gap_side: PositionType,
+    gap_side: _PositionTypeValueType,
     gap_x: int,
     gap_width: int,
 ) -> None: ...
 def paint_slider(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
     y: int,
     width: int,
     height: int,
-    orientation: Orientation,
+    orientation: _OrientationValueType,
 ) -> None: ...
 def paint_spinner(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
     step: int,
@@ -671,8 +676,8 @@ def paint_spinner(
 def paint_tab(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
-    shadow_type: ShadowType,
+    state_type: _StateTypeValueType,
+    shadow_type: _ShadowTypeValueType,
     widget: Widget | None,
     detail: str | None,
     x: int,
@@ -683,7 +688,7 @@ def paint_tab(
 def paint_vline(
     style: Style,
     cr: cairo.Context[_SomeSurface],
-    state_type: StateType,
+    state_type: _StateTypeValueType,
     widget: Widget | None,
     detail: str | None,
     y1_: int,
@@ -724,7 +729,9 @@ def rc_parse_color(scanner: GLib.Scanner) -> tuple[int, _Gdk3.Color]: ...
 def rc_parse_color_full(
     scanner: GLib.Scanner, style: RcStyle | None = None
 ) -> tuple[int, _Gdk3.Color]: ...
-def rc_parse_priority(scanner: GLib.Scanner, priority: PathPriorityType) -> int: ...
+def rc_parse_priority(
+    scanner: GLib.Scanner, priority: _PathPriorityTypeValueType
+) -> int: ...
 def rc_parse_state(scanner: GLib.Scanner) -> tuple[int, StateType]: ...
 def rc_parse_string(rc_string: str) -> None: ...
 def rc_property_parse_border(
@@ -798,7 +805,7 @@ def render_extension(
     y: float,
     width: float,
     height: float,
-    gap_side: PositionType,
+    gap_side: _PositionTypeValueType,
 ) -> None: ...
 def render_focus(
     context: StyleContext,
@@ -823,7 +830,7 @@ def render_frame_gap(
     y: float,
     width: float,
     height: float,
-    gap_side: PositionType,
+    gap_side: _PositionTypeValueType,
     xy0_gap: float,
     xy1_gap: float,
 ) -> None: ...
@@ -859,7 +866,7 @@ def render_insertion_cursor(
     y: float,
     layout: Pango.Layout,
     index: int,
-    direction: Pango.Direction,
+    direction: Pango._DirectionValueType,
 ) -> None: ...
 def render_layout(
     context: StyleContext,
@@ -891,7 +898,7 @@ def render_slider(
     y: float,
     width: float,
     height: float,
-    orientation: Orientation,
+    orientation: _OrientationValueType,
 ) -> None: ...
 def rgb_to_hsv(r: float, g: float, b: float) -> tuple[float, float, float]: ...
 def selection_add_target(
@@ -943,10 +950,10 @@ def test_spin_button_click(spinner: SpinButton, button: int, upwards: bool) -> b
 def test_text_get(widget: Widget) -> str: ...
 def test_text_set(widget: Widget, string: str) -> None: ...
 def test_widget_click(
-    widget: Widget, button: int, modifiers: _Gdk3.ModifierType
+    widget: Widget, button: int, modifiers: _Gdk3._ModifierTypeValueType
 ) -> bool: ...
 def test_widget_send_key(
-    widget: Widget, keyval: int, modifiers: _Gdk3.ModifierType
+    widget: Widget, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
 ) -> bool: ...
 def test_widget_wait_for_draw(widget: Widget) -> None: ...
 def tree_get_row_drag_data(
@@ -1258,19 +1265,55 @@ class AboutDialog(Dialog):
     """
     @type_check_only
     class Props(Dialog.Props):
-        artists: list[str]
-        authors: list[str]
-        comments: str | None
-        copyright: str | None
-        documenters: list[str]
-        license: str | None
-        license_type: License
-        logo: GdkPixbuf.Pixbuf | None
-        logo_icon_name: str | None
+        @property
+        def artists(self) -> list[str]: ...
+        @artists.setter
+        def artists(self, value: Sequence[str]) -> None: ...
+        @property
+        def authors(self) -> list[str]: ...
+        @authors.setter
+        def authors(self, value: Sequence[str]) -> None: ...
+        @property
+        def comments(self) -> str: ...
+        @comments.setter
+        def comments(self, value: str | None) -> None: ...
+        @property
+        def copyright(self) -> str: ...
+        @copyright.setter
+        def copyright(self, value: str | None) -> None: ...
+        @property
+        def documenters(self) -> list[str]: ...
+        @documenters.setter
+        def documenters(self, value: Sequence[str]) -> None: ...
+        @property
+        def license(self) -> str: ...
+        @license.setter
+        def license(self, value: str | None) -> None: ...
+        @property
+        def license_type(self) -> License: ...
+        @license_type.setter
+        def license_type(self, value: _LicenseValueType) -> None: ...
+        @property
+        def logo(self) -> GdkPixbuf.Pixbuf: ...
+        @logo.setter
+        def logo(self, value: GdkPixbuf.Pixbuf | None) -> None: ...
+        @property
+        def logo_icon_name(self) -> str: ...
+        @logo_icon_name.setter
+        def logo_icon_name(self, value: str | None) -> None: ...
         program_name: str
-        translator_credits: str | None
-        version: str | None
-        website: str | None
+        @property
+        def translator_credits(self) -> str: ...
+        @translator_credits.setter
+        def translator_credits(self, value: str | None) -> None: ...
+        @property
+        def version(self) -> str: ...
+        @version.setter
+        def version(self, value: str | None) -> None: ...
+        @property
+        def website(self) -> str: ...
+        @website.setter
+        def website(self, value: str | None) -> None: ...
         website_label: str
         wrap_license: bool
 
@@ -1289,7 +1332,7 @@ class AboutDialog(Dialog):
         copyright: str | None = ...,
         documenters: Sequence[str] = ...,
         license: str | None = ...,
-        license_type: License = ...,
+        license_type: _LicenseValueType = ...,
         logo: GdkPixbuf.Pixbuf | None = ...,
         logo_icon_name: str | None = ...,
         program_name: str = ...,
@@ -1309,7 +1352,7 @@ class AboutDialog(Dialog):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -1324,21 +1367,21 @@ class AboutDialog(Dialog):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -1362,7 +1405,7 @@ class AboutDialog(Dialog):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -1393,7 +1436,7 @@ class AboutDialog(Dialog):
     def set_copyright(self, copyright: str | None = None) -> None: ...
     def set_documenters(self, documenters: Sequence[str]) -> None: ...
     def set_license(self, license: str | None = None) -> None: ...
-    def set_license_type(self, license_type: License) -> None: ...
+    def set_license_type(self, license_type: _LicenseValueType) -> None: ...
     def set_logo(self, logo: GdkPixbuf.Pixbuf | None = None) -> None: ...
     def set_logo_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_program_name(self, name: str) -> None: ...
@@ -1460,24 +1503,24 @@ class AccelGroup(GObject.Object):
         accel_quark: int,
         acceleratable: GObject.Object,
         accel_key: int,
-        accel_mods: _Gdk3.ModifierType,
+        accel_mods: _Gdk3._ModifierTypeValueType,
     ) -> bool: ...
     def connect(
         self,
         accel_key: int,
-        accel_mods: _Gdk3.ModifierType,
-        accel_flags: AccelFlags,
+        accel_mods: _Gdk3._ModifierTypeValueType,
+        accel_flags: _AccelFlagsValueType,
         closure: Callable[..., Any],
     ) -> None: ...
     def connect_by_path(self, accel_path: str, closure: Callable[..., Any]) -> None: ...
     def disconnect(self, closure: Callable[..., Any] | None = None) -> bool: ...
     def disconnect_key(
-        self, accel_key: int, accel_mods: _Gdk3.ModifierType
+        self, accel_key: int, accel_mods: _Gdk3._ModifierTypeValueType
     ) -> bool: ...
     def do_accel_changed(
         self,
         keyval: int,
-        modifier: _Gdk3.ModifierType,
+        modifier: _Gdk3._ModifierTypeValueType,
         accel_closure: Callable[..., Any],
     ) -> None: ...
     def find(
@@ -1493,7 +1536,7 @@ class AccelGroup(GObject.Object):
     @classmethod
     def new(cls) -> AccelGroup: ...
     def query(
-        self, accel_key: int, accel_mods: _Gdk3.ModifierType
+        self, accel_key: int, accel_mods: _Gdk3._ModifierTypeValueType
     ) -> list[AccelGroupEntry]: ...
     def unlock(self) -> None: ...
 
@@ -1510,7 +1553,9 @@ class AccelGroupClass(_gi.Struct):
     @property
     def accel_changed(
         self,
-    ) -> Callable[[AccelGroup, int, _Gdk3.ModifierType, Callable[..., Any]], None]: ...
+    ) -> Callable[
+        [AccelGroup, int, _Gdk3._ModifierTypeValueType, Callable[..., Any]], None
+    ]: ...
 
 class AccelGroupEntry(_gi.Struct):
     """
@@ -1792,8 +1837,8 @@ class AccelLabel(Label):
         accel_widget: Widget | None = ...,
         angle: float = ...,
         attributes: Pango.AttrList | None = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
-        justify: Justification = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
+        justify: _JustificationValueType = ...,
         label: str = ...,
         lines: int = ...,
         max_width_chars: int = ...,
@@ -1806,7 +1851,7 @@ class AccelLabel(Label):
         use_underline: bool = ...,
         width_chars: int = ...,
         wrap: bool = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         xalign: float = ...,
         yalign: float = ...,
         xpad: int = ...,
@@ -1815,10 +1860,10 @@ class AccelLabel(Label):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -1842,7 +1887,7 @@ class AccelLabel(Label):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -1855,7 +1900,7 @@ class AccelLabel(Label):
     def new(cls, string: str) -> AccelLabel: ...
     def refetch(self) -> bool: ...
     def set_accel(
-        self, accelerator_key: int, accelerator_mods: _Gdk3.ModifierType
+        self, accelerator_key: int, accelerator_mods: _Gdk3._ModifierTypeValueType
     ) -> None: ...
     def set_accel_closure(
         self, accel_closure: Callable[..., Any] | None = None
@@ -1905,23 +1950,30 @@ class AccelMap(GObject.Object):
     """
     @staticmethod
     def add_entry(
-        accel_path: str, accel_key: int, accel_mods: _Gdk3.ModifierType
+        accel_path: str, accel_key: int, accel_mods: _Gdk3._ModifierTypeValueType
     ) -> None: ...
     @staticmethod
     def add_filter(filter_pattern: str) -> None: ...
     @staticmethod
     def change_entry(
-        accel_path: str, accel_key: int, accel_mods: _Gdk3.ModifierType, replace: bool
+        accel_path: str,
+        accel_key: int,
+        accel_mods: _Gdk3._ModifierTypeValueType,
+        replace: bool,
     ) -> bool: ...
     @staticmethod
     def foreach(
         data: int | Any | None,
-        foreach_func: Callable[[Any | None, str, int, _Gdk3.ModifierType, bool], None],
+        foreach_func: Callable[
+            [Any | None, str, int, _Gdk3._ModifierTypeValueType, bool], None
+        ],
     ) -> None: ...
     @staticmethod
     def foreach_unfiltered(
         data: int | Any | None,
-        foreach_func: Callable[[Any | None, str, int, _Gdk3.ModifierType, bool], None],
+        foreach_func: Callable[
+            [Any | None, str, int, _Gdk3._ModifierTypeValueType, bool], None
+        ],
     ) -> None: ...
     @staticmethod
     def get() -> AccelMap: ...
@@ -2022,19 +2074,19 @@ class Accessible(Atk.Object):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def connect_widget_destroyed(self) -> None: ...
@@ -2116,7 +2168,7 @@ class Action(GObject.Object, Buildable):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        action_group: ActionGroup
+        action_group: ActionGroup | None
         always_show_image: bool
         gicon: Gio.Icon
         hide_if_empty: bool
@@ -2143,14 +2195,14 @@ class Action(GObject.Object, Buildable):
     def __init__(
         self,
         *,
-        action_group: ActionGroup = ...,
+        action_group: ActionGroup | None = ...,
         always_show_image: bool = ...,
         gicon: Gio.Icon = ...,
         hide_if_empty: bool = ...,
         icon_name: str = ...,
         is_important: bool = ...,
         label: str = ...,
-        name: str = ...,
+        name: str | None = ...,
         sensitive: bool = ...,
         short_label: str = ...,
         stock_id: str = ...,
@@ -2401,16 +2453,16 @@ class ActionBar(Bin):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -2434,7 +2486,7 @@ class ActionBar(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -2535,7 +2587,10 @@ class ActionGroup(GObject.Object, Buildable):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        accel_group: AccelGroup | None
+        @property
+        def accel_group(self) -> AccelGroup: ...
+        @accel_group.setter
+        def accel_group(self, value: AccelGroup | None) -> None: ...
         @property
         def name(self) -> str: ...
         sensitive: bool
@@ -2551,7 +2606,7 @@ class ActionGroup(GObject.Object, Buildable):
         self,
         *,
         accel_group: AccelGroup | None = ...,
-        name: str = ...,
+        name: str | None = ...,
         sensitive: bool = ...,
         visible: bool = ...,
     ) -> None: ...
@@ -3081,16 +3136,16 @@ class Alignment(Bin):
         yalign: float = ...,
         yscale: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -3114,7 +3169,7 @@ class Alignment(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -3401,7 +3456,10 @@ class AppChooserButton(ComboBox, AppChooser):
     """
     @type_check_only
     class Props(ComboBox.Props):
-        heading: str | None
+        @property
+        def heading(self) -> str | None: ...
+        @heading.setter
+        def heading(self, value: str) -> None: ...
         show_default_item: bool
         show_dialog_item: bool
         @property
@@ -3420,13 +3478,13 @@ class AppChooserButton(ComboBox, AppChooser):
         heading: str = ...,
         show_default_item: bool = ...,
         show_dialog_item: bool = ...,
-        content_type: str = ...,
+        content_type: str | None = ...,
         editing_canceled: bool = ...,
         active: int = ...,
         active_id: str | None = ...,
         add_tearoffs: bool = ...,
-        button_sensitivity: SensitivityType = ...,
-        cell_area: CellArea = ...,
+        button_sensitivity: _SensitivityTypeValueType = ...,
+        cell_area: CellArea | None = ...,
         column_span_column: int = ...,
         entry_text_column: int = ...,
         has_entry: bool = ...,
@@ -3435,19 +3493,19 @@ class AppChooserButton(ComboBox, AppChooser):
         model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
         row_span_column: int = ...,
-        tearoff_title: str = ...,
+        tearoff_title: str | None = ...,
         wrap_width: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -3471,7 +3529,7 @@ class AppChooserButton(ComboBox, AppChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -3779,8 +3837,11 @@ class AppChooserDialog(Dialog, AppChooser):
     @type_check_only
     class Props(Dialog.Props):
         @property
-        def gfile(self) -> Gio.File: ...
-        heading: str | None
+        def gfile(self) -> Gio.File | None: ...
+        @property
+        def heading(self) -> str | None: ...
+        @heading.setter
+        def heading(self, value: str) -> None: ...
         @property
         def content_type(self) -> str: ...
 
@@ -3793,9 +3854,9 @@ class AppChooserDialog(Dialog, AppChooser):
     def __init__(
         self,
         *,
-        gfile: Gio.File = ...,
+        gfile: Gio.File | None = ...,
         heading: str = ...,
-        content_type: str = ...,
+        content_type: str | None = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -3807,7 +3868,7 @@ class AppChooserDialog(Dialog, AppChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -3822,21 +3883,21 @@ class AppChooserDialog(Dialog, AppChooser):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -3860,7 +3921,7 @@ class AppChooserDialog(Dialog, AppChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -3870,11 +3931,11 @@ class AppChooserDialog(Dialog, AppChooser):
     def get_widget(self) -> Widget: ...
     @classmethod
     def new(
-        cls, parent: Window | None, flags: DialogFlags, file: Gio.File
+        cls, parent: Window | None, flags: _DialogFlagsValueType, file: Gio.File
     ) -> AppChooserDialog: ...
     @classmethod
     def new_for_content_type(
-        cls, parent: Window | None, flags: DialogFlags, content_type: str
+        cls, parent: Window | None, flags: _DialogFlagsValueType, content_type: str
     ) -> AppChooserDialog: ...
     def set_heading(self, heading: str) -> None: ...
 
@@ -4109,7 +4170,10 @@ class AppChooserWidget(Box, AppChooser):
         show_recommended: bool
         @property
         def content_type(self) -> str: ...
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -4126,22 +4190,22 @@ class AppChooserWidget(Box, AppChooser):
         show_fallback: bool = ...,
         show_other: bool = ...,
         show_recommended: bool = ...,
-        content_type: str = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        content_type: str | None = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -4165,7 +4229,7 @@ class AppChooserWidget(Box, AppChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -4284,7 +4348,10 @@ class Application(Gio.Application):
         @property
         def active_window(self) -> Window | None: ...
         app_menu: Gio.MenuModel | None
-        menubar: Gio.MenuModel | None
+        @property
+        def menubar(self) -> Gio.MenuModel: ...
+        @menubar.setter
+        def menubar(self, value: Gio.MenuModel | None) -> None: ...
         register_session: bool
         @property
         def screensaver_active(self) -> bool: ...
@@ -4303,7 +4370,7 @@ class Application(Gio.Application):
         register_session: bool = ...,
         action_group: Gio.ActionGroup | None = ...,
         application_id: str | None = ...,
-        flags: Gio.ApplicationFlags = ...,
+        flags: Gio._ApplicationFlagsValueType = ...,
         inactivity_timeout: int = ...,
         resource_base_path: str | None = ...,
         version: str = ...,
@@ -4325,14 +4392,14 @@ class Application(Gio.Application):
     def inhibit(
         self,
         window: Window | None,
-        flags: ApplicationInhibitFlags,
+        flags: _ApplicationInhibitFlagsValueType,
         reason: str | None = None,
     ) -> int: ...
-    def is_inhibited(self, flags: ApplicationInhibitFlags) -> bool: ...
+    def is_inhibited(self, flags: _ApplicationInhibitFlagsValueType) -> bool: ...
     def list_action_descriptions(self) -> list[str]: ...
     @classmethod
     def new(
-        cls, application_id: str | None, flags: Gio.ApplicationFlags
+        cls, application_id: str | None, flags: Gio._ApplicationFlagsValueType
     ) -> Application: ...
     def prefers_app_menu(self) -> bool: ...
     def remove_accelerator(
@@ -4653,7 +4720,7 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -4668,21 +4735,21 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -4706,7 +4773,7 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -4918,8 +4985,14 @@ class Arrow(Misc):
     """
     @type_check_only
     class Props(Misc.Props):
-        arrow_type: ArrowType
-        shadow_type: ShadowType
+        @property
+        def arrow_type(self) -> ArrowType: ...
+        @arrow_type.setter
+        def arrow_type(self, value: _ArrowTypeValueType) -> None: ...
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -4930,8 +5003,8 @@ class Arrow(Misc):
     def __init__(
         self,
         *,
-        arrow_type: ArrowType = ...,
-        shadow_type: ShadowType = ...,
+        arrow_type: _ArrowTypeValueType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         xalign: float = ...,
         xpad: int = ...,
         yalign: float = ...,
@@ -4940,10 +5013,10 @@ class Arrow(Misc):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -4967,15 +5040,19 @@ class Arrow(Misc):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     @classmethod
-    def new(cls, arrow_type: ArrowType, shadow_type: ShadowType) -> Arrow: ...
-    def set(self, arrow_type: ArrowType, shadow_type: ShadowType) -> None: ...
+    def new(
+        cls, arrow_type: _ArrowTypeValueType, shadow_type: _ShadowTypeValueType
+    ) -> Arrow: ...
+    def set(
+        self, arrow_type: _ArrowTypeValueType, shadow_type: _ShadowTypeValueType
+    ) -> None: ...
 
 class ArrowAccessible(WidgetAccessible, Atk.Image):
     """
@@ -5055,19 +5132,19 @@ class ArrowAccessible(WidgetAccessible, Atk.Image):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -5322,18 +5399,18 @@ class AspectFrame(Frame):
         label_widget: Widget | None = ...,
         label_xalign: float = ...,
         label_yalign: float = ...,
-        shadow_type: ShadowType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -5357,7 +5434,7 @@ class AspectFrame(Frame):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -5679,7 +5756,7 @@ class Assistant(Window):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -5694,21 +5771,21 @@ class Assistant(Window):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -5732,7 +5809,7 @@ class Assistant(Window):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -5777,7 +5854,9 @@ class Assistant(Window):
         self, page: Widget, pixbuf: GdkPixbuf.Pixbuf | None = None
     ) -> None: ...
     def set_page_title(self, page: Widget, title: str) -> None: ...
-    def set_page_type(self, page: Widget, type: AssistantPageType) -> None: ...
+    def set_page_type(
+        self, page: Widget, type: _AssistantPageTypeValueType
+    ) -> None: ...
     def update_buttons_state(self) -> None: ...
 
 class AssistantClass(_gi.Struct):
@@ -5987,16 +6066,16 @@ class Bin(Container):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -6020,7 +6099,7 @@ class Bin(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -6078,17 +6157,17 @@ class BindingEntry(_gi.Struct):
     def add_signall(
         binding_set: BindingSet,
         keyval: int,
-        modifiers: _Gdk3.ModifierType,
+        modifiers: _Gdk3._ModifierTypeValueType,
         signal_name: str,
         binding_args: list[BindingArg],
     ) -> None: ...
     @staticmethod
     def remove(
-        binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
+        binding_set: BindingSet, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
     ) -> None: ...
     @staticmethod
     def skip(
-        binding_set: BindingSet, keyval: int, modifiers: _Gdk3.ModifierType
+        binding_set: BindingSet, keyval: int, modifiers: _Gdk3._ModifierTypeValueType
     ) -> None: ...
 
 class BindingSet(_gi.Struct):
@@ -6109,10 +6188,16 @@ class BindingSet(_gi.Struct):
     current: BindingEntry
     parsed: int
     def activate(
-        self, keyval: int, modifiers: _Gdk3.ModifierType, object: GObject.Object
+        self,
+        keyval: int,
+        modifiers: _Gdk3._ModifierTypeValueType,
+        object: GObject.Object,
     ) -> bool: ...
     def add_path(
-        self, path_type: PathType, path_pattern: str, priority: PathPriorityType
+        self,
+        path_type: _PathTypeValueType,
+        path_pattern: str,
+        priority: _PathPriorityTypeValueType,
     ) -> None: ...
     @staticmethod
     def find(set_name: str) -> BindingSet | None: ...
@@ -6215,21 +6300,21 @@ class BooleanCellAccessible(RendererCellAccessible):
     def __init__(
         self,
         *,
-        renderer: CellRenderer = ...,
+        renderer: CellRenderer | None = ...,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -6455,10 +6540,16 @@ class Box(Container, Orientable):
     """
     @type_check_only
     class Props(Container.Props):
-        baseline_position: BaselinePosition
+        @property
+        def baseline_position(self) -> BaselinePosition: ...
+        @baseline_position.setter
+        def baseline_position(self, value: _BaselinePositionValueType) -> None: ...
         homogeneous: bool
         spacing: int
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -6469,21 +6560,21 @@ class Box(Container, Orientable):
     def __init__(
         self,
         *,
-        baseline_position: BaselinePosition = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -6507,7 +6598,7 @@ class Box(Container, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -6518,7 +6609,7 @@ class Box(Container, Orientable):
     def get_homogeneous(self) -> bool: ...
     def get_spacing(self) -> int: ...
     @classmethod
-    def new(cls, orientation: Orientation, spacing: int) -> Box: ...
+    def new(cls, orientation: _OrientationValueType, spacing: int) -> Box: ...
     def pack_end(
         self, child: Widget, expand: bool, fill: bool, padding: int
     ) -> None: ...
@@ -6529,10 +6620,15 @@ class Box(Container, Orientable):
         self, child: Widget
     ) -> tuple[bool, bool, int, PackType]: ...
     def reorder_child(self, child: Widget, position: int) -> None: ...
-    def set_baseline_position(self, position: BaselinePosition) -> None: ...
+    def set_baseline_position(self, position: _BaselinePositionValueType) -> None: ...
     def set_center_widget(self, widget: Widget | None = None) -> None: ...
     def set_child_packing(
-        self, child: Widget, expand: bool, fill: bool, padding: int, pack_type: PackType
+        self,
+        child: Widget,
+        expand: bool,
+        fill: bool,
+        padding: int,
+        pack_type: _PackTypeValueType,
     ) -> None: ...
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
@@ -6663,7 +6759,10 @@ class Builder(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        translation_domain: str | None
+        @property
+        def translation_domain(self) -> str: ...
+        @translation_domain.setter
+        def translation_domain(self, value: str | None) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -6962,15 +7061,24 @@ class Button(Bin, Actionable, Activatable, Container):
     class Props(Bin.Props):
         always_show_image: bool
         image: Widget | None
-        image_position: PositionType
+        @property
+        def image_position(self) -> PositionType: ...
+        @image_position.setter
+        def image_position(self, value: _PositionTypeValueType) -> None: ...
         label: str
-        relief: ReliefStyle
+        @property
+        def relief(self) -> ReliefStyle: ...
+        @relief.setter
+        def relief(self, value: _ReliefStyleValueType) -> None: ...
         use_stock: bool
         use_underline: bool
         xalign: float
         yalign: float
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -6985,9 +7093,9 @@ class Button(Bin, Actionable, Activatable, Container):
         *,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
@@ -6997,16 +7105,16 @@ class Button(Bin, Actionable, Activatable, Container):
         related_action: Action = ...,
         use_action_appearance: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -7030,7 +7138,7 @@ class Button(Bin, Actionable, Activatable, Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -7075,9 +7183,9 @@ class Button(Bin, Actionable, Activatable, Container):
         self, *args, **kwargs
     ): ...  # FIXME: Override is missing typing annotation
     def set_image(self, image: Widget | None = None) -> None: ...
-    def set_image_position(self, position: PositionType) -> None: ...
+    def set_image_position(self, position: _PositionTypeValueType) -> None: ...
     def set_label(self, label: str) -> None: ...
-    def set_relief(self, relief: ReliefStyle) -> None: ...
+    def set_relief(self, relief: _ReliefStyleValueType) -> None: ...
     def set_use_stock(self, use_stock: bool) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
 
@@ -7162,19 +7270,19 @@ class ButtonAccessible(ContainerAccessible, Atk.Action, Atk.Image):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -7384,8 +7492,14 @@ class ButtonBox(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        layout_style: ButtonBoxStyle
-        orientation: Orientation
+        @property
+        def layout_style(self) -> ButtonBoxStyle: ...
+        @layout_style.setter
+        def layout_style(self, value: _ButtonBoxStyleValueType) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -7396,22 +7510,22 @@ class ButtonBox(Box):
     def __init__(
         self,
         *,
-        layout_style: ButtonBoxStyle = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        layout_style: _ButtonBoxStyleValueType = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -7435,7 +7549,7 @@ class ButtonBox(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -7445,12 +7559,12 @@ class ButtonBox(Box):
     def get_child_secondary(self, child: Widget) -> bool: ...
     def get_layout(self) -> ButtonBoxStyle: ...
     @classmethod
-    def new(cls, orientation: Orientation) -> ButtonBox: ...
+    def new(cls, orientation: _OrientationValueType) -> ButtonBox: ...
     def set_child_non_homogeneous(
         self, child: Widget, non_homogeneous: bool
     ) -> None: ...
     def set_child_secondary(self, child: Widget, is_secondary: bool) -> None: ...
-    def set_layout(self, layout_style: ButtonBoxStyle) -> None: ...
+    def set_layout(self, layout_style: _ButtonBoxStyleValueType) -> None: ...
 
 class ButtonBoxClass(_gi.Struct):
     """
@@ -7722,10 +7836,10 @@ class Calendar(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -7749,7 +7863,7 @@ class Calendar(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -7780,7 +7894,7 @@ class Calendar(Widget):
     ) -> None: ...
     def set_detail_height_rows(self, rows: int) -> None: ...
     def set_detail_width_chars(self, chars: int) -> None: ...
-    def set_display_options(self, flags: CalendarDisplayOptions) -> None: ...
+    def set_display_options(self, flags: _CalendarDisplayOptionsValueType) -> None: ...
     def unmark_day(self, day: int) -> None: ...
 
 class CalendarClass(_gi.Struct):
@@ -7885,19 +7999,19 @@ class CellAccessible(Accessible, Atk.Action, Atk.Component, Atk.TableCell):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def do_update_cache(self, emit_signal: bool) -> None: ...
@@ -7924,7 +8038,7 @@ class CellAccessibleParent(GObject.GInterface, Protocol):
     def expand_collapse(self, cell: CellAccessible) -> None: ...
     def get_cell_area(self, cell: CellAccessible) -> _Gdk3.Rectangle: ...
     def get_cell_extents(
-        self, cell: CellAccessible, coord_type: Atk.CoordType
+        self, cell: CellAccessible, coord_type: Atk._CoordTypeValueType
     ) -> tuple[int, int, int, int]: ...
     def get_cell_position(self, cell: CellAccessible) -> tuple[int, int]: ...
     def get_child_index(self, cell: CellAccessible) -> int: ...
@@ -7950,7 +8064,8 @@ class CellAccessibleParentIface(_gi.Struct):
     def get_cell_extents(
         self,
     ) -> Callable[
-        [CellAccessibleParent, CellAccessible, Atk.CoordType], tuple[int, int, int, int]
+        [CellAccessibleParent, CellAccessible, Atk._CoordTypeValueType],
+        tuple[int, int, int, int],
     ]: ...
     @property
     def get_cell_area(
@@ -8040,7 +8155,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         context: CellAreaContext,
         widget: Widget,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
         edit_only: bool,
     ) -> bool: ...
     def activate_cell(
@@ -8049,7 +8164,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         renderer: CellRenderer,
         event: _Gdk3.Event,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> bool: ...
     def add(self, renderer: CellRenderer) -> None: ...
     def add_focus_sibling(
@@ -8080,7 +8195,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         context: CellAreaContext,
         widget: Widget,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
         edit_only: bool,
     ) -> bool: ...
     def do_add(self, renderer: CellRenderer) -> None: ...
@@ -8099,9 +8214,9 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Widget,
         event: _Gdk3.Event,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> int: ...
-    def do_focus(self, direction: DirectionType) -> bool: ...
+    def do_focus(self, direction: _DirectionTypeValueType) -> bool: ...
     def do_foreach(
         self,
         callback: Callable[[CellRenderer, Unpack[_DataTs]], bool],
@@ -8147,7 +8262,7 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         cr: cairo.Context[_SomeSurface],
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
         paint_focus: bool,
     ) -> None: ...
     def do_set_cell_property(
@@ -8163,10 +8278,10 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         widget: Widget,
         event: _Gdk3.Event,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> int: ...
     def find_cell_property(self, property_name: str) -> GObject.ParamSpec: ...
-    def focus(self, direction: DirectionType) -> bool: ...
+    def focus(self, direction: _DirectionTypeValueType) -> bool: ...
     def foreach(
         self,
         callback: Callable[[CellRenderer, Unpack[_DataTs]], bool],
@@ -8240,13 +8355,13 @@ class CellArea(GObject.InitiallyUnowned, Buildable, CellLayout):
         cr: cairo.Context[_SomeSurface],
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
         paint_focus: bool,
     ) -> None: ...
     def request_renderer(
         self,
         renderer: CellRenderer,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
         widget: Widget,
         for_size: int,
     ) -> tuple[int, int]: ...
@@ -8288,7 +8403,10 @@ class CellAreaBox(CellArea, Orientable):
     @type_check_only
     class Props(CellArea.Props):
         spacing: int
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -8300,7 +8418,7 @@ class CellAreaBox(CellArea, Orientable):
         self,
         *,
         spacing: int = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         focus_cell: CellRenderer = ...,
     ) -> None: ...
     def get_spacing(self) -> int: ...
@@ -8374,7 +8492,7 @@ class CellAreaClass(_gi.Struct):
             Widget,
             _Gdk3.Event,
             _Gdk3.Rectangle,
-            CellRendererState,
+            _CellRendererStateValueType,
         ],
         int,
     ]: ...
@@ -8389,7 +8507,7 @@ class CellAreaClass(_gi.Struct):
             cairo.Context[_SomeSurface],
             _Gdk3.Rectangle,
             _Gdk3.Rectangle,
-            CellRendererState,
+            _CellRendererStateValueType,
             bool,
         ],
         None,
@@ -8431,14 +8549,21 @@ class CellAreaClass(_gi.Struct):
         self,
     ) -> Callable[[CellArea, CellRenderer, int, Any, GObject.ParamSpec], None]: ...
     @property
-    def focus(self) -> Callable[[CellArea, DirectionType], bool]: ...
+    def focus(self) -> Callable[[CellArea, _DirectionTypeValueType], bool]: ...
     @property
     def is_activatable(self) -> Callable[[CellArea], bool]: ...
     @property
     def activate(
         self,
     ) -> Callable[
-        [CellArea, CellAreaContext, Widget, _Gdk3.Rectangle, CellRendererState, bool],
+        [
+            CellArea,
+            CellAreaContext,
+            Widget,
+            _Gdk3.Rectangle,
+            _CellRendererStateValueType,
+            bool,
+        ],
         bool,
     ]: ...
     def find_cell_property(self, property_name: str) -> GObject.ParamSpec: ...
@@ -8491,7 +8616,7 @@ class CellAreaContext(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> CellAreaContextPrivate: ...
-    def __init__(self, *, area: CellArea = ...) -> None: ...
+    def __init__(self, *, area: CellArea | None = ...) -> None: ...
     def allocate(self, width: int, height: int) -> None: ...
     def do_allocate(self, width: int, height: int) -> None: ...
     def do_get_preferred_height_for_width(self, width: int) -> tuple[int, int]: ...
@@ -8684,16 +8809,22 @@ class CellRenderer(GObject.InitiallyUnowned):
     """
     @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
-        cell_background: str
-        cell_background_gdk: _Gdk3.Color
-        cell_background_rgba: _Gdk3.RGBA
+        @property
+        def cell_background(self) -> Never: ...
+        @cell_background.setter
+        def cell_background(self, value: str | None) -> None: ...
+        cell_background_gdk: _Gdk3.Color | None
+        cell_background_rgba: _Gdk3.RGBA | None
         cell_background_set: bool
         @property
         def editing(self) -> bool: ...
         height: int
         is_expanded: bool
         is_expander: bool
-        mode: CellRendererMode
+        @property
+        def mode(self) -> CellRendererMode: ...
+        @mode.setter
+        def mode(self, value: _CellRendererModeValueType) -> None: ...
         sensitive: bool
         visible: bool
         width: int
@@ -8711,14 +8842,14 @@ class CellRenderer(GObject.InitiallyUnowned):
     def __init__(
         self,
         *,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -8734,7 +8865,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         path: str,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> bool: ...
     def do_activate(
         self,
@@ -8743,12 +8874,15 @@ class CellRenderer(GObject.InitiallyUnowned):
         path: str,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> bool: ...
     def do_editing_canceled(self) -> None: ...
     def do_editing_started(self, editable: CellEditable, path: str) -> None: ...
     def do_get_aligned_area(
-        self, widget: Widget, flags: CellRendererState, cell_area: _Gdk3.Rectangle
+        self,
+        widget: Widget,
+        flags: _CellRendererStateValueType,
+        cell_area: _Gdk3.Rectangle,
     ) -> _Gdk3.Rectangle: ...
     def do_get_preferred_height(self, widget: Widget) -> tuple[int, int]: ...
     def do_get_preferred_height_for_width(
@@ -8768,7 +8902,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         widget: Widget,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> None: ...
     def do_start_editing(
         self,
@@ -8777,10 +8911,13 @@ class CellRenderer(GObject.InitiallyUnowned):
         path: str,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> CellEditable | None: ...
     def get_aligned_area(
-        self, widget: Widget, flags: CellRendererState, cell_area: _Gdk3.Rectangle
+        self,
+        widget: Widget,
+        flags: _CellRendererStateValueType,
+        cell_area: _Gdk3.Rectangle,
     ) -> _Gdk3.Rectangle: ...
     def get_alignment(self) -> tuple[float, float]: ...
     def get_fixed_size(self) -> tuple[int, int]: ...
@@ -8800,7 +8937,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         self, widget: Widget, cell_area: _Gdk3.Rectangle | None = None
     ) -> tuple[int, int, int, int]: ...
     def get_state(
-        self, widget: Widget | None, cell_state: CellRendererState
+        self, widget: Widget | None, cell_state: _CellRendererStateValueType
     ) -> StateFlags: ...
     def get_visible(self) -> bool: ...
     def is_activatable(self) -> bool: ...
@@ -8810,7 +8947,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         widget: Widget,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> None: ...
     def set_accessible_type(self, type: type[Any]) -> None: ...
     def set_alignment(self, xalign: float, yalign: float) -> None: ...
@@ -8825,7 +8962,7 @@ class CellRenderer(GObject.InitiallyUnowned):
         path: str,
         background_area: _Gdk3.Rectangle,
         cell_area: _Gdk3.Rectangle,
-        flags: CellRendererState,
+        flags: _CellRendererStateValueType,
     ) -> CellEditable | None: ...
     def stop_editing(self, canceled: bool) -> None: ...
 
@@ -8999,8 +9136,14 @@ class CellRendererAccel(CellRendererText):
     @type_check_only
     class Props(CellRendererText.Props):
         accel_key: int
-        accel_mode: CellRendererAccelMode
-        accel_mods: _Gdk3.ModifierType
+        @property
+        def accel_mode(self) -> CellRendererAccelMode: ...
+        @accel_mode.setter
+        def accel_mode(self, value: _CellRendererAccelModeValueType) -> None: ...
+        @property
+        def accel_mods(self) -> _Gdk3.ModifierType: ...
+        @accel_mods.setter
+        def accel_mods(self, value: _Gdk3._ModifierTypeValueType) -> None: ...
         keycode: int
 
     @property
@@ -9013,33 +9156,33 @@ class CellRendererAccel(CellRendererText):
         self,
         *,
         accel_key: int = ...,
-        accel_mode: CellRendererAccelMode = ...,
-        accel_mods: _Gdk3.ModifierType = ...,
+        accel_mode: _CellRendererAccelModeValueType = ...,
+        accel_mods: _Gdk3._ModifierTypeValueType = ...,
         keycode: int = ...,
         align_set: bool = ...,
-        alignment: Pango.Alignment = ...,
-        attributes: Pango.AttrList = ...,
-        background: str = ...,
-        background_gdk: _Gdk3.Color = ...,
-        background_rgba: _Gdk3.RGBA = ...,
+        alignment: Pango._AlignmentValueType = ...,
+        attributes: Pango.AttrList | None = ...,
+        background: str | None = ...,
+        background_gdk: _Gdk3.Color | None = ...,
+        background_rgba: _Gdk3.RGBA | None = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
         ellipsize_set: bool = ...,
-        family: str = ...,
+        family: str | None = ...,
         family_set: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        foreground: str = ...,
-        foreground_gdk: _Gdk3.Color = ...,
-        foreground_rgba: _Gdk3.RGBA = ...,
+        font: str | None = ...,
+        font_desc: Pango.FontDescription | None = ...,
+        foreground: str | None = ...,
+        foreground_gdk: _Gdk3.Color | None = ...,
+        foreground_rgba: _Gdk3.RGBA | None = ...,
         foreground_set: bool = ...,
-        language: str = ...,
+        language: str | None = ...,
         language_set: bool = ...,
-        markup: str = ...,
+        markup: str | None = ...,
         max_width_chars: int = ...,
-        placeholder_text: str = ...,
+        placeholder_text: str | None = ...,
         rise: int = ...,
         rise_set: bool = ...,
         scale: float = ...,
@@ -9048,30 +9191,30 @@ class CellRendererAccel(CellRendererText):
         size: int = ...,
         size_points: float = ...,
         size_set: bool = ...,
-        stretch: Pango.Stretch = ...,
+        stretch: Pango._StretchValueType = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
         strikethrough_set: bool = ...,
-        style: Pango.Style = ...,
+        style: Pango._StyleValueType = ...,
         style_set: bool = ...,
-        text: str = ...,
-        underline: Pango.Underline = ...,
+        text: str | None = ...,
+        underline: Pango._UnderlineValueType = ...,
         underline_set: bool = ...,
-        variant: Pango.Variant = ...,
+        variant: Pango._VariantValueType = ...,
         variant_set: bool = ...,
         weight: int = ...,
         weight_set: bool = ...,
         width_chars: int = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         wrap_width: int = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -9085,7 +9228,7 @@ class CellRendererAccel(CellRendererText):
         self,
         path_string: str,
         accel_key: int,
-        accel_mods: _Gdk3.ModifierType,
+        accel_mods: _Gdk3._ModifierTypeValueType,
         hardware_keycode: int,
     ) -> None: ...
     @classmethod
@@ -9104,7 +9247,9 @@ class CellRendererAccelClass(_gi.Struct):
     @property
     def accel_edited(
         self,
-    ) -> Callable[[CellRendererAccel, str, int, _Gdk3.ModifierType, int], None]: ...
+    ) -> Callable[
+        [CellRendererAccel, str, int, _Gdk3._ModifierTypeValueType, int], None
+    ]: ...
     @property
     def accel_cleared(self) -> Callable[[CellRendererAccel, str], None]: ...
 
@@ -9142,7 +9287,8 @@ class CellRendererClass(_gi.Struct):
     def get_aligned_area(
         self,
     ) -> Callable[
-        [CellRenderer, Widget, CellRendererState, _Gdk3.Rectangle], _Gdk3.Rectangle
+        [CellRenderer, Widget, _CellRendererStateValueType, _Gdk3.Rectangle],
+        _Gdk3.Rectangle,
     ]: ...
     @property
     def get_size(
@@ -9160,7 +9306,7 @@ class CellRendererClass(_gi.Struct):
             Widget,
             _Gdk3.Rectangle,
             _Gdk3.Rectangle,
-            CellRendererState,
+            _CellRendererStateValueType,
         ],
         None,
     ]: ...
@@ -9175,7 +9321,7 @@ class CellRendererClass(_gi.Struct):
             str,
             _Gdk3.Rectangle,
             _Gdk3.Rectangle,
-            CellRendererState,
+            _CellRendererStateValueType,
         ],
         bool,
     ]: ...
@@ -9190,7 +9336,7 @@ class CellRendererClass(_gi.Struct):
             str,
             _Gdk3.Rectangle,
             _Gdk3.Rectangle,
-            CellRendererState,
+            _CellRendererStateValueType,
         ],
         CellEditable | None,
     ]: ...
@@ -9371,7 +9517,7 @@ class CellRendererCombo(CellRendererText):
     @type_check_only
     class Props(CellRendererText.Props):
         has_entry: bool
-        model: TreeModel
+        model: TreeModel | None
         text_column: int
 
     @property
@@ -9384,32 +9530,32 @@ class CellRendererCombo(CellRendererText):
         self,
         *,
         has_entry: bool = ...,
-        model: TreeModel = ...,
+        model: TreeModel | None = ...,
         text_column: int = ...,
         align_set: bool = ...,
-        alignment: Pango.Alignment = ...,
-        attributes: Pango.AttrList = ...,
-        background: str = ...,
-        background_gdk: _Gdk3.Color = ...,
-        background_rgba: _Gdk3.RGBA = ...,
+        alignment: Pango._AlignmentValueType = ...,
+        attributes: Pango.AttrList | None = ...,
+        background: str | None = ...,
+        background_gdk: _Gdk3.Color | None = ...,
+        background_rgba: _Gdk3.RGBA | None = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
         ellipsize_set: bool = ...,
-        family: str = ...,
+        family: str | None = ...,
         family_set: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        foreground: str = ...,
-        foreground_gdk: _Gdk3.Color = ...,
-        foreground_rgba: _Gdk3.RGBA = ...,
+        font: str | None = ...,
+        font_desc: Pango.FontDescription | None = ...,
+        foreground: str | None = ...,
+        foreground_gdk: _Gdk3.Color | None = ...,
+        foreground_rgba: _Gdk3.RGBA | None = ...,
         foreground_set: bool = ...,
-        language: str = ...,
+        language: str | None = ...,
         language_set: bool = ...,
-        markup: str = ...,
+        markup: str | None = ...,
         max_width_chars: int = ...,
-        placeholder_text: str = ...,
+        placeholder_text: str | None = ...,
         rise: int = ...,
         rise_set: bool = ...,
         scale: float = ...,
@@ -9418,30 +9564,30 @@ class CellRendererCombo(CellRendererText):
         size: int = ...,
         size_points: float = ...,
         size_set: bool = ...,
-        stretch: Pango.Stretch = ...,
+        stretch: Pango._StretchValueType = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
         strikethrough_set: bool = ...,
-        style: Pango.Style = ...,
+        style: Pango._StyleValueType = ...,
         style_set: bool = ...,
-        text: str = ...,
-        underline: Pango.Underline = ...,
+        text: str | None = ...,
+        underline: Pango._UnderlineValueType = ...,
         underline_set: bool = ...,
-        variant: Pango.Variant = ...,
+        variant: Pango._VariantValueType = ...,
         variant_set: bool = ...,
         weight: int = ...,
         weight_set: bool = ...,
         width_chars: int = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         wrap_width: int = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -9543,15 +9689,15 @@ class CellRendererPixbuf(CellRenderer):
     @type_check_only
     class Props(CellRenderer.Props):
         follow_state: bool
-        gicon: Gio.Icon
-        icon_name: str
-        pixbuf: GdkPixbuf.Pixbuf
-        pixbuf_expander_closed: GdkPixbuf.Pixbuf
-        pixbuf_expander_open: GdkPixbuf.Pixbuf
-        stock_detail: str
-        stock_id: str
+        gicon: Gio.Icon | None
+        icon_name: str | None
+        pixbuf: GdkPixbuf.Pixbuf | None
+        pixbuf_expander_closed: GdkPixbuf.Pixbuf | None
+        pixbuf_expander_open: GdkPixbuf.Pixbuf | None
+        stock_detail: str | None
+        stock_id: str | None
         stock_size: int
-        surface: cairo.Surface
+        surface: cairo.Surface | None
 
     @property
     def props(self) -> Props: ...
@@ -9563,23 +9709,23 @@ class CellRendererPixbuf(CellRenderer):
         self,
         *,
         follow_state: bool = ...,
-        gicon: Gio.Icon = ...,
-        icon_name: str = ...,
-        pixbuf: GdkPixbuf.Pixbuf = ...,
-        pixbuf_expander_closed: GdkPixbuf.Pixbuf = ...,
-        pixbuf_expander_open: GdkPixbuf.Pixbuf = ...,
-        stock_detail: str = ...,
-        stock_id: str = ...,
+        gicon: Gio.Icon | None = ...,
+        icon_name: str | None = ...,
+        pixbuf: GdkPixbuf.Pixbuf | None = ...,
+        pixbuf_expander_closed: GdkPixbuf.Pixbuf | None = ...,
+        pixbuf_expander_open: GdkPixbuf.Pixbuf | None = ...,
+        stock_detail: str | None = ...,
+        stock_id: str | None = ...,
         stock_size: int = ...,
-        surface: cairo.Surface = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        surface: cairo.Surface | None = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -9675,11 +9821,14 @@ class CellRendererProgress(CellRenderer, Orientable):
     class Props(CellRenderer.Props):
         inverted: bool
         pulse: int
-        text: str
+        text: str | None
         text_xalign: float
         text_yalign: float
         value: int
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -9692,19 +9841,19 @@ class CellRendererProgress(CellRenderer, Orientable):
         *,
         inverted: bool = ...,
         pulse: int = ...,
-        text: str = ...,
+        text: str | None = ...,
         text_xalign: float = ...,
         text_yalign: float = ...,
         value: int = ...,
-        orientation: Orientation = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        orientation: _OrientationValueType = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -9892,7 +10041,7 @@ class CellRendererSpin(CellRendererText):
     """
     @type_check_only
     class Props(CellRendererText.Props):
-        adjustment: Adjustment
+        adjustment: Adjustment | None
         climb_rate: float
         digits: int
 
@@ -9905,33 +10054,33 @@ class CellRendererSpin(CellRendererText):
     def __init__(
         self,
         *,
-        adjustment: Adjustment = ...,
+        adjustment: Adjustment | None = ...,
         climb_rate: float = ...,
         digits: int = ...,
         align_set: bool = ...,
-        alignment: Pango.Alignment = ...,
-        attributes: Pango.AttrList = ...,
-        background: str = ...,
-        background_gdk: _Gdk3.Color = ...,
-        background_rgba: _Gdk3.RGBA = ...,
+        alignment: Pango._AlignmentValueType = ...,
+        attributes: Pango.AttrList | None = ...,
+        background: str | None = ...,
+        background_gdk: _Gdk3.Color | None = ...,
+        background_rgba: _Gdk3.RGBA | None = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
         ellipsize_set: bool = ...,
-        family: str = ...,
+        family: str | None = ...,
         family_set: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        foreground: str = ...,
-        foreground_gdk: _Gdk3.Color = ...,
-        foreground_rgba: _Gdk3.RGBA = ...,
+        font: str | None = ...,
+        font_desc: Pango.FontDescription | None = ...,
+        foreground: str | None = ...,
+        foreground_gdk: _Gdk3.Color | None = ...,
+        foreground_rgba: _Gdk3.RGBA | None = ...,
         foreground_set: bool = ...,
-        language: str = ...,
+        language: str | None = ...,
         language_set: bool = ...,
-        markup: str = ...,
+        markup: str | None = ...,
         max_width_chars: int = ...,
-        placeholder_text: str = ...,
+        placeholder_text: str | None = ...,
         rise: int = ...,
         rise_set: bool = ...,
         scale: float = ...,
@@ -9940,30 +10089,30 @@ class CellRendererSpin(CellRendererText):
         size: int = ...,
         size_points: float = ...,
         size_set: bool = ...,
-        stretch: Pango.Stretch = ...,
+        stretch: Pango._StretchValueType = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
         strikethrough_set: bool = ...,
-        style: Pango.Style = ...,
+        style: Pango._StyleValueType = ...,
         style_set: bool = ...,
-        text: str = ...,
-        underline: Pango.Underline = ...,
+        text: str | None = ...,
+        underline: Pango._UnderlineValueType = ...,
         underline_set: bool = ...,
-        variant: Pango.Variant = ...,
+        variant: Pango._VariantValueType = ...,
         variant_set: bool = ...,
         weight: int = ...,
         weight_set: bool = ...,
         width_chars: int = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         wrap_width: int = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -10052,7 +10201,10 @@ class CellRendererSpinner(CellRenderer):
     class Props(CellRenderer.Props):
         active: bool
         pulse: int
-        size: IconSize
+        @property
+        def size(self) -> IconSize: ...
+        @size.setter
+        def size(self, value: _IconSizeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10065,15 +10217,15 @@ class CellRendererSpinner(CellRenderer):
         *,
         active: bool = ...,
         pulse: int = ...,
-        size: IconSize = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        size: _IconSizeValueType = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -10254,29 +10406,44 @@ class CellRendererText(CellRenderer):
     @type_check_only
     class Props(CellRenderer.Props):
         align_set: bool
-        alignment: Pango.Alignment
-        attributes: Pango.AttrList
-        background: str
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
+        @property
+        def alignment(self) -> Pango.Alignment: ...
+        @alignment.setter
+        def alignment(self, value: Pango._AlignmentValueType) -> None: ...
+        attributes: Pango.AttrList | None
+        @property
+        def background(self) -> Never: ...
+        @background.setter
+        def background(self, value: str | None) -> None: ...
+        background_gdk: _Gdk3.Color | None
+        background_rgba: _Gdk3.RGBA | None
         background_set: bool
         editable: bool
         editable_set: bool
-        ellipsize: Pango.EllipsizeMode
+        @property
+        def ellipsize(self) -> Pango.EllipsizeMode: ...
+        @ellipsize.setter
+        def ellipsize(self, value: Pango._EllipsizeModeValueType) -> None: ...
         ellipsize_set: bool
-        family: str
+        family: str | None
         family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        foreground: str
-        foreground_gdk: _Gdk3.Color
-        foreground_rgba: _Gdk3.RGBA
+        font: str | None
+        font_desc: Pango.FontDescription | None
+        @property
+        def foreground(self) -> Never: ...
+        @foreground.setter
+        def foreground(self, value: str | None) -> None: ...
+        foreground_gdk: _Gdk3.Color | None
+        foreground_rgba: _Gdk3.RGBA | None
         foreground_set: bool
-        language: str
+        language: str | None
         language_set: bool
-        markup: str
+        @property
+        def markup(self) -> Never: ...
+        @markup.setter
+        def markup(self, value: str | None) -> None: ...
         max_width_chars: int
-        placeholder_text: str
+        placeholder_text: str | None
         rise: int
         rise_set: bool
         scale: float
@@ -10285,21 +10452,36 @@ class CellRendererText(CellRenderer):
         size: int
         size_points: float
         size_set: bool
-        stretch: Pango.Stretch
+        @property
+        def stretch(self) -> Pango.Stretch: ...
+        @stretch.setter
+        def stretch(self, value: Pango._StretchValueType) -> None: ...
         stretch_set: bool
         strikethrough: bool
         strikethrough_set: bool
-        style: Pango.Style
+        @property
+        def style(self) -> Pango.Style: ...
+        @style.setter
+        def style(self, value: Pango._StyleValueType) -> None: ...
         style_set: bool
-        text: str
-        underline: Pango.Underline
+        text: str | None
+        @property
+        def underline(self) -> Pango.Underline: ...
+        @underline.setter
+        def underline(self, value: Pango._UnderlineValueType) -> None: ...
         underline_set: bool
-        variant: Pango.Variant
+        @property
+        def variant(self) -> Pango.Variant: ...
+        @variant.setter
+        def variant(self, value: Pango._VariantValueType) -> None: ...
         variant_set: bool
         weight: int
         weight_set: bool
         width_chars: int
-        wrap_mode: Pango.WrapMode
+        @property
+        def wrap_mode(self) -> Pango.WrapMode: ...
+        @wrap_mode.setter
+        def wrap_mode(self, value: Pango._WrapModeValueType) -> None: ...
         wrap_width: int
 
     @property
@@ -10312,29 +10494,29 @@ class CellRendererText(CellRenderer):
         self,
         *,
         align_set: bool = ...,
-        alignment: Pango.Alignment = ...,
-        attributes: Pango.AttrList = ...,
-        background: str = ...,
-        background_gdk: _Gdk3.Color = ...,
-        background_rgba: _Gdk3.RGBA = ...,
+        alignment: Pango._AlignmentValueType = ...,
+        attributes: Pango.AttrList | None = ...,
+        background: str | None = ...,
+        background_gdk: _Gdk3.Color | None = ...,
+        background_rgba: _Gdk3.RGBA | None = ...,
         background_set: bool = ...,
         editable: bool = ...,
         editable_set: bool = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
         ellipsize_set: bool = ...,
-        family: str = ...,
+        family: str | None = ...,
         family_set: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        foreground: str = ...,
-        foreground_gdk: _Gdk3.Color = ...,
-        foreground_rgba: _Gdk3.RGBA = ...,
+        font: str | None = ...,
+        font_desc: Pango.FontDescription | None = ...,
+        foreground: str | None = ...,
+        foreground_gdk: _Gdk3.Color | None = ...,
+        foreground_rgba: _Gdk3.RGBA | None = ...,
         foreground_set: bool = ...,
-        language: str = ...,
+        language: str | None = ...,
         language_set: bool = ...,
-        markup: str = ...,
+        markup: str | None = ...,
         max_width_chars: int = ...,
-        placeholder_text: str = ...,
+        placeholder_text: str | None = ...,
         rise: int = ...,
         rise_set: bool = ...,
         scale: float = ...,
@@ -10343,30 +10525,30 @@ class CellRendererText(CellRenderer):
         size: int = ...,
         size_points: float = ...,
         size_set: bool = ...,
-        stretch: Pango.Stretch = ...,
+        stretch: Pango._StretchValueType = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
         strikethrough_set: bool = ...,
-        style: Pango.Style = ...,
+        style: Pango._StyleValueType = ...,
         style_set: bool = ...,
-        text: str = ...,
-        underline: Pango.Underline = ...,
+        text: str | None = ...,
+        underline: Pango._UnderlineValueType = ...,
         underline_set: bool = ...,
-        variant: Pango.Variant = ...,
+        variant: Pango._VariantValueType = ...,
         variant_set: bool = ...,
         weight: int = ...,
         weight_set: bool = ...,
         width_chars: int = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         wrap_width: int = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -10484,14 +10666,14 @@ class CellRendererToggle(CellRenderer):
         inconsistent: bool = ...,
         indicator_size: int = ...,
         radio: bool = ...,
-        cell_background: str = ...,
-        cell_background_gdk: _Gdk3.Color = ...,
-        cell_background_rgba: _Gdk3.RGBA = ...,
+        cell_background: str | None = ...,
+        cell_background_gdk: _Gdk3.Color | None = ...,
+        cell_background_rgba: _Gdk3.RGBA | None = ...,
         cell_background_set: bool = ...,
         height: int = ...,
         is_expanded: bool = ...,
         is_expander: bool = ...,
-        mode: CellRendererMode = ...,
+        mode: _CellRendererModeValueType = ...,
         sensitive: bool = ...,
         visible: bool = ...,
         width: int = ...,
@@ -10716,18 +10898,27 @@ class CellView(Widget, CellLayout, Orientable):
     """
     @type_check_only
     class Props(Widget.Props):
-        background: str
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
+        @property
+        def background(self) -> Never: ...
+        @background.setter
+        def background(self, value: str | None) -> None: ...
+        background_gdk: _Gdk3.Color | None
+        @property
+        def background_rgba(self) -> _Gdk3.RGBA | None: ...
+        @background_rgba.setter
+        def background_rgba(self, value: _Gdk3.RGBA) -> None: ...
         background_set: bool
         @property
-        def cell_area(self) -> CellArea: ...
+        def cell_area(self) -> CellArea | None: ...
         @property
-        def cell_area_context(self) -> CellAreaContext: ...
+        def cell_area_context(self) -> CellAreaContext | None: ...
         draw_sensitive: bool
         fit_model: bool
         model: TreeModel | None
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10738,24 +10929,24 @@ class CellView(Widget, CellLayout, Orientable):
     def __init__(
         self,
         *,
-        background: str = ...,
-        background_gdk: _Gdk3.Color = ...,
+        background: str | None = ...,
+        background_gdk: _Gdk3.Color | None = ...,
         background_rgba: _Gdk3.RGBA = ...,
         background_set: bool = ...,
-        cell_area: CellArea = ...,
-        cell_area_context: CellAreaContext = ...,
+        cell_area: CellArea | None = ...,
+        cell_area_context: CellAreaContext | None = ...,
         draw_sensitive: bool = ...,
         fit_model: bool = ...,
         model: TreeModel | None = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -10779,7 +10970,7 @@ class CellView(Widget, CellLayout, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -11043,7 +11234,10 @@ class CheckButton(ToggleButton):
     @type_check_only
     class Props(ToggleButton.Props):
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -11063,24 +11257,24 @@ class CheckButton(ToggleButton):
         inconsistent: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -11104,7 +11298,7 @@ class CheckButton(ToggleButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -11351,7 +11545,10 @@ class CheckMenuItem(MenuItem):
         draw_as_radio: bool
         inconsistent: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -11377,16 +11574,16 @@ class CheckMenuItem(MenuItem):
         submenu: Menu | None = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -11410,7 +11607,7 @@ class CheckMenuItem(MenuItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -11522,19 +11719,19 @@ class CheckMenuItemAccessible(MenuItemAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -11886,7 +12083,10 @@ class ColorButton(Button, ColorChooser):
         title: str
         use_alpha: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -11911,24 +12111,24 @@ class ColorButton(Button, ColorChooser):
         use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -11952,7 +12152,7 @@ class ColorButton(Button, ColorChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -11998,7 +12198,7 @@ class ColorChooser(GObject.GInterface, Protocol):
     """
     def add_palette(
         self,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
         colors_per_line: int,
         colors: Sequence[_Gdk3.RGBA] | None = None,
     ) -> None: ...
@@ -12305,7 +12505,7 @@ class ColorChooserDialog(Dialog, ColorChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -12320,21 +12520,21 @@ class ColorChooserDialog(Dialog, ColorChooser):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -12358,7 +12558,7 @@ class ColorChooserDialog(Dialog, ColorChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -12400,7 +12600,8 @@ class ColorChooserInterface(_gi.Struct):
     def add_palette(
         self,
     ) -> Callable[
-        [ColorChooser, Orientation, int, int, Sequence[_Gdk3.RGBA] | None], None
+        [ColorChooser, _OrientationValueType, int, int, Sequence[_Gdk3.RGBA] | None],
+        None,
     ]: ...
     @property
     def color_activated(self) -> Callable[[ColorChooser, _Gdk3.RGBA], None]: ...
@@ -12606,7 +12807,10 @@ class ColorChooserWidget(Box, ColorChooser):
         show_editor: bool
         rgba: _Gdk3.RGBA
         use_alpha: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -12620,21 +12824,21 @@ class ColorChooserWidget(Box, ColorChooser):
         show_editor: bool = ...,
         rgba: _Gdk3.RGBA = ...,
         use_alpha: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -12658,7 +12862,7 @@ class ColorChooserWidget(Box, ColorChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -12889,7 +13093,10 @@ class ColorSelection(Box):
         current_rgba: _Gdk3.RGBA
         has_opacity_control: bool
         has_palette: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -12905,21 +13112,21 @@ class ColorSelection(Box):
         current_rgba: _Gdk3.RGBA = ...,
         has_opacity_control: bool = ...,
         has_palette: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -12943,7 +13150,7 @@ class ColorSelection(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -13262,13 +13469,13 @@ class ColorSelectionDialog(Dialog):
     @type_check_only
     class Props(Dialog.Props):
         @property
-        def cancel_button(self) -> Widget: ...
+        def cancel_button(self) -> Widget | None: ...
         @property
         def color_selection(self) -> Widget: ...
         @property
-        def help_button(self) -> Widget: ...
+        def help_button(self) -> Widget | None: ...
         @property
-        def ok_button(self) -> Widget: ...
+        def ok_button(self) -> Widget | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -13290,7 +13497,7 @@ class ColorSelectionDialog(Dialog):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -13305,21 +13512,21 @@ class ColorSelectionDialog(Dialog):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -13343,7 +13550,7 @@ class ColorSelectionDialog(Dialog):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -13601,21 +13808,27 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         active: int
         active_id: str | None
         add_tearoffs: bool
-        button_sensitivity: SensitivityType
         @property
-        def cell_area(self) -> CellArea: ...
+        def button_sensitivity(self) -> SensitivityType: ...
+        @button_sensitivity.setter
+        def button_sensitivity(self, value: _SensitivityTypeValueType) -> None: ...
+        @property
+        def cell_area(self) -> CellArea | None: ...
         column_span_column: int
         entry_text_column: int
         @property
         def has_entry(self) -> bool: ...
         has_frame: bool
         id_column: int
-        model: TreeModel | None
+        @property
+        def model(self) -> TreeModel: ...
+        @model.setter
+        def model(self, value: TreeModel | None) -> None: ...
         popup_fixed_width: bool
         @property
         def popup_shown(self) -> bool: ...
         row_span_column: int
-        tearoff_title: str
+        tearoff_title: str | None
         wrap_width: int
         editing_canceled: bool
 
@@ -13631,8 +13844,8 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         active: int = ...,
         active_id: str | None = ...,
         add_tearoffs: bool = ...,
-        button_sensitivity: SensitivityType = ...,
-        cell_area: CellArea = ...,
+        button_sensitivity: _SensitivityTypeValueType = ...,
+        cell_area: CellArea | None = ...,
         column_span_column: int = ...,
         entry_text_column: int = ...,
         has_entry: bool = ...,
@@ -13641,20 +13854,20 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
         row_span_column: int = ...,
-        tearoff_title: str = ...,
+        tearoff_title: str | None = ...,
         wrap_width: int = ...,
         editing_canceled: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -13678,7 +13891,7 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -13721,7 +13934,9 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
     def set_active_id(self, active_id: str | None = None) -> bool: ...
     def set_active_iter(self, iter: TreeIter | None = None) -> None: ...
     def set_add_tearoffs(self, add_tearoffs: bool) -> None: ...
-    def set_button_sensitivity(self, sensitivity: SensitivityType) -> None: ...
+    def set_button_sensitivity(
+        self, sensitivity: _SensitivityTypeValueType
+    ) -> None: ...
     def set_column_span_column(self, column_span: int) -> None: ...
     def set_entry_text_column(self, text_column: int) -> None: ...
     def set_focus_on_click(self, focus_on_click: bool) -> None: ...
@@ -13821,19 +14036,19 @@ class ComboBoxAccessible(ContainerAccessible, Atk.Action, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -14113,8 +14328,8 @@ class ComboBoxText(ComboBox):
         active: int = ...,
         active_id: str | None = ...,
         add_tearoffs: bool = ...,
-        button_sensitivity: SensitivityType = ...,
-        cell_area: CellArea = ...,
+        button_sensitivity: _SensitivityTypeValueType = ...,
+        cell_area: CellArea | None = ...,
         column_span_column: int = ...,
         entry_text_column: int = ...,
         has_entry: bool = ...,
@@ -14123,19 +14338,19 @@ class ComboBoxText(ComboBox):
         model: TreeModel | None = ...,
         popup_fixed_width: bool = ...,
         row_span_column: int = ...,
-        tearoff_title: str = ...,
+        tearoff_title: str | None = ...,
         wrap_width: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -14159,7 +14374,7 @@ class ComboBoxText(ComboBox):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -14374,8 +14589,14 @@ class Container(Widget):
     @type_check_only
     class Props(Widget.Props):
         border_width: int
-        child: Widget
-        resize_mode: ResizeMode
+        @property
+        def child(self) -> Never: ...
+        @child.setter
+        def child(self, value: Widget | None) -> None: ...
+        @property
+        def resize_mode(self) -> ResizeMode: ...
+        @resize_mode.setter
+        def resize_mode(self, value: _ResizeModeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -14387,16 +14608,16 @@ class Container(Widget):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -14420,7 +14641,7 @@ class Container(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -14506,7 +14727,7 @@ class Container(Widget):
     def set_focus_hadjustment(self, adjustment: Adjustment) -> None: ...
     def set_focus_vadjustment(self, adjustment: Adjustment) -> None: ...
     def set_reallocate_redraws(self, needs_redraws: bool) -> None: ...
-    def set_resize_mode(self, resize_mode: ResizeMode) -> None: ...
+    def set_resize_mode(self, resize_mode: _ResizeModeValueType) -> None: ...
     def unset_focus_chain(self) -> None: ...
 
 class ContainerAccessible(WidgetAccessible):
@@ -14587,19 +14808,19 @@ class ContainerAccessible(WidgetAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -14699,19 +14920,19 @@ class ContainerCellAccessible(CellAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def add_child(self, child: CellAccessible) -> None: ...
@@ -15134,7 +15355,7 @@ class Dialog(Window, Container):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -15149,21 +15370,21 @@ class Dialog(Window, Container):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -15187,7 +15408,7 @@ class Dialog(Window, Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -15422,10 +15643,10 @@ class DrawingArea(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -15449,7 +15670,7 @@ class DrawingArea(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -15821,55 +16042,76 @@ class Entry(Widget, CellEditable, Editable):
     @type_check_only
     class Props(Widget.Props):
         activates_default: bool
-        attributes: Pango.AttrList | None
+        @property
+        def attributes(self) -> Pango.AttrList | None: ...
+        @attributes.setter
+        def attributes(self, value: Pango.AttrList) -> None: ...
         buffer: EntryBuffer
         caps_lock_warning: bool
-        completion: EntryCompletion | None
+        @property
+        def completion(self) -> EntryCompletion: ...
+        @completion.setter
+        def completion(self, value: EntryCompletion | None) -> None: ...
         @property
         def cursor_position(self) -> int: ...
         editable: bool
         enable_emoji_completion: bool
         has_frame: bool
-        im_module: str
+        im_module: str | None
         inner_border: Border | None
-        input_hints: InputHints
-        input_purpose: InputPurpose
+        @property
+        def input_hints(self) -> InputHints: ...
+        @input_hints.setter
+        def input_hints(self, value: _InputHintsValueType) -> None: ...
+        @property
+        def input_purpose(self) -> InputPurpose: ...
+        @input_purpose.setter
+        def input_purpose(self, value: _InputPurposeValueType) -> None: ...
         invisible_char: int
         invisible_char_set: bool
         max_length: int
         max_width_chars: int
         overwrite_mode: bool
-        placeholder_text: str | None
+        @property
+        def placeholder_text(self) -> str: ...
+        @placeholder_text.setter
+        def placeholder_text(self, value: str | None) -> None: ...
         populate_all: bool
         primary_icon_activatable: bool
-        primary_icon_gicon: Gio.Icon
-        primary_icon_name: str
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf
+        primary_icon_gicon: Gio.Icon | None
+        primary_icon_name: str | None
+        primary_icon_pixbuf: GdkPixbuf.Pixbuf | None
         primary_icon_sensitive: bool
-        primary_icon_stock: str
+        primary_icon_stock: str | None
         @property
         def primary_icon_storage_type(self) -> ImageType: ...
-        primary_icon_tooltip_markup: str
-        primary_icon_tooltip_text: str
+        primary_icon_tooltip_markup: str | None
+        primary_icon_tooltip_text: str | None
         progress_fraction: float
         progress_pulse_step: float
         @property
         def scroll_offset(self) -> int: ...
         secondary_icon_activatable: bool
-        secondary_icon_gicon: Gio.Icon
-        secondary_icon_name: str
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf
+        secondary_icon_gicon: Gio.Icon | None
+        secondary_icon_name: str | None
+        secondary_icon_pixbuf: GdkPixbuf.Pixbuf | None
         secondary_icon_sensitive: bool
-        secondary_icon_stock: str
+        secondary_icon_stock: str | None
         @property
         def secondary_icon_storage_type(self) -> ImageType: ...
-        secondary_icon_tooltip_markup: str
-        secondary_icon_tooltip_text: str
+        secondary_icon_tooltip_markup: str | None
+        secondary_icon_tooltip_text: str | None
         @property
         def selection_bound(self) -> int: ...
-        shadow_type: ShadowType
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
         show_emoji_icon: bool
-        tabs: Pango.TabArray | None
+        @property
+        def tabs(self) -> Pango.TabArray | None: ...
+        @tabs.setter
+        def tabs(self, value: Pango.TabArray) -> None: ...
         text: str
         @property
         def text_length(self) -> int: ...
@@ -15896,10 +16138,10 @@ class Entry(Widget, CellEditable, Editable):
         editable: bool = ...,
         enable_emoji_completion: bool = ...,
         has_frame: bool = ...,
-        im_module: str = ...,
+        im_module: str | None = ...,
         inner_border: Border | None = ...,
-        input_hints: InputHints = ...,
-        input_purpose: InputPurpose = ...,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
         invisible_char: int = ...,
         invisible_char_set: bool = ...,
         max_length: int = ...,
@@ -15908,24 +16150,24 @@ class Entry(Widget, CellEditable, Editable):
         placeholder_text: str | None = ...,
         populate_all: bool = ...,
         primary_icon_activatable: bool = ...,
-        primary_icon_gicon: Gio.Icon = ...,
-        primary_icon_name: str = ...,
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        primary_icon_gicon: Gio.Icon | None = ...,
+        primary_icon_name: str | None = ...,
+        primary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         primary_icon_sensitive: bool = ...,
-        primary_icon_stock: str = ...,
-        primary_icon_tooltip_markup: str = ...,
-        primary_icon_tooltip_text: str = ...,
+        primary_icon_stock: str | None = ...,
+        primary_icon_tooltip_markup: str | None = ...,
+        primary_icon_tooltip_text: str | None = ...,
         progress_fraction: float = ...,
         progress_pulse_step: float = ...,
         secondary_icon_activatable: bool = ...,
-        secondary_icon_gicon: Gio.Icon = ...,
-        secondary_icon_name: str = ...,
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        secondary_icon_gicon: Gio.Icon | None = ...,
+        secondary_icon_name: str | None = ...,
+        secondary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         secondary_icon_sensitive: bool = ...,
-        secondary_icon_stock: str = ...,
-        secondary_icon_tooltip_markup: str = ...,
-        secondary_icon_tooltip_text: str = ...,
-        shadow_type: ShadowType = ...,
+        secondary_icon_stock: str | None = ...,
+        secondary_icon_tooltip_markup: str | None = ...,
+        secondary_icon_tooltip_text: str | None = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         show_emoji_icon: bool = ...,
         tabs: Pango.TabArray = ...,
         text: str = ...,
@@ -15938,10 +16180,10 @@ class Entry(Widget, CellEditable, Editable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -15965,7 +16207,7 @@ class Entry(Widget, CellEditable, Editable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -15975,7 +16217,7 @@ class Entry(Widget, CellEditable, Editable):
     def do_backspace(self) -> None: ...
     def do_copy_clipboard(self) -> None: ...
     def do_cut_clipboard(self) -> None: ...
-    def do_delete_from_cursor(self, type: DeleteType, count: int) -> None: ...
+    def do_delete_from_cursor(self, type: _DeleteTypeValueType, count: int) -> None: ...
     def do_get_frame_size(self, x: int, y: int, width: int, height: int) -> None: ...
     def do_get_text_area_size(
         self, x: int, y: int, width: int, height: int
@@ -15983,7 +16225,7 @@ class Entry(Widget, CellEditable, Editable):
     def do_insert_at_cursor(self, str: str) -> None: ...
     def do_insert_emoji(self) -> None: ...
     def do_move_cursor(
-        self, step: MovementStep, count: int, extend_selection: bool
+        self, step: _MovementStepValueType, count: int, extend_selection: bool
     ) -> None: ...
     def do_paste_clipboard(self) -> None: ...
     def do_populate_popup(self, popup: Widget) -> None: ...
@@ -15997,19 +16239,29 @@ class Entry(Widget, CellEditable, Editable):
     def get_current_icon_drag_source(self) -> int: ...
     def get_cursor_hadjustment(self) -> Adjustment | None: ...
     def get_has_frame(self) -> bool: ...
-    def get_icon_activatable(self, icon_pos: EntryIconPosition) -> bool: ...
-    def get_icon_area(self, icon_pos: EntryIconPosition) -> _Gdk3.Rectangle: ...
+    def get_icon_activatable(self, icon_pos: _EntryIconPositionValueType) -> bool: ...
+    def get_icon_area(
+        self, icon_pos: _EntryIconPositionValueType
+    ) -> _Gdk3.Rectangle: ...
     def get_icon_at_pos(self, x: int, y: int) -> int: ...
-    def get_icon_gicon(self, icon_pos: EntryIconPosition) -> Gio.Icon | None: ...
-    def get_icon_name(self, icon_pos: EntryIconPosition) -> str | None: ...
+    def get_icon_gicon(
+        self, icon_pos: _EntryIconPositionValueType
+    ) -> Gio.Icon | None: ...
+    def get_icon_name(self, icon_pos: _EntryIconPositionValueType) -> str | None: ...
     def get_icon_pixbuf(
-        self, icon_pos: EntryIconPosition
+        self, icon_pos: _EntryIconPositionValueType
     ) -> GdkPixbuf.Pixbuf | None: ...
-    def get_icon_sensitive(self, icon_pos: EntryIconPosition) -> bool: ...
-    def get_icon_stock(self, icon_pos: EntryIconPosition) -> str: ...
-    def get_icon_storage_type(self, icon_pos: EntryIconPosition) -> ImageType: ...
-    def get_icon_tooltip_markup(self, icon_pos: EntryIconPosition) -> str | None: ...
-    def get_icon_tooltip_text(self, icon_pos: EntryIconPosition) -> str | None: ...
+    def get_icon_sensitive(self, icon_pos: _EntryIconPositionValueType) -> bool: ...
+    def get_icon_stock(self, icon_pos: _EntryIconPositionValueType) -> str: ...
+    def get_icon_storage_type(
+        self, icon_pos: _EntryIconPositionValueType
+    ) -> ImageType: ...
+    def get_icon_tooltip_markup(
+        self, icon_pos: _EntryIconPositionValueType
+    ) -> str | None: ...
+    def get_icon_tooltip_text(
+        self, icon_pos: _EntryIconPositionValueType
+    ) -> str | None: ...
     def get_inner_border(self) -> Border | None: ...
     def get_input_hints(self) -> InputHints: ...
     def get_input_purpose(self) -> InputPurpose: ...
@@ -16045,38 +16297,40 @@ class Entry(Widget, CellEditable, Editable):
     def set_cursor_hadjustment(self, adjustment: Adjustment | None = None) -> None: ...
     def set_has_frame(self, setting: bool) -> None: ...
     def set_icon_activatable(
-        self, icon_pos: EntryIconPosition, activatable: bool
+        self, icon_pos: _EntryIconPositionValueType, activatable: bool
     ) -> None: ...
     def set_icon_drag_source(
         self,
-        icon_pos: EntryIconPosition,
+        icon_pos: _EntryIconPositionValueType,
         target_list: TargetList,
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
     ) -> None: ...
     def set_icon_from_gicon(
-        self, icon_pos: EntryIconPosition, icon: Gio.Icon | None = None
+        self, icon_pos: _EntryIconPositionValueType, icon: Gio.Icon | None = None
     ) -> None: ...
     def set_icon_from_icon_name(
-        self, icon_pos: EntryIconPosition, icon_name: str | None = None
+        self, icon_pos: _EntryIconPositionValueType, icon_name: str | None = None
     ) -> None: ...
     def set_icon_from_pixbuf(
-        self, icon_pos: EntryIconPosition, pixbuf: GdkPixbuf.Pixbuf | None = None
+        self,
+        icon_pos: _EntryIconPositionValueType,
+        pixbuf: GdkPixbuf.Pixbuf | None = None,
     ) -> None: ...
     def set_icon_from_stock(
-        self, icon_pos: EntryIconPosition, stock_id: str | None = None
+        self, icon_pos: _EntryIconPositionValueType, stock_id: str | None = None
     ) -> None: ...
     def set_icon_sensitive(
-        self, icon_pos: EntryIconPosition, sensitive: bool
+        self, icon_pos: _EntryIconPositionValueType, sensitive: bool
     ) -> None: ...
     def set_icon_tooltip_markup(
-        self, icon_pos: EntryIconPosition, tooltip: str | None = None
+        self, icon_pos: _EntryIconPositionValueType, tooltip: str | None = None
     ) -> None: ...
     def set_icon_tooltip_text(
-        self, icon_pos: EntryIconPosition, tooltip: str | None = None
+        self, icon_pos: _EntryIconPositionValueType, tooltip: str | None = None
     ) -> None: ...
     def set_inner_border(self, border: Border | None = None) -> None: ...
-    def set_input_hints(self, hints: InputHints) -> None: ...
-    def set_input_purpose(self, purpose: InputPurpose) -> None: ...
+    def set_input_hints(self, hints: _InputHintsValueType) -> None: ...
+    def set_input_purpose(self, purpose: _InputPurposeValueType) -> None: ...
     def set_invisible_char(self, ch: str) -> None: ...
     def set_max_length(self, max: int) -> None: ...
     def set_max_width_chars(self, n_chars: int) -> None: ...
@@ -16177,19 +16431,19 @@ class EntryAccessible(WidgetAccessible, Atk.Action, Atk.EditableText, Atk.Text):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -16305,11 +16559,15 @@ class EntryClass(_gi.Struct):
     @property
     def activate(self) -> Callable[[Entry], None]: ...
     @property
-    def move_cursor(self) -> Callable[[Entry, MovementStep, int, bool], None]: ...
+    def move_cursor(
+        self,
+    ) -> Callable[[Entry, _MovementStepValueType, int, bool], None]: ...
     @property
     def insert_at_cursor(self) -> Callable[[Entry, str], None]: ...
     @property
-    def delete_from_cursor(self) -> Callable[[Entry, DeleteType, int], None]: ...
+    def delete_from_cursor(
+        self,
+    ) -> Callable[[Entry, _DeleteTypeValueType, int], None]: ...
     @property
     def backspace(self) -> Callable[[Entry], None]: ...
     @property
@@ -16374,7 +16632,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def cell_area(self) -> CellArea: ...
+        def cell_area(self) -> CellArea | None: ...
         inline_completion: bool
         inline_selection: bool
         minimum_key_length: int
@@ -16393,7 +16651,7 @@ class EntryCompletion(GObject.Object, Buildable, CellLayout):
     def __init__(
         self,
         *,
-        cell_area: CellArea = ...,
+        cell_area: CellArea | None = ...,
         inline_completion: bool = ...,
         inline_selection: bool = ...,
         minimum_key_length: int = ...,
@@ -16535,19 +16793,19 @@ class EntryIconAccessible(Atk.Object, Atk.Action, Atk.Component):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -16755,16 +17013,16 @@ class EventBox(Bin):
         above_child: bool = ...,
         visible_window: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -16788,7 +17046,7 @@ class EventBox(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -16835,20 +17093,26 @@ class EventController(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        propagation_phase: PropagationPhase
+        @property
+        def propagation_phase(self) -> PropagationPhase: ...
+        @propagation_phase.setter
+        def propagation_phase(self, value: _PropagationPhaseValueType) -> None: ...
         @property
         def widget(self) -> Widget: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, *, propagation_phase: PropagationPhase = ..., widget: Widget = ...
+        self,
+        *,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_propagation_phase(self) -> PropagationPhase: ...
     def get_widget(self) -> Widget: ...
     def handle_event(self, event: _Gdk3.Event) -> bool: ...
     def reset(self) -> None: ...
-    def set_propagation_phase(self, phase: PropagationPhase) -> None: ...
+    def set_propagation_phase(self, phase: _PropagationPhaseValueType) -> None: ...
 
 class EventControllerClass(_gi.Struct): ...
 
@@ -16881,7 +17145,10 @@ class EventControllerKey(EventController):
       notify (GParam)
     """
     def __init__(
-        self, *, propagation_phase: PropagationPhase = ..., widget: Widget = ...
+        self,
+        *,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def forward(self, widget: Widget) -> bool: ...
     def get_group(self) -> int: ...
@@ -16918,7 +17185,10 @@ class EventControllerMotion(EventController):
       notify (GParam)
     """
     def __init__(
-        self, *, propagation_phase: PropagationPhase = ..., widget: Widget = ...
+        self,
+        *,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     @classmethod
     def new(cls, widget: Widget) -> EventControllerMotion: ...
@@ -16957,23 +17227,26 @@ class EventControllerScroll(EventController):
     """
     @type_check_only
     class Props(EventController.Props):
-        flags: EventControllerScrollFlags
+        @property
+        def flags(self) -> EventControllerScrollFlags: ...
+        @flags.setter
+        def flags(self, value: _EventControllerScrollFlagsValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        flags: EventControllerScrollFlags = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        flags: _EventControllerScrollFlagsValueType = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_flags(self) -> EventControllerScrollFlags: ...
     @classmethod
     def new(
-        cls, widget: Widget, flags: EventControllerScrollFlags
+        cls, widget: Widget, flags: _EventControllerScrollFlagsValueType
     ) -> EventControllerScroll: ...
-    def set_flags(self, flags: EventControllerScrollFlags) -> None: ...
+    def set_flags(self, flags: _EventControllerScrollFlagsValueType) -> None: ...
 
 class EventControllerScrollClass(_gi.Struct): ...
 
@@ -17207,16 +17480,16 @@ class Expander(Bin):
         use_markup: bool = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -17240,7 +17513,7 @@ class Expander(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -17349,19 +17622,19 @@ class ExpanderAccessible(ContainerAccessible, Atk.Action):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -17446,7 +17719,7 @@ class FileChooser(GObject.GInterface, Protocol):
     def select_file(self, file: Gio.File) -> bool: ...
     def select_filename(self, filename: str) -> bool: ...
     def select_uri(self, uri: str) -> bool: ...
-    def set_action(self, action: FileChooserAction) -> None: ...
+    def set_action(self, action: _FileChooserActionValueType) -> None: ...
     def set_choice(self, id: str, option: str) -> None: ...
     def set_create_folders(self, create_folders: bool) -> None: ...
     def set_current_folder(self, filename: str) -> bool: ...
@@ -17682,18 +17955,33 @@ class FileChooserButton(Box, FileChooser):
     class Props(Box.Props):
         title: str
         width_chars: int
-        action: FileChooserAction
+        @property
+        def action(self) -> FileChooserAction: ...
+        @action.setter
+        def action(self, value: _FileChooserActionValueType) -> None: ...
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget | None
-        filter: FileFilter | None
+        @property
+        def extra_widget(self) -> Widget | None: ...
+        @extra_widget.setter
+        def extra_widget(self, value: Widget) -> None: ...
+        @property
+        def filter(self) -> FileFilter | None: ...
+        @filter.setter
+        def filter(self, value: FileFilter) -> None: ...
         local_only: bool
-        preview_widget: Widget | None
+        @property
+        def preview_widget(self) -> Widget | None: ...
+        @preview_widget.setter
+        def preview_widget(self, value: Widget) -> None: ...
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -17704,10 +17992,10 @@ class FileChooserButton(Box, FileChooser):
     def __init__(
         self,
         *,
-        dialog: FileChooser = ...,
+        dialog: FileChooser | None = ...,
         title: str = ...,
         width_chars: int = ...,
-        action: FileChooserAction = ...,
+        action: _FileChooserActionValueType = ...,
         create_folders: bool = ...,
         do_overwrite_confirmation: bool = ...,
         extra_widget: Widget = ...,
@@ -17718,21 +18006,21 @@ class FileChooserButton(Box, FileChooser):
         select_multiple: bool = ...,
         show_hidden: bool = ...,
         use_preview_label: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -17756,7 +18044,7 @@ class FileChooserButton(Box, FileChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -17767,7 +18055,9 @@ class FileChooserButton(Box, FileChooser):
     def get_title(self) -> str: ...
     def get_width_chars(self) -> int: ...
     @classmethod
-    def new(cls, title: str, action: FileChooserAction) -> FileChooserButton: ...
+    def new(
+        cls, title: str, action: _FileChooserActionValueType
+    ) -> FileChooserButton: ...
     @classmethod
     def new_with_dialog(cls, dialog: Dialog) -> FileChooserButton: ...
     def set_focus_on_click(self, focus_on_click: bool) -> None: ...
@@ -18059,13 +18349,25 @@ class FileChooserDialog(Dialog, FileChooser):
     """
     @type_check_only
     class Props(Dialog.Props):
-        action: FileChooserAction
+        @property
+        def action(self) -> FileChooserAction: ...
+        @action.setter
+        def action(self, value: _FileChooserActionValueType) -> None: ...
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget | None
-        filter: FileFilter | None
+        @property
+        def extra_widget(self) -> Widget | None: ...
+        @extra_widget.setter
+        def extra_widget(self, value: Widget) -> None: ...
+        @property
+        def filter(self) -> FileFilter | None: ...
+        @filter.setter
+        def filter(self, value: FileFilter) -> None: ...
         local_only: bool
-        preview_widget: Widget | None
+        @property
+        def preview_widget(self) -> Widget | None: ...
+        @preview_widget.setter
+        def preview_widget(self, value: Widget) -> None: ...
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
@@ -18080,7 +18382,7 @@ class FileChooserDialog(Dialog, FileChooser):
     def __init__(
         self,
         *,
-        action: FileChooserAction = ...,
+        action: _FileChooserActionValueType = ...,
         create_folders: bool = ...,
         do_overwrite_confirmation: bool = ...,
         extra_widget: Widget = ...,
@@ -18102,7 +18404,7 @@ class FileChooserDialog(Dialog, FileChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -18117,21 +18419,21 @@ class FileChooserDialog(Dialog, FileChooser):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -18155,7 +18457,7 @@ class FileChooserDialog(Dialog, FileChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -18219,13 +18521,25 @@ class FileChooserNative(NativeDialog, FileChooser):
     class Props(NativeDialog.Props):
         accept_label: str | None
         cancel_label: str | None
-        action: FileChooserAction
+        @property
+        def action(self) -> FileChooserAction: ...
+        @action.setter
+        def action(self, value: _FileChooserActionValueType) -> None: ...
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget | None
-        filter: FileFilter | None
+        @property
+        def extra_widget(self) -> Widget | None: ...
+        @extra_widget.setter
+        def extra_widget(self, value: Widget) -> None: ...
+        @property
+        def filter(self) -> FileFilter | None: ...
+        @filter.setter
+        def filter(self, value: FileFilter) -> None: ...
         local_only: bool
-        preview_widget: Widget | None
+        @property
+        def preview_widget(self) -> Widget | None: ...
+        @preview_widget.setter
+        def preview_widget(self, value: Widget) -> None: ...
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
@@ -18238,7 +18552,7 @@ class FileChooserNative(NativeDialog, FileChooser):
         *,
         accept_label: str | None = ...,
         cancel_label: str | None = ...,
-        action: FileChooserAction = ...,
+        action: _FileChooserActionValueType = ...,
         create_folders: bool = ...,
         do_overwrite_confirmation: bool = ...,
         extra_widget: Widget = ...,
@@ -18261,7 +18575,7 @@ class FileChooserNative(NativeDialog, FileChooser):
         cls,
         title: str | None,
         parent: Window | None,
-        action: FileChooserAction,
+        action: _FileChooserActionValueType,
         accept_label: str | None = None,
         cancel_label: str | None = None,
     ) -> FileChooserNative: ...
@@ -18501,19 +18815,34 @@ class FileChooserWidget(Box, FileChooser):
     class Props(Box.Props):
         search_mode: bool
         @property
-        def subtitle(self) -> str: ...
-        action: FileChooserAction
+        def subtitle(self) -> str | None: ...
+        @property
+        def action(self) -> FileChooserAction: ...
+        @action.setter
+        def action(self, value: _FileChooserActionValueType) -> None: ...
         create_folders: bool
         do_overwrite_confirmation: bool
-        extra_widget: Widget | None
-        filter: FileFilter | None
+        @property
+        def extra_widget(self) -> Widget | None: ...
+        @extra_widget.setter
+        def extra_widget(self, value: Widget) -> None: ...
+        @property
+        def filter(self) -> FileFilter | None: ...
+        @filter.setter
+        def filter(self, value: FileFilter) -> None: ...
         local_only: bool
-        preview_widget: Widget | None
+        @property
+        def preview_widget(self) -> Widget | None: ...
+        @preview_widget.setter
+        def preview_widget(self, value: Widget) -> None: ...
         preview_widget_active: bool
         select_multiple: bool
         show_hidden: bool
         use_preview_label: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -18525,7 +18854,7 @@ class FileChooserWidget(Box, FileChooser):
         self,
         *,
         search_mode: bool = ...,
-        action: FileChooserAction = ...,
+        action: _FileChooserActionValueType = ...,
         create_folders: bool = ...,
         do_overwrite_confirmation: bool = ...,
         extra_widget: Widget = ...,
@@ -18536,21 +18865,21 @@ class FileChooserWidget(Box, FileChooser):
         select_multiple: bool = ...,
         show_hidden: bool = ...,
         use_preview_label: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -18574,14 +18903,14 @@ class FileChooserWidget(Box, FileChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     @classmethod
-    def new(cls, action: FileChooserAction) -> FileChooserWidget: ...
+    def new(cls, action: _FileChooserActionValueType) -> FileChooserWidget: ...
 
 class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action):
     """
@@ -18664,19 +18993,19 @@ class FileChooserWidgetAccessible(ContainerAccessible, Atk.Action):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -18723,7 +19052,7 @@ class FileFilter(GObject.InitiallyUnowned, Buildable):
     """
     def add_custom(
         self,
-        needed: FileFilterFlags,
+        needed: _FileFilterFlagsValueType,
         func: Callable[[FileFilterInfo, Unpack[_DataTs]], bool],
         *data: Unpack[_DataTs],
     ) -> None: ...
@@ -18942,16 +19271,16 @@ class Fixed(Container):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -18975,7 +19304,7 @@ class Fixed(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -19224,8 +19553,14 @@ class FlowBox(Container, Orientable):
         max_children_per_line: int
         min_children_per_line: int
         row_spacing: int
-        selection_mode: SelectionMode
-        orientation: Orientation
+        @property
+        def selection_mode(self) -> SelectionMode: ...
+        @selection_mode.setter
+        def selection_mode(self, value: _SelectionModeValueType) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -19240,19 +19575,19 @@ class FlowBox(Container, Orientable):
         max_children_per_line: int = ...,
         min_children_per_line: int = ...,
         row_spacing: int = ...,
-        selection_mode: SelectionMode = ...,
-        orientation: Orientation = ...,
+        selection_mode: _SelectionModeValueType = ...,
+        orientation: _OrientationValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -19276,7 +19611,7 @@ class FlowBox(Container, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -19290,7 +19625,7 @@ class FlowBox(Container, Orientable):
     ) -> None: ...
     def do_activate_cursor_child(self) -> None: ...
     def do_child_activated(self, child: FlowBoxChild) -> None: ...
-    def do_move_cursor(self, step: MovementStep, count: int) -> bool: ...
+    def do_move_cursor(self, step: _MovementStepValueType, count: int) -> bool: ...
     def do_select_all(self) -> None: ...
     def do_selected_children_changed(self) -> None: ...
     def do_toggle_cursor_child(self) -> None: ...
@@ -19329,7 +19664,7 @@ class FlowBox(Container, Orientable):
     def set_max_children_per_line(self, n_children: int) -> None: ...
     def set_min_children_per_line(self, n_children: int) -> None: ...
     def set_row_spacing(self, spacing: int) -> None: ...
-    def set_selection_mode(self, mode: SelectionMode) -> None: ...
+    def set_selection_mode(self, mode: _SelectionModeValueType) -> None: ...
     def set_sort_func(
         self,
         sort_func: Callable[[FlowBoxChild, FlowBoxChild, Unpack[_DataTs]], int]
@@ -19424,19 +19759,19 @@ class FlowBoxAccessible(ContainerAccessible, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -19641,16 +19976,16 @@ class FlowBoxChild(Bin):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -19674,7 +20009,7 @@ class FlowBoxChild(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -19766,19 +20101,19 @@ class FlowBoxChildAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -19825,7 +20160,7 @@ class FlowBoxClass(_gi.Struct):
     @property
     def toggle_cursor_child(self) -> Callable[[FlowBox], None]: ...
     @property
-    def move_cursor(self) -> Callable[[FlowBox, MovementStep, int], bool]: ...
+    def move_cursor(self) -> Callable[[FlowBox, _MovementStepValueType, int], bool]: ...
     @property
     def select_all(self) -> Callable[[FlowBox], None]: ...
     @property
@@ -20068,15 +20403,27 @@ class FontButton(Button, FontChooser):
         use_font: bool
         use_size: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
-        font: str | None
-        font_desc: Pango.FontDescription | None
+        @property
+        def font(self) -> str | None: ...
+        @font.setter
+        def font(self, value: str) -> None: ...
+        @property
+        def font_desc(self) -> Pango.FontDescription | None: ...
+        @font_desc.setter
+        def font_desc(self, value: Pango.FontDescription) -> None: ...
         @property
         def font_features(self) -> str: ...
         language: str
-        level: FontChooserLevel
+        @property
+        def level(self) -> FontChooserLevel: ...
+        @level.setter
+        def level(self, value: _FontChooserLevelValueType) -> None: ...
         preview_text: str
         show_preview_entry: bool
 
@@ -20102,29 +20449,29 @@ class FontButton(Button, FontChooser):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         language: str = ...,
-        level: FontChooserLevel = ...,
+        level: _FontChooserLevelValueType = ...,
         preview_text: str = ...,
         show_preview_entry: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -20148,7 +20495,7 @@ class FontButton(Button, FontChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -20215,7 +20562,7 @@ class FontChooser(GObject.GInterface, Protocol):
     def set_font_desc(self, font_desc: Pango.FontDescription) -> None: ...
     def set_font_map(self, fontmap: Pango.FontMap | None = None) -> None: ...
     def set_language(self, language: str) -> None: ...
-    def set_level(self, level: FontChooserLevel) -> None: ...
+    def set_level(self, level: _FontChooserLevelValueType) -> None: ...
     def set_preview_text(self, text: str) -> None: ...
     def set_show_preview_entry(self, show_preview_entry: bool) -> None: ...
 
@@ -20486,12 +20833,21 @@ class FontChooserDialog(Dialog, FontChooser):
     """
     @type_check_only
     class Props(Dialog.Props):
-        font: str | None
-        font_desc: Pango.FontDescription | None
+        @property
+        def font(self) -> str | None: ...
+        @font.setter
+        def font(self, value: str) -> None: ...
+        @property
+        def font_desc(self) -> Pango.FontDescription | None: ...
+        @font_desc.setter
+        def font_desc(self, value: Pango.FontDescription) -> None: ...
         @property
         def font_features(self) -> str: ...
         language: str
-        level: FontChooserLevel
+        @property
+        def level(self) -> FontChooserLevel: ...
+        @level.setter
+        def level(self, value: _FontChooserLevelValueType) -> None: ...
         preview_text: str
         show_preview_entry: bool
 
@@ -20507,7 +20863,7 @@ class FontChooserDialog(Dialog, FontChooser):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         language: str = ...,
-        level: FontChooserLevel = ...,
+        level: _FontChooserLevelValueType = ...,
         preview_text: str = ...,
         show_preview_entry: bool = ...,
         use_header_bar: int = ...,
@@ -20521,7 +20877,7 @@ class FontChooserDialog(Dialog, FontChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -20536,21 +20892,21 @@ class FontChooserDialog(Dialog, FontChooser):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -20574,7 +20930,7 @@ class FontChooserDialog(Dialog, FontChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -20832,16 +21188,28 @@ class FontChooserWidget(Box, FontChooser):
     @type_check_only
     class Props(Box.Props):
         @property
-        def tweak_action(self) -> Gio.Action: ...
-        font: str | None
-        font_desc: Pango.FontDescription | None
+        def tweak_action(self) -> Gio.Action | None: ...
+        @property
+        def font(self) -> str | None: ...
+        @font.setter
+        def font(self, value: str) -> None: ...
+        @property
+        def font_desc(self) -> Pango.FontDescription | None: ...
+        @font_desc.setter
+        def font_desc(self, value: Pango.FontDescription) -> None: ...
         @property
         def font_features(self) -> str: ...
         language: str
-        level: FontChooserLevel
+        @property
+        def level(self) -> FontChooserLevel: ...
+        @level.setter
+        def level(self, value: _FontChooserLevelValueType) -> None: ...
         preview_text: str
         show_preview_entry: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -20855,24 +21223,24 @@ class FontChooserWidget(Box, FontChooser):
         font: str = ...,
         font_desc: Pango.FontDescription = ...,
         language: str = ...,
-        level: FontChooserLevel = ...,
+        level: _FontChooserLevelValueType = ...,
         preview_text: str = ...,
         show_preview_entry: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -20896,7 +21264,7 @@ class FontChooserWidget(Box, FontChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -21115,7 +21483,10 @@ class FontSelection(Box):
     class Props(Box.Props):
         font_name: str
         preview_text: str
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -21128,21 +21499,21 @@ class FontSelection(Box):
         *,
         font_name: str = ...,
         preview_text: str = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -21166,7 +21537,7 @@ class FontSelection(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -21478,7 +21849,7 @@ class FontSelectionDialog(Dialog):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -21493,21 +21864,21 @@ class FontSelectionDialog(Dialog):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -21531,7 +21902,7 @@ class FontSelectionDialog(Dialog):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -21758,7 +22129,10 @@ class Frame(Bin):
         label_widget: Widget | None
         label_xalign: float
         label_yalign: float
-        shadow_type: ShadowType
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -21773,18 +22147,18 @@ class Frame(Bin):
         label_widget: Widget | None = ...,
         label_xalign: float = ...,
         label_yalign: float = ...,
-        shadow_type: ShadowType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -21808,7 +22182,7 @@ class Frame(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -21824,7 +22198,7 @@ class Frame(Bin):
     def set_label(self, label: str | None = None) -> None: ...
     def set_label_align(self, xalign: float, yalign: float) -> None: ...
     def set_label_widget(self, label_widget: Widget | None = None) -> None: ...
-    def set_shadow_type(self, type: ShadowType) -> None: ...
+    def set_shadow_type(self, type: _ShadowTypeValueType) -> None: ...
 
 class FrameAccessible(ContainerAccessible):
     """
@@ -21907,19 +22281,19 @@ class FrameAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -22161,10 +22535,10 @@ class GLArea(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -22188,7 +22562,7 @@ class GLArea(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -22279,8 +22653,8 @@ class Gesture(EventController):
         *,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_bounding_box(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     def get_bounding_box_center(self) -> tuple[bool, float, float]: ...
@@ -22304,9 +22678,9 @@ class Gesture(EventController):
     def is_grouped_with(self, other: Gesture) -> bool: ...
     def is_recognized(self) -> bool: ...
     def set_sequence_state(
-        self, sequence: _Gdk3.EventSequence, state: EventSequenceState
+        self, sequence: _Gdk3.EventSequence, state: _EventSequenceStateValueType
     ) -> bool: ...
-    def set_state(self, state: EventSequenceState) -> bool: ...
+    def set_state(self, state: _EventSequenceStateValueType) -> bool: ...
     def set_window(self, window: _Gdk3.Window | None = None) -> None: ...
     def ungroup(self) -> None: ...
 
@@ -22366,8 +22740,8 @@ class GestureDrag(GestureSingle):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_offset(self) -> tuple[bool, float | None, float | None]: ...
     def get_start_point(self) -> tuple[bool, float | None, float | None]: ...
@@ -22440,8 +22814,8 @@ class GestureLongPress(GestureSingle):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     @classmethod
     def new(cls, widget: Widget) -> GestureLongPress: ...
@@ -22502,8 +22876,8 @@ class GestureMultiPress(GestureSingle):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_area(self) -> tuple[bool, _Gdk3.Rectangle]: ...
     @classmethod
@@ -22567,26 +22941,29 @@ class GesturePan(GestureDrag):
     """
     @type_check_only
     class Props(GestureDrag.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         button: int = ...,
         exclusive: bool = ...,
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_orientation(self) -> Orientation: ...
     @classmethod
-    def new(cls, widget: Widget, orientation: Orientation) -> GesturePan: ...
-    def set_orientation(self, orientation: Orientation) -> None: ...
+    def new(cls, widget: Widget, orientation: _OrientationValueType) -> GesturePan: ...
+    def set_orientation(self, orientation: _OrientationValueType) -> None: ...
 
 class GesturePanClass(_gi.Struct): ...
 
@@ -22631,8 +23008,8 @@ class GestureRotate(Gesture):
         *,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_angle_delta(self) -> float: ...
     @classmethod
@@ -22696,8 +23073,8 @@ class GestureSingle(Gesture):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_button(self) -> int: ...
     def get_current_button(self) -> int: ...
@@ -22765,11 +23142,13 @@ class GestureStylus(GestureSingle):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
-    def get_axes(self, axes: Sequence[_Gdk3.AxisUse]) -> tuple[bool, list[float]]: ...
-    def get_axis(self, axis: _Gdk3.AxisUse) -> tuple[bool, float]: ...
+    def get_axes(
+        self, axes: Sequence[_Gdk3._AxisUseValueType]
+    ) -> tuple[bool, list[float]]: ...
+    def get_axis(self, axis: _Gdk3._AxisUseValueType) -> tuple[bool, float]: ...
     def get_device_tool(self) -> _Gdk3.DeviceTool | None: ...
     @classmethod
     def new(cls, widget: Widget) -> GestureStylus: ...
@@ -22828,8 +23207,8 @@ class GestureSwipe(GestureSingle):
         touch_only: bool = ...,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_velocity(self) -> tuple[bool, float, float]: ...
     @classmethod
@@ -22878,8 +23257,8 @@ class GestureZoom(Gesture):
         *,
         n_points: int = ...,
         window: _Gdk3.Window | None = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     def get_scale_delta(self) -> float: ...
     @classmethod
@@ -23107,7 +23486,10 @@ class Grid(Container, Orientable):
         column_spacing: int
         row_homogeneous: bool
         row_spacing: int
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -23123,18 +23505,18 @@ class Grid(Container, Orientable):
         column_spacing: int = ...,
         row_homogeneous: bool = ...,
         row_spacing: int = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -23158,7 +23540,7 @@ class Grid(Container, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -23171,7 +23553,7 @@ class Grid(Container, Orientable):
         self,
         child: Widget,
         sibling: Widget | None,
-        side: PositionType,
+        side: _PositionTypeValueType,
         width: int,
         height: int,
     ) -> None: ...
@@ -23183,7 +23565,7 @@ class Grid(Container, Orientable):
     def get_row_homogeneous(self) -> bool: ...
     def get_row_spacing(self) -> int: ...
     def insert_column(self, position: int) -> None: ...
-    def insert_next_to(self, sibling: Widget, side: PositionType) -> None: ...
+    def insert_next_to(self, sibling: Widget, side: _PositionTypeValueType) -> None: ...
     def insert_row(self, position: int) -> None: ...
     @classmethod
     def new(cls) -> Grid: ...
@@ -23192,7 +23574,9 @@ class Grid(Container, Orientable):
     def set_baseline_row(self, row: int) -> None: ...
     def set_column_homogeneous(self, homogeneous: bool) -> None: ...
     def set_column_spacing(self, spacing: int) -> None: ...
-    def set_row_baseline_position(self, row: int, pos: BaselinePosition) -> None: ...
+    def set_row_baseline_position(
+        self, row: int, pos: _BaselinePositionValueType
+    ) -> None: ...
     def set_row_homogeneous(self, homogeneous: bool) -> None: ...
     def set_row_spacing(self, spacing: int) -> None: ...
 
@@ -23398,7 +23782,10 @@ class HBox(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -23407,21 +23794,21 @@ class HBox(Box):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -23445,7 +23832,7 @@ class HBox(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -23658,7 +24045,10 @@ class HButtonBox(ButtonBox):
     """
     @type_check_only
     class Props(ButtonBox.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -23667,22 +24057,22 @@ class HButtonBox(ButtonBox):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
-        layout_style: ButtonBoxStyle = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        layout_style: _ButtonBoxStyleValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -23706,7 +24096,7 @@ class HButtonBox(ButtonBox):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -23927,7 +24317,10 @@ class HPaned(Paned):
     """
     @type_check_only
     class Props(Paned.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -23936,21 +24329,21 @@ class HPaned(Paned):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -23974,7 +24367,7 @@ class HPaned(Paned):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -24174,10 +24567,10 @@ class HSV(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -24201,14 +24594,14 @@ class HSV(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     def do_changed(self) -> None: ...
-    def do_move(self, type: DirectionType) -> None: ...
+    def do_move(self, type: _DirectionTypeValueType) -> None: ...
     def get_color(self) -> tuple[float, float, float]: ...
     def get_metrics(self) -> tuple[int, int]: ...
     def is_adjusting(self) -> bool: ...
@@ -24232,7 +24625,7 @@ class HSVClass(_gi.Struct):
     @property
     def changed(self) -> Callable[[HSV], None]: ...
     @property
-    def move(self) -> Callable[[HSV, DirectionType], None]: ...
+    def move(self) -> Callable[[HSV, _DirectionTypeValueType], None]: ...
 
 class HSVPrivate(_gi.Struct): ...
 
@@ -24441,7 +24834,10 @@ class HScale(Scale):
     """
     @type_check_only
     class Props(Scale.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -24450,27 +24846,27 @@ class HScale(Scale):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         digits: int = ...,
         draw_value: bool = ...,
         has_origin: bool = ...,
-        value_pos: PositionType = ...,
+        value_pos: _PositionTypeValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -24494,7 +24890,7 @@ class HScale(Scale):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -24707,7 +25103,10 @@ class HScrollbar(Scrollbar):
     """
     @type_check_only
     class Props(Scrollbar.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -24716,23 +25115,23 @@ class HScrollbar(Scrollbar):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -24756,7 +25155,7 @@ class HScrollbar(Scrollbar):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -24943,7 +25342,10 @@ class HSeparator(Separator):
     """
     @type_check_only
     class Props(Separator.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -24952,15 +25354,15 @@ class HSeparator(Separator):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -24984,7 +25386,7 @@ class HSeparator(Separator):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -25203,9 +25605,18 @@ class HandleBox(Bin):
     class Props(Bin.Props):
         @property
         def child_detached(self) -> bool: ...
-        handle_position: PositionType
-        shadow_type: ShadowType
-        snap_edge: PositionType
+        @property
+        def handle_position(self) -> PositionType: ...
+        @handle_position.setter
+        def handle_position(self, value: _PositionTypeValueType) -> None: ...
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
+        @property
+        def snap_edge(self) -> PositionType: ...
+        @snap_edge.setter
+        def snap_edge(self, value: _PositionTypeValueType) -> None: ...
         snap_edge_set: bool
 
     @property
@@ -25217,21 +25628,21 @@ class HandleBox(Bin):
     def __init__(
         self,
         *,
-        handle_position: PositionType = ...,
-        shadow_type: ShadowType = ...,
-        snap_edge: PositionType = ...,
+        handle_position: _PositionTypeValueType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
+        snap_edge: _PositionTypeValueType = ...,
         snap_edge_set: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -25255,7 +25666,7 @@ class HandleBox(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -25269,9 +25680,9 @@ class HandleBox(Bin):
     def get_snap_edge(self) -> PositionType: ...
     @classmethod
     def new(cls) -> HandleBox: ...
-    def set_handle_position(self, position: PositionType) -> None: ...
-    def set_shadow_type(self, type: ShadowType) -> None: ...
-    def set_snap_edge(self, edge: PositionType) -> None: ...
+    def set_handle_position(self, position: _PositionTypeValueType) -> None: ...
+    def set_shadow_type(self, type: _ShadowTypeValueType) -> None: ...
+    def set_snap_edge(self, edge: _PositionTypeValueType) -> None: ...
 
 class HandleBoxClass(_gi.Struct):
     """
@@ -25490,7 +25901,10 @@ class HeaderBar(Container):
     @type_check_only
     class Props(Container.Props):
         custom_title: Widget | None
-        decoration_layout: str | None
+        @property
+        def decoration_layout(self) -> str: ...
+        @decoration_layout.setter
+        def decoration_layout(self, value: str | None) -> None: ...
         decoration_layout_set: bool
         has_subtitle: bool
         show_close_button: bool
@@ -25514,16 +25928,16 @@ class HeaderBar(Container):
         subtitle: str | None = ...,
         title: str | None = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -25547,7 +25961,7 @@ class HeaderBar(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -25649,19 +26063,19 @@ class HeaderBarAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -25720,15 +26134,24 @@ class IMContext(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        input_hints: InputHints
-        input_purpose: InputPurpose
+        @property
+        def input_hints(self) -> InputHints: ...
+        @input_hints.setter
+        def input_hints(self, value: _InputHintsValueType) -> None: ...
+        @property
+        def input_purpose(self) -> InputPurpose: ...
+        @input_purpose.setter
+        def input_purpose(self, value: _InputPurposeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     @property
     def parent_instance(self) -> GObject.Object: ...
     def __init__(
-        self, *, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
+        self,
+        *,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
     ) -> None: ...
     def delete_surrounding(self, offset: int, n_chars: int) -> bool: ...
     def do_commit(self, str: str) -> None: ...
@@ -25851,7 +26274,10 @@ class IMContextSimple(IMContext):
     @property
     def priv(self) -> IMContextSimplePrivate: ...
     def __init__(
-        self, *, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
+        self,
+        *,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
     ) -> None: ...
     def add_compose_file(self, compose_file: str) -> None: ...
     @classmethod
@@ -25903,7 +26329,10 @@ class IMMulticontext(IMContext):
     @property
     def priv(self) -> IMMulticontextPrivate: ...
     def __init__(
-        self, *, input_hints: InputHints = ..., input_purpose: InputPurpose = ...
+        self,
+        *,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
     ) -> None: ...
     def append_menuitems(self, menushell: MenuShell) -> None: ...
     def get_context_id(self) -> str: ...
@@ -26041,7 +26470,7 @@ class IconInfo(GObject.Object):
         self, res: Gio.AsyncResult
     ) -> tuple[GdkPixbuf.Pixbuf, bool]: ...
     def load_symbolic_for_style(
-        self, style: Style, state: StateType
+        self, style: Style, state: _StateTypeValueType
     ) -> tuple[GdkPixbuf.Pixbuf, bool]: ...
     @classmethod
     def new_for_pixbuf(
@@ -26074,8 +26503,8 @@ class IconSet(GObject.GBoxed):
     def render_icon(
         self,
         style: Style | None,
-        direction: TextDirection,
-        state: StateType,
+        direction: _TextDirectionValueType,
+        state: _StateTypeValueType,
         size: int,
         widget: Widget | None = None,
         detail: str | None = None,
@@ -26114,14 +26543,14 @@ class IconSource(GObject.GBoxed):
     def get_state_wildcarded(self) -> bool: ...
     @classmethod
     def new(cls) -> IconSource: ...
-    def set_direction(self, direction: TextDirection) -> None: ...
+    def set_direction(self, direction: _TextDirectionValueType) -> None: ...
     def set_direction_wildcarded(self, setting: bool) -> None: ...
     def set_filename(self, filename: str) -> None: ...
     def set_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> None: ...
     def set_size(self, size: int) -> None: ...
     def set_size_wildcarded(self, setting: bool) -> None: ...
-    def set_state(self, state: StateType) -> None: ...
+    def set_state(self, state: _StateTypeValueType) -> None: ...
     def set_state_wildcarded(self, setting: bool) -> None: ...
 
 class IconTheme(GObject.Object):
@@ -26152,10 +26581,14 @@ class IconTheme(GObject.Object):
     def add_resource_path(self, path: str) -> None: ...
     def append_search_path(self, path: str) -> None: ...
     def choose_icon(
-        self, icon_names: Sequence[str], size: int, flags: IconLookupFlags
+        self, icon_names: Sequence[str], size: int, flags: _IconLookupFlagsValueType
     ) -> IconInfo | None: ...
     def choose_icon_for_scale(
-        self, icon_names: Sequence[str], size: int, scale: int, flags: IconLookupFlags
+        self,
+        icon_names: Sequence[str],
+        size: int,
+        scale: int,
+        flags: _IconLookupFlagsValueType,
     ) -> IconInfo | None: ...
     def do_changed(self) -> None: ...
     @staticmethod
@@ -26169,10 +26602,10 @@ class IconTheme(GObject.Object):
     def list_contexts(self) -> list[str]: ...
     def list_icons(self, context: str | None = None) -> list[str]: ...
     def load_icon(
-        self, icon_name: str, size: int, flags: IconLookupFlags
+        self, icon_name: str, size: int, flags: _IconLookupFlagsValueType
     ) -> GdkPixbuf.Pixbuf | None: ...
     def load_icon_for_scale(
-        self, icon_name: str, size: int, scale: int, flags: IconLookupFlags
+        self, icon_name: str, size: int, scale: int, flags: _IconLookupFlagsValueType
     ) -> GdkPixbuf.Pixbuf | None: ...
     # override
     def load_surface(
@@ -26184,16 +26617,16 @@ class IconTheme(GObject.Object):
         flags: IconLookupFlags,
     ) -> cairo.ImageSurface | None: ...
     def lookup_by_gicon(
-        self, icon: Gio.Icon, size: int, flags: IconLookupFlags
+        self, icon: Gio.Icon, size: int, flags: _IconLookupFlagsValueType
     ) -> IconInfo | None: ...
     def lookup_by_gicon_for_scale(
-        self, icon: Gio.Icon, size: int, scale: int, flags: IconLookupFlags
+        self, icon: Gio.Icon, size: int, scale: int, flags: _IconLookupFlagsValueType
     ) -> IconInfo | None: ...
     def lookup_icon(
-        self, icon_name: str, size: int, flags: IconLookupFlags
+        self, icon_name: str, size: int, flags: _IconLookupFlagsValueType
     ) -> IconInfo | None: ...
     def lookup_icon_for_scale(
-        self, icon_name: str, size: int, scale: int, flags: IconLookupFlags
+        self, icon_name: str, size: int, scale: int, flags: _IconLookupFlagsValueType
     ) -> IconInfo | None: ...
     @classmethod
     def new(cls) -> IconTheme: ...
@@ -26449,10 +26882,13 @@ class IconView(Container, CellLayout, Scrollable):
     class Props(Container.Props):
         activate_on_single_click: bool
         @property
-        def cell_area(self) -> CellArea: ...
+        def cell_area(self) -> CellArea | None: ...
         column_spacing: int
         columns: int
-        item_orientation: Orientation
+        @property
+        def item_orientation(self) -> Orientation: ...
+        @item_orientation.setter
+        def item_orientation(self, value: _OrientationValueType) -> None: ...
         item_padding: int
         item_width: int
         margin: int
@@ -26461,14 +26897,29 @@ class IconView(Container, CellLayout, Scrollable):
         pixbuf_column: int
         reorderable: bool
         row_spacing: int
-        selection_mode: SelectionMode
+        @property
+        def selection_mode(self) -> SelectionMode: ...
+        @selection_mode.setter
+        def selection_mode(self, value: _SelectionModeValueType) -> None: ...
         spacing: int
         text_column: int
         tooltip_column: int
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -26480,10 +26931,10 @@ class IconView(Container, CellLayout, Scrollable):
         self,
         *,
         activate_on_single_click: bool = ...,
-        cell_area: CellArea = ...,
+        cell_area: CellArea | None = ...,
         column_spacing: int = ...,
         columns: int = ...,
-        item_orientation: Orientation = ...,
+        item_orientation: _OrientationValueType = ...,
         item_padding: int = ...,
         item_width: int = ...,
         margin: int = ...,
@@ -26492,25 +26943,25 @@ class IconView(Container, CellLayout, Scrollable):
         pixbuf_column: int = ...,
         reorderable: bool = ...,
         row_spacing: int = ...,
-        selection_mode: SelectionMode = ...,
+        selection_mode: _SelectionModeValueType = ...,
         spacing: int = ...,
         text_column: int = ...,
         tooltip_column: int = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -26533,7 +26984,7 @@ class IconView(Container, CellLayout, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -26545,20 +26996,20 @@ class IconView(Container, CellLayout, Scrollable):
     def create_drag_icon(self, path: TreePath) -> cairo.Surface: ...
     def do_activate_cursor_item(self) -> bool: ...
     def do_item_activated(self, path: TreePath) -> None: ...
-    def do_move_cursor(self, step: MovementStep, count: int) -> bool: ...
+    def do_move_cursor(self, step: _MovementStepValueType, count: int) -> bool: ...
     def do_select_all(self) -> None: ...
     def do_select_cursor_item(self) -> None: ...
     def do_selection_changed(self) -> None: ...
     def do_toggle_cursor_item(self) -> None: ...
     def do_unselect_all(self) -> None: ...
     def enable_model_drag_dest(
-        self, targets: Sequence[TargetEntry], actions: _Gdk3.DragAction
+        self, targets: Sequence[TargetEntry], actions: _Gdk3._DragActionValueType
     ) -> None: ...
     def enable_model_drag_source(
         self,
-        start_button_mask: _Gdk3.ModifierType,
+        start_button_mask: _Gdk3._ModifierTypeValueType,
         targets: Sequence[TargetEntry],
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
     ) -> None: ...
     def get_activate_on_single_click(self) -> bool: ...
     def get_cell_rect(
@@ -26622,9 +27073,9 @@ class IconView(Container, CellLayout, Scrollable):
         self, path: TreePath, cell: CellRenderer | None, start_editing: bool
     ) -> None: ...
     def set_drag_dest_item(
-        self, path: TreePath | None, pos: IconViewDropPosition
+        self, path: TreePath | None, pos: _IconViewDropPositionValueType
     ) -> None: ...
-    def set_item_orientation(self, orientation: Orientation) -> None: ...
+    def set_item_orientation(self, orientation: _OrientationValueType) -> None: ...
     def set_item_padding(self, item_padding: int) -> None: ...
     def set_item_width(self, item_width: int) -> None: ...
     def set_margin(self, margin: int) -> None: ...
@@ -26633,7 +27084,7 @@ class IconView(Container, CellLayout, Scrollable):
     def set_pixbuf_column(self, column: int) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
     def set_row_spacing(self, row_spacing: int) -> None: ...
-    def set_selection_mode(self, mode: SelectionMode) -> None: ...
+    def set_selection_mode(self, mode: _SelectionModeValueType) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
     def set_text_column(self, column: int) -> None: ...
     def set_tooltip_cell(
@@ -26730,19 +27181,19 @@ class IconViewAccessible(ContainerAccessible, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -26782,7 +27233,9 @@ class IconViewClass(_gi.Struct):
     @property
     def toggle_cursor_item(self) -> Callable[[IconView], None]: ...
     @property
-    def move_cursor(self) -> Callable[[IconView, MovementStep, int], bool]: ...
+    def move_cursor(
+        self,
+    ) -> Callable[[IconView, _MovementStepValueType, int], bool]: ...
     @property
     def activate_cursor_item(self) -> Callable[[IconView], bool]: ...
 
@@ -27002,19 +27455,31 @@ class Image(Misc):
     """
     @type_check_only
     class Props(Misc.Props):
-        file: str
-        gicon: Gio.Icon
-        icon_name: str
-        icon_set: IconSet
+        file: str | None
+        @property
+        def gicon(self) -> Gio.Icon: ...
+        @gicon.setter
+        def gicon(self, value: Gio.Icon | None) -> None: ...
+        @property
+        def icon_name(self) -> str: ...
+        @icon_name.setter
+        def icon_name(self, value: str | None) -> None: ...
+        @property
+        def icon_set(self) -> IconSet: ...
+        @icon_set.setter
+        def icon_set(self, value: IconSet | None) -> None: ...
         icon_size: int
         pixbuf: GdkPixbuf.Pixbuf | None
-        pixbuf_animation: GdkPixbuf.PixbufAnimation
+        pixbuf_animation: GdkPixbuf.PixbufAnimation | None
         pixel_size: int
-        resource: str
-        stock: str
+        resource: str | None
+        @property
+        def stock(self) -> str: ...
+        @stock.setter
+        def stock(self, value: str | None) -> None: ...
         @property
         def storage_type(self) -> ImageType: ...
-        surface: cairo.Surface
+        surface: cairo.Surface | None
         use_fallback: bool
 
     @property
@@ -27026,17 +27491,17 @@ class Image(Misc):
     def __init__(
         self,
         *,
-        file: str = ...,
-        gicon: Gio.Icon = ...,
-        icon_name: str = ...,
-        icon_set: IconSet = ...,
+        file: str | None = ...,
+        gicon: Gio.Icon | None = ...,
+        icon_name: str | None = ...,
+        icon_set: IconSet | None = ...,
         icon_size: int = ...,
-        pixbuf: GdkPixbuf.Pixbuf = ...,
-        pixbuf_animation: GdkPixbuf.PixbufAnimation = ...,
+        pixbuf: GdkPixbuf.Pixbuf | None = ...,
+        pixbuf_animation: GdkPixbuf.PixbufAnimation | None = ...,
         pixel_size: int = ...,
-        resource: str = ...,
-        stock: str = ...,
-        surface: cairo.Surface = ...,
+        resource: str | None = ...,
+        stock: str | None = ...,
+        surface: cairo.Surface | None = ...,
         use_fallback: bool = ...,
         xalign: float = ...,
         xpad: int = ...,
@@ -27046,10 +27511,10 @@ class Image(Misc):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -27073,7 +27538,7 @@ class Image(Misc):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -27197,19 +27662,19 @@ class ImageAccessible(WidgetAccessible, Atk.Image):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -27310,21 +27775,21 @@ class ImageCellAccessible(RendererCellAccessible, Atk.Image):
     def __init__(
         self,
         *,
-        renderer: CellRenderer = ...,
+        renderer: CellRenderer | None = ...,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -27566,12 +28031,21 @@ class ImageMenuItem(MenuItem):
     """
     @type_check_only
     class Props(MenuItem.Props):
-        accel_group: AccelGroup
+        @property
+        def accel_group(self) -> Never: ...
+        @accel_group.setter
+        def accel_group(self, value: AccelGroup) -> None: ...
         always_show_image: bool
-        image: Widget | None
+        @property
+        def image(self) -> Widget: ...
+        @image.setter
+        def image(self, value: Widget | None) -> None: ...
         use_stock: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -27598,16 +28072,16 @@ class ImageMenuItem(MenuItem):
         submenu: Menu | None = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -27631,7 +28105,7 @@ class ImageMenuItem(MenuItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -27870,10 +28344,16 @@ class InfoBar(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        message_type: MessageType
+        @property
+        def message_type(self) -> MessageType: ...
+        @message_type.setter
+        def message_type(self, value: _MessageTypeValueType) -> None: ...
         revealed: bool
         show_close_button: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -27884,24 +28364,24 @@ class InfoBar(Box):
     def __init__(
         self,
         *,
-        message_type: MessageType = ...,
+        message_type: _MessageTypeValueType = ...,
         revealed: bool = ...,
         show_close_button: bool = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -27925,7 +28405,7 @@ class InfoBar(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -27944,7 +28424,7 @@ class InfoBar(Box):
     def new(cls) -> InfoBar: ...
     def response(self, response_id: int) -> None: ...
     def set_default_response(self, response_id: int) -> None: ...
-    def set_message_type(self, message_type: MessageType) -> None: ...
+    def set_message_type(self, message_type: _MessageTypeValueType) -> None: ...
     def set_response_sensitive(self, response_id: int, setting: bool) -> None: ...
     def set_revealed(self, revealed: bool) -> None: ...
     def set_show_close_button(self, setting: bool) -> None: ...
@@ -28154,10 +28634,10 @@ class Invisible(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -28181,7 +28661,7 @@ class Invisible(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -28442,15 +28922,24 @@ class Label(Misc):
         attributes: Pango.AttrList | None
         @property
         def cursor_position(self) -> int: ...
-        ellipsize: Pango.EllipsizeMode
-        justify: Justification
+        @property
+        def ellipsize(self) -> Pango.EllipsizeMode: ...
+        @ellipsize.setter
+        def ellipsize(self, value: Pango._EllipsizeModeValueType) -> None: ...
+        @property
+        def justify(self) -> Justification: ...
+        @justify.setter
+        def justify(self, value: _JustificationValueType) -> None: ...
         label: str
         lines: int
         max_width_chars: int
         @property
         def mnemonic_keyval(self) -> int: ...
         mnemonic_widget: Widget | None
-        pattern: str
+        @property
+        def pattern(self) -> Never: ...
+        @pattern.setter
+        def pattern(self, value: str) -> None: ...
         selectable: bool
         @property
         def selection_bound(self) -> int: ...
@@ -28460,7 +28949,10 @@ class Label(Misc):
         use_underline: bool
         width_chars: int
         wrap: bool
-        wrap_mode: Pango.WrapMode
+        @property
+        def wrap_mode(self) -> Pango.WrapMode: ...
+        @wrap_mode.setter
+        def wrap_mode(self, value: Pango._WrapModeValueType) -> None: ...
         xalign: float
         yalign: float
 
@@ -28475,8 +28967,8 @@ class Label(Misc):
         *,
         angle: float = ...,
         attributes: Pango.AttrList | None = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
-        justify: Justification = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
+        justify: _JustificationValueType = ...,
         label: str = ...,
         lines: int = ...,
         max_width_chars: int = ...,
@@ -28489,7 +28981,7 @@ class Label(Misc):
         use_underline: bool = ...,
         width_chars: int = ...,
         wrap: bool = ...,
-        wrap_mode: Pango.WrapMode = ...,
+        wrap_mode: Pango._WrapModeValueType = ...,
         xalign: float = ...,
         yalign: float = ...,
         xpad: int = ...,
@@ -28498,10 +28990,10 @@ class Label(Misc):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -28525,7 +29017,7 @@ class Label(Misc):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -28534,7 +29026,7 @@ class Label(Misc):
     def do_activate_link(self, uri: str) -> bool: ...
     def do_copy_clipboard(self) -> None: ...
     def do_move_cursor(
-        self, step: MovementStep, count: int, extend_selection: bool
+        self, step: _MovementStepValueType, count: int, extend_selection: bool
     ) -> None: ...
     def do_populate_popup(self, menu: Menu) -> None: ...
     def get_angle(self) -> float: ...
@@ -28568,11 +29060,11 @@ class Label(Misc):
     def select_region(self, start_offset: int, end_offset: int) -> None: ...
     def set_angle(self, angle: float) -> None: ...
     def set_attributes(self, attrs: Pango.AttrList | None = None) -> None: ...
-    def set_ellipsize(self, mode: Pango.EllipsizeMode) -> None: ...
-    def set_justify(self, jtype: Justification) -> None: ...
+    def set_ellipsize(self, mode: Pango._EllipsizeModeValueType) -> None: ...
+    def set_justify(self, jtype: _JustificationValueType) -> None: ...
     def set_label(self, str: str) -> None: ...
     def set_line_wrap(self, wrap: bool) -> None: ...
-    def set_line_wrap_mode(self, wrap_mode: Pango.WrapMode) -> None: ...
+    def set_line_wrap_mode(self, wrap_mode: Pango._WrapModeValueType) -> None: ...
     def set_lines(self, lines: int) -> None: ...
     def set_markup(self, str: str) -> None: ...
     def set_markup_with_mnemonic(self, str: str) -> None: ...
@@ -28679,19 +29171,19 @@ class LabelAccessible(WidgetAccessible, Atk.Hypertext, Atk.Text):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -28719,7 +29211,9 @@ class LabelClass(_gi.Struct):
     @property
     def parent_class(self) -> MiscClass: ...
     @property
-    def move_cursor(self) -> Callable[[Label, MovementStep, int, bool], None]: ...
+    def move_cursor(
+        self,
+    ) -> Callable[[Label, _MovementStepValueType, int, bool], None]: ...
     @property
     def copy_clipboard(self) -> Callable[[Label], None]: ...
     @property
@@ -28919,10 +29413,22 @@ class Layout(Container, Scrollable):
     class Props(Container.Props):
         height: int
         width: int
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -28936,20 +29442,20 @@ class Layout(Container, Scrollable):
         height: int = ...,
         width: int = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -28973,7 +29479,7 @@ class Layout(Container, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -29194,9 +29700,15 @@ class LevelBar(Widget, Orientable):
         inverted: bool
         max_value: float
         min_value: float
-        mode: LevelBarMode
+        @property
+        def mode(self) -> LevelBarMode: ...
+        @mode.setter
+        def mode(self, value: _LevelBarModeValueType) -> None: ...
         value: float
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -29210,17 +29722,17 @@ class LevelBar(Widget, Orientable):
         inverted: bool = ...,
         max_value: float = ...,
         min_value: float = ...,
-        mode: LevelBarMode = ...,
+        mode: _LevelBarModeValueType = ...,
         value: float = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -29244,7 +29756,7 @@ class LevelBar(Widget, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -29266,7 +29778,7 @@ class LevelBar(Widget, Orientable):
     def set_inverted(self, inverted: bool) -> None: ...
     def set_max_value(self, value: float) -> None: ...
     def set_min_value(self, value: float) -> None: ...
-    def set_mode(self, mode: LevelBarMode) -> None: ...
+    def set_mode(self, mode: _LevelBarModeValueType) -> None: ...
     def set_value(self, value: float) -> None: ...
 
 class LevelBarAccessible(WidgetAccessible, Atk.Value):
@@ -29350,19 +29862,19 @@ class LevelBarAccessible(WidgetAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -29618,7 +30130,10 @@ class LinkButton(Button):
         uri: str
         visited: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -29639,24 +30154,24 @@ class LinkButton(Button):
         use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -29680,7 +30195,7 @@ class LinkButton(Button):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -29780,19 +30295,19 @@ class LinkButtonAccessible(ButtonAccessible, Atk.HyperlinkImpl):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -30022,7 +30537,10 @@ class ListBox(Container):
     @type_check_only
     class Props(Container.Props):
         activate_on_single_click: bool
-        selection_mode: SelectionMode
+        @property
+        def selection_mode(self) -> SelectionMode: ...
+        @selection_mode.setter
+        def selection_mode(self, value: _SelectionModeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -30032,18 +30550,18 @@ class ListBox(Container):
         self,
         *,
         activate_on_single_click: bool = ...,
-        selection_mode: SelectionMode = ...,
+        selection_mode: _SelectionModeValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -30067,7 +30585,7 @@ class ListBox(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -30081,7 +30599,7 @@ class ListBox(Container):
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def do_activate_cursor_row(self) -> None: ...
-    def do_move_cursor(self, step: MovementStep, count: int) -> None: ...
+    def do_move_cursor(self, step: _MovementStepValueType, count: int) -> None: ...
     def do_row_activated(self, row: ListBoxRow) -> None: ...
     def do_row_selected(self, row: ListBoxRow) -> None: ...
     def do_select_all(self) -> None: ...
@@ -30125,7 +30643,7 @@ class ListBox(Container):
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_placeholder(self, placeholder: Widget | None = None) -> None: ...
-    def set_selection_mode(self, mode: SelectionMode) -> None: ...
+    def set_selection_mode(self, mode: _SelectionModeValueType) -> None: ...
     def set_sort_func(
         self,
         sort_func: Callable[[ListBoxRow, ListBoxRow, Unpack[_DataTs]], int]
@@ -30219,19 +30737,19 @@ class ListBoxAccessible(ContainerAccessible, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -30267,7 +30785,7 @@ class ListBoxClass(_gi.Struct):
     @property
     def toggle_cursor_row(self) -> Callable[[ListBox], None]: ...
     @property
-    def move_cursor(self) -> Callable[[ListBox, MovementStep, int], None]: ...
+    def move_cursor(self) -> Callable[[ListBox, _MovementStepValueType, int], None]: ...
     @property
     def selected_rows_changed(self) -> Callable[[ListBox], None]: ...
     @property
@@ -30468,7 +30986,10 @@ class ListBoxRow(Bin, Actionable):
         activatable: bool
         selectable: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -30482,16 +31003,16 @@ class ListBoxRow(Bin, Actionable):
         action_name: str | None = ...,
         action_target: GLib.Variant = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -30515,7 +31036,7 @@ class ListBoxRow(Bin, Actionable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -30613,19 +31134,19 @@ class ListBoxRowAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -30963,14 +31484,20 @@ class LockButton(Button):
     """
     @type_check_only
     class Props(Button.Props):
-        permission: Gio.Permission | None
-        text_lock: str
-        text_unlock: str
-        tooltip_lock: str
-        tooltip_not_authorized: str
-        tooltip_unlock: str
+        @property
+        def permission(self) -> Gio.Permission: ...
+        @permission.setter
+        def permission(self, value: Gio.Permission | None) -> None: ...
+        text_lock: str | None
+        text_unlock: str | None
+        tooltip_lock: str | None
+        tooltip_not_authorized: str | None
+        tooltip_unlock: str | None
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -30984,35 +31511,35 @@ class LockButton(Button):
         self,
         *,
         permission: Gio.Permission | None = ...,
-        text_lock: str = ...,
-        text_unlock: str = ...,
-        tooltip_lock: str = ...,
-        tooltip_not_authorized: str = ...,
-        tooltip_unlock: str = ...,
+        text_lock: str | None = ...,
+        text_unlock: str | None = ...,
+        tooltip_lock: str | None = ...,
+        tooltip_not_authorized: str | None = ...,
+        tooltip_unlock: str | None = ...,
         action_name: str | None = ...,
         action_target: GLib.Variant = ...,
         related_action: Action = ...,
         use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -31036,7 +31563,7 @@ class LockButton(Button):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -31131,19 +31658,19 @@ class LockButtonAccessible(ButtonAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -31415,18 +31942,33 @@ class Menu(MenuShell):
     """
     @type_check_only
     class Props(MenuShell.Props):
-        accel_group: AccelGroup | None
-        accel_path: str | None
+        @property
+        def accel_group(self) -> AccelGroup: ...
+        @accel_group.setter
+        def accel_group(self, value: AccelGroup | None) -> None: ...
+        @property
+        def accel_path(self) -> str: ...
+        @accel_path.setter
+        def accel_path(self, value: str | None) -> None: ...
         active: int
-        anchor_hints: _Gdk3.AnchorHints
-        attach_widget: Widget
-        menu_type_hint: _Gdk3.WindowTypeHint
+        @property
+        def anchor_hints(self) -> _Gdk3.AnchorHints: ...
+        @anchor_hints.setter
+        def anchor_hints(self, value: _Gdk3._AnchorHintsValueType) -> None: ...
+        @property
+        def attach_widget(self) -> Widget: ...
+        @attach_widget.setter
+        def attach_widget(self, value: Widget | None) -> None: ...
+        @property
+        def menu_type_hint(self) -> _Gdk3.WindowTypeHint: ...
+        @menu_type_hint.setter
+        def menu_type_hint(self, value: _Gdk3._WindowTypeHintValueType) -> None: ...
         monitor: int
         rect_anchor_dx: int
         rect_anchor_dy: int
         reserve_toggle_size: bool
         tearoff_state: bool
-        tearoff_title: str
+        tearoff_title: str | None
 
     @property
     def props(self) -> Props: ...
@@ -31440,27 +31982,27 @@ class Menu(MenuShell):
         accel_group: AccelGroup | None = ...,
         accel_path: str | None = ...,
         active: int = ...,
-        anchor_hints: _Gdk3.AnchorHints = ...,
-        attach_widget: Widget = ...,
-        menu_type_hint: _Gdk3.WindowTypeHint = ...,
+        anchor_hints: _Gdk3._AnchorHintsValueType = ...,
+        attach_widget: Widget | None = ...,
+        menu_type_hint: _Gdk3._WindowTypeHintValueType = ...,
         monitor: int = ...,
         rect_anchor_dx: int = ...,
         rect_anchor_dy: int = ...,
         reserve_toggle_size: bool = ...,
         tearoff_state: bool = ...,
-        tearoff_title: str = ...,
+        tearoff_title: str | None = ...,
         take_focus: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -31484,7 +32026,7 @@ class Menu(MenuShell):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -31535,15 +32077,15 @@ class Menu(MenuShell):
         self,
         rect_window: _Gdk3.Window,
         rect: _Gdk3.Rectangle,
-        rect_anchor: _Gdk3.Gravity,
-        menu_anchor: _Gdk3.Gravity,
+        rect_anchor: _Gdk3._GravityValueType,
+        menu_anchor: _Gdk3._GravityValueType,
         trigger_event: _Gdk3.Event | None = None,
     ) -> None: ...
     def popup_at_widget(
         self,
         widget: Widget,
-        widget_anchor: _Gdk3.Gravity,
-        menu_anchor: _Gdk3.Gravity,
+        widget_anchor: _Gdk3._GravityValueType,
+        menu_anchor: _Gdk3._GravityValueType,
         trigger_event: _Gdk3.Event | None = None,
     ) -> None: ...
     def popup_for_device(
@@ -31657,19 +32199,19 @@ class MenuAccessible(MenuShellAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -31888,8 +32430,14 @@ class MenuBar(MenuShell):
     """
     @type_check_only
     class Props(MenuShell.Props):
-        child_pack_direction: PackDirection
-        pack_direction: PackDirection
+        @property
+        def child_pack_direction(self) -> PackDirection: ...
+        @child_pack_direction.setter
+        def child_pack_direction(self, value: _PackDirectionValueType) -> None: ...
+        @property
+        def pack_direction(self) -> PackDirection: ...
+        @pack_direction.setter
+        def pack_direction(self, value: _PackDirectionValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -31900,20 +32448,20 @@ class MenuBar(MenuShell):
     def __init__(
         self,
         *,
-        child_pack_direction: PackDirection = ...,
-        pack_direction: PackDirection = ...,
+        child_pack_direction: _PackDirectionValueType = ...,
+        pack_direction: _PackDirectionValueType = ...,
         take_focus: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -31937,7 +32485,7 @@ class MenuBar(MenuShell):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -31949,8 +32497,10 @@ class MenuBar(MenuShell):
     def new(cls) -> MenuBar: ...
     @classmethod
     def new_from_model(cls, model: Gio.MenuModel) -> MenuBar: ...
-    def set_child_pack_direction(self, child_pack_dir: PackDirection) -> None: ...
-    def set_pack_direction(self, pack_dir: PackDirection) -> None: ...
+    def set_child_pack_direction(
+        self, child_pack_dir: _PackDirectionValueType
+    ) -> None: ...
+    def set_pack_direction(self, pack_dir: _PackDirectionValueType) -> None: ...
 
 class MenuBarClass(_gi.Struct):
     """
@@ -32200,13 +32750,19 @@ class MenuButton(ToggleButton):
     @type_check_only
     class Props(ToggleButton.Props):
         align_widget: Container | None
-        direction: ArrowType
+        @property
+        def direction(self) -> ArrowType: ...
+        @direction.setter
+        def direction(self, value: _ArrowTypeValueType) -> None: ...
         menu_model: Gio.MenuModel | None
         popover: Popover | None
         popup: Menu | None
         use_popover: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -32220,7 +32776,7 @@ class MenuButton(ToggleButton):
         self,
         *,
         align_widget: Container | None = ...,
-        direction: ArrowType = ...,
+        direction: _ArrowTypeValueType = ...,
         menu_model: Gio.MenuModel | None = ...,
         popover: Popover | None = ...,
         popup: Menu | None = ...,
@@ -32234,24 +32790,24 @@ class MenuButton(ToggleButton):
         inconsistent: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -32275,7 +32831,7 @@ class MenuButton(ToggleButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -32290,7 +32846,7 @@ class MenuButton(ToggleButton):
     @classmethod
     def new(cls) -> MenuButton: ...
     def set_align_widget(self, align_widget: Widget | None = None) -> None: ...
-    def set_direction(self, direction: ArrowType) -> None: ...
+    def set_direction(self, direction: _ArrowTypeValueType) -> None: ...
     def set_menu_model(self, menu_model: Gio.MenuModel | None = None) -> None: ...
     def set_popover(self, popover: Widget | None = None) -> None: ...
     def set_popup(self, menu: Widget | None = None) -> None: ...
@@ -32383,19 +32939,19 @@ class MenuButtonAccessible(ToggleButtonAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -32645,7 +33201,10 @@ class MenuItem(Bin, Actionable, Activatable):
         submenu: Menu | None
         use_underline: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -32668,16 +33227,16 @@ class MenuItem(Bin, Actionable, Activatable):
         related_action: Action = ...,
         use_action_appearance: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -32701,7 +33260,7 @@ class MenuItem(Bin, Actionable, Activatable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -32823,19 +33382,19 @@ class MenuItemAccessible(ContainerAccessible, Atk.Action, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -33091,16 +33650,16 @@ class MenuShell(Container):
         *,
         take_focus: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -33124,7 +33683,7 @@ class MenuShell(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -33146,7 +33705,7 @@ class MenuShell(Container):
     def do_deactivate(self) -> None: ...
     def do_get_popup_delay(self) -> int: ...
     def do_insert(self, child: Widget, position: int) -> None: ...
-    def do_move_current(self, direction: MenuDirectionType) -> None: ...
+    def do_move_current(self, direction: _MenuDirectionTypeValueType) -> None: ...
     def do_move_selected(self, distance: int) -> bool: ...
     def do_select_item(self, menu_item: Widget) -> None: ...
     def do_selection_done(self) -> None: ...
@@ -33243,19 +33802,19 @@ class MenuShellAccessible(ContainerAccessible, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -33289,7 +33848,9 @@ class MenuShellClass(_gi.Struct):
     @property
     def selection_done(self) -> Callable[[MenuShell], None]: ...
     @property
-    def move_current(self) -> Callable[[MenuShell, MenuDirectionType], None]: ...
+    def move_current(
+        self,
+    ) -> Callable[[MenuShell, _MenuDirectionTypeValueType], None]: ...
     @property
     def activate_current(self) -> Callable[[MenuShell, bool], None]: ...
     @property
@@ -33525,7 +34086,10 @@ class MenuToolButton(ToolButton):
     class Props(ToolButton.Props):
         menu: Menu
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -33553,16 +34117,16 @@ class MenuToolButton(ToolButton):
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -33586,7 +34150,7 @@ class MenuToolButton(ToolButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -33903,10 +34467,13 @@ class MessageDialog(Dialog):
         image: Widget
         @property
         def message_area(self) -> Widget: ...
-        message_type: MessageType
-        secondary_text: str
+        @property
+        def message_type(self) -> MessageType: ...
+        @message_type.setter
+        def message_type(self, value: _MessageTypeValueType) -> None: ...
+        secondary_text: str | None
         secondary_use_markup: bool
-        text: str
+        text: str | None
         use_markup: bool
 
     @property
@@ -33918,12 +34485,12 @@ class MessageDialog(Dialog):
     def __init__(
         self,
         *,
-        buttons: ButtonsType = ...,
+        buttons: _ButtonsTypeValueType = ...,
         image: Widget = ...,
-        message_type: MessageType = ...,
-        secondary_text: str = ...,
+        message_type: _MessageTypeValueType = ...,
+        secondary_text: str | None = ...,
         secondary_use_markup: bool = ...,
-        text: str = ...,
+        text: str | None = ...,
         use_markup: bool = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
@@ -33936,7 +34503,7 @@ class MessageDialog(Dialog):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -33951,21 +34518,21 @@ class MessageDialog(Dialog):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -33989,7 +34556,7 @@ class MessageDialog(Dialog):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -34215,10 +34782,10 @@ class Misc(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -34242,7 +34809,7 @@ class Misc(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -34497,15 +35064,21 @@ class ModelButton(Button):
     class Props(Button.Props):
         active: bool
         centered: bool
-        icon: Gio.Icon
+        icon: Gio.Icon | None
         iconic: bool
         inverted: bool
-        menu_name: str
-        role: ButtonRole
-        text: str
+        menu_name: str | None
+        @property
+        def role(self) -> ButtonRole: ...
+        @role.setter
+        def role(self, value: _ButtonRoleValueType) -> None: ...
+        text: str | None
         use_markup: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -34516,12 +35089,12 @@ class ModelButton(Button):
         *,
         active: bool = ...,
         centered: bool = ...,
-        icon: Gio.Icon = ...,
+        icon: Gio.Icon | None = ...,
         iconic: bool = ...,
         inverted: bool = ...,
-        menu_name: str = ...,
-        role: ButtonRole = ...,
-        text: str = ...,
+        menu_name: str | None = ...,
+        role: _ButtonRoleValueType = ...,
+        text: str | None = ...,
         use_markup: bool = ...,
         action_name: str | None = ...,
         action_target: GLib.Variant = ...,
@@ -34529,24 +35102,24 @@ class ModelButton(Button):
         use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -34570,7 +35143,7 @@ class ModelButton(Button):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -34624,7 +35197,10 @@ class MountOperation(Gio.MountOperation):
     class Props(Gio.MountOperation.Props):
         @property
         def is_showing(self) -> bool: ...
-        parent: Window | None
+        @property
+        def parent(self) -> Window: ...
+        @parent.setter
+        def parent(self, value: Window | None) -> None: ...
         screen: _Gdk3.Screen
 
     @property
@@ -34644,7 +35220,7 @@ class MountOperation(Gio.MountOperation):
         is_tcrypt_hidden_volume: bool = ...,
         is_tcrypt_system_volume: bool = ...,
         password: str | None = ...,
-        password_save: Gio.PasswordSave = ...,
+        password_save: Gio._PasswordSaveValueType = ...,
         pim: int = ...,
         username: str | None = ...,
     ) -> None: ...
@@ -34698,7 +35274,10 @@ class NativeDialog(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         modal: bool
-        title: str | None
+        @property
+        def title(self) -> str | None: ...
+        @title.setter
+        def title(self, value: str) -> None: ...
         transient_for: Window | None
         visible: bool
 
@@ -34961,7 +35540,10 @@ class Notebook(Container):
         scrollable: bool
         show_border: bool
         show_tabs: bool
-        tab_pos: PositionType
+        @property
+        def tab_pos(self) -> PositionType: ...
+        @tab_pos.setter
+        def tab_pos(self, value: _PositionTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -34978,18 +35560,18 @@ class Notebook(Container):
         scrollable: bool = ...,
         show_border: bool = ...,
         show_tabs: bool = ...,
-        tab_pos: PositionType = ...,
+        tab_pos: _PositionTypeValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -35013,7 +35595,7 @@ class Notebook(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -35028,18 +35610,20 @@ class Notebook(Container):
     ) -> int: ...
     def detach_tab(self, child: Widget) -> None: ...
     def do_change_current_page(self, offset: int) -> bool: ...
-    def do_focus_tab(self, type: NotebookTab) -> bool: ...
+    def do_focus_tab(self, type: _NotebookTabValueType) -> bool: ...
     def do_insert_page(
         self, child: Widget, tab_label: Widget, menu_label: Widget, position: int
     ) -> int: ...
-    def do_move_focus_out(self, direction: DirectionType) -> None: ...
+    def do_move_focus_out(self, direction: _DirectionTypeValueType) -> None: ...
     def do_page_added(self, child: Widget, page_num: int) -> None: ...
     def do_page_removed(self, child: Widget, page_num: int) -> None: ...
     def do_page_reordered(self, child: Widget, page_num: int) -> None: ...
-    def do_reorder_tab(self, direction: DirectionType, move_to_last: bool) -> bool: ...
+    def do_reorder_tab(
+        self, direction: _DirectionTypeValueType, move_to_last: bool
+    ) -> bool: ...
     def do_select_page(self, move_focus: bool) -> bool: ...
     def do_switch_page(self, page: Widget, page_num: int) -> None: ...
-    def get_action_widget(self, pack_type: PackType) -> Widget | None: ...
+    def get_action_widget(self, pack_type: _PackTypeValueType) -> Widget | None: ...
     def get_current_page(self) -> int: ...
     def get_group_name(self) -> str | None: ...
     def get_menu_label(self, child: Widget) -> Widget | None: ...
@@ -35082,7 +35666,9 @@ class Notebook(Container):
     def prev_page(self) -> None: ...
     def remove_page(self, page_num: int) -> None: ...
     def reorder_child(self, child: Widget, position: int) -> None: ...
-    def set_action_widget(self, widget: Widget, pack_type: PackType) -> None: ...
+    def set_action_widget(
+        self, widget: Widget, pack_type: _PackTypeValueType
+    ) -> None: ...
     def set_current_page(self, page_num: int) -> None: ...
     def set_group_name(self, group_name: str | None = None) -> None: ...
     def set_menu_label(
@@ -35095,7 +35681,7 @@ class Notebook(Container):
     def set_tab_detachable(self, child: Widget, detachable: bool) -> None: ...
     def set_tab_label(self, child: Widget, tab_label: Widget | None = None) -> None: ...
     def set_tab_label_text(self, child: Widget, tab_text: str) -> None: ...
-    def set_tab_pos(self, pos: PositionType) -> None: ...
+    def set_tab_pos(self, pos: _PositionTypeValueType) -> None: ...
     def set_tab_reorderable(self, child: Widget, reorderable: bool) -> None: ...
 
 class NotebookAccessible(ContainerAccessible, Atk.Selection):
@@ -35182,19 +35768,19 @@ class NotebookAccessible(ContainerAccessible, Atk.Selection):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -35226,13 +35812,15 @@ class NotebookClass(_gi.Struct):
     @property
     def select_page(self) -> Callable[[Notebook, bool], bool]: ...
     @property
-    def focus_tab(self) -> Callable[[Notebook, NotebookTab], bool]: ...
+    def focus_tab(self) -> Callable[[Notebook, _NotebookTabValueType], bool]: ...
     @property
     def change_current_page(self) -> Callable[[Notebook, int], bool]: ...
     @property
-    def move_focus_out(self) -> Callable[[Notebook, DirectionType], None]: ...
+    def move_focus_out(self) -> Callable[[Notebook, _DirectionTypeValueType], None]: ...
     @property
-    def reorder_tab(self) -> Callable[[Notebook, DirectionType, bool], bool]: ...
+    def reorder_tab(
+        self,
+    ) -> Callable[[Notebook, _DirectionTypeValueType, bool], bool]: ...
     @property
     def insert_page(self) -> Callable[[Notebook, Widget, Widget, Widget, int], int]: ...
     @property
@@ -35315,19 +35903,19 @@ class NotebookPageAccessible(Atk.Object, Atk.Component):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def invalidate(self) -> None: ...
@@ -35380,11 +35968,14 @@ class NumerableIcon(Gio.EmblemedIcon):
     """
     @type_check_only
     class Props(Gio.EmblemedIcon.Props):
-        background_icon: Gio.Icon
+        background_icon: Gio.Icon | None
         background_icon_name: str | None
         count: int
         label: str | None
-        style_context: StyleContext | None
+        @property
+        def style_context(self) -> StyleContext | None: ...
+        @style_context.setter
+        def style_context(self, value: StyleContext) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -35395,12 +35986,12 @@ class NumerableIcon(Gio.EmblemedIcon):
     def __init__(
         self,
         *,
-        background_icon: Gio.Icon = ...,
+        background_icon: Gio.Icon | None = ...,
         background_icon_name: str | None = ...,
         count: int = ...,
         label: str | None = ...,
         style_context: StyleContext = ...,
-        gicon: Gio.Icon = ...,
+        gicon: Gio.Icon | None = ...,
     ) -> None: ...
     def get_background_gicon(self) -> Gio.Icon | None: ...
     def get_background_icon_name(self) -> str | None: ...
@@ -35703,7 +36294,7 @@ class OffscreenWindow(Window):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -35718,21 +36309,21 @@ class OffscreenWindow(Window):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -35756,7 +36347,7 @@ class OffscreenWindow(Window):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -35786,7 +36377,7 @@ class Orientable(GObject.GInterface, Protocol):
       notify (GParam)
     """
     def get_orientation(self) -> Orientation: ...
-    def set_orientation(self, orientation: Orientation) -> None: ...
+    def set_orientation(self, orientation: _OrientationValueType) -> None: ...
 
 class OrientableIface(_gi.Struct):
     """
@@ -35989,16 +36580,16 @@ class Overlay(Bin):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -36022,7 +36613,7 @@ class Overlay(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -36099,26 +36690,31 @@ class PadController(EventController):
     @type_check_only
     class Props(EventController.Props):
         @property
-        def action_group(self) -> Gio.ActionGroup: ...
+        def action_group(self) -> Gio.ActionGroup | None: ...
         @property
-        def pad(self) -> _Gdk3.Device: ...
+        def pad(self) -> _Gdk3.Device | None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        action_group: Gio.ActionGroup = ...,
-        pad: _Gdk3.Device = ...,
-        propagation_phase: PropagationPhase = ...,
-        widget: Widget = ...,
+        action_group: Gio.ActionGroup | None = ...,
+        pad: _Gdk3.Device | None = ...,
+        propagation_phase: _PropagationPhaseValueType = ...,
+        widget: Widget | None = ...,
     ) -> None: ...
     @classmethod
     def new(
         cls, window: Window, group: Gio.ActionGroup, pad: _Gdk3.Device | None = None
     ) -> PadController: ...
     def set_action(
-        self, type: PadActionType, index: int, mode: int, label: str, action_name: str
+        self,
+        type: _PadActionTypeValueType,
+        index: int,
+        mode: int,
+        label: str,
+        action_name: str,
     ) -> None: ...
     def set_action_entries(self, entries: Sequence[PadActionEntry]) -> None: ...
 
@@ -36154,16 +36750,16 @@ class PageSetup(GObject.Object):
       notify (GParam)
     """
     def copy(self) -> PageSetup: ...
-    def get_bottom_margin(self, unit: Unit) -> float: ...
-    def get_left_margin(self, unit: Unit) -> float: ...
+    def get_bottom_margin(self, unit: _UnitValueType) -> float: ...
+    def get_left_margin(self, unit: _UnitValueType) -> float: ...
     def get_orientation(self) -> PageOrientation: ...
-    def get_page_height(self, unit: Unit) -> float: ...
-    def get_page_width(self, unit: Unit) -> float: ...
-    def get_paper_height(self, unit: Unit) -> float: ...
+    def get_page_height(self, unit: _UnitValueType) -> float: ...
+    def get_page_width(self, unit: _UnitValueType) -> float: ...
+    def get_paper_height(self, unit: _UnitValueType) -> float: ...
     def get_paper_size(self) -> PaperSize: ...
-    def get_paper_width(self, unit: Unit) -> float: ...
-    def get_right_margin(self, unit: Unit) -> float: ...
-    def get_top_margin(self, unit: Unit) -> float: ...
+    def get_paper_width(self, unit: _UnitValueType) -> float: ...
+    def get_right_margin(self, unit: _UnitValueType) -> float: ...
+    def get_top_margin(self, unit: _UnitValueType) -> float: ...
     def load_file(self, file_name: str) -> bool: ...
     def load_key_file(
         self, key_file: GLib.KeyFile, group_name: str | None = None
@@ -36178,13 +36774,13 @@ class PageSetup(GObject.Object):
     def new_from_key_file(
         cls, key_file: GLib.KeyFile, group_name: str | None = None
     ) -> PageSetup: ...
-    def set_bottom_margin(self, margin: float, unit: Unit) -> None: ...
-    def set_left_margin(self, margin: float, unit: Unit) -> None: ...
-    def set_orientation(self, orientation: PageOrientation) -> None: ...
+    def set_bottom_margin(self, margin: float, unit: _UnitValueType) -> None: ...
+    def set_left_margin(self, margin: float, unit: _UnitValueType) -> None: ...
+    def set_orientation(self, orientation: _PageOrientationValueType) -> None: ...
     def set_paper_size(self, size: PaperSize) -> None: ...
     def set_paper_size_and_default_margins(self, size: PaperSize) -> None: ...
-    def set_right_margin(self, margin: float, unit: Unit) -> None: ...
-    def set_top_margin(self, margin: float, unit: Unit) -> None: ...
+    def set_right_margin(self, margin: float, unit: _UnitValueType) -> None: ...
+    def set_top_margin(self, margin: float, unit: _UnitValueType) -> None: ...
     def to_file(self, file_name: str) -> bool: ...
     def to_gvariant(self) -> GLib.Variant: ...
     def to_key_file(
@@ -36399,7 +36995,10 @@ class Paned(Container, Orientable):
         position: int
         position_set: bool
         wide_handle: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -36413,18 +37012,18 @@ class Paned(Container, Orientable):
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -36448,7 +37047,7 @@ class Paned(Container, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -36460,7 +37059,7 @@ class Paned(Container, Orientable):
     def do_cancel_position(self) -> bool: ...
     def do_cycle_child_focus(self, reverse: bool) -> bool: ...
     def do_cycle_handle_focus(self, reverse: bool) -> bool: ...
-    def do_move_handle(self, scroll: ScrollType) -> bool: ...
+    def do_move_handle(self, scroll: _ScrollTypeValueType) -> bool: ...
     def do_toggle_handle_focus(self) -> bool: ...
     def get_child1(self) -> Widget | None: ...
     def get_child2(self) -> Widget | None: ...
@@ -36468,7 +37067,7 @@ class Paned(Container, Orientable):
     def get_position(self) -> int: ...
     def get_wide_handle(self) -> bool: ...
     @classmethod
-    def new(cls, orientation: Orientation) -> Paned: ...
+    def new(cls, orientation: _OrientationValueType) -> Paned: ...
     # override
     def pack1(
         self, child: Widget, resize: bool = False, shrink: bool = True
@@ -36564,19 +37163,19 @@ class PanedAccessible(ContainerAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -36608,7 +37207,7 @@ class PanedClass(_gi.Struct):
     @property
     def toggle_handle_focus(self) -> Callable[[Paned], bool]: ...
     @property
-    def move_handle(self) -> Callable[[Paned, ScrollType], bool]: ...
+    def move_handle(self) -> Callable[[Paned, _ScrollTypeValueType], bool]: ...
     @property
     def cycle_handle_focus(self) -> Callable[[Paned, bool], bool]: ...
     @property
@@ -36636,17 +37235,17 @@ class PaperSize(GObject.GBoxed):
     def free(self) -> None: ...
     @staticmethod
     def get_default() -> str: ...
-    def get_default_bottom_margin(self, unit: Unit) -> float: ...
-    def get_default_left_margin(self, unit: Unit) -> float: ...
-    def get_default_right_margin(self, unit: Unit) -> float: ...
-    def get_default_top_margin(self, unit: Unit) -> float: ...
+    def get_default_bottom_margin(self, unit: _UnitValueType) -> float: ...
+    def get_default_left_margin(self, unit: _UnitValueType) -> float: ...
+    def get_default_right_margin(self, unit: _UnitValueType) -> float: ...
+    def get_default_top_margin(self, unit: _UnitValueType) -> float: ...
     def get_display_name(self) -> str: ...
-    def get_height(self, unit: Unit) -> float: ...
+    def get_height(self, unit: _UnitValueType) -> float: ...
     def get_name(self) -> str: ...
     @staticmethod
     def get_paper_sizes(include_custom: bool) -> list[PaperSize]: ...
     def get_ppd_name(self) -> str: ...
-    def get_width(self, unit: Unit) -> float: ...
+    def get_width(self, unit: _UnitValueType) -> float: ...
     def is_custom(self) -> bool: ...
     def is_equal(self, size2: PaperSize) -> bool: ...
     def is_ipp(self) -> bool: ...
@@ -36654,7 +37253,12 @@ class PaperSize(GObject.GBoxed):
     def new(cls, name: str | None = None) -> PaperSize: ...
     @classmethod
     def new_custom(
-        cls, name: str, display_name: str, width: float, height: float, unit: Unit
+        cls,
+        name: str,
+        display_name: str,
+        width: float,
+        height: float,
+        unit: _UnitValueType,
     ) -> PaperSize: ...
     @classmethod
     def new_from_gvariant(cls, variant: GLib.Variant) -> PaperSize: ...
@@ -36668,7 +37272,7 @@ class PaperSize(GObject.GBoxed):
     def new_from_ppd(
         cls, ppd_name: str, ppd_display_name: str, width: float, height: float
     ) -> PaperSize: ...
-    def set_size(self, width: float, height: float, unit: Unit) -> None: ...
+    def set_size(self, width: float, height: float, unit: _UnitValueType) -> None: ...
     def to_gvariant(self) -> GLib.Variant: ...
     def to_key_file(self, key_file: GLib.KeyFile, group_name: str) -> None: ...
 
@@ -36932,7 +37536,10 @@ class PlacesSidebar(ScrolledWindow):
     class Props(ScrolledWindow.Props):
         local_only: bool
         location: Gio.File | None
-        open_flags: PlacesOpenFlags
+        @property
+        def open_flags(self) -> PlacesOpenFlags: ...
+        @open_flags.setter
+        def open_flags(self, value: _PlacesOpenFlagsValueType) -> None: ...
         populate_all: bool
         show_connect_to_server: bool
         show_desktop: bool
@@ -36949,7 +37556,7 @@ class PlacesSidebar(ScrolledWindow):
         *,
         local_only: bool = ...,
         location: Gio.File | None = ...,
-        open_flags: PlacesOpenFlags = ...,
+        open_flags: _PlacesOpenFlagsValueType = ...,
         populate_all: bool = ...,
         show_connect_to_server: bool = ...,
         show_desktop: bool = ...,
@@ -36959,7 +37566,7 @@ class PlacesSidebar(ScrolledWindow):
         show_starred_location: bool = ...,
         show_trash: bool = ...,
         hadjustment: Adjustment | None = ...,
-        hscrollbar_policy: PolicyType = ...,
+        hscrollbar_policy: _PolicyTypeValueType = ...,
         kinetic_scrolling: bool = ...,
         max_content_height: int = ...,
         max_content_width: int = ...,
@@ -36968,22 +37575,22 @@ class PlacesSidebar(ScrolledWindow):
         overlay_scrolling: bool = ...,
         propagate_natural_height: bool = ...,
         propagate_natural_width: bool = ...,
-        shadow_type: ShadowType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscrollbar_policy: PolicyType = ...,
-        window_placement: CornerType = ...,
+        vscrollbar_policy: _PolicyTypeValueType = ...,
+        window_placement: _CornerTypeValueType = ...,
         window_placement_set: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -37007,7 +37614,7 @@ class PlacesSidebar(ScrolledWindow):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -37034,7 +37641,7 @@ class PlacesSidebar(ScrolledWindow):
     ) -> None: ...
     def set_local_only(self, local_only: bool) -> None: ...
     def set_location(self, location: Gio.File | None = None) -> None: ...
-    def set_open_flags(self, flags: PlacesOpenFlags) -> None: ...
+    def set_open_flags(self, flags: _PlacesOpenFlagsValueType) -> None: ...
     def set_show_connect_to_server(self, show_connect_to_server: bool) -> None: ...
     def set_show_desktop(self, show_desktop: bool) -> None: ...
     def set_show_enter_location(self, show_enter_location: bool) -> None: ...
@@ -37335,7 +37942,7 @@ class Plug(Window):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -37350,21 +37957,21 @@ class Plug(Window):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -37388,7 +37995,7 @@ class Plug(Window):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -37511,19 +38118,19 @@ class PlugAccessible(WindowAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def get_id(self) -> str: ...
@@ -37755,11 +38362,20 @@ class Popover(Bin):
     """
     @type_check_only
     class Props(Bin.Props):
-        constrain_to: PopoverConstraint
+        @property
+        def constrain_to(self) -> PopoverConstraint: ...
+        @constrain_to.setter
+        def constrain_to(self, value: _PopoverConstraintValueType) -> None: ...
         modal: bool
         pointing_to: _Gdk3.Rectangle
-        position: PositionType
-        relative_to: Widget | None
+        @property
+        def position(self) -> PositionType: ...
+        @position.setter
+        def position(self, value: _PositionTypeValueType) -> None: ...
+        @property
+        def relative_to(self) -> Widget: ...
+        @relative_to.setter
+        def relative_to(self, value: Widget | None) -> None: ...
         transitions_enabled: bool
 
     @property
@@ -37771,23 +38387,23 @@ class Popover(Bin):
     def __init__(
         self,
         *,
-        constrain_to: PopoverConstraint = ...,
+        constrain_to: _PopoverConstraintValueType = ...,
         modal: bool = ...,
         pointing_to: _Gdk3.Rectangle = ...,
-        position: PositionType = ...,
+        position: _PositionTypeValueType = ...,
         relative_to: Widget | None = ...,
         transitions_enabled: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -37811,7 +38427,7 @@ class Popover(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -37836,11 +38452,11 @@ class Popover(Bin):
     ) -> Popover: ...
     def popdown(self) -> None: ...
     def popup(self) -> None: ...
-    def set_constrain_to(self, constraint: PopoverConstraint) -> None: ...
+    def set_constrain_to(self, constraint: _PopoverConstraintValueType) -> None: ...
     def set_default_widget(self, widget: Widget | None = None) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_pointing_to(self, rect: _Gdk3.Rectangle) -> None: ...
-    def set_position(self, position: PositionType) -> None: ...
+    def set_position(self, position: _PositionTypeValueType) -> None: ...
     def set_relative_to(self, relative_to: Widget | None = None) -> None: ...
     def set_transitions_enabled(self, transitions_enabled: bool) -> None: ...
 
@@ -37923,19 +38539,19 @@ class PopoverAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -38167,31 +38783,31 @@ class PopoverMenu(Popover):
     """
     @type_check_only
     class Props(Popover.Props):
-        visible_submenu: str
+        visible_submenu: str | None
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        visible_submenu: str = ...,
-        constrain_to: PopoverConstraint = ...,
+        visible_submenu: str | None = ...,
+        constrain_to: _PopoverConstraintValueType = ...,
         modal: bool = ...,
         pointing_to: _Gdk3.Rectangle = ...,
-        position: PositionType = ...,
+        position: _PositionTypeValueType = ...,
         relative_to: Widget | None = ...,
         transitions_enabled: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -38215,7 +38831,7 @@ class PopoverMenu(Popover):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -38341,15 +38957,27 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         allow_async: bool
         current_page: int
         custom_tab_label: str | None
-        default_page_setup: PageSetup | None
+        @property
+        def default_page_setup(self) -> PageSetup: ...
+        @default_page_setup.setter
+        def default_page_setup(self, value: PageSetup | None) -> None: ...
         embed_page_setup: bool
-        export_filename: str
+        @property
+        def export_filename(self) -> str | None: ...
+        @export_filename.setter
+        def export_filename(self, value: str) -> None: ...
         has_selection: bool
-        job_name: str
+        @property
+        def job_name(self) -> str | None: ...
+        @job_name.setter
+        def job_name(self, value: str) -> None: ...
         n_pages: int
         @property
         def n_pages_to_print(self) -> int: ...
-        print_settings: PrintSettings | None
+        @property
+        def print_settings(self) -> PrintSettings: ...
+        @print_settings.setter
+        def print_settings(self, value: PrintSettings | None) -> None: ...
         show_progress: bool
         @property
         def status(self) -> PrintStatus: ...
@@ -38357,7 +38985,10 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         def status_string(self) -> str: ...
         support_selection: bool
         track_print_status: bool
-        unit: Unit
+        @property
+        def unit(self) -> Unit: ...
+        @unit.setter
+        def unit(self, value: _UnitValueType) -> None: ...
         use_full_page: bool
 
     @property
@@ -38382,13 +39013,13 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
         show_progress: bool = ...,
         support_selection: bool = ...,
         track_print_status: bool = ...,
-        unit: Unit = ...,
+        unit: _UnitValueType = ...,
         use_full_page: bool = ...,
     ) -> None: ...
     def cancel(self) -> None: ...
     def do_begin_print(self, context: PrintContext) -> None: ...
     def do_custom_widget_apply(self, widget: Widget) -> None: ...
-    def do_done(self, result: PrintOperationResult) -> None: ...
+    def do_done(self, result: _PrintOperationResultValueType) -> None: ...
     def do_draw_page(self, context: PrintContext, page_nr: int) -> None: ...
     def do_end_print(self, context: PrintContext) -> None: ...
     def do_paginate(self, context: PrintContext) -> bool: ...
@@ -38416,7 +39047,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     @classmethod
     def new(cls) -> PrintOperation: ...
     def run(
-        self, action: PrintOperationAction, parent: Window | None = None
+        self, action: _PrintOperationActionValueType, parent: Window | None = None
     ) -> PrintOperationResult: ...
     def set_allow_async(self, allow_async: bool) -> None: ...
     def set_current_page(self, current_page: int) -> None: ...
@@ -38436,7 +39067,7 @@ class PrintOperation(GObject.Object, PrintOperationPreview):
     def set_show_progress(self, show_progress: bool) -> None: ...
     def set_support_selection(self, support_selection: bool) -> None: ...
     def set_track_print_status(self, track_status: bool) -> None: ...
-    def set_unit(self, unit: Unit) -> None: ...
+    def set_unit(self, unit: _UnitValueType) -> None: ...
     def set_use_full_page(self, full_page: bool) -> None: ...
 
 class PrintOperationClass(_gi.Struct):
@@ -38450,7 +39081,9 @@ class PrintOperationClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
     @property
-    def done(self) -> Callable[[PrintOperation, PrintOperationResult], None]: ...
+    def done(
+        self,
+    ) -> Callable[[PrintOperation, _PrintOperationResultValueType], None]: ...
     @property
     def begin_print(self) -> Callable[[PrintOperation, PrintContext], None]: ...
     @property
@@ -38550,7 +39183,7 @@ class PrintSettings(GObject.Object):
     def get_finishings(self) -> str: ...
     def get_int(self, key: str) -> int: ...
     def get_int_with_default(self, key: str, def_: int) -> int: ...
-    def get_length(self, key: str, unit: Unit) -> float: ...
+    def get_length(self, key: str, unit: _UnitValueType) -> float: ...
     def get_media_type(self) -> str: ...
     def get_n_copies(self) -> int: ...
     def get_number_up(self) -> int: ...
@@ -38559,9 +39192,9 @@ class PrintSettings(GObject.Object):
     def get_output_bin(self) -> str: ...
     def get_page_ranges(self) -> list[PageRange]: ...
     def get_page_set(self) -> PageSet: ...
-    def get_paper_height(self, unit: Unit) -> float: ...
+    def get_paper_height(self, unit: _UnitValueType) -> float: ...
     def get_paper_size(self) -> PaperSize: ...
-    def get_paper_width(self, unit: Unit) -> float: ...
+    def get_paper_width(self, unit: _UnitValueType) -> float: ...
     def get_print_pages(self) -> PrintPages: ...
     def get_printer(self) -> str: ...
     def get_printer_lpi(self) -> float: ...
@@ -38593,25 +39226,27 @@ class PrintSettings(GObject.Object):
     def set_default_source(self, default_source: str) -> None: ...
     def set_dither(self, dither: str) -> None: ...
     def set_double(self, key: str, value: float) -> None: ...
-    def set_duplex(self, duplex: PrintDuplex) -> None: ...
+    def set_duplex(self, duplex: _PrintDuplexValueType) -> None: ...
     def set_finishings(self, finishings: str) -> None: ...
     def set_int(self, key: str, value: int) -> None: ...
-    def set_length(self, key: str, value: float, unit: Unit) -> None: ...
+    def set_length(self, key: str, value: float, unit: _UnitValueType) -> None: ...
     def set_media_type(self, media_type: str) -> None: ...
     def set_n_copies(self, num_copies: int) -> None: ...
     def set_number_up(self, number_up: int) -> None: ...
-    def set_number_up_layout(self, number_up_layout: NumberUpLayout) -> None: ...
-    def set_orientation(self, orientation: PageOrientation) -> None: ...
+    def set_number_up_layout(
+        self, number_up_layout: _NumberUpLayoutValueType
+    ) -> None: ...
+    def set_orientation(self, orientation: _PageOrientationValueType) -> None: ...
     def set_output_bin(self, output_bin: str) -> None: ...
     def set_page_ranges(self, page_ranges: Sequence[PageRange]) -> None: ...
-    def set_page_set(self, page_set: PageSet) -> None: ...
-    def set_paper_height(self, height: float, unit: Unit) -> None: ...
+    def set_page_set(self, page_set: _PageSetValueType) -> None: ...
+    def set_paper_height(self, height: float, unit: _UnitValueType) -> None: ...
     def set_paper_size(self, paper_size: PaperSize) -> None: ...
-    def set_paper_width(self, width: float, unit: Unit) -> None: ...
-    def set_print_pages(self, pages: PrintPages) -> None: ...
+    def set_paper_width(self, width: float, unit: _UnitValueType) -> None: ...
+    def set_print_pages(self, pages: _PrintPagesValueType) -> None: ...
     def set_printer(self, printer: str) -> None: ...
     def set_printer_lpi(self, lpi: float) -> None: ...
-    def set_quality(self, quality: PrintQuality) -> None: ...
+    def set_quality(self, quality: _PrintQualityValueType) -> None: ...
     def set_resolution(self, resolution: int) -> None: ...
     def set_resolution_xy(self, resolution_x: int, resolution_y: int) -> None: ...
     def set_reverse(self, reverse: bool) -> None: ...
@@ -38805,13 +39440,19 @@ class ProgressBar(Widget, Orientable):
     """
     @type_check_only
     class Props(Widget.Props):
-        ellipsize: Pango.EllipsizeMode
+        @property
+        def ellipsize(self) -> Pango.EllipsizeMode: ...
+        @ellipsize.setter
+        def ellipsize(self, value: Pango._EllipsizeModeValueType) -> None: ...
         fraction: float
         inverted: bool
         pulse_step: float
         show_text: bool
         text: str | None
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -38822,21 +39463,21 @@ class ProgressBar(Widget, Orientable):
     def __init__(
         self,
         *,
-        ellipsize: Pango.EllipsizeMode = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
         fraction: float = ...,
         inverted: bool = ...,
         pulse_step: float = ...,
         show_text: bool = ...,
         text: str | None = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -38860,7 +39501,7 @@ class ProgressBar(Widget, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -38875,7 +39516,7 @@ class ProgressBar(Widget, Orientable):
     @classmethod
     def new(cls) -> ProgressBar: ...
     def pulse(self) -> None: ...
-    def set_ellipsize(self, mode: Pango.EllipsizeMode) -> None: ...
+    def set_ellipsize(self, mode: Pango._EllipsizeModeValueType) -> None: ...
     def set_fraction(self, fraction: float) -> None: ...
     def set_inverted(self, inverted: bool) -> None: ...
     def set_pulse_step(self, fraction: float) -> None: ...
@@ -38963,19 +39604,19 @@ class ProgressBarAccessible(WidgetAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -39080,7 +39721,10 @@ class RadioAction(ToggleAction):
     @type_check_only
     class Props(ToggleAction.Props):
         current_value: int
-        group: RadioAction | None
+        @property
+        def group(self) -> Never: ...
+        @group.setter
+        def group(self, value: RadioAction | None) -> None: ...
         value: int
 
     @property
@@ -39097,14 +39741,14 @@ class RadioAction(ToggleAction):
         value: int = ...,
         active: bool = ...,
         draw_as_radio: bool = ...,
-        action_group: ActionGroup = ...,
+        action_group: ActionGroup | None = ...,
         always_show_image: bool = ...,
         gicon: Gio.Icon = ...,
         hide_if_empty: bool = ...,
         icon_name: str = ...,
         is_important: bool = ...,
         label: str = ...,
-        name: str = ...,
+        name: str | None = ...,
         sensitive: bool = ...,
         short_label: str = ...,
         stock_id: str = ...,
@@ -39393,9 +40037,15 @@ class RadioButton(CheckButton):
     """
     @type_check_only
     class Props(CheckButton.Props):
-        group: RadioButton | None
+        @property
+        def group(self) -> Never: ...
+        @group.setter
+        def group(self, value: RadioButton | None) -> None: ...
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -39418,24 +40068,24 @@ class RadioButton(CheckButton):
         inconsistent: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -39459,7 +40109,7 @@ class RadioButton(CheckButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -39579,19 +40229,19 @@ class RadioButtonAccessible(ToggleButtonAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -39847,9 +40497,15 @@ class RadioMenuItem(CheckMenuItem):
     """
     @type_check_only
     class Props(CheckMenuItem.Props):
-        group: RadioMenuItem | None
+        @property
+        def group(self) -> Never: ...
+        @group.setter
+        def group(self, value: RadioMenuItem | None) -> None: ...
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -39876,16 +40532,16 @@ class RadioMenuItem(CheckMenuItem):
         submenu: Menu | None = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -39909,7 +40565,7 @@ class RadioMenuItem(CheckMenuItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -40036,19 +40692,19 @@ class RadioMenuItemAccessible(CheckMenuItemAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -40304,9 +40960,15 @@ class RadioToolButton(ToggleToolButton):
     """
     @type_check_only
     class Props(ToggleToolButton.Props):
-        group: RadioToolButton | None
+        @property
+        def group(self) -> Never: ...
+        @group.setter
+        def group(self, value: RadioToolButton | None) -> None: ...
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -40333,16 +40995,16 @@ class RadioToolButton(ToggleToolButton):
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -40366,7 +41028,7 @@ class RadioToolButton(ToggleToolButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -40593,12 +41255,25 @@ class Range(Widget, Orientable):
         adjustment: Adjustment
         fill_level: float
         inverted: bool
-        lower_stepper_sensitivity: SensitivityType
+        @property
+        def lower_stepper_sensitivity(self) -> SensitivityType: ...
+        @lower_stepper_sensitivity.setter
+        def lower_stepper_sensitivity(
+            self, value: _SensitivityTypeValueType
+        ) -> None: ...
         restrict_to_fill_level: bool
         round_digits: int
         show_fill_level: bool
-        upper_stepper_sensitivity: SensitivityType
-        orientation: Orientation
+        @property
+        def upper_stepper_sensitivity(self) -> SensitivityType: ...
+        @upper_stepper_sensitivity.setter
+        def upper_stepper_sensitivity(
+            self, value: _SensitivityTypeValueType
+        ) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -40612,20 +41287,20 @@ class Range(Widget, Orientable):
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
-        orientation: Orientation = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -40649,19 +41324,21 @@ class Range(Widget, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     def do_adjust_bounds(self, new_value: float) -> None: ...
-    def do_change_value(self, scroll: ScrollType, new_value: float) -> bool: ...
+    def do_change_value(
+        self, scroll: _ScrollTypeValueType, new_value: float
+    ) -> bool: ...
     def do_get_range_border(self, border_: Border) -> None: ...
     def do_get_range_size_request(
-        self, orientation: Orientation, minimum: int, natural: int
+        self, orientation: _OrientationValueType, minimum: int, natural: int
     ) -> None: ...
-    def do_move_slider(self, scroll: ScrollType) -> None: ...
+    def do_move_slider(self, scroll: _ScrollTypeValueType) -> None: ...
     def do_value_changed(self) -> None: ...
     def get_adjustment(self) -> Adjustment: ...
     def get_fill_level(self) -> float: ...
@@ -40682,14 +41359,18 @@ class Range(Widget, Orientable):
     def set_flippable(self, flippable: bool) -> None: ...
     def set_increments(self, step: float, page: float) -> None: ...
     def set_inverted(self, setting: bool) -> None: ...
-    def set_lower_stepper_sensitivity(self, sensitivity: SensitivityType) -> None: ...
+    def set_lower_stepper_sensitivity(
+        self, sensitivity: _SensitivityTypeValueType
+    ) -> None: ...
     def set_min_slider_size(self, min_size: int) -> None: ...
     def set_range(self, min: float, max: float) -> None: ...
     def set_restrict_to_fill_level(self, restrict_to_fill_level: bool) -> None: ...
     def set_round_digits(self, round_digits: int) -> None: ...
     def set_show_fill_level(self, show_fill_level: bool) -> None: ...
     def set_slider_size_fixed(self, size_fixed: bool) -> None: ...
-    def set_upper_stepper_sensitivity(self, sensitivity: SensitivityType) -> None: ...
+    def set_upper_stepper_sensitivity(
+        self, sensitivity: _SensitivityTypeValueType
+    ) -> None: ...
     def set_value(self, value: float) -> None: ...
 
 class RangeAccessible(WidgetAccessible, Atk.Value):
@@ -40773,19 +41454,19 @@ class RangeAccessible(WidgetAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -40821,15 +41502,15 @@ class RangeClass(_gi.Struct):
     @property
     def adjust_bounds(self) -> Callable[[Range, float], None]: ...
     @property
-    def move_slider(self) -> Callable[[Range, ScrollType], None]: ...
+    def move_slider(self) -> Callable[[Range, _ScrollTypeValueType], None]: ...
     @property
     def get_range_border(self) -> Callable[[Range, Border], None]: ...
     @property
-    def change_value(self) -> Callable[[Range, ScrollType, float], bool]: ...
+    def change_value(self) -> Callable[[Range, _ScrollTypeValueType, float], bool]: ...
     @property
     def get_range_size_request(
         self,
-    ) -> Callable[[Range, Orientation, int, int], None]: ...
+    ) -> Callable[[Range, _OrientationValueType, int, int], None]: ...
 
 class RangePrivate(_gi.Struct): ...
 class RcContext(_gi.Struct): ...
@@ -41000,7 +41681,10 @@ class RecentAction(Action, RecentChooser):
     @type_check_only
     class Props(Action.Props):
         show_numbers: bool
-        filter: RecentFilter | None
+        @property
+        def filter(self) -> RecentFilter: ...
+        @filter.setter
+        def filter(self, value: RecentFilter | None) -> None: ...
         limit: int
         local_only: bool
         select_multiple: bool
@@ -41008,7 +41692,10 @@ class RecentAction(Action, RecentChooser):
         show_not_found: bool
         show_private: bool
         show_tips: bool
-        sort_type: RecentSortType
+        @property
+        def sort_type(self) -> RecentSortType: ...
+        @sort_type.setter
+        def sort_type(self, value: _RecentSortTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -41023,21 +41710,21 @@ class RecentAction(Action, RecentChooser):
         filter: RecentFilter | None = ...,
         limit: int = ...,
         local_only: bool = ...,
-        recent_manager: RecentManager = ...,
+        recent_manager: RecentManager | None = ...,
         select_multiple: bool = ...,
         show_icons: bool = ...,
         show_not_found: bool = ...,
         show_private: bool = ...,
         show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
-        action_group: ActionGroup = ...,
+        sort_type: _RecentSortTypeValueType = ...,
+        action_group: ActionGroup | None = ...,
         always_show_image: bool = ...,
         gicon: Gio.Icon = ...,
         hide_if_empty: bool = ...,
         icon_name: str = ...,
         is_important: bool = ...,
         label: str = ...,
-        name: str = ...,
+        name: str | None = ...,
         sensitive: bool = ...,
         short_label: str = ...,
         stock_id: str = ...,
@@ -41119,7 +41806,7 @@ class RecentChooser(GObject.GInterface, Protocol):
         sort_func: Callable[[RecentInfo, RecentInfo, Unpack[_DataTs]], int],
         *sort_data: Unpack[_DataTs],
     ) -> None: ...
-    def set_sort_type(self, sort_type: RecentSortType) -> None: ...
+    def set_sort_type(self, sort_type: _RecentSortTypeValueType) -> None: ...
     def unselect_all(self) -> None: ...
     def unselect_uri(self, uri: str) -> None: ...
 
@@ -41390,7 +42077,10 @@ class RecentChooserDialog(Dialog, RecentChooser):
     """
     @type_check_only
     class Props(Dialog.Props):
-        filter: RecentFilter | None
+        @property
+        def filter(self) -> RecentFilter: ...
+        @filter.setter
+        def filter(self, value: RecentFilter | None) -> None: ...
         limit: int
         local_only: bool
         select_multiple: bool
@@ -41398,7 +42088,10 @@ class RecentChooserDialog(Dialog, RecentChooser):
         show_not_found: bool
         show_private: bool
         show_tips: bool
-        sort_type: RecentSortType
+        @property
+        def sort_type(self) -> RecentSortType: ...
+        @sort_type.setter
+        def sort_type(self, value: _RecentSortTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -41412,13 +42105,13 @@ class RecentChooserDialog(Dialog, RecentChooser):
         filter: RecentFilter | None = ...,
         limit: int = ...,
         local_only: bool = ...,
-        recent_manager: RecentManager = ...,
+        recent_manager: RecentManager | None = ...,
         select_multiple: bool = ...,
         show_icons: bool = ...,
         show_not_found: bool = ...,
         show_private: bool = ...,
         show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
+        sort_type: _RecentSortTypeValueType = ...,
         use_header_bar: int = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
@@ -41430,7 +42123,7 @@ class RecentChooserDialog(Dialog, RecentChooser):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -41445,21 +42138,21 @@ class RecentChooserDialog(Dialog, RecentChooser):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -41483,7 +42176,7 @@ class RecentChooserDialog(Dialog, RecentChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -41789,7 +42482,10 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         show_numbers: bool
         related_action: Action
         use_action_appearance: bool
-        filter: RecentFilter | None
+        @property
+        def filter(self) -> RecentFilter: ...
+        @filter.setter
+        def filter(self, value: RecentFilter | None) -> None: ...
         limit: int
         local_only: bool
         select_multiple: bool
@@ -41797,7 +42493,10 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         show_not_found: bool
         show_private: bool
         show_tips: bool
-        sort_type: RecentSortType
+        @property
+        def sort_type(self) -> RecentSortType: ...
+        @sort_type.setter
+        def sort_type(self, value: _RecentSortTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -41814,37 +42513,37 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         filter: RecentFilter | None = ...,
         limit: int = ...,
         local_only: bool = ...,
-        recent_manager: RecentManager = ...,
+        recent_manager: RecentManager | None = ...,
         select_multiple: bool = ...,
         show_icons: bool = ...,
         show_not_found: bool = ...,
         show_private: bool = ...,
         show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
+        sort_type: _RecentSortTypeValueType = ...,
         accel_group: AccelGroup | None = ...,
         accel_path: str | None = ...,
         active: int = ...,
-        anchor_hints: _Gdk3.AnchorHints = ...,
-        attach_widget: Widget = ...,
-        menu_type_hint: _Gdk3.WindowTypeHint = ...,
+        anchor_hints: _Gdk3._AnchorHintsValueType = ...,
+        attach_widget: Widget | None = ...,
+        menu_type_hint: _Gdk3._WindowTypeHintValueType = ...,
         monitor: int = ...,
         rect_anchor_dx: int = ...,
         rect_anchor_dy: int = ...,
         reserve_toggle_size: bool = ...,
         tearoff_state: bool = ...,
-        tearoff_title: str = ...,
+        tearoff_title: str | None = ...,
         take_focus: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -41868,7 +42567,7 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -42096,8 +42795,14 @@ class RecentChooserWidget(Box, RecentChooser):
     """
     @type_check_only
     class Props(Box.Props):
-        orientation: Orientation
-        filter: RecentFilter | None
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
+        @property
+        def filter(self) -> RecentFilter: ...
+        @filter.setter
+        def filter(self, value: RecentFilter | None) -> None: ...
         limit: int
         local_only: bool
         select_multiple: bool
@@ -42105,7 +42810,10 @@ class RecentChooserWidget(Box, RecentChooser):
         show_not_found: bool
         show_private: bool
         show_tips: bool
-        sort_type: RecentSortType
+        @property
+        def sort_type(self) -> RecentSortType: ...
+        @sort_type.setter
+        def sort_type(self, value: _RecentSortTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -42116,31 +42824,31 @@ class RecentChooserWidget(Box, RecentChooser):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         filter: RecentFilter | None = ...,
         limit: int = ...,
         local_only: bool = ...,
-        recent_manager: RecentManager = ...,
+        recent_manager: RecentManager | None = ...,
         select_multiple: bool = ...,
         show_icons: bool = ...,
         show_not_found: bool = ...,
         show_private: bool = ...,
         show_tips: bool = ...,
-        sort_type: RecentSortType = ...,
-        baseline_position: BaselinePosition = ...,
+        sort_type: _RecentSortTypeValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -42164,7 +42872,7 @@ class RecentChooserWidget(Box, RecentChooser):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -42223,7 +42931,7 @@ class RecentFilter(GObject.InitiallyUnowned, Buildable):
     def add_application(self, application: str) -> None: ...
     def add_custom(
         self,
-        needed: RecentFilterFlags,
+        needed: _RecentFilterFlagsValueType,
         func: Callable[[RecentFilterInfo, Unpack[_DataTs]], bool],
         *data: Unpack[_DataTs],
     ) -> None: ...
@@ -42310,7 +43018,7 @@ class RecentManager(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def filename(self) -> str: ...
+        def filename(self) -> str | None: ...
         @property
         def size(self) -> int: ...
 
@@ -42320,7 +43028,7 @@ class RecentManager(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> RecentManagerPrivate: ...
-    def __init__(self, *, filename: str = ...) -> None: ...
+    def __init__(self, *, filename: str | None = ...) -> None: ...
     def add_full(self, uri: str, recent_data: RecentData) -> bool: ...
     def add_item(self, uri: str) -> bool: ...
     def do_changed(self) -> None: ...
@@ -42428,7 +43136,7 @@ class RendererCellAccessible(CellAccessible):
     @type_check_only
     class Props(CellAccessible.Props):
         @property
-        def renderer(self) -> CellRenderer: ...
+        def renderer(self) -> CellRenderer | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -42439,21 +43147,21 @@ class RendererCellAccessible(CellAccessible):
     def __init__(
         self,
         *,
-        renderer: CellRenderer = ...,
+        renderer: CellRenderer | None = ...,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     @classmethod
@@ -42698,7 +43406,10 @@ class Revealer(Bin):
         def child_revealed(self) -> bool: ...
         reveal_child: bool
         transition_duration: int
-        transition_type: RevealerTransitionType
+        @property
+        def transition_type(self) -> RevealerTransitionType: ...
+        @transition_type.setter
+        def transition_type(self, value: _RevealerTransitionTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -42709,18 +43420,18 @@ class Revealer(Bin):
         *,
         reveal_child: bool = ...,
         transition_duration: int = ...,
-        transition_type: RevealerTransitionType = ...,
+        transition_type: _RevealerTransitionTypeValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -42744,7 +43455,7 @@ class Revealer(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -42758,7 +43469,9 @@ class Revealer(Bin):
     def new(cls) -> Revealer: ...
     def set_reveal_child(self, reveal_child: bool) -> None: ...
     def set_transition_duration(self, duration: int) -> None: ...
-    def set_transition_type(self, transition: RevealerTransitionType) -> None: ...
+    def set_transition_type(
+        self, transition: _RevealerTransitionTypeValueType
+    ) -> None: ...
 
 class RevealerClass(_gi.Struct):
     """
@@ -42979,8 +43692,14 @@ class Scale(Range):
         digits: int
         draw_value: bool
         has_origin: bool
-        value_pos: PositionType
-        orientation: Orientation
+        @property
+        def value_pos(self) -> PositionType: ...
+        @value_pos.setter
+        def value_pos(self, value: _PositionTypeValueType) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -42994,24 +43713,24 @@ class Scale(Range):
         digits: int = ...,
         draw_value: bool = ...,
         has_origin: bool = ...,
-        value_pos: PositionType = ...,
-        orientation: Orientation = ...,
+        value_pos: _PositionTypeValueType = ...,
+        orientation: _OrientationValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -43035,14 +43754,14 @@ class Scale(Range):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     def add_mark(
-        self, value: float, position: PositionType, markup: str | None = None
+        self, value: float, position: _PositionTypeValueType, markup: str | None = None
     ) -> None: ...
     def clear_marks(self) -> None: ...
     def do_draw_value(self) -> None: ...
@@ -43056,16 +43775,16 @@ class Scale(Range):
     def get_value_pos(self) -> PositionType: ...
     @classmethod
     def new(
-        cls, orientation: Orientation, adjustment: Adjustment | None = None
+        cls, orientation: _OrientationValueType, adjustment: Adjustment | None = None
     ) -> Scale: ...
     @classmethod
     def new_with_range(
-        cls, orientation: Orientation, min: float, max: float, step: float
+        cls, orientation: _OrientationValueType, min: float, max: float, step: float
     ) -> Scale: ...
     def set_digits(self, digits: int) -> None: ...
     def set_draw_value(self, draw_value: bool) -> None: ...
     def set_has_origin(self, has_origin: bool) -> None: ...
-    def set_value_pos(self, pos: PositionType) -> None: ...
+    def set_value_pos(self, pos: _PositionTypeValueType) -> None: ...
 
 class ScaleAccessible(RangeAccessible):
     """
@@ -43154,19 +43873,19 @@ class ScaleAccessible(RangeAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -43408,14 +44127,26 @@ class ScaleButton(Button, Orientable):
     @type_check_only
     class Props(Button.Props):
         adjustment: Adjustment
-        icons: list[str]
-        size: IconSize
+        @property
+        def icons(self) -> list[str]: ...
+        @icons.setter
+        def icons(self, value: Sequence[str]) -> None: ...
+        @property
+        def size(self) -> IconSize: ...
+        @size.setter
+        def size(self, value: _IconSizeValueType) -> None: ...
         value: float
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -43428,33 +44159,33 @@ class ScaleButton(Button, Orientable):
         *,
         adjustment: Adjustment = ...,
         icons: Sequence[str] = ...,
-        size: IconSize = ...,
+        size: _IconSizeValueType = ...,
         value: float = ...,
         action_name: str | None = ...,
         action_target: GLib.Variant = ...,
         related_action: Action = ...,
         use_action_appearance: bool = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -43478,7 +44209,7 @@ class ScaleButton(Button, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -43590,19 +44321,19 @@ class ScaleButtonAccessible(ButtonAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -43666,9 +44397,9 @@ class Scrollable(GObject.GInterface, Protocol):
     def get_vadjustment(self) -> Adjustment: ...
     def get_vscroll_policy(self) -> ScrollablePolicy: ...
     def set_hadjustment(self, hadjustment: Adjustment | None = None) -> None: ...
-    def set_hscroll_policy(self, policy: ScrollablePolicy) -> None: ...
+    def set_hscroll_policy(self, policy: _ScrollablePolicyValueType) -> None: ...
     def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
-    def set_vscroll_policy(self, policy: ScrollablePolicy) -> None: ...
+    def set_vscroll_policy(self, policy: _ScrollablePolicyValueType) -> None: ...
 
 class ScrollableInterface(_gi.Struct):
     """
@@ -43874,7 +44605,10 @@ class Scrollbar(Range):
     """
     @type_check_only
     class Props(Range.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -43883,23 +44617,23 @@ class Scrollbar(Range):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -43923,7 +44657,7 @@ class Scrollbar(Range):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -43931,7 +44665,7 @@ class Scrollbar(Range):
     ) -> None: ...
     @classmethod
     def new(
-        cls, orientation: Orientation, adjustment: Adjustment | None = None
+        cls, orientation: _OrientationValueType, adjustment: Adjustment | None = None
     ) -> Scrollbar: ...
 
 class ScrollbarClass(_gi.Struct):
@@ -44164,8 +44898,14 @@ class ScrolledWindow(Bin):
     """
     @type_check_only
     class Props(Bin.Props):
-        hadjustment: Adjustment | None
-        hscrollbar_policy: PolicyType
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscrollbar_policy(self) -> PolicyType: ...
+        @hscrollbar_policy.setter
+        def hscrollbar_policy(self, value: _PolicyTypeValueType) -> None: ...
         kinetic_scrolling: bool
         max_content_height: int
         max_content_width: int
@@ -44174,10 +44914,22 @@ class ScrolledWindow(Bin):
         overlay_scrolling: bool
         propagate_natural_height: bool
         propagate_natural_width: bool
-        shadow_type: ShadowType
-        vadjustment: Adjustment | None
-        vscrollbar_policy: PolicyType
-        window_placement: CornerType
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscrollbar_policy(self) -> PolicyType: ...
+        @vscrollbar_policy.setter
+        def vscrollbar_policy(self, value: _PolicyTypeValueType) -> None: ...
+        @property
+        def window_placement(self) -> CornerType: ...
+        @window_placement.setter
+        def window_placement(self, value: _CornerTypeValueType) -> None: ...
         window_placement_set: bool
 
     @property
@@ -44190,7 +44942,7 @@ class ScrolledWindow(Bin):
         self,
         *,
         hadjustment: Adjustment | None = ...,
-        hscrollbar_policy: PolicyType = ...,
+        hscrollbar_policy: _PolicyTypeValueType = ...,
         kinetic_scrolling: bool = ...,
         max_content_height: int = ...,
         max_content_width: int = ...,
@@ -44199,22 +44951,22 @@ class ScrolledWindow(Bin):
         overlay_scrolling: bool = ...,
         propagate_natural_height: bool = ...,
         propagate_natural_width: bool = ...,
-        shadow_type: ShadowType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscrollbar_policy: PolicyType = ...,
-        window_placement: CornerType = ...,
+        vscrollbar_policy: _PolicyTypeValueType = ...,
+        window_placement: _CornerTypeValueType = ...,
         window_placement_set: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -44238,15 +44990,17 @@ class ScrolledWindow(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     def add_with_viewport(self, child: Widget) -> None: ...
-    def do_move_focus_out(self, direction: DirectionType) -> None: ...
-    def do_scroll_child(self, scroll: ScrollType, horizontal: bool) -> bool: ...
+    def do_move_focus_out(self, direction: _DirectionTypeValueType) -> None: ...
+    def do_scroll_child(
+        self, scroll: _ScrollTypeValueType, horizontal: bool
+    ) -> bool: ...
     def get_capture_button_press(self) -> bool: ...
     def get_hadjustment(self) -> Adjustment: ...
     def get_hscrollbar(self) -> Widget: ...
@@ -44277,13 +45031,15 @@ class ScrolledWindow(Bin):
     def set_min_content_height(self, height: int) -> None: ...
     def set_min_content_width(self, width: int) -> None: ...
     def set_overlay_scrolling(self, overlay_scrolling: bool) -> None: ...
-    def set_placement(self, window_placement: CornerType) -> None: ...
+    def set_placement(self, window_placement: _CornerTypeValueType) -> None: ...
     def set_policy(
-        self, hscrollbar_policy: PolicyType, vscrollbar_policy: PolicyType
+        self,
+        hscrollbar_policy: _PolicyTypeValueType,
+        vscrollbar_policy: _PolicyTypeValueType,
     ) -> None: ...
     def set_propagate_natural_height(self, propagate: bool) -> None: ...
     def set_propagate_natural_width(self, propagate: bool) -> None: ...
-    def set_shadow_type(self, type: ShadowType) -> None: ...
+    def set_shadow_type(self, type: _ShadowTypeValueType) -> None: ...
     def set_vadjustment(self, vadjustment: Adjustment | None = None) -> None: ...
     def unset_placement(self) -> None: ...
 
@@ -44368,19 +45124,19 @@ class ScrolledWindowAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -44410,9 +45166,13 @@ class ScrolledWindowClass(_gi.Struct):
     @property
     def scrollbar_spacing(self) -> int: ...
     @property
-    def scroll_child(self) -> Callable[[ScrolledWindow, ScrollType, bool], bool]: ...
+    def scroll_child(
+        self,
+    ) -> Callable[[ScrolledWindow, _ScrollTypeValueType, bool], bool]: ...
     @property
-    def move_focus_out(self) -> Callable[[ScrolledWindow, DirectionType], None]: ...
+    def move_focus_out(
+        self,
+    ) -> Callable[[ScrolledWindow, _DirectionTypeValueType], None]: ...
 
 class ScrolledWindowPrivate(_gi.Struct): ...
 
@@ -44616,16 +45376,16 @@ class SearchBar(Bin):
         search_mode_enabled: bool = ...,
         show_close_button: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -44649,7 +45409,7 @@ class SearchBar(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -45005,10 +45765,10 @@ class SearchEntry(Entry):
         editable: bool = ...,
         enable_emoji_completion: bool = ...,
         has_frame: bool = ...,
-        im_module: str = ...,
+        im_module: str | None = ...,
         inner_border: Border | None = ...,
-        input_hints: InputHints = ...,
-        input_purpose: InputPurpose = ...,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
         invisible_char: int = ...,
         invisible_char_set: bool = ...,
         max_length: int = ...,
@@ -45017,24 +45777,24 @@ class SearchEntry(Entry):
         placeholder_text: str | None = ...,
         populate_all: bool = ...,
         primary_icon_activatable: bool = ...,
-        primary_icon_gicon: Gio.Icon = ...,
-        primary_icon_name: str = ...,
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        primary_icon_gicon: Gio.Icon | None = ...,
+        primary_icon_name: str | None = ...,
+        primary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         primary_icon_sensitive: bool = ...,
-        primary_icon_stock: str = ...,
-        primary_icon_tooltip_markup: str = ...,
-        primary_icon_tooltip_text: str = ...,
+        primary_icon_stock: str | None = ...,
+        primary_icon_tooltip_markup: str | None = ...,
+        primary_icon_tooltip_text: str | None = ...,
         progress_fraction: float = ...,
         progress_pulse_step: float = ...,
         secondary_icon_activatable: bool = ...,
-        secondary_icon_gicon: Gio.Icon = ...,
-        secondary_icon_name: str = ...,
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        secondary_icon_gicon: Gio.Icon | None = ...,
+        secondary_icon_name: str | None = ...,
+        secondary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         secondary_icon_sensitive: bool = ...,
-        secondary_icon_stock: str = ...,
-        secondary_icon_tooltip_markup: str = ...,
-        secondary_icon_tooltip_text: str = ...,
-        shadow_type: ShadowType = ...,
+        secondary_icon_stock: str | None = ...,
+        secondary_icon_tooltip_markup: str | None = ...,
+        secondary_icon_tooltip_text: str | None = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         show_emoji_icon: bool = ...,
         tabs: Pango.TabArray = ...,
         text: str = ...,
@@ -45046,10 +45806,10 @@ class SearchEntry(Entry):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -45073,7 +45833,7 @@ class SearchEntry(Entry):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -45296,7 +46056,10 @@ class Separator(Widget, Orientable):
     """
     @type_check_only
     class Props(Widget.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -45307,15 +46070,15 @@ class Separator(Widget, Orientable):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -45339,14 +46102,14 @@ class Separator(Widget, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
     @classmethod
-    def new(cls, orientation: Orientation) -> Separator: ...
+    def new(cls, orientation: _OrientationValueType) -> Separator: ...
 
 class SeparatorClass(_gi.Struct):
     """
@@ -45561,7 +46324,10 @@ class SeparatorMenuItem(MenuItem):
     @type_check_only
     class Props(MenuItem.Props):
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -45582,16 +46348,16 @@ class SeparatorMenuItem(MenuItem):
         submenu: Menu | None = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -45615,7 +46381,7 @@ class SeparatorMenuItem(MenuItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -45854,16 +46620,16 @@ class SeparatorToolItem(ToolItem):
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -45887,7 +46653,7 @@ class SeparatorToolItem(ToolItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -46102,22 +46868,22 @@ class Settings(GObject.Object, StyleProvider):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def color_hash(self) -> dict[str, _Gdk3.Color]: ...
+        def color_hash(self) -> dict[str, _Gdk3.Color] | None: ...
         gtk_alternative_button_order: bool
         gtk_alternative_sort_arrows: bool
         gtk_application_prefer_dark_theme: bool
         gtk_auto_mnemonics: bool
         gtk_button_images: bool
         gtk_can_change_accels: bool
-        gtk_color_palette: str
-        gtk_color_scheme: str
+        gtk_color_palette: str | None
+        gtk_color_scheme: str | None
         gtk_cursor_aspect_ratio: float
         gtk_cursor_blink: bool
         gtk_cursor_blink_time: int
         gtk_cursor_blink_timeout: int
-        gtk_cursor_theme_name: str
+        gtk_cursor_theme_name: str | None
         gtk_cursor_theme_size: int
-        gtk_decoration_layout: str
+        gtk_decoration_layout: str | None
         gtk_dialogs_use_header: bool
         gtk_dnd_drag_threshold: int
         gtk_double_click_distance: int
@@ -46132,61 +46898,81 @@ class Settings(GObject.Object, StyleProvider):
         gtk_entry_password_hint_timeout: int
         gtk_entry_select_on_focus: bool
         gtk_error_bell: bool
-        gtk_fallback_icon_theme: str
-        gtk_file_chooser_backend: str
-        gtk_font_name: str
+        gtk_fallback_icon_theme: str | None
+        gtk_file_chooser_backend: str | None
+        gtk_font_name: str | None
         gtk_fontconfig_timestamp: int
-        gtk_icon_sizes: str
-        gtk_icon_theme_name: str
-        gtk_im_module: str
-        gtk_im_preedit_style: IMPreeditStyle
-        gtk_im_status_style: IMStatusStyle
-        gtk_key_theme_name: str
+        gtk_icon_sizes: str | None
+        gtk_icon_theme_name: str | None
+        gtk_im_module: str | None
+        @property
+        def gtk_im_preedit_style(self) -> IMPreeditStyle: ...
+        @gtk_im_preedit_style.setter
+        def gtk_im_preedit_style(self, value: _IMPreeditStyleValueType) -> None: ...
+        @property
+        def gtk_im_status_style(self) -> IMStatusStyle: ...
+        @gtk_im_status_style.setter
+        def gtk_im_status_style(self, value: _IMStatusStyleValueType) -> None: ...
+        gtk_key_theme_name: str | None
         gtk_keynav_cursor_only: bool
         gtk_keynav_use_caret: bool
         gtk_keynav_wrap_around: bool
         gtk_label_select_on_focus: bool
         gtk_long_press_time: int
-        gtk_menu_bar_accel: str
+        gtk_menu_bar_accel: str | None
         gtk_menu_bar_popup_delay: int
         gtk_menu_images: bool
         gtk_menu_popdown_delay: int
         gtk_menu_popup_delay: int
-        gtk_modules: str
+        gtk_modules: str | None
         gtk_overlay_scrolling: bool
         gtk_primary_button_warps_slider: bool
-        gtk_print_backends: str
-        gtk_print_preview_command: str
+        gtk_print_backends: str | None
+        gtk_print_preview_command: str | None
         gtk_recent_files_enabled: bool
         gtk_recent_files_limit: int
         gtk_recent_files_max_age: int
-        gtk_scrolled_window_placement: CornerType
+        @property
+        def gtk_scrolled_window_placement(self) -> CornerType: ...
+        @gtk_scrolled_window_placement.setter
+        def gtk_scrolled_window_placement(
+            self, value: _CornerTypeValueType
+        ) -> None: ...
         gtk_shell_shows_app_menu: bool
         gtk_shell_shows_desktop: bool
         gtk_shell_shows_menubar: bool
         gtk_show_input_method_menu: bool
         gtk_show_unicode_menu: bool
-        gtk_sound_theme_name: str
+        gtk_sound_theme_name: str | None
         gtk_split_cursor: bool
-        gtk_theme_name: str
+        gtk_theme_name: str | None
         gtk_timeout_expand: int
         gtk_timeout_initial: int
         gtk_timeout_repeat: int
-        gtk_titlebar_double_click: str
-        gtk_titlebar_middle_click: str
-        gtk_titlebar_right_click: str
-        gtk_toolbar_icon_size: IconSize
-        gtk_toolbar_style: ToolbarStyle
+        gtk_titlebar_double_click: str | None
+        gtk_titlebar_middle_click: str | None
+        gtk_titlebar_right_click: str | None
+        @property
+        def gtk_toolbar_icon_size(self) -> IconSize: ...
+        @gtk_toolbar_icon_size.setter
+        def gtk_toolbar_icon_size(self, value: _IconSizeValueType) -> None: ...
+        @property
+        def gtk_toolbar_style(self) -> ToolbarStyle: ...
+        @gtk_toolbar_style.setter
+        def gtk_toolbar_style(self, value: _ToolbarStyleValueType) -> None: ...
         gtk_tooltip_browse_mode_timeout: int
         gtk_tooltip_browse_timeout: int
         gtk_tooltip_timeout: int
         gtk_touchscreen_mode: bool
-        gtk_visible_focus: PolicyType
+        @property
+        def gtk_visible_focus(self) -> PolicyType: ...
+        @gtk_visible_focus.setter
+        def gtk_visible_focus(self, value: _PolicyTypeValueType) -> None: ...
         gtk_xft_antialias: int
         gtk_xft_dpi: int
         gtk_xft_hinting: int
-        gtk_xft_hintstyle: str
-        gtk_xft_rgba: str
+        gtk_xft_hintstyle: str | None
+        gtk_xft_rgba: str | None
 
     @property
     def props(self) -> Props: ...
@@ -46203,15 +46989,15 @@ class Settings(GObject.Object, StyleProvider):
         gtk_auto_mnemonics: bool = ...,
         gtk_button_images: bool = ...,
         gtk_can_change_accels: bool = ...,
-        gtk_color_palette: str = ...,
-        gtk_color_scheme: str = ...,
+        gtk_color_palette: str | None = ...,
+        gtk_color_scheme: str | None = ...,
         gtk_cursor_aspect_ratio: float = ...,
         gtk_cursor_blink: bool = ...,
         gtk_cursor_blink_time: int = ...,
         gtk_cursor_blink_timeout: int = ...,
-        gtk_cursor_theme_name: str = ...,
+        gtk_cursor_theme_name: str | None = ...,
         gtk_cursor_theme_size: int = ...,
-        gtk_decoration_layout: str = ...,
+        gtk_decoration_layout: str | None = ...,
         gtk_dialogs_use_header: bool = ...,
         gtk_dnd_drag_threshold: int = ...,
         gtk_double_click_distance: int = ...,
@@ -46226,61 +47012,61 @@ class Settings(GObject.Object, StyleProvider):
         gtk_entry_password_hint_timeout: int = ...,
         gtk_entry_select_on_focus: bool = ...,
         gtk_error_bell: bool = ...,
-        gtk_fallback_icon_theme: str = ...,
-        gtk_file_chooser_backend: str = ...,
-        gtk_font_name: str = ...,
+        gtk_fallback_icon_theme: str | None = ...,
+        gtk_file_chooser_backend: str | None = ...,
+        gtk_font_name: str | None = ...,
         gtk_fontconfig_timestamp: int = ...,
-        gtk_icon_sizes: str = ...,
-        gtk_icon_theme_name: str = ...,
-        gtk_im_module: str = ...,
-        gtk_im_preedit_style: IMPreeditStyle = ...,
-        gtk_im_status_style: IMStatusStyle = ...,
-        gtk_key_theme_name: str = ...,
+        gtk_icon_sizes: str | None = ...,
+        gtk_icon_theme_name: str | None = ...,
+        gtk_im_module: str | None = ...,
+        gtk_im_preedit_style: _IMPreeditStyleValueType = ...,
+        gtk_im_status_style: _IMStatusStyleValueType = ...,
+        gtk_key_theme_name: str | None = ...,
         gtk_keynav_cursor_only: bool = ...,
         gtk_keynav_use_caret: bool = ...,
         gtk_keynav_wrap_around: bool = ...,
         gtk_label_select_on_focus: bool = ...,
         gtk_long_press_time: int = ...,
-        gtk_menu_bar_accel: str = ...,
+        gtk_menu_bar_accel: str | None = ...,
         gtk_menu_bar_popup_delay: int = ...,
         gtk_menu_images: bool = ...,
         gtk_menu_popdown_delay: int = ...,
         gtk_menu_popup_delay: int = ...,
-        gtk_modules: str = ...,
+        gtk_modules: str | None = ...,
         gtk_overlay_scrolling: bool = ...,
         gtk_primary_button_warps_slider: bool = ...,
-        gtk_print_backends: str = ...,
-        gtk_print_preview_command: str = ...,
+        gtk_print_backends: str | None = ...,
+        gtk_print_preview_command: str | None = ...,
         gtk_recent_files_enabled: bool = ...,
         gtk_recent_files_limit: int = ...,
         gtk_recent_files_max_age: int = ...,
-        gtk_scrolled_window_placement: CornerType = ...,
+        gtk_scrolled_window_placement: _CornerTypeValueType = ...,
         gtk_shell_shows_app_menu: bool = ...,
         gtk_shell_shows_desktop: bool = ...,
         gtk_shell_shows_menubar: bool = ...,
         gtk_show_input_method_menu: bool = ...,
         gtk_show_unicode_menu: bool = ...,
-        gtk_sound_theme_name: str = ...,
+        gtk_sound_theme_name: str | None = ...,
         gtk_split_cursor: bool = ...,
-        gtk_theme_name: str = ...,
+        gtk_theme_name: str | None = ...,
         gtk_timeout_expand: int = ...,
         gtk_timeout_initial: int = ...,
         gtk_timeout_repeat: int = ...,
-        gtk_titlebar_double_click: str = ...,
-        gtk_titlebar_middle_click: str = ...,
-        gtk_titlebar_right_click: str = ...,
-        gtk_toolbar_icon_size: IconSize = ...,
-        gtk_toolbar_style: ToolbarStyle = ...,
+        gtk_titlebar_double_click: str | None = ...,
+        gtk_titlebar_middle_click: str | None = ...,
+        gtk_titlebar_right_click: str | None = ...,
+        gtk_toolbar_icon_size: _IconSizeValueType = ...,
+        gtk_toolbar_style: _ToolbarStyleValueType = ...,
         gtk_tooltip_browse_mode_timeout: int = ...,
         gtk_tooltip_browse_timeout: int = ...,
         gtk_tooltip_timeout: int = ...,
         gtk_touchscreen_mode: bool = ...,
-        gtk_visible_focus: PolicyType = ...,
+        gtk_visible_focus: _PolicyTypeValueType = ...,
         gtk_xft_antialias: int = ...,
         gtk_xft_dpi: int = ...,
         gtk_xft_hinting: int = ...,
-        gtk_xft_hintstyle: str = ...,
-        gtk_xft_rgba: str = ...,
+        gtk_xft_hintstyle: str | None = ...,
+        gtk_xft_rgba: str | None = ...,
     ) -> None: ...
     @staticmethod
     def get_default() -> Settings | None: ...
@@ -46519,9 +47305,18 @@ class ShortcutLabel(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        accelerator: str | None
-        disabled_text: str | None
-        orientation: Orientation
+        @property
+        def accelerator(self) -> str | None: ...
+        @accelerator.setter
+        def accelerator(self, value: str) -> None: ...
+        @property
+        def disabled_text(self) -> str | None: ...
+        @disabled_text.setter
+        def disabled_text(self, value: str) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -46530,21 +47325,21 @@ class ShortcutLabel(Box):
         *,
         accelerator: str = ...,
         disabled_text: str = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -46568,7 +47363,7 @@ class ShortcutLabel(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -46783,38 +47578,47 @@ class ShortcutsGroup(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        accel_size_group: SizeGroup
+        @property
+        def accel_size_group(self) -> Never: ...
+        @accel_size_group.setter
+        def accel_size_group(self, value: SizeGroup | None) -> None: ...
         @property
         def height(self) -> int: ...
-        title: str
-        title_size_group: SizeGroup
-        view: str
-        orientation: Orientation
+        title: str | None
+        @property
+        def title_size_group(self) -> Never: ...
+        @title_size_group.setter
+        def title_size_group(self, value: SizeGroup | None) -> None: ...
+        view: str | None
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        accel_size_group: SizeGroup = ...,
-        title: str = ...,
-        title_size_group: SizeGroup = ...,
-        view: str = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        accel_size_group: SizeGroup | None = ...,
+        title: str | None = ...,
+        title_size_group: SizeGroup | None = ...,
+        view: str | None = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -46838,7 +47642,7 @@ class ShortcutsGroup(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -47049,10 +47853,13 @@ class ShortcutsSection(Box):
     @type_check_only
     class Props(Box.Props):
         max_height: int
-        section_name: str
-        title: str
-        view_name: str
-        orientation: Orientation
+        section_name: str | None
+        title: str | None
+        view_name: str | None
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -47060,24 +47867,24 @@ class ShortcutsSection(Box):
         self,
         *,
         max_height: int = ...,
-        section_name: str = ...,
-        title: str = ...,
-        view_name: str = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        section_name: str | None = ...,
+        title: str | None = ...,
+        view_name: str | None = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -47101,7 +47908,7 @@ class ShortcutsSection(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -47322,50 +48129,65 @@ class ShortcutsShortcut(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        accel_size_group: SizeGroup
-        accelerator: str
-        action_name: str
-        direction: TextDirection
-        icon: Gio.Icon
+        @property
+        def accel_size_group(self) -> Never: ...
+        @accel_size_group.setter
+        def accel_size_group(self, value: SizeGroup | None) -> None: ...
+        accelerator: str | None
+        action_name: str | None
+        @property
+        def direction(self) -> TextDirection: ...
+        @direction.setter
+        def direction(self, value: _TextDirectionValueType) -> None: ...
+        icon: Gio.Icon | None
         icon_set: bool
-        shortcut_type: ShortcutType
-        subtitle: str
+        @property
+        def shortcut_type(self) -> ShortcutType: ...
+        @shortcut_type.setter
+        def shortcut_type(self, value: _ShortcutTypeValueType) -> None: ...
+        subtitle: str | None
         subtitle_set: bool
-        title: str
-        title_size_group: SizeGroup
-        orientation: Orientation
+        title: str | None
+        @property
+        def title_size_group(self) -> Never: ...
+        @title_size_group.setter
+        def title_size_group(self, value: SizeGroup | None) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        accel_size_group: SizeGroup = ...,
-        accelerator: str = ...,
-        action_name: str = ...,
-        direction: TextDirection = ...,
-        icon: Gio.Icon = ...,
+        accel_size_group: SizeGroup | None = ...,
+        accelerator: str | None = ...,
+        action_name: str | None = ...,
+        direction: _TextDirectionValueType = ...,
+        icon: Gio.Icon | None = ...,
         icon_set: bool = ...,
-        shortcut_type: ShortcutType = ...,
-        subtitle: str = ...,
+        shortcut_type: _ShortcutTypeValueType = ...,
+        subtitle: str | None = ...,
         subtitle_set: bool = ...,
-        title: str = ...,
-        title_size_group: SizeGroup = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        title: str | None = ...,
+        title_size_group: SizeGroup | None = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -47389,7 +48211,7 @@ class ShortcutsShortcut(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -47663,8 +48485,8 @@ class ShortcutsWindow(Window):
     """
     @type_check_only
     class Props(Window.Props):
-        section_name: str
-        view_name: str
+        section_name: str | None
+        view_name: str | None
 
     @property
     def props(self) -> Props: ...
@@ -47673,8 +48495,8 @@ class ShortcutsWindow(Window):
     def __init__(
         self,
         *,
-        section_name: str = ...,
-        view_name: str = ...,
+        section_name: str | None = ...,
+        view_name: str | None = ...,
         accept_focus: bool = ...,
         application: Application | None = ...,
         attached_to: Widget | None = ...,
@@ -47685,7 +48507,7 @@ class ShortcutsWindow(Window):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -47700,21 +48522,21 @@ class ShortcutsWindow(Window):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -47738,7 +48560,7 @@ class ShortcutsWindow(Window):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -47785,7 +48607,10 @@ class SizeGroup(GObject.Object, Buildable):
     @type_check_only
     class Props(GObject.Object.Props):
         ignore_hidden: bool
-        mode: SizeGroupMode
+        @property
+        def mode(self) -> SizeGroupMode: ...
+        @mode.setter
+        def mode(self, value: _SizeGroupModeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -47794,17 +48619,17 @@ class SizeGroup(GObject.Object, Buildable):
     @property
     def priv(self) -> SizeGroupPrivate: ...
     def __init__(
-        self, *, ignore_hidden: bool = ..., mode: SizeGroupMode = ...
+        self, *, ignore_hidden: bool = ..., mode: _SizeGroupModeValueType = ...
     ) -> None: ...
     def add_widget(self, widget: Widget) -> None: ...
     def get_ignore_hidden(self) -> bool: ...
     def get_mode(self) -> SizeGroupMode: ...
     def get_widgets(self) -> list[Widget]: ...
     @classmethod
-    def new(cls, mode: SizeGroupMode) -> SizeGroup: ...
+    def new(cls, mode: _SizeGroupModeValueType) -> SizeGroup: ...
     def remove_widget(self, widget: Widget) -> None: ...
     def set_ignore_hidden(self, ignore_hidden: bool) -> None: ...
-    def set_mode(self, mode: SizeGroupMode) -> None: ...
+    def set_mode(self, mode: _SizeGroupModeValueType) -> None: ...
 
 class SizeGroupClass(_gi.Struct):
     """
@@ -48010,16 +48835,16 @@ class Socket(Container):
         self,
         *,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -48043,7 +48868,7 @@ class Socket(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -48138,19 +48963,19 @@ class SocketAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def embed(self, path: str) -> None: ...
@@ -48522,11 +49347,17 @@ class SpinButton(Entry, Orientable):
         digits: int
         numeric: bool
         snap_to_ticks: bool
-        update_policy: SpinButtonUpdatePolicy
+        @property
+        def update_policy(self) -> SpinButtonUpdatePolicy: ...
+        @update_policy.setter
+        def update_policy(self, value: _SpinButtonUpdatePolicyValueType) -> None: ...
         value: float
         wrap: bool
         editing_canceled: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -48542,11 +49373,11 @@ class SpinButton(Entry, Orientable):
         digits: int = ...,
         numeric: bool = ...,
         snap_to_ticks: bool = ...,
-        update_policy: SpinButtonUpdatePolicy = ...,
+        update_policy: _SpinButtonUpdatePolicyValueType = ...,
         value: float = ...,
         wrap: bool = ...,
         editing_canceled: bool = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         activates_default: bool = ...,
         attributes: Pango.AttrList = ...,
         buffer: EntryBuffer = ...,
@@ -48555,10 +49386,10 @@ class SpinButton(Entry, Orientable):
         editable: bool = ...,
         enable_emoji_completion: bool = ...,
         has_frame: bool = ...,
-        im_module: str = ...,
+        im_module: str | None = ...,
         inner_border: Border | None = ...,
-        input_hints: InputHints = ...,
-        input_purpose: InputPurpose = ...,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
         invisible_char: int = ...,
         invisible_char_set: bool = ...,
         max_length: int = ...,
@@ -48567,24 +49398,24 @@ class SpinButton(Entry, Orientable):
         placeholder_text: str | None = ...,
         populate_all: bool = ...,
         primary_icon_activatable: bool = ...,
-        primary_icon_gicon: Gio.Icon = ...,
-        primary_icon_name: str = ...,
-        primary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        primary_icon_gicon: Gio.Icon | None = ...,
+        primary_icon_name: str | None = ...,
+        primary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         primary_icon_sensitive: bool = ...,
-        primary_icon_stock: str = ...,
-        primary_icon_tooltip_markup: str = ...,
-        primary_icon_tooltip_text: str = ...,
+        primary_icon_stock: str | None = ...,
+        primary_icon_tooltip_markup: str | None = ...,
+        primary_icon_tooltip_text: str | None = ...,
         progress_fraction: float = ...,
         progress_pulse_step: float = ...,
         secondary_icon_activatable: bool = ...,
-        secondary_icon_gicon: Gio.Icon = ...,
-        secondary_icon_name: str = ...,
-        secondary_icon_pixbuf: GdkPixbuf.Pixbuf = ...,
+        secondary_icon_gicon: Gio.Icon | None = ...,
+        secondary_icon_name: str | None = ...,
+        secondary_icon_pixbuf: GdkPixbuf.Pixbuf | None = ...,
         secondary_icon_sensitive: bool = ...,
-        secondary_icon_stock: str = ...,
-        secondary_icon_tooltip_markup: str = ...,
-        secondary_icon_tooltip_text: str = ...,
-        shadow_type: ShadowType = ...,
+        secondary_icon_stock: str | None = ...,
+        secondary_icon_tooltip_markup: str | None = ...,
+        secondary_icon_tooltip_text: str | None = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         show_emoji_icon: bool = ...,
         tabs: Pango.TabArray = ...,
         text: str = ...,
@@ -48596,10 +49427,10 @@ class SpinButton(Entry, Orientable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -48623,7 +49454,7 @@ class SpinButton(Entry, Orientable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -48632,7 +49463,7 @@ class SpinButton(Entry, Orientable):
     def configure(
         self, adjustment: Adjustment | None, climb_rate: float, digits: int
     ) -> None: ...
-    def do_change_value(self, scroll: ScrollType) -> None: ...
+    def do_change_value(self, scroll: _ScrollTypeValueType) -> None: ...
     def do_input(self, new_value: float) -> int: ...
     def do_output(self) -> int: ...
     def do_value_changed(self) -> None: ...
@@ -48659,10 +49490,10 @@ class SpinButton(Entry, Orientable):
     def set_numeric(self, numeric: bool) -> None: ...
     def set_range(self, min: float, max: float) -> None: ...
     def set_snap_to_ticks(self, snap_to_ticks: bool) -> None: ...
-    def set_update_policy(self, policy: SpinButtonUpdatePolicy) -> None: ...
+    def set_update_policy(self, policy: _SpinButtonUpdatePolicyValueType) -> None: ...
     def set_value(self, value: float) -> None: ...
     def set_wrap(self, wrap: bool) -> None: ...
-    def spin(self, direction: SpinType, increment: float) -> None: ...
+    def spin(self, direction: _SpinTypeValueType, increment: float) -> None: ...
     def update(self) -> None: ...
 
 class SpinButtonAccessible(EntryAccessible, Atk.Value):
@@ -48765,19 +49596,19 @@ class SpinButtonAccessible(EntryAccessible, Atk.Value):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -48811,7 +49642,7 @@ class SpinButtonClass(_gi.Struct):
     @property
     def value_changed(self) -> Callable[[SpinButton], None]: ...
     @property
-    def change_value(self) -> Callable[[SpinButton, ScrollType], None]: ...
+    def change_value(self) -> Callable[[SpinButton, _ScrollTypeValueType], None]: ...
     @property
     def wrapped(self) -> Callable[[SpinButton], None]: ...
 
@@ -49004,10 +49835,10 @@ class Spinner(Widget):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -49031,7 +49862,7 @@ class Spinner(Widget):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -49120,19 +49951,19 @@ class SpinnerAccessible(WidgetAccessible, Atk.Image):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -49369,10 +50200,19 @@ class Stack(Container):
         transition_duration: int
         @property
         def transition_running(self) -> bool: ...
-        transition_type: StackTransitionType
+        @property
+        def transition_type(self) -> StackTransitionType: ...
+        @transition_type.setter
+        def transition_type(self, value: _StackTransitionTypeValueType) -> None: ...
         vhomogeneous: bool
-        visible_child: Widget | None
-        visible_child_name: str | None
+        @property
+        def visible_child(self) -> Widget | None: ...
+        @visible_child.setter
+        def visible_child(self, value: Widget) -> None: ...
+        @property
+        def visible_child_name(self) -> str | None: ...
+        @visible_child_name.setter
+        def visible_child_name(self, value: str) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -49385,21 +50225,21 @@ class Stack(Container):
         homogeneous: bool = ...,
         interpolate_size: bool = ...,
         transition_duration: int = ...,
-        transition_type: StackTransitionType = ...,
+        transition_type: _StackTransitionTypeValueType = ...,
         vhomogeneous: bool = ...,
         visible_child: Widget = ...,
         visible_child_name: str = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -49423,7 +50263,7 @@ class Stack(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -49447,11 +50287,13 @@ class Stack(Container):
     def set_homogeneous(self, homogeneous: bool) -> None: ...
     def set_interpolate_size(self, interpolate_size: bool) -> None: ...
     def set_transition_duration(self, duration: int) -> None: ...
-    def set_transition_type(self, transition: StackTransitionType) -> None: ...
+    def set_transition_type(
+        self, transition: _StackTransitionTypeValueType
+    ) -> None: ...
     def set_vhomogeneous(self, vhomogeneous: bool) -> None: ...
     def set_visible_child(self, child: Widget) -> None: ...
     def set_visible_child_full(
-        self, name: str, transition: StackTransitionType
+        self, name: str, transition: _StackTransitionTypeValueType
     ) -> None: ...
     def set_visible_child_name(self, name: str) -> None: ...
 
@@ -49534,19 +50376,19 @@ class StackAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -49757,7 +50599,10 @@ class StackSidebar(Bin):
     """
     @type_check_only
     class Props(Bin.Props):
-        stack: Stack | None
+        @property
+        def stack(self) -> Stack | None: ...
+        @stack.setter
+        def stack(self, value: Stack) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -49768,16 +50613,16 @@ class StackSidebar(Bin):
         *,
         stack: Stack = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -49801,7 +50646,7 @@ class StackSidebar(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -50022,7 +50867,10 @@ class StackSwitcher(Box):
     class Props(Box.Props):
         icon_size: int
         stack: Stack | None
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -50033,21 +50881,21 @@ class StackSwitcher(Box):
         *,
         icon_size: int = ...,
         stack: Stack | None = ...,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -50071,7 +50919,7 @@ class StackSwitcher(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -50157,7 +51005,10 @@ class StatusIcon(GObject.Object):
     class Props(GObject.Object.Props):
         @property
         def embedded(self) -> bool: ...
-        file: str
+        @property
+        def file(self) -> Never: ...
+        @file.setter
+        def file(self, value: str | None) -> None: ...
         gicon: Gio.Icon | None
         has_tooltip: bool
         icon_name: str | None
@@ -50172,7 +51023,10 @@ class StatusIcon(GObject.Object):
         def storage_type(self) -> ImageType: ...
         title: str
         tooltip_markup: str | None
-        tooltip_text: str | None
+        @property
+        def tooltip_text(self) -> str | None: ...
+        @tooltip_text.setter
+        def tooltip_text(self, value: str) -> None: ...
         visible: bool
 
     @property
@@ -50184,13 +51038,13 @@ class StatusIcon(GObject.Object):
     def __init__(
         self,
         *,
-        file: str = ...,
-        gicon: Gio.Icon = ...,
+        file: str | None = ...,
+        gicon: Gio.Icon | None = ...,
         has_tooltip: bool = ...,
-        icon_name: str = ...,
-        pixbuf: GdkPixbuf.Pixbuf = ...,
+        icon_name: str | None = ...,
+        pixbuf: GdkPixbuf.Pixbuf | None = ...,
         screen: _Gdk3.Screen = ...,
-        stock: str = ...,
+        stock: str | None = ...,
         title: str = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str = ...,
@@ -50475,7 +51329,10 @@ class Statusbar(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -50486,21 +51343,21 @@ class Statusbar(Box):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -50524,7 +51381,7 @@ class Statusbar(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -50622,19 +51479,19 @@ class StatusbarAccessible(ContainerAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -50711,7 +51568,7 @@ class Style(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def context(self) -> StyleContext: ...
+        def context(self) -> StyleContext | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -50759,12 +51616,12 @@ class Style(GObject.Object):
     def property_cache(self) -> list[int]: ...
     @property
     def icon_factories(self) -> list[int]: ...
-    def __init__(self, *, context: StyleContext = ...) -> None: ...
+    def __init__(self, *, context: StyleContext | None = ...) -> None: ...
     def apply_default_background(
         self,
         cr: cairo.Context[_SomeSurface],
         window: _Gdk3.Window,
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         x: int,
         y: int,
         width: int,
@@ -50776,11 +51633,11 @@ class Style(GObject.Object):
     def do_draw_arrow(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
-        arrow_type: ArrowType,
+        arrow_type: _ArrowTypeValueType,
         fill: bool,
         x: int,
         y: int,
@@ -50790,8 +51647,8 @@ class Style(GObject.Object):
     def do_draw_box(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50802,23 +51659,23 @@ class Style(GObject.Object):
     def do_draw_box_gap(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
         width: int,
         height: int,
-        gap_side: PositionType,
+        gap_side: _PositionTypeValueType,
         gap_x: int,
         gap_width: int,
     ) -> None: ...
     def do_draw_check(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50829,8 +51686,8 @@ class Style(GObject.Object):
     def do_draw_diamond(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50841,31 +51698,31 @@ class Style(GObject.Object):
     def do_draw_expander(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
-        expander_style: ExpanderStyle,
+        expander_style: _ExpanderStyleValueType,
     ) -> None: ...
     def do_draw_extension(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
         width: int,
         height: int,
-        gap_side: PositionType,
+        gap_side: _PositionTypeValueType,
     ) -> None: ...
     def do_draw_flat_box(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50876,7 +51733,7 @@ class Style(GObject.Object):
     def do_draw_focus(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50887,20 +51744,20 @@ class Style(GObject.Object):
     def do_draw_handle(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
         width: int,
         height: int,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
     ) -> None: ...
     def do_draw_hline(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
         x1: int,
@@ -50910,7 +51767,7 @@ class Style(GObject.Object):
     def do_draw_layout(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         use_text: bool,
         widget: Widget,
         detail: str,
@@ -50921,8 +51778,8 @@ class Style(GObject.Object):
     def do_draw_option(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50933,10 +51790,10 @@ class Style(GObject.Object):
     def do_draw_resize_grip(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
-        edge: _Gdk3.WindowEdge,
+        edge: _Gdk3._WindowEdgeValueType,
         x: int,
         y: int,
         width: int,
@@ -50945,8 +51802,8 @@ class Style(GObject.Object):
     def do_draw_shadow(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -50957,35 +51814,35 @@ class Style(GObject.Object):
     def do_draw_shadow_gap(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
         width: int,
         height: int,
-        gap_side: PositionType,
+        gap_side: _PositionTypeValueType,
         gap_x: int,
         gap_width: int,
     ) -> None: ...
     def do_draw_slider(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
         y: int,
         width: int,
         height: int,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
     ) -> None: ...
     def do_draw_spinner(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
         step: int,
@@ -50997,8 +51854,8 @@ class Style(GObject.Object):
     def do_draw_tab(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
-        shadow_type: ShadowType,
+        state_type: _StateTypeValueType,
+        shadow_type: _ShadowTypeValueType,
         widget: Widget,
         detail: str,
         x: int,
@@ -51009,7 +51866,7 @@ class Style(GObject.Object):
     def do_draw_vline(
         self,
         cr: cairo.Context[_SomeSurface],
-        state_type: StateType,
+        state_type: _StateTypeValueType,
         widget: Widget,
         detail: str,
         y1_: int,
@@ -51021,14 +51878,14 @@ class Style(GObject.Object):
     def do_render_icon(
         self,
         source: IconSource,
-        direction: TextDirection,
-        state: StateType,
+        direction: _TextDirectionValueType,
+        state: _StateTypeValueType,
         size: int,
         widget: Widget | None,
         detail: str | None,
     ) -> GdkPixbuf.Pixbuf: ...
     def do_set_background(
-        self, window: _Gdk3.Window, state_type: StateType
+        self, window: _Gdk3.Window, state_type: _StateTypeValueType
     ) -> None: ...
     def do_unrealize(self) -> None: ...
     def get_style_property(self, widget_type: type[Any], property_name: str) -> Any: ...
@@ -51040,13 +51897,15 @@ class Style(GObject.Object):
     def render_icon(
         self,
         source: IconSource,
-        direction: TextDirection,
-        state: StateType,
+        direction: _TextDirectionValueType,
+        state: _StateTypeValueType,
         size: int,
         widget: Widget | None = None,
         detail: str | None = None,
     ) -> GdkPixbuf.Pixbuf: ...
-    def set_background(self, window: _Gdk3.Window, state_type: StateType) -> None: ...
+    def set_background(
+        self, window: _Gdk3.Window, state_type: _StateTypeValueType
+    ) -> None: ...
 
 class StyleClass(_gi.Struct):
     """
@@ -51069,26 +51928,54 @@ class StyleClass(_gi.Struct):
     @property
     def init_from_rc(self) -> Callable[[Style, RcStyle], None]: ...
     @property
-    def set_background(self) -> Callable[[Style, _Gdk3.Window, StateType], None]: ...
+    def set_background(
+        self,
+    ) -> Callable[[Style, _Gdk3.Window, _StateTypeValueType], None]: ...
     @property
     def render_icon(
         self,
     ) -> Callable[
-        [Style, IconSource, TextDirection, StateType, int, Widget | None, str | None],
+        [
+            Style,
+            IconSource,
+            _TextDirectionValueType,
+            _StateTypeValueType,
+            int,
+            Widget | None,
+            str | None,
+        ],
         GdkPixbuf.Pixbuf,
     ]: ...
     @property
     def draw_hline(
         self,
     ) -> Callable[
-        [Style, cairo.Context[_SomeSurface], StateType, Widget, str, int, int, int],
+        [
+            Style,
+            cairo.Context[_SomeSurface],
+            _StateTypeValueType,
+            Widget,
+            str,
+            int,
+            int,
+            int,
+        ],
         None,
     ]: ...
     @property
     def draw_vline(
         self,
     ) -> Callable[
-        [Style, cairo.Context[_SomeSurface], StateType, Widget, str, int, int, int],
+        [
+            Style,
+            cairo.Context[_SomeSurface],
+            _StateTypeValueType,
+            Widget,
+            str,
+            int,
+            int,
+            int,
+        ],
         None,
     ]: ...
     @property
@@ -51098,8 +51985,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51116,11 +52003,11 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
-            ArrowType,
+            _ArrowTypeValueType,
             bool,
             int,
             int,
@@ -51136,8 +52023,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51154,8 +52041,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51172,8 +52059,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51190,8 +52077,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51208,8 +52095,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51226,8 +52113,8 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
@@ -51244,15 +52131,15 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
             int,
             int,
             int,
-            PositionType,
+            _PositionTypeValueType,
             int,
             int,
         ],
@@ -51265,15 +52152,15 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
             int,
             int,
             int,
-            PositionType,
+            _PositionTypeValueType,
             int,
             int,
         ],
@@ -51286,15 +52173,15 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
             int,
             int,
             int,
-            PositionType,
+            _PositionTypeValueType,
         ],
         None,
     ]: ...
@@ -51305,7 +52192,7 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
+            _StateTypeValueType,
             Widget,
             str,
             int,
@@ -51322,15 +52209,15 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
             int,
             int,
             int,
-            Orientation,
+            _OrientationValueType,
         ],
         None,
     ]: ...
@@ -51341,15 +52228,15 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
-            ShadowType,
+            _StateTypeValueType,
+            _ShadowTypeValueType,
             Widget,
             str,
             int,
             int,
             int,
             int,
-            Orientation,
+            _OrientationValueType,
         ],
         None,
     ]: ...
@@ -51360,12 +52247,12 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
+            _StateTypeValueType,
             Widget,
             str,
             int,
             int,
-            ExpanderStyle,
+            _ExpanderStyleValueType,
         ],
         None,
     ]: ...
@@ -51376,7 +52263,7 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
+            _StateTypeValueType,
             bool,
             Widget,
             str,
@@ -51393,10 +52280,10 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
+            _StateTypeValueType,
             Widget,
             str,
-            _Gdk3.WindowEdge,
+            _Gdk3._WindowEdgeValueType,
             int,
             int,
             int,
@@ -51411,7 +52298,7 @@ class StyleClass(_gi.Struct):
         [
             Style,
             cairo.Context[_SomeSurface],
-            StateType,
+            _StateTypeValueType,
             Widget,
             str,
             int,
@@ -51452,8 +52339,11 @@ class StyleContext(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        direction: TextDirection
-        paint_clock: _Gdk3.FrameClock
+        @property
+        def direction(self) -> TextDirection: ...
+        @direction.setter
+        def direction(self, value: _TextDirectionValueType) -> None: ...
+        paint_clock: _Gdk3.FrameClock | None
         parent: StyleContext | None
         screen: _Gdk3.Screen
 
@@ -51466,8 +52356,8 @@ class StyleContext(GObject.Object):
     def __init__(
         self,
         *,
-        direction: TextDirection = ...,
-        paint_clock: _Gdk3.FrameClock = ...,
+        direction: _TextDirectionValueType = ...,
+        paint_clock: _Gdk3.FrameClock | None = ...,
         parent: StyleContext | None = ...,
         screen: _Gdk3.Screen = ...,
     ) -> None: ...
@@ -51477,22 +52367,22 @@ class StyleContext(GObject.Object):
     def add_provider_for_screen(
         screen: _Gdk3.Screen, provider: StyleProvider, priority: int
     ) -> None: ...
-    def add_region(self, region_name: str, flags: RegionFlags) -> None: ...
+    def add_region(self, region_name: str, flags: _RegionFlagsValueType) -> None: ...
     def cancel_animations(self, region_id: int | Any | None = None) -> None: ...
     def do_changed(self) -> None: ...
-    def get_background_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
-    def get_border(self, state: StateFlags) -> Border: ...
-    def get_border_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
-    def get_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
+    def get_background_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
+    def get_border(self, state: _StateFlagsValueType) -> Border: ...
+    def get_border_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
+    def get_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
     def get_direction(self) -> TextDirection: ...
-    def get_font(self, state: StateFlags) -> Pango.FontDescription: ...
+    def get_font(self, state: _StateFlagsValueType) -> Pango.FontDescription: ...
     def get_frame_clock(self) -> _Gdk3.FrameClock | None: ...
     def get_junction_sides(self) -> JunctionSides: ...
-    def get_margin(self, state: StateFlags) -> Border: ...
-    def get_padding(self, state: StateFlags) -> Border: ...
+    def get_margin(self, state: _StateFlagsValueType) -> Border: ...
+    def get_padding(self, state: _StateFlagsValueType) -> Border: ...
     def get_parent(self) -> StyleContext | None: ...
     def get_path(self) -> WidgetPath: ...
-    def get_property(self, property: str, state: StateFlags) -> Any: ...
+    def get_property(self, property: str, state: _StateFlagsValueType) -> Any: ...
     def get_scale(self) -> int: ...
     def get_screen(self) -> _Gdk3.Screen: ...
     def get_section(self, property: str) -> CssSection | None: ...
@@ -51511,7 +52401,7 @@ class StyleContext(GObject.Object):
         self,
         window: _Gdk3.Window,
         region_id: int | Any | None,
-        state: StateType,
+        state: _StateTypeValueType,
         state_value: bool,
     ) -> None: ...
     def pop_animatable_region(self) -> None: ...
@@ -51529,16 +52419,16 @@ class StyleContext(GObject.Object):
     def save(self) -> None: ...
     def scroll_animations(self, window: _Gdk3.Window, dx: int, dy: int) -> None: ...
     def set_background(self, window: _Gdk3.Window) -> None: ...
-    def set_direction(self, direction: TextDirection) -> None: ...
+    def set_direction(self, direction: _TextDirectionValueType) -> None: ...
     def set_frame_clock(self, frame_clock: _Gdk3.FrameClock) -> None: ...
-    def set_junction_sides(self, sides: JunctionSides) -> None: ...
+    def set_junction_sides(self, sides: _JunctionSidesValueType) -> None: ...
     def set_parent(self, parent: StyleContext | None = None) -> None: ...
     def set_path(self, path: WidgetPath) -> None: ...
     def set_scale(self, scale: int) -> None: ...
     def set_screen(self, screen: _Gdk3.Screen) -> None: ...
-    def set_state(self, flags: StateFlags) -> None: ...
-    def state_is_running(self, state: StateType) -> tuple[bool, float]: ...
-    def to_string(self, flags: StyleContextPrintFlags) -> str: ...
+    def set_state(self, flags: _StateFlagsValueType) -> None: ...
+    def state_is_running(self, state: _StateTypeValueType) -> tuple[bool, float]: ...
+    def to_string(self, flags: _StyleContextPrintFlagsValueType) -> str: ...
 
 class StyleContextClass(_gi.Struct):
     """
@@ -51577,14 +52467,18 @@ class StyleProperties(GObject.Object, StyleProvider):
     @property
     def priv(self) -> StylePropertiesPrivate: ...
     def clear(self) -> None: ...
-    def get_property(self, property: str, state: StateFlags) -> tuple[bool, Any]: ...
+    def get_property(
+        self, property: str, state: _StateFlagsValueType
+    ) -> tuple[bool, Any]: ...
     def lookup_color(self, name: str) -> SymbolicColor: ...
     def map_color(self, name: str, color: SymbolicColor) -> None: ...
     def merge(self, props_to_merge: StyleProperties, replace: bool) -> None: ...
     @classmethod
     def new(cls) -> StyleProperties: ...
-    def set_property(self, property: str, state: StateFlags, value: Any) -> None: ...
-    def unset_property(self, property: str, state: StateFlags) -> None: ...
+    def set_property(
+        self, property: str, state: _StateFlagsValueType, value: Any
+    ) -> None: ...
+    def unset_property(self, property: str, state: _StateFlagsValueType) -> None: ...
 
 class StylePropertiesClass(_gi.Struct):
     """
@@ -51606,7 +52500,7 @@ class StyleProvider(GObject.GInterface, Protocol):
     def get_icon_factory(self, path: WidgetPath) -> IconFactory | None: ...
     def get_style(self, path: WidgetPath) -> StyleProperties | None: ...
     def get_style_property(
-        self, path: WidgetPath, state: StateFlags, pspec: GObject.ParamSpec
+        self, path: WidgetPath, state: _StateFlagsValueType, pspec: GObject.ParamSpec
     ) -> tuple[bool, Any]: ...
 
 class StyleProviderIface(_gi.Struct):
@@ -51627,7 +52521,8 @@ class StyleProviderIface(_gi.Struct):
     def get_style_property(
         self,
     ) -> Callable[
-        [StyleProvider, WidgetPath, StateFlags, GObject.ParamSpec], tuple[bool, Any]
+        [StyleProvider, WidgetPath, _StateFlagsValueType, GObject.ParamSpec],
+        tuple[bool, Any],
     ]: ...
     @property
     def get_icon_factory(
@@ -51814,7 +52709,10 @@ class Switch(Widget, Actionable, Activatable):
         active: bool
         state: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -51837,10 +52735,10 @@ class Switch(Widget, Actionable, Activatable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -51864,7 +52762,7 @@ class Switch(Widget, Actionable, Activatable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -51957,19 +52855,19 @@ class SwitchAccessible(WidgetAccessible, Atk.Action):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -52251,16 +53149,16 @@ class Table(Container):
         n_rows: int = ...,
         row_spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -52284,7 +53182,7 @@ class Table(Container):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -52637,7 +53535,10 @@ class TearoffMenuItem(MenuItem):
     @type_check_only
     class Props(MenuItem.Props):
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -52660,16 +53561,16 @@ class TearoffMenuItem(MenuItem):
         submenu: Menu | None = ...,
         use_underline: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -52693,7 +53594,7 @@ class TearoffMenuItem(MenuItem):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -52842,7 +53743,9 @@ class TextBuffer(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> TextBufferPrivate: ...
-    def __init__(self, *, tag_table: TextTagTable = ..., text: str = ...) -> None: ...
+    def __init__(
+        self, *, tag_table: TextTagTable | None = ..., text: str = ...
+    ) -> None: ...
     def add_mark(self, mark: TextMark, where: TextIter) -> None: ...
     def add_selection_clipboard(self, clipboard: Clipboard) -> None: ...
     def apply_tag(self, tag: TextTag, start: TextIter, end: TextIter) -> None: ...
@@ -53150,21 +54053,21 @@ class TextCellAccessible(RendererCellAccessible, Atk.Text):
     def __init__(
         self,
         *,
-        renderer: CellRenderer = ...,
+        renderer: CellRenderer | None = ...,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -53265,7 +54168,7 @@ class TextIter(GObject.GBoxed):
     def backward_line(self) -> bool: ...
     def backward_lines(self, count: int) -> bool: ...
     def backward_search(
-        self, str: str, flags: TextSearchFlags, limit: TextIter | None = None
+        self, str: str, flags: _TextSearchFlagsValueType, limit: TextIter | None = None
     ) -> tuple[TextIter, TextIter] | None: ...  # CHECK Wrapped function
     def backward_sentence_start(self) -> bool: ...
     def backward_sentence_starts(self, count: int) -> bool: ...
@@ -53301,7 +54204,7 @@ class TextIter(GObject.GBoxed):
     def forward_line(self) -> bool: ...
     def forward_lines(self, count: int) -> bool: ...
     def forward_search(
-        self, str: str, flags: TextSearchFlags, limit: TextIter | None = None
+        self, str: str, flags: _TextSearchFlagsValueType, limit: TextIter | None = None
     ) -> tuple[TextIter, TextIter] | None: ...  # CHECK Wrapped function
     def forward_sentence_end(self) -> bool: ...
     def forward_sentence_ends(self, count: int) -> bool: ...
@@ -53391,7 +54294,7 @@ class TextMark(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def segment(self) -> int: ...
-    def __init__(self, *, left_gravity: bool = ..., name: str = ...) -> None: ...
+    def __init__(self, *, left_gravity: bool = ..., name: str | None = ...) -> None: ...
     def get_buffer(self) -> TextBuffer: ...
     def get_deleted(self) -> bool: ...
     def get_left_gravity(self) -> bool: ...
@@ -53582,44 +54485,59 @@ class TextTag(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         accumulative_margin: bool
-        background: str
+        @property
+        def background(self) -> Never: ...
+        @background.setter
+        def background(self, value: str | None) -> None: ...
         background_full_height: bool
         background_full_height_set: bool
-        background_gdk: _Gdk3.Color
-        background_rgba: _Gdk3.RGBA
+        background_gdk: _Gdk3.Color | None
+        background_rgba: _Gdk3.RGBA | None
         background_set: bool
-        direction: TextDirection
+        @property
+        def direction(self) -> TextDirection: ...
+        @direction.setter
+        def direction(self, value: _TextDirectionValueType) -> None: ...
         editable: bool
         editable_set: bool
         fallback: bool
         fallback_set: bool
-        family: str
+        family: str | None
         family_set: bool
-        font: str
-        font_desc: Pango.FontDescription
-        font_features: str
+        font: str | None
+        font_desc: Pango.FontDescription | None
+        font_features: str | None
         font_features_set: bool
-        foreground: str
-        foreground_gdk: _Gdk3.Color
-        foreground_rgba: _Gdk3.RGBA
+        @property
+        def foreground(self) -> Never: ...
+        @foreground.setter
+        def foreground(self, value: str | None) -> None: ...
+        foreground_gdk: _Gdk3.Color | None
+        foreground_rgba: _Gdk3.RGBA | None
         foreground_set: bool
         indent: int
         indent_set: bool
         invisible: bool
         invisible_set: bool
-        justification: Justification
+        @property
+        def justification(self) -> Justification: ...
+        @justification.setter
+        def justification(self, value: _JustificationValueType) -> None: ...
         justification_set: bool
-        language: str
+        language: str | None
         language_set: bool
         left_margin: int
         left_margin_set: bool
         letter_spacing: int
         letter_spacing_set: bool
         @property
-        def name(self) -> str: ...
-        paragraph_background: str
-        paragraph_background_gdk: _Gdk3.Color
-        paragraph_background_rgba: _Gdk3.RGBA
+        def name(self) -> str | None: ...
+        @property
+        def paragraph_background(self) -> Never: ...
+        @paragraph_background.setter
+        def paragraph_background(self, value: str | None) -> None: ...
+        paragraph_background_gdk: _Gdk3.Color | None
+        paragraph_background_rgba: _Gdk3.RGBA | None
         paragraph_background_set: bool
         pixels_above_lines: int
         pixels_above_lines_set: bool
@@ -53636,25 +54554,40 @@ class TextTag(GObject.Object):
         size: int
         size_points: float
         size_set: bool
-        stretch: Pango.Stretch
+        @property
+        def stretch(self) -> Pango.Stretch: ...
+        @stretch.setter
+        def stretch(self, value: Pango._StretchValueType) -> None: ...
         stretch_set: bool
         strikethrough: bool
-        strikethrough_rgba: _Gdk3.RGBA
+        strikethrough_rgba: _Gdk3.RGBA | None
         strikethrough_rgba_set: bool
         strikethrough_set: bool
-        style: Pango.Style
+        @property
+        def style(self) -> Pango.Style: ...
+        @style.setter
+        def style(self, value: Pango._StyleValueType) -> None: ...
         style_set: bool
-        tabs: Pango.TabArray
+        tabs: Pango.TabArray | None
         tabs_set: bool
-        underline: Pango.Underline
-        underline_rgba: _Gdk3.RGBA
+        @property
+        def underline(self) -> Pango.Underline: ...
+        @underline.setter
+        def underline(self, value: Pango._UnderlineValueType) -> None: ...
+        underline_rgba: _Gdk3.RGBA | None
         underline_rgba_set: bool
         underline_set: bool
-        variant: Pango.Variant
+        @property
+        def variant(self) -> Pango.Variant: ...
+        @variant.setter
+        def variant(self, value: Pango._VariantValueType) -> None: ...
         variant_set: bool
         weight: int
         weight_set: bool
-        wrap_mode: WrapMode
+        @property
+        def wrap_mode(self) -> WrapMode: ...
+        @wrap_mode.setter
+        def wrap_mode(self, value: _WrapModeValueType) -> None: ...
         wrap_mode_set: bool
 
     @property
@@ -53667,43 +54600,43 @@ class TextTag(GObject.Object):
         self,
         *,
         accumulative_margin: bool = ...,
-        background: str = ...,
+        background: str | None = ...,
         background_full_height: bool = ...,
         background_full_height_set: bool = ...,
-        background_gdk: _Gdk3.Color = ...,
-        background_rgba: _Gdk3.RGBA = ...,
+        background_gdk: _Gdk3.Color | None = ...,
+        background_rgba: _Gdk3.RGBA | None = ...,
         background_set: bool = ...,
-        direction: TextDirection = ...,
+        direction: _TextDirectionValueType = ...,
         editable: bool = ...,
         editable_set: bool = ...,
         fallback: bool = ...,
         fallback_set: bool = ...,
-        family: str = ...,
+        family: str | None = ...,
         family_set: bool = ...,
-        font: str = ...,
-        font_desc: Pango.FontDescription = ...,
-        font_features: str = ...,
+        font: str | None = ...,
+        font_desc: Pango.FontDescription | None = ...,
+        font_features: str | None = ...,
         font_features_set: bool = ...,
-        foreground: str = ...,
-        foreground_gdk: _Gdk3.Color = ...,
-        foreground_rgba: _Gdk3.RGBA = ...,
+        foreground: str | None = ...,
+        foreground_gdk: _Gdk3.Color | None = ...,
+        foreground_rgba: _Gdk3.RGBA | None = ...,
         foreground_set: bool = ...,
         indent: int = ...,
         indent_set: bool = ...,
         invisible: bool = ...,
         invisible_set: bool = ...,
-        justification: Justification = ...,
+        justification: _JustificationValueType = ...,
         justification_set: bool = ...,
-        language: str = ...,
+        language: str | None = ...,
         language_set: bool = ...,
         left_margin: int = ...,
         left_margin_set: bool = ...,
         letter_spacing: int = ...,
         letter_spacing_set: bool = ...,
-        name: str = ...,
-        paragraph_background: str = ...,
-        paragraph_background_gdk: _Gdk3.Color = ...,
-        paragraph_background_rgba: _Gdk3.RGBA = ...,
+        name: str | None = ...,
+        paragraph_background: str | None = ...,
+        paragraph_background_gdk: _Gdk3.Color | None = ...,
+        paragraph_background_rgba: _Gdk3.RGBA | None = ...,
         paragraph_background_set: bool = ...,
         pixels_above_lines: int = ...,
         pixels_above_lines_set: bool = ...,
@@ -53720,25 +54653,25 @@ class TextTag(GObject.Object):
         size: int = ...,
         size_points: float = ...,
         size_set: bool = ...,
-        stretch: Pango.Stretch = ...,
+        stretch: Pango._StretchValueType = ...,
         stretch_set: bool = ...,
         strikethrough: bool = ...,
-        strikethrough_rgba: _Gdk3.RGBA = ...,
+        strikethrough_rgba: _Gdk3.RGBA | None = ...,
         strikethrough_rgba_set: bool = ...,
         strikethrough_set: bool = ...,
-        style: Pango.Style = ...,
+        style: Pango._StyleValueType = ...,
         style_set: bool = ...,
-        tabs: Pango.TabArray = ...,
+        tabs: Pango.TabArray | None = ...,
         tabs_set: bool = ...,
-        underline: Pango.Underline = ...,
-        underline_rgba: _Gdk3.RGBA = ...,
+        underline: Pango._UnderlineValueType = ...,
+        underline_rgba: _Gdk3.RGBA | None = ...,
         underline_rgba_set: bool = ...,
         underline_set: bool = ...,
-        variant: Pango.Variant = ...,
+        variant: Pango._VariantValueType = ...,
         variant_set: bool = ...,
         weight: int = ...,
         weight_set: bool = ...,
-        wrap_mode: WrapMode = ...,
+        wrap_mode: _WrapModeValueType = ...,
         wrap_mode_set: bool = ...,
     ) -> None: ...
     def changed(self, size_changed: bool) -> None: ...
@@ -54071,14 +55004,26 @@ class TextView(Container, Scrollable):
     class Props(Container.Props):
         accepts_tab: bool
         bottom_margin: int
-        buffer: TextBuffer | None
+        @property
+        def buffer(self) -> TextBuffer: ...
+        @buffer.setter
+        def buffer(self, value: TextBuffer | None) -> None: ...
         cursor_visible: bool
         editable: bool
-        im_module: str
+        im_module: str | None
         indent: int
-        input_hints: InputHints
-        input_purpose: InputPurpose
-        justification: Justification
+        @property
+        def input_hints(self) -> InputHints: ...
+        @input_hints.setter
+        def input_hints(self, value: _InputHintsValueType) -> None: ...
+        @property
+        def input_purpose(self) -> InputPurpose: ...
+        @input_purpose.setter
+        def input_purpose(self, value: _InputPurposeValueType) -> None: ...
+        @property
+        def justification(self) -> Justification: ...
+        @justification.setter
+        def justification(self, value: _JustificationValueType) -> None: ...
         left_margin: int
         monospace: bool
         overwrite: bool
@@ -54087,13 +55032,31 @@ class TextView(Container, Scrollable):
         pixels_inside_wrap: int
         populate_all: bool
         right_margin: int
-        tabs: Pango.TabArray | None
+        @property
+        def tabs(self) -> Pango.TabArray | None: ...
+        @tabs.setter
+        def tabs(self, value: Pango.TabArray) -> None: ...
         top_margin: int
-        wrap_mode: WrapMode
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def wrap_mode(self) -> WrapMode: ...
+        @wrap_mode.setter
+        def wrap_mode(self, value: _WrapModeValueType) -> None: ...
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -54109,11 +55072,11 @@ class TextView(Container, Scrollable):
         buffer: TextBuffer | None = ...,
         cursor_visible: bool = ...,
         editable: bool = ...,
-        im_module: str = ...,
+        im_module: str | None = ...,
         indent: int = ...,
-        input_hints: InputHints = ...,
-        input_purpose: InputPurpose = ...,
-        justification: Justification = ...,
+        input_hints: _InputHintsValueType = ...,
+        input_purpose: _InputPurposeValueType = ...,
+        justification: _JustificationValueType = ...,
         left_margin: int = ...,
         monospace: bool = ...,
         overwrite: bool = ...,
@@ -54124,22 +55087,22 @@ class TextView(Container, Scrollable):
         right_margin: int = ...,
         tabs: Pango.TabArray = ...,
         top_margin: int = ...,
-        wrap_mode: WrapMode = ...,
+        wrap_mode: _WrapModeValueType = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -54163,7 +55126,7 @@ class TextView(Container, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -54171,23 +55134,27 @@ class TextView(Container, Scrollable):
     ) -> None: ...
     def add_child_at_anchor(self, child: Widget, anchor: TextChildAnchor) -> None: ...
     def add_child_in_window(
-        self, child: Widget, which_window: TextWindowType, xpos: int, ypos: int
+        self,
+        child: Widget,
+        which_window: _TextWindowTypeValueType,
+        xpos: int,
+        ypos: int,
     ) -> None: ...
     def backward_display_line(self, iter: TextIter) -> bool: ...
     def backward_display_line_start(self, iter: TextIter) -> bool: ...
     def buffer_to_window_coords(
-        self, win: TextWindowType, buffer_x: int, buffer_y: int
+        self, win: _TextWindowTypeValueType, buffer_x: int, buffer_y: int
     ) -> tuple[int, int]: ...
     def do_backspace(self) -> None: ...
     def do_copy_clipboard(self) -> None: ...
     def do_cut_clipboard(self) -> None: ...
-    def do_delete_from_cursor(self, type: DeleteType, count: int) -> None: ...
+    def do_delete_from_cursor(self, type: _DeleteTypeValueType, count: int) -> None: ...
     def do_draw_layer(
-        self, layer: TextViewLayer, cr: cairo.Context[_SomeSurface]
+        self, layer: _TextViewLayerValueType, cr: cairo.Context[_SomeSurface]
     ) -> None: ...
     def do_extend_selection(
         self,
-        granularity: TextExtendSelection,
+        granularity: _TextExtendSelectionValueType,
         location: TextIter,
         start: TextIter,
         end: TextIter,
@@ -54195,7 +55162,7 @@ class TextView(Container, Scrollable):
     def do_insert_at_cursor(self, str: str) -> None: ...
     def do_insert_emoji(self) -> None: ...
     def do_move_cursor(
-        self, step: MovementStep, count: int, extend_selection: bool
+        self, step: _MovementStepValueType, count: int, extend_selection: bool
     ) -> None: ...
     def do_paste_clipboard(self) -> None: ...
     def do_populate_popup(self, popup: Widget) -> None: ...
@@ -54204,7 +55171,7 @@ class TextView(Container, Scrollable):
     def forward_display_line(self, iter: TextIter) -> bool: ...
     def forward_display_line_end(self, iter: TextIter) -> bool: ...
     def get_accepts_tab(self) -> bool: ...
-    def get_border_window_size(self, type: TextWindowType) -> int: ...
+    def get_border_window_size(self, type: _TextWindowTypeValueType) -> int: ...
     def get_bottom_margin(self) -> int: ...
     def get_buffer(self) -> TextBuffer: ...
     def get_cursor_locations(
@@ -54234,7 +55201,7 @@ class TextView(Container, Scrollable):
     def get_top_margin(self) -> int: ...
     def get_vadjustment(self) -> Adjustment: ...
     def get_visible_rect(self) -> _Gdk3.Rectangle: ...
-    def get_window(self, win: TextWindowType) -> _Gdk3.Window | None: ...
+    def get_window(self, win: _TextWindowTypeValueType) -> _Gdk3.Window | None: ...
     def get_window_type(self, window: _Gdk3.Window) -> TextWindowType: ...
     def get_wrap_mode(self) -> WrapMode: ...
     def im_context_filter_keypress(self, event: _Gdk3.EventKey) -> bool: ...
@@ -54266,15 +55233,17 @@ class TextView(Container, Scrollable):
         yalign: float,
     ) -> None: ...
     def set_accepts_tab(self, accepts_tab: bool) -> None: ...
-    def set_border_window_size(self, type: TextWindowType, size: int) -> None: ...
+    def set_border_window_size(
+        self, type: _TextWindowTypeValueType, size: int
+    ) -> None: ...
     def set_bottom_margin(self, bottom_margin: int) -> None: ...
     def set_buffer(self, buffer: TextBuffer | None = None) -> None: ...
     def set_cursor_visible(self, setting: bool) -> None: ...
     def set_editable(self, setting: bool) -> None: ...
     def set_indent(self, indent: int) -> None: ...
-    def set_input_hints(self, hints: InputHints) -> None: ...
-    def set_input_purpose(self, purpose: InputPurpose) -> None: ...
-    def set_justification(self, justification: Justification) -> None: ...
+    def set_input_hints(self, hints: _InputHintsValueType) -> None: ...
+    def set_input_purpose(self, purpose: _InputPurposeValueType) -> None: ...
+    def set_justification(self, justification: _JustificationValueType) -> None: ...
     def set_left_margin(self, left_margin: int) -> None: ...
     def set_monospace(self, monospace: bool) -> None: ...
     def set_overwrite(self, overwrite: bool) -> None: ...
@@ -54284,10 +55253,10 @@ class TextView(Container, Scrollable):
     def set_right_margin(self, right_margin: int) -> None: ...
     def set_tabs(self, tabs: Pango.TabArray) -> None: ...
     def set_top_margin(self, top_margin: int) -> None: ...
-    def set_wrap_mode(self, wrap_mode: WrapMode) -> None: ...
+    def set_wrap_mode(self, wrap_mode: _WrapModeValueType) -> None: ...
     def starts_display_line(self, iter: TextIter) -> bool: ...
     def window_to_buffer_coords(
-        self, win: TextWindowType, window_x: int, window_y: int
+        self, win: _TextWindowTypeValueType, window_x: int, window_y: int
     ) -> tuple[int, int]: ...
 
 class TextViewAccessible(
@@ -54381,19 +55350,19 @@ class TextViewAccessible(
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -54423,13 +55392,17 @@ class TextViewClass(_gi.Struct):
     @property
     def populate_popup(self) -> Callable[[TextView, Widget], None]: ...
     @property
-    def move_cursor(self) -> Callable[[TextView, MovementStep, int, bool], None]: ...
+    def move_cursor(
+        self,
+    ) -> Callable[[TextView, _MovementStepValueType, int, bool], None]: ...
     @property
     def set_anchor(self) -> Callable[[TextView], None]: ...
     @property
     def insert_at_cursor(self) -> Callable[[TextView, str], None]: ...
     @property
-    def delete_from_cursor(self) -> Callable[[TextView, DeleteType, int], None]: ...
+    def delete_from_cursor(
+        self,
+    ) -> Callable[[TextView, _DeleteTypeValueType, int], None]: ...
     @property
     def backspace(self) -> Callable[[TextView], None]: ...
     @property
@@ -54445,12 +55418,14 @@ class TextViewClass(_gi.Struct):
     @property
     def draw_layer(
         self,
-    ) -> Callable[[TextView, TextViewLayer, cairo.Context[_SomeSurface]], None]: ...
+    ) -> Callable[
+        [TextView, _TextViewLayerValueType, cairo.Context[_SomeSurface]], None
+    ]: ...
     @property
     def extend_selection(
         self,
     ) -> Callable[
-        [TextView, TextExtendSelection, TextIter, TextIter, TextIter], bool
+        [TextView, _TextExtendSelectionValueType, TextIter, TextIter, TextIter], bool
     ]: ...
     @property
     def insert_emoji(self) -> Callable[[TextView], None]: ...
@@ -54478,7 +55453,7 @@ class ThemingEngine(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def name(self) -> str: ...
+        def name(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -54486,7 +55461,7 @@ class ThemingEngine(GObject.Object):
     def parent_object(self) -> GObject.Object: ...
     @property
     def priv(self) -> ThemingEnginePrivate: ...
-    def __init__(self, *, name: str = ...) -> None: ...
+    def __init__(self, *, name: str | None = ...) -> None: ...
     def do_render_activity(
         self,
         cr: cairo.Context[_SomeSurface],
@@ -54534,7 +55509,7 @@ class ThemingEngine(GObject.Object):
         y: float,
         width: float,
         height: float,
-        gap_side: PositionType,
+        gap_side: _PositionTypeValueType,
     ) -> None: ...
     def do_render_focus(
         self,
@@ -54559,7 +55534,7 @@ class ThemingEngine(GObject.Object):
         y: float,
         width: float,
         height: float,
-        gap_side: PositionType,
+        gap_side: _PositionTypeValueType,
         xy0_gap: float,
         xy1_gap: float,
     ) -> None: ...
@@ -54611,19 +55586,19 @@ class ThemingEngine(GObject.Object):
         y: float,
         width: float,
         height: float,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
     ) -> None: ...
-    def get_background_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
-    def get_border(self, state: StateFlags) -> Border: ...
-    def get_border_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
-    def get_color(self, state: StateFlags) -> _Gdk3.RGBA: ...
+    def get_background_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
+    def get_border(self, state: _StateFlagsValueType) -> Border: ...
+    def get_border_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
+    def get_color(self, state: _StateFlagsValueType) -> _Gdk3.RGBA: ...
     def get_direction(self) -> TextDirection: ...
-    def get_font(self, state: StateFlags) -> Pango.FontDescription: ...
+    def get_font(self, state: _StateFlagsValueType) -> Pango.FontDescription: ...
     def get_junction_sides(self) -> JunctionSides: ...
-    def get_margin(self, state: StateFlags) -> Border: ...
-    def get_padding(self, state: StateFlags) -> Border: ...
+    def get_margin(self, state: _StateFlagsValueType) -> Border: ...
+    def get_padding(self, state: _StateFlagsValueType) -> Border: ...
     def get_path(self) -> WidgetPath: ...
-    def get_property(self, property: str, state: StateFlags) -> Any: ...
+    def get_property(self, property: str, state: _StateFlagsValueType) -> Any: ...
     def get_screen(self) -> _Gdk3.Screen | None: ...
     def get_state(self) -> StateFlags: ...
     def get_style_property(self, property_name: str) -> Any: ...
@@ -54632,7 +55607,7 @@ class ThemingEngine(GObject.Object):
     @staticmethod
     def load(name: str) -> ThemingEngine | None: ...
     def lookup_color(self, color_name: str) -> tuple[bool, _Gdk3.RGBA]: ...
-    def state_is_running(self, state: StateType) -> tuple[bool, float]: ...
+    def state_is_running(self, state: _StateTypeValueType) -> tuple[bool, float]: ...
 
 class ThemingEngineClass(_gi.Struct):
     """
@@ -54673,7 +55648,7 @@ class ThemingEngineClass(_gi.Struct):
             float,
             float,
             float,
-            PositionType,
+            _PositionTypeValueType,
             float,
             float,
         ],
@@ -54690,7 +55665,7 @@ class ThemingEngineClass(_gi.Struct):
             float,
             float,
             float,
-            PositionType,
+            _PositionTypeValueType,
         ],
         None,
     ]: ...
@@ -54741,7 +55716,7 @@ class ThemingEngineClass(_gi.Struct):
             float,
             float,
             float,
-            Orientation,
+            _OrientationValueType,
         ],
         None,
     ]: ...
@@ -54853,14 +55828,14 @@ class ToggleAction(Action):
         *,
         active: bool = ...,
         draw_as_radio: bool = ...,
-        action_group: ActionGroup = ...,
+        action_group: ActionGroup | None = ...,
         always_show_image: bool = ...,
         gicon: Gio.Icon = ...,
         hide_if_empty: bool = ...,
         icon_name: str = ...,
         is_important: bool = ...,
         label: str = ...,
-        name: str = ...,
+        name: str | None = ...,
         sensitive: bool = ...,
         short_label: str = ...,
         stock_id: str = ...,
@@ -55143,7 +56118,10 @@ class ToggleButton(Button):
         draw_indicator: bool
         inconsistent: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -55165,24 +56143,24 @@ class ToggleButton(Button):
         use_action_appearance: bool = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -55206,7 +56184,7 @@ class ToggleButton(Button):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -55311,19 +56289,19 @@ class ToggleButtonAccessible(ButtonAccessible):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -55575,7 +56553,10 @@ class ToggleToolButton(ToolButton):
     class Props(ToolButton.Props):
         active: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -55603,16 +56584,16 @@ class ToggleToolButton(ToolButton):
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -55636,7 +56617,7 @@ class ToggleToolButton(ToolButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -55880,10 +56861,16 @@ class ToolButton(ToolItem, Actionable):
         icon_widget: Widget | None
         label: str | None
         label_widget: Widget | None
-        stock_id: str | None
+        @property
+        def stock_id(self) -> str: ...
+        @stock_id.setter
+        def stock_id(self, value: str | None) -> None: ...
         use_underline: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
 
@@ -55910,16 +56897,16 @@ class ToolButton(ToolItem, Actionable):
         visible_horizontal: bool = ...,
         visible_vertical: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -55943,7 +56930,7 @@ class ToolButton(ToolItem, Actionable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -56200,16 +57187,16 @@ class ToolItem(Bin, Activatable):
         related_action: Action = ...,
         use_action_appearance: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -56233,7 +57220,7 @@ class ToolItem(Bin, Activatable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -56482,8 +57469,14 @@ class ToolItemGroup(Container, ToolShell):
     @type_check_only
     class Props(Container.Props):
         collapsed: bool
-        ellipsize: Pango.EllipsizeMode
-        header_relief: ReliefStyle
+        @property
+        def ellipsize(self) -> Pango.EllipsizeMode: ...
+        @ellipsize.setter
+        def ellipsize(self, value: Pango._EllipsizeModeValueType) -> None: ...
+        @property
+        def header_relief(self) -> ReliefStyle: ...
+        @header_relief.setter
+        def header_relief(self, value: _ReliefStyleValueType) -> None: ...
         label: str
         label_widget: Widget
 
@@ -56497,21 +57490,21 @@ class ToolItemGroup(Container, ToolShell):
         self,
         *,
         collapsed: bool = ...,
-        ellipsize: Pango.EllipsizeMode = ...,
-        header_relief: ReliefStyle = ...,
+        ellipsize: Pango._EllipsizeModeValueType = ...,
+        header_relief: _ReliefStyleValueType = ...,
         label: str = ...,
         label_widget: Widget = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -56535,7 +57528,7 @@ class ToolItemGroup(Container, ToolShell):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -56554,8 +57547,8 @@ class ToolItemGroup(Container, ToolShell):
     @classmethod
     def new(cls, label: str) -> ToolItemGroup: ...
     def set_collapsed(self, collapsed: bool) -> None: ...
-    def set_ellipsize(self, ellipsize: Pango.EllipsizeMode) -> None: ...
-    def set_header_relief(self, style: ReliefStyle) -> None: ...
+    def set_ellipsize(self, ellipsize: Pango._EllipsizeModeValueType) -> None: ...
+    def set_header_relief(self, style: _ReliefStyleValueType) -> None: ...
     def set_item_position(self, item: ToolItem, position: int) -> None: ...
     def set_label(self, label: str) -> None: ...
     def set_label_widget(self, label_widget: Widget) -> None: ...
@@ -56763,14 +57756,35 @@ class ToolPalette(Container, Orientable, Scrollable):
     """
     @type_check_only
     class Props(Container.Props):
-        icon_size: IconSize
+        @property
+        def icon_size(self) -> IconSize: ...
+        @icon_size.setter
+        def icon_size(self, value: _IconSizeValueType) -> None: ...
         icon_size_set: bool
-        toolbar_style: ToolbarStyle
-        orientation: Orientation
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def toolbar_style(self) -> ToolbarStyle: ...
+        @toolbar_style.setter
+        def toolbar_style(self, value: _ToolbarStyleValueType) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -56781,25 +57795,25 @@ class ToolPalette(Container, Orientable, Scrollable):
     def __init__(
         self,
         *,
-        icon_size: IconSize = ...,
+        icon_size: _IconSizeValueType = ...,
         icon_size_set: bool = ...,
-        toolbar_style: ToolbarStyle = ...,
-        orientation: Orientation = ...,
+        toolbar_style: _ToolbarStyleValueType = ...,
+        orientation: _OrientationValueType = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -56823,7 +57837,7 @@ class ToolPalette(Container, Orientable, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -56832,9 +57846,9 @@ class ToolPalette(Container, Orientable, Scrollable):
     def add_drag_dest(
         self,
         widget: Widget,
-        flags: DestDefaults,
-        targets: ToolPaletteDragTargets,
-        actions: _Gdk3.DragAction,
+        flags: _DestDefaultsValueType,
+        targets: _ToolPaletteDragTargetsValueType,
+        actions: _Gdk3._DragActionValueType,
     ) -> None: ...
     def get_drag_item(self, selection: SelectionData) -> Widget: ...
     @staticmethod
@@ -56852,12 +57866,12 @@ class ToolPalette(Container, Orientable, Scrollable):
     def get_vadjustment(self) -> Adjustment: ...
     @classmethod
     def new(cls) -> ToolPalette: ...
-    def set_drag_source(self, targets: ToolPaletteDragTargets) -> None: ...
+    def set_drag_source(self, targets: _ToolPaletteDragTargetsValueType) -> None: ...
     def set_exclusive(self, group: ToolItemGroup, exclusive: bool) -> None: ...
     def set_expand(self, group: ToolItemGroup, expand: bool) -> None: ...
     def set_group_position(self, group: ToolItemGroup, position: int) -> None: ...
     def set_icon_size(self, icon_size: int) -> None: ...
-    def set_style(self, style: ToolbarStyle) -> None: ...
+    def set_style(self, style: _ToolbarStyleValueType) -> None: ...
     def unset_icon_size(self) -> None: ...
     def unset_style(self) -> None: ...
 
@@ -57117,11 +58131,20 @@ class Toolbar(Container, Orientable, ToolShell):
     """
     @type_check_only
     class Props(Container.Props):
-        icon_size: IconSize
+        @property
+        def icon_size(self) -> IconSize: ...
+        @icon_size.setter
+        def icon_size(self, value: _IconSizeValueType) -> None: ...
         icon_size_set: bool
         show_arrow: bool
-        toolbar_style: ToolbarStyle
-        orientation: Orientation
+        @property
+        def toolbar_style(self) -> ToolbarStyle: ...
+        @toolbar_style.setter
+        def toolbar_style(self, value: _ToolbarStyleValueType) -> None: ...
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -57132,22 +58155,22 @@ class Toolbar(Container, Orientable, ToolShell):
     def __init__(
         self,
         *,
-        icon_size: IconSize = ...,
+        icon_size: _IconSizeValueType = ...,
         icon_size_set: bool = ...,
         show_arrow: bool = ...,
-        toolbar_style: ToolbarStyle = ...,
-        orientation: Orientation = ...,
+        toolbar_style: _ToolbarStyleValueType = ...,
+        orientation: _OrientationValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -57171,15 +58194,15 @@ class Toolbar(Container, Orientable, ToolShell):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
         width_request: int = ...,
     ) -> None: ...
-    def do_orientation_changed(self, orientation: Orientation) -> None: ...
+    def do_orientation_changed(self, orientation: _OrientationValueType) -> None: ...
     def do_popup_context_menu(self, x: int, y: int, button_number: int) -> bool: ...
-    def do_style_changed(self, style: ToolbarStyle) -> None: ...
+    def do_style_changed(self, style: _ToolbarStyleValueType) -> None: ...
     def get_drop_index(self, x: int, y: int) -> int: ...
     def get_icon_size(self) -> IconSize: ...
     def get_item_index(self, item: ToolItem) -> int: ...
@@ -57194,9 +58217,9 @@ class Toolbar(Container, Orientable, ToolShell):
     def set_drop_highlight_item(
         self, tool_item: ToolItem | None, index_: int
     ) -> None: ...
-    def set_icon_size(self, icon_size: IconSize) -> None: ...
+    def set_icon_size(self, icon_size: _IconSizeValueType) -> None: ...
     def set_show_arrow(self, show_arrow: bool) -> None: ...
-    def set_style(self, style: ToolbarStyle) -> None: ...
+    def set_style(self, style: _ToolbarStyleValueType) -> None: ...
     def unset_icon_size(self) -> None: ...
     def unset_style(self) -> None: ...
 
@@ -57211,9 +58234,11 @@ class ToolbarClass(_gi.Struct):
     @property
     def parent_class(self) -> ContainerClass: ...
     @property
-    def orientation_changed(self) -> Callable[[Toolbar, Orientation], None]: ...
+    def orientation_changed(
+        self,
+    ) -> Callable[[Toolbar, _OrientationValueType], None]: ...
     @property
-    def style_changed(self) -> Callable[[Toolbar, ToolbarStyle], None]: ...
+    def style_changed(self) -> Callable[[Toolbar, _ToolbarStyleValueType], None]: ...
     @property
     def popup_context_menu(self) -> Callable[[Toolbar, int, int, int], bool]: ...
 
@@ -57310,19 +58335,19 @@ class ToplevelAccessible(Atk.Object):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def get_children(self) -> list[Window]: ...
@@ -57524,9 +58549,9 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def child_model(self) -> TreeModel: ...
+        def child_model(self) -> TreeModel | None: ...
         @property
-        def virtual_root(self) -> TreePath: ...
+        def virtual_root(self) -> TreePath | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -57535,7 +58560,10 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     @property
     def priv(self) -> TreeModelFilterPrivate: ...
     def __init__(
-        self, *, child_model: TreeModel = ..., virtual_root: TreePath = ...
+        self,
+        *,
+        child_model: TreeModel | None = ...,
+        virtual_root: TreePath | None = ...,
     ) -> None: ...
     def clear_cache(self) -> None: ...
     def convert_child_iter_to_iter(
@@ -57705,7 +58733,7 @@ class TreeModelSort(GObject.Object, TreeDragSource, TreeModel, TreeSortable):
     def parent(self) -> GObject.Object: ...
     @property
     def priv(self) -> TreeModelSortPrivate: ...
-    def __init__(self, *, model: TreeModel = ...) -> None: ...
+    def __init__(self, *, model: TreeModel | None = ...) -> None: ...
     def clear_cache(self) -> None: ...
     def convert_child_iter_to_iter(
         self, child_iter: TreeIter
@@ -57822,7 +58850,10 @@ class TreeSelection(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        mode: SelectionMode
+        @property
+        def mode(self) -> SelectionMode: ...
+        @mode.setter
+        def mode(self, value: _SelectionModeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -57830,7 +58861,7 @@ class TreeSelection(GObject.Object):
     def parent(self) -> GObject.Object: ...
     @property
     def priv(self) -> TreeSelectionPrivate: ...
-    def __init__(self, *, mode: SelectionMode = ...) -> None: ...
+    def __init__(self, *, mode: _SelectionModeValueType = ...) -> None: ...
     def count_selected_rows(self) -> int: ...
     def do_changed(self) -> None: ...
     def get_mode(self) -> SelectionMode: ...
@@ -57851,7 +58882,7 @@ class TreeSelection(GObject.Object):
         func: Callable[[TreeModel, TreePath, TreeIter, Unpack[_DataTs]], None],
         *data: Unpack[_DataTs],
     ) -> None: ...
-    def set_mode(self, type: SelectionMode) -> None: ...
+    def set_mode(self, type: _SelectionModeValueType) -> None: ...
     def set_select_function(
         self,
         func: Callable[
@@ -57897,7 +58928,9 @@ class TreeSortable(GObject.GInterface, Protocol):
         sort_func: Callable[[TreeModel, TreeIter, TreeIter, Any], int],
         user_data: Any | None = None,
     ): ...
-    def set_sort_column_id(self, sort_column_id: int, order: SortType) -> None: ...
+    def set_sort_column_id(
+        self, sort_column_id: int, order: _SortTypeValueType
+    ) -> None: ...
     # override
     def set_sort_func(
         self,
@@ -57924,7 +58957,9 @@ class TreeSortableIface(_gi.Struct):
         self,
     ) -> Callable[[TreeSortable], tuple[bool, int, SortType]]: ...
     @property
-    def set_sort_column_id(self) -> Callable[[TreeSortable, int, SortType], None]: ...
+    def set_sort_column_id(
+        self,
+    ) -> Callable[[TreeSortable, int, _SortTypeValueType], None]: ...
     @property
     def set_sort_func(
         self,
@@ -58275,10 +59310,16 @@ class TreeView(Container, Scrollable):
     @type_check_only
     class Props(Container.Props):
         activate_on_single_click: bool
-        enable_grid_lines: TreeViewGridLines
+        @property
+        def enable_grid_lines(self) -> TreeViewGridLines: ...
+        @enable_grid_lines.setter
+        def enable_grid_lines(self, value: _TreeViewGridLinesValueType) -> None: ...
         enable_search: bool
         enable_tree_lines: bool
-        expander_column: TreeViewColumn | None
+        @property
+        def expander_column(self) -> TreeViewColumn: ...
+        @expander_column.setter
+        def expander_column(self, value: TreeViewColumn | None) -> None: ...
         fixed_height_mode: bool
         headers_clickable: bool
         headers_visible: bool
@@ -58292,10 +59333,22 @@ class TreeView(Container, Scrollable):
         search_column: int
         show_expanders: bool
         tooltip_column: int
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -58307,7 +59360,7 @@ class TreeView(Container, Scrollable):
         self,
         *,
         activate_on_single_click: bool = ...,
-        enable_grid_lines: TreeViewGridLines = ...,
+        enable_grid_lines: _TreeViewGridLinesValueType = ...,
         enable_search: bool = ...,
         enable_tree_lines: bool = ...,
         expander_column: TreeViewColumn | None = ...,
@@ -58325,20 +59378,20 @@ class TreeView(Container, Scrollable):
         show_expanders: bool = ...,
         tooltip_column: int = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -58362,7 +59415,7 @@ class TreeView(Container, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -58392,7 +59445,7 @@ class TreeView(Container, Scrollable):
     def do_expand_collapse_cursor_row(
         self, logical: bool, expand: bool, open_all: bool
     ) -> bool: ...
-    def do_move_cursor(self, step: MovementStep, count: int) -> bool: ...
+    def do_move_cursor(self, step: _MovementStepValueType, count: int) -> bool: ...
     def do_row_activated(self, path: TreePath, column: TreeViewColumn) -> None: ...
     def do_row_collapsed(self, iter: TreeIter, path: TreePath) -> None: ...
     def do_row_expanded(self, iter: TreeIter, path: TreePath) -> None: ...
@@ -58546,13 +59599,13 @@ class TreeView(Container, Scrollable):
         *data: Unpack[_DataTs],
     ) -> None: ...
     def set_drag_dest_row(
-        self, path: TreePath | None, pos: TreeViewDropPosition
+        self, path: TreePath | None, pos: _TreeViewDropPositionValueType
     ) -> None: ...
     def set_enable_search(self, enable_search: bool) -> None: ...
     def set_enable_tree_lines(self, enabled: bool) -> None: ...
     def set_expander_column(self, column: TreeViewColumn | None = None) -> None: ...
     def set_fixed_height_mode(self, enable: bool) -> None: ...
-    def set_grid_lines(self, grid_lines: TreeViewGridLines) -> None: ...
+    def set_grid_lines(self, grid_lines: _TreeViewGridLinesValueType) -> None: ...
     def set_hadjustment(self, adjustment: Adjustment | None = None) -> None: ...
     def set_headers_clickable(self, setting: bool) -> None: ...
     def set_headers_visible(self, headers_visible: bool) -> None: ...
@@ -58691,19 +59744,19 @@ class TreeViewAccessible(
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -58745,7 +59798,9 @@ class TreeViewClass(_gi.Struct):
     @property
     def cursor_changed(self) -> Callable[[TreeView], None]: ...
     @property
-    def move_cursor(self) -> Callable[[TreeView, MovementStep, int], bool]: ...
+    def move_cursor(
+        self,
+    ) -> Callable[[TreeView, _MovementStepValueType, int], bool]: ...
     @property
     def select_all(self) -> Callable[[TreeView], bool]: ...
     @property
@@ -58825,7 +59880,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     class Props(GObject.InitiallyUnowned.Props):
         alignment: float
         @property
-        def cell_area(self) -> CellArea: ...
+        def cell_area(self) -> CellArea | None: ...
         clickable: bool
         expand: bool
         fixed_width: int
@@ -58833,10 +59888,16 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         min_width: int
         reorderable: bool
         resizable: bool
-        sizing: TreeViewColumnSizing
+        @property
+        def sizing(self) -> TreeViewColumnSizing: ...
+        @sizing.setter
+        def sizing(self, value: _TreeViewColumnSizingValueType) -> None: ...
         sort_column_id: int
         sort_indicator: bool
-        sort_order: SortType
+        @property
+        def sort_order(self) -> SortType: ...
+        @sort_order.setter
+        def sort_order(self, value: _SortTypeValueType) -> None: ...
         spacing: int
         title: str
         visible: bool
@@ -58944,10 +60005,10 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def set_min_width(self, min_width: int) -> None: ...
     def set_reorderable(self, reorderable: bool) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
-    def set_sizing(self, type: TreeViewColumnSizing) -> None: ...
+    def set_sizing(self, type: _TreeViewColumnSizingValueType) -> None: ...
     def set_sort_column_id(self, sort_column_id: int) -> None: ...
     def set_sort_indicator(self, setting: bool) -> None: ...
-    def set_sort_order(self, order: SortType) -> None: ...
+    def set_sort_order(self, order: _SortTypeValueType) -> None: ...
     def set_spacing(self, spacing: int) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
@@ -59016,7 +60077,7 @@ class UIManager(GObject.Object, Buildable):
         path: str,
         name: str,
         action: str | None,
-        type: UIManagerItemType,
+        type: _UIManagerItemTypeValueType,
         top: bool,
     ) -> None: ...
     def add_ui_from_file(self, filename: str) -> int: ...
@@ -59037,7 +60098,7 @@ class UIManager(GObject.Object, Buildable):
     def get_action(self, path: str) -> Action: ...
     def get_action_groups(self) -> list[ActionGroup]: ...
     def get_add_tearoffs(self) -> bool: ...
-    def get_toplevels(self, types: UIManagerItemType) -> list[Widget]: ...
+    def get_toplevels(self, types: _UIManagerItemTypeValueType) -> list[Widget]: ...
     def get_ui(self) -> str: ...
     def get_widget(self, path: str) -> Widget: ...
     def insert_action_group(
@@ -59268,7 +60329,10 @@ class VBox(Box):
     """
     @type_check_only
     class Props(Box.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -59277,21 +60341,21 @@ class VBox(Box):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -59315,7 +60379,7 @@ class VBox(Box):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -59528,7 +60592,10 @@ class VButtonBox(ButtonBox):
     """
     @type_check_only
     class Props(ButtonBox.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -59537,22 +60604,22 @@ class VButtonBox(ButtonBox):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
-        layout_style: ButtonBoxStyle = ...,
-        baseline_position: BaselinePosition = ...,
+        orientation: _OrientationValueType = ...,
+        layout_style: _ButtonBoxStyleValueType = ...,
+        baseline_position: _BaselinePositionValueType = ...,
         homogeneous: bool = ...,
         spacing: int = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -59576,7 +60643,7 @@ class VButtonBox(ButtonBox):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -59797,7 +60864,10 @@ class VPaned(Paned):
     """
     @type_check_only
     class Props(Paned.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -59806,21 +60876,21 @@ class VPaned(Paned):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         position: int = ...,
         position_set: bool = ...,
         wide_handle: bool = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -59844,7 +60914,7 @@ class VPaned(Paned):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -60069,7 +61139,10 @@ class VScale(Scale):
     """
     @type_check_only
     class Props(Scale.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -60078,27 +61151,27 @@ class VScale(Scale):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         digits: int = ...,
         draw_value: bool = ...,
         has_origin: bool = ...,
-        value_pos: PositionType = ...,
+        value_pos: _PositionTypeValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -60122,7 +61195,7 @@ class VScale(Scale):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -60335,7 +61408,10 @@ class VScrollbar(Scrollbar):
     """
     @type_check_only
     class Props(Scrollbar.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -60344,23 +61420,23 @@ class VScrollbar(Scrollbar):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         adjustment: Adjustment = ...,
         fill_level: float = ...,
         inverted: bool = ...,
-        lower_stepper_sensitivity: SensitivityType = ...,
+        lower_stepper_sensitivity: _SensitivityTypeValueType = ...,
         restrict_to_fill_level: bool = ...,
         round_digits: int = ...,
         show_fill_level: bool = ...,
-        upper_stepper_sensitivity: SensitivityType = ...,
+        upper_stepper_sensitivity: _SensitivityTypeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -60384,7 +61460,7 @@ class VScrollbar(Scrollbar):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -60571,7 +61647,10 @@ class VSeparator(Separator):
     """
     @type_check_only
     class Props(Separator.Props):
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -60580,15 +61659,15 @@ class VSeparator(Separator):
     def __init__(
         self,
         *,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -60612,7 +61691,7 @@ class VSeparator(Separator):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -60817,11 +61896,26 @@ class Viewport(Bin, Scrollable):
     """
     @type_check_only
     class Props(Bin.Props):
-        shadow_type: ShadowType
-        hadjustment: Adjustment | None
-        hscroll_policy: ScrollablePolicy
-        vadjustment: Adjustment | None
-        vscroll_policy: ScrollablePolicy
+        @property
+        def shadow_type(self) -> ShadowType: ...
+        @shadow_type.setter
+        def shadow_type(self, value: _ShadowTypeValueType) -> None: ...
+        @property
+        def hadjustment(self) -> Adjustment: ...
+        @hadjustment.setter
+        def hadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def hscroll_policy(self) -> ScrollablePolicy: ...
+        @hscroll_policy.setter
+        def hscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
+        @property
+        def vadjustment(self) -> Adjustment: ...
+        @vadjustment.setter
+        def vadjustment(self, value: Adjustment | None) -> None: ...
+        @property
+        def vscroll_policy(self) -> ScrollablePolicy: ...
+        @vscroll_policy.setter
+        def vscroll_policy(self, value: _ScrollablePolicyValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -60832,22 +61926,22 @@ class Viewport(Bin, Scrollable):
     def __init__(
         self,
         *,
-        shadow_type: ShadowType = ...,
+        shadow_type: _ShadowTypeValueType = ...,
         hadjustment: Adjustment | None = ...,
-        hscroll_policy: ScrollablePolicy = ...,
+        hscroll_policy: _ScrollablePolicyValueType = ...,
         vadjustment: Adjustment | None = ...,
-        vscroll_policy: ScrollablePolicy = ...,
+        vscroll_policy: _ScrollablePolicyValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -60871,7 +61965,7 @@ class Viewport(Bin, Scrollable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -60889,7 +61983,7 @@ class Viewport(Bin, Scrollable):
         vadjustment: Adjustment | None = None,
     ) -> Viewport: ...
     def set_hadjustment(self, adjustment: Adjustment | None = None) -> None: ...
-    def set_shadow_type(self, type: ShadowType) -> None: ...
+    def set_shadow_type(self, type: _ShadowTypeValueType) -> None: ...
     def set_vadjustment(self, adjustment: Adjustment | None = None) -> None: ...
 
 class ViewportClass(_gi.Struct):
@@ -61135,10 +62229,16 @@ class VolumeButton(ScaleButton):
     class Props(ScaleButton.Props):
         use_symbolic: bool
         action_name: str | None
-        action_target: GLib.Variant
+        @property
+        def action_target(self) -> GLib.Variant | None: ...
+        @action_target.setter
+        def action_target(self, value: GLib.Variant) -> None: ...
         related_action: Action
         use_action_appearance: bool
-        orientation: Orientation
+        @property
+        def orientation(self) -> Orientation: ...
+        @orientation.setter
+        def orientation(self, value: _OrientationValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -61152,31 +62252,31 @@ class VolumeButton(ScaleButton):
         action_target: GLib.Variant = ...,
         related_action: Action = ...,
         use_action_appearance: bool = ...,
-        orientation: Orientation = ...,
+        orientation: _OrientationValueType = ...,
         adjustment: Adjustment = ...,
         icons: Sequence[str] = ...,
-        size: IconSize = ...,
+        size: _IconSizeValueType = ...,
         value: float = ...,
         always_show_image: bool = ...,
         image: Widget | None = ...,
-        image_position: PositionType = ...,
+        image_position: _PositionTypeValueType = ...,
         label: str = ...,
-        relief: ReliefStyle = ...,
+        relief: _ReliefStyleValueType = ...,
         use_stock: bool = ...,
         use_underline: bool = ...,
         xalign: float = ...,
         yalign: float = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -61200,7 +62300,7 @@ class VolumeButton(ScaleButton):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -61392,10 +62492,16 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         @property
         def composite_child(self) -> bool: ...
         double_buffered: bool
-        events: _Gdk3.EventMask
+        @property
+        def events(self) -> _Gdk3.EventMask: ...
+        @events.setter
+        def events(self, value: _Gdk3._EventMaskValueType) -> None: ...
         expand: bool
         focus_on_click: bool
-        halign: Align
+        @property
+        def halign(self) -> Align: ...
+        @halign.setter
+        def halign(self, value: _AlignValueType) -> None: ...
         has_default: bool
         has_focus: bool
         has_tooltip: bool
@@ -61413,15 +62519,24 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         name: str
         no_show_all: bool
         opacity: float
-        parent: Container | None
+        @property
+        def parent(self) -> Container | None: ...
+        @parent.setter
+        def parent(self, value: Container) -> None: ...
         receives_default: bool
         @property
         def scale_factor(self) -> int: ...
         sensitive: bool
-        style: Style | None
+        @property
+        def style(self) -> Style: ...
+        @style.setter
+        def style(self, value: Style | None) -> None: ...
         tooltip_markup: str | None
         tooltip_text: str | None
-        valign: Align
+        @property
+        def valign(self) -> Align: ...
+        @valign.setter
+        def valign(self, value: _AlignValueType) -> None: ...
         vexpand: bool
         vexpand_set: bool
         visible: bool
@@ -61442,10 +62557,10 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -61469,7 +62584,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -61481,11 +62596,11 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         accel_signal: str,
         accel_group: AccelGroup,
         accel_key: int,
-        accel_mods: _Gdk3.ModifierType,
-        accel_flags: AccelFlags,
+        accel_mods: _Gdk3._ModifierTypeValueType,
+        accel_flags: _AccelFlagsValueType,
     ) -> None: ...
     def add_device_events(
-        self, device: _Gdk3.Device, events: _Gdk3.EventMask
+        self, device: _Gdk3.Device, events: _Gdk3._EventMaskValueType
     ) -> None: ...
     def add_events(self, events: int) -> None: ...
     def add_mnemonic_label(self, label: Widget) -> None: ...
@@ -61501,10 +62616,10 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
         self, name: str, internal_child: bool, struct_offset: int
     ) -> None: ...
     def can_activate_accel(self, signal_id: int) -> bool: ...
-    def child_focus(self, direction: DirectionType) -> bool: ...
+    def child_focus(self, direction: _DirectionTypeValueType) -> bool: ...
     def child_notify(self, child_property: str) -> None: ...
     def class_path(self) -> tuple[int, str, str]: ...
-    def compute_expand(self, orientation: Orientation) -> bool: ...
+    def compute_expand(self, orientation: _OrientationValueType) -> bool: ...
     def create_pango_context(self) -> Pango.Context: ...
     def create_pango_layout(self, text: str | None = None) -> Pango.Layout: ...
     def destroy(self) -> None: ...
@@ -61516,14 +62631,14 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     ) -> None: ...
     def do_adjust_size_allocation(
         self,
-        orientation: Orientation,
+        orientation: _OrientationValueType,
         minimum_size: int,
         natural_size: int,
         allocated_pos: int,
         allocated_size: int,
     ) -> None: ...
     def do_adjust_size_request(
-        self, orientation: Orientation, minimum_size: int, natural_size: int
+        self, orientation: _OrientationValueType, minimum_size: int, natural_size: int
     ) -> None: ...
     def do_button_press_event(self, event: _Gdk3.EventButton) -> bool: ...
     def do_button_release_event(self, event: _Gdk3.EventButton) -> bool: ...
@@ -61536,7 +62651,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_delete_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_destroy(self) -> None: ...
     def do_destroy_event(self, event: _Gdk3.EventAny) -> bool: ...
-    def do_direction_changed(self, previous_direction: TextDirection) -> None: ...
+    def do_direction_changed(
+        self, previous_direction: _TextDirectionValueType
+    ) -> None: ...
     def do_dispatch_child_properties_changed(
         self, n_pspecs: int, pspecs: GObject.ParamSpec
     ) -> None: ...
@@ -61563,7 +62680,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     ) -> bool: ...
     def do_drag_end(self, context: _Gdk3.DragContext) -> None: ...
     def do_drag_failed(
-        self, context: _Gdk3.DragContext, result: DragResult
+        self, context: _Gdk3.DragContext, result: _DragResultValueType
     ) -> bool: ...
     def do_drag_leave(self, context: _Gdk3.DragContext, time_: int) -> None: ...
     def do_drag_motion(
@@ -61572,7 +62689,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_draw(self, cr: cairo.Context[_SomeSurface]) -> bool: ...
     def do_enter_notify_event(self, event: _Gdk3.EventCrossing) -> bool: ...
     def do_event(self, event: _Gdk3.Event) -> bool: ...
-    def do_focus(self, direction: DirectionType) -> bool: ...
+    def do_focus(self, direction: _DirectionTypeValueType) -> bool: ...
     def do_focus_in_event(self, event: _Gdk3.EventFocus) -> bool: ...
     def do_focus_out_event(self, event: _Gdk3.EventFocus) -> bool: ...
     def do_get_accessible(self) -> Atk.Object: ...
@@ -61591,13 +62708,13 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_hierarchy_changed(self, previous_toplevel: Widget) -> None: ...
     def do_key_press_event(self, event: _Gdk3.EventKey) -> bool: ...
     def do_key_release_event(self, event: _Gdk3.EventKey) -> bool: ...
-    def do_keynav_failed(self, direction: DirectionType) -> bool: ...
+    def do_keynav_failed(self, direction: _DirectionTypeValueType) -> bool: ...
     def do_leave_notify_event(self, event: _Gdk3.EventCrossing) -> bool: ...
     def do_map(self) -> None: ...
     def do_map_event(self, event: _Gdk3.EventAny) -> bool: ...
     def do_mnemonic_activate(self, group_cycling: bool) -> bool: ...
     def do_motion_notify_event(self, event: _Gdk3.EventMotion) -> bool: ...
-    def do_move_focus(self, direction: DirectionType) -> None: ...
+    def do_move_focus(self, direction: _DirectionTypeValueType) -> None: ...
     def do_parent_set(self, previous_parent: Widget) -> None: ...
     def do_popup_menu(self) -> bool: ...
     def do_property_notify_event(self, event: _Gdk3.EventProperty) -> bool: ...
@@ -61621,10 +62738,12 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def do_selection_request_event(self, event: _Gdk3.EventSelection) -> bool: ...
     def do_show(self) -> None: ...
     def do_show_all(self) -> None: ...
-    def do_show_help(self, help_type: WidgetHelpType) -> bool: ...
+    def do_show_help(self, help_type: _WidgetHelpTypeValueType) -> bool: ...
     def do_size_allocate(self, allocation: _Gdk3.Rectangle) -> None: ...
-    def do_state_changed(self, previous_state: StateType) -> None: ...
-    def do_state_flags_changed(self, previous_state_flags: StateFlags) -> None: ...
+    def do_state_changed(self, previous_state: _StateTypeValueType) -> None: ...
+    def do_state_flags_changed(
+        self, previous_state_flags: _StateFlagsValueType
+    ) -> None: ...
     def do_style_set(self, previous_style: Style) -> None: ...
     def do_style_updated(self) -> None: ...
     def do_touch_event(self, event: _Gdk3.EventTouch) -> bool: ...
@@ -61636,14 +62755,14 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_begin(
         self,
         targets: TargetList,
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
         button: int,
         event: _Gdk3.Event | None = None,
     ) -> _Gdk3.DragContext: ...
     def drag_begin_with_coordinates(
         self,
         targets: TargetList,
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
         button: int,
         event: _Gdk3.Event | None,
         x: int,
@@ -61662,14 +62781,14 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_dest_get_track_motion(self) -> bool: ...
     def drag_dest_set(
         self,
-        flags: DestDefaults,
+        flags: _DestDefaultsValueType,
         targets: Sequence[TargetEntry] | None,
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
     ) -> None: ...
     def drag_dest_set_proxy(
         self,
         proxy_window: _Gdk3.Window,
-        protocol: _Gdk3.DragProtocol,
+        protocol: _Gdk3._DragProtocolValueType,
         use_coordinates: bool,
     ) -> None: ...
     # override
@@ -61686,9 +62805,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def drag_source_get_target_list(self) -> TargetList | None: ...
     def drag_source_set(
         self,
-        start_button_mask: _Gdk3.ModifierType,
+        start_button_mask: _Gdk3._ModifierTypeValueType,
         targets: Sequence[TargetEntry] | None,
-        actions: _Gdk3.DragAction,
+        actions: _Gdk3._DragActionValueType,
     ) -> None: ...
     def drag_source_set_icon_gicon(self, icon: Gio.Icon) -> None: ...
     def drag_source_set_icon_name(self, icon_name: str) -> None: ...
@@ -61748,7 +62867,9 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def get_margin_right(self) -> int: ...
     def get_margin_start(self) -> int: ...
     def get_margin_top(self) -> int: ...
-    def get_modifier_mask(self, intent: _Gdk3.ModifierIntent) -> _Gdk3.ModifierType: ...
+    def get_modifier_mask(
+        self, intent: _Gdk3._ModifierIntentValueType
+    ) -> _Gdk3.ModifierType: ...
     def get_modifier_style(self) -> RcStyle: ...
     def get_name(self) -> str: ...
     def get_no_show_all(self) -> bool: ...
@@ -61824,7 +62945,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def is_sensitive(self) -> bool: ...
     def is_toplevel(self) -> bool: ...
     def is_visible(self) -> bool: ...
-    def keynav_failed(self, direction: DirectionType) -> bool: ...
+    def keynav_failed(self, direction: _DirectionTypeValueType) -> bool: ...
     def list_accel_closures(self) -> list[Callable[..., Any]]: ...
     def list_action_prefixes(self) -> list[str]: ...
     def list_mnemonic_labels(self) -> list[Widget]: ...
@@ -61832,23 +62953,27 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def map(self) -> None: ...
     def mnemonic_activate(self, group_cycling: bool) -> bool: ...
     def modify_base(
-        self, state: StateType, color: _Gdk3.Color | None = None
+        self, state: _StateTypeValueType, color: _Gdk3.Color | None = None
     ) -> None: ...
-    def modify_bg(self, state: StateType, color: _Gdk3.Color | None = None) -> None: ...
+    def modify_bg(
+        self, state: _StateTypeValueType, color: _Gdk3.Color | None = None
+    ) -> None: ...
     def modify_cursor(
         self, primary: _Gdk3.Color | None = None, secondary: _Gdk3.Color | None = None
     ) -> None: ...
-    def modify_fg(self, state: StateType, color: _Gdk3.Color | None = None) -> None: ...
+    def modify_fg(
+        self, state: _StateTypeValueType, color: _Gdk3.Color | None = None
+    ) -> None: ...
     def modify_font(self, font_desc: Pango.FontDescription | None = None) -> None: ...
     def modify_style(self, style: RcStyle) -> None: ...
     def modify_text(
-        self, state: StateType, color: _Gdk3.Color | None = None
+        self, state: _StateTypeValueType, color: _Gdk3.Color | None = None
     ) -> None: ...
     def override_background_color(
-        self, state: StateFlags, color: _Gdk3.RGBA | None = None
+        self, state: _StateFlagsValueType, color: _Gdk3.RGBA | None = None
     ) -> None: ...
     def override_color(
-        self, state: StateFlags, color: _Gdk3.RGBA | None = None
+        self, state: _StateFlagsValueType, color: _Gdk3.RGBA | None = None
     ) -> None: ...
     def override_cursor(
         self,
@@ -61875,7 +63000,10 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def region_intersect(self, region: cairo.Region) -> cairo.Region: ...
     def register_window(self, window: _Gdk3.Window) -> None: ...
     def remove_accelerator(
-        self, accel_group: AccelGroup, accel_key: int, accel_mods: _Gdk3.ModifierType
+        self,
+        accel_group: AccelGroup,
+        accel_key: int,
+        accel_mods: _Gdk3._ModifierTypeValueType,
     ) -> bool: ...
     def remove_mnemonic_label(self, label: Widget) -> None: ...
     def remove_tick_callback(self, id: int) -> None: ...
@@ -61893,7 +63021,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_accel_path(
         self, accel_path: str | None = None, accel_group: AccelGroup | None = None
     ) -> None: ...
-    def set_accessible_role(self, role: Atk.Role) -> None: ...
+    def set_accessible_role(self, role: Atk._RoleValueType) -> None: ...
     def set_accessible_type(self, type: type[Any]) -> None: ...
     def set_allocation(self, allocation: _Gdk3.Rectangle) -> None: ...
     def set_app_paintable(self, app_paintable: bool) -> None: ...
@@ -61920,18 +63048,18 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     ) -> None: ...
     def set_css_name(self, name: str) -> None: ...
     @staticmethod
-    def set_default_direction(dir: TextDirection) -> None: ...
+    def set_default_direction(dir: _TextDirectionValueType) -> None: ...
     def set_device_enabled(self, device: _Gdk3.Device, enabled: bool) -> None: ...
     def set_device_events(
-        self, device: _Gdk3.Device, events: _Gdk3.EventMask
+        self, device: _Gdk3.Device, events: _Gdk3._EventMaskValueType
     ) -> None: ...
-    def set_direction(self, dir: TextDirection) -> None: ...
+    def set_direction(self, dir: _TextDirectionValueType) -> None: ...
     def set_double_buffered(self, double_buffered: bool) -> None: ...
     def set_events(self, events: int) -> None: ...
     def set_focus_on_click(self, focus_on_click: bool) -> None: ...
     def set_font_map(self, font_map: Pango.FontMap | None = None) -> None: ...
     def set_font_options(self, options: cairo.FontOptions | None = None) -> None: ...
-    def set_halign(self, align: Align) -> None: ...
+    def set_halign(self, align: _AlignValueType) -> None: ...
     def set_has_tooltip(self, has_tooltip: bool) -> None: ...
     def set_has_window(self, has_window: bool) -> None: ...
     def set_hexpand(self, expand: bool) -> None: ...
@@ -61953,8 +63081,8 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_redraw_on_allocate(self, redraw_on_allocate: bool) -> None: ...
     def set_sensitive(self, sensitive: bool) -> None: ...
     def set_size_request(self, width: int, height: int) -> None: ...
-    def set_state(self, state: StateType) -> None: ...
-    def set_state_flags(self, flags: StateFlags, clear: bool) -> None: ...
+    def set_state(self, state: _StateTypeValueType) -> None: ...
+    def set_state_flags(self, flags: _StateFlagsValueType, clear: bool) -> None: ...
     def set_style(self, style: Style | None = None) -> None: ...
     def set_support_multidevice(self, support_multidevice: bool) -> None: ...
     def set_template(self, template_bytes: GLib.Bytes) -> None: ...
@@ -61962,7 +63090,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def set_tooltip_markup(self, markup: str | None = None) -> None: ...
     def set_tooltip_text(self, text: str | None = None) -> None: ...
     def set_tooltip_window(self, custom_window: Window | None = None) -> None: ...
-    def set_valign(self, align: Align) -> None: ...
+    def set_valign(self, align: _AlignValueType) -> None: ...
     def set_vexpand(self, expand: bool) -> None: ...
     def set_vexpand_set(self, set: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
@@ -61990,7 +63118,7 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     def unparent(self) -> None: ...
     def unrealize(self) -> None: ...
     def unregister_window(self, window: _Gdk3.Window) -> None: ...
-    def unset_state_flags(self, flags: StateFlags) -> None: ...
+    def unset_state_flags(self, flags: _StateFlagsValueType) -> None: ...
 
 class WidgetAccessible(Accessible, Atk.Component):
     """
@@ -62067,19 +63195,19 @@ class WidgetAccessible(Accessible, Atk.Component):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -62133,9 +63261,9 @@ class WidgetClass(_gi.Struct):
     @property
     def size_allocate(self) -> Callable[[Widget, _Gdk3.Rectangle], None]: ...
     @property
-    def state_changed(self) -> Callable[[Widget, StateType], None]: ...
+    def state_changed(self) -> Callable[[Widget, _StateTypeValueType], None]: ...
     @property
-    def state_flags_changed(self) -> Callable[[Widget, StateFlags], None]: ...
+    def state_flags_changed(self) -> Callable[[Widget, _StateFlagsValueType], None]: ...
     @property
     def parent_set(self) -> Callable[[Widget, Widget], None]: ...
     @property
@@ -62143,7 +63271,9 @@ class WidgetClass(_gi.Struct):
     @property
     def style_set(self) -> Callable[[Widget, Style], None]: ...
     @property
-    def direction_changed(self) -> Callable[[Widget, TextDirection], None]: ...
+    def direction_changed(
+        self,
+    ) -> Callable[[Widget, _TextDirectionValueType], None]: ...
     @property
     def grab_notify(self) -> Callable[[Widget, bool], None]: ...
     @property
@@ -62169,11 +63299,11 @@ class WidgetClass(_gi.Struct):
     @property
     def grab_focus(self) -> Callable[[Widget], None]: ...
     @property
-    def focus(self) -> Callable[[Widget, DirectionType], bool]: ...
+    def focus(self) -> Callable[[Widget, _DirectionTypeValueType], bool]: ...
     @property
-    def move_focus(self) -> Callable[[Widget, DirectionType], None]: ...
+    def move_focus(self) -> Callable[[Widget, _DirectionTypeValueType], None]: ...
     @property
-    def keynav_failed(self) -> Callable[[Widget, DirectionType], bool]: ...
+    def keynav_failed(self) -> Callable[[Widget, _DirectionTypeValueType], bool]: ...
     @property
     def event(self) -> Callable[[Widget, _Gdk3.Event], bool]: ...
     @property
@@ -62271,11 +63401,11 @@ class WidgetClass(_gi.Struct):
     @property
     def drag_failed(
         self,
-    ) -> Callable[[Widget, _Gdk3.DragContext, DragResult], bool]: ...
+    ) -> Callable[[Widget, _Gdk3.DragContext, _DragResultValueType], bool]: ...
     @property
     def popup_menu(self) -> Callable[[Widget], bool]: ...
     @property
-    def show_help(self) -> Callable[[Widget, WidgetHelpType], bool]: ...
+    def show_help(self) -> Callable[[Widget, _WidgetHelpTypeValueType], bool]: ...
     @property
     def get_accessible(self) -> Callable[[Widget], Atk.Object]: ...
     @property
@@ -62291,11 +63421,11 @@ class WidgetClass(_gi.Struct):
     @property
     def adjust_size_request(
         self,
-    ) -> Callable[[Widget, Orientation, int, int], None]: ...
+    ) -> Callable[[Widget, _OrientationValueType, int, int], None]: ...
     @property
     def adjust_size_allocation(
         self,
-    ) -> Callable[[Widget, Orientation, int, int, int, int], None]: ...
+    ) -> Callable[[Widget, _OrientationValueType, int, int, int, int], None]: ...
     @property
     def style_updated(self) -> Callable[[Widget], None]: ...
     @property
@@ -62322,7 +63452,7 @@ class WidgetClass(_gi.Struct):
     def get_css_name(self) -> str: ...
     def install_style_property(self, pspec: GObject.ParamSpec) -> None: ...
     def list_style_properties(self) -> list[GObject.ParamSpec]: ...
-    def set_accessible_role(self, role: Atk.Role) -> None: ...
+    def set_accessible_role(self, role: Atk._RoleValueType) -> None: ...
     def set_accessible_type(self, type: type[Any]) -> None: ...
     def set_connect_func(
         self,
@@ -62364,7 +63494,9 @@ class WidgetPath(GObject.GBoxed):
     def has_parent(self, type: type[Any]) -> bool: ...
     def is_type(self, type: type[Any]) -> bool: ...
     def iter_add_class(self, pos: int, name: str) -> None: ...
-    def iter_add_region(self, pos: int, name: str, flags: RegionFlags) -> None: ...
+    def iter_add_region(
+        self, pos: int, name: str, flags: _RegionFlagsValueType
+    ) -> None: ...
     def iter_clear_classes(self, pos: int) -> None: ...
     def iter_clear_regions(self, pos: int) -> None: ...
     def iter_get_name(self, pos: int) -> str | None: ...
@@ -62386,7 +63518,7 @@ class WidgetPath(GObject.GBoxed):
     def iter_set_name(self, pos: int, name: str) -> None: ...
     def iter_set_object_name(self, pos: int, name: str | None = None) -> None: ...
     def iter_set_object_type(self, pos: int, type: type[Any]) -> None: ...
-    def iter_set_state(self, pos: int, state: StateFlags) -> None: ...
+    def iter_set_state(self, pos: int, state: _StateFlagsValueType) -> None: ...
     def length(self) -> int: ...
     @classmethod
     def new(cls) -> WidgetPath: ...
@@ -62663,7 +63795,10 @@ class Window(Bin):
         destroy_with_parent: bool
         focus_on_map: bool
         focus_visible: bool
-        gravity: _Gdk3.Gravity
+        @property
+        def gravity(self) -> _Gdk3.Gravity: ...
+        @gravity.setter
+        def gravity(self, value: _Gdk3._GravityValueType) -> None: ...
         has_resize_grip: bool
         @property
         def has_toplevel_focus(self) -> bool: ...
@@ -62679,18 +63814,33 @@ class Window(Bin):
         resizable: bool
         @property
         def resize_grip_visible(self) -> bool: ...
-        role: str | None
+        @property
+        def role(self) -> str | None: ...
+        @role.setter
+        def role(self, value: str) -> None: ...
         screen: _Gdk3.Screen
         skip_pager_hint: bool
         skip_taskbar_hint: bool
-        startup_id: str
-        title: str | None
+        @property
+        def startup_id(self) -> Never: ...
+        @startup_id.setter
+        def startup_id(self, value: str) -> None: ...
+        @property
+        def title(self) -> str | None: ...
+        @title.setter
+        def title(self, value: str) -> None: ...
         transient_for: Window | None
         @property
         def type(self) -> WindowType: ...
-        type_hint: _Gdk3.WindowTypeHint
+        @property
+        def type_hint(self) -> _Gdk3.WindowTypeHint: ...
+        @type_hint.setter
+        def type_hint(self, value: _Gdk3._WindowTypeHintValueType) -> None: ...
         urgency_hint: bool
-        window_position: WindowPosition
+        @property
+        def window_position(self) -> WindowPosition: ...
+        @window_position.setter
+        def window_position(self, value: _WindowPositionValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -62711,7 +63861,7 @@ class Window(Bin):
         destroy_with_parent: bool = ...,
         focus_on_map: bool = ...,
         focus_visible: bool = ...,
-        gravity: _Gdk3.Gravity = ...,
+        gravity: _Gdk3._GravityValueType = ...,
         has_resize_grip: bool = ...,
         hide_titlebar_when_maximized: bool = ...,
         icon: GdkPixbuf.Pixbuf | None = ...,
@@ -62726,21 +63876,21 @@ class Window(Bin):
         startup_id: str = ...,
         title: str = ...,
         transient_for: Window | None = ...,
-        type: WindowType = ...,
-        type_hint: _Gdk3.WindowTypeHint = ...,
+        type: _WindowTypeValueType = ...,
+        type_hint: _Gdk3._WindowTypeHintValueType = ...,
         urgency_hint: bool = ...,
-        window_position: WindowPosition = ...,
+        window_position: _WindowPositionValueType = ...,
         border_width: int = ...,
-        child: Widget = ...,
-        resize_mode: ResizeMode = ...,
+        child: Widget | None = ...,
+        resize_mode: _ResizeModeValueType = ...,
         app_paintable: bool = ...,
         can_default: bool = ...,
         can_focus: bool = ...,
         double_buffered: bool = ...,
-        events: _Gdk3.EventMask = ...,
+        events: _Gdk3._EventMaskValueType = ...,
         expand: bool = ...,
         focus_on_click: bool = ...,
-        halign: Align = ...,
+        halign: _AlignValueType = ...,
         has_default: bool = ...,
         has_focus: bool = ...,
         has_tooltip: bool = ...,
@@ -62764,7 +63914,7 @@ class Window(Bin):
         style: Style | None = ...,
         tooltip_markup: str | None = ...,
         tooltip_text: str | None = ...,
-        valign: Align = ...,
+        valign: _AlignValueType = ...,
         vexpand: bool = ...,
         vexpand_set: bool = ...,
         visible: bool = ...,
@@ -62780,7 +63930,7 @@ class Window(Bin):
     ) -> None: ...
     def begin_resize_drag(
         self,
-        edge: _Gdk3.WindowEdge,
+        edge: _Gdk3._WindowEdgeValueType,
         button: int,
         root_x: int,
         root_y: int,
@@ -62843,10 +63993,12 @@ class Window(Bin):
     @staticmethod
     def list_toplevels() -> list[Widget]: ...
     def maximize(self) -> None: ...
-    def mnemonic_activate(self, keyval: int, modifier: _Gdk3.ModifierType) -> bool: ...
+    def mnemonic_activate(
+        self, keyval: int, modifier: _Gdk3._ModifierTypeValueType
+    ) -> bool: ...
     def move(self, x: int, y: int) -> None: ...
     @classmethod
-    def new(cls, type: WindowType) -> Window: ...
+    def new(cls, type: _WindowTypeValueType) -> Window: ...
     def parse_geometry(self, geometry: str) -> bool: ...
     def present(self) -> None: ...
     def present_with_time(self, timestamp: int) -> None: ...
@@ -62883,9 +64035,9 @@ class Window(Bin):
         self,
         geometry_widget: Widget | None,
         geometry: _Gdk3.Geometry | None,
-        geom_mask: _Gdk3.WindowHints,
+        geom_mask: _Gdk3._WindowHintsValueType,
     ) -> None: ...
-    def set_gravity(self, gravity: _Gdk3.Gravity) -> None: ...
+    def set_gravity(self, gravity: _Gdk3._GravityValueType) -> None: ...
     def set_has_resize_grip(self, value: bool) -> None: ...
     def set_has_user_ref_count(self, setting: bool) -> None: ...
     def set_hide_titlebar_when_maximized(self, setting: bool) -> None: ...
@@ -62897,11 +64049,11 @@ class Window(Bin):
     def set_interactive_debugging(enable: bool) -> None: ...
     def set_keep_above(self, setting: bool) -> None: ...
     def set_keep_below(self, setting: bool) -> None: ...
-    def set_mnemonic_modifier(self, modifier: _Gdk3.ModifierType) -> None: ...
+    def set_mnemonic_modifier(self, modifier: _Gdk3._ModifierTypeValueType) -> None: ...
     def set_mnemonics_visible(self, setting: bool) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_opacity(self, opacity: float) -> None: ...
-    def set_position(self, position: WindowPosition) -> None: ...
+    def set_position(self, position: _WindowPositionValueType) -> None: ...
     def set_resizable(self, resizable: bool) -> None: ...
     def set_role(self, role: str) -> None: ...
     def set_screen(self, screen: _Gdk3.Screen) -> None: ...
@@ -62911,7 +64063,7 @@ class Window(Bin):
     def set_title(self, title: str) -> None: ...
     def set_titlebar(self, titlebar: Widget | None = None) -> None: ...
     def set_transient_for(self, parent: Window | None = None) -> None: ...
-    def set_type_hint(self, hint: _Gdk3.WindowTypeHint) -> None: ...
+    def set_type_hint(self, hint: _Gdk3._WindowTypeHintValueType) -> None: ...
     def set_urgency_hint(self, setting: bool) -> None: ...
     def set_wmclass(self, wmclass_name: str, wmclass_class: str) -> None: ...
     def stick(self) -> None: ...
@@ -63011,19 +64163,19 @@ class WindowAccessible(ContainerAccessible, Atk.Window):
         self,
         *,
         widget: Widget | None = ...,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Atk.Object = ...,
-        accessible_role: Atk.Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Atk.Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Atk.Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Atk.Object = ...,
-        accessible_table_summary: Atk.Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Atk.Object | None = ...,
+        accessible_role: Atk._RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Atk.Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Atk.Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Atk.Object | None = ...,
+        accessible_table_summary: Atk.Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
 
@@ -63180,16 +64332,51 @@ class AccelFlags(GObject.GFlags):
     MASK = 7
     VISIBLE = 1
 
+_AccelFlagsLiteralType: TypeAlias = Literal[
+    "GTK_ACCEL_LOCKED",
+    "GTK_ACCEL_MASK",
+    "GTK_ACCEL_VISIBLE",
+    "locked",
+    "mask",
+    "visible",
+]
+_AccelFlagsValueType: TypeAlias = (
+    AccelFlags | _AccelFlagsLiteralType | tuple[_AccelFlagsLiteralType, ...]
+)
+
 class ApplicationInhibitFlags(GObject.GFlags):
     IDLE = 8
     LOGOUT = 1
     SUSPEND = 4
     SWITCH = 2
 
+_ApplicationInhibitFlagsLiteralType: TypeAlias = Literal[
+    "GTK_APPLICATION_INHIBIT_IDLE",
+    "GTK_APPLICATION_INHIBIT_LOGOUT",
+    "GTK_APPLICATION_INHIBIT_SUSPEND",
+    "GTK_APPLICATION_INHIBIT_SWITCH",
+    "idle",
+    "logout",
+    "suspend",
+    "switch",
+]
+_ApplicationInhibitFlagsValueType: TypeAlias = (
+    ApplicationInhibitFlags
+    | _ApplicationInhibitFlagsLiteralType
+    | tuple[_ApplicationInhibitFlagsLiteralType, ...]
+)
+
 class AttachOptions(GObject.GFlags):
     EXPAND = 1
     FILL = 4
     SHRINK = 2
+
+_AttachOptionsLiteralType: TypeAlias = Literal[
+    "GTK_EXPAND", "GTK_FILL", "GTK_SHRINK", "expand", "fill", "shrink"
+]
+_AttachOptionsValueType: TypeAlias = (
+    AttachOptions | _AttachOptionsLiteralType | tuple[_AttachOptionsLiteralType, ...]
+)
 
 class CalendarDisplayOptions(GObject.GFlags):
     NO_MONTH_CHANGE = 4
@@ -63197,6 +64384,24 @@ class CalendarDisplayOptions(GObject.GFlags):
     SHOW_DETAILS = 32
     SHOW_HEADING = 1
     SHOW_WEEK_NUMBERS = 8
+
+_CalendarDisplayOptionsLiteralType: TypeAlias = Literal[
+    "GTK_CALENDAR_NO_MONTH_CHANGE",
+    "GTK_CALENDAR_SHOW_DAY_NAMES",
+    "GTK_CALENDAR_SHOW_DETAILS",
+    "GTK_CALENDAR_SHOW_HEADING",
+    "GTK_CALENDAR_SHOW_WEEK_NUMBERS",
+    "no-month-change",
+    "show-day-names",
+    "show-details",
+    "show-heading",
+    "show-week-numbers",
+]
+_CalendarDisplayOptionsValueType: TypeAlias = (
+    CalendarDisplayOptions
+    | _CalendarDisplayOptionsLiteralType
+    | tuple[_CalendarDisplayOptionsLiteralType, ...]
+)
 
 class CellRendererState(GObject.GFlags):
     EXPANDABLE = 32
@@ -63206,6 +64411,28 @@ class CellRendererState(GObject.GFlags):
     PRELIT = 2
     SELECTED = 1
     SORTED = 8
+
+_CellRendererStateLiteralType: TypeAlias = Literal[
+    "GTK_CELL_RENDERER_EXPANDABLE",
+    "GTK_CELL_RENDERER_EXPANDED",
+    "GTK_CELL_RENDERER_FOCUSED",
+    "GTK_CELL_RENDERER_INSENSITIVE",
+    "GTK_CELL_RENDERER_PRELIT",
+    "GTK_CELL_RENDERER_SELECTED",
+    "GTK_CELL_RENDERER_SORTED",
+    "expandable",
+    "expanded",
+    "focused",
+    "insensitive",
+    "prelit",
+    "selected",
+    "sorted",
+]
+_CellRendererStateValueType: TypeAlias = (
+    CellRendererState
+    | _CellRendererStateLiteralType
+    | tuple[_CellRendererStateLiteralType, ...]
+)
 
 class DebugFlag(GObject.GFlags):
     ACTIONS = 524288
@@ -63231,16 +64458,92 @@ class DebugFlag(GObject.GFlags):
     TREE = 8
     UPDATES = 16
 
+_DebugFlagLiteralType: TypeAlias = Literal[
+    "GTK_DEBUG_ACTIONS",
+    "GTK_DEBUG_BASELINES",
+    "GTK_DEBUG_BUILDER",
+    "GTK_DEBUG_GEOMETRY",
+    "GTK_DEBUG_ICONTHEME",
+    "GTK_DEBUG_INTERACTIVE",
+    "GTK_DEBUG_KEYBINDINGS",
+    "GTK_DEBUG_LAYOUT",
+    "GTK_DEBUG_MISC",
+    "GTK_DEBUG_MODULES",
+    "GTK_DEBUG_MULTIHEAD",
+    "GTK_DEBUG_NO_CSS_CACHE",
+    "GTK_DEBUG_NO_PIXEL_CACHE",
+    "GTK_DEBUG_PIXEL_CACHE",
+    "GTK_DEBUG_PLUGSOCKET",
+    "GTK_DEBUG_PRINTING",
+    "GTK_DEBUG_RESIZE",
+    "GTK_DEBUG_SIZE_REQUEST",
+    "GTK_DEBUG_TEXT",
+    "GTK_DEBUG_TOUCHSCREEN",
+    "GTK_DEBUG_TREE",
+    "GTK_DEBUG_UPDATES",
+    "actions",
+    "baselines",
+    "builder",
+    "geometry",
+    "icontheme",
+    "interactive",
+    "keybindings",
+    "layout",
+    "misc",
+    "modules",
+    "multihead",
+    "no-css-cache",
+    "no-pixel-cache",
+    "pixel-cache",
+    "plugsocket",
+    "printing",
+    "resize",
+    "size-request",
+    "text",
+    "touchscreen",
+    "tree",
+    "updates",
+]
+_DebugFlagValueType: TypeAlias = (
+    DebugFlag | _DebugFlagLiteralType | tuple[_DebugFlagLiteralType, ...]
+)
+
 class DestDefaults(GObject.GFlags):
     ALL = 7
     DROP = 4
     HIGHLIGHT = 2
     MOTION = 1
 
+_DestDefaultsLiteralType: TypeAlias = Literal[
+    "GTK_DEST_DEFAULT_ALL",
+    "GTK_DEST_DEFAULT_DROP",
+    "GTK_DEST_DEFAULT_HIGHLIGHT",
+    "GTK_DEST_DEFAULT_MOTION",
+    "all",
+    "drop",
+    "highlight",
+    "motion",
+]
+_DestDefaultsValueType: TypeAlias = (
+    DestDefaults | _DestDefaultsLiteralType | tuple[_DestDefaultsLiteralType, ...]
+)
+
 class DialogFlags(GObject.GFlags):
     DESTROY_WITH_PARENT = 2
     MODAL = 1
     USE_HEADER_BAR = 4
+
+_DialogFlagsLiteralType: TypeAlias = Literal[
+    "GTK_DIALOG_DESTROY_WITH_PARENT",
+    "GTK_DIALOG_MODAL",
+    "GTK_DIALOG_USE_HEADER_BAR",
+    "destroy-with-parent",
+    "modal",
+    "use-header-bar",
+]
+_DialogFlagsValueType: TypeAlias = (
+    DialogFlags | _DialogFlagsLiteralType | tuple[_DialogFlagsLiteralType, ...]
+)
 
 class EventControllerScrollFlags(GObject.GFlags):
     BOTH_AXES = 3
@@ -63250,11 +64553,47 @@ class EventControllerScrollFlags(GObject.GFlags):
     NONE = 0
     VERTICAL = 1
 
+_EventControllerScrollFlagsLiteralType: TypeAlias = Literal[
+    "GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES",
+    "GTK_EVENT_CONTROLLER_SCROLL_DISCRETE",
+    "GTK_EVENT_CONTROLLER_SCROLL_HORIZONTAL",
+    "GTK_EVENT_CONTROLLER_SCROLL_KINETIC",
+    "GTK_EVENT_CONTROLLER_SCROLL_NONE",
+    "GTK_EVENT_CONTROLLER_SCROLL_VERTICAL",
+    "both-axes",
+    "discrete",
+    "horizontal",
+    "kinetic",
+    "none",
+    "vertical",
+]
+_EventControllerScrollFlagsValueType: TypeAlias = (
+    EventControllerScrollFlags
+    | _EventControllerScrollFlagsLiteralType
+    | tuple[_EventControllerScrollFlagsLiteralType, ...]
+)
+
 class FileFilterFlags(GObject.GFlags):
     DISPLAY_NAME = 4
     FILENAME = 1
     MIME_TYPE = 8
     URI = 2
+
+_FileFilterFlagsLiteralType: TypeAlias = Literal[
+    "GTK_FILE_FILTER_DISPLAY_NAME",
+    "GTK_FILE_FILTER_FILENAME",
+    "GTK_FILE_FILTER_MIME_TYPE",
+    "GTK_FILE_FILTER_URI",
+    "display-name",
+    "filename",
+    "mime-type",
+    "uri",
+]
+_FileFilterFlagsValueType: TypeAlias = (
+    FileFilterFlags
+    | _FileFilterFlagsLiteralType
+    | tuple[_FileFilterFlagsLiteralType, ...]
+)
 
 class FontChooserLevel(GObject.GFlags):
     FAMILY = 0
@@ -63262,6 +64601,24 @@ class FontChooserLevel(GObject.GFlags):
     SIZE = 2
     STYLE = 1
     VARIATIONS = 4
+
+_FontChooserLevelLiteralType: TypeAlias = Literal[
+    "GTK_FONT_CHOOSER_LEVEL_FAMILY",
+    "GTK_FONT_CHOOSER_LEVEL_FEATURES",
+    "GTK_FONT_CHOOSER_LEVEL_SIZE",
+    "GTK_FONT_CHOOSER_LEVEL_STYLE",
+    "GTK_FONT_CHOOSER_LEVEL_VARIATIONS",
+    "family",
+    "features",
+    "size",
+    "style",
+    "variations",
+]
+_FontChooserLevelValueType: TypeAlias = (
+    FontChooserLevel
+    | _FontChooserLevelLiteralType
+    | tuple[_FontChooserLevelLiteralType, ...]
+)
 
 class IconLookupFlags(GObject.GFlags):
     DIR_LTR = 128
@@ -63273,6 +64630,32 @@ class IconLookupFlags(GObject.GFlags):
     GENERIC_FALLBACK = 8
     NO_SVG = 1
     USE_BUILTIN = 4
+
+_IconLookupFlagsLiteralType: TypeAlias = Literal[
+    "GTK_ICON_LOOKUP_DIR_LTR",
+    "GTK_ICON_LOOKUP_DIR_RTL",
+    "GTK_ICON_LOOKUP_FORCE_REGULAR",
+    "GTK_ICON_LOOKUP_FORCE_SIZE",
+    "GTK_ICON_LOOKUP_FORCE_SVG",
+    "GTK_ICON_LOOKUP_FORCE_SYMBOLIC",
+    "GTK_ICON_LOOKUP_GENERIC_FALLBACK",
+    "GTK_ICON_LOOKUP_NO_SVG",
+    "GTK_ICON_LOOKUP_USE_BUILTIN",
+    "dir-ltr",
+    "dir-rtl",
+    "force-regular",
+    "force-size",
+    "force-svg",
+    "force-symbolic",
+    "generic-fallback",
+    "no-svg",
+    "use-builtin",
+]
+_IconLookupFlagsValueType: TypeAlias = (
+    IconLookupFlags
+    | _IconLookupFlagsLiteralType
+    | tuple[_IconLookupFlagsLiteralType, ...]
+)
 
 class InputHints(GObject.GFlags):
     EMOJI = 512
@@ -63288,6 +64671,36 @@ class InputHints(GObject.GFlags):
     VERTICAL_WRITING = 256
     WORD_COMPLETION = 4
 
+_InputHintsLiteralType: TypeAlias = Literal[
+    "GTK_INPUT_HINT_EMOJI",
+    "GTK_INPUT_HINT_INHIBIT_OSK",
+    "GTK_INPUT_HINT_LOWERCASE",
+    "GTK_INPUT_HINT_NONE",
+    "GTK_INPUT_HINT_NO_EMOJI",
+    "GTK_INPUT_HINT_NO_SPELLCHECK",
+    "GTK_INPUT_HINT_SPELLCHECK",
+    "GTK_INPUT_HINT_UPPERCASE_CHARS",
+    "GTK_INPUT_HINT_UPPERCASE_SENTENCES",
+    "GTK_INPUT_HINT_UPPERCASE_WORDS",
+    "GTK_INPUT_HINT_VERTICAL_WRITING",
+    "GTK_INPUT_HINT_WORD_COMPLETION",
+    "emoji",
+    "inhibit-osk",
+    "lowercase",
+    "no-emoji",
+    "no-spellcheck",
+    "none",
+    "spellcheck",
+    "uppercase-chars",
+    "uppercase-sentences",
+    "uppercase-words",
+    "vertical-writing",
+    "word-completion",
+]
+_InputHintsValueType: TypeAlias = (
+    InputHints | _InputHintsLiteralType | tuple[_InputHintsLiteralType, ...]
+)
+
 class JunctionSides(GObject.GFlags):
     BOTTOM = 12
     CORNER_BOTTOMLEFT = 4
@@ -63299,16 +64712,61 @@ class JunctionSides(GObject.GFlags):
     RIGHT = 10
     TOP = 3
 
+_JunctionSidesLiteralType: TypeAlias = Literal[
+    "GTK_JUNCTION_BOTTOM",
+    "GTK_JUNCTION_CORNER_BOTTOMLEFT",
+    "GTK_JUNCTION_CORNER_BOTTOMRIGHT",
+    "GTK_JUNCTION_CORNER_TOPLEFT",
+    "GTK_JUNCTION_CORNER_TOPRIGHT",
+    "GTK_JUNCTION_LEFT",
+    "GTK_JUNCTION_NONE",
+    "GTK_JUNCTION_RIGHT",
+    "GTK_JUNCTION_TOP",
+    "bottom",
+    "corner-bottomleft",
+    "corner-bottomright",
+    "corner-topleft",
+    "corner-topright",
+    "left",
+    "none",
+    "right",
+    "top",
+]
+_JunctionSidesValueType: TypeAlias = (
+    JunctionSides | _JunctionSidesLiteralType | tuple[_JunctionSidesLiteralType, ...]
+)
+
 class PlacesOpenFlags(GObject.GFlags):
     NEW_TAB = 2
     NEW_WINDOW = 4
     NORMAL = 1
+
+_PlacesOpenFlagsLiteralType: TypeAlias = Literal[
+    "GTK_PLACES_OPEN_NEW_TAB",
+    "GTK_PLACES_OPEN_NEW_WINDOW",
+    "GTK_PLACES_OPEN_NORMAL",
+    "new-tab",
+    "new-window",
+    "normal",
+]
+_PlacesOpenFlagsValueType: TypeAlias = (
+    PlacesOpenFlags
+    | _PlacesOpenFlagsLiteralType
+    | tuple[_PlacesOpenFlagsLiteralType, ...]
+)
 
 class RcFlags(GObject.GFlags):
     BASE = 8
     BG = 2
     FG = 1
     TEXT = 4
+
+_RcFlagsLiteralType: TypeAlias = Literal[
+    "GTK_RC_BASE", "GTK_RC_BG", "GTK_RC_FG", "GTK_RC_TEXT", "base", "bg", "fg", "text"
+]
+_RcFlagsValueType: TypeAlias = (
+    RcFlags | _RcFlagsLiteralType | tuple[_RcFlagsLiteralType, ...]
+)
 
 class RecentFilterFlags(GObject.GFlags):
     AGE = 32
@@ -63318,6 +64776,26 @@ class RecentFilterFlags(GObject.GFlags):
     MIME_TYPE = 4
     URI = 1
 
+_RecentFilterFlagsLiteralType: TypeAlias = Literal[
+    "GTK_RECENT_FILTER_AGE",
+    "GTK_RECENT_FILTER_APPLICATION",
+    "GTK_RECENT_FILTER_DISPLAY_NAME",
+    "GTK_RECENT_FILTER_GROUP",
+    "GTK_RECENT_FILTER_MIME_TYPE",
+    "GTK_RECENT_FILTER_URI",
+    "age",
+    "application",
+    "display-name",
+    "group",
+    "mime-type",
+    "uri",
+]
+_RecentFilterFlagsValueType: TypeAlias = (
+    RecentFilterFlags
+    | _RecentFilterFlagsLiteralType
+    | tuple[_RecentFilterFlagsLiteralType, ...]
+)
+
 class RegionFlags(GObject.GFlags):
     EVEN = 1
     FIRST = 4
@@ -63325,6 +64803,24 @@ class RegionFlags(GObject.GFlags):
     ODD = 2
     ONLY = 16
     SORTED = 32
+
+_RegionFlagsLiteralType: TypeAlias = Literal[
+    "GTK_REGION_EVEN",
+    "GTK_REGION_FIRST",
+    "GTK_REGION_LAST",
+    "GTK_REGION_ODD",
+    "GTK_REGION_ONLY",
+    "GTK_REGION_SORTED",
+    "even",
+    "first",
+    "last",
+    "odd",
+    "only",
+    "sorted",
+]
+_RegionFlagsValueType: TypeAlias = (
+    RegionFlags | _RegionFlagsLiteralType | tuple[_RegionFlagsLiteralType, ...]
+)
 
 class StateFlags(GObject.GFlags):
     ACTIVE = 1
@@ -63342,10 +64838,58 @@ class StateFlags(GObject.GFlags):
     SELECTED = 4
     VISITED = 1024
 
+_StateFlagsLiteralType: TypeAlias = Literal[
+    "GTK_STATE_FLAG_ACTIVE",
+    "GTK_STATE_FLAG_BACKDROP",
+    "GTK_STATE_FLAG_CHECKED",
+    "GTK_STATE_FLAG_DIR_LTR",
+    "GTK_STATE_FLAG_DIR_RTL",
+    "GTK_STATE_FLAG_DROP_ACTIVE",
+    "GTK_STATE_FLAG_FOCUSED",
+    "GTK_STATE_FLAG_INCONSISTENT",
+    "GTK_STATE_FLAG_INSENSITIVE",
+    "GTK_STATE_FLAG_LINK",
+    "GTK_STATE_FLAG_NORMAL",
+    "GTK_STATE_FLAG_PRELIGHT",
+    "GTK_STATE_FLAG_SELECTED",
+    "GTK_STATE_FLAG_VISITED",
+    "active",
+    "backdrop",
+    "checked",
+    "dir-ltr",
+    "dir-rtl",
+    "drop-active",
+    "focused",
+    "inconsistent",
+    "insensitive",
+    "link",
+    "normal",
+    "prelight",
+    "selected",
+    "visited",
+]
+_StateFlagsValueType: TypeAlias = (
+    StateFlags | _StateFlagsLiteralType | tuple[_StateFlagsLiteralType, ...]
+)
+
 class StyleContextPrintFlags(GObject.GFlags):
     NONE = 0
     RECURSE = 1
     SHOW_STYLE = 2
+
+_StyleContextPrintFlagsLiteralType: TypeAlias = Literal[
+    "GTK_STYLE_CONTEXT_PRINT_NONE",
+    "GTK_STYLE_CONTEXT_PRINT_RECURSE",
+    "GTK_STYLE_CONTEXT_PRINT_SHOW_STYLE",
+    "none",
+    "recurse",
+    "show-style",
+]
+_StyleContextPrintFlagsValueType: TypeAlias = (
+    StyleContextPrintFlags
+    | _StyleContextPrintFlagsLiteralType
+    | tuple[_StyleContextPrintFlagsLiteralType, ...]
+)
 
 class TargetFlags(GObject.GFlags):
     OTHER_APP = 4
@@ -63353,18 +64897,65 @@ class TargetFlags(GObject.GFlags):
     SAME_APP = 1
     SAME_WIDGET = 2
 
+_TargetFlagsLiteralType: TypeAlias = Literal[
+    "GTK_TARGET_OTHER_APP",
+    "GTK_TARGET_OTHER_WIDGET",
+    "GTK_TARGET_SAME_APP",
+    "GTK_TARGET_SAME_WIDGET",
+    "other-app",
+    "other-widget",
+    "same-app",
+    "same-widget",
+]
+_TargetFlagsValueType: TypeAlias = (
+    TargetFlags | _TargetFlagsLiteralType | tuple[_TargetFlagsLiteralType, ...]
+)
+
 class TextSearchFlags(GObject.GFlags):
     CASE_INSENSITIVE = 4
     TEXT_ONLY = 2
     VISIBLE_ONLY = 1
 
+_TextSearchFlagsLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_SEARCH_CASE_INSENSITIVE",
+    "GTK_TEXT_SEARCH_TEXT_ONLY",
+    "GTK_TEXT_SEARCH_VISIBLE_ONLY",
+    "case-insensitive",
+    "text-only",
+    "visible-only",
+]
+_TextSearchFlagsValueType: TypeAlias = (
+    TextSearchFlags
+    | _TextSearchFlagsLiteralType
+    | tuple[_TextSearchFlagsLiteralType, ...]
+)
+
 class ToolPaletteDragTargets(GObject.GFlags):
     GROUPS = 2
     ITEMS = 1
 
+_ToolPaletteDragTargetsLiteralType: TypeAlias = Literal[
+    "GTK_TOOL_PALETTE_DRAG_GROUPS", "GTK_TOOL_PALETTE_DRAG_ITEMS", "groups", "items"
+]
+_ToolPaletteDragTargetsValueType: TypeAlias = (
+    ToolPaletteDragTargets
+    | _ToolPaletteDragTargetsLiteralType
+    | tuple[_ToolPaletteDragTargetsLiteralType, ...]
+)
+
 class TreeModelFlags(GObject.GFlags):
     ITERS_PERSIST = 1
     LIST_ONLY = 2
+
+_TreeModelFlagsLiteralType: TypeAlias = Literal[
+    "GTK_TREE_MODEL_ITERS_PERSIST",
+    "GTK_TREE_MODEL_LIST_ONLY",
+    "iters-persist",
+    "list-only",
+]
+_TreeModelFlagsValueType: TypeAlias = (
+    TreeModelFlags | _TreeModelFlagsLiteralType | tuple[_TreeModelFlagsLiteralType, ...]
+)
 
 class UIManagerItemType(GObject.GFlags):
     ACCELERATOR = 256
@@ -63379,6 +64970,36 @@ class UIManagerItemType(GObject.GFlags):
     TOOLBAR = 4
     TOOLITEM = 64
 
+_UIManagerItemTypeLiteralType: TypeAlias = Literal[
+    "GTK_UI_MANAGER_ACCELERATOR",
+    "GTK_UI_MANAGER_AUTO",
+    "GTK_UI_MANAGER_MENU",
+    "GTK_UI_MANAGER_MENUBAR",
+    "GTK_UI_MANAGER_MENUITEM",
+    "GTK_UI_MANAGER_PLACEHOLDER",
+    "GTK_UI_MANAGER_POPUP",
+    "GTK_UI_MANAGER_POPUP_WITH_ACCELS",
+    "GTK_UI_MANAGER_SEPARATOR",
+    "GTK_UI_MANAGER_TOOLBAR",
+    "GTK_UI_MANAGER_TOOLITEM",
+    "accelerator",
+    "auto",
+    "menu",
+    "menubar",
+    "menuitem",
+    "placeholder",
+    "popup",
+    "popup-with-accels",
+    "separator",
+    "toolbar",
+    "toolitem",
+]
+_UIManagerItemTypeValueType: TypeAlias = (
+    UIManagerItemType
+    | _UIManagerItemTypeLiteralType
+    | tuple[_UIManagerItemTypeLiteralType, ...]
+)
+
 class Align(GObject.GEnum):
     BASELINE = 4
     CENTER = 3
@@ -63386,10 +65007,29 @@ class Align(GObject.GEnum):
     FILL = 0
     START = 1
 
+_AlignLiteralType: TypeAlias = Literal[
+    "GTK_ALIGN_BASELINE",
+    "GTK_ALIGN_CENTER",
+    "GTK_ALIGN_END",
+    "GTK_ALIGN_FILL",
+    "GTK_ALIGN_START",
+    "baseline",
+    "center",
+    "end",
+    "fill",
+    "start",
+]
+_AlignValueType: TypeAlias = Align | _AlignLiteralType
+
 class ArrowPlacement(GObject.GEnum):
     BOTH = 0
     END = 2
     START = 1
+
+_ArrowPlacementLiteralType: TypeAlias = Literal[
+    "GTK_ARROWS_BOTH", "GTK_ARROWS_END", "GTK_ARROWS_START", "both", "end", "start"
+]
+_ArrowPlacementValueType: TypeAlias = ArrowPlacement | _ArrowPlacementLiteralType
 
 class ArrowType(GObject.GEnum):
     DOWN = 1
@@ -63397,6 +65037,20 @@ class ArrowType(GObject.GEnum):
     NONE = 4
     RIGHT = 3
     UP = 0
+
+_ArrowTypeLiteralType: TypeAlias = Literal[
+    "GTK_ARROW_DOWN",
+    "GTK_ARROW_LEFT",
+    "GTK_ARROW_NONE",
+    "GTK_ARROW_RIGHT",
+    "GTK_ARROW_UP",
+    "down",
+    "left",
+    "none",
+    "right",
+    "up",
+]
+_ArrowTypeValueType: TypeAlias = ArrowType | _ArrowTypeLiteralType
 
 class AssistantPageType(GObject.GEnum):
     CONFIRM = 2
@@ -63406,10 +65060,38 @@ class AssistantPageType(GObject.GEnum):
     PROGRESS = 4
     SUMMARY = 3
 
+_AssistantPageTypeLiteralType: TypeAlias = Literal[
+    "GTK_ASSISTANT_PAGE_CONFIRM",
+    "GTK_ASSISTANT_PAGE_CONTENT",
+    "GTK_ASSISTANT_PAGE_CUSTOM",
+    "GTK_ASSISTANT_PAGE_INTRO",
+    "GTK_ASSISTANT_PAGE_PROGRESS",
+    "GTK_ASSISTANT_PAGE_SUMMARY",
+    "confirm",
+    "content",
+    "custom",
+    "intro",
+    "progress",
+    "summary",
+]
+_AssistantPageTypeValueType: TypeAlias = (
+    AssistantPageType | _AssistantPageTypeLiteralType
+)
+
 class BaselinePosition(GObject.GEnum):
     BOTTOM = 2
     CENTER = 1
     TOP = 0
+
+_BaselinePositionLiteralType: TypeAlias = Literal[
+    "GTK_BASELINE_POSITION_BOTTOM",
+    "GTK_BASELINE_POSITION_CENTER",
+    "GTK_BASELINE_POSITION_TOP",
+    "bottom",
+    "center",
+    "top",
+]
+_BaselinePositionValueType: TypeAlias = BaselinePosition | _BaselinePositionLiteralType
 
 class BorderStyle(GObject.GEnum):
     DASHED = 6
@@ -63422,6 +65104,30 @@ class BorderStyle(GObject.GEnum):
     OUTSET = 3
     RIDGE = 9
     SOLID = 1
+
+_BorderStyleLiteralType: TypeAlias = Literal[
+    "GTK_BORDER_STYLE_DASHED",
+    "GTK_BORDER_STYLE_DOTTED",
+    "GTK_BORDER_STYLE_DOUBLE",
+    "GTK_BORDER_STYLE_GROOVE",
+    "GTK_BORDER_STYLE_HIDDEN",
+    "GTK_BORDER_STYLE_INSET",
+    "GTK_BORDER_STYLE_NONE",
+    "GTK_BORDER_STYLE_OUTSET",
+    "GTK_BORDER_STYLE_RIDGE",
+    "GTK_BORDER_STYLE_SOLID",
+    "dashed",
+    "dotted",
+    "double",
+    "groove",
+    "hidden",
+    "inset",
+    "none",
+    "outset",
+    "ridge",
+    "solid",
+]
+_BorderStyleValueType: TypeAlias = BorderStyle | _BorderStyleLiteralType
 
 class BuilderError(GObject.GEnum):
     DUPLICATE_ID = 8
@@ -63441,6 +65147,38 @@ class BuilderError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_BuilderErrorLiteralType: TypeAlias = Literal[
+    "GTK_BUILDER_ERROR_DUPLICATE_ID",
+    "GTK_BUILDER_ERROR_INVALID_ATTRIBUTE",
+    "GTK_BUILDER_ERROR_INVALID_ID",
+    "GTK_BUILDER_ERROR_INVALID_PROPERTY",
+    "GTK_BUILDER_ERROR_INVALID_SIGNAL",
+    "GTK_BUILDER_ERROR_INVALID_TAG",
+    "GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION",
+    "GTK_BUILDER_ERROR_INVALID_VALUE",
+    "GTK_BUILDER_ERROR_MISSING_ATTRIBUTE",
+    "GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE",
+    "GTK_BUILDER_ERROR_OBJECT_TYPE_REFUSED",
+    "GTK_BUILDER_ERROR_TEMPLATE_MISMATCH",
+    "GTK_BUILDER_ERROR_UNHANDLED_TAG",
+    "GTK_BUILDER_ERROR_VERSION_MISMATCH",
+    "duplicate-id",
+    "invalid-attribute",
+    "invalid-id",
+    "invalid-property",
+    "invalid-signal",
+    "invalid-tag",
+    "invalid-type-function",
+    "invalid-value",
+    "missing-attribute",
+    "missing-property-value",
+    "object-type-refused",
+    "template-mismatch",
+    "unhandled-tag",
+    "version-mismatch",
+]
+_BuilderErrorValueType: TypeAlias = BuilderError | _BuilderErrorLiteralType
+
 class ButtonBoxStyle(GObject.GEnum):
     CENTER = 5
     EDGE = 2
@@ -63449,10 +65187,36 @@ class ButtonBoxStyle(GObject.GEnum):
     SPREAD = 1
     START = 3
 
+_ButtonBoxStyleLiteralType: TypeAlias = Literal[
+    "GTK_BUTTONBOX_CENTER",
+    "GTK_BUTTONBOX_EDGE",
+    "GTK_BUTTONBOX_END",
+    "GTK_BUTTONBOX_EXPAND",
+    "GTK_BUTTONBOX_SPREAD",
+    "GTK_BUTTONBOX_START",
+    "center",
+    "edge",
+    "end",
+    "expand",
+    "spread",
+    "start",
+]
+_ButtonBoxStyleValueType: TypeAlias = ButtonBoxStyle | _ButtonBoxStyleLiteralType
+
 class ButtonRole(GObject.GEnum):
     CHECK = 1
     NORMAL = 0
     RADIO = 2
+
+_ButtonRoleLiteralType: TypeAlias = Literal[
+    "GTK_BUTTON_ROLE_CHECK",
+    "GTK_BUTTON_ROLE_NORMAL",
+    "GTK_BUTTON_ROLE_RADIO",
+    "check",
+    "normal",
+    "radio",
+]
+_ButtonRoleValueType: TypeAlias = ButtonRole | _ButtonRoleLiteralType
 
 class ButtonsType(GObject.GEnum):
     CANCEL = 3
@@ -63462,20 +65226,68 @@ class ButtonsType(GObject.GEnum):
     OK_CANCEL = 5
     YES_NO = 4
 
+_ButtonsTypeLiteralType: TypeAlias = Literal[
+    "GTK_BUTTONS_CANCEL",
+    "GTK_BUTTONS_CLOSE",
+    "GTK_BUTTONS_NONE",
+    "GTK_BUTTONS_OK",
+    "GTK_BUTTONS_OK_CANCEL",
+    "GTK_BUTTONS_YES_NO",
+    "cancel",
+    "close",
+    "none",
+    "ok",
+    "ok-cancel",
+    "yes-no",
+]
+_ButtonsTypeValueType: TypeAlias = ButtonsType | _ButtonsTypeLiteralType
+
 class CellRendererAccelMode(GObject.GEnum):
     GTK = 0
     OTHER = 1
+
+_CellRendererAccelModeLiteralType: TypeAlias = Literal[
+    "GTK_CELL_RENDERER_ACCEL_MODE_GTK",
+    "GTK_CELL_RENDERER_ACCEL_MODE_OTHER",
+    "gtk",
+    "other",
+]
+_CellRendererAccelModeValueType: TypeAlias = (
+    CellRendererAccelMode | _CellRendererAccelModeLiteralType
+)
 
 class CellRendererMode(GObject.GEnum):
     ACTIVATABLE = 1
     EDITABLE = 2
     INERT = 0
 
+_CellRendererModeLiteralType: TypeAlias = Literal[
+    "GTK_CELL_RENDERER_MODE_ACTIVATABLE",
+    "GTK_CELL_RENDERER_MODE_EDITABLE",
+    "GTK_CELL_RENDERER_MODE_INERT",
+    "activatable",
+    "editable",
+    "inert",
+]
+_CellRendererModeValueType: TypeAlias = CellRendererMode | _CellRendererModeLiteralType
+
 class CornerType(GObject.GEnum):
     BOTTOM_LEFT = 1
     BOTTOM_RIGHT = 3
     TOP_LEFT = 0
     TOP_RIGHT = 2
+
+_CornerTypeLiteralType: TypeAlias = Literal[
+    "GTK_CORNER_BOTTOM_LEFT",
+    "GTK_CORNER_BOTTOM_RIGHT",
+    "GTK_CORNER_TOP_LEFT",
+    "GTK_CORNER_TOP_RIGHT",
+    "bottom-left",
+    "bottom-right",
+    "top-left",
+    "top-right",
+]
+_CornerTypeValueType: TypeAlias = CornerType | _CornerTypeLiteralType
 
 class CssProviderError(GObject.GEnum):
     DEPRECATED = 4
@@ -63486,6 +65298,22 @@ class CssProviderError(GObject.GEnum):
     UNKNOWN_VALUE = 5
     @staticmethod
     def quark() -> int: ...
+
+_CssProviderErrorLiteralType: TypeAlias = Literal[
+    "GTK_CSS_PROVIDER_ERROR_DEPRECATED",
+    "GTK_CSS_PROVIDER_ERROR_FAILED",
+    "GTK_CSS_PROVIDER_ERROR_IMPORT",
+    "GTK_CSS_PROVIDER_ERROR_NAME",
+    "GTK_CSS_PROVIDER_ERROR_SYNTAX",
+    "GTK_CSS_PROVIDER_ERROR_UNKNOWN_VALUE",
+    "deprecated",
+    "failed",
+    "import",
+    "name",
+    "syntax",
+    "unknown-value",
+]
+_CssProviderErrorValueType: TypeAlias = CssProviderError | _CssProviderErrorLiteralType
 
 class CssSectionType(GObject.GEnum):
     BINDING_SET = 3
@@ -63498,6 +65326,28 @@ class CssSectionType(GObject.GEnum):
     SELECTOR = 5
     VALUE = 7
 
+_CssSectionTypeLiteralType: TypeAlias = Literal[
+    "GTK_CSS_SECTION_BINDING_SET",
+    "GTK_CSS_SECTION_COLOR_DEFINITION",
+    "GTK_CSS_SECTION_DECLARATION",
+    "GTK_CSS_SECTION_DOCUMENT",
+    "GTK_CSS_SECTION_IMPORT",
+    "GTK_CSS_SECTION_KEYFRAMES",
+    "GTK_CSS_SECTION_RULESET",
+    "GTK_CSS_SECTION_SELECTOR",
+    "GTK_CSS_SECTION_VALUE",
+    "binding-set",
+    "color-definition",
+    "declaration",
+    "document",
+    "import",
+    "keyframes",
+    "ruleset",
+    "selector",
+    "value",
+]
+_CssSectionTypeValueType: TypeAlias = CssSectionType | _CssSectionTypeLiteralType
+
 class DeleteType(GObject.GEnum):
     CHARS = 0
     DISPLAY_LINES = 3
@@ -63508,6 +65358,26 @@ class DeleteType(GObject.GEnum):
     WORDS = 2
     WORD_ENDS = 1
 
+_DeleteTypeLiteralType: TypeAlias = Literal[
+    "GTK_DELETE_CHARS",
+    "GTK_DELETE_DISPLAY_LINES",
+    "GTK_DELETE_DISPLAY_LINE_ENDS",
+    "GTK_DELETE_PARAGRAPHS",
+    "GTK_DELETE_PARAGRAPH_ENDS",
+    "GTK_DELETE_WHITESPACE",
+    "GTK_DELETE_WORDS",
+    "GTK_DELETE_WORD_ENDS",
+    "chars",
+    "display-line-ends",
+    "display-lines",
+    "paragraph-ends",
+    "paragraphs",
+    "whitespace",
+    "word-ends",
+    "words",
+]
+_DeleteTypeValueType: TypeAlias = DeleteType | _DeleteTypeLiteralType
+
 class DirectionType(GObject.GEnum):
     DOWN = 3
     LEFT = 4
@@ -63515,6 +65385,22 @@ class DirectionType(GObject.GEnum):
     TAB_BACKWARD = 1
     TAB_FORWARD = 0
     UP = 2
+
+_DirectionTypeLiteralType: TypeAlias = Literal[
+    "GTK_DIR_DOWN",
+    "GTK_DIR_LEFT",
+    "GTK_DIR_RIGHT",
+    "GTK_DIR_TAB_BACKWARD",
+    "GTK_DIR_TAB_FORWARD",
+    "GTK_DIR_UP",
+    "down",
+    "left",
+    "right",
+    "tab-backward",
+    "tab-forward",
+    "up",
+]
+_DirectionTypeValueType: TypeAlias = DirectionType | _DirectionTypeLiteralType
 
 class DragResult(GObject.GEnum):
     ERROR = 5
@@ -63524,14 +65410,49 @@ class DragResult(GObject.GEnum):
     TIMEOUT_EXPIRED = 3
     USER_CANCELLED = 2
 
+_DragResultLiteralType: TypeAlias = Literal[
+    "GTK_DRAG_RESULT_ERROR",
+    "GTK_DRAG_RESULT_GRAB_BROKEN",
+    "GTK_DRAG_RESULT_NO_TARGET",
+    "GTK_DRAG_RESULT_SUCCESS",
+    "GTK_DRAG_RESULT_TIMEOUT_EXPIRED",
+    "GTK_DRAG_RESULT_USER_CANCELLED",
+    "error",
+    "grab-broken",
+    "no-target",
+    "success",
+    "timeout-expired",
+    "user-cancelled",
+]
+_DragResultValueType: TypeAlias = DragResult | _DragResultLiteralType
+
 class EntryIconPosition(GObject.GEnum):
     PRIMARY = 0
     SECONDARY = 1
+
+_EntryIconPositionLiteralType: TypeAlias = Literal[
+    "GTK_ENTRY_ICON_PRIMARY", "GTK_ENTRY_ICON_SECONDARY", "primary", "secondary"
+]
+_EntryIconPositionValueType: TypeAlias = (
+    EntryIconPosition | _EntryIconPositionLiteralType
+)
 
 class EventSequenceState(GObject.GEnum):
     CLAIMED = 1
     DENIED = 2
     NONE = 0
+
+_EventSequenceStateLiteralType: TypeAlias = Literal[
+    "GTK_EVENT_SEQUENCE_CLAIMED",
+    "GTK_EVENT_SEQUENCE_DENIED",
+    "GTK_EVENT_SEQUENCE_NONE",
+    "claimed",
+    "denied",
+    "none",
+]
+_EventSequenceStateValueType: TypeAlias = (
+    EventSequenceState | _EventSequenceStateLiteralType
+)
 
 class ExpanderStyle(GObject.GEnum):
     COLLAPSED = 0
@@ -63539,16 +65460,54 @@ class ExpanderStyle(GObject.GEnum):
     SEMI_COLLAPSED = 1
     SEMI_EXPANDED = 2
 
+_ExpanderStyleLiteralType: TypeAlias = Literal[
+    "GTK_EXPANDER_COLLAPSED",
+    "GTK_EXPANDER_EXPANDED",
+    "GTK_EXPANDER_SEMI_COLLAPSED",
+    "GTK_EXPANDER_SEMI_EXPANDED",
+    "collapsed",
+    "expanded",
+    "semi-collapsed",
+    "semi-expanded",
+]
+_ExpanderStyleValueType: TypeAlias = ExpanderStyle | _ExpanderStyleLiteralType
+
 class FileChooserAction(GObject.GEnum):
     CREATE_FOLDER = 3
     OPEN = 0
     SAVE = 1
     SELECT_FOLDER = 2
 
+_FileChooserActionLiteralType: TypeAlias = Literal[
+    "GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER",
+    "GTK_FILE_CHOOSER_ACTION_OPEN",
+    "GTK_FILE_CHOOSER_ACTION_SAVE",
+    "GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER",
+    "create-folder",
+    "open",
+    "save",
+    "select-folder",
+]
+_FileChooserActionValueType: TypeAlias = (
+    FileChooserAction | _FileChooserActionLiteralType
+)
+
 class FileChooserConfirmation(GObject.GEnum):
     ACCEPT_FILENAME = 1
     CONFIRM = 0
     SELECT_AGAIN = 2
+
+_FileChooserConfirmationLiteralType: TypeAlias = Literal[
+    "GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME",
+    "GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM",
+    "GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN",
+    "accept-filename",
+    "confirm",
+    "select-again",
+]
+_FileChooserConfirmationValueType: TypeAlias = (
+    FileChooserConfirmation | _FileChooserConfirmationLiteralType
+)
 
 class FileChooserError(GObject.GEnum):
     ALREADY_EXISTS = 2
@@ -63558,15 +65517,47 @@ class FileChooserError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_FileChooserErrorLiteralType: TypeAlias = Literal[
+    "GTK_FILE_CHOOSER_ERROR_ALREADY_EXISTS",
+    "GTK_FILE_CHOOSER_ERROR_BAD_FILENAME",
+    "GTK_FILE_CHOOSER_ERROR_INCOMPLETE_HOSTNAME",
+    "GTK_FILE_CHOOSER_ERROR_NONEXISTENT",
+    "already-exists",
+    "bad-filename",
+    "incomplete-hostname",
+    "nonexistent",
+]
+_FileChooserErrorValueType: TypeAlias = FileChooserError | _FileChooserErrorLiteralType
+
 class IMPreeditStyle(GObject.GEnum):
     CALLBACK = 1
     NONE = 2
     NOTHING = 0
 
+_IMPreeditStyleLiteralType: TypeAlias = Literal[
+    "GTK_IM_PREEDIT_CALLBACK",
+    "GTK_IM_PREEDIT_NONE",
+    "GTK_IM_PREEDIT_NOTHING",
+    "callback",
+    "none",
+    "nothing",
+]
+_IMPreeditStyleValueType: TypeAlias = IMPreeditStyle | _IMPreeditStyleLiteralType
+
 class IMStatusStyle(GObject.GEnum):
     CALLBACK = 1
     NONE = 2
     NOTHING = 0
+
+_IMStatusStyleLiteralType: TypeAlias = Literal[
+    "GTK_IM_STATUS_CALLBACK",
+    "GTK_IM_STATUS_NONE",
+    "GTK_IM_STATUS_NOTHING",
+    "callback",
+    "none",
+    "nothing",
+]
+_IMStatusStyleValueType: TypeAlias = IMStatusStyle | _IMStatusStyleLiteralType
 
 class IconSize(GObject.GEnum):
     BUTTON = 4
@@ -63589,11 +65580,34 @@ class IconSize(GObject.GEnum):
     @staticmethod
     def register_alias(alias: str, target: int) -> None: ...
 
+_IconSizeLiteralType: TypeAlias = Literal[
+    "GTK_ICON_SIZE_BUTTON",
+    "GTK_ICON_SIZE_DIALOG",
+    "GTK_ICON_SIZE_DND",
+    "GTK_ICON_SIZE_INVALID",
+    "GTK_ICON_SIZE_LARGE_TOOLBAR",
+    "GTK_ICON_SIZE_MENU",
+    "GTK_ICON_SIZE_SMALL_TOOLBAR",
+    "button",
+    "dialog",
+    "dnd",
+    "invalid",
+    "large-toolbar",
+    "menu",
+    "small-toolbar",
+]
+_IconSizeValueType: TypeAlias = IconSize | _IconSizeLiteralType
+
 class IconThemeError(GObject.GEnum):
     FAILED = 1
     NOT_FOUND = 0
     @staticmethod
     def quark() -> int: ...
+
+_IconThemeErrorLiteralType: TypeAlias = Literal[
+    "GTK_ICON_THEME_FAILED", "GTK_ICON_THEME_NOT_FOUND", "failed", "not-found"
+]
+_IconThemeErrorValueType: TypeAlias = IconThemeError | _IconThemeErrorLiteralType
 
 class IconViewDropPosition(GObject.GEnum):
     DROP_ABOVE = 4
@@ -63602,6 +65616,24 @@ class IconViewDropPosition(GObject.GEnum):
     DROP_LEFT = 2
     DROP_RIGHT = 3
     NO_DROP = 0
+
+_IconViewDropPositionLiteralType: TypeAlias = Literal[
+    "GTK_ICON_VIEW_DROP_ABOVE",
+    "GTK_ICON_VIEW_DROP_BELOW",
+    "GTK_ICON_VIEW_DROP_INTO",
+    "GTK_ICON_VIEW_DROP_LEFT",
+    "GTK_ICON_VIEW_DROP_RIGHT",
+    "GTK_ICON_VIEW_NO_DROP",
+    "drop-above",
+    "drop-below",
+    "drop-into",
+    "drop-left",
+    "drop-right",
+    "no-drop",
+]
+_IconViewDropPositionValueType: TypeAlias = (
+    IconViewDropPosition | _IconViewDropPositionLiteralType
+)
 
 class ImageType(GObject.GEnum):
     ANIMATION = 4
@@ -63612,6 +65644,26 @@ class ImageType(GObject.GEnum):
     PIXBUF = 1
     STOCK = 2
     SURFACE = 7
+
+_ImageTypeLiteralType: TypeAlias = Literal[
+    "GTK_IMAGE_ANIMATION",
+    "GTK_IMAGE_EMPTY",
+    "GTK_IMAGE_GICON",
+    "GTK_IMAGE_ICON_NAME",
+    "GTK_IMAGE_ICON_SET",
+    "GTK_IMAGE_PIXBUF",
+    "GTK_IMAGE_STOCK",
+    "GTK_IMAGE_SURFACE",
+    "animation",
+    "empty",
+    "gicon",
+    "icon-name",
+    "icon-set",
+    "pixbuf",
+    "stock",
+    "surface",
+]
+_ImageTypeValueType: TypeAlias = ImageType | _ImageTypeLiteralType
 
 class InputPurpose(GObject.GEnum):
     ALPHA = 1
@@ -63626,15 +65678,61 @@ class InputPurpose(GObject.GEnum):
     TERMINAL = 10
     URL = 5
 
+_InputPurposeLiteralType: TypeAlias = Literal[
+    "GTK_INPUT_PURPOSE_ALPHA",
+    "GTK_INPUT_PURPOSE_DIGITS",
+    "GTK_INPUT_PURPOSE_EMAIL",
+    "GTK_INPUT_PURPOSE_FREE_FORM",
+    "GTK_INPUT_PURPOSE_NAME",
+    "GTK_INPUT_PURPOSE_NUMBER",
+    "GTK_INPUT_PURPOSE_PASSWORD",
+    "GTK_INPUT_PURPOSE_PHONE",
+    "GTK_INPUT_PURPOSE_PIN",
+    "GTK_INPUT_PURPOSE_TERMINAL",
+    "GTK_INPUT_PURPOSE_URL",
+    "alpha",
+    "digits",
+    "email",
+    "free-form",
+    "name",
+    "number",
+    "password",
+    "phone",
+    "pin",
+    "terminal",
+    "url",
+]
+_InputPurposeValueType: TypeAlias = InputPurpose | _InputPurposeLiteralType
+
 class Justification(GObject.GEnum):
     CENTER = 2
     FILL = 3
     LEFT = 0
     RIGHT = 1
 
+_JustificationLiteralType: TypeAlias = Literal[
+    "GTK_JUSTIFY_CENTER",
+    "GTK_JUSTIFY_FILL",
+    "GTK_JUSTIFY_LEFT",
+    "GTK_JUSTIFY_RIGHT",
+    "center",
+    "fill",
+    "left",
+    "right",
+]
+_JustificationValueType: TypeAlias = Justification | _JustificationLiteralType
+
 class LevelBarMode(GObject.GEnum):
     CONTINUOUS = 0
     DISCRETE = 1
+
+_LevelBarModeLiteralType: TypeAlias = Literal[
+    "GTK_LEVEL_BAR_MODE_CONTINUOUS",
+    "GTK_LEVEL_BAR_MODE_DISCRETE",
+    "continuous",
+    "discrete",
+]
+_LevelBarModeValueType: TypeAlias = LevelBarMode | _LevelBarModeLiteralType
 
 class License(GObject.GEnum):
     AGPL_3_0 = 13
@@ -63656,11 +65754,65 @@ class License(GObject.GEnum):
     MPL_2_0 = 17
     UNKNOWN = 0
 
+_LicenseLiteralType: TypeAlias = Literal[
+    "GTK_LICENSE_AGPL_3_0",
+    "GTK_LICENSE_AGPL_3_0_ONLY",
+    "GTK_LICENSE_APACHE_2_0",
+    "GTK_LICENSE_ARTISTIC",
+    "GTK_LICENSE_BSD",
+    "GTK_LICENSE_BSD_3",
+    "GTK_LICENSE_CUSTOM",
+    "GTK_LICENSE_GPL_2_0",
+    "GTK_LICENSE_GPL_2_0_ONLY",
+    "GTK_LICENSE_GPL_3_0",
+    "GTK_LICENSE_GPL_3_0_ONLY",
+    "GTK_LICENSE_LGPL_2_1",
+    "GTK_LICENSE_LGPL_2_1_ONLY",
+    "GTK_LICENSE_LGPL_3_0",
+    "GTK_LICENSE_LGPL_3_0_ONLY",
+    "GTK_LICENSE_MIT_X11",
+    "GTK_LICENSE_MPL_2_0",
+    "GTK_LICENSE_UNKNOWN",
+    "agpl-3-0",
+    "agpl-3-0-only",
+    "apache-2-0",
+    "artistic",
+    "bsd",
+    "bsd-3",
+    "custom",
+    "gpl-2-0",
+    "gpl-2-0-only",
+    "gpl-3-0",
+    "gpl-3-0-only",
+    "lgpl-2-1",
+    "lgpl-2-1-only",
+    "lgpl-3-0",
+    "lgpl-3-0-only",
+    "mit-x11",
+    "mpl-2-0",
+    "unknown",
+]
+_LicenseValueType: TypeAlias = License | _LicenseLiteralType
+
 class MenuDirectionType(GObject.GEnum):
     CHILD = 1
     NEXT = 2
     PARENT = 0
     PREV = 3
+
+_MenuDirectionTypeLiteralType: TypeAlias = Literal[
+    "GTK_MENU_DIR_CHILD",
+    "GTK_MENU_DIR_NEXT",
+    "GTK_MENU_DIR_PARENT",
+    "GTK_MENU_DIR_PREV",
+    "child",
+    "next",
+    "parent",
+    "prev",
+]
+_MenuDirectionTypeValueType: TypeAlias = (
+    MenuDirectionType | _MenuDirectionTypeLiteralType
+)
 
 class MessageType(GObject.GEnum):
     ERROR = 3
@@ -63668,6 +65820,20 @@ class MessageType(GObject.GEnum):
     OTHER = 4
     QUESTION = 2
     WARNING = 1
+
+_MessageTypeLiteralType: TypeAlias = Literal[
+    "GTK_MESSAGE_ERROR",
+    "GTK_MESSAGE_INFO",
+    "GTK_MESSAGE_OTHER",
+    "GTK_MESSAGE_QUESTION",
+    "GTK_MESSAGE_WARNING",
+    "error",
+    "info",
+    "other",
+    "question",
+    "warning",
+]
+_MessageTypeValueType: TypeAlias = MessageType | _MessageTypeLiteralType
 
 class MovementStep(GObject.GEnum):
     BUFFER_ENDS = 8
@@ -63681,9 +65847,38 @@ class MovementStep(GObject.GEnum):
     VISUAL_POSITIONS = 1
     WORDS = 2
 
+_MovementStepLiteralType: TypeAlias = Literal[
+    "GTK_MOVEMENT_BUFFER_ENDS",
+    "GTK_MOVEMENT_DISPLAY_LINES",
+    "GTK_MOVEMENT_DISPLAY_LINE_ENDS",
+    "GTK_MOVEMENT_HORIZONTAL_PAGES",
+    "GTK_MOVEMENT_LOGICAL_POSITIONS",
+    "GTK_MOVEMENT_PAGES",
+    "GTK_MOVEMENT_PARAGRAPHS",
+    "GTK_MOVEMENT_PARAGRAPH_ENDS",
+    "GTK_MOVEMENT_VISUAL_POSITIONS",
+    "GTK_MOVEMENT_WORDS",
+    "buffer-ends",
+    "display-line-ends",
+    "display-lines",
+    "horizontal-pages",
+    "logical-positions",
+    "pages",
+    "paragraph-ends",
+    "paragraphs",
+    "visual-positions",
+    "words",
+]
+_MovementStepValueType: TypeAlias = MovementStep | _MovementStepLiteralType
+
 class NotebookTab(GObject.GEnum):
     FIRST = 0
     LAST = 1
+
+_NotebookTabLiteralType: TypeAlias = Literal[
+    "GTK_NOTEBOOK_TAB_FIRST", "GTK_NOTEBOOK_TAB_LAST", "first", "last"
+]
+_NotebookTabValueType: TypeAlias = NotebookTab | _NotebookTabLiteralType
 
 class NumberUpLayout(GObject.GEnum):
     BTLR = 6
@@ -63695,9 +65890,34 @@ class NumberUpLayout(GObject.GEnum):
     TBLR = 4
     TBRL = 5
 
+_NumberUpLayoutLiteralType: TypeAlias = Literal[
+    "GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_LEFT_TO_RIGHT",
+    "GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_RIGHT_TO_LEFT",
+    "GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_BOTTOM_TO_TOP",
+    "GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_TOP_TO_BOTTOM",
+    "GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_BOTTOM_TO_TOP",
+    "GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_TOP_TO_BOTTOM",
+    "GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_LEFT_TO_RIGHT",
+    "GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_RIGHT_TO_LEFT",
+    "btlr",
+    "btrl",
+    "lrbt",
+    "lrtb",
+    "rlbt",
+    "rltb",
+    "tblr",
+    "tbrl",
+]
+_NumberUpLayoutValueType: TypeAlias = NumberUpLayout | _NumberUpLayoutLiteralType
+
 class Orientation(GObject.GEnum):
     HORIZONTAL = 0
     VERTICAL = 1
+
+_OrientationLiteralType: TypeAlias = Literal[
+    "GTK_ORIENTATION_HORIZONTAL", "GTK_ORIENTATION_VERTICAL", "horizontal", "vertical"
+]
+_OrientationValueType: TypeAlias = Orientation | _OrientationLiteralType
 
 class PackDirection(GObject.GEnum):
     BTT = 3
@@ -63705,14 +65925,41 @@ class PackDirection(GObject.GEnum):
     RTL = 1
     TTB = 2
 
+_PackDirectionLiteralType: TypeAlias = Literal[
+    "GTK_PACK_DIRECTION_BTT",
+    "GTK_PACK_DIRECTION_LTR",
+    "GTK_PACK_DIRECTION_RTL",
+    "GTK_PACK_DIRECTION_TTB",
+    "btt",
+    "ltr",
+    "rtl",
+    "ttb",
+]
+_PackDirectionValueType: TypeAlias = PackDirection | _PackDirectionLiteralType
+
 class PackType(GObject.GEnum):
     END = 1
     START = 0
+
+_PackTypeLiteralType: TypeAlias = Literal[
+    "GTK_PACK_END", "GTK_PACK_START", "end", "start"
+]
+_PackTypeValueType: TypeAlias = PackType | _PackTypeLiteralType
 
 class PadActionType(GObject.GEnum):
     BUTTON = 0
     RING = 1
     STRIP = 2
+
+_PadActionTypeLiteralType: TypeAlias = Literal[
+    "GTK_PAD_ACTION_BUTTON",
+    "GTK_PAD_ACTION_RING",
+    "GTK_PAD_ACTION_STRIP",
+    "button",
+    "ring",
+    "strip",
+]
+_PadActionTypeValueType: TypeAlias = PadActionType | _PadActionTypeLiteralType
 
 class PageOrientation(GObject.GEnum):
     LANDSCAPE = 1
@@ -63720,16 +65967,45 @@ class PageOrientation(GObject.GEnum):
     REVERSE_LANDSCAPE = 3
     REVERSE_PORTRAIT = 2
 
+_PageOrientationLiteralType: TypeAlias = Literal[
+    "GTK_PAGE_ORIENTATION_LANDSCAPE",
+    "GTK_PAGE_ORIENTATION_PORTRAIT",
+    "GTK_PAGE_ORIENTATION_REVERSE_LANDSCAPE",
+    "GTK_PAGE_ORIENTATION_REVERSE_PORTRAIT",
+    "landscape",
+    "portrait",
+    "reverse-landscape",
+    "reverse-portrait",
+]
+_PageOrientationValueType: TypeAlias = PageOrientation | _PageOrientationLiteralType
+
 class PageSet(GObject.GEnum):
     ALL = 0
     EVEN = 1
     ODD = 2
+
+_PageSetLiteralType: TypeAlias = Literal[
+    "GTK_PAGE_SET_ALL", "GTK_PAGE_SET_EVEN", "GTK_PAGE_SET_ODD", "all", "even", "odd"
+]
+_PageSetValueType: TypeAlias = PageSet | _PageSetLiteralType
 
 class PanDirection(GObject.GEnum):
     DOWN = 3
     LEFT = 0
     RIGHT = 1
     UP = 2
+
+_PanDirectionLiteralType: TypeAlias = Literal[
+    "GTK_PAN_DIRECTION_DOWN",
+    "GTK_PAN_DIRECTION_LEFT",
+    "GTK_PAN_DIRECTION_RIGHT",
+    "GTK_PAN_DIRECTION_UP",
+    "down",
+    "left",
+    "right",
+    "up",
+]
+_PanDirectionValueType: TypeAlias = PanDirection | _PanDirectionLiteralType
 
 class PathPriorityType(GObject.GEnum):
     APPLICATION = 8
@@ -63739,10 +66015,36 @@ class PathPriorityType(GObject.GEnum):
     RC = 12
     THEME = 10
 
+_PathPriorityTypeLiteralType: TypeAlias = Literal[
+    "GTK_PATH_PRIO_APPLICATION",
+    "GTK_PATH_PRIO_GTK",
+    "GTK_PATH_PRIO_HIGHEST",
+    "GTK_PATH_PRIO_LOWEST",
+    "GTK_PATH_PRIO_RC",
+    "GTK_PATH_PRIO_THEME",
+    "application",
+    "gtk",
+    "highest",
+    "lowest",
+    "rc",
+    "theme",
+]
+_PathPriorityTypeValueType: TypeAlias = PathPriorityType | _PathPriorityTypeLiteralType
+
 class PathType(GObject.GEnum):
     CLASS = 2
     WIDGET = 0
     WIDGET_CLASS = 1
+
+_PathTypeLiteralType: TypeAlias = Literal[
+    "GTK_PATH_CLASS",
+    "GTK_PATH_WIDGET",
+    "GTK_PATH_WIDGET_CLASS",
+    "class",
+    "widget",
+    "widget-class",
+]
+_PathTypeValueType: TypeAlias = PathType | _PathTypeLiteralType
 
 class PolicyType(GObject.GEnum):
     ALWAYS = 0
@@ -63750,9 +66052,28 @@ class PolicyType(GObject.GEnum):
     EXTERNAL = 3
     NEVER = 2
 
+_PolicyTypeLiteralType: TypeAlias = Literal[
+    "GTK_POLICY_ALWAYS",
+    "GTK_POLICY_AUTOMATIC",
+    "GTK_POLICY_EXTERNAL",
+    "GTK_POLICY_NEVER",
+    "always",
+    "automatic",
+    "external",
+    "never",
+]
+_PolicyTypeValueType: TypeAlias = PolicyType | _PolicyTypeLiteralType
+
 class PopoverConstraint(GObject.GEnum):
     NONE = 0
     WINDOW = 1
+
+_PopoverConstraintLiteralType: TypeAlias = Literal[
+    "GTK_POPOVER_CONSTRAINT_NONE", "GTK_POPOVER_CONSTRAINT_WINDOW", "none", "window"
+]
+_PopoverConstraintValueType: TypeAlias = (
+    PopoverConstraint | _PopoverConstraintLiteralType
+)
 
 class PositionType(GObject.GEnum):
     BOTTOM = 3
@@ -63760,10 +66081,32 @@ class PositionType(GObject.GEnum):
     RIGHT = 1
     TOP = 2
 
+_PositionTypeLiteralType: TypeAlias = Literal[
+    "GTK_POS_BOTTOM",
+    "GTK_POS_LEFT",
+    "GTK_POS_RIGHT",
+    "GTK_POS_TOP",
+    "bottom",
+    "left",
+    "right",
+    "top",
+]
+_PositionTypeValueType: TypeAlias = PositionType | _PositionTypeLiteralType
+
 class PrintDuplex(GObject.GEnum):
     HORIZONTAL = 1
     SIMPLEX = 0
     VERTICAL = 2
+
+_PrintDuplexLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_DUPLEX_HORIZONTAL",
+    "GTK_PRINT_DUPLEX_SIMPLEX",
+    "GTK_PRINT_DUPLEX_VERTICAL",
+    "horizontal",
+    "simplex",
+    "vertical",
+]
+_PrintDuplexValueType: TypeAlias = PrintDuplex | _PrintDuplexLiteralType
 
 class PrintError(GObject.GEnum):
     GENERAL = 0
@@ -63773,11 +66116,37 @@ class PrintError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_PrintErrorLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_ERROR_GENERAL",
+    "GTK_PRINT_ERROR_INTERNAL_ERROR",
+    "GTK_PRINT_ERROR_INVALID_FILE",
+    "GTK_PRINT_ERROR_NOMEM",
+    "general",
+    "internal-error",
+    "invalid-file",
+    "nomem",
+]
+_PrintErrorValueType: TypeAlias = PrintError | _PrintErrorLiteralType
+
 class PrintOperationAction(GObject.GEnum):
     EXPORT = 3
     PREVIEW = 2
     PRINT = 1
     PRINT_DIALOG = 0
+
+_PrintOperationActionLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_OPERATION_ACTION_EXPORT",
+    "GTK_PRINT_OPERATION_ACTION_PREVIEW",
+    "GTK_PRINT_OPERATION_ACTION_PRINT",
+    "GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG",
+    "export",
+    "preview",
+    "print",
+    "print-dialog",
+]
+_PrintOperationActionValueType: TypeAlias = (
+    PrintOperationAction | _PrintOperationActionLiteralType
+)
 
 class PrintOperationResult(GObject.GEnum):
     APPLY = 1
@@ -63785,17 +66154,55 @@ class PrintOperationResult(GObject.GEnum):
     ERROR = 0
     IN_PROGRESS = 3
 
+_PrintOperationResultLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_OPERATION_RESULT_APPLY",
+    "GTK_PRINT_OPERATION_RESULT_CANCEL",
+    "GTK_PRINT_OPERATION_RESULT_ERROR",
+    "GTK_PRINT_OPERATION_RESULT_IN_PROGRESS",
+    "apply",
+    "cancel",
+    "error",
+    "in-progress",
+]
+_PrintOperationResultValueType: TypeAlias = (
+    PrintOperationResult | _PrintOperationResultLiteralType
+)
+
 class PrintPages(GObject.GEnum):
     ALL = 0
     CURRENT = 1
     RANGES = 2
     SELECTION = 3
 
+_PrintPagesLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_PAGES_ALL",
+    "GTK_PRINT_PAGES_CURRENT",
+    "GTK_PRINT_PAGES_RANGES",
+    "GTK_PRINT_PAGES_SELECTION",
+    "all",
+    "current",
+    "ranges",
+    "selection",
+]
+_PrintPagesValueType: TypeAlias = PrintPages | _PrintPagesLiteralType
+
 class PrintQuality(GObject.GEnum):
     DRAFT = 3
     HIGH = 2
     LOW = 0
     NORMAL = 1
+
+_PrintQualityLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_QUALITY_DRAFT",
+    "GTK_PRINT_QUALITY_HIGH",
+    "GTK_PRINT_QUALITY_LOW",
+    "GTK_PRINT_QUALITY_NORMAL",
+    "draft",
+    "high",
+    "low",
+    "normal",
+]
+_PrintQualityValueType: TypeAlias = PrintQuality | _PrintQualityLiteralType
 
 class PrintStatus(GObject.GEnum):
     FINISHED = 7
@@ -63808,11 +66215,45 @@ class PrintStatus(GObject.GEnum):
     PRINTING = 6
     SENDING_DATA = 3
 
+_PrintStatusLiteralType: TypeAlias = Literal[
+    "GTK_PRINT_STATUS_FINISHED",
+    "GTK_PRINT_STATUS_FINISHED_ABORTED",
+    "GTK_PRINT_STATUS_GENERATING_DATA",
+    "GTK_PRINT_STATUS_INITIAL",
+    "GTK_PRINT_STATUS_PENDING",
+    "GTK_PRINT_STATUS_PENDING_ISSUE",
+    "GTK_PRINT_STATUS_PREPARING",
+    "GTK_PRINT_STATUS_PRINTING",
+    "GTK_PRINT_STATUS_SENDING_DATA",
+    "finished",
+    "finished-aborted",
+    "generating-data",
+    "initial",
+    "pending",
+    "pending-issue",
+    "preparing",
+    "printing",
+    "sending-data",
+]
+_PrintStatusValueType: TypeAlias = PrintStatus | _PrintStatusLiteralType
+
 class PropagationPhase(GObject.GEnum):
     BUBBLE = 2
     CAPTURE = 1
     NONE = 0
     TARGET = 3
+
+_PropagationPhaseLiteralType: TypeAlias = Literal[
+    "GTK_PHASE_BUBBLE",
+    "GTK_PHASE_CAPTURE",
+    "GTK_PHASE_NONE",
+    "GTK_PHASE_TARGET",
+    "bubble",
+    "capture",
+    "none",
+    "target",
+]
+_PropagationPhaseValueType: TypeAlias = PropagationPhase | _PropagationPhaseLiteralType
 
 class RcTokenType(GObject.GEnum):
     ACTIVE = 273
@@ -63856,11 +66297,105 @@ class RcTokenType(GObject.GEnum):
     XTHICKNESS = 281
     YTHICKNESS = 282
 
+_RcTokenTypeLiteralType: TypeAlias = Literal[
+    "GTK_RC_TOKEN_ACTIVE",
+    "GTK_RC_TOKEN_APPLICATION",
+    "GTK_RC_TOKEN_BASE",
+    "GTK_RC_TOKEN_BG",
+    "GTK_RC_TOKEN_BG_PIXMAP",
+    "GTK_RC_TOKEN_BIND",
+    "GTK_RC_TOKEN_BINDING",
+    "GTK_RC_TOKEN_CLASS",
+    "GTK_RC_TOKEN_COLOR",
+    "GTK_RC_TOKEN_ENGINE",
+    "GTK_RC_TOKEN_FG",
+    "GTK_RC_TOKEN_FONT",
+    "GTK_RC_TOKEN_FONTSET",
+    "GTK_RC_TOKEN_FONT_NAME",
+    "GTK_RC_TOKEN_GTK",
+    "GTK_RC_TOKEN_HIGHEST",
+    "GTK_RC_TOKEN_IM_MODULE_FILE",
+    "GTK_RC_TOKEN_IM_MODULE_PATH",
+    "GTK_RC_TOKEN_INCLUDE",
+    "GTK_RC_TOKEN_INSENSITIVE",
+    "GTK_RC_TOKEN_INVALID",
+    "GTK_RC_TOKEN_LAST",
+    "GTK_RC_TOKEN_LOWEST",
+    "GTK_RC_TOKEN_LTR",
+    "GTK_RC_TOKEN_MODULE_PATH",
+    "GTK_RC_TOKEN_NORMAL",
+    "GTK_RC_TOKEN_PIXMAP_PATH",
+    "GTK_RC_TOKEN_PRELIGHT",
+    "GTK_RC_TOKEN_RC",
+    "GTK_RC_TOKEN_RTL",
+    "GTK_RC_TOKEN_SELECTED",
+    "GTK_RC_TOKEN_STOCK",
+    "GTK_RC_TOKEN_STYLE",
+    "GTK_RC_TOKEN_TEXT",
+    "GTK_RC_TOKEN_THEME",
+    "GTK_RC_TOKEN_UNBIND",
+    "GTK_RC_TOKEN_WIDGET",
+    "GTK_RC_TOKEN_WIDGET_CLASS",
+    "GTK_RC_TOKEN_XTHICKNESS",
+    "GTK_RC_TOKEN_YTHICKNESS",
+    "active",
+    "application",
+    "base",
+    "bg",
+    "bg-pixmap",
+    "bind",
+    "binding",
+    "class",
+    "color",
+    "engine",
+    "fg",
+    "font",
+    "font-name",
+    "fontset",
+    "gtk",
+    "highest",
+    "im-module-file",
+    "im-module-path",
+    "include",
+    "insensitive",
+    "invalid",
+    "last",
+    "lowest",
+    "ltr",
+    "module-path",
+    "normal",
+    "pixmap-path",
+    "prelight",
+    "rc",
+    "rtl",
+    "selected",
+    "stock",
+    "style",
+    "text",
+    "theme",
+    "unbind",
+    "widget",
+    "widget-class",
+    "xthickness",
+    "ythickness",
+]
+_RcTokenTypeValueType: TypeAlias = RcTokenType | _RcTokenTypeLiteralType
+
 class RecentChooserError(GObject.GEnum):
     INVALID_URI = 1
     NOT_FOUND = 0
     @staticmethod
     def quark() -> int: ...
+
+_RecentChooserErrorLiteralType: TypeAlias = Literal[
+    "GTK_RECENT_CHOOSER_ERROR_INVALID_URI",
+    "GTK_RECENT_CHOOSER_ERROR_NOT_FOUND",
+    "invalid-uri",
+    "not-found",
+]
+_RecentChooserErrorValueType: TypeAlias = (
+    RecentChooserError | _RecentChooserErrorLiteralType
+)
 
 class RecentManagerError(GObject.GEnum):
     INVALID_ENCODING = 2
@@ -63873,21 +66408,68 @@ class RecentManagerError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_RecentManagerErrorLiteralType: TypeAlias = Literal[
+    "GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING",
+    "GTK_RECENT_MANAGER_ERROR_INVALID_URI",
+    "GTK_RECENT_MANAGER_ERROR_NOT_FOUND",
+    "GTK_RECENT_MANAGER_ERROR_NOT_REGISTERED",
+    "GTK_RECENT_MANAGER_ERROR_READ",
+    "GTK_RECENT_MANAGER_ERROR_UNKNOWN",
+    "GTK_RECENT_MANAGER_ERROR_WRITE",
+    "invalid-encoding",
+    "invalid-uri",
+    "not-found",
+    "not-registered",
+    "read",
+    "unknown",
+    "write",
+]
+_RecentManagerErrorValueType: TypeAlias = (
+    RecentManagerError | _RecentManagerErrorLiteralType
+)
+
 class RecentSortType(GObject.GEnum):
     CUSTOM = 3
     LRU = 2
     MRU = 1
     NONE = 0
 
+_RecentSortTypeLiteralType: TypeAlias = Literal[
+    "GTK_RECENT_SORT_CUSTOM",
+    "GTK_RECENT_SORT_LRU",
+    "GTK_RECENT_SORT_MRU",
+    "GTK_RECENT_SORT_NONE",
+    "custom",
+    "lru",
+    "mru",
+    "none",
+]
+_RecentSortTypeValueType: TypeAlias = RecentSortType | _RecentSortTypeLiteralType
+
 class ReliefStyle(GObject.GEnum):
     HALF = 1
     NONE = 2
     NORMAL = 0
 
+_ReliefStyleLiteralType: TypeAlias = Literal[
+    "GTK_RELIEF_HALF", "GTK_RELIEF_NONE", "GTK_RELIEF_NORMAL", "half", "none", "normal"
+]
+_ReliefStyleValueType: TypeAlias = ReliefStyle | _ReliefStyleLiteralType
+
 class ResizeMode(GObject.GEnum):
     IMMEDIATE = 2
     PARENT = 0
     QUEUE = 1
+
+_ResizeModeLiteralType: TypeAlias = Literal[
+    "GTK_RESIZE_IMMEDIATE",
+    "GTK_RESIZE_PARENT",
+    "GTK_RESIZE_QUEUE",
+    "immediate",
+    "parent",
+    "queue",
+]
+_ResizeModeValueType: TypeAlias = ResizeMode | _ResizeModeLiteralType
 
 class ResponseType(GObject.GEnum):
     ACCEPT = -3
@@ -63902,6 +66484,32 @@ class ResponseType(GObject.GEnum):
     REJECT = -2
     YES = -8
 
+_ResponseTypeLiteralType: TypeAlias = Literal[
+    "GTK_RESPONSE_ACCEPT",
+    "GTK_RESPONSE_APPLY",
+    "GTK_RESPONSE_CANCEL",
+    "GTK_RESPONSE_CLOSE",
+    "GTK_RESPONSE_DELETE_EVENT",
+    "GTK_RESPONSE_HELP",
+    "GTK_RESPONSE_NO",
+    "GTK_RESPONSE_NONE",
+    "GTK_RESPONSE_OK",
+    "GTK_RESPONSE_REJECT",
+    "GTK_RESPONSE_YES",
+    "accept",
+    "apply",
+    "cancel",
+    "close",
+    "delete-event",
+    "help",
+    "no",
+    "none",
+    "ok",
+    "reject",
+    "yes",
+]
+_ResponseTypeValueType: TypeAlias = ResponseType | _ResponseTypeLiteralType
+
 class RevealerTransitionType(GObject.GEnum):
     CROSSFADE = 1
     NONE = 0
@@ -63910,6 +66518,24 @@ class RevealerTransitionType(GObject.GEnum):
     SLIDE_RIGHT = 2
     SLIDE_UP = 4
 
+_RevealerTransitionTypeLiteralType: TypeAlias = Literal[
+    "GTK_REVEALER_TRANSITION_TYPE_CROSSFADE",
+    "GTK_REVEALER_TRANSITION_TYPE_NONE",
+    "GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN",
+    "GTK_REVEALER_TRANSITION_TYPE_SLIDE_LEFT",
+    "GTK_REVEALER_TRANSITION_TYPE_SLIDE_RIGHT",
+    "GTK_REVEALER_TRANSITION_TYPE_SLIDE_UP",
+    "crossfade",
+    "none",
+    "slide-down",
+    "slide-left",
+    "slide-right",
+    "slide-up",
+]
+_RevealerTransitionTypeValueType: TypeAlias = (
+    RevealerTransitionType | _RevealerTransitionTypeLiteralType
+)
+
 class ScrollStep(GObject.GEnum):
     ENDS = 2
     HORIZONTAL_ENDS = 5
@@ -63917,6 +66543,22 @@ class ScrollStep(GObject.GEnum):
     HORIZONTAL_STEPS = 3
     PAGES = 1
     STEPS = 0
+
+_ScrollStepLiteralType: TypeAlias = Literal[
+    "GTK_SCROLL_ENDS",
+    "GTK_SCROLL_HORIZONTAL_ENDS",
+    "GTK_SCROLL_HORIZONTAL_PAGES",
+    "GTK_SCROLL_HORIZONTAL_STEPS",
+    "GTK_SCROLL_PAGES",
+    "GTK_SCROLL_STEPS",
+    "ends",
+    "horizontal-ends",
+    "horizontal-pages",
+    "horizontal-steps",
+    "pages",
+    "steps",
+]
+_ScrollStepValueType: TypeAlias = ScrollStep | _ScrollStepLiteralType
 
 class ScrollType(GObject.GEnum):
     END = 15
@@ -63936,9 +66578,50 @@ class ScrollType(GObject.GEnum):
     STEP_RIGHT = 11
     STEP_UP = 6
 
+_ScrollTypeLiteralType: TypeAlias = Literal[
+    "GTK_SCROLL_END",
+    "GTK_SCROLL_JUMP",
+    "GTK_SCROLL_NONE",
+    "GTK_SCROLL_PAGE_BACKWARD",
+    "GTK_SCROLL_PAGE_DOWN",
+    "GTK_SCROLL_PAGE_FORWARD",
+    "GTK_SCROLL_PAGE_LEFT",
+    "GTK_SCROLL_PAGE_RIGHT",
+    "GTK_SCROLL_PAGE_UP",
+    "GTK_SCROLL_START",
+    "GTK_SCROLL_STEP_BACKWARD",
+    "GTK_SCROLL_STEP_DOWN",
+    "GTK_SCROLL_STEP_FORWARD",
+    "GTK_SCROLL_STEP_LEFT",
+    "GTK_SCROLL_STEP_RIGHT",
+    "GTK_SCROLL_STEP_UP",
+    "end",
+    "jump",
+    "none",
+    "page-backward",
+    "page-down",
+    "page-forward",
+    "page-left",
+    "page-right",
+    "page-up",
+    "start",
+    "step-backward",
+    "step-down",
+    "step-forward",
+    "step-left",
+    "step-right",
+    "step-up",
+]
+_ScrollTypeValueType: TypeAlias = ScrollType | _ScrollTypeLiteralType
+
 class ScrollablePolicy(GObject.GEnum):
     MINIMUM = 0
     NATURAL = 1
+
+_ScrollablePolicyLiteralType: TypeAlias = Literal[
+    "GTK_SCROLL_MINIMUM", "GTK_SCROLL_NATURAL", "minimum", "natural"
+]
+_ScrollablePolicyValueType: TypeAlias = ScrollablePolicy | _ScrollablePolicyLiteralType
 
 class SelectionMode(GObject.GEnum):
     BROWSE = 2
@@ -63946,10 +66629,32 @@ class SelectionMode(GObject.GEnum):
     NONE = 0
     SINGLE = 1
 
+_SelectionModeLiteralType: TypeAlias = Literal[
+    "GTK_SELECTION_BROWSE",
+    "GTK_SELECTION_MULTIPLE",
+    "GTK_SELECTION_NONE",
+    "GTK_SELECTION_SINGLE",
+    "browse",
+    "multiple",
+    "none",
+    "single",
+]
+_SelectionModeValueType: TypeAlias = SelectionMode | _SelectionModeLiteralType
+
 class SensitivityType(GObject.GEnum):
     AUTO = 0
     OFF = 2
     ON = 1
+
+_SensitivityTypeLiteralType: TypeAlias = Literal[
+    "GTK_SENSITIVITY_AUTO",
+    "GTK_SENSITIVITY_OFF",
+    "GTK_SENSITIVITY_ON",
+    "auto",
+    "off",
+    "on",
+]
+_SensitivityTypeValueType: TypeAlias = SensitivityType | _SensitivityTypeLiteralType
 
 class ShadowType(GObject.GEnum):
     ETCHED_IN = 3
@@ -63957,6 +66662,20 @@ class ShadowType(GObject.GEnum):
     IN = 1
     NONE = 0
     OUT = 2
+
+_ShadowTypeLiteralType: TypeAlias = Literal[
+    "GTK_SHADOW_ETCHED_IN",
+    "GTK_SHADOW_ETCHED_OUT",
+    "GTK_SHADOW_IN",
+    "GTK_SHADOW_NONE",
+    "GTK_SHADOW_OUT",
+    "etched-in",
+    "etched-out",
+    "in",
+    "none",
+    "out",
+]
+_ShadowTypeValueType: TypeAlias = ShadowType | _ShadowTypeLiteralType
 
 class ShortcutType(GObject.GEnum):
     ACCELERATOR = 0
@@ -63968,24 +66687,78 @@ class ShortcutType(GObject.GEnum):
     GESTURE_TWO_FINGER_SWIPE_LEFT = 5
     GESTURE_TWO_FINGER_SWIPE_RIGHT = 6
 
+_ShortcutTypeLiteralType: TypeAlias = Literal[
+    "GTK_SHORTCUT_ACCELERATOR",
+    "GTK_SHORTCUT_GESTURE",
+    "GTK_SHORTCUT_GESTURE_PINCH",
+    "GTK_SHORTCUT_GESTURE_ROTATE_CLOCKWISE",
+    "GTK_SHORTCUT_GESTURE_ROTATE_COUNTERCLOCKWISE",
+    "GTK_SHORTCUT_GESTURE_STRETCH",
+    "GTK_SHORTCUT_GESTURE_TWO_FINGER_SWIPE_LEFT",
+    "GTK_SHORTCUT_GESTURE_TWO_FINGER_SWIPE_RIGHT",
+    "accelerator",
+    "gesture",
+    "gesture-pinch",
+    "gesture-rotate-clockwise",
+    "gesture-rotate-counterclockwise",
+    "gesture-stretch",
+    "gesture-two-finger-swipe-left",
+    "gesture-two-finger-swipe-right",
+]
+_ShortcutTypeValueType: TypeAlias = ShortcutType | _ShortcutTypeLiteralType
+
 class SizeGroupMode(GObject.GEnum):
     BOTH = 3
     HORIZONTAL = 1
     NONE = 0
     VERTICAL = 2
 
+_SizeGroupModeLiteralType: TypeAlias = Literal[
+    "GTK_SIZE_GROUP_BOTH",
+    "GTK_SIZE_GROUP_HORIZONTAL",
+    "GTK_SIZE_GROUP_NONE",
+    "GTK_SIZE_GROUP_VERTICAL",
+    "both",
+    "horizontal",
+    "none",
+    "vertical",
+]
+_SizeGroupModeValueType: TypeAlias = SizeGroupMode | _SizeGroupModeLiteralType
+
 class SizeRequestMode(GObject.GEnum):
     CONSTANT_SIZE = 2
     HEIGHT_FOR_WIDTH = 0
     WIDTH_FOR_HEIGHT = 1
 
+_SizeRequestModeLiteralType: TypeAlias = Literal[
+    "GTK_SIZE_REQUEST_CONSTANT_SIZE",
+    "GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH",
+    "GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT",
+    "constant-size",
+    "height-for-width",
+    "width-for-height",
+]
+_SizeRequestModeValueType: TypeAlias = SizeRequestMode | _SizeRequestModeLiteralType
+
 class SortType(GObject.GEnum):
     ASCENDING = 0
     DESCENDING = 1
 
+_SortTypeLiteralType: TypeAlias = Literal[
+    "GTK_SORT_ASCENDING", "GTK_SORT_DESCENDING", "ascending", "descending"
+]
+_SortTypeValueType: TypeAlias = SortType | _SortTypeLiteralType
+
 class SpinButtonUpdatePolicy(GObject.GEnum):
     ALWAYS = 0
     IF_VALID = 1
+
+_SpinButtonUpdatePolicyLiteralType: TypeAlias = Literal[
+    "GTK_UPDATE_ALWAYS", "GTK_UPDATE_IF_VALID", "always", "if-valid"
+]
+_SpinButtonUpdatePolicyValueType: TypeAlias = (
+    SpinButtonUpdatePolicy | _SpinButtonUpdatePolicyLiteralType
+)
 
 class SpinType(GObject.GEnum):
     END = 5
@@ -63995,6 +66768,24 @@ class SpinType(GObject.GEnum):
     STEP_BACKWARD = 1
     STEP_FORWARD = 0
     USER_DEFINED = 6
+
+_SpinTypeLiteralType: TypeAlias = Literal[
+    "GTK_SPIN_END",
+    "GTK_SPIN_HOME",
+    "GTK_SPIN_PAGE_BACKWARD",
+    "GTK_SPIN_PAGE_FORWARD",
+    "GTK_SPIN_STEP_BACKWARD",
+    "GTK_SPIN_STEP_FORWARD",
+    "GTK_SPIN_USER_DEFINED",
+    "end",
+    "home",
+    "page-backward",
+    "page-forward",
+    "step-backward",
+    "step-forward",
+    "user-defined",
+]
+_SpinTypeValueType: TypeAlias = SpinType | _SpinTypeLiteralType
 
 class StackTransitionType(GObject.GEnum):
     CROSSFADE = 1
@@ -64018,6 +66809,52 @@ class StackTransitionType(GObject.GEnum):
     UNDER_RIGHT = 15
     UNDER_UP = 12
 
+_StackTransitionTypeLiteralType: TypeAlias = Literal[
+    "GTK_STACK_TRANSITION_TYPE_CROSSFADE",
+    "GTK_STACK_TRANSITION_TYPE_NONE",
+    "GTK_STACK_TRANSITION_TYPE_OVER_DOWN",
+    "GTK_STACK_TRANSITION_TYPE_OVER_DOWN_UP",
+    "GTK_STACK_TRANSITION_TYPE_OVER_LEFT",
+    "GTK_STACK_TRANSITION_TYPE_OVER_LEFT_RIGHT",
+    "GTK_STACK_TRANSITION_TYPE_OVER_RIGHT",
+    "GTK_STACK_TRANSITION_TYPE_OVER_RIGHT_LEFT",
+    "GTK_STACK_TRANSITION_TYPE_OVER_UP",
+    "GTK_STACK_TRANSITION_TYPE_OVER_UP_DOWN",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_DOWN",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_UP",
+    "GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN",
+    "GTK_STACK_TRANSITION_TYPE_UNDER_DOWN",
+    "GTK_STACK_TRANSITION_TYPE_UNDER_LEFT",
+    "GTK_STACK_TRANSITION_TYPE_UNDER_RIGHT",
+    "GTK_STACK_TRANSITION_TYPE_UNDER_UP",
+    "crossfade",
+    "none",
+    "over-down",
+    "over-down-up",
+    "over-left",
+    "over-left-right",
+    "over-right",
+    "over-right-left",
+    "over-up",
+    "over-up-down",
+    "slide-down",
+    "slide-left",
+    "slide-left-right",
+    "slide-right",
+    "slide-up",
+    "slide-up-down",
+    "under-down",
+    "under-left",
+    "under-right",
+    "under-up",
+]
+_StackTransitionTypeValueType: TypeAlias = (
+    StackTransitionType | _StackTransitionTypeLiteralType
+)
+
 class StateType(GObject.GEnum):
     ACTIVE = 1
     FOCUSED = 6
@@ -64027,25 +66864,79 @@ class StateType(GObject.GEnum):
     PRELIGHT = 2
     SELECTED = 3
 
+_StateTypeLiteralType: TypeAlias = Literal[
+    "GTK_STATE_ACTIVE",
+    "GTK_STATE_FOCUSED",
+    "GTK_STATE_INCONSISTENT",
+    "GTK_STATE_INSENSITIVE",
+    "GTK_STATE_NORMAL",
+    "GTK_STATE_PRELIGHT",
+    "GTK_STATE_SELECTED",
+    "active",
+    "focused",
+    "inconsistent",
+    "insensitive",
+    "normal",
+    "prelight",
+    "selected",
+]
+_StateTypeValueType: TypeAlias = StateType | _StateTypeLiteralType
+
 class TextBufferTargetInfo(GObject.GEnum):
     BUFFER_CONTENTS = -1
     RICH_TEXT = -2
     TEXT = -3
+
+_TextBufferTargetInfoLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_BUFFER_TARGET_INFO_BUFFER_CONTENTS",
+    "GTK_TEXT_BUFFER_TARGET_INFO_RICH_TEXT",
+    "GTK_TEXT_BUFFER_TARGET_INFO_TEXT",
+    "buffer-contents",
+    "rich-text",
+    "text",
+]
+_TextBufferTargetInfoValueType: TypeAlias = (
+    TextBufferTargetInfo | _TextBufferTargetInfoLiteralType
+)
 
 class TextDirection(GObject.GEnum):
     LTR = 1
     NONE = 0
     RTL = 2
 
+_TextDirectionLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_DIR_LTR", "GTK_TEXT_DIR_NONE", "GTK_TEXT_DIR_RTL", "ltr", "none", "rtl"
+]
+_TextDirectionValueType: TypeAlias = TextDirection | _TextDirectionLiteralType
+
 class TextExtendSelection(GObject.GEnum):
     LINE = 1
     WORD = 0
+
+_TextExtendSelectionLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_EXTEND_SELECTION_LINE", "GTK_TEXT_EXTEND_SELECTION_WORD", "line", "word"
+]
+_TextExtendSelectionValueType: TypeAlias = (
+    TextExtendSelection | _TextExtendSelectionLiteralType
+)
 
 class TextViewLayer(GObject.GEnum):
     ABOVE = 1
     ABOVE_TEXT = 3
     BELOW = 0
     BELOW_TEXT = 2
+
+_TextViewLayerLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_VIEW_LAYER_ABOVE",
+    "GTK_TEXT_VIEW_LAYER_ABOVE_TEXT",
+    "GTK_TEXT_VIEW_LAYER_BELOW",
+    "GTK_TEXT_VIEW_LAYER_BELOW_TEXT",
+    "above",
+    "above-text",
+    "below",
+    "below-text",
+]
+_TextViewLayerValueType: TypeAlias = TextViewLayer | _TextViewLayerLiteralType
 
 class TextWindowType(GObject.GEnum):
     BOTTOM = 6
@@ -64056,9 +66947,34 @@ class TextWindowType(GObject.GEnum):
     TOP = 5
     WIDGET = 1
 
+_TextWindowTypeLiteralType: TypeAlias = Literal[
+    "GTK_TEXT_WINDOW_BOTTOM",
+    "GTK_TEXT_WINDOW_LEFT",
+    "GTK_TEXT_WINDOW_PRIVATE",
+    "GTK_TEXT_WINDOW_RIGHT",
+    "GTK_TEXT_WINDOW_TEXT",
+    "GTK_TEXT_WINDOW_TOP",
+    "GTK_TEXT_WINDOW_WIDGET",
+    "bottom",
+    "left",
+    "private",
+    "right",
+    "text",
+    "top",
+    "widget",
+]
+_TextWindowTypeValueType: TypeAlias = TextWindowType | _TextWindowTypeLiteralType
+
 class ToolbarSpaceStyle(GObject.GEnum):
     EMPTY = 0
     LINE = 1
+
+_ToolbarSpaceStyleLiteralType: TypeAlias = Literal[
+    "GTK_TOOLBAR_SPACE_EMPTY", "GTK_TOOLBAR_SPACE_LINE", "empty", "line"
+]
+_ToolbarSpaceStyleValueType: TypeAlias = (
+    ToolbarSpaceStyle | _ToolbarSpaceStyleLiteralType
+)
 
 class ToolbarStyle(GObject.GEnum):
     BOTH = 2
@@ -64066,10 +66982,34 @@ class ToolbarStyle(GObject.GEnum):
     ICONS = 0
     TEXT = 1
 
+_ToolbarStyleLiteralType: TypeAlias = Literal[
+    "GTK_TOOLBAR_BOTH",
+    "GTK_TOOLBAR_BOTH_HORIZ",
+    "GTK_TOOLBAR_ICONS",
+    "GTK_TOOLBAR_TEXT",
+    "both",
+    "both-horiz",
+    "icons",
+    "text",
+]
+_ToolbarStyleValueType: TypeAlias = ToolbarStyle | _ToolbarStyleLiteralType
+
 class TreeViewColumnSizing(GObject.GEnum):
     AUTOSIZE = 1
     FIXED = 2
     GROW_ONLY = 0
+
+_TreeViewColumnSizingLiteralType: TypeAlias = Literal[
+    "GTK_TREE_VIEW_COLUMN_AUTOSIZE",
+    "GTK_TREE_VIEW_COLUMN_FIXED",
+    "GTK_TREE_VIEW_COLUMN_GROW_ONLY",
+    "autosize",
+    "fixed",
+    "grow-only",
+]
+_TreeViewColumnSizingValueType: TypeAlias = (
+    TreeViewColumnSizing | _TreeViewColumnSizingLiteralType
+)
 
 class TreeViewDropPosition(GObject.GEnum):
     AFTER = 1
@@ -64077,11 +67017,39 @@ class TreeViewDropPosition(GObject.GEnum):
     INTO_OR_AFTER = 3
     INTO_OR_BEFORE = 2
 
+_TreeViewDropPositionLiteralType: TypeAlias = Literal[
+    "GTK_TREE_VIEW_DROP_AFTER",
+    "GTK_TREE_VIEW_DROP_BEFORE",
+    "GTK_TREE_VIEW_DROP_INTO_OR_AFTER",
+    "GTK_TREE_VIEW_DROP_INTO_OR_BEFORE",
+    "after",
+    "before",
+    "into-or-after",
+    "into-or-before",
+]
+_TreeViewDropPositionValueType: TypeAlias = (
+    TreeViewDropPosition | _TreeViewDropPositionLiteralType
+)
+
 class TreeViewGridLines(GObject.GEnum):
     BOTH = 3
     HORIZONTAL = 1
     NONE = 0
     VERTICAL = 2
+
+_TreeViewGridLinesLiteralType: TypeAlias = Literal[
+    "GTK_TREE_VIEW_GRID_LINES_BOTH",
+    "GTK_TREE_VIEW_GRID_LINES_HORIZONTAL",
+    "GTK_TREE_VIEW_GRID_LINES_NONE",
+    "GTK_TREE_VIEW_GRID_LINES_VERTICAL",
+    "both",
+    "horizontal",
+    "none",
+    "vertical",
+]
+_TreeViewGridLinesValueType: TypeAlias = (
+    TreeViewGridLines | _TreeViewGridLinesLiteralType
+)
 
 class Unit(GObject.GEnum):
     INCH = 2
@@ -64089,9 +67057,26 @@ class Unit(GObject.GEnum):
     NONE = 0
     POINTS = 1
 
+_UnitLiteralType: TypeAlias = Literal[
+    "GTK_UNIT_INCH",
+    "GTK_UNIT_MM",
+    "GTK_UNIT_NONE",
+    "GTK_UNIT_POINTS",
+    "inch",
+    "mm",
+    "none",
+    "points",
+]
+_UnitValueType: TypeAlias = Unit | _UnitLiteralType
+
 class WidgetHelpType(GObject.GEnum):
     TOOLTIP = 0
     WHATS_THIS = 1
+
+_WidgetHelpTypeLiteralType: TypeAlias = Literal[
+    "GTK_WIDGET_HELP_TOOLTIP", "GTK_WIDGET_HELP_WHATS_THIS", "tooltip", "whats-this"
+]
+_WidgetHelpTypeValueType: TypeAlias = WidgetHelpType | _WidgetHelpTypeLiteralType
 
 class WindowPosition(GObject.GEnum):
     CENTER = 1
@@ -64100,12 +67085,43 @@ class WindowPosition(GObject.GEnum):
     MOUSE = 2
     NONE = 0
 
+_WindowPositionLiteralType: TypeAlias = Literal[
+    "GTK_WIN_POS_CENTER",
+    "GTK_WIN_POS_CENTER_ALWAYS",
+    "GTK_WIN_POS_CENTER_ON_PARENT",
+    "GTK_WIN_POS_MOUSE",
+    "GTK_WIN_POS_NONE",
+    "center",
+    "center-always",
+    "center-on-parent",
+    "mouse",
+    "none",
+]
+_WindowPositionValueType: TypeAlias = WindowPosition | _WindowPositionLiteralType
+
 class WindowType(GObject.GEnum):
     POPUP = 1
     TOPLEVEL = 0
+
+_WindowTypeLiteralType: TypeAlias = Literal[
+    "GTK_WINDOW_POPUP", "GTK_WINDOW_TOPLEVEL", "popup", "toplevel"
+]
+_WindowTypeValueType: TypeAlias = WindowType | _WindowTypeLiteralType
 
 class WrapMode(GObject.GEnum):
     CHAR = 1
     NONE = 0
     WORD = 2
     WORD_CHAR = 3
+
+_WrapModeLiteralType: TypeAlias = Literal[
+    "GTK_WRAP_CHAR",
+    "GTK_WRAP_NONE",
+    "GTK_WRAP_WORD",
+    "GTK_WRAP_WORD_CHAR",
+    "char",
+    "none",
+    "word",
+    "word-char",
+]
+_WrapModeValueType: TypeAlias = WrapMode | _WrapModeLiteralType

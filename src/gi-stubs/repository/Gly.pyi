@@ -1,4 +1,6 @@
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -12,8 +14,8 @@ from gi.repository import GObject
 _DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 
 def loader_error_quark() -> int: ...
-def memory_format_has_alpha(memory_format: MemoryFormat) -> bool: ...
-def memory_format_is_premultiplied(memory_format: MemoryFormat) -> bool: ...
+def memory_format_has_alpha(memory_format: _MemoryFormatValueType) -> bool: ...
+def memory_format_is_premultiplied(memory_format: _MemoryFormatValueType) -> bool: ...
 
 class Cicp(GObject.GBoxed):
     """
@@ -52,23 +54,33 @@ class Creator(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def mime_type(self) -> str: ...
-        sandbox_selector: SandboxSelector
+        def mime_type(self) -> str | None: ...
+        @property
+        def sandbox_selector(self) -> SandboxSelector: ...
+        @sandbox_selector.setter
+        def sandbox_selector(self, value: _SandboxSelectorValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, *, mime_type: str = ..., sandbox_selector: SandboxSelector = ...
+        self,
+        *,
+        mime_type: str | None = ...,
+        sandbox_selector: _SandboxSelectorValueType = ...,
     ) -> None: ...
     def add_frame(
-        self, width: int, height: int, memory_format: MemoryFormat, texture: GLib.Bytes
+        self,
+        width: int,
+        height: int,
+        memory_format: _MemoryFormatValueType,
+        texture: GLib.Bytes,
     ) -> NewFrame: ...
     def add_frame_with_stride(
         self,
         width: int,
         height: int,
         stride: int,
-        memory_format: MemoryFormat,
+        memory_format: _MemoryFormatValueType,
         texture: GLib.Bytes,
     ) -> NewFrame: ...
     def add_metadata_key_value(self, key: str, value: str) -> bool: ...
@@ -87,7 +99,9 @@ class Creator(GObject.Object):
     def new(cls, mime_type: str) -> Creator: ...
     def set_encoding_compression(self, compression: int) -> bool: ...
     def set_encoding_quality(self, quality: int) -> bool: ...
-    def set_sandbox_selector(self, sandbox_selector: SandboxSelector) -> bool: ...
+    def set_sandbox_selector(
+        self, sandbox_selector: _SandboxSelectorValueType
+    ) -> bool: ...
 
 class CreatorClass(_gi.Struct):
     """
@@ -297,14 +311,22 @@ class Loader(GObject.Object):
     class Props(GObject.Object.Props):
         apply_transformation: bool
         @property
-        def bytes(self) -> GLib.Bytes: ...
-        cancellable: Gio.Cancellable
+        def bytes(self) -> GLib.Bytes | None: ...
+        cancellable: Gio.Cancellable | None
         @property
-        def file(self) -> Gio.File: ...
-        memory_format_selection: MemoryFormatSelection
-        sandbox_selector: SandboxSelector
+        def file(self) -> Gio.File | None: ...
         @property
-        def stream(self) -> Gio.InputStream: ...
+        def memory_format_selection(self) -> MemoryFormatSelection: ...
+        @memory_format_selection.setter
+        def memory_format_selection(
+            self, value: _MemoryFormatSelectionValueType
+        ) -> None: ...
+        @property
+        def sandbox_selector(self) -> SandboxSelector: ...
+        @sandbox_selector.setter
+        def sandbox_selector(self, value: _SandboxSelectorValueType) -> None: ...
+        @property
+        def stream(self) -> Gio.InputStream | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -312,12 +334,12 @@ class Loader(GObject.Object):
         self,
         *,
         apply_transformation: bool = ...,
-        bytes: GLib.Bytes = ...,
-        cancellable: Gio.Cancellable = ...,
-        file: Gio.File = ...,
-        memory_format_selection: MemoryFormatSelection = ...,
-        sandbox_selector: SandboxSelector = ...,
-        stream: Gio.InputStream = ...,
+        bytes: GLib.Bytes | None = ...,
+        cancellable: Gio.Cancellable | None = ...,
+        file: Gio.File | None = ...,
+        memory_format_selection: _MemoryFormatSelectionValueType = ...,
+        sandbox_selector: _SandboxSelectorValueType = ...,
+        stream: Gio.InputStream | None = ...,
     ) -> None: ...
     @staticmethod
     def get_mime_types() -> list[str]: ...
@@ -350,10 +372,12 @@ class Loader(GObject.Object):
     @classmethod
     def new_for_stream(cls, stream: Gio.InputStream) -> Loader: ...
     def set_accepted_memory_formats(
-        self, memory_format_selection: MemoryFormatSelection
+        self, memory_format_selection: _MemoryFormatSelectionValueType
     ) -> None: ...
     def set_apply_transformations(self, apply_transformations: bool) -> None: ...
-    def set_sandbox_selector(self, sandbox_selector: SandboxSelector) -> None: ...
+    def set_sandbox_selector(
+        self, sandbox_selector: _SandboxSelectorValueType
+    ) -> None: ...
 
 class LoaderClass(_gi.Struct):
     """
@@ -417,12 +441,76 @@ class MemoryFormatSelection(GObject.GFlags):
     R8G8B8A8 = 32
     R8G8B8A8_PREMULTIPLIED = 4
 
+_MemoryFormatSelectionLiteralType: TypeAlias = Literal[
+    "A8b8g8r8",
+    "A8r8g8b8",
+    "A8r8g8b8Premultiplied",
+    "B8g8r8",
+    "B8g8r8a8",
+    "B8g8r8a8Premultiplied",
+    "G16",
+    "G16a16",
+    "G16a16Premultiplied",
+    "G8",
+    "G8a8",
+    "G8a8Premultiplied",
+    "R16g16b16",
+    "R16g16b16Float",
+    "R16g16b16a16",
+    "R16g16b16a16Float",
+    "R16g16b16a16Premultiplied",
+    "R32g32b32Float",
+    "R32g32b32a32Float",
+    "R32g32b32a32FloatPremultiplied",
+    "R8g8b8",
+    "R8g8b8a8",
+    "R8g8b8a8Premultiplied",
+    "a8b8g8r8",
+    "a8r8g8b8",
+    "a8r8g8b8-premultiplied",
+    "b8g8r8",
+    "b8g8r8a8",
+    "b8g8r8a8-premultiplied",
+    "g16",
+    "g16a16",
+    "g16a16-premultiplied",
+    "g8",
+    "g8a8",
+    "g8a8-premultiplied",
+    "r16g16b16",
+    "r16g16b16-float",
+    "r16g16b16a16",
+    "r16g16b16a16-float",
+    "r16g16b16a16-premultiplied",
+    "r32g32b32-float",
+    "r32g32b32a32-float",
+    "r32g32b32a32-float-premultiplied",
+    "r8g8b8",
+    "r8g8b8a8",
+    "r8g8b8a8-premultiplied",
+]
+_MemoryFormatSelectionValueType: TypeAlias = (
+    MemoryFormatSelection
+    | _MemoryFormatSelectionLiteralType
+    | tuple[_MemoryFormatSelectionLiteralType, ...]
+)
+
 class LoaderError(GObject.GEnum):
     FAILED = 0
     NO_MORE_FRAMES = 2
     UNKNOWN_IMAGE_FORMAT = 1
     @staticmethod
     def quark() -> int: ...
+
+_LoaderErrorLiteralType: TypeAlias = Literal[
+    "Failed",
+    "NoMoreFrames",
+    "UnknownImageFormat",
+    "failed",
+    "no-more-frames",
+    "unknown-image-format",
+]
+_LoaderErrorValueType: TypeAlias = LoaderError | _LoaderErrorLiteralType
 
 class MemoryFormat(GObject.GEnum):
     A8B8G8R8 = 6
@@ -449,12 +537,74 @@ class MemoryFormat(GObject.GEnum):
     R8G8B8A8 = 5
     R8G8B8A8_PREMULTIPLIED = 2
     @staticmethod
-    def has_alpha(memory_format: MemoryFormat) -> bool: ...
+    def has_alpha(memory_format: _MemoryFormatValueType) -> bool: ...
     @staticmethod
-    def is_premultiplied(memory_format: MemoryFormat) -> bool: ...
+    def is_premultiplied(memory_format: _MemoryFormatValueType) -> bool: ...
+
+_MemoryFormatLiteralType: TypeAlias = Literal[
+    "A8b8g8r8",
+    "A8r8g8b8",
+    "A8r8g8b8Premultiplied",
+    "B8g8r8",
+    "B8g8r8a8",
+    "B8g8r8a8Premultiplied",
+    "G16",
+    "G16a16",
+    "G16a16Premultiplied",
+    "G8",
+    "G8a8",
+    "G8a8Premultiplied",
+    "R16g16b16",
+    "R16g16b16Float",
+    "R16g16b16a16",
+    "R16g16b16a16Float",
+    "R16g16b16a16Premultiplied",
+    "R32g32b32Float",
+    "R32g32b32a32Float",
+    "R32g32b32a32FloatPremultiplied",
+    "R8g8b8",
+    "R8g8b8a8",
+    "R8g8b8a8Premultiplied",
+    "a8b8g8r8",
+    "a8r8g8b8",
+    "a8r8g8b8-premultiplied",
+    "b8g8r8",
+    "b8g8r8a8",
+    "b8g8r8a8-premultiplied",
+    "g16",
+    "g16a16",
+    "g16a16-premultiplied",
+    "g8",
+    "g8a8",
+    "g8a8-premultiplied",
+    "r16g16b16",
+    "r16g16b16-float",
+    "r16g16b16a16",
+    "r16g16b16a16-float",
+    "r16g16b16a16-premultiplied",
+    "r32g32b32-float",
+    "r32g32b32a32-float",
+    "r32g32b32a32-float-premultiplied",
+    "r8g8b8",
+    "r8g8b8a8",
+    "r8g8b8a8-premultiplied",
+]
+_MemoryFormatValueType: TypeAlias = MemoryFormat | _MemoryFormatLiteralType
 
 class SandboxSelector(GObject.GEnum):
     AUTO = 0
     BWRAP = 1
     FLATPAK_SPAWN = 2
     NOT_SANDBOXED = 3
+
+_SandboxSelectorLiteralType: TypeAlias = Literal[
+    "Auto",
+    "Bwrap",
+    "FlatpakSpawn",
+    "NotSandboxed",
+    "auto",
+    "bwrap",
+    "flatpak-spawn",
+    "not-sandboxed",
+]
+_SandboxSelectorValueType: TypeAlias = SandboxSelector | _SandboxSelectorLiteralType

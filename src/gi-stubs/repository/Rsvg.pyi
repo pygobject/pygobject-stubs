@@ -1,5 +1,7 @@
 from typing import Final
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -109,7 +111,7 @@ class Handle(GObject.Object):
         base_uri: str = ...,
         dpi_x: float = ...,
         dpi_y: float = ...,
-        flags: HandleFlags = ...,
+        flags: _HandleFlagsValueType = ...,
     ) -> None: ...
     def close(self) -> bool: ...
     def free(self) -> None: ...
@@ -144,7 +146,7 @@ class Handle(GObject.Object):
     def new_from_gfile_sync(
         cls,
         file: Gio.File,
-        flags: HandleFlags,
+        flags: _HandleFlagsValueType,
         cancellable: Gio.Cancellable | None = None,
     ) -> Handle | None: ...
     @classmethod
@@ -152,11 +154,11 @@ class Handle(GObject.Object):
         cls,
         input_stream: Gio.InputStream,
         base_file: Gio.File | None,
-        flags: HandleFlags,
+        flags: _HandleFlagsValueType,
         cancellable: Gio.Cancellable | None = None,
     ) -> Handle | None: ...
     @classmethod
-    def new_with_flags(cls, flags: HandleFlags) -> Handle: ...
+    def new_with_flags(cls, flags: _HandleFlagsValueType) -> Handle: ...
     def read_stream_sync(
         self, stream: Gio.InputStream, cancellable: Gio.Cancellable | None = None
     ) -> bool: ...
@@ -245,10 +247,25 @@ class HandleFlags(GObject.GFlags):
     FLAG_KEEP_IMAGE_DATA = 2
     FLAG_UNLIMITED = 1
 
+_HandleFlagsLiteralType: TypeAlias = Literal[
+    "RSVG_HANDLE_FLAGS_NONE",
+    "RSVG_HANDLE_FLAG_KEEP_IMAGE_DATA",
+    "RSVG_HANDLE_FLAG_UNLIMITED",
+    "flag-keep-image-data",
+    "flag-unlimited",
+    "flags-none",
+]
+_HandleFlagsValueType: TypeAlias = (
+    HandleFlags | _HandleFlagsLiteralType | tuple[_HandleFlagsLiteralType, ...]
+)
+
 class Error(GObject.GEnum):
     FAILED = 0
     @staticmethod
     def quark() -> int: ...
+
+_ErrorLiteralType: TypeAlias = Literal["RSVG_ERROR_FAILED", "failed"]
+_ErrorValueType: TypeAlias = Error | _ErrorLiteralType
 
 class Unit(IntEnum):
     CH = 9

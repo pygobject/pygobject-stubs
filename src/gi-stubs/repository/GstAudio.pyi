@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -69,32 +71,32 @@ def audio_buffer_clip(
     buffer: Gst.Buffer, segment: Gst.Segment, rate: int, bpf: int
 ) -> Gst.Buffer | None: ...
 def audio_buffer_map(
-    info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst.MapFlags
+    info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst._MapFlagsValueType
 ) -> tuple[bool, AudioBuffer]: ...
 def audio_buffer_reorder_channels(
     buffer: Gst.Buffer,
-    format: AudioFormat,
-    from_: Sequence[AudioChannelPosition],
-    to: Sequence[AudioChannelPosition],
+    format: _AudioFormatValueType,
+    from_: Sequence[_AudioChannelPositionValueType],
+    to: Sequence[_AudioChannelPositionValueType],
 ) -> bool: ...
 def audio_buffer_truncate(
     buffer: Gst.Buffer, bpf: int, trim: int, samples: int
 ) -> Gst.Buffer: ...
 def audio_channel_get_fallback_mask(channels: int) -> int: ...
 def audio_channel_positions_from_mask(
-    channel_mask: int, position: Sequence[AudioChannelPosition]
+    channel_mask: int, position: Sequence[_AudioChannelPositionValueType]
 ) -> bool: ...
 def audio_channel_positions_to_mask(
-    position: Sequence[AudioChannelPosition], force_order: bool
+    position: Sequence[_AudioChannelPositionValueType], force_order: bool
 ) -> tuple[bool, int]: ...
 def audio_channel_positions_to_string(
-    position: Sequence[AudioChannelPosition],
+    position: Sequence[_AudioChannelPositionValueType],
 ) -> str: ...
 def audio_channel_positions_to_valid_order(
-    position: Sequence[AudioChannelPosition],
+    position: Sequence[_AudioChannelPositionValueType],
 ) -> bool: ...
 def audio_check_valid_channel_positions(
-    position: Sequence[AudioChannelPosition], force_order: bool
+    position: Sequence[_AudioChannelPositionValueType], force_order: bool
 ) -> bool: ...
 def audio_clipping_meta_api_get_type() -> type[Any]: ...
 def audio_clipping_meta_get_info() -> Gst.MetaInfo: ...
@@ -105,12 +107,12 @@ def audio_format_build_integer(
 ) -> AudioFormat: ...
 def audio_format_fill_silence(info: AudioFormatInfo, dest: Sequence[int]) -> None: ...
 def audio_format_from_string(format: str) -> AudioFormat: ...
-def audio_format_get_info(format: AudioFormat) -> AudioFormatInfo: ...
-def audio_format_to_string(format: AudioFormat) -> str: ...
+def audio_format_get_info(format: _AudioFormatValueType) -> AudioFormatInfo: ...
+def audio_format_to_string(format: _AudioFormatValueType) -> str: ...
 def audio_formats_raw() -> list[AudioFormat]: ...
 def audio_get_channel_reorder_map(
-    from_: Sequence[AudioChannelPosition],
-    to: Sequence[AudioChannelPosition],
+    from_: Sequence[_AudioChannelPositionValueType],
+    to: Sequence[_AudioChannelPositionValueType],
     reorder_map: Sequence[int],
 ) -> bool: ...
 def audio_iec61937_frame_size(spec: AudioRingBufferSpec) -> int: ...
@@ -122,37 +124,37 @@ def audio_info_init() -> AudioInfo: ...
 def audio_level_meta_api_get_type() -> type[Any]: ...
 def audio_level_meta_get_info() -> Gst.MetaInfo: ...
 def audio_make_raw_caps(
-    formats: Sequence[AudioFormat] | None, layout: AudioLayout
+    formats: Sequence[_AudioFormatValueType] | None, layout: _AudioLayoutValueType
 ) -> Gst.Caps: ...
 def audio_meta_api_get_type() -> type[Any]: ...
 def audio_meta_get_info() -> Gst.MetaInfo: ...
 def audio_reorder_channels(
     data: Sequence[int],
-    format: AudioFormat,
-    from_: Sequence[AudioChannelPosition],
-    to: Sequence[AudioChannelPosition],
+    format: _AudioFormatValueType,
+    from_: Sequence[_AudioChannelPositionValueType],
+    to: Sequence[_AudioChannelPositionValueType],
 ) -> bool: ...
 def audio_reorder_channels_with_reorder_map(
     data: Sequence[int], bps: int, reorder_map: Sequence[int]
 ) -> None: ...
 def audio_resampler_new(
-    method: AudioResamplerMethod,
-    flags: AudioResamplerFlags,
-    format: AudioFormat,
+    method: _AudioResamplerMethodValueType,
+    flags: _AudioResamplerFlagsValueType,
+    format: _AudioFormatValueType,
     channels: int,
     in_rate: int,
     out_rate: int,
     options: Gst.Structure,
 ) -> None: ...
 def audio_resampler_options_set_quality(
-    method: AudioResamplerMethod,
+    method: _AudioResamplerMethodValueType,
     quality: int,
     in_rate: int,
     out_rate: int,
     options: Gst.Structure,
 ) -> None: ...
 def buffer_add_audio_clipping_meta(
-    buffer: Gst.Buffer, format: Gst.Format, start: int, end: int
+    buffer: Gst.Buffer, format: Gst._FormatValueType, start: int, end: int
 ) -> AudioClippingMeta: ...
 def buffer_add_audio_level_meta(
     buffer: Gst.Buffer, level: int, voice_activity: bool
@@ -167,24 +169,24 @@ def buffer_add_dsd_plane_offset_meta(
     buffer: Gst.Buffer, num_bytes_per_channel: int, offsets: Sequence[int] | None = None
 ) -> DsdPlaneOffsetMeta: ...
 def buffer_get_audio_downmix_meta_for_channels(
-    buffer: Gst.Buffer, to_position: Sequence[AudioChannelPosition]
+    buffer: Gst.Buffer, to_position: Sequence[_AudioChannelPositionValueType]
 ) -> AudioDownmixMeta: ...
 def buffer_get_audio_level_meta(buffer: Gst.Buffer) -> AudioLevelMeta | None: ...
 def dsd_convert(
     input_data: Sequence[int],
     output_data: Sequence[int],
-    input_format: DsdFormat,
-    output_format: DsdFormat,
-    input_layout: AudioLayout,
-    output_layout: AudioLayout,
+    input_format: _DsdFormatValueType,
+    output_format: _DsdFormatValueType,
+    input_layout: _AudioLayoutValueType,
+    output_layout: _AudioLayoutValueType,
     input_plane_offsets: Sequence[int] | None,
     output_plane_offsets: Sequence[int] | None,
     num_dsd_bytes: int,
     reverse_byte_bits: bool,
 ) -> None: ...
 def dsd_format_from_string(str: str) -> DsdFormat: ...
-def dsd_format_get_width(format: DsdFormat) -> int: ...
-def dsd_format_to_string(format: DsdFormat) -> str: ...
+def dsd_format_get_width(format: _DsdFormatValueType) -> int: ...
+def dsd_format_to_string(format: _DsdFormatValueType) -> str: ...
 def dsd_info_from_caps(caps: Gst.Caps) -> tuple[bool, DsdInfo]: ...
 def dsd_info_init() -> DsdInfo: ...
 def dsd_plane_offset_meta_api_get_type() -> type[Any]: ...
@@ -257,7 +259,7 @@ class AudioAggregator(GstBase.Aggregator):
         def force_live(self) -> bool: ...
         ignore_inactive_pads: bool
         output_buffer_duration: int
-        output_buffer_duration_fraction: Gst.Fraction
+        output_buffer_duration_fraction: Gst.Fraction | None
 
     @property
     def props(self) -> Props: ...
@@ -275,12 +277,12 @@ class AudioAggregator(GstBase.Aggregator):
         force_live: bool = ...,
         ignore_inactive_pads: bool = ...,
         output_buffer_duration: int = ...,
-        output_buffer_duration_fraction: Gst.Fraction = ...,
+        output_buffer_duration_fraction: Gst.Fraction | None = ...,
         emit_signals: bool = ...,
         latency: int = ...,
         min_upstream_latency: int = ...,
         start_time: int = ...,
-        start_time_selection: GstBase.AggregatorStartTimeSelection = ...,
+        start_time_selection: GstBase._AggregatorStartTimeSelectionValueType = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -375,7 +377,7 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     """
     @type_check_only
     class Props(AudioAggregatorPad.Props):
-        converter_config: Gst.Structure
+        converter_config: Gst.Structure | None
 
     @property
     def props(self) -> Props: ...
@@ -386,12 +388,12 @@ class AudioAggregatorConvertPad(AudioAggregatorPad):
     def __init__(
         self,
         *,
-        converter_config: Gst.Structure = ...,
+        converter_config: Gst.Structure | None = ...,
         qos_messages: bool = ...,
         emit_signals: bool = ...,
-        direction: Gst.PadDirection = ...,
+        direction: Gst._PadDirectionValueType = ...,
         offset: int = ...,
-        template: Gst.PadTemplate = ...,
+        template: Gst.PadTemplate | None = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -479,9 +481,9 @@ class AudioAggregatorPad(GstBase.AggregatorPad):
         *,
         qos_messages: bool = ...,
         emit_signals: bool = ...,
-        direction: Gst.PadDirection = ...,
+        direction: Gst._PadDirectionValueType = ...,
         offset: int = ...,
-        template: Gst.PadTemplate = ...,
+        template: Gst.PadTemplate | None = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -594,7 +596,10 @@ class AudioBaseSink(GstBase.BaseSink):
         drift_tolerance: int
         latency_time: int
         provide_clock: bool
-        slave_method: AudioBaseSinkSlaveMethod
+        @property
+        def slave_method(self) -> AudioBaseSinkSlaveMethod: ...
+        @slave_method.setter
+        def slave_method(self, value: _AudioBaseSinkSlaveMethodValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -624,7 +629,7 @@ class AudioBaseSink(GstBase.BaseSink):
         drift_tolerance: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
-        slave_method: AudioBaseSinkSlaveMethod = ...,
+        slave_method: _AudioBaseSinkSlaveMethodValueType = ...,
         blocksize: int = ...,
         enable_last_sample: bool = ...,
         max_bitrate: int = ...,
@@ -651,7 +656,14 @@ class AudioBaseSink(GstBase.BaseSink):
     def set_custom_slaving_callback(
         self,
         callback: Callable[
-            [AudioBaseSink, int, int, int, AudioBaseSinkDiscontReason, Unpack[_DataTs]],
+            [
+                AudioBaseSink,
+                int,
+                int,
+                int,
+                _AudioBaseSinkDiscontReasonValueType,
+                Unpack[_DataTs],
+            ],
             None,
         ],
         *user_data: Unpack[_DataTs],
@@ -659,7 +671,7 @@ class AudioBaseSink(GstBase.BaseSink):
     def set_discont_wait(self, discont_wait: int) -> None: ...
     def set_drift_tolerance(self, drift_tolerance: int) -> None: ...
     def set_provide_clock(self, provide: bool) -> None: ...
-    def set_slave_method(self, method: AudioBaseSinkSlaveMethod) -> None: ...
+    def set_slave_method(self, method: _AudioBaseSinkSlaveMethodValueType) -> None: ...
 
 class AudioBaseSinkClass(_gi.Struct):
     """
@@ -742,7 +754,10 @@ class AudioBaseSrc(GstBase.PushSrc):
         buffer_time: int
         latency_time: int
         provide_clock: bool
-        slave_method: AudioBaseSrcSlaveMethod
+        @property
+        def slave_method(self) -> AudioBaseSrcSlaveMethod: ...
+        @slave_method.setter
+        def slave_method(self, value: _AudioBaseSrcSlaveMethodValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -766,7 +781,7 @@ class AudioBaseSrc(GstBase.PushSrc):
         buffer_time: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
-        slave_method: AudioBaseSrcSlaveMethod = ...,
+        slave_method: _AudioBaseSrcSlaveMethodValueType = ...,
         automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
@@ -780,7 +795,7 @@ class AudioBaseSrc(GstBase.PushSrc):
     def get_provide_clock(self) -> bool: ...
     def get_slave_method(self) -> AudioBaseSrcSlaveMethod: ...
     def set_provide_clock(self, provide: bool) -> None: ...
-    def set_slave_method(self, method: AudioBaseSrcSlaveMethod) -> None: ...
+    def set_slave_method(self, method: _AudioBaseSrcSlaveMethodValueType) -> None: ...
 
 class AudioBaseSrcClass(_gi.Struct):
     """
@@ -823,14 +838,14 @@ class AudioBuffer(_gi.Struct):
     ) -> Gst.Buffer | None: ...
     @staticmethod
     def map(
-        info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst.MapFlags
+        info: AudioInfo, gstbuffer: Gst.Buffer, flags: Gst._MapFlagsValueType
     ) -> tuple[bool, AudioBuffer]: ...
     @staticmethod
     def reorder_channels(
         buffer: Gst.Buffer,
-        format: AudioFormat,
-        from_: Sequence[AudioChannelPosition],
-        to: Sequence[AudioChannelPosition],
+        format: _AudioFormatValueType,
+        from_: Sequence[_AudioChannelPositionValueType],
+        to: Sequence[_AudioChannelPositionValueType],
     ) -> bool: ...
     @staticmethod
     def truncate(
@@ -887,8 +902,11 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
     """
     @type_check_only
     class Props(GstBase.PushSrc.Props):
-        device: str
-        mode: AudioCdSrcMode
+        device: str | None
+        @property
+        def mode(self) -> AudioCdSrcMode: ...
+        @mode.setter
+        def mode(self, value: _AudioCdSrcModeValueType) -> None: ...
         track: int
 
     @property
@@ -902,8 +920,8 @@ class AudioCdSrc(GstBase.PushSrc, Gst.URIHandler):
     def __init__(
         self,
         *,
-        device: str = ...,
-        mode: AudioCdSrcMode = ...,
+        device: str | None = ...,
+        mode: _AudioCdSrcModeValueType = ...,
         track: int = ...,
         automatic_eos: bool = ...,
         blocksize: int = ...,
@@ -1025,7 +1043,7 @@ class AudioClock(Gst.SystemClock):
     def __init__(
         self,
         *,
-        clock_type: Gst.ClockType = ...,
+        clock_type: Gst._ClockTypeValueType = ...,
         timeout: int = ...,
         window_size: int = ...,
         window_threshold: int = ...,
@@ -1065,13 +1083,13 @@ class AudioConverter(GObject.GBoxed):
     """
     def __init__(
         self,
-        flags: AudioConverterFlags,
+        flags: _AudioConverterFlagsValueType,
         in_info: AudioInfo,
         out_info: AudioInfo,
         config: Gst.Structure | None = None,
     ) -> None: ...
     def convert(
-        self, flags: AudioConverterFlags, in_: Sequence[int]
+        self, flags: _AudioConverterFlagsValueType, in_: Sequence[int]
     ) -> tuple[bool, bytes]: ...
     def free(self) -> None: ...
     def get_config(self) -> tuple[Gst.Structure, int, int]: ...
@@ -1082,7 +1100,7 @@ class AudioConverter(GObject.GBoxed):
     @classmethod
     def new(
         cls,
-        flags: AudioConverterFlags,
+        flags: _AudioConverterFlagsValueType,
         in_info: AudioInfo,
         out_info: AudioInfo,
         config: Gst.Structure | None = None,
@@ -1199,7 +1217,9 @@ class AudioDecoder(Gst.Element):
     def get_plc(self) -> bool: ...
     def get_plc_aware(self) -> int: ...
     def get_tolerance(self) -> int: ...
-    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: Gst.TagList | None, mode: Gst._TagMergeModeValueType
+    ) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
@@ -1395,7 +1415,9 @@ class AudioEncoder(Gst.Element, Gst.Preset):
     def get_mark_granule(self) -> bool: ...
     def get_perfect_timestamp(self) -> bool: ...
     def get_tolerance(self) -> int: ...
-    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: Gst.TagList | None, mode: Gst._TagMergeModeValueType
+    ) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
@@ -1538,10 +1560,12 @@ class AudioFormatInfo(_gi.Struct):
     silence: bytes
     unpack_format: AudioFormat
     unpack_func: Callable[
-        [AudioFormatInfo, AudioPackFlags, Sequence[int], Sequence[int], int], None
+        [AudioFormatInfo, _AudioPackFlagsValueType, Sequence[int], Sequence[int], int],
+        None,
     ]
     pack_func: Callable[
-        [AudioFormatInfo, AudioPackFlags, Sequence[int], Sequence[int], int], None
+        [AudioFormatInfo, _AudioPackFlagsValueType, Sequence[int], Sequence[int], int],
+        None,
     ]
     def fill_silence(self, dest: Sequence[int]) -> None: ...
 
@@ -1565,7 +1589,10 @@ class AudioInfo(GObject.GBoxed):
     position: list[AudioChannelPosition]
     def __init__(self) -> None: ...
     def convert(
-        self, src_fmt: Gst.Format, src_val: int, dest_fmt: Gst.Format
+        self,
+        src_fmt: Gst._FormatValueType,
+        src_val: int,
+        dest_fmt: Gst._FormatValueType,
     ) -> tuple[bool, int]: ...
     def copy(self) -> AudioInfo: ...
     def free(self) -> None: ...
@@ -1579,10 +1606,10 @@ class AudioInfo(GObject.GBoxed):
     def new_from_caps(cls, caps: Gst.Caps) -> AudioInfo | None: ...
     def set_format(
         self,
-        format: AudioFormat,
+        format: _AudioFormatValueType,
         rate: int,
         channels: int,
-        position: Sequence[AudioChannelPosition] | None = None,
+        position: Sequence[_AudioChannelPositionValueType] | None = None,
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 
@@ -1630,9 +1657,9 @@ class AudioResampler(_gi.Struct):
     def get_out_frames(self, in_frames: int) -> int: ...
     @staticmethod
     def new(
-        method: AudioResamplerMethod,
-        flags: AudioResamplerFlags,
-        format: AudioFormat,
+        method: _AudioResamplerMethodValueType,
+        flags: _AudioResamplerFlagsValueType,
+        format: _AudioFormatValueType,
         channels: int,
         in_rate: int,
         out_rate: int,
@@ -1640,7 +1667,7 @@ class AudioResampler(_gi.Struct):
     ) -> None: ...
     @staticmethod
     def options_set_quality(
-        method: AudioResamplerMethod,
+        method: _AudioResamplerMethodValueType,
         quality: int,
         in_rate: int,
         out_rate: int,
@@ -1737,7 +1764,10 @@ class AudioRingBuffer(Gst.Object):
         self, sample: int, data: Sequence[int], out_samples: int, accum: int
     ) -> tuple[int, int, int]: ...
     def convert(
-        self, src_fmt: Gst.Format, src_val: int, dest_fmt: Gst.Format
+        self,
+        src_fmt: Gst._FormatValueType,
+        src_val: int,
+        dest_fmt: Gst._FormatValueType,
     ) -> tuple[bool, int]: ...
     @staticmethod
     def debug_spec_buff(spec: AudioRingBufferSpec) -> None: ...
@@ -1779,7 +1809,7 @@ class AudioRingBuffer(Gst.Object):
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_channel_positions(
-        self, position: Sequence[AudioChannelPosition]
+        self, position: Sequence[_AudioChannelPositionValueType]
     ) -> None: ...
     def set_errored(self) -> None: ...
     def set_flushing(self, flushing: bool) -> None: ...
@@ -1935,7 +1965,7 @@ class AudioSink(AudioBaseSink):
         drift_tolerance: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
-        slave_method: AudioBaseSinkSlaveMethod = ...,
+        slave_method: _AudioBaseSinkSlaveMethodValueType = ...,
         blocksize: int = ...,
         enable_last_sample: bool = ...,
         max_bitrate: int = ...,
@@ -2067,7 +2097,7 @@ class AudioSrc(AudioBaseSrc):
         buffer_time: int = ...,
         latency_time: int = ...,
         provide_clock: bool = ...,
-        slave_method: AudioBaseSrcSlaveMethod = ...,
+        slave_method: _AudioBaseSrcSlaveMethodValueType = ...,
         automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
@@ -2171,10 +2201,10 @@ class DsdInfo(GObject.GBoxed):
     def new_from_caps(cls, caps: Gst.Caps) -> DsdInfo: ...
     def set_format(
         self,
-        format: DsdFormat,
+        format: _DsdFormatValueType,
         rate: int,
         channels: int,
-        positions: Sequence[AudioChannelPosition] | None = None,
+        positions: Sequence[_AudioChannelPositionValueType] | None = None,
     ) -> None: ...
     def to_caps(self) -> Gst.Caps: ...
 
@@ -2230,14 +2260,53 @@ class AudioChannelMixerFlags(GObject.GFlags):
     UNPOSITIONED_IN = 4
     UNPOSITIONED_OUT = 8
 
+_AudioChannelMixerFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_CHANNEL_MIXER_FLAGS_NONE",
+    "GST_AUDIO_CHANNEL_MIXER_FLAGS_NON_INTERLEAVED_IN",
+    "GST_AUDIO_CHANNEL_MIXER_FLAGS_NON_INTERLEAVED_OUT",
+    "GST_AUDIO_CHANNEL_MIXER_FLAGS_UNPOSITIONED_IN",
+    "GST_AUDIO_CHANNEL_MIXER_FLAGS_UNPOSITIONED_OUT",
+    "non-interleaved-in",
+    "non-interleaved-out",
+    "none",
+    "unpositioned-in",
+    "unpositioned-out",
+]
+_AudioChannelMixerFlagsValueType: TypeAlias = (
+    AudioChannelMixerFlags
+    | _AudioChannelMixerFlagsLiteralType
+    | tuple[_AudioChannelMixerFlagsLiteralType, ...]
+)
+
 class AudioConverterFlags(GObject.GFlags):
     IN_WRITABLE = 1
     NONE = 0
     VARIABLE_RATE = 2
 
+_AudioConverterFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_CONVERTER_FLAG_IN_WRITABLE",
+    "GST_AUDIO_CONVERTER_FLAG_NONE",
+    "GST_AUDIO_CONVERTER_FLAG_VARIABLE_RATE",
+    "in-writable",
+    "none",
+    "variable-rate",
+]
+_AudioConverterFlagsValueType: TypeAlias = (
+    AudioConverterFlags
+    | _AudioConverterFlagsLiteralType
+    | tuple[_AudioConverterFlagsLiteralType, ...]
+)
+
 class AudioFlags(GObject.GFlags):
     NONE = 0
     UNPOSITIONED = 1
+
+_AudioFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_FLAG_NONE", "GST_AUDIO_FLAG_UNPOSITIONED", "none", "unpositioned"
+]
+_AudioFlagsValueType: TypeAlias = (
+    AudioFlags | _AudioFlagsLiteralType | tuple[_AudioFlagsLiteralType, ...]
+)
 
 class AudioFormatFlags(GObject.GFlags):
     COMPLEX = 16
@@ -2246,19 +2315,75 @@ class AudioFormatFlags(GObject.GFlags):
     SIGNED = 4
     UNPACK = 32
 
+_AudioFormatFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_FORMAT_FLAG_COMPLEX",
+    "GST_AUDIO_FORMAT_FLAG_FLOAT",
+    "GST_AUDIO_FORMAT_FLAG_INTEGER",
+    "GST_AUDIO_FORMAT_FLAG_SIGNED",
+    "GST_AUDIO_FORMAT_FLAG_UNPACK",
+    "complex",
+    "float",
+    "integer",
+    "signed",
+    "unpack",
+]
+_AudioFormatFlagsValueType: TypeAlias = (
+    AudioFormatFlags
+    | _AudioFormatFlagsLiteralType
+    | tuple[_AudioFormatFlagsLiteralType, ...]
+)
+
 class AudioPackFlags(GObject.GFlags):
     NONE = 0
     TRUNCATE_RANGE = 1
 
+_AudioPackFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_PACK_FLAG_NONE",
+    "GST_AUDIO_PACK_FLAG_TRUNCATE_RANGE",
+    "none",
+    "truncate-range",
+]
+_AudioPackFlagsValueType: TypeAlias = (
+    AudioPackFlags | _AudioPackFlagsLiteralType | tuple[_AudioPackFlagsLiteralType, ...]
+)
+
 class AudioQuantizeFlags(GObject.GFlags):
     NONE = 0
     NON_INTERLEAVED = 1
+
+_AudioQuantizeFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_QUANTIZE_FLAG_NONE",
+    "GST_AUDIO_QUANTIZE_FLAG_NON_INTERLEAVED",
+    "non-interleaved",
+    "none",
+]
+_AudioQuantizeFlagsValueType: TypeAlias = (
+    AudioQuantizeFlags
+    | _AudioQuantizeFlagsLiteralType
+    | tuple[_AudioQuantizeFlagsLiteralType, ...]
+)
 
 class AudioResamplerFlags(GObject.GFlags):
     NONE = 0
     NON_INTERLEAVED_IN = 1
     NON_INTERLEAVED_OUT = 2
     VARIABLE_RATE = 4
+
+_AudioResamplerFlagsLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RESAMPLER_FLAG_NONE",
+    "GST_AUDIO_RESAMPLER_FLAG_NON_INTERLEAVED_IN",
+    "GST_AUDIO_RESAMPLER_FLAG_NON_INTERLEAVED_OUT",
+    "GST_AUDIO_RESAMPLER_FLAG_VARIABLE_RATE",
+    "non-interleaved-in",
+    "non-interleaved-out",
+    "none",
+    "variable-rate",
+]
+_AudioResamplerFlagsValueType: TypeAlias = (
+    AudioResamplerFlags
+    | _AudioResamplerFlagsLiteralType
+    | tuple[_AudioResamplerFlagsLiteralType, ...]
+)
 
 class AudioBaseSinkDiscontReason(GObject.GEnum):
     ALIGNMENT = 4
@@ -2268,11 +2393,43 @@ class AudioBaseSinkDiscontReason(GObject.GEnum):
     NO_DISCONT = 0
     SYNC_LATENCY = 3
 
+_AudioBaseSinkDiscontReasonLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_ALIGNMENT",
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_DEVICE_FAILURE",
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_FLUSH",
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_NEW_CAPS",
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_NO_DISCONT",
+    "GST_AUDIO_BASE_SINK_DISCONT_REASON_SYNC_LATENCY",
+    "alignment",
+    "device-failure",
+    "flush",
+    "new-caps",
+    "no-discont",
+    "sync-latency",
+]
+_AudioBaseSinkDiscontReasonValueType: TypeAlias = (
+    AudioBaseSinkDiscontReason | _AudioBaseSinkDiscontReasonLiteralType
+)
+
 class AudioBaseSinkSlaveMethod(GObject.GEnum):
     CUSTOM = 3
     NONE = 2
     RESAMPLE = 0
     SKEW = 1
+
+_AudioBaseSinkSlaveMethodLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_BASE_SINK_SLAVE_CUSTOM",
+    "GST_AUDIO_BASE_SINK_SLAVE_NONE",
+    "GST_AUDIO_BASE_SINK_SLAVE_RESAMPLE",
+    "GST_AUDIO_BASE_SINK_SLAVE_SKEW",
+    "custom",
+    "none",
+    "resample",
+    "skew",
+]
+_AudioBaseSinkSlaveMethodValueType: TypeAlias = (
+    AudioBaseSinkSlaveMethod | _AudioBaseSinkSlaveMethodLiteralType
+)
 
 class AudioBaseSrcSlaveMethod(GObject.GEnum):
     NONE = 3
@@ -2280,9 +2437,31 @@ class AudioBaseSrcSlaveMethod(GObject.GEnum):
     RE_TIMESTAMP = 1
     SKEW = 2
 
+_AudioBaseSrcSlaveMethodLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_BASE_SRC_SLAVE_NONE",
+    "GST_AUDIO_BASE_SRC_SLAVE_RESAMPLE",
+    "GST_AUDIO_BASE_SRC_SLAVE_RE_TIMESTAMP",
+    "GST_AUDIO_BASE_SRC_SLAVE_SKEW",
+    "none",
+    "re-timestamp",
+    "resample",
+    "skew",
+]
+_AudioBaseSrcSlaveMethodValueType: TypeAlias = (
+    AudioBaseSrcSlaveMethod | _AudioBaseSrcSlaveMethodLiteralType
+)
+
 class AudioCdSrcMode(GObject.GEnum):
     CONTINUOUS = 1
     NORMAL = 0
+
+_AudioCdSrcModeLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_CD_SRC_MODE_CONTINUOUS",
+    "GST_AUDIO_CD_SRC_MODE_NORMAL",
+    "continuous",
+    "normal",
+]
+_AudioCdSrcModeValueType: TypeAlias = AudioCdSrcMode | _AudioCdSrcModeLiteralType
 
 class AudioChannelPosition(GObject.GEnum):
     BOTTOM_FRONT_CENTER = 21
@@ -2319,11 +2498,97 @@ class AudioChannelPosition(GObject.GEnum):
     WIDE_LEFT = 24
     WIDE_RIGHT = 25
 
+_AudioChannelPositionLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_CHANNEL_POSITION_BOTTOM_FRONT_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_BOTTOM_FRONT_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_BOTTOM_FRONT_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_FRONT_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_FRONT_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_FRONT_LEFT_OF_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_FRONT_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_FRONT_RIGHT_OF_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_INVALID",
+    "GST_AUDIO_CHANNEL_POSITION_LFE1",
+    "GST_AUDIO_CHANNEL_POSITION_LFE2",
+    "GST_AUDIO_CHANNEL_POSITION_MONO",
+    "GST_AUDIO_CHANNEL_POSITION_NONE",
+    "GST_AUDIO_CHANNEL_POSITION_REAR_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_REAR_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_REAR_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_SIDE_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_SIDE_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_SURROUND_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_SURROUND_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_FRONT_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_FRONT_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_FRONT_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_REAR_CENTER",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_REAR_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_REAR_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_SIDE_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_SIDE_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_SURROUND_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_TOP_SURROUND_RIGHT",
+    "GST_AUDIO_CHANNEL_POSITION_WIDE_LEFT",
+    "GST_AUDIO_CHANNEL_POSITION_WIDE_RIGHT",
+    "bottom-front-center",
+    "bottom-front-left",
+    "bottom-front-right",
+    "front-center",
+    "front-left",
+    "front-left-of-center",
+    "front-right",
+    "front-right-of-center",
+    "invalid",
+    "lfe1",
+    "lfe2",
+    "mono",
+    "none",
+    "rear-center",
+    "rear-left",
+    "rear-right",
+    "side-left",
+    "side-right",
+    "surround-left",
+    "surround-right",
+    "top-center",
+    "top-front-center",
+    "top-front-left",
+    "top-front-right",
+    "top-rear-center",
+    "top-rear-left",
+    "top-rear-right",
+    "top-side-left",
+    "top-side-right",
+    "top-surround-left",
+    "top-surround-right",
+    "wide-left",
+    "wide-right",
+]
+_AudioChannelPositionValueType: TypeAlias = (
+    AudioChannelPosition | _AudioChannelPositionLiteralType
+)
+
 class AudioDitherMethod(GObject.GEnum):
     NONE = 0
     RPDF = 1
     TPDF = 2
     TPDF_HF = 3
+
+_AudioDitherMethodLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_DITHER_NONE",
+    "GST_AUDIO_DITHER_RPDF",
+    "GST_AUDIO_DITHER_TPDF",
+    "GST_AUDIO_DITHER_TPDF_HF",
+    "none",
+    "rpdf",
+    "tpdf",
+    "tpdf-hf",
+]
+_AudioDitherMethodValueType: TypeAlias = (
+    AudioDitherMethod | _AudioDitherMethodLiteralType
+)
 
 class AudioFormat(GObject.GEnum):
     ENCODED = 1
@@ -2387,13 +2652,97 @@ class AudioFormat(GObject.GEnum):
     @staticmethod
     def from_string(format: str) -> AudioFormat: ...
     @staticmethod
-    def get_info(format: AudioFormat) -> AudioFormatInfo: ...
+    def get_info(format: _AudioFormatValueType) -> AudioFormatInfo: ...
     @staticmethod
-    def to_string(format: AudioFormat) -> str: ...
+    def to_string(format: _AudioFormatValueType) -> str: ...
+
+_AudioFormatLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_FORMAT_ENCODED",
+    "GST_AUDIO_FORMAT_F32BE",
+    "GST_AUDIO_FORMAT_F32LE",
+    "GST_AUDIO_FORMAT_F64BE",
+    "GST_AUDIO_FORMAT_F64LE",
+    "GST_AUDIO_FORMAT_S16BE",
+    "GST_AUDIO_FORMAT_S16LE",
+    "GST_AUDIO_FORMAT_S18BE",
+    "GST_AUDIO_FORMAT_S18LE",
+    "GST_AUDIO_FORMAT_S20BE",
+    "GST_AUDIO_FORMAT_S20LE",
+    "GST_AUDIO_FORMAT_S20_32BE",
+    "GST_AUDIO_FORMAT_S20_32LE",
+    "GST_AUDIO_FORMAT_S24BE",
+    "GST_AUDIO_FORMAT_S24LE",
+    "GST_AUDIO_FORMAT_S24_32BE",
+    "GST_AUDIO_FORMAT_S24_32LE",
+    "GST_AUDIO_FORMAT_S32BE",
+    "GST_AUDIO_FORMAT_S32LE",
+    "GST_AUDIO_FORMAT_S8",
+    "GST_AUDIO_FORMAT_U16BE",
+    "GST_AUDIO_FORMAT_U16LE",
+    "GST_AUDIO_FORMAT_U18BE",
+    "GST_AUDIO_FORMAT_U18LE",
+    "GST_AUDIO_FORMAT_U20BE",
+    "GST_AUDIO_FORMAT_U20LE",
+    "GST_AUDIO_FORMAT_U20_32BE",
+    "GST_AUDIO_FORMAT_U20_32LE",
+    "GST_AUDIO_FORMAT_U24BE",
+    "GST_AUDIO_FORMAT_U24LE",
+    "GST_AUDIO_FORMAT_U24_32BE",
+    "GST_AUDIO_FORMAT_U24_32LE",
+    "GST_AUDIO_FORMAT_U32BE",
+    "GST_AUDIO_FORMAT_U32LE",
+    "GST_AUDIO_FORMAT_U8",
+    "GST_AUDIO_FORMAT_UNKNOWN",
+    "encoded",
+    "f32be",
+    "f32le",
+    "f64be",
+    "f64le",
+    "s16be",
+    "s16le",
+    "s18be",
+    "s18le",
+    "s20-32be",
+    "s20-32le",
+    "s20be",
+    "s20le",
+    "s24-32be",
+    "s24-32le",
+    "s24be",
+    "s24le",
+    "s32be",
+    "s32le",
+    "s8",
+    "u16be",
+    "u16le",
+    "u18be",
+    "u18le",
+    "u20-32be",
+    "u20-32le",
+    "u20be",
+    "u20le",
+    "u24-32be",
+    "u24-32le",
+    "u24be",
+    "u24le",
+    "u32be",
+    "u32le",
+    "u8",
+    "unknown",
+]
+_AudioFormatValueType: TypeAlias = AudioFormat | _AudioFormatLiteralType
 
 class AudioLayout(GObject.GEnum):
     INTERLEAVED = 0
     NON_INTERLEAVED = 1
+
+_AudioLayoutLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_LAYOUT_INTERLEAVED",
+    "GST_AUDIO_LAYOUT_NON_INTERLEAVED",
+    "interleaved",
+    "non-interleaved",
+]
+_AudioLayoutValueType: TypeAlias = AudioLayout | _AudioLayoutLiteralType
 
 class AudioNoiseShapingMethod(GObject.GEnum):
     ERROR_FEEDBACK = 1
@@ -2402,15 +2751,55 @@ class AudioNoiseShapingMethod(GObject.GEnum):
     NONE = 0
     SIMPLE = 2
 
+_AudioNoiseShapingMethodLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_NOISE_SHAPING_ERROR_FEEDBACK",
+    "GST_AUDIO_NOISE_SHAPING_HIGH",
+    "GST_AUDIO_NOISE_SHAPING_MEDIUM",
+    "GST_AUDIO_NOISE_SHAPING_NONE",
+    "GST_AUDIO_NOISE_SHAPING_SIMPLE",
+    "error-feedback",
+    "high",
+    "medium",
+    "none",
+    "simple",
+]
+_AudioNoiseShapingMethodValueType: TypeAlias = (
+    AudioNoiseShapingMethod | _AudioNoiseShapingMethodLiteralType
+)
+
 class AudioResamplerFilterInterpolation(GObject.GEnum):
     CUBIC = 2
     LINEAR = 1
     NONE = 0
 
+_AudioResamplerFilterInterpolationLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RESAMPLER_FILTER_INTERPOLATION_CUBIC",
+    "GST_AUDIO_RESAMPLER_FILTER_INTERPOLATION_LINEAR",
+    "GST_AUDIO_RESAMPLER_FILTER_INTERPOLATION_NONE",
+    "cubic",
+    "linear",
+    "none",
+]
+_AudioResamplerFilterInterpolationValueType: TypeAlias = (
+    AudioResamplerFilterInterpolation | _AudioResamplerFilterInterpolationLiteralType
+)
+
 class AudioResamplerFilterMode(GObject.GEnum):
     AUTO = 2
     FULL = 1
     INTERPOLATED = 0
+
+_AudioResamplerFilterModeLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RESAMPLER_FILTER_MODE_AUTO",
+    "GST_AUDIO_RESAMPLER_FILTER_MODE_FULL",
+    "GST_AUDIO_RESAMPLER_FILTER_MODE_INTERPOLATED",
+    "auto",
+    "full",
+    "interpolated",
+]
+_AudioResamplerFilterModeValueType: TypeAlias = (
+    AudioResamplerFilterMode | _AudioResamplerFilterModeLiteralType
+)
 
 class AudioResamplerMethod(GObject.GEnum):
     BLACKMAN_NUTTALL = 3
@@ -2418,6 +2807,22 @@ class AudioResamplerMethod(GObject.GEnum):
     KAISER = 4
     LINEAR = 1
     NEAREST = 0
+
+_AudioResamplerMethodLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RESAMPLER_METHOD_BLACKMAN_NUTTALL",
+    "GST_AUDIO_RESAMPLER_METHOD_CUBIC",
+    "GST_AUDIO_RESAMPLER_METHOD_KAISER",
+    "GST_AUDIO_RESAMPLER_METHOD_LINEAR",
+    "GST_AUDIO_RESAMPLER_METHOD_NEAREST",
+    "blackman-nuttall",
+    "cubic",
+    "kaiser",
+    "linear",
+    "nearest",
+]
+_AudioResamplerMethodValueType: TypeAlias = (
+    AudioResamplerMethod | _AudioResamplerMethodLiteralType
+)
 
 class AudioRingBufferFormatType(GObject.GEnum):
     AC3 = 7
@@ -2437,11 +2842,63 @@ class AudioRingBufferFormatType(GObject.GEnum):
     MU_LAW = 1
     RAW = 0
 
+_AudioRingBufferFormatTypeLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_AC3",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_A_LAW",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_DSD",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_DTS",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_EAC3",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_FLAC",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_GSM",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_IEC958",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_IMA_ADPCM",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MPEG",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MPEG2_AAC",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MPEG2_AAC_RAW",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MPEG4_AAC",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MPEG4_AAC_RAW",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_MU_LAW",
+    "GST_AUDIO_RING_BUFFER_FORMAT_TYPE_RAW",
+    "a-law",
+    "ac3",
+    "dsd",
+    "dts",
+    "eac3",
+    "flac",
+    "gsm",
+    "iec958",
+    "ima-adpcm",
+    "mpeg",
+    "mpeg2-aac",
+    "mpeg2-aac-raw",
+    "mpeg4-aac",
+    "mpeg4-aac-raw",
+    "mu-law",
+    "raw",
+]
+_AudioRingBufferFormatTypeValueType: TypeAlias = (
+    AudioRingBufferFormatType | _AudioRingBufferFormatTypeLiteralType
+)
+
 class AudioRingBufferState(GObject.GEnum):
     ERROR = 3
     PAUSED = 1
     STARTED = 2
     STOPPED = 0
+
+_AudioRingBufferStateLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_RING_BUFFER_STATE_ERROR",
+    "GST_AUDIO_RING_BUFFER_STATE_PAUSED",
+    "GST_AUDIO_RING_BUFFER_STATE_STARTED",
+    "GST_AUDIO_RING_BUFFER_STATE_STOPPED",
+    "error",
+    "paused",
+    "started",
+    "stopped",
+]
+_AudioRingBufferStateValueType: TypeAlias = (
+    AudioRingBufferState | _AudioRingBufferStateLiteralType
+)
 
 class DsdFormat(GObject.GEnum):
     DSD_FORMAT_U16 = 2
@@ -2456,9 +2913,27 @@ class DsdFormat(GObject.GEnum):
     @staticmethod
     def from_string(str: str) -> DsdFormat: ...
     @staticmethod
-    def get_width(format: DsdFormat) -> int: ...
+    def get_width(format: _DsdFormatValueType) -> int: ...
     @staticmethod
-    def to_string(format: DsdFormat) -> str: ...
+    def to_string(format: _DsdFormatValueType) -> str: ...
+
+_DsdFormatLiteralType: TypeAlias = Literal[
+    "GST_DSD_FORMAT_U16BE",
+    "GST_DSD_FORMAT_U16LE",
+    "GST_DSD_FORMAT_U32BE",
+    "GST_DSD_FORMAT_U32LE",
+    "GST_DSD_FORMAT_U8",
+    "GST_DSD_FORMAT_UNKNOWN",
+    "GST_NUM_DSD_FORMATS",
+    "dsd-format-u16be",
+    "dsd-format-u16le",
+    "dsd-format-u32be",
+    "dsd-format-u32le",
+    "dsd-format-u8",
+    "dsd-format-unknown",
+    "num-dsd-formats",
+]
+_DsdFormatValueType: TypeAlias = DsdFormat | _DsdFormatLiteralType
 
 class StreamVolumeFormat(IntEnum):
     CUBIC = 1

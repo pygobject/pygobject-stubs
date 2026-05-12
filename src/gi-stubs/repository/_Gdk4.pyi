@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -2544,7 +2546,7 @@ def content_serialize_async(
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
 def dmabuf_error_quark() -> int: ...
-def drag_action_is_unique(action: DragAction) -> bool: ...
+def drag_action_is_unique(action: _DragActionValueType) -> bool: ...
 def events_get_angle(event1: Event, event2: Event) -> tuple[bool, float]: ...
 def events_get_center(event1: Event, event2: Event) -> tuple[bool, float, float]: ...
 def events_get_distance(event1: Event, event2: Event) -> tuple[bool, float]: ...
@@ -2596,7 +2598,7 @@ class AppLaunchContext(Gio.AppLaunchContext):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, display: Display = ...) -> None: ...
+    def __init__(self, *, display: Display | None = ...) -> None: ...
     def get_display(self) -> Display: ...
     def set_desktop(self, desktop: int) -> None: ...
     def set_icon(self, icon: Gio.Icon | None = None) -> None: ...
@@ -2630,7 +2632,9 @@ class CairoContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-    def __init__(self, *, display: Display = ..., surface: Surface = ...) -> None: ...
+    def __init__(
+        self, *, display: Display | None = ..., surface: Surface | None = ...
+    ) -> None: ...
     def cairo_create(self) -> cairo.Context | None: ...
 
 class CicpParams(GObject.Object):
@@ -2657,7 +2661,10 @@ class CicpParams(GObject.Object):
     class Props(GObject.Object.Props):
         color_primaries: int
         matrix_coefficients: int
-        range: CicpRange
+        @property
+        def range(self) -> CicpRange: ...
+        @range.setter
+        def range(self, value: _CicpRangeValueType) -> None: ...
         transfer_function: int
 
     @property
@@ -2667,7 +2674,7 @@ class CicpParams(GObject.Object):
         *,
         color_primaries: int = ...,
         matrix_coefficients: int = ...,
-        range: CicpRange = ...,
+        range: _CicpRangeValueType = ...,
         transfer_function: int = ...,
     ) -> None: ...
     def build_color_state(self) -> ColorState: ...
@@ -2679,7 +2686,7 @@ class CicpParams(GObject.Object):
     def new(cls) -> CicpParams: ...
     def set_color_primaries(self, color_primaries: int) -> None: ...
     def set_matrix_coefficients(self, matrix_coefficients: int) -> None: ...
-    def set_range(self, range: CicpRange) -> None: ...
+    def set_range(self, range: _CicpRangeValueType) -> None: ...
     def set_transfer_function(self, transfer_function: int) -> None: ...
 
 class CicpParamsClass(_gi.Struct): ...
@@ -2719,7 +2726,7 @@ class Clipboard(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, display: Display = ...) -> None: ...
+    def __init__(self, *, display: Display | None = ...) -> None: ...
     def get_content(self) -> ContentProvider | None: ...
     def get_display(self) -> Display: ...
     def get_formats(self) -> ContentFormats: ...
@@ -3089,11 +3096,11 @@ class Cursor(GObject.Object):
     def __init__(
         self,
         *,
-        fallback: Cursor = ...,
+        fallback: Cursor | None = ...,
         hotspot_x: int = ...,
         hotspot_y: int = ...,
-        name: str = ...,
-        texture: Texture = ...,
+        name: str | None = ...,
+        texture: Texture | None = ...,
     ) -> None: ...
     def get_fallback(self) -> Cursor | None: ...
     def get_hotspot_x(self) -> int: ...
@@ -3193,7 +3200,7 @@ class Device(GObject.Object):
         @property
         def has_cursor(self) -> bool: ...
         @property
-        def layout_names(self) -> list[str] | None: ...
+        def layout_names(self) -> list[str]: ...
         @property
         def modifier_state(self) -> ModifierType: ...
         @property
@@ -3208,7 +3215,10 @@ class Device(GObject.Object):
         def product_id(self) -> str | None: ...
         @property
         def scroll_lock_state(self) -> bool: ...
-        seat: Seat
+        @property
+        def seat(self) -> Seat: ...
+        @seat.setter
+        def seat(self, value: Seat | None) -> None: ...
         @property
         def source(self) -> InputSource: ...
         @property
@@ -3221,14 +3231,14 @@ class Device(GObject.Object):
     def __init__(
         self,
         *,
-        display: Display = ...,
+        display: Display | None = ...,
         has_cursor: bool = ...,
-        name: str = ...,
+        name: str | None = ...,
         num_touches: int = ...,
-        product_id: str = ...,
-        seat: Seat = ...,
-        source: InputSource = ...,
-        vendor_id: str = ...,
+        product_id: str | None = ...,
+        seat: Seat | None = ...,
+        source: _InputSourceValueType = ...,
+        vendor_id: str | None = ...,
     ) -> None: ...
     def get_active_layout_index(self) -> int: ...
     def get_caps_lock_state(self) -> bool: ...
@@ -3257,9 +3267,11 @@ class DevicePad(GObject.GInterface, Protocol):
     Signals from GObject:
       notify (GParam)
     """
-    def get_feature_group(self, feature: DevicePadFeature, feature_idx: int) -> int: ...
+    def get_feature_group(
+        self, feature: _DevicePadFeatureValueType, feature_idx: int
+    ) -> int: ...
     def get_group_n_modes(self, group_idx: int) -> int: ...
-    def get_n_features(self, feature: DevicePadFeature) -> int: ...
+    def get_n_features(self, feature: _DevicePadFeatureValueType) -> int: ...
     def get_n_groups(self) -> int: ...
 
 class DevicePadInterface(_gi.Struct): ...
@@ -3299,10 +3311,10 @@ class DeviceTool(GObject.Object):
     def __init__(
         self,
         *,
-        axes: AxisFlags = ...,
+        axes: _AxisFlagsValueType = ...,
         hardware_id: int = ...,
         serial: int = ...,
-        tool_type: DeviceToolType = ...,
+        tool_type: _DeviceToolTypeValueType = ...,
     ) -> None: ...
     def get_axes(self) -> AxisFlags: ...
     def get_hardware_id(self) -> int: ...
@@ -3384,7 +3396,7 @@ class Display(GObject.Object):
     def supports_shadow_width(self) -> bool: ...
     def sync(self) -> None: ...
     def translate_key(
-        self, keycode: int, state: ModifierType, group: int
+        self, keycode: int, state: _ModifierTypeValueType, group: int
     ) -> tuple[bool, int, int, int, ModifierType]: ...
 
 class DisplayManager(GObject.Object):
@@ -3408,7 +3420,10 @@ class DisplayManager(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        default_display: Display | None
+        @property
+        def default_display(self) -> Display | None: ...
+        @default_display.setter
+        def default_display(self, value: Display) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3455,7 +3470,11 @@ class DmabufTexture(Texture):
       notify (GParam)
     """
     def __init__(
-        self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
+        self,
+        *,
+        color_state: ColorState | None = ...,
+        height: int = ...,
+        width: int = ...,
     ) -> None: ...
 
 class DmabufTextureBuilder(GObject.Object):
@@ -3579,7 +3598,10 @@ class Drag(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        actions: DragAction
+        @property
+        def actions(self) -> DragAction: ...
+        @actions.setter
+        def actions(self, value: _DragActionValueType) -> None: ...
         @property
         def content(self) -> ContentProvider: ...
         @property
@@ -3588,7 +3610,10 @@ class Drag(GObject.Object):
         def display(self) -> Display: ...
         @property
         def formats(self) -> ContentFormats: ...
-        selected_action: DragAction
+        @property
+        def selected_action(self) -> DragAction: ...
+        @selected_action.setter
+        def selected_action(self, value: _DragActionValueType) -> None: ...
         @property
         def surface(self) -> Surface: ...
 
@@ -3597,19 +3622,19 @@ class Drag(GObject.Object):
     def __init__(
         self,
         *,
-        actions: DragAction = ...,
-        content: ContentProvider = ...,
-        device: Device = ...,
-        formats: ContentFormats = ...,
-        selected_action: DragAction = ...,
-        surface: Surface = ...,
+        actions: _DragActionValueType = ...,
+        content: ContentProvider | None = ...,
+        device: Device | None = ...,
+        formats: ContentFormats | None = ...,
+        selected_action: _DragActionValueType = ...,
+        surface: Surface | None = ...,
     ) -> None: ...
     @staticmethod
     def begin(
         surface: Surface,
         device: Device,
         content: ContentProvider,
-        actions: DragAction,
+        actions: _DragActionValueType,
         dx: float,
         dy: float,
     ) -> Drag | None: ...
@@ -3664,7 +3689,9 @@ class DrawContext(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, display: Display = ..., surface: Surface = ...) -> None: ...
+    def __init__(
+        self, *, display: Display | None = ..., surface: Surface | None = ...
+    ) -> None: ...
     def begin_frame(self, region: cairo.Region) -> None: ...
     def end_frame(self) -> None: ...
     def get_display(self) -> Display | None: ...
@@ -3713,13 +3740,13 @@ class Drop(GObject.Object):
     def __init__(
         self,
         *,
-        actions: DragAction = ...,
-        device: Device = ...,
-        drag: Drag = ...,
-        formats: ContentFormats = ...,
-        surface: Surface = ...,
+        actions: _DragActionValueType = ...,
+        device: Device | None = ...,
+        drag: Drag | None = ...,
+        formats: ContentFormats | None = ...,
+        surface: Surface | None = ...,
     ) -> None: ...
-    def finish(self, action: DragAction) -> None: ...
+    def finish(self, action: _DragActionValueType) -> None: ...
     def get_actions(self) -> DragAction: ...
     def get_device(self) -> Device: ...
     def get_display(self) -> Display: ...
@@ -3752,7 +3779,9 @@ class Drop(GObject.Object):
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
-    def status(self, actions: DragAction, preferred: DragAction) -> None: ...
+    def status(
+        self, actions: _DragActionValueType, preferred: _DragActionValueType
+    ) -> None: ...
 
 class Event(_gi.Fundamental):
     """
@@ -3763,7 +3792,7 @@ class Event(_gi.Fundamental):
         Event(**properties)
     """
     def get_axes(self) -> tuple[bool, list[float]]: ...
-    def get_axis(self, axis_use: AxisUse) -> tuple[bool, float]: ...
+    def get_axis(self, axis_use: _AxisUseValueType) -> tuple[bool, float]: ...
     def get_device(self) -> Device | None: ...
     def get_device_tool(self) -> DeviceTool | None: ...
     def get_display(self) -> Display | None: ...
@@ -3844,7 +3873,7 @@ class FrameClock(GObject.Object):
     def get_history_start(self) -> int: ...
     def get_refresh_info(self, base_time: int) -> tuple[int, int]: ...
     def get_timings(self, frame_counter: int) -> FrameTimings | None: ...
-    def request_phase(self, phase: FrameClockPhase) -> None: ...
+    def request_phase(self, phase: _FrameClockPhaseValueType) -> None: ...
 
 class FrameClockClass(_gi.Struct): ...
 class FrameClockPrivate(_gi.Struct): ...
@@ -3883,7 +3912,10 @@ class GLContext(DrawContext):
     """
     @type_check_only
     class Props(DrawContext.Props):
-        allowed_apis: GLAPI
+        @property
+        def allowed_apis(self) -> GLAPI: ...
+        @allowed_apis.setter
+        def allowed_apis(self, value: _GLAPIValueType) -> None: ...
         @property
         def api(self) -> GLAPI: ...
         @property
@@ -3894,10 +3926,10 @@ class GLContext(DrawContext):
     def __init__(
         self,
         *,
-        allowed_apis: GLAPI = ...,
-        shared_context: GLContext = ...,
-        display: Display = ...,
-        surface: Surface = ...,
+        allowed_apis: _GLAPIValueType = ...,
+        shared_context: GLContext | None = ...,
+        display: Display | None = ...,
+        surface: Surface | None = ...,
     ) -> None: ...
     @staticmethod
     def clear_current() -> None: ...
@@ -3917,7 +3949,7 @@ class GLContext(DrawContext):
     def is_shared(self, other: GLContext) -> bool: ...
     def make_current(self) -> None: ...
     def realize(self) -> bool: ...
-    def set_allowed_apis(self, apis: GLAPI) -> None: ...
+    def set_allowed_apis(self, apis: _GLAPIValueType) -> None: ...
     def set_debug_enabled(self, enabled: bool) -> None: ...
     def set_forward_compatible(self, compatible: bool) -> None: ...
     def set_required_version(self, major: int, minor: int) -> None: ...
@@ -3951,7 +3983,11 @@ class GLTexture(Texture):
       notify (GParam)
     """
     def __init__(
-        self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
+        self,
+        *,
+        color_state: ColorState | None = ...,
+        height: int = ...,
+        width: int = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -3995,11 +4031,17 @@ class GLTextureBuilder(GObject.Object):
     class Props(GObject.Object.Props):
         color_state: ColorState
         context: GLContext | None
-        format: MemoryFormat
+        @property
+        def format(self) -> MemoryFormat: ...
+        @format.setter
+        def format(self, value: _MemoryFormatValueType) -> None: ...
         has_mipmap: bool
         height: int
         id: int
-        sync: int | None
+        @property
+        def sync(self) -> int: ...
+        @sync.setter
+        def sync(self, value: int | Any | None) -> None: ...
         update_region: cairo.Region | None
         update_texture: Texture | None
         width: int
@@ -4011,7 +4053,7 @@ class GLTextureBuilder(GObject.Object):
         *,
         color_state: ColorState = ...,
         context: GLContext | None = ...,
-        format: MemoryFormat = ...,
+        format: _MemoryFormatValueType = ...,
         has_mipmap: bool = ...,
         height: int = ...,
         id: int = ...,
@@ -4039,7 +4081,7 @@ class GLTextureBuilder(GObject.Object):
     def new(cls) -> GLTextureBuilder: ...
     def set_color_state(self, color_state: ColorState) -> None: ...
     def set_context(self, context: GLContext | None = None) -> None: ...
-    def set_format(self, format: MemoryFormat) -> None: ...
+    def set_format(self, format: _MemoryFormatValueType) -> None: ...
     def set_has_mipmap(self, has_mipmap: bool) -> None: ...
     def set_height(self, height: int) -> None: ...
     def set_id(self, id: int) -> None: ...
@@ -4077,7 +4119,7 @@ class KeyEvent(Event):
     def get_level(self) -> int: ...
     def get_match(self) -> tuple[bool, int, ModifierType]: ...
     def is_modifier(self) -> bool: ...
-    def matches(self, keyval: int, modifiers: ModifierType) -> KeyMatch: ...
+    def matches(self, keyval: int, modifiers: _ModifierTypeValueType) -> KeyMatch: ...
 
 class KeymapKey(_gi.Struct):
     """
@@ -4120,14 +4162,18 @@ class MemoryTexture(Texture):
       notify (GParam)
     """
     def __init__(
-        self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
+        self,
+        *,
+        color_state: ColorState | None = ...,
+        height: int = ...,
+        width: int = ...,
     ) -> None: ...
     @classmethod
     def new(
         cls,
         width: int,
         height: int,
-        format: MemoryFormat,
+        format: _MemoryFormatValueType,
         bytes: GLib.Bytes,
         stride: int,
     ) -> MemoryTexture: ...
@@ -4160,7 +4206,10 @@ class MemoryTextureBuilder(GObject.Object):
     class Props(GObject.Object.Props):
         bytes: GLib.Bytes | None
         color_state: ColorState
-        format: MemoryFormat
+        @property
+        def format(self) -> MemoryFormat: ...
+        @format.setter
+        def format(self, value: _MemoryFormatValueType) -> None: ...
         height: int
         stride: int
         update_region: cairo.Region | None
@@ -4174,7 +4223,7 @@ class MemoryTextureBuilder(GObject.Object):
         *,
         bytes: GLib.Bytes | None = ...,
         color_state: ColorState = ...,
-        format: MemoryFormat = ...,
+        format: _MemoryFormatValueType = ...,
         height: int = ...,
         stride: int = ...,
         update_region: cairo.Region | None = ...,
@@ -4196,7 +4245,7 @@ class MemoryTextureBuilder(GObject.Object):
     def new(cls) -> MemoryTextureBuilder: ...
     def set_bytes(self, bytes: GLib.Bytes | None = None) -> None: ...
     def set_color_state(self, color_state: ColorState) -> None: ...
-    def set_format(self, format: MemoryFormat) -> None: ...
+    def set_format(self, format: _MemoryFormatValueType) -> None: ...
     def set_height(self, height: int) -> None: ...
     def set_offset(self, plane: int, offset: int) -> None: ...
     def set_stride(self, stride: int) -> None: ...
@@ -4270,7 +4319,7 @@ class Monitor(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, display: Display = ...) -> None: ...
+    def __init__(self, *, display: Display | None = ...) -> None: ...
     def get_connector(self) -> str | None: ...
     def get_description(self) -> str | None: ...
     def get_display(self) -> Display: ...
@@ -4382,7 +4431,10 @@ class PopupLayout(GObject.GBoxed):
         new(anchor_rect:Gdk.Rectangle, rect_anchor:Gdk.Gravity, surface_anchor:Gdk.Gravity) -> Gdk.PopupLayout
     """
     def __init__(
-        self, anchor_rect: Rectangle, rect_anchor: Gravity, surface_anchor: Gravity
+        self,
+        anchor_rect: Rectangle,
+        rect_anchor: _GravityValueType,
+        surface_anchor: _GravityValueType,
     ) -> None: ...
     def copy(self) -> PopupLayout: ...
     def equal(self, other: PopupLayout) -> bool: ...
@@ -4394,17 +4446,20 @@ class PopupLayout(GObject.GBoxed):
     def get_surface_anchor(self) -> Gravity: ...
     @classmethod
     def new(
-        cls, anchor_rect: Rectangle, rect_anchor: Gravity, surface_anchor: Gravity
+        cls,
+        anchor_rect: Rectangle,
+        rect_anchor: _GravityValueType,
+        surface_anchor: _GravityValueType,
     ) -> PopupLayout: ...
     def ref(self) -> PopupLayout: ...
-    def set_anchor_hints(self, anchor_hints: AnchorHints) -> None: ...
+    def set_anchor_hints(self, anchor_hints: _AnchorHintsValueType) -> None: ...
     def set_anchor_rect(self, anchor_rect: Rectangle) -> None: ...
     def set_offset(self, dx: int, dy: int) -> None: ...
-    def set_rect_anchor(self, anchor: Gravity) -> None: ...
+    def set_rect_anchor(self, anchor: _GravityValueType) -> None: ...
     def set_shadow_width(
         self, left: int, right: int, top: int, bottom: int
     ) -> None: ...
-    def set_surface_anchor(self, anchor: Gravity) -> None: ...
+    def set_surface_anchor(self, anchor: _GravityValueType) -> None: ...
     def unref(self) -> None: ...
 
 class ProximityEvent(Event):
@@ -4512,9 +4567,9 @@ class Seat(GObject.Object):
     def props(self) -> Props: ...
     @property
     def parent_instance(self) -> GObject.Object: ...
-    def __init__(self, *, display: Display = ...) -> None: ...
+    def __init__(self, *, display: Display | None = ...) -> None: ...
     def get_capabilities(self) -> SeatCapabilities: ...
-    def get_devices(self, capabilities: SeatCapabilities) -> list[Device]: ...
+    def get_devices(self, capabilities: _SeatCapabilitiesValueType) -> list[Device]: ...
     def get_display(self) -> Display: ...
     def get_keyboard(self) -> Device | None: ...
     def get_pointer(self) -> Device | None: ...
@@ -4592,8 +4647,8 @@ class Surface(GObject.Object):
         self,
         *,
         cursor: Cursor | None = ...,
-        display: Display = ...,
-        frame_clock: FrameClock = ...,
+        display: Display | None = ...,
+        frame_clock: FrameClock | None = ...,
     ) -> None: ...
     def beep(self) -> None: ...
     def create_cairo_context(self) -> CairoContext: ...
@@ -4672,7 +4727,11 @@ class Texture(GObject.Object, Paintable, Gio.Icon, Gio.LoadableIcon):
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, *, color_state: ColorState = ..., height: int = ..., width: int = ...
+        self,
+        *,
+        color_state: ColorState | None = ...,
+        height: int = ...,
+        width: int = ...,
     ) -> None: ...
     def download(self, data: Sequence[int], stride: int) -> None: ...
     def get_color_state(self) -> ColorState: ...
@@ -4716,7 +4775,7 @@ class TextureDownloader(GObject.GBoxed):
     @classmethod
     def new(cls, texture: Texture) -> TextureDownloader: ...
     def set_color_state(self, color_state: ColorState) -> None: ...
-    def set_format(self, format: MemoryFormat) -> None: ...
+    def set_format(self, format: _MemoryFormatValueType) -> None: ...
     def set_texture(self, texture: Texture) -> None: ...
 
 class TimeCoord(_gi.Struct):
@@ -4744,7 +4803,7 @@ class Toplevel(GObject.GInterface, Protocol):
     ) -> None: ...
     def begin_resize(
         self,
-        edge: SurfaceEdge,
+        edge: _SurfaceEdgeValueType,
         device: Device | None,
         button: int,
         x: float,
@@ -4762,7 +4821,7 @@ class Toplevel(GObject.GInterface, Protocol):
     def restore_system_shortcuts(self) -> None: ...
     def set_decorated(self, decorated: bool) -> None: ...
     def set_deletable(self, deletable: bool) -> None: ...
-    def set_gravity(self, gravity: Gravity) -> None: ...
+    def set_gravity(self, gravity: _GravityValueType) -> None: ...
     def set_icon_list(self, surfaces: list[Texture]) -> None: ...
     def set_modal(self, modal: bool) -> None: ...
     def set_startup_id(self, startup_id: str) -> None: ...
@@ -4770,7 +4829,7 @@ class Toplevel(GObject.GInterface, Protocol):
     def set_transient_for(self, parent: Surface) -> None: ...
     def show_window_menu(self, event: Event) -> bool: ...
     def supports_edge_constraints(self) -> bool: ...
-    def titlebar_gesture(self, gesture: TitlebarGesture) -> bool: ...
+    def titlebar_gesture(self, gesture: _TitlebarGestureValueType) -> bool: ...
 
 class ToplevelInterface(_gi.Struct): ...
 
@@ -4851,7 +4910,9 @@ class VulkanContext(DrawContext):
     Signals from GObject:
       notify (GParam)
     """
-    def __init__(self, *, display: Display = ..., surface: Surface = ...) -> None: ...
+    def __init__(
+        self, *, display: Display | None = ..., surface: Surface | None = ...
+    ) -> None: ...
 
 class AnchorHints(GObject.GFlags):
     FLIP = 3
@@ -4863,6 +4924,30 @@ class AnchorHints(GObject.GFlags):
     SLIDE = 12
     SLIDE_X = 4
     SLIDE_Y = 8
+
+_AnchorHintsLiteralType: TypeAlias = Literal[
+    "GDK_ANCHOR_FLIP",
+    "GDK_ANCHOR_FLIP_X",
+    "GDK_ANCHOR_FLIP_Y",
+    "GDK_ANCHOR_RESIZE",
+    "GDK_ANCHOR_RESIZE_X",
+    "GDK_ANCHOR_RESIZE_Y",
+    "GDK_ANCHOR_SLIDE",
+    "GDK_ANCHOR_SLIDE_X",
+    "GDK_ANCHOR_SLIDE_Y",
+    "flip",
+    "flip-x",
+    "flip-y",
+    "resize",
+    "resize-x",
+    "resize-y",
+    "slide",
+    "slide-x",
+    "slide-y",
+]
+_AnchorHintsValueType: TypeAlias = (
+    AnchorHints | _AnchorHintsLiteralType | tuple[_AnchorHintsLiteralType, ...]
+)
 
 class AxisFlags(GObject.GFlags):
     DELTA_X = 8
@@ -4877,6 +4962,34 @@ class AxisFlags(GObject.GFlags):
     Y = 4
     YTILT = 128
 
+_AxisFlagsLiteralType: TypeAlias = Literal[
+    "GDK_AXIS_FLAG_DELTA_X",
+    "GDK_AXIS_FLAG_DELTA_Y",
+    "GDK_AXIS_FLAG_DISTANCE",
+    "GDK_AXIS_FLAG_PRESSURE",
+    "GDK_AXIS_FLAG_ROTATION",
+    "GDK_AXIS_FLAG_SLIDER",
+    "GDK_AXIS_FLAG_WHEEL",
+    "GDK_AXIS_FLAG_X",
+    "GDK_AXIS_FLAG_XTILT",
+    "GDK_AXIS_FLAG_Y",
+    "GDK_AXIS_FLAG_YTILT",
+    "delta-x",
+    "delta-y",
+    "distance",
+    "pressure",
+    "rotation",
+    "slider",
+    "wheel",
+    "x",
+    "xtilt",
+    "y",
+    "ytilt",
+]
+_AxisFlagsValueType: TypeAlias = (
+    AxisFlags | _AxisFlagsLiteralType | tuple[_AxisFlagsLiteralType, ...]
+)
+
 class DragAction(GObject.GFlags):
     ASK = 8
     COPY = 1
@@ -4884,7 +4997,23 @@ class DragAction(GObject.GFlags):
     MOVE = 2
     NONE = 0
     @staticmethod
-    def is_unique(action: DragAction) -> bool: ...
+    def is_unique(action: _DragActionValueType) -> bool: ...
+
+_DragActionLiteralType: TypeAlias = Literal[
+    "GDK_ACTION_ASK",
+    "GDK_ACTION_COPY",
+    "GDK_ACTION_LINK",
+    "GDK_ACTION_MOVE",
+    "GDK_ACTION_NONE",
+    "ask",
+    "copy",
+    "link",
+    "move",
+    "none",
+]
+_DragActionValueType: TypeAlias = (
+    DragAction | _DragActionLiteralType | tuple[_DragActionLiteralType, ...]
+)
 
 class FrameClockPhase(GObject.GFlags):
     AFTER_PAINT = 64
@@ -4896,9 +5025,36 @@ class FrameClockPhase(GObject.GFlags):
     RESUME_EVENTS = 32
     UPDATE = 4
 
+_FrameClockPhaseLiteralType: TypeAlias = Literal[
+    "GDK_FRAME_CLOCK_PHASE_AFTER_PAINT",
+    "GDK_FRAME_CLOCK_PHASE_BEFORE_PAINT",
+    "GDK_FRAME_CLOCK_PHASE_FLUSH_EVENTS",
+    "GDK_FRAME_CLOCK_PHASE_LAYOUT",
+    "GDK_FRAME_CLOCK_PHASE_NONE",
+    "GDK_FRAME_CLOCK_PHASE_PAINT",
+    "GDK_FRAME_CLOCK_PHASE_RESUME_EVENTS",
+    "GDK_FRAME_CLOCK_PHASE_UPDATE",
+    "after-paint",
+    "before-paint",
+    "flush-events",
+    "layout",
+    "none",
+    "paint",
+    "resume-events",
+    "update",
+]
+_FrameClockPhaseValueType: TypeAlias = (
+    FrameClockPhase
+    | _FrameClockPhaseLiteralType
+    | tuple[_FrameClockPhaseLiteralType, ...]
+)
+
 class GLAPI(GObject.GFlags):
     GL = 1
     GLES = 2
+
+_GLAPILiteralType: TypeAlias = Literal["GDK_GL_API_GL", "GDK_GL_API_GLES", "gl", "gles"]
+_GLAPIValueType: TypeAlias = GLAPI | _GLAPILiteralType | tuple[_GLAPILiteralType, ...]
 
 class ModifierType(GObject.GFlags):
     ALT_MASK = 8
@@ -4915,9 +5071,48 @@ class ModifierType(GObject.GFlags):
     SHIFT_MASK = 1
     SUPER_MASK = 67108864
 
+_ModifierTypeLiteralType: TypeAlias = Literal[
+    "GDK_ALT_MASK",
+    "GDK_BUTTON1_MASK",
+    "GDK_BUTTON2_MASK",
+    "GDK_BUTTON3_MASK",
+    "GDK_BUTTON4_MASK",
+    "GDK_BUTTON5_MASK",
+    "GDK_CONTROL_MASK",
+    "GDK_HYPER_MASK",
+    "GDK_LOCK_MASK",
+    "GDK_META_MASK",
+    "GDK_NO_MODIFIER_MASK",
+    "GDK_SHIFT_MASK",
+    "GDK_SUPER_MASK",
+    "alt-mask",
+    "button1-mask",
+    "button2-mask",
+    "button3-mask",
+    "button4-mask",
+    "button5-mask",
+    "control-mask",
+    "hyper-mask",
+    "lock-mask",
+    "meta-mask",
+    "no-modifier-mask",
+    "shift-mask",
+    "super-mask",
+]
+_ModifierTypeValueType: TypeAlias = (
+    ModifierType | _ModifierTypeLiteralType | tuple[_ModifierTypeLiteralType, ...]
+)
+
 class PaintableFlags(GObject.GFlags):
     CONTENTS = 2
     SIZE = 1
+
+_PaintableFlagsLiteralType: TypeAlias = Literal[
+    "GDK_PAINTABLE_STATIC_CONTENTS", "GDK_PAINTABLE_STATIC_SIZE", "contents", "size"
+]
+_PaintableFlagsValueType: TypeAlias = (
+    PaintableFlags | _PaintableFlagsLiteralType | tuple[_PaintableFlagsLiteralType, ...]
+)
 
 class SeatCapabilities(GObject.GFlags):
     ALL = 31
@@ -4929,6 +5124,30 @@ class SeatCapabilities(GObject.GFlags):
     TABLET_STYLUS = 4
     TOUCH = 2
 
+_SeatCapabilitiesLiteralType: TypeAlias = Literal[
+    "GDK_SEAT_CAPABILITY_ALL",
+    "GDK_SEAT_CAPABILITY_ALL_POINTING",
+    "GDK_SEAT_CAPABILITY_KEYBOARD",
+    "GDK_SEAT_CAPABILITY_NONE",
+    "GDK_SEAT_CAPABILITY_POINTER",
+    "GDK_SEAT_CAPABILITY_TABLET_PAD",
+    "GDK_SEAT_CAPABILITY_TABLET_STYLUS",
+    "GDK_SEAT_CAPABILITY_TOUCH",
+    "all",
+    "all-pointing",
+    "keyboard",
+    "none",
+    "pointer",
+    "tablet-pad",
+    "tablet-stylus",
+    "touch",
+]
+_SeatCapabilitiesValueType: TypeAlias = (
+    SeatCapabilities
+    | _SeatCapabilitiesLiteralType
+    | tuple[_SeatCapabilitiesLiteralType, ...]
+)
+
 class ToplevelCapabilities(GObject.GFlags):
     EDGE_CONSTRAINTS = 1
     FULLSCREEN = 32
@@ -4938,6 +5157,30 @@ class ToplevelCapabilities(GObject.GFlags):
     MINIMIZE = 64
     TITLEBAR_GESTURES = 4
     WINDOW_MENU = 8
+
+_ToplevelCapabilitiesLiteralType: TypeAlias = Literal[
+    "GDK_TOPLEVEL_CAPABILITIES_EDGE_CONSTRAINTS",
+    "GDK_TOPLEVEL_CAPABILITIES_FULLSCREEN",
+    "GDK_TOPLEVEL_CAPABILITIES_INHIBIT_SHORTCUTS",
+    "GDK_TOPLEVEL_CAPABILITIES_LOWER",
+    "GDK_TOPLEVEL_CAPABILITIES_MAXIMIZE",
+    "GDK_TOPLEVEL_CAPABILITIES_MINIMIZE",
+    "GDK_TOPLEVEL_CAPABILITIES_TITLEBAR_GESTURES",
+    "GDK_TOPLEVEL_CAPABILITIES_WINDOW_MENU",
+    "edge-constraints",
+    "fullscreen",
+    "inhibit-shortcuts",
+    "lower",
+    "maximize",
+    "minimize",
+    "titlebar-gestures",
+    "window-menu",
+]
+_ToplevelCapabilitiesValueType: TypeAlias = (
+    ToplevelCapabilities
+    | _ToplevelCapabilitiesLiteralType
+    | tuple[_ToplevelCapabilitiesLiteralType, ...]
+)
 
 class ToplevelState(GObject.GFlags):
     ABOVE = 16
@@ -4958,6 +5201,46 @@ class ToplevelState(GObject.GFlags):
     TOP_RESIZABLE = 512
     TOP_TILED = 256
 
+_ToplevelStateLiteralType: TypeAlias = Literal[
+    "GDK_TOPLEVEL_STATE_ABOVE",
+    "GDK_TOPLEVEL_STATE_BELOW",
+    "GDK_TOPLEVEL_STATE_BOTTOM_RESIZABLE",
+    "GDK_TOPLEVEL_STATE_BOTTOM_TILED",
+    "GDK_TOPLEVEL_STATE_FOCUSED",
+    "GDK_TOPLEVEL_STATE_FULLSCREEN",
+    "GDK_TOPLEVEL_STATE_LEFT_RESIZABLE",
+    "GDK_TOPLEVEL_STATE_LEFT_TILED",
+    "GDK_TOPLEVEL_STATE_MAXIMIZED",
+    "GDK_TOPLEVEL_STATE_MINIMIZED",
+    "GDK_TOPLEVEL_STATE_RIGHT_RESIZABLE",
+    "GDK_TOPLEVEL_STATE_RIGHT_TILED",
+    "GDK_TOPLEVEL_STATE_STICKY",
+    "GDK_TOPLEVEL_STATE_SUSPENDED",
+    "GDK_TOPLEVEL_STATE_TILED",
+    "GDK_TOPLEVEL_STATE_TOP_RESIZABLE",
+    "GDK_TOPLEVEL_STATE_TOP_TILED",
+    "above",
+    "below",
+    "bottom-resizable",
+    "bottom-tiled",
+    "focused",
+    "fullscreen",
+    "left-resizable",
+    "left-tiled",
+    "maximized",
+    "minimized",
+    "right-resizable",
+    "right-tiled",
+    "sticky",
+    "suspended",
+    "tiled",
+    "top-resizable",
+    "top-tiled",
+]
+_ToplevelStateValueType: TypeAlias = (
+    ToplevelState | _ToplevelStateLiteralType | tuple[_ToplevelStateLiteralType, ...]
+)
+
 class AxisUse(GObject.GEnum):
     DELTA_X = 3
     DELTA_Y = 4
@@ -4973,9 +5256,44 @@ class AxisUse(GObject.GEnum):
     Y = 2
     YTILT = 7
 
+_AxisUseLiteralType: TypeAlias = Literal[
+    "GDK_AXIS_DELTA_X",
+    "GDK_AXIS_DELTA_Y",
+    "GDK_AXIS_DISTANCE",
+    "GDK_AXIS_IGNORE",
+    "GDK_AXIS_LAST",
+    "GDK_AXIS_PRESSURE",
+    "GDK_AXIS_ROTATION",
+    "GDK_AXIS_SLIDER",
+    "GDK_AXIS_WHEEL",
+    "GDK_AXIS_X",
+    "GDK_AXIS_XTILT",
+    "GDK_AXIS_Y",
+    "GDK_AXIS_YTILT",
+    "delta-x",
+    "delta-y",
+    "distance",
+    "ignore",
+    "last",
+    "pressure",
+    "rotation",
+    "slider",
+    "wheel",
+    "x",
+    "xtilt",
+    "y",
+    "ytilt",
+]
+_AxisUseValueType: TypeAlias = AxisUse | _AxisUseLiteralType
+
 class CicpRange(GObject.GEnum):
     FULL = 1
     NARROW = 0
+
+_CicpRangeLiteralType: TypeAlias = Literal[
+    "GDK_CICP_RANGE_FULL", "GDK_CICP_RANGE_NARROW", "full", "narrow"
+]
+_CicpRangeValueType: TypeAlias = CicpRange | _CicpRangeLiteralType
 
 class CrossingMode(GObject.GEnum):
     DEVICE_SWITCH = 8
@@ -4988,10 +5306,42 @@ class CrossingMode(GObject.GEnum):
     TOUCH_END = 7
     UNGRAB = 2
 
+_CrossingModeLiteralType: TypeAlias = Literal[
+    "GDK_CROSSING_DEVICE_SWITCH",
+    "GDK_CROSSING_GRAB",
+    "GDK_CROSSING_GTK_GRAB",
+    "GDK_CROSSING_GTK_UNGRAB",
+    "GDK_CROSSING_NORMAL",
+    "GDK_CROSSING_STATE_CHANGED",
+    "GDK_CROSSING_TOUCH_BEGIN",
+    "GDK_CROSSING_TOUCH_END",
+    "GDK_CROSSING_UNGRAB",
+    "device-switch",
+    "grab",
+    "gtk-grab",
+    "gtk-ungrab",
+    "normal",
+    "state-changed",
+    "touch-begin",
+    "touch-end",
+    "ungrab",
+]
+_CrossingModeValueType: TypeAlias = CrossingMode | _CrossingModeLiteralType
+
 class DevicePadFeature(GObject.GEnum):
     BUTTON = 0
     RING = 1
     STRIP = 2
+
+_DevicePadFeatureLiteralType: TypeAlias = Literal[
+    "GDK_DEVICE_PAD_FEATURE_BUTTON",
+    "GDK_DEVICE_PAD_FEATURE_RING",
+    "GDK_DEVICE_PAD_FEATURE_STRIP",
+    "button",
+    "ring",
+    "strip",
+]
+_DevicePadFeatureValueType: TypeAlias = DevicePadFeature | _DevicePadFeatureLiteralType
 
 class DeviceToolType(GObject.GEnum):
     AIRBRUSH = 5
@@ -5003,6 +5353,26 @@ class DeviceToolType(GObject.GEnum):
     PENCIL = 4
     UNKNOWN = 0
 
+_DeviceToolTypeLiteralType: TypeAlias = Literal[
+    "GDK_DEVICE_TOOL_TYPE_AIRBRUSH",
+    "GDK_DEVICE_TOOL_TYPE_BRUSH",
+    "GDK_DEVICE_TOOL_TYPE_ERASER",
+    "GDK_DEVICE_TOOL_TYPE_LENS",
+    "GDK_DEVICE_TOOL_TYPE_MOUSE",
+    "GDK_DEVICE_TOOL_TYPE_PEN",
+    "GDK_DEVICE_TOOL_TYPE_PENCIL",
+    "GDK_DEVICE_TOOL_TYPE_UNKNOWN",
+    "airbrush",
+    "brush",
+    "eraser",
+    "lens",
+    "mouse",
+    "pen",
+    "pencil",
+    "unknown",
+]
+_DeviceToolTypeValueType: TypeAlias = DeviceToolType | _DeviceToolTypeLiteralType
+
 class DmabufError(GObject.GEnum):
     CREATION_FAILED = 2
     NOT_AVAILABLE = 0
@@ -5010,10 +5380,30 @@ class DmabufError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_DmabufErrorLiteralType: TypeAlias = Literal[
+    "GDK_DMABUF_ERROR_CREATION_FAILED",
+    "GDK_DMABUF_ERROR_NOT_AVAILABLE",
+    "GDK_DMABUF_ERROR_UNSUPPORTED_FORMAT",
+    "creation-failed",
+    "not-available",
+    "unsupported-format",
+]
+_DmabufErrorValueType: TypeAlias = DmabufError | _DmabufErrorLiteralType
+
 class DragCancelReason(GObject.GEnum):
     ERROR = 2
     NO_TARGET = 0
     USER_CANCELLED = 1
+
+_DragCancelReasonLiteralType: TypeAlias = Literal[
+    "GDK_DRAG_CANCEL_ERROR",
+    "GDK_DRAG_CANCEL_NO_TARGET",
+    "GDK_DRAG_CANCEL_USER_CANCELLED",
+    "error",
+    "no-target",
+    "user-cancelled",
+]
+_DragCancelReasonValueType: TypeAlias = DragCancelReason | _DragCancelReasonLiteralType
 
 class EventType(GObject.GEnum):
     BUTTON_PRESS = 2
@@ -5048,9 +5438,83 @@ class EventType(GObject.GEnum):
     TOUCH_END = 19
     TOUCH_UPDATE = 18
 
+_EventTypeLiteralType: TypeAlias = Literal[
+    "GDK_BUTTON_PRESS",
+    "GDK_BUTTON_RELEASE",
+    "GDK_DELETE",
+    "GDK_DRAG_ENTER",
+    "GDK_DRAG_LEAVE",
+    "GDK_DRAG_MOTION",
+    "GDK_DROP_START",
+    "GDK_ENTER_NOTIFY",
+    "GDK_EVENT_LAST",
+    "GDK_FOCUS_CHANGE",
+    "GDK_GRAB_BROKEN",
+    "GDK_KEY_PRESS",
+    "GDK_KEY_RELEASE",
+    "GDK_LEAVE_NOTIFY",
+    "GDK_MOTION_NOTIFY",
+    "GDK_PAD_BUTTON_PRESS",
+    "GDK_PAD_BUTTON_RELEASE",
+    "GDK_PAD_DIAL",
+    "GDK_PAD_GROUP_MODE",
+    "GDK_PAD_RING",
+    "GDK_PAD_STRIP",
+    "GDK_PROXIMITY_IN",
+    "GDK_PROXIMITY_OUT",
+    "GDK_SCROLL",
+    "GDK_TOUCHPAD_HOLD",
+    "GDK_TOUCHPAD_PINCH",
+    "GDK_TOUCHPAD_SWIPE",
+    "GDK_TOUCH_BEGIN",
+    "GDK_TOUCH_CANCEL",
+    "GDK_TOUCH_END",
+    "GDK_TOUCH_UPDATE",
+    "button-press",
+    "button-release",
+    "delete",
+    "drag-enter",
+    "drag-leave",
+    "drag-motion",
+    "drop-start",
+    "enter-notify",
+    "event-last",
+    "focus-change",
+    "grab-broken",
+    "key-press",
+    "key-release",
+    "leave-notify",
+    "motion-notify",
+    "pad-button-press",
+    "pad-button-release",
+    "pad-dial",
+    "pad-group-mode",
+    "pad-ring",
+    "pad-strip",
+    "proximity-in",
+    "proximity-out",
+    "scroll",
+    "touch-begin",
+    "touch-cancel",
+    "touch-end",
+    "touch-update",
+    "touchpad-hold",
+    "touchpad-pinch",
+    "touchpad-swipe",
+]
+_EventTypeValueType: TypeAlias = EventType | _EventTypeLiteralType
+
 class FullscreenMode(GObject.GEnum):
     ALL_MONITORS = 1
     CURRENT_MONITOR = 0
+
+_FullscreenModeLiteralType: TypeAlias = Literal[
+    "GDK_FULLSCREEN_ON_ALL_MONITORS",
+    "GDK_FULLSCREEN_ON_CURRENT_MONITOR",
+    "all-monitors",
+    "current-monitor",
+]
+_FullscreenModeValueType: TypeAlias = FullscreenMode | _FullscreenModeLiteralType
 
 class GLError(GObject.GEnum):
     COMPILATION_FAILED = 3
@@ -5060,6 +5524,20 @@ class GLError(GObject.GEnum):
     UNSUPPORTED_PROFILE = 2
     @staticmethod
     def quark() -> int: ...
+
+_GLErrorLiteralType: TypeAlias = Literal[
+    "GDK_GL_ERROR_COMPILATION_FAILED",
+    "GDK_GL_ERROR_LINK_FAILED",
+    "GDK_GL_ERROR_NOT_AVAILABLE",
+    "GDK_GL_ERROR_UNSUPPORTED_FORMAT",
+    "GDK_GL_ERROR_UNSUPPORTED_PROFILE",
+    "compilation-failed",
+    "link-failed",
+    "not-available",
+    "unsupported-format",
+    "unsupported-profile",
+]
+_GLErrorValueType: TypeAlias = GLError | _GLErrorLiteralType
 
 class Gravity(GObject.GEnum):
     CENTER = 5
@@ -5073,6 +5551,30 @@ class Gravity(GObject.GEnum):
     STATIC = 10
     WEST = 4
 
+_GravityLiteralType: TypeAlias = Literal[
+    "GDK_GRAVITY_CENTER",
+    "GDK_GRAVITY_EAST",
+    "GDK_GRAVITY_NORTH",
+    "GDK_GRAVITY_NORTH_EAST",
+    "GDK_GRAVITY_NORTH_WEST",
+    "GDK_GRAVITY_SOUTH",
+    "GDK_GRAVITY_SOUTH_EAST",
+    "GDK_GRAVITY_SOUTH_WEST",
+    "GDK_GRAVITY_STATIC",
+    "GDK_GRAVITY_WEST",
+    "center",
+    "east",
+    "north",
+    "north-east",
+    "north-west",
+    "south",
+    "south-east",
+    "south-west",
+    "static",
+    "west",
+]
+_GravityValueType: TypeAlias = Gravity | _GravityLiteralType
+
 class InputSource(GObject.GEnum):
     KEYBOARD = 2
     MOUSE = 0
@@ -5082,10 +5584,38 @@ class InputSource(GObject.GEnum):
     TOUCHSCREEN = 3
     TRACKPOINT = 5
 
+_InputSourceLiteralType: TypeAlias = Literal[
+    "GDK_SOURCE_KEYBOARD",
+    "GDK_SOURCE_MOUSE",
+    "GDK_SOURCE_PEN",
+    "GDK_SOURCE_TABLET_PAD",
+    "GDK_SOURCE_TOUCHPAD",
+    "GDK_SOURCE_TOUCHSCREEN",
+    "GDK_SOURCE_TRACKPOINT",
+    "keyboard",
+    "mouse",
+    "pen",
+    "tablet-pad",
+    "touchpad",
+    "touchscreen",
+    "trackpoint",
+]
+_InputSourceValueType: TypeAlias = InputSource | _InputSourceLiteralType
+
 class KeyMatch(GObject.GEnum):
     EXACT = 2
     NONE = 0
     PARTIAL = 1
+
+_KeyMatchLiteralType: TypeAlias = Literal[
+    "GDK_KEY_MATCH_EXACT",
+    "GDK_KEY_MATCH_NONE",
+    "GDK_KEY_MATCH_PARTIAL",
+    "exact",
+    "none",
+    "partial",
+]
+_KeyMatchValueType: TypeAlias = KeyMatch | _KeyMatchLiteralType
 
 class MemoryFormat(GObject.GEnum):
     A16 = 25
@@ -5155,6 +5685,142 @@ class MemoryFormat(GObject.GEnum):
     X8B8G8R8 = 32
     X8R8G8B8 = 30
 
+_MemoryFormatLiteralType: TypeAlias = Literal[
+    "GDK_MEMORY_A16",
+    "GDK_MEMORY_A16_FLOAT",
+    "GDK_MEMORY_A32_FLOAT",
+    "GDK_MEMORY_A8",
+    "GDK_MEMORY_A8B8G8R8",
+    "GDK_MEMORY_A8B8G8R8_PREMULTIPLIED",
+    "GDK_MEMORY_A8R8G8B8",
+    "GDK_MEMORY_A8R8G8B8_PREMULTIPLIED",
+    "GDK_MEMORY_B8G8R8",
+    "GDK_MEMORY_B8G8R8A8",
+    "GDK_MEMORY_B8G8R8A8_PREMULTIPLIED",
+    "GDK_MEMORY_B8G8R8G8_422",
+    "GDK_MEMORY_B8G8R8X8",
+    "GDK_MEMORY_G10X6_B10X6R10X6_420",
+    "GDK_MEMORY_G12X4_B12X4R12X4_420",
+    "GDK_MEMORY_G16",
+    "GDK_MEMORY_G16A16",
+    "GDK_MEMORY_G16A16_PREMULTIPLIED",
+    "GDK_MEMORY_G16_B16R16_420",
+    "GDK_MEMORY_G16_B16_R16_420",
+    "GDK_MEMORY_G16_B16_R16_422",
+    "GDK_MEMORY_G16_B16_R16_444",
+    "GDK_MEMORY_G8",
+    "GDK_MEMORY_G8A8",
+    "GDK_MEMORY_G8A8_PREMULTIPLIED",
+    "GDK_MEMORY_G8B8G8R8_422",
+    "GDK_MEMORY_G8R8G8B8_422",
+    "GDK_MEMORY_G8_B8R8_420",
+    "GDK_MEMORY_G8_B8R8_422",
+    "GDK_MEMORY_G8_B8R8_444",
+    "GDK_MEMORY_G8_B8_R8_410",
+    "GDK_MEMORY_G8_B8_R8_411",
+    "GDK_MEMORY_G8_B8_R8_420",
+    "GDK_MEMORY_G8_B8_R8_422",
+    "GDK_MEMORY_G8_B8_R8_444",
+    "GDK_MEMORY_G8_R8B8_420",
+    "GDK_MEMORY_G8_R8B8_422",
+    "GDK_MEMORY_G8_R8B8_444",
+    "GDK_MEMORY_G8_R8_B8_410",
+    "GDK_MEMORY_G8_R8_B8_411",
+    "GDK_MEMORY_G8_R8_B8_420",
+    "GDK_MEMORY_G8_R8_B8_422",
+    "GDK_MEMORY_G8_R8_B8_444",
+    "GDK_MEMORY_N_FORMATS",
+    "GDK_MEMORY_R16G16B16",
+    "GDK_MEMORY_R16G16B16A16",
+    "GDK_MEMORY_R16G16B16A16_FLOAT",
+    "GDK_MEMORY_R16G16B16A16_FLOAT_PREMULTIPLIED",
+    "GDK_MEMORY_R16G16B16A16_PREMULTIPLIED",
+    "GDK_MEMORY_R16G16B16_FLOAT",
+    "GDK_MEMORY_R32G32B32A32_FLOAT",
+    "GDK_MEMORY_R32G32B32A32_FLOAT_PREMULTIPLIED",
+    "GDK_MEMORY_R32G32B32_FLOAT",
+    "GDK_MEMORY_R8G8B8",
+    "GDK_MEMORY_R8G8B8A8",
+    "GDK_MEMORY_R8G8B8A8_PREMULTIPLIED",
+    "GDK_MEMORY_R8G8B8G8_422",
+    "GDK_MEMORY_R8G8B8X8",
+    "GDK_MEMORY_X4G12_X4B12_X4R12_420",
+    "GDK_MEMORY_X4G12_X4B12_X4R12_422",
+    "GDK_MEMORY_X4G12_X4B12_X4R12_444",
+    "GDK_MEMORY_X6G10_X6B10_X6R10_420",
+    "GDK_MEMORY_X6G10_X6B10_X6R10_422",
+    "GDK_MEMORY_X6G10_X6B10_X6R10_444",
+    "GDK_MEMORY_X8B8G8R8",
+    "GDK_MEMORY_X8R8G8B8",
+    "a16",
+    "a16-float",
+    "a32-float",
+    "a8",
+    "a8b8g8r8",
+    "a8b8g8r8-premultiplied",
+    "a8r8g8b8",
+    "a8r8g8b8-premultiplied",
+    "b8g8r8",
+    "b8g8r8a8",
+    "b8g8r8a8-premultiplied",
+    "b8g8r8g8-422",
+    "b8g8r8x8",
+    "g10x6-b10x6r10x6-420",
+    "g12x4-b12x4r12x4-420",
+    "g16",
+    "g16-b16-r16-420",
+    "g16-b16-r16-422",
+    "g16-b16-r16-444",
+    "g16-b16r16-420",
+    "g16a16",
+    "g16a16-premultiplied",
+    "g8",
+    "g8-b8-r8-410",
+    "g8-b8-r8-411",
+    "g8-b8-r8-420",
+    "g8-b8-r8-422",
+    "g8-b8-r8-444",
+    "g8-b8r8-420",
+    "g8-b8r8-422",
+    "g8-b8r8-444",
+    "g8-r8-b8-410",
+    "g8-r8-b8-411",
+    "g8-r8-b8-420",
+    "g8-r8-b8-422",
+    "g8-r8-b8-444",
+    "g8-r8b8-420",
+    "g8-r8b8-422",
+    "g8-r8b8-444",
+    "g8a8",
+    "g8a8-premultiplied",
+    "g8b8g8r8-422",
+    "g8r8g8b8-422",
+    "n-formats",
+    "r16g16b16",
+    "r16g16b16-float",
+    "r16g16b16a16",
+    "r16g16b16a16-float",
+    "r16g16b16a16-float-premultiplied",
+    "r16g16b16a16-premultiplied",
+    "r32g32b32-float",
+    "r32g32b32a32-float",
+    "r32g32b32a32-float-premultiplied",
+    "r8g8b8",
+    "r8g8b8a8",
+    "r8g8b8a8-premultiplied",
+    "r8g8b8g8-422",
+    "r8g8b8x8",
+    "x4g12-x4b12-x4r12-420",
+    "x4g12-x4b12-x4r12-422",
+    "x4g12-x4b12-x4r12-444",
+    "x6g10-x6b10-x6r10-420",
+    "x6g10-x6b10-x6r10-422",
+    "x6g10-x6b10-x6r10-444",
+    "x8b8g8r8",
+    "x8r8g8b8",
+]
+_MemoryFormatValueType: TypeAlias = MemoryFormat | _MemoryFormatLiteralType
+
 class NotifyType(GObject.GEnum):
     ANCESTOR = 0
     INFERIOR = 2
@@ -5163,6 +5829,22 @@ class NotifyType(GObject.GEnum):
     UNKNOWN = 5
     VIRTUAL = 1
 
+_NotifyTypeLiteralType: TypeAlias = Literal[
+    "GDK_NOTIFY_ANCESTOR",
+    "GDK_NOTIFY_INFERIOR",
+    "GDK_NOTIFY_NONLINEAR",
+    "GDK_NOTIFY_NONLINEAR_VIRTUAL",
+    "GDK_NOTIFY_UNKNOWN",
+    "GDK_NOTIFY_VIRTUAL",
+    "ancestor",
+    "inferior",
+    "nonlinear",
+    "nonlinear-virtual",
+    "unknown",
+    "virtual",
+]
+_NotifyTypeValueType: TypeAlias = NotifyType | _NotifyTypeLiteralType
+
 class ScrollDirection(GObject.GEnum):
     DOWN = 1
     LEFT = 2
@@ -5170,14 +5852,45 @@ class ScrollDirection(GObject.GEnum):
     SMOOTH = 4
     UP = 0
 
+_ScrollDirectionLiteralType: TypeAlias = Literal[
+    "GDK_SCROLL_DOWN",
+    "GDK_SCROLL_LEFT",
+    "GDK_SCROLL_RIGHT",
+    "GDK_SCROLL_SMOOTH",
+    "GDK_SCROLL_UP",
+    "down",
+    "left",
+    "right",
+    "smooth",
+    "up",
+]
+_ScrollDirectionValueType: TypeAlias = ScrollDirection | _ScrollDirectionLiteralType
+
 class ScrollRelativeDirection(GObject.GEnum):
     IDENTICAL = 0
     INVERTED = 1
     UNKNOWN = 2
 
+_ScrollRelativeDirectionLiteralType: TypeAlias = Literal[
+    "GDK_SCROLL_RELATIVE_DIRECTION_IDENTICAL",
+    "GDK_SCROLL_RELATIVE_DIRECTION_INVERTED",
+    "GDK_SCROLL_RELATIVE_DIRECTION_UNKNOWN",
+    "identical",
+    "inverted",
+    "unknown",
+]
+_ScrollRelativeDirectionValueType: TypeAlias = (
+    ScrollRelativeDirection | _ScrollRelativeDirectionLiteralType
+)
+
 class ScrollUnit(GObject.GEnum):
     SURFACE = 1
     WHEEL = 0
+
+_ScrollUnitLiteralType: TypeAlias = Literal[
+    "GDK_SCROLL_UNIT_SURFACE", "GDK_SCROLL_UNIT_WHEEL", "surface", "wheel"
+]
+_ScrollUnitValueType: TypeAlias = ScrollUnit | _ScrollUnitLiteralType
 
 class SubpixelLayout(GObject.GEnum):
     HORIZONTAL_BGR = 3
@@ -5186,6 +5899,22 @@ class SubpixelLayout(GObject.GEnum):
     UNKNOWN = 0
     VERTICAL_BGR = 5
     VERTICAL_RGB = 4
+
+_SubpixelLayoutLiteralType: TypeAlias = Literal[
+    "GDK_SUBPIXEL_LAYOUT_HORIZONTAL_BGR",
+    "GDK_SUBPIXEL_LAYOUT_HORIZONTAL_RGB",
+    "GDK_SUBPIXEL_LAYOUT_NONE",
+    "GDK_SUBPIXEL_LAYOUT_UNKNOWN",
+    "GDK_SUBPIXEL_LAYOUT_VERTICAL_BGR",
+    "GDK_SUBPIXEL_LAYOUT_VERTICAL_RGB",
+    "horizontal-bgr",
+    "horizontal-rgb",
+    "none",
+    "unknown",
+    "vertical-bgr",
+    "vertical-rgb",
+]
+_SubpixelLayoutValueType: TypeAlias = SubpixelLayout | _SubpixelLayoutLiteralType
 
 class SurfaceEdge(GObject.GEnum):
     EAST = 4
@@ -5197,6 +5926,26 @@ class SurfaceEdge(GObject.GEnum):
     SOUTH_WEST = 5
     WEST = 3
 
+_SurfaceEdgeLiteralType: TypeAlias = Literal[
+    "GDK_SURFACE_EDGE_EAST",
+    "GDK_SURFACE_EDGE_NORTH",
+    "GDK_SURFACE_EDGE_NORTH_EAST",
+    "GDK_SURFACE_EDGE_NORTH_WEST",
+    "GDK_SURFACE_EDGE_SOUTH",
+    "GDK_SURFACE_EDGE_SOUTH_EAST",
+    "GDK_SURFACE_EDGE_SOUTH_WEST",
+    "GDK_SURFACE_EDGE_WEST",
+    "east",
+    "north",
+    "north-east",
+    "north-west",
+    "south",
+    "south-east",
+    "south-west",
+    "west",
+]
+_SurfaceEdgeValueType: TypeAlias = SurfaceEdge | _SurfaceEdgeLiteralType
+
 class TextureError(GObject.GEnum):
     CORRUPT_IMAGE = 1
     TOO_LARGE = 0
@@ -5205,10 +5954,32 @@ class TextureError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_TextureErrorLiteralType: TypeAlias = Literal[
+    "GDK_TEXTURE_ERROR_CORRUPT_IMAGE",
+    "GDK_TEXTURE_ERROR_TOO_LARGE",
+    "GDK_TEXTURE_ERROR_UNSUPPORTED_CONTENT",
+    "GDK_TEXTURE_ERROR_UNSUPPORTED_FORMAT",
+    "corrupt-image",
+    "too-large",
+    "unsupported-content",
+    "unsupported-format",
+]
+_TextureErrorValueType: TypeAlias = TextureError | _TextureErrorLiteralType
+
 class TitlebarGesture(GObject.GEnum):
     DOUBLE_CLICK = 1
     MIDDLE_CLICK = 3
     RIGHT_CLICK = 2
+
+_TitlebarGestureLiteralType: TypeAlias = Literal[
+    "GDK_TITLEBAR_GESTURE_DOUBLE_CLICK",
+    "GDK_TITLEBAR_GESTURE_MIDDLE_CLICK",
+    "GDK_TITLEBAR_GESTURE_RIGHT_CLICK",
+    "double-click",
+    "middle-click",
+    "right-click",
+]
+_TitlebarGestureValueType: TypeAlias = TitlebarGesture | _TitlebarGestureLiteralType
 
 class TouchpadGesturePhase(GObject.GEnum):
     BEGIN = 0
@@ -5216,8 +5987,30 @@ class TouchpadGesturePhase(GObject.GEnum):
     END = 2
     UPDATE = 1
 
+_TouchpadGesturePhaseLiteralType: TypeAlias = Literal[
+    "GDK_TOUCHPAD_GESTURE_PHASE_BEGIN",
+    "GDK_TOUCHPAD_GESTURE_PHASE_CANCEL",
+    "GDK_TOUCHPAD_GESTURE_PHASE_END",
+    "GDK_TOUCHPAD_GESTURE_PHASE_UPDATE",
+    "begin",
+    "cancel",
+    "end",
+    "update",
+]
+_TouchpadGesturePhaseValueType: TypeAlias = (
+    TouchpadGesturePhase | _TouchpadGesturePhaseLiteralType
+)
+
 class VulkanError(GObject.GEnum):
     NOT_AVAILABLE = 1
     UNSUPPORTED = 0
     @staticmethod
     def quark() -> int: ...
+
+_VulkanErrorLiteralType: TypeAlias = Literal[
+    "GDK_VULKAN_ERROR_NOT_AVAILABLE",
+    "GDK_VULKAN_ERROR_UNSUPPORTED",
+    "not-available",
+    "unsupported",
+]
+_VulkanErrorValueType: TypeAlias = VulkanError | _VulkanErrorLiteralType

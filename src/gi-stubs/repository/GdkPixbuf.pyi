@@ -1,6 +1,8 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -82,7 +84,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         @property
         def n_channels(self) -> int: ...
         @property
-        def pixel_bytes(self) -> GLib.Bytes: ...
+        def pixel_bytes(self) -> GLib.Bytes | None: ...
         @property
         def pixels(self) -> int: ...
         @property
@@ -96,11 +98,11 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         self,
         *,
         bits_per_sample: int = ...,
-        colorspace: Colorspace = ...,
+        colorspace: _ColorspaceValueType = ...,
         has_alpha: bool = ...,
         height: int = ...,
         n_channels: int = ...,
-        pixel_bytes: GLib.Bytes = ...,
+        pixel_bytes: GLib.Bytes | None = ...,
         pixels: int | Any | None = ...,
         rowstride: int = ...,
         width: int = ...,
@@ -111,7 +113,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def apply_embedded_orientation(self) -> Pixbuf | None: ...
     @staticmethod
     def calculate_rowstride(
-        colorspace: Colorspace,
+        colorspace: _ColorspaceValueType,
         has_alpha: bool,
         bits_per_sample: int,
         width: int,
@@ -128,7 +130,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         offset_y: float,
         scale_x: float,
         scale_y: float,
-        interp_type: InterpType,
+        interp_type: _InterpTypeValueType,
         overall_alpha: int,
     ) -> None: ...
     def composite_color(
@@ -142,7 +144,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         offset_y: float,
         scale_x: float,
         scale_y: float,
-        interp_type: InterpType,
+        interp_type: _InterpTypeValueType,
         overall_alpha: int,
         check_x: int,
         check_y: int,
@@ -154,7 +156,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         self,
         dest_width: int,
         dest_height: int,
-        interp_type: InterpType,
+        interp_type: _InterpTypeValueType,
         overall_alpha: int,
         check_size: int,
         color1: int,
@@ -208,7 +210,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     @classmethod
     def new(
         cls,
-        colorspace: Colorspace,
+        colorspace: _ColorspaceValueType,
         has_alpha: bool,
         bits_per_sample: int,
         width: int,
@@ -218,7 +220,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def new_from_bytes(
         cls,
         data: GLib.Bytes,
-        colorspace: Colorspace,
+        colorspace: _ColorspaceValueType,
         has_alpha: bool,
         bits_per_sample: int,
         width: int,
@@ -303,7 +305,7 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def read_pixel_bytes(self) -> GLib.Bytes: ...
     def read_pixels(self) -> int: ...
     def remove_option(self, key: str) -> bool: ...
-    def rotate_simple(self, angle: PixbufRotation) -> Pixbuf | None: ...
+    def rotate_simple(self, angle: _PixbufRotationValueType) -> Pixbuf | None: ...
     def saturate_and_pixelate(
         self, dest: Pixbuf, saturation: float, pixelate: bool
     ) -> None: ...
@@ -362,10 +364,10 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
         offset_y: float,
         scale_x: float,
         scale_y: float,
-        interp_type: InterpType,
+        interp_type: _InterpTypeValueType,
     ) -> None: ...
     def scale_simple(
-        self, dest_width: int, dest_height: int, interp_type: InterpType
+        self, dest_width: int, dest_height: int, interp_type: _InterpTypeValueType
     ) -> Pixbuf | None: ...
     def set_option(self, key: str, value: str) -> bool: ...
 
@@ -690,15 +692,35 @@ class PixbufFormatFlags(IntFlag):
 class Colorspace(GObject.GEnum):
     RGB = 0
 
+_ColorspaceLiteralType: TypeAlias = Literal["GDK_COLORSPACE_RGB", "rgb"]
+_ColorspaceValueType: TypeAlias = Colorspace | _ColorspaceLiteralType
+
 class InterpType(GObject.GEnum):
     BILINEAR = 2
     HYPER = 3
     NEAREST = 0
     TILES = 1
 
+_InterpTypeLiteralType: TypeAlias = Literal[
+    "GDK_INTERP_BILINEAR",
+    "GDK_INTERP_HYPER",
+    "GDK_INTERP_NEAREST",
+    "GDK_INTERP_TILES",
+    "bilinear",
+    "hyper",
+    "nearest",
+    "tiles",
+]
+_InterpTypeValueType: TypeAlias = InterpType | _InterpTypeLiteralType
+
 class PixbufAlphaMode(GObject.GEnum):
     BILEVEL = 0
     FULL = 1
+
+_PixbufAlphaModeLiteralType: TypeAlias = Literal[
+    "GDK_PIXBUF_ALPHA_BILEVEL", "GDK_PIXBUF_ALPHA_FULL", "bilevel", "full"
+]
+_PixbufAlphaModeValueType: TypeAlias = PixbufAlphaMode | _PixbufAlphaModeLiteralType
 
 class PixbufError(GObject.GEnum):
     BAD_OPTION = 2
@@ -711,8 +733,38 @@ class PixbufError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_PixbufErrorLiteralType: TypeAlias = Literal[
+    "GDK_PIXBUF_ERROR_BAD_OPTION",
+    "GDK_PIXBUF_ERROR_CORRUPT_IMAGE",
+    "GDK_PIXBUF_ERROR_FAILED",
+    "GDK_PIXBUF_ERROR_INCOMPLETE_ANIMATION",
+    "GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY",
+    "GDK_PIXBUF_ERROR_UNKNOWN_TYPE",
+    "GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION",
+    "bad-option",
+    "corrupt-image",
+    "failed",
+    "incomplete-animation",
+    "insufficient-memory",
+    "unknown-type",
+    "unsupported-operation",
+]
+_PixbufErrorValueType: TypeAlias = PixbufError | _PixbufErrorLiteralType
+
 class PixbufRotation(GObject.GEnum):
     CLOCKWISE = 270
     COUNTERCLOCKWISE = 90
     NONE = 0
     UPSIDEDOWN = 180
+
+_PixbufRotationLiteralType: TypeAlias = Literal[
+    "GDK_PIXBUF_ROTATE_CLOCKWISE",
+    "GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE",
+    "GDK_PIXBUF_ROTATE_NONE",
+    "GDK_PIXBUF_ROTATE_UPSIDEDOWN",
+    "clockwise",
+    "counterclockwise",
+    "none",
+    "upsidedown",
+]
+_PixbufRotationValueType: TypeAlias = PixbufRotation | _PixbufRotationLiteralType

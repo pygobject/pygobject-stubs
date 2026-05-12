@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -31,25 +33,27 @@ def get_toolkit_name() -> str: ...
 def get_toolkit_version() -> str: ...
 def get_version() -> str: ...
 def relation_type_for_name(name: str) -> RelationType: ...
-def relation_type_get_name(type: RelationType) -> str: ...
+def relation_type_get_name(type: _RelationTypeValueType) -> str: ...
 def relation_type_register(name: str) -> RelationType: ...
 def remove_focus_tracker(tracker_id: int) -> None: ...
 def remove_global_event_listener(listener_id: int) -> None: ...
 def remove_key_event_listener(listener_id: int) -> None: ...
 def role_for_name(name: str) -> Role: ...
-def role_get_localized_name(role: Role) -> str: ...
-def role_get_name(role: Role) -> str: ...
+def role_get_localized_name(role: _RoleValueType) -> str: ...
+def role_get_name(role: _RoleValueType) -> str: ...
 def role_register(name: str) -> Role: ...
 def state_type_for_name(name: str) -> StateType: ...
-def state_type_get_name(type: StateType) -> str: ...
+def state_type_get_name(type: _StateTypeValueType) -> str: ...
 def state_type_register(name: str) -> StateType: ...
 def text_attribute_for_name(name: str) -> TextAttribute: ...
-def text_attribute_get_name(attr: TextAttribute) -> str: ...
-def text_attribute_get_value(attr: TextAttribute, index_: int) -> str | None: ...
+def text_attribute_get_name(attr: _TextAttributeValueType) -> str: ...
+def text_attribute_get_value(
+    attr: _TextAttributeValueType, index_: int
+) -> str | None: ...
 def text_attribute_register(name: str) -> TextAttribute: ...
 def text_free_ranges(ranges: Sequence[TextRange]) -> None: ...
-def value_type_get_localized_name(value_type: ValueType) -> str: ...
-def value_type_get_name(value_type: ValueType) -> str: ...
+def value_type_get_localized_name(value_type: _ValueTypeValueType) -> str: ...
+def value_type_get_name(value_type: _ValueTypeValueType) -> str: ...
 
 class Action(GObject.GInterface, Protocol):
     """
@@ -106,24 +110,26 @@ class Component(GObject.GInterface, Protocol):
     """
     Interface AtkComponent
     """
-    def contains(self, x: int, y: int, coord_type: CoordType) -> bool: ...
+    def contains(self, x: int, y: int, coord_type: _CoordTypeValueType) -> bool: ...
     def get_alpha(self) -> float: ...
-    def get_extents(self, coord_type: CoordType) -> tuple[int, int, int, int]: ...
+    def get_extents(
+        self, coord_type: _CoordTypeValueType
+    ) -> tuple[int, int, int, int]: ...
     def get_layer(self) -> Layer: ...
     def get_mdi_zorder(self) -> int: ...
-    def get_position(self, coord_type: CoordType) -> tuple[int, int]: ...
+    def get_position(self, coord_type: _CoordTypeValueType) -> tuple[int, int]: ...
     def get_size(self) -> tuple[int, int]: ...
     def grab_focus(self) -> bool: ...
     def ref_accessible_at_point(
-        self, x: int, y: int, coord_type: CoordType
+        self, x: int, y: int, coord_type: _CoordTypeValueType
     ) -> Object | None: ...
     def remove_focus_handler(self, handler_id: int) -> None: ...
-    def scroll_to(self, type: ScrollType) -> bool: ...
-    def scroll_to_point(self, coords: CoordType, x: int, y: int) -> bool: ...
+    def scroll_to(self, type: _ScrollTypeValueType) -> bool: ...
+    def scroll_to_point(self, coords: _CoordTypeValueType, x: int, y: int) -> bool: ...
     def set_extents(
-        self, x: int, y: int, width: int, height: int, coord_type: CoordType
+        self, x: int, y: int, width: int, height: int, coord_type: _CoordTypeValueType
     ) -> bool: ...
-    def set_position(self, x: int, y: int, coord_type: CoordType) -> bool: ...
+    def set_position(self, x: int, y: int, coord_type: _CoordTypeValueType) -> bool: ...
     def set_size(self, width: int, height: int) -> bool: ...
 
 class ComponentIface(_gi.Struct):
@@ -139,17 +145,21 @@ class ComponentIface(_gi.Struct):
     @property
     def add_focus_handler(self) -> int: ...
     @property
-    def contains(self) -> Callable[[Component, int, int, CoordType], bool]: ...
+    def contains(
+        self,
+    ) -> Callable[[Component, int, int, _CoordTypeValueType], bool]: ...
     @property
     def ref_accessible_at_point(
         self,
-    ) -> Callable[[Component, int, int, CoordType], Object | None]: ...
+    ) -> Callable[[Component, int, int, _CoordTypeValueType], Object | None]: ...
     @property
     def get_extents(
         self,
-    ) -> Callable[[Component, CoordType], tuple[int, int, int, int]]: ...
+    ) -> Callable[[Component, _CoordTypeValueType], tuple[int, int, int, int]]: ...
     @property
-    def get_position(self) -> Callable[[Component, CoordType], tuple[int, int]]: ...
+    def get_position(
+        self,
+    ) -> Callable[[Component, _CoordTypeValueType], tuple[int, int]]: ...
     @property
     def get_size(self) -> Callable[[Component], tuple[int, int]]: ...
     @property
@@ -159,9 +169,11 @@ class ComponentIface(_gi.Struct):
     @property
     def set_extents(
         self,
-    ) -> Callable[[Component, int, int, int, int, CoordType], bool]: ...
+    ) -> Callable[[Component, int, int, int, int, _CoordTypeValueType], bool]: ...
     @property
-    def set_position(self) -> Callable[[Component, int, int, CoordType], bool]: ...
+    def set_position(
+        self,
+    ) -> Callable[[Component, int, int, _CoordTypeValueType], bool]: ...
     @property
     def set_size(self) -> Callable[[Component, int, int], bool]: ...
     @property
@@ -173,9 +185,11 @@ class ComponentIface(_gi.Struct):
     @property
     def get_alpha(self) -> Callable[[Component], float]: ...
     @property
-    def scroll_to(self) -> Callable[[Component, ScrollType], bool]: ...
+    def scroll_to(self) -> Callable[[Component, _ScrollTypeValueType], bool]: ...
     @property
-    def scroll_to_point(self) -> Callable[[Component, CoordType, int, int], bool]: ...
+    def scroll_to_point(
+        self,
+    ) -> Callable[[Component, _CoordTypeValueType, int, int], bool]: ...
 
 class Document(GObject.GInterface, Protocol):
     """
@@ -333,19 +347,19 @@ class GObjectAccessible(Object):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Object = ...,
-        accessible_role: Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Object = ...,
-        accessible_table_summary: Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Object | None = ...,
+        accessible_role: _RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Object | None = ...,
+        accessible_table_summary: Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     @staticmethod
@@ -509,7 +523,9 @@ class Image(GObject.GInterface, Protocol):
     """
     def get_image_description(self) -> str: ...
     def get_image_locale(self) -> str | None: ...
-    def get_image_position(self, coord_type: CoordType) -> tuple[int, int]: ...
+    def get_image_position(
+        self, coord_type: _CoordTypeValueType
+    ) -> tuple[int, int]: ...
     def get_image_size(self) -> tuple[int, int]: ...
     def set_image_description(self, description: str) -> bool: ...
 
@@ -524,7 +540,9 @@ class ImageIface(_gi.Struct):
     @property
     def parent(self) -> GObject.TypeInterface: ...
     @property
-    def get_image_position(self) -> Callable[[Image, CoordType], tuple[int, int]]: ...
+    def get_image_position(
+        self,
+    ) -> Callable[[Image, _CoordTypeValueType], tuple[int, int]]: ...
     @property
     def get_image_description(self) -> Callable[[Image], str]: ...
     @property
@@ -725,19 +743,19 @@ class NoOpObject(
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Object = ...,
-        accessible_role: Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Object = ...,
-        accessible_table_summary: Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Object | None = ...,
+        accessible_role: _RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Object | None = ...,
+        accessible_table_summary: Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     @classmethod
@@ -850,21 +868,24 @@ class Object(GObject.Object):
         def accessible_component_layer(self) -> int: ...
         @property
         def accessible_component_mdi_zorder(self) -> int: ...
-        accessible_description: str
-        accessible_help_text: str
+        accessible_description: str | None
+        accessible_help_text: str | None
         @property
         def accessible_hypertext_nlinks(self) -> int: ...
         accessible_id: str
-        accessible_name: str
-        accessible_parent: Object
-        accessible_role: Role
-        accessible_table_caption: str
-        accessible_table_caption_object: Object
-        accessible_table_column_description: str
-        accessible_table_column_header: Object
-        accessible_table_row_description: str
-        accessible_table_row_header: Object
-        accessible_table_summary: Object
+        accessible_name: str | None
+        accessible_parent: Object | None
+        @property
+        def accessible_role(self) -> Role: ...
+        @accessible_role.setter
+        def accessible_role(self, value: _RoleValueType) -> None: ...
+        accessible_table_caption: str | None
+        accessible_table_caption_object: Object | None
+        accessible_table_column_description: str | None
+        accessible_table_column_header: Object | None
+        accessible_table_row_description: str | None
+        accessible_table_row_header: Object | None
+        accessible_table_summary: Object | None
         accessible_value: float
 
     @property
@@ -886,22 +907,24 @@ class Object(GObject.Object):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Object = ...,
-        accessible_role: Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Object = ...,
-        accessible_table_summary: Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Object | None = ...,
+        accessible_role: _RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Object | None = ...,
+        accessible_table_summary: Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
-    def add_relationship(self, relationship: RelationType, target: Object) -> bool: ...
+    def add_relationship(
+        self, relationship: _RelationTypeValueType, target: Object
+    ) -> bool: ...
     def do_active_descendant_changed(self, child: int | Any | None) -> None: ...
     def do_children_changed(
         self, change_index: int, changed_child: int | Any | None
@@ -925,7 +948,7 @@ class Object(GObject.Object):
     def do_set_description(self, description: str) -> None: ...
     def do_set_name(self, name: str) -> None: ...
     def do_set_parent(self, parent: Object) -> None: ...
-    def do_set_role(self, role: Role) -> None: ...
+    def do_set_role(self, role: _RoleValueType) -> None: ...
     def do_state_change(self, name: str, state_set: bool) -> None: ...
     def do_visible_data_changed(self) -> None: ...
     def get_accessible_id(self) -> str: ...
@@ -948,14 +971,14 @@ class Object(GObject.Object):
     def ref_state_set(self) -> StateSet: ...
     def remove_property_change_handler(self, handler_id: int) -> None: ...
     def remove_relationship(
-        self, relationship: RelationType, target: Object
+        self, relationship: _RelationTypeValueType, target: Object
     ) -> bool: ...
     def set_accessible_id(self, id: str) -> None: ...
     def set_description(self, description: str) -> None: ...
     def set_help_text(self, help_text: str) -> None: ...
     def set_name(self, name: str) -> None: ...
     def set_parent(self, parent: Object) -> None: ...
-    def set_role(self, role: Role) -> None: ...
+    def set_role(self, role: _RoleValueType) -> None: ...
 
 class ObjectClass(_gi.Struct):
     """
@@ -996,7 +1019,7 @@ class ObjectClass(_gi.Struct):
     @property
     def set_parent(self) -> Callable[[Object, Object], None]: ...
     @property
-    def set_role(self) -> Callable[[Object, Role], None]: ...
+    def set_role(self) -> Callable[[Object, _RoleValueType], None]: ...
     @property
     def connect_property_change_handler(self) -> int: ...
     @property
@@ -1132,19 +1155,19 @@ class Plug(Object, Component):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Object = ...,
-        accessible_role: Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Object = ...,
-        accessible_table_summary: Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Object | None = ...,
+        accessible_role: _RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Object | None = ...,
+        accessible_table_summary: Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def do_get_object_id(self) -> str: ...
@@ -1268,8 +1291,14 @@ class Relation(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        relation_type: RelationType
-        target: GObject.ValueArray
+        @property
+        def relation_type(self) -> RelationType: ...
+        @relation_type.setter
+        def relation_type(self, value: _RelationTypeValueType) -> None: ...
+        @property
+        def target(self) -> GObject.ValueArray: ...
+        @target.setter
+        def target(self, value: GObject.ValueArray | None) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -1280,13 +1309,18 @@ class Relation(GObject.Object):
     @property
     def relationship(self) -> RelationType: ...
     def __init__(
-        self, *, relation_type: RelationType = ..., target: GObject.ValueArray = ...
+        self,
+        *,
+        relation_type: _RelationTypeValueType = ...,
+        target: GObject.ValueArray | None = ...,
     ) -> None: ...
     def add_target(self, target: Object) -> None: ...
     def get_relation_type(self) -> RelationType: ...
     def get_target(self) -> list[Object]: ...
     @classmethod
-    def new(cls, targets: Sequence[Object], relationship: RelationType) -> Relation: ...
+    def new(
+        cls, targets: Sequence[Object], relationship: _RelationTypeValueType
+    ) -> Relation: ...
     def remove_target(self, target: Object) -> bool: ...
 
 class RelationClass(_gi.Struct):
@@ -1320,13 +1354,17 @@ class RelationSet(GObject.Object):
     def relations(self) -> list[int]: ...
     def add(self, relation: Relation) -> None: ...
     def add_relation_by_type(
-        self, relationship: RelationType, target: Object
+        self, relationship: _RelationTypeValueType, target: Object
     ) -> None: ...
-    def contains(self, relationship: RelationType) -> bool: ...
-    def contains_target(self, relationship: RelationType, target: Object) -> bool: ...
+    def contains(self, relationship: _RelationTypeValueType) -> bool: ...
+    def contains_target(
+        self, relationship: _RelationTypeValueType, target: Object
+    ) -> bool: ...
     def get_n_relations(self) -> int: ...
     def get_relation(self, i: int) -> Relation: ...
-    def get_relation_by_type(self, relationship: RelationType) -> Relation: ...
+    def get_relation_by_type(
+        self, relationship: _RelationTypeValueType
+    ) -> Relation: ...
     @classmethod
     def new(cls) -> RelationSet: ...
     def remove(self, relation: Relation) -> None: ...
@@ -1456,19 +1494,19 @@ class Socket(Object, Component):
     def __init__(
         self,
         *,
-        accessible_description: str = ...,
-        accessible_help_text: str = ...,
+        accessible_description: str | None = ...,
+        accessible_help_text: str | None = ...,
         accessible_id: str = ...,
-        accessible_name: str = ...,
-        accessible_parent: Object = ...,
-        accessible_role: Role = ...,
-        accessible_table_caption: str = ...,
-        accessible_table_caption_object: Object = ...,
-        accessible_table_column_description: str = ...,
-        accessible_table_column_header: Object = ...,
-        accessible_table_row_description: str = ...,
-        accessible_table_row_header: Object = ...,
-        accessible_table_summary: Object = ...,
+        accessible_name: str | None = ...,
+        accessible_parent: Object | None = ...,
+        accessible_role: _RoleValueType = ...,
+        accessible_table_caption: str | None = ...,
+        accessible_table_caption_object: Object | None = ...,
+        accessible_table_column_description: str | None = ...,
+        accessible_table_column_header: Object | None = ...,
+        accessible_table_row_description: str | None = ...,
+        accessible_table_row_header: Object | None = ...,
+        accessible_table_summary: Object | None = ...,
         accessible_value: float = ...,
     ) -> None: ...
     def do_embed(self, plug_id: str) -> None: ...
@@ -1506,17 +1544,17 @@ class StateSet(GObject.Object):
     """
     @property
     def parent(self) -> GObject.Object: ...
-    def add_state(self, type: StateType) -> bool: ...
-    def add_states(self, types: Sequence[StateType]) -> None: ...
+    def add_state(self, type: _StateTypeValueType) -> bool: ...
+    def add_states(self, types: Sequence[_StateTypeValueType]) -> None: ...
     def and_sets(self, compare_set: StateSet) -> StateSet: ...
     def clear_states(self) -> None: ...
-    def contains_state(self, type: StateType) -> bool: ...
-    def contains_states(self, types: Sequence[StateType]) -> bool: ...
+    def contains_state(self, type: _StateTypeValueType) -> bool: ...
+    def contains_states(self, types: Sequence[_StateTypeValueType]) -> bool: ...
     def is_empty(self) -> bool: ...
     @classmethod
     def new(cls) -> StateSet: ...
     def or_sets(self, compare_set: StateSet) -> StateSet | None: ...
-    def remove_state(self, type: StateType) -> bool: ...
+    def remove_state(self, type: _StateTypeValueType) -> bool: ...
     def xor_sets(self, compare_set: StateSet) -> StateSet: ...
 
 class StateSetClass(_gi.Struct):
@@ -1733,43 +1771,50 @@ class Text(GObject.GInterface, Protocol):
     def get_bounded_ranges(
         self,
         rect: TextRectangle,
-        coord_type: CoordType,
-        x_clip_type: TextClipType,
-        y_clip_type: TextClipType,
+        coord_type: _CoordTypeValueType,
+        x_clip_type: _TextClipTypeValueType,
+        y_clip_type: _TextClipTypeValueType,
     ) -> list[TextRange]: ...
     def get_caret_offset(self) -> int: ...
     def get_character_at_offset(self, offset: int) -> str: ...
     def get_character_count(self) -> int: ...
     def get_character_extents(
-        self, offset: int, coords: CoordType
+        self, offset: int, coords: _CoordTypeValueType
     ) -> tuple[int, int, int, int]: ...
     def get_default_attributes(self) -> list[int]: ...
     def get_n_selections(self) -> int: ...
-    def get_offset_at_point(self, x: int, y: int, coords: CoordType) -> int: ...
+    def get_offset_at_point(
+        self, x: int, y: int, coords: _CoordTypeValueType
+    ) -> int: ...
     def get_range_extents(
-        self, start_offset: int, end_offset: int, coord_type: CoordType
+        self, start_offset: int, end_offset: int, coord_type: _CoordTypeValueType
     ) -> TextRectangle: ...
     def get_run_attributes(self, offset: int) -> tuple[list[int], int, int]: ...
     def get_selection(self, selection_num: int) -> tuple[str, int, int]: ...
     def get_string_at_offset(
-        self, offset: int, granularity: TextGranularity
+        self, offset: int, granularity: _TextGranularityValueType
     ) -> tuple[str | None, int, int]: ...
     def get_text(self, start_offset: int, end_offset: int) -> str: ...
     def get_text_after_offset(
-        self, offset: int, boundary_type: TextBoundary
+        self, offset: int, boundary_type: _TextBoundaryValueType
     ) -> tuple[str, int, int]: ...
     def get_text_at_offset(
-        self, offset: int, boundary_type: TextBoundary
+        self, offset: int, boundary_type: _TextBoundaryValueType
     ) -> tuple[str, int, int]: ...
     def get_text_before_offset(
-        self, offset: int, boundary_type: TextBoundary
+        self, offset: int, boundary_type: _TextBoundaryValueType
     ) -> tuple[str, int, int]: ...
     def remove_selection(self, selection_num: int) -> bool: ...
     def scroll_substring_to(
-        self, start_offset: int, end_offset: int, type: ScrollType
+        self, start_offset: int, end_offset: int, type: _ScrollTypeValueType
     ) -> bool: ...
     def scroll_substring_to_point(
-        self, start_offset: int, end_offset: int, coords: CoordType, x: int, y: int
+        self,
+        start_offset: int,
+        end_offset: int,
+        coords: _CoordTypeValueType,
+        x: int,
+        y: int,
     ) -> bool: ...
     def set_caret_offset(self, offset: int) -> bool: ...
     def set_selection(
@@ -1791,17 +1836,17 @@ class TextIface(_gi.Struct):
     @property
     def get_text_after_offset(
         self,
-    ) -> Callable[[Text, int, TextBoundary], tuple[str, int, int]]: ...
+    ) -> Callable[[Text, int, _TextBoundaryValueType], tuple[str, int, int]]: ...
     @property
     def get_text_at_offset(
         self,
-    ) -> Callable[[Text, int, TextBoundary], tuple[str, int, int]]: ...
+    ) -> Callable[[Text, int, _TextBoundaryValueType], tuple[str, int, int]]: ...
     @property
     def get_character_at_offset(self) -> Callable[[Text, int], str]: ...
     @property
     def get_text_before_offset(
         self,
-    ) -> Callable[[Text, int, TextBoundary], tuple[str, int, int]]: ...
+    ) -> Callable[[Text, int, _TextBoundaryValueType], tuple[str, int, int]]: ...
     @property
     def get_caret_offset(self) -> Callable[[Text], int]: ...
     @property
@@ -1813,11 +1858,13 @@ class TextIface(_gi.Struct):
     @property
     def get_character_extents(
         self,
-    ) -> Callable[[Text, int, CoordType], tuple[int, int, int, int]]: ...
+    ) -> Callable[[Text, int, _CoordTypeValueType], tuple[int, int, int, int]]: ...
     @property
     def get_character_count(self) -> Callable[[Text], int]: ...
     @property
-    def get_offset_at_point(self) -> Callable[[Text, int, int, CoordType], int]: ...
+    def get_offset_at_point(
+        self,
+    ) -> Callable[[Text, int, int, _CoordTypeValueType], int]: ...
     @property
     def get_n_selections(self) -> Callable[[Text], int]: ...
     @property
@@ -1841,23 +1888,34 @@ class TextIface(_gi.Struct):
     @property
     def get_range_extents(
         self,
-    ) -> Callable[[Text, int, int, CoordType], TextRectangle]: ...
+    ) -> Callable[[Text, int, int, _CoordTypeValueType], TextRectangle]: ...
     @property
     def get_bounded_ranges(
         self,
     ) -> Callable[
-        [Text, TextRectangle, CoordType, TextClipType, TextClipType], list[TextRange]
+        [
+            Text,
+            TextRectangle,
+            _CoordTypeValueType,
+            _TextClipTypeValueType,
+            _TextClipTypeValueType,
+        ],
+        list[TextRange],
     ]: ...
     @property
     def get_string_at_offset(
         self,
-    ) -> Callable[[Text, int, TextGranularity], tuple[str | None, int, int]]: ...
+    ) -> Callable[
+        [Text, int, _TextGranularityValueType], tuple[str | None, int, int]
+    ]: ...
     @property
-    def scroll_substring_to(self) -> Callable[[Text, int, int, ScrollType], bool]: ...
+    def scroll_substring_to(
+        self,
+    ) -> Callable[[Text, int, int, _ScrollTypeValueType], bool]: ...
     @property
     def scroll_substring_to_point(
         self,
-    ) -> Callable[[Text, int, int, CoordType, int, int], bool]: ...
+    ) -> Callable[[Text, int, int, _CoordTypeValueType, int, int], bool]: ...
 
 class TextRange(GObject.GBoxed):
     """
@@ -2011,15 +2069,39 @@ class WindowIface(_gi.Struct):
 class HyperlinkStateFlags(GObject.GFlags):
     INLINE = 1
 
+_HyperlinkStateFlagsLiteralType: TypeAlias = Literal[
+    "ATK_HYPERLINK_IS_INLINE", "inline"
+]
+_HyperlinkStateFlagsValueType: TypeAlias = (
+    HyperlinkStateFlags
+    | _HyperlinkStateFlagsLiteralType
+    | tuple[_HyperlinkStateFlagsLiteralType, ...]
+)
+
 class CoordType(GObject.GEnum):
     PARENT = 2
     SCREEN = 0
     WINDOW = 1
 
+_CoordTypeLiteralType: TypeAlias = Literal[
+    "ATK_XY_PARENT", "ATK_XY_SCREEN", "ATK_XY_WINDOW", "parent", "screen", "window"
+]
+_CoordTypeValueType: TypeAlias = CoordType | _CoordTypeLiteralType
+
 class KeyEventType(GObject.GEnum):
     LAST_DEFINED = 2
     PRESS = 0
     RELEASE = 1
+
+_KeyEventTypeLiteralType: TypeAlias = Literal[
+    "ATK_KEY_EVENT_LAST_DEFINED",
+    "ATK_KEY_EVENT_PRESS",
+    "ATK_KEY_EVENT_RELEASE",
+    "last-defined",
+    "press",
+    "release",
+]
+_KeyEventTypeValueType: TypeAlias = KeyEventType | _KeyEventTypeLiteralType
 
 class Layer(GObject.GEnum):
     BACKGROUND = 1
@@ -2031,10 +2113,40 @@ class Layer(GObject.GEnum):
     WIDGET = 3
     WINDOW = 7
 
+_LayerLiteralType: TypeAlias = Literal[
+    "ATK_LAYER_BACKGROUND",
+    "ATK_LAYER_CANVAS",
+    "ATK_LAYER_INVALID",
+    "ATK_LAYER_MDI",
+    "ATK_LAYER_OVERLAY",
+    "ATK_LAYER_POPUP",
+    "ATK_LAYER_WIDGET",
+    "ATK_LAYER_WINDOW",
+    "background",
+    "canvas",
+    "invalid",
+    "mdi",
+    "overlay",
+    "popup",
+    "widget",
+    "window",
+]
+_LayerValueType: TypeAlias = Layer | _LayerLiteralType
+
 class Live(GObject.GEnum):
     ASSERTIVE = 2
     NONE = 0
     POLITE = 1
+
+_LiveLiteralType: TypeAlias = Literal[
+    "ATK_LIVE_ASSERTIVE",
+    "ATK_LIVE_NONE",
+    "ATK_LIVE_POLITE",
+    "assertive",
+    "none",
+    "polite",
+]
+_LiveValueType: TypeAlias = Live | _LiveLiteralType
 
 class RelationType(GObject.GEnum):
     CONTROLLED_BY = 1
@@ -2062,9 +2174,57 @@ class RelationType(GObject.GEnum):
     @staticmethod
     def for_name(name: str) -> RelationType: ...
     @staticmethod
-    def get_name(type: RelationType) -> str: ...
+    def get_name(type: _RelationTypeValueType) -> str: ...
     @staticmethod
     def register(name: str) -> RelationType: ...
+
+_RelationTypeLiteralType: TypeAlias = Literal[
+    "ATK_RELATION_CONTROLLED_BY",
+    "ATK_RELATION_CONTROLLER_FOR",
+    "ATK_RELATION_DESCRIBED_BY",
+    "ATK_RELATION_DESCRIPTION_FOR",
+    "ATK_RELATION_DETAILS",
+    "ATK_RELATION_DETAILS_FOR",
+    "ATK_RELATION_EMBEDDED_BY",
+    "ATK_RELATION_EMBEDS",
+    "ATK_RELATION_ERROR_FOR",
+    "ATK_RELATION_ERROR_MESSAGE",
+    "ATK_RELATION_FLOWS_FROM",
+    "ATK_RELATION_FLOWS_TO",
+    "ATK_RELATION_LABELLED_BY",
+    "ATK_RELATION_LABEL_FOR",
+    "ATK_RELATION_LAST_DEFINED",
+    "ATK_RELATION_MEMBER_OF",
+    "ATK_RELATION_NODE_CHILD_OF",
+    "ATK_RELATION_NODE_PARENT_OF",
+    "ATK_RELATION_NULL",
+    "ATK_RELATION_PARENT_WINDOW_OF",
+    "ATK_RELATION_POPUP_FOR",
+    "ATK_RELATION_SUBWINDOW_OF",
+    "controlled-by",
+    "controller-for",
+    "described-by",
+    "description-for",
+    "details",
+    "details-for",
+    "embedded-by",
+    "embeds",
+    "error-for",
+    "error-message",
+    "flows-from",
+    "flows-to",
+    "label-for",
+    "labelled-by",
+    "last-defined",
+    "member-of",
+    "node-child-of",
+    "node-parent-of",
+    "null",
+    "parent-window-of",
+    "popup-for",
+    "subwindow-of",
+]
+_RelationTypeValueType: TypeAlias = RelationType | _RelationTypeLiteralType
 
 class Role(GObject.GEnum):
     ACCELERATOR_LABEL = 1
@@ -2201,11 +2361,275 @@ class Role(GObject.GEnum):
     @staticmethod
     def for_name(name: str) -> Role: ...
     @staticmethod
-    def get_localized_name(role: Role) -> str: ...
+    def get_localized_name(role: _RoleValueType) -> str: ...
     @staticmethod
-    def get_name(role: Role) -> str: ...
+    def get_name(role: _RoleValueType) -> str: ...
     @staticmethod
     def register(name: str) -> Role: ...
+
+_RoleLiteralType: TypeAlias = Literal[
+    "ATK_ROLE_ACCEL_LABEL",
+    "ATK_ROLE_ALERT",
+    "ATK_ROLE_ANIMATION",
+    "ATK_ROLE_APPLICATION",
+    "ATK_ROLE_ARROW",
+    "ATK_ROLE_ARTICLE",
+    "ATK_ROLE_AUDIO",
+    "ATK_ROLE_AUTOCOMPLETE",
+    "ATK_ROLE_BLOCK_QUOTE",
+    "ATK_ROLE_BUTTON",
+    "ATK_ROLE_CALENDAR",
+    "ATK_ROLE_CANVAS",
+    "ATK_ROLE_CAPTION",
+    "ATK_ROLE_CHART",
+    "ATK_ROLE_CHECK_BOX",
+    "ATK_ROLE_CHECK_MENU_ITEM",
+    "ATK_ROLE_COLOR_CHOOSER",
+    "ATK_ROLE_COLUMN_HEADER",
+    "ATK_ROLE_COMBO_BOX",
+    "ATK_ROLE_COMMENT",
+    "ATK_ROLE_CONTENT_DELETION",
+    "ATK_ROLE_CONTENT_INSERTION",
+    "ATK_ROLE_DATE_EDITOR",
+    "ATK_ROLE_DEFINITION",
+    "ATK_ROLE_DESCRIPTION_LIST",
+    "ATK_ROLE_DESCRIPTION_TERM",
+    "ATK_ROLE_DESCRIPTION_VALUE",
+    "ATK_ROLE_DESKTOP_FRAME",
+    "ATK_ROLE_DESKTOP_ICON",
+    "ATK_ROLE_DIAL",
+    "ATK_ROLE_DIALOG",
+    "ATK_ROLE_DIRECTORY_PANE",
+    "ATK_ROLE_DOCUMENT_EMAIL",
+    "ATK_ROLE_DOCUMENT_FRAME",
+    "ATK_ROLE_DOCUMENT_PRESENTATION",
+    "ATK_ROLE_DOCUMENT_SPREADSHEET",
+    "ATK_ROLE_DOCUMENT_TEXT",
+    "ATK_ROLE_DOCUMENT_WEB",
+    "ATK_ROLE_DRAWING_AREA",
+    "ATK_ROLE_EDITBAR",
+    "ATK_ROLE_EMBEDDED",
+    "ATK_ROLE_ENTRY",
+    "ATK_ROLE_FILE_CHOOSER",
+    "ATK_ROLE_FILLER",
+    "ATK_ROLE_FONT_CHOOSER",
+    "ATK_ROLE_FOOTER",
+    "ATK_ROLE_FOOTNOTE",
+    "ATK_ROLE_FORM",
+    "ATK_ROLE_FRAME",
+    "ATK_ROLE_GLASS_PANE",
+    "ATK_ROLE_GROUPING",
+    "ATK_ROLE_HEADER",
+    "ATK_ROLE_HEADING",
+    "ATK_ROLE_HTML_CONTAINER",
+    "ATK_ROLE_ICON",
+    "ATK_ROLE_IMAGE",
+    "ATK_ROLE_IMAGE_MAP",
+    "ATK_ROLE_INFO_BAR",
+    "ATK_ROLE_INPUT_METHOD_WINDOW",
+    "ATK_ROLE_INTERNAL_FRAME",
+    "ATK_ROLE_INVALID",
+    "ATK_ROLE_LABEL",
+    "ATK_ROLE_LANDMARK",
+    "ATK_ROLE_LAST_DEFINED",
+    "ATK_ROLE_LAYERED_PANE",
+    "ATK_ROLE_LEVEL_BAR",
+    "ATK_ROLE_LINK",
+    "ATK_ROLE_LIST",
+    "ATK_ROLE_LIST_BOX",
+    "ATK_ROLE_LIST_ITEM",
+    "ATK_ROLE_LOG",
+    "ATK_ROLE_MARK",
+    "ATK_ROLE_MARQUEE",
+    "ATK_ROLE_MATH",
+    "ATK_ROLE_MATH_FRACTION",
+    "ATK_ROLE_MATH_ROOT",
+    "ATK_ROLE_MENU",
+    "ATK_ROLE_MENU_BAR",
+    "ATK_ROLE_MENU_ITEM",
+    "ATK_ROLE_NOTIFICATION",
+    "ATK_ROLE_OPTION_PANE",
+    "ATK_ROLE_PAGE",
+    "ATK_ROLE_PAGE_TAB",
+    "ATK_ROLE_PAGE_TAB_LIST",
+    "ATK_ROLE_PANEL",
+    "ATK_ROLE_PARAGRAPH",
+    "ATK_ROLE_PASSWORD_TEXT",
+    "ATK_ROLE_POPUP_MENU",
+    "ATK_ROLE_PROGRESS_BAR",
+    "ATK_ROLE_PUSH_BUTTON_MENU",
+    "ATK_ROLE_RADIO_BUTTON",
+    "ATK_ROLE_RADIO_MENU_ITEM",
+    "ATK_ROLE_RATING",
+    "ATK_ROLE_REDUNDANT_OBJECT",
+    "ATK_ROLE_ROOT_PANE",
+    "ATK_ROLE_ROW_HEADER",
+    "ATK_ROLE_RULER",
+    "ATK_ROLE_SCROLL_BAR",
+    "ATK_ROLE_SCROLL_PANE",
+    "ATK_ROLE_SECTION",
+    "ATK_ROLE_SEPARATOR",
+    "ATK_ROLE_SLIDER",
+    "ATK_ROLE_SPIN_BUTTON",
+    "ATK_ROLE_SPLIT_PANE",
+    "ATK_ROLE_STATIC",
+    "ATK_ROLE_STATUSBAR",
+    "ATK_ROLE_SUBSCRIPT",
+    "ATK_ROLE_SUGGESTION",
+    "ATK_ROLE_SUPERSCRIPT",
+    "ATK_ROLE_SWITCH",
+    "ATK_ROLE_TABLE",
+    "ATK_ROLE_TABLE_CELL",
+    "ATK_ROLE_TABLE_COLUMN_HEADER",
+    "ATK_ROLE_TABLE_ROW",
+    "ATK_ROLE_TABLE_ROW_HEADER",
+    "ATK_ROLE_TEAR_OFF_MENU_ITEM",
+    "ATK_ROLE_TERMINAL",
+    "ATK_ROLE_TEXT",
+    "ATK_ROLE_TIMER",
+    "ATK_ROLE_TITLE_BAR",
+    "ATK_ROLE_TOGGLE_BUTTON",
+    "ATK_ROLE_TOOL_BAR",
+    "ATK_ROLE_TOOL_TIP",
+    "ATK_ROLE_TREE",
+    "ATK_ROLE_TREE_ITEM",
+    "ATK_ROLE_TREE_TABLE",
+    "ATK_ROLE_UNKNOWN",
+    "ATK_ROLE_VIDEO",
+    "ATK_ROLE_VIEWPORT",
+    "ATK_ROLE_WINDOW",
+    "accelerator-label",
+    "alert",
+    "animation",
+    "application",
+    "arrow",
+    "article",
+    "audio",
+    "autocomplete",
+    "block-quote",
+    "button",
+    "calendar",
+    "canvas",
+    "caption",
+    "chart",
+    "check-box",
+    "check-menu-item",
+    "color-chooser",
+    "column-header",
+    "combo-box",
+    "comment",
+    "content-deletion",
+    "content-insertion",
+    "date-editor",
+    "definition",
+    "description-list",
+    "description-term",
+    "description-value",
+    "desktop-frame",
+    "desktop-icon",
+    "dial",
+    "dialog",
+    "directory-pane",
+    "document-email",
+    "document-frame",
+    "document-presentation",
+    "document-spreadsheet",
+    "document-text",
+    "document-web",
+    "drawing-area",
+    "edit-bar",
+    "embedded",
+    "entry",
+    "file-chooser",
+    "filler",
+    "font-chooser",
+    "footer",
+    "footnote",
+    "form",
+    "frame",
+    "glass-pane",
+    "grouping",
+    "header",
+    "heading",
+    "html-container",
+    "icon",
+    "image",
+    "image-map",
+    "info-bar",
+    "input-method-window",
+    "internal-frame",
+    "invalid",
+    "label",
+    "landmark",
+    "last-defined",
+    "layered-pane",
+    "level-bar",
+    "link",
+    "list",
+    "list-box",
+    "list-item",
+    "log",
+    "mark",
+    "marquee",
+    "math",
+    "math-fraction",
+    "math-root",
+    "menu",
+    "menu-bar",
+    "menu-item",
+    "notification",
+    "option-pane",
+    "page",
+    "page-tab",
+    "page-tab-list",
+    "panel",
+    "paragraph",
+    "password-text",
+    "popup-menu",
+    "progress-bar",
+    "push-button-menu",
+    "radio-button",
+    "radio-menu-item",
+    "rating",
+    "redundant-object",
+    "root-pane",
+    "row-header",
+    "ruler",
+    "scroll-bar",
+    "scroll-pane",
+    "section",
+    "separator",
+    "slider",
+    "spin-button",
+    "split-pane",
+    "static",
+    "statusbar",
+    "subscript",
+    "suggestion",
+    "superscript",
+    "switch",
+    "table",
+    "table-cell",
+    "table-column-header",
+    "table-row",
+    "table-row-header",
+    "tear-off-menu-item",
+    "terminal",
+    "text",
+    "timer",
+    "title-bar",
+    "toggle-button",
+    "tool-bar",
+    "tool-tip",
+    "tree",
+    "tree-item",
+    "tree-table",
+    "unknown",
+    "video",
+    "viewport",
+    "window",
+]
+_RoleValueType: TypeAlias = Role | _RoleLiteralType
 
 class ScrollType(GObject.GEnum):
     ANYWHERE = 6
@@ -2215,6 +2639,24 @@ class ScrollType(GObject.GEnum):
     RIGHT_EDGE = 5
     TOP_EDGE = 2
     TOP_LEFT = 0
+
+_ScrollTypeLiteralType: TypeAlias = Literal[
+    "ATK_SCROLL_ANYWHERE",
+    "ATK_SCROLL_BOTTOM_EDGE",
+    "ATK_SCROLL_BOTTOM_RIGHT",
+    "ATK_SCROLL_LEFT_EDGE",
+    "ATK_SCROLL_RIGHT_EDGE",
+    "ATK_SCROLL_TOP_EDGE",
+    "ATK_SCROLL_TOP_LEFT",
+    "anywhere",
+    "bottom-edge",
+    "bottom-right",
+    "left-edge",
+    "right-edge",
+    "top-edge",
+    "top-left",
+]
+_ScrollTypeValueType: TypeAlias = ScrollType | _ScrollTypeLiteralType
 
 class StateType(GObject.GEnum):
     ACTIVE = 1
@@ -2265,9 +2707,103 @@ class StateType(GObject.GEnum):
     @staticmethod
     def for_name(name: str) -> StateType: ...
     @staticmethod
-    def get_name(type: StateType) -> str: ...
+    def get_name(type: _StateTypeValueType) -> str: ...
     @staticmethod
     def register(name: str) -> StateType: ...
+
+_StateTypeLiteralType: TypeAlias = Literal[
+    "ATK_STATE_ACTIVE",
+    "ATK_STATE_ANIMATED",
+    "ATK_STATE_ARMED",
+    "ATK_STATE_BUSY",
+    "ATK_STATE_CHECKABLE",
+    "ATK_STATE_CHECKED",
+    "ATK_STATE_COLLAPSED",
+    "ATK_STATE_DEFAULT",
+    "ATK_STATE_DEFUNCT",
+    "ATK_STATE_EDITABLE",
+    "ATK_STATE_ENABLED",
+    "ATK_STATE_EXPANDABLE",
+    "ATK_STATE_EXPANDED",
+    "ATK_STATE_FOCUSABLE",
+    "ATK_STATE_FOCUSED",
+    "ATK_STATE_HAS_POPUP",
+    "ATK_STATE_HAS_TOOLTIP",
+    "ATK_STATE_HORIZONTAL",
+    "ATK_STATE_ICONIFIED",
+    "ATK_STATE_INDETERMINATE",
+    "ATK_STATE_INVALID",
+    "ATK_STATE_INVALID_ENTRY",
+    "ATK_STATE_LAST_DEFINED",
+    "ATK_STATE_MANAGES_DESCENDANTS",
+    "ATK_STATE_MODAL",
+    "ATK_STATE_MULTISELECTABLE",
+    "ATK_STATE_MULTI_LINE",
+    "ATK_STATE_OPAQUE",
+    "ATK_STATE_PRESSED",
+    "ATK_STATE_READ_ONLY",
+    "ATK_STATE_REQUIRED",
+    "ATK_STATE_RESIZABLE",
+    "ATK_STATE_SELECTABLE",
+    "ATK_STATE_SELECTABLE_TEXT",
+    "ATK_STATE_SELECTED",
+    "ATK_STATE_SENSITIVE",
+    "ATK_STATE_SHOWING",
+    "ATK_STATE_SINGLE_LINE",
+    "ATK_STATE_STALE",
+    "ATK_STATE_SUPPORTS_AUTOCOMPLETION",
+    "ATK_STATE_TRANSIENT",
+    "ATK_STATE_TRUNCATED",
+    "ATK_STATE_VERTICAL",
+    "ATK_STATE_VISIBLE",
+    "ATK_STATE_VISITED",
+    "active",
+    "animated",
+    "armed",
+    "busy",
+    "checkable",
+    "checked",
+    "collapsed",
+    "default",
+    "defunct",
+    "editable",
+    "enabled",
+    "expandable",
+    "expanded",
+    "focusable",
+    "focused",
+    "has-popup",
+    "has-tooltip",
+    "horizontal",
+    "iconified",
+    "indeterminate",
+    "invalid",
+    "invalid-entry",
+    "last-defined",
+    "manages-descendants",
+    "modal",
+    "multi-line",
+    "multiselectable",
+    "opaque",
+    "pressed",
+    "read-only",
+    "required",
+    "resizable",
+    "selectable",
+    "selectable-text",
+    "selected",
+    "sensitive",
+    "showing",
+    "single-line",
+    "stale",
+    "supports-autocompletion",
+    "transient",
+    "truncated",
+    "vertical",
+    "visible",
+    "visited",
+]
+_StateTypeValueType: TypeAlias = StateType | _StateTypeLiteralType
 
 class TextAttribute(GObject.GEnum):
     BG_COLOR = 18
@@ -2303,11 +2839,75 @@ class TextAttribute(GObject.GEnum):
     @staticmethod
     def for_name(name: str) -> TextAttribute: ...
     @staticmethod
-    def get_name(attr: TextAttribute) -> str: ...
+    def get_name(attr: _TextAttributeValueType) -> str: ...
     @staticmethod
-    def get_value(attr: TextAttribute, index_: int) -> str | None: ...
+    def get_value(attr: _TextAttributeValueType, index_: int) -> str | None: ...
     @staticmethod
     def register(name: str) -> TextAttribute: ...
+
+_TextAttributeLiteralType: TypeAlias = Literal[
+    "ATK_TEXT_ATTR_BG_COLOR",
+    "ATK_TEXT_ATTR_BG_FULL_HEIGHT",
+    "ATK_TEXT_ATTR_BG_STIPPLE",
+    "ATK_TEXT_ATTR_DIRECTION",
+    "ATK_TEXT_ATTR_EDITABLE",
+    "ATK_TEXT_ATTR_FAMILY_NAME",
+    "ATK_TEXT_ATTR_FG_COLOR",
+    "ATK_TEXT_ATTR_FG_STIPPLE",
+    "ATK_TEXT_ATTR_INDENT",
+    "ATK_TEXT_ATTR_INVALID",
+    "ATK_TEXT_ATTR_INVISIBLE",
+    "ATK_TEXT_ATTR_JUSTIFICATION",
+    "ATK_TEXT_ATTR_LANGUAGE",
+    "ATK_TEXT_ATTR_LAST_DEFINED",
+    "ATK_TEXT_ATTR_LEFT_MARGIN",
+    "ATK_TEXT_ATTR_PIXELS_ABOVE_LINES",
+    "ATK_TEXT_ATTR_PIXELS_BELOW_LINES",
+    "ATK_TEXT_ATTR_PIXELS_INSIDE_WRAP",
+    "ATK_TEXT_ATTR_RIGHT_MARGIN",
+    "ATK_TEXT_ATTR_RISE",
+    "ATK_TEXT_ATTR_SCALE",
+    "ATK_TEXT_ATTR_SIZE",
+    "ATK_TEXT_ATTR_STRETCH",
+    "ATK_TEXT_ATTR_STRIKETHROUGH",
+    "ATK_TEXT_ATTR_STYLE",
+    "ATK_TEXT_ATTR_TEXT_POSITION",
+    "ATK_TEXT_ATTR_UNDERLINE",
+    "ATK_TEXT_ATTR_VARIANT",
+    "ATK_TEXT_ATTR_WEIGHT",
+    "ATK_TEXT_ATTR_WRAP_MODE",
+    "bg-color",
+    "bg-full-height",
+    "bg-stipple",
+    "direction",
+    "editable",
+    "family-name",
+    "fg-color",
+    "fg-stipple",
+    "indent",
+    "invalid",
+    "invisible",
+    "justification",
+    "language",
+    "last-defined",
+    "left-margin",
+    "pixels-above-lines",
+    "pixels-below-lines",
+    "pixels-inside-wrap",
+    "right-margin",
+    "rise",
+    "scale",
+    "size",
+    "stretch",
+    "strikethrough",
+    "style",
+    "text-position",
+    "underline",
+    "variant",
+    "weight",
+    "wrap-mode",
+]
+_TextAttributeValueType: TypeAlias = TextAttribute | _TextAttributeLiteralType
 
 class TextBoundary(GObject.GEnum):
     CHAR = 0
@@ -2318,11 +2918,41 @@ class TextBoundary(GObject.GEnum):
     WORD_END = 2
     WORD_START = 1
 
+_TextBoundaryLiteralType: TypeAlias = Literal[
+    "ATK_TEXT_BOUNDARY_CHAR",
+    "ATK_TEXT_BOUNDARY_LINE_END",
+    "ATK_TEXT_BOUNDARY_LINE_START",
+    "ATK_TEXT_BOUNDARY_SENTENCE_END",
+    "ATK_TEXT_BOUNDARY_SENTENCE_START",
+    "ATK_TEXT_BOUNDARY_WORD_END",
+    "ATK_TEXT_BOUNDARY_WORD_START",
+    "char",
+    "line-end",
+    "line-start",
+    "sentence-end",
+    "sentence-start",
+    "word-end",
+    "word-start",
+]
+_TextBoundaryValueType: TypeAlias = TextBoundary | _TextBoundaryLiteralType
+
 class TextClipType(GObject.GEnum):
     BOTH = 3
     MAX = 2
     MIN = 1
     NONE = 0
+
+_TextClipTypeLiteralType: TypeAlias = Literal[
+    "ATK_TEXT_CLIP_BOTH",
+    "ATK_TEXT_CLIP_MAX",
+    "ATK_TEXT_CLIP_MIN",
+    "ATK_TEXT_CLIP_NONE",
+    "both",
+    "max",
+    "min",
+    "none",
+]
+_TextClipTypeValueType: TypeAlias = TextClipType | _TextClipTypeLiteralType
 
 class TextGranularity(GObject.GEnum):
     CHAR = 0
@@ -2330,6 +2960,20 @@ class TextGranularity(GObject.GEnum):
     PARAGRAPH = 4
     SENTENCE = 2
     WORD = 1
+
+_TextGranularityLiteralType: TypeAlias = Literal[
+    "ATK_TEXT_GRANULARITY_CHAR",
+    "ATK_TEXT_GRANULARITY_LINE",
+    "ATK_TEXT_GRANULARITY_PARAGRAPH",
+    "ATK_TEXT_GRANULARITY_SENTENCE",
+    "ATK_TEXT_GRANULARITY_WORD",
+    "char",
+    "line",
+    "paragraph",
+    "sentence",
+    "word",
+]
+_TextGranularityValueType: TypeAlias = TextGranularity | _TextGranularityLiteralType
 
 class ValueType(GObject.GEnum):
     ACCEPTABLE = 2
@@ -2349,6 +2993,42 @@ class ValueType(GObject.GEnum):
     VERY_WEAK = 0
     WEAK = 1
     @staticmethod
-    def get_localized_name(value_type: ValueType) -> str: ...
+    def get_localized_name(value_type: _ValueTypeValueType) -> str: ...
     @staticmethod
-    def get_name(value_type: ValueType) -> str: ...
+    def get_name(value_type: _ValueTypeValueType) -> str: ...
+
+_ValueTypeLiteralType: TypeAlias = Literal[
+    "ATK_VALUE_ACCEPTABLE",
+    "ATK_VALUE_BAD",
+    "ATK_VALUE_BEST",
+    "ATK_VALUE_GOOD",
+    "ATK_VALUE_HIGH",
+    "ATK_VALUE_LAST_DEFINED",
+    "ATK_VALUE_LOW",
+    "ATK_VALUE_MEDIUM",
+    "ATK_VALUE_STRONG",
+    "ATK_VALUE_VERY_BAD",
+    "ATK_VALUE_VERY_GOOD",
+    "ATK_VALUE_VERY_HIGH",
+    "ATK_VALUE_VERY_LOW",
+    "ATK_VALUE_VERY_STRONG",
+    "ATK_VALUE_VERY_WEAK",
+    "ATK_VALUE_WEAK",
+    "acceptable",
+    "bad",
+    "best",
+    "good",
+    "high",
+    "last-defined",
+    "low",
+    "medium",
+    "strong",
+    "very-bad",
+    "very-good",
+    "very-high",
+    "very-low",
+    "very-strong",
+    "very-weak",
+    "weak",
+]
+_ValueTypeValueType: TypeAlias = ValueType | _ValueTypeLiteralType

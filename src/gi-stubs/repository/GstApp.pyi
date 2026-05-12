@@ -1,4 +1,6 @@
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -130,7 +132,10 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         emit_signals: bool
         @property
         def eos(self) -> bool: ...
-        leaky_type: AppLeakyType
+        @property
+        def leaky_type(self) -> AppLeakyType: ...
+        @leaky_type.setter
+        def leaky_type(self, value: _AppLeakyTypeValueType) -> None: ...
         max_buffers: int
         max_bytes: int
         max_time: int
@@ -152,7 +157,7 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
         caps: Gst.Caps | None = ...,
         drop: bool = ...,
         emit_signals: bool = ...,
-        leaky_type: AppLeakyType = ...,
+        leaky_type: _AppLeakyTypeValueType = ...,
         max_buffers: int = ...,
         max_bytes: int = ...,
         max_time: int = ...,
@@ -199,7 +204,7 @@ class AppSink(GstBase.BaseSink, Gst.URIHandler):
     def set_caps(self, caps: Gst.Caps | None = None) -> None: ...
     def set_drop(self, drop: bool) -> None: ...
     def set_emit_signals(self, emit: bool) -> None: ...
-    def set_leaky_type(self, leaky: AppLeakyType) -> None: ...
+    def set_leaky_type(self, leaky: _AppLeakyTypeValueType) -> None: ...
     def set_max_buffers(self, max: int) -> None: ...
     def set_max_bytes(self, max: int) -> None: ...
     def set_max_time(self, max: int) -> None: ...
@@ -389,10 +394,16 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         def dropped(self) -> int: ...
         duration: int
         emit_signals: bool
-        format: Gst.Format
+        @property
+        def format(self) -> Gst.Format: ...
+        @format.setter
+        def format(self, value: Gst._FormatValueType) -> None: ...
         handle_segment_change: bool
         is_live: bool
-        leaky_type: AppLeakyType
+        @property
+        def leaky_type(self) -> AppLeakyType: ...
+        @leaky_type.setter
+        def leaky_type(self, value: _AppLeakyTypeValueType) -> None: ...
         max_buffers: int
         max_bytes: int
         max_latency: int
@@ -403,7 +414,10 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         def out(self) -> int: ...
         silent: bool
         size: int
-        stream_type: AppStreamType
+        @property
+        def stream_type(self) -> AppStreamType: ...
+        @stream_type.setter
+        def stream_type(self, value: _AppStreamTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -418,10 +432,10 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         caps: Gst.Caps | None = ...,
         duration: int = ...,
         emit_signals: bool = ...,
-        format: Gst.Format = ...,
+        format: Gst._FormatValueType = ...,
         handle_segment_change: bool = ...,
         is_live: bool = ...,
-        leaky_type: AppLeakyType = ...,
+        leaky_type: _AppLeakyTypeValueType = ...,
         max_buffers: int = ...,
         max_bytes: int = ...,
         max_latency: int = ...,
@@ -430,7 +444,7 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
         min_percent: int = ...,
         silent: bool = ...,
         size: int = ...,
-        stream_type: AppStreamType = ...,
+        stream_type: _AppStreamTypeValueType = ...,
         automatic_eos: bool = ...,
         blocksize: int = ...,
         do_timestamp: bool = ...,
@@ -467,13 +481,13 @@ class AppSrc(GstBase.BaseSrc, Gst.URIHandler):
     def set_duration(self, duration: int) -> None: ...
     def set_emit_signals(self, emit: bool) -> None: ...
     def set_latency(self, min: int, max: int) -> None: ...
-    def set_leaky_type(self, leaky: AppLeakyType) -> None: ...
+    def set_leaky_type(self, leaky: _AppLeakyTypeValueType) -> None: ...
     def set_max_buffers(self, max: int) -> None: ...
     def set_max_bytes(self, max: int) -> None: ...
     def set_max_time(self, max: int) -> None: ...
     def set_simple_callbacks(self, cb: AppSrcSimpleCallbacks | None = None) -> None: ...
     def set_size(self, size: int) -> None: ...
-    def set_stream_type(self, type: AppStreamType) -> None: ...
+    def set_stream_type(self, type: _AppStreamTypeValueType) -> None: ...
 
 class AppSrcClass(_gi.Struct):
     """
@@ -538,7 +552,27 @@ class AppLeakyType(GObject.GEnum):
     NONE = 0
     UPSTREAM = 1
 
+_AppLeakyTypeLiteralType: TypeAlias = Literal[
+    "GST_APP_LEAKY_TYPE_DOWNSTREAM",
+    "GST_APP_LEAKY_TYPE_NONE",
+    "GST_APP_LEAKY_TYPE_UPSTREAM",
+    "downstream",
+    "none",
+    "upstream",
+]
+_AppLeakyTypeValueType: TypeAlias = AppLeakyType | _AppLeakyTypeLiteralType
+
 class AppStreamType(GObject.GEnum):
     RANDOM_ACCESS = 2
     SEEKABLE = 1
     STREAM = 0
+
+_AppStreamTypeLiteralType: TypeAlias = Literal[
+    "GST_APP_STREAM_TYPE_RANDOM_ACCESS",
+    "GST_APP_STREAM_TYPE_SEEKABLE",
+    "GST_APP_STREAM_TYPE_STREAM",
+    "random-access",
+    "seekable",
+    "stream",
+]
+_AppStreamTypeValueType: TypeAlias = AppStreamType | _AppStreamTypeLiteralType
