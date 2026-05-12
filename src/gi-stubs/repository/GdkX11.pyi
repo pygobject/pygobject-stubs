@@ -40,7 +40,7 @@ class X11AppLaunchContext(_Gdk4.AppLaunchContext):
     Signals from GObject:
       notify (GParam)
     """
-    def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
+    def __init__(self, *, display: _Gdk4.Display | None = ...) -> None: ...
 
 class X11AppLaunchContextClass(_gi.Struct): ...
 
@@ -66,7 +66,7 @@ class X11DeviceManagerXI2(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def display(self) -> _Gdk4.Display: ...
+        def display(self) -> _Gdk4.Display | None: ...
         @property
         def major(self) -> int: ...
         @property
@@ -79,7 +79,7 @@ class X11DeviceManagerXI2(GObject.Object):
     def __init__(
         self,
         *,
-        display: _Gdk4.Display = ...,
+        display: _Gdk4.Display | None = ...,
         major: int = ...,
         minor: int = ...,
         opcode: int = ...,
@@ -138,14 +138,14 @@ class X11DeviceXI2(_Gdk4.Device):
         self,
         *,
         device_id: int = ...,
-        display: _Gdk4.Display = ...,
+        display: _Gdk4.Display | None = ...,
         has_cursor: bool = ...,
-        name: str = ...,
+        name: str | None = ...,
         num_touches: int = ...,
-        product_id: str = ...,
-        seat: _Gdk4.Seat = ...,
-        source: _Gdk4.InputSource = ...,
-        vendor_id: str = ...,
+        product_id: str | None = ...,
+        seat: _Gdk4.Seat | None = ...,
+        source: _Gdk4._InputSourceValueType = ...,
+        vendor_id: str | None = ...,
     ) -> None: ...
 
 class X11DeviceXI2Class(_gi.Struct): ...
@@ -242,12 +242,12 @@ class X11Drag(_Gdk4.Drag):
     def __init__(
         self,
         *,
-        actions: _Gdk4.DragAction = ...,
-        content: _Gdk4.ContentProvider = ...,
-        device: _Gdk4.Device = ...,
-        formats: _Gdk4.ContentFormats = ...,
-        selected_action: _Gdk4.DragAction = ...,
-        surface: _Gdk4.Surface = ...,
+        actions: _Gdk4._DragActionValueType = ...,
+        content: _Gdk4.ContentProvider | None = ...,
+        device: _Gdk4.Device | None = ...,
+        formats: _Gdk4.ContentFormats | None = ...,
+        selected_action: _Gdk4._DragActionValueType = ...,
+        surface: _Gdk4.Surface | None = ...,
     ) -> None: ...
 
 class X11DragClass(_gi.Struct): ...
@@ -277,10 +277,10 @@ class X11GLContext(_Gdk4.GLContext):
     def __init__(
         self,
         *,
-        allowed_apis: _Gdk4.GLAPI = ...,
-        shared_context: _Gdk4.GLContext = ...,
-        display: _Gdk4.Display = ...,
-        surface: _Gdk4.Surface = ...,
+        allowed_apis: _Gdk4._GLAPIValueType = ...,
+        shared_context: _Gdk4.GLContext | None = ...,
+        display: _Gdk4.Display | None = ...,
+        surface: _Gdk4.Surface | None = ...,
     ) -> None: ...
 
 class X11GLContextClass(_gi.Struct): ...
@@ -316,7 +316,7 @@ class X11Monitor(_Gdk4.Monitor):
     Signals from GObject:
       notify (GParam)
     """
-    def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
+    def __init__(self, *, display: _Gdk4.Display | None = ...) -> None: ...
     def get_output(self) -> int: ...
     def get_workarea(self) -> _Gdk4.Rectangle: ...
 
@@ -382,8 +382,8 @@ class X11Surface(_Gdk4.Surface):
         self,
         *,
         cursor: _Gdk4.Cursor | None = ...,
-        display: _Gdk4.Display = ...,
-        frame_clock: _Gdk4.FrameClock = ...,
+        display: _Gdk4.Display | None = ...,
+        frame_clock: _Gdk4.FrameClock | None = ...,
     ) -> None: ...
     def get_desktop(self) -> int: ...
     def get_group(self) -> _Gdk4.Surface | None: ...

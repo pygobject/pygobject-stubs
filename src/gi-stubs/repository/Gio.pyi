@@ -1,9 +1,12 @@
 from typing import Any
 from typing import Final
 from typing import Generic
+from typing import Literal
 from typing import overload
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
+from typing_extensions import Never
 from typing_extensions import Self
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
@@ -163,7 +166,7 @@ def action_print_detailed_name(
     action_name: str, target_value: GLib.Variant | None = None
 ) -> str: ...
 def app_info_create_from_commandline(
-    commandline: str, application_name: str | None, flags: AppInfoCreateFlags
+    commandline: str, application_name: str | None, flags: _AppInfoCreateFlagsValueType
 ) -> AppInfo: ...
 def app_info_get_all() -> list[AppInfo]: ...
 def app_info_get_all_for_type(content_type: str) -> list[AppInfo]: ...
@@ -214,7 +217,7 @@ def async_initable_newv_async(
     *user_data: Unpack[_DataTs],
 ) -> None: ...
 def bus_get(
-    bus_type: BusType,
+    bus_type: _BusTypeValueType,
     cancellable: Cancellable | None = None,
     callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
     | None = None,
@@ -222,12 +225,12 @@ def bus_get(
 ) -> None: ...
 def bus_get_finish(res: AsyncResult) -> DBusConnection: ...
 def bus_get_sync(
-    bus_type: BusType, cancellable: Cancellable | None = None
+    bus_type: _BusTypeValueType, cancellable: Cancellable | None = None
 ) -> DBusConnection: ...
 def bus_own_name(
-    bus_type: BusType,
+    bus_type: _BusTypeValueType,
     name: str,
-    flags: BusNameOwnerFlags,
+    flags: _BusNameOwnerFlagsValueType,
     bus_acquired_closure: Callable[..., Any] | None = None,
     name_acquired_closure: Callable[..., Any] | None = None,
     name_lost_closure: Callable[..., Any] | None = None,
@@ -235,23 +238,23 @@ def bus_own_name(
 def bus_own_name_on_connection(
     connection: DBusConnection,
     name: str,
-    flags: BusNameOwnerFlags,
+    flags: _BusNameOwnerFlagsValueType,
     name_acquired_closure: Callable[..., Any] | None = None,
     name_lost_closure: Callable[..., Any] | None = None,
 ) -> int: ...
 def bus_unown_name(owner_id: int) -> None: ...
 def bus_unwatch_name(watcher_id: int) -> None: ...
 def bus_watch_name(
-    bus_type: BusType,
+    bus_type: _BusTypeValueType,
     name: str,
-    flags: BusNameWatcherFlags,
+    flags: _BusNameWatcherFlagsValueType,
     name_appeared_closure: Callable[..., Any] | None = None,
     name_vanished_closure: Callable[..., Any] | None = None,
 ) -> int: ...
 def bus_watch_name_on_connection(
     connection: DBusConnection,
     name: str,
-    flags: BusNameWatcherFlags,
+    flags: _BusNameWatcherFlagsValueType,
     name_appeared_closure: Callable[..., Any] | None = None,
     name_vanished_closure: Callable[..., Any] | None = None,
 ) -> int: ...
@@ -275,7 +278,7 @@ def content_type_set_mime_dirs(dirs: Sequence[str] | None = None) -> None: ...
 def content_types_get_registered() -> list[str]: ...
 def dbus_address_escape_value(string: str) -> str: ...
 def dbus_address_get_for_bus_sync(
-    bus_type: BusType, cancellable: Cancellable | None = None
+    bus_type: _BusTypeValueType, cancellable: Cancellable | None = None
 ) -> str: ...
 def dbus_address_get_stream(
     address: str,
@@ -422,17 +425,17 @@ def resolver_error_quark() -> int: ...
 def resource_error_quark() -> int: ...
 def resource_load(filename: str) -> Resource: ...
 def resources_enumerate_children(
-    path: str, lookup_flags: ResourceLookupFlags
+    path: str, lookup_flags: _ResourceLookupFlagsValueType
 ) -> list[str]: ...
 def resources_get_info(
-    path: str, lookup_flags: ResourceLookupFlags
+    path: str, lookup_flags: _ResourceLookupFlagsValueType
 ) -> tuple[bool, int, int]: ...
 def resources_has_children(path: str) -> bool: ...
 def resources_lookup_data(
-    path: str, lookup_flags: ResourceLookupFlags
+    path: str, lookup_flags: _ResourceLookupFlagsValueType
 ) -> GLib.Bytes: ...
 def resources_open_stream(
-    path: str, lookup_flags: ResourceLookupFlags
+    path: str, lookup_flags: _ResourceLookupFlagsValueType
 ) -> InputStream: ...
 def resources_register(resource: Resource) -> None: ...
 def resources_unregister(resource: Resource) -> None: ...
@@ -723,7 +726,9 @@ class AppInfo(GObject.GInterface, Protocol):
     def can_remove_supports_type(self) -> bool: ...
     @staticmethod
     def create_from_commandline(
-        commandline: str, application_name: str | None, flags: AppInfoCreateFlags
+        commandline: str,
+        application_name: str | None,
+        flags: _AppInfoCreateFlagsValueType,
     ) -> AppInfo: ...
     def delete(self) -> bool: ...
     def dup(self) -> AppInfo: ...
@@ -1022,9 +1027,15 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        action_group: ActionGroup | None
+        @property
+        def action_group(self) -> Never: ...
+        @action_group.setter
+        def action_group(self, value: ActionGroup | None) -> None: ...
         application_id: str | None
-        flags: ApplicationFlags
+        @property
+        def flags(self) -> ApplicationFlags: ...
+        @flags.setter
+        def flags(self, value: _ApplicationFlagsValueType) -> None: ...
         inactivity_timeout: int
         @property
         def is_busy(self) -> bool: ...
@@ -1033,7 +1044,10 @@ class Application(GObject.Object, ActionGroup, ActionMap):
         @property
         def is_remote(self) -> bool: ...
         resource_base_path: str | None
-        version: str | None
+        @property
+        def version(self) -> str | None: ...
+        @version.setter
+        def version(self, value: str) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -1046,7 +1060,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
         *,
         action_group: ActionGroup | None = ...,
         application_id: str | None = ...,
-        flags: ApplicationFlags = ...,
+        flags: _ApplicationFlagsValueType = ...,
         inactivity_timeout: int = ...,
         resource_base_path: str | None = ...,
         version: str = ...,
@@ -1120,7 +1134,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     def mark_busy(self) -> None: ...
     @classmethod
     def new(
-        cls, application_id: str | None, flags: ApplicationFlags
+        cls, application_id: str | None, flags: _ApplicationFlagsValueType
     ) -> Application: ...
     def open(self, files: Sequence[File], hint: str) -> None: ...
     def quit(self) -> None: ...
@@ -1132,7 +1146,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     def set_action_group(self, action_group: ActionGroup | None = None) -> None: ...
     def set_application_id(self, application_id: str | None = None) -> None: ...
     def set_default(self) -> None: ...
-    def set_flags(self, flags: ApplicationFlags) -> None: ...
+    def set_flags(self, flags: _ApplicationFlagsValueType) -> None: ...
     def set_inactivity_timeout(self, inactivity_timeout: int) -> None: ...
     def set_option_context_description(
         self, description: str | None = None
@@ -1229,9 +1243,9 @@ class ApplicationCommandLine(GObject.Object):
     def __init__(
         self,
         *,
-        arguments: GLib.Variant = ...,
-        options: GLib.Variant = ...,
-        platform_data: GLib.Variant = ...,
+        arguments: GLib.Variant | None = ...,
+        options: GLib.Variant | None = ...,
+        platform_data: GLib.Variant | None = ...,
     ) -> None: ...
     def create_file_for_arg(self, arg: str) -> File: ...
     def do_done(self) -> None: ...
@@ -1396,7 +1410,7 @@ class BufferedInputStream(FilterInputStream, Seekable):
         self,
         *,
         buffer_size: int = ...,
-        base_stream: InputStream = ...,
+        base_stream: InputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     def do_fill(self, count: int, cancellable: Cancellable | None) -> int: ...
@@ -1502,7 +1516,7 @@ class BufferedOutputStream(FilterOutputStream, Seekable):
         *,
         auto_grow: bool = ...,
         buffer_size: int = ...,
-        base_stream: OutputStream = ...,
+        base_stream: OutputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     def get_auto_grow(self) -> bool: ...
@@ -1553,7 +1567,7 @@ class BytesIcon(GObject.Object, Icon, LoadableIcon):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, bytes: GLib.Bytes = ...) -> None: ...
+    def __init__(self, *, bytes: GLib.Bytes | None = ...) -> None: ...
     def get_bytes(self) -> GLib.Bytes: ...
     @classmethod
     def new(cls, bytes: GLib.Bytes) -> BytesIcon: ...
@@ -1634,9 +1648,9 @@ class CharsetConverter(GObject.Object, Converter, Initable):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def from_charset(self) -> str: ...
+        def from_charset(self) -> str | None: ...
         @property
-        def to_charset(self) -> str: ...
+        def to_charset(self) -> str | None: ...
         use_fallback: bool
 
     @property
@@ -1644,8 +1658,8 @@ class CharsetConverter(GObject.Object, Converter, Initable):
     def __init__(
         self,
         *,
-        from_charset: str = ...,
-        to_charset: str = ...,
+        from_charset: str | None = ...,
+        to_charset: str | None = ...,
         use_fallback: bool = ...,
     ) -> None: ...
     def get_num_fallbacks(self) -> int: ...
@@ -1673,7 +1687,10 @@ class Converter(GObject.GInterface, Protocol):
       notify (GParam)
     """
     def convert(
-        self, inbuf: Sequence[int], outbuf: Sequence[int], flags: ConverterFlags
+        self,
+        inbuf: Sequence[int],
+        outbuf: Sequence[int],
+        flags: _ConverterFlagsValueType,
     ) -> tuple[ConverterResult, int, int]: ...
     def convert_bytes(self, bytes: GLib.Bytes) -> GLib.Bytes: ...
     def reset(self) -> None: ...
@@ -1692,7 +1709,14 @@ class ConverterIface(_gi.Struct):
     def convert(
         self,
     ) -> Callable[
-        [Converter, Sequence[int] | None, int, Sequence[int], int, ConverterFlags],
+        [
+            Converter,
+            Sequence[int] | None,
+            int,
+            Sequence[int],
+            int,
+            _ConverterFlagsValueType,
+        ],
         tuple[ConverterResult, int, int],
     ]: ...
     @property
@@ -1733,8 +1757,8 @@ class ConverterInputStream(FilterInputStream, PollableInputStream):
     def __init__(
         self,
         *,
-        converter: Converter = ...,
-        base_stream: InputStream = ...,
+        converter: Converter | None = ...,
+        base_stream: InputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     def get_converter(self) -> Converter: ...
@@ -1791,8 +1815,8 @@ class ConverterOutputStream(FilterOutputStream, PollableOutputStream):
     def __init__(
         self,
         *,
-        converter: Converter = ...,
-        base_stream: OutputStream = ...,
+        converter: Converter | None = ...,
+        base_stream: OutputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     def get_converter(self) -> Converter: ...
@@ -1834,7 +1858,7 @@ class Credentials(GObject.Object):
     @classmethod
     def new(cls) -> Credentials: ...
     def set_native(
-        self, native_type: CredentialsType, native: int | Any | None
+        self, native_type: _CredentialsTypeValueType, native: int | Any | None
     ) -> None: ...
     def set_unix_user(self, uid: int) -> bool: ...
     def to_string(self) -> str: ...
@@ -1984,12 +2008,12 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     def __init__(
         self,
         *,
-        address: str = ...,
-        authentication_observer: DBusAuthObserver = ...,
+        address: str | None = ...,
+        authentication_observer: DBusAuthObserver | None = ...,
         exit_on_close: bool = ...,
-        flags: DBusConnectionFlags = ...,
-        guid: str = ...,
-        stream: IOStream = ...,
+        flags: _DBusConnectionFlagsValueType = ...,
+        guid: str | None = ...,
+        stream: IOStream | None = ...,
     ) -> None: ...
     def add_filter(
         self,
@@ -2006,7 +2030,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         method_name: str,
         parameters: GLib.Variant | None,
         reply_type: GLib.VariantType | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -2022,7 +2046,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         method_name: str,
         parameters: GLib.Variant | None,
         reply_type: GLib.VariantType | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
     ) -> GLib.Variant: ...
@@ -2034,7 +2058,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         method_name: str,
         parameters: GLib.Variant | None,
         reply_type: GLib.VariantType | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
@@ -2053,7 +2077,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         method_name: str,
         parameters: GLib.Variant | None,
         reply_type: GLib.VariantType | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
@@ -2101,7 +2125,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     def new(
         stream: IOStream,
         guid: str | None,
-        flags: DBusConnectionFlags,
+        flags: _DBusConnectionFlagsValueType,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -2113,7 +2137,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     @staticmethod
     def new_for_address(
         address: str,
-        flags: DBusConnectionFlags,
+        flags: _DBusConnectionFlagsValueType,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -2126,7 +2150,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     def new_for_address_sync(
         cls,
         address: str,
-        flags: DBusConnectionFlags,
+        flags: _DBusConnectionFlagsValueType,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
     ) -> DBusConnection: ...
@@ -2135,7 +2159,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         cls,
         stream: IOStream,
         guid: str | None,
-        flags: DBusConnectionFlags,
+        flags: _DBusConnectionFlagsValueType,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
     ) -> DBusConnection: ...
@@ -2181,18 +2205,18 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         self,
         object_path: str,
         vtable: DBusSubtreeVTable,
-        flags: DBusSubtreeFlags,
+        flags: _DBusSubtreeFlagsValueType,
         user_data: int | Any | None,
         user_data_free_func: Callable[[Any | None], None],
     ) -> int: ...
     def remove_filter(self, filter_id: int) -> None: ...
     def send_message(
-        self, message: DBusMessage, flags: DBusSendMessageFlags
+        self, message: DBusMessage, flags: _DBusSendMessageFlagsValueType
     ) -> tuple[bool, int]: ...
     def send_message_with_reply(
         self,
         message: DBusMessage,
-        flags: DBusSendMessageFlags,
+        flags: _DBusSendMessageFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -2203,7 +2227,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
     def send_message_with_reply_sync(
         self,
         message: DBusMessage,
-        flags: DBusSendMessageFlags,
+        flags: _DBusSendMessageFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
     ) -> tuple[DBusMessage, int]: ...
@@ -2215,7 +2239,7 @@ class DBusConnection(GObject.Object, AsyncInitable, Initable):
         member: str | None,
         object_path: str | None,
         arg0: str | None,
-        flags: DBusSignalFlags,
+        flags: _DBusSignalFlagsValueType,
         callback: Callable[
             [DBusConnection, str | None, str, str, str, GLib.Variant, Unpack[_DataTs]],
             None,
@@ -2319,7 +2343,10 @@ class DBusInterfaceSkeleton(GObject.Object, DBusInterface):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        g_flags: DBusInterfaceSkeletonFlags
+        @property
+        def g_flags(self) -> DBusInterfaceSkeletonFlags: ...
+        @g_flags.setter
+        def g_flags(self, value: _DBusInterfaceSkeletonFlagsValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2327,7 +2354,9 @@ class DBusInterfaceSkeleton(GObject.Object, DBusInterface):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> DBusInterfaceSkeletonPrivate: ...
-    def __init__(self, *, g_flags: DBusInterfaceSkeletonFlags = ...) -> None: ...
+    def __init__(
+        self, *, g_flags: _DBusInterfaceSkeletonFlagsValueType = ...
+    ) -> None: ...
     def do_flush(self) -> None: ...
     def do_g_authorize_method(self, invocation: DBusMethodInvocation) -> bool: ...
     def do_get_info(self) -> DBusInterfaceInfo: ...
@@ -2343,7 +2372,7 @@ class DBusInterfaceSkeleton(GObject.Object, DBusInterface):
     def get_properties(self) -> GLib.Variant: ...
     def get_vtable(self) -> DBusInterfaceVTable: ...
     def has_connection(self, connection: DBusConnection) -> bool: ...
-    def set_flags(self, flags: DBusInterfaceSkeletonFlags) -> None: ...
+    def set_flags(self, flags: _DBusInterfaceSkeletonFlagsValueType) -> None: ...
     def unexport(self) -> None: ...
     def unexport_from_connection(self, connection: DBusConnection) -> None: ...
 
@@ -2477,7 +2506,7 @@ class DBusMessage(GObject.Object):
     def get_error_name(self) -> str | None: ...
     def get_flags(self) -> DBusMessageFlags: ...
     def get_header(
-        self, header_field: DBusMessageHeaderField
+        self, header_field: _DBusMessageHeaderFieldValueType
     ) -> GLib.Variant | None: ...
     def get_header_fields(self) -> bytes: ...
     def get_interface(self) -> str | None: ...
@@ -2496,7 +2525,7 @@ class DBusMessage(GObject.Object):
     def new(cls) -> DBusMessage: ...
     @classmethod
     def new_from_blob(
-        cls, blob: Sequence[int], capabilities: DBusCapabilityFlags
+        cls, blob: Sequence[int], capabilities: _DBusCapabilityFlagsValueType
     ) -> DBusMessage: ...
     @classmethod
     def new_method_call(
@@ -2510,16 +2539,18 @@ class DBusMessage(GObject.Object):
     def new_signal(cls, path: str, interface_: str, signal: str) -> DBusMessage: ...
     def print_(self, indent: int) -> str: ...
     def set_body(self, body: GLib.Variant) -> None: ...
-    def set_byte_order(self, byte_order: DBusMessageByteOrder) -> None: ...
+    def set_byte_order(self, byte_order: _DBusMessageByteOrderValueType) -> None: ...
     def set_destination(self, value: str | None = None) -> None: ...
     def set_error_name(self, value: str) -> None: ...
-    def set_flags(self, flags: DBusMessageFlags) -> None: ...
+    def set_flags(self, flags: _DBusMessageFlagsValueType) -> None: ...
     def set_header(
-        self, header_field: DBusMessageHeaderField, value: GLib.Variant | None = None
+        self,
+        header_field: _DBusMessageHeaderFieldValueType,
+        value: GLib.Variant | None = None,
     ) -> None: ...
     def set_interface(self, value: str | None = None) -> None: ...
     def set_member(self, value: str | None = None) -> None: ...
-    def set_message_type(self, type: DBusMessageType) -> None: ...
+    def set_message_type(self, type: _DBusMessageTypeValueType) -> None: ...
     def set_num_unix_fds(self, value: int) -> None: ...
     def set_path(self, value: str | None = None) -> None: ...
     def set_reply_serial(self, value: int) -> None: ...
@@ -2527,7 +2558,7 @@ class DBusMessage(GObject.Object):
     def set_serial(self, serial: int) -> None: ...
     def set_signature(self, value: str | None = None) -> None: ...
     def set_unix_fd_list(self, fd_list: UnixFDList | None = None) -> None: ...
-    def to_blob(self, capabilities: DBusCapabilityFlags) -> bytes: ...
+    def to_blob(self, capabilities: _DBusCapabilityFlagsValueType) -> bytes: ...
     def to_gerror(self) -> bool: ...
 
 class DBusMethodInfo(GObject.GBoxed):
@@ -2708,7 +2739,7 @@ class DBusObjectManagerClient(
         @property
         def name_owner(self) -> str | None: ...
         @property
-        def object_path(self) -> str: ...
+        def object_path(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2719,14 +2750,14 @@ class DBusObjectManagerClient(
     def __init__(
         self,
         *,
-        bus_type: BusType = ...,
-        connection: DBusConnection = ...,
-        flags: DBusObjectManagerClientFlags = ...,
+        bus_type: _BusTypeValueType = ...,
+        connection: DBusConnection | None = ...,
+        flags: _DBusObjectManagerClientFlagsValueType = ...,
         get_proxy_type_destroy_notify: int | Any | None = ...,
         get_proxy_type_func: int | Any | None = ...,
         get_proxy_type_user_data: int | Any | None = ...,
-        name: str = ...,
-        object_path: str = ...,
+        name: str | None = ...,
+        object_path: str | None = ...,
     ) -> None: ...
     def do_interface_proxy_properties_changed(
         self,
@@ -2750,7 +2781,7 @@ class DBusObjectManagerClient(
     @staticmethod
     def new(
         connection: DBusConnection,
-        flags: DBusObjectManagerClientFlags,
+        flags: _DBusObjectManagerClientFlagsValueType,
         name: str,
         object_path: str,
         get_proxy_type_func: Callable[
@@ -2767,8 +2798,8 @@ class DBusObjectManagerClient(
     def new_finish(cls, res: AsyncResult) -> DBusObjectManagerClient: ...
     @staticmethod
     def new_for_bus(
-        bus_type: BusType,
-        flags: DBusObjectManagerClientFlags,
+        bus_type: _BusTypeValueType,
+        flags: _DBusObjectManagerClientFlagsValueType,
         name: str,
         object_path: str,
         get_proxy_type_func: Callable[
@@ -2786,8 +2817,8 @@ class DBusObjectManagerClient(
     @classmethod
     def new_for_bus_sync(
         cls,
-        bus_type: BusType,
-        flags: DBusObjectManagerClientFlags,
+        bus_type: _BusTypeValueType,
+        flags: _DBusObjectManagerClientFlagsValueType,
         name: str,
         object_path: str,
         get_proxy_type_func: Callable[
@@ -2801,7 +2832,7 @@ class DBusObjectManagerClient(
     def new_sync(
         cls,
         connection: DBusConnection,
-        flags: DBusObjectManagerClientFlags,
+        flags: _DBusObjectManagerClientFlagsValueType,
         name: str | None,
         object_path: str,
         get_proxy_type_func: Callable[
@@ -2901,7 +2932,7 @@ class DBusObjectManagerServer(GObject.Object, DBusObjectManager):
     class Props(GObject.Object.Props):
         connection: DBusConnection | None
         @property
-        def object_path(self) -> str: ...
+        def object_path(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2910,7 +2941,7 @@ class DBusObjectManagerServer(GObject.Object, DBusObjectManager):
     @property
     def priv(self) -> DBusObjectManagerServerPrivate: ...
     def __init__(
-        self, *, connection: DBusConnection | None = ..., object_path: str = ...
+        self, *, connection: DBusConnection | None = ..., object_path: str | None = ...
     ) -> None: ...
     def export(self, object: DBusObjectSkeleton) -> None: ...
     def export_uniquely(self, object: DBusObjectSkeleton) -> None: ...
@@ -2961,9 +2992,9 @@ class DBusObjectProxy(GObject.Object, DBusObject):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def g_connection(self) -> DBusConnection: ...
+        def g_connection(self) -> DBusConnection | None: ...
         @property
-        def g_object_path(self) -> str: ...
+        def g_object_path(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -2972,7 +3003,10 @@ class DBusObjectProxy(GObject.Object, DBusObject):
     @property
     def priv(self) -> DBusObjectProxyPrivate: ...
     def __init__(
-        self, *, g_connection: DBusConnection = ..., g_object_path: str = ...
+        self,
+        *,
+        g_connection: DBusConnection | None = ...,
+        g_object_path: str | None = ...,
     ) -> None: ...
     def get_connection(self) -> DBusConnection: ...
     @classmethod
@@ -3019,7 +3053,7 @@ class DBusObjectSkeleton(GObject.Object, DBusObject):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        g_object_path: str
+        g_object_path: str | None
 
     @property
     def props(self) -> Props: ...
@@ -3027,7 +3061,7 @@ class DBusObjectSkeleton(GObject.Object, DBusObject):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> DBusObjectSkeletonPrivate: ...
-    def __init__(self, *, g_object_path: str = ...) -> None: ...
+    def __init__(self, *, g_object_path: str | None = ...) -> None: ...
     def add_interface(self, interface_: DBusInterfaceSkeleton) -> None: ...
     def do_authorize_method(
         self, interface_: DBusInterfaceSkeleton, invocation: DBusMethodInvocation
@@ -3191,19 +3225,19 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def g_connection(self) -> DBusConnection: ...
+        def g_connection(self) -> DBusConnection | None: ...
         g_default_timeout: int
         @property
         def g_flags(self) -> DBusProxyFlags: ...
-        g_interface_info: DBusInterfaceInfo
+        g_interface_info: DBusInterfaceInfo | None
         @property
-        def g_interface_name(self) -> str: ...
+        def g_interface_name(self) -> str | None: ...
         @property
-        def g_name(self) -> str: ...
+        def g_name(self) -> str | None: ...
         @property
-        def g_name_owner(self) -> str: ...
+        def g_name_owner(self) -> str | None: ...
         @property
-        def g_object_path(self) -> str: ...
+        def g_object_path(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3214,20 +3248,20 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     def __init__(
         self,
         *,
-        g_bus_type: BusType = ...,
-        g_connection: DBusConnection = ...,
+        g_bus_type: _BusTypeValueType = ...,
+        g_connection: DBusConnection | None = ...,
         g_default_timeout: int = ...,
-        g_flags: DBusProxyFlags = ...,
-        g_interface_info: DBusInterfaceInfo = ...,
-        g_interface_name: str = ...,
-        g_name: str = ...,
-        g_object_path: str = ...,
+        g_flags: _DBusProxyFlagsValueType = ...,
+        g_interface_info: DBusInterfaceInfo | None = ...,
+        g_interface_name: str | None = ...,
+        g_name: str | None = ...,
+        g_object_path: str | None = ...,
     ) -> None: ...
     def call(
         self,
         method_name: str,
         parameters: GLib.Variant | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -3239,7 +3273,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         self,
         method_name: str,
         parameters: GLib.Variant | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         cancellable: Cancellable | None = None,
     ) -> GLib.Variant: ...
@@ -3247,7 +3281,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         self,
         method_name: str,
         parameters: GLib.Variant | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
@@ -3262,7 +3296,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         self,
         method_name: str,
         parameters: GLib.Variant | None,
-        flags: DBusCallFlags,
+        flags: _DBusCallFlagsValueType,
         timeout_msec: int,
         fd_list: UnixFDList | None = None,
         cancellable: Cancellable | None = None,
@@ -3286,7 +3320,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     @staticmethod
     def new(
         connection: DBusConnection,
-        flags: DBusProxyFlags,
+        flags: _DBusProxyFlagsValueType,
         info: DBusInterfaceInfo | None,
         name: str | None,
         object_path: str,
@@ -3300,8 +3334,8 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     def new_finish(cls, res: AsyncResult) -> DBusProxy: ...
     @staticmethod
     def new_for_bus(
-        bus_type: BusType,
-        flags: DBusProxyFlags,
+        bus_type: _BusTypeValueType,
+        flags: _DBusProxyFlagsValueType,
         info: DBusInterfaceInfo | None,
         name: str,
         object_path: str,
@@ -3316,8 +3350,8 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     @classmethod
     def new_for_bus_sync(
         cls,
-        bus_type: BusType,
-        flags: DBusProxyFlags,
+        bus_type: _BusTypeValueType,
+        flags: _DBusProxyFlagsValueType,
         info: DBusInterfaceInfo | None,
         name: str,
         object_path: str,
@@ -3328,7 +3362,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     def new_sync(
         cls,
         connection: DBusConnection,
-        flags: DBusProxyFlags,
+        flags: _DBusProxyFlagsValueType,
         info: DBusInterfaceInfo | None,
         name: str | None,
         object_path: str,
@@ -3392,9 +3426,9 @@ class DBusServer(GObject.Object, Initable):
         @property
         def active(self) -> bool: ...
         @property
-        def address(self) -> str: ...
+        def address(self) -> str | None: ...
         @property
-        def authentication_observer(self) -> DBusAuthObserver: ...
+        def authentication_observer(self) -> DBusAuthObserver | None: ...
         @property
         def client_address(self) -> str: ...
         @property
@@ -3407,10 +3441,10 @@ class DBusServer(GObject.Object, Initable):
     def __init__(
         self,
         *,
-        address: str = ...,
-        authentication_observer: DBusAuthObserver = ...,
-        flags: DBusServerFlags = ...,
-        guid: str = ...,
+        address: str | None = ...,
+        authentication_observer: DBusAuthObserver | None = ...,
+        flags: _DBusServerFlagsValueType = ...,
+        guid: str | None = ...,
     ) -> None: ...
     def get_client_address(self) -> str: ...
     def get_flags(self) -> DBusServerFlags: ...
@@ -3420,7 +3454,7 @@ class DBusServer(GObject.Object, Initable):
     def new_sync(
         cls,
         address: str,
-        flags: DBusServerFlags,
+        flags: _DBusServerFlagsValueType,
         guid: str,
         observer: DBusAuthObserver | None = None,
         cancellable: Cancellable | None = None,
@@ -3494,8 +3528,14 @@ class DataInputStream(BufferedInputStream):
     """
     @type_check_only
     class Props(BufferedInputStream.Props):
-        byte_order: DataStreamByteOrder
-        newline_type: DataStreamNewlineType
+        @property
+        def byte_order(self) -> DataStreamByteOrder: ...
+        @byte_order.setter
+        def byte_order(self, value: _DataStreamByteOrderValueType) -> None: ...
+        @property
+        def newline_type(self) -> DataStreamNewlineType: ...
+        @newline_type.setter
+        def newline_type(self, value: _DataStreamNewlineTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3506,10 +3546,10 @@ class DataInputStream(BufferedInputStream):
     def __init__(
         self,
         *,
-        byte_order: DataStreamByteOrder = ...,
-        newline_type: DataStreamNewlineType = ...,
+        byte_order: _DataStreamByteOrderValueType = ...,
+        newline_type: _DataStreamNewlineTypeValueType = ...,
         buffer_size: int = ...,
-        base_stream: InputStream = ...,
+        base_stream: InputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     # override
@@ -3573,8 +3613,8 @@ class DataInputStream(BufferedInputStream):
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def read_upto_finish(self, result: AsyncResult) -> tuple[str, int]: ...
-    def set_byte_order(self, order: DataStreamByteOrder) -> None: ...
-    def set_newline_type(self, type: DataStreamNewlineType) -> None: ...
+    def set_byte_order(self, order: _DataStreamByteOrderValueType) -> None: ...
+    def set_newline_type(self, type: _DataStreamNewlineTypeValueType) -> None: ...
 
 class DataInputStreamClass(_gi.Struct):
     """
@@ -3612,7 +3652,10 @@ class DataOutputStream(FilterOutputStream, Seekable):
     """
     @type_check_only
     class Props(FilterOutputStream.Props):
-        byte_order: DataStreamByteOrder
+        @property
+        def byte_order(self) -> DataStreamByteOrder: ...
+        @byte_order.setter
+        def byte_order(self, value: _DataStreamByteOrderValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3623,8 +3666,8 @@ class DataOutputStream(FilterOutputStream, Seekable):
     def __init__(
         self,
         *,
-        byte_order: DataStreamByteOrder = ...,
-        base_stream: OutputStream = ...,
+        byte_order: _DataStreamByteOrderValueType = ...,
+        base_stream: OutputStream | None = ...,
         close_base_stream: bool = ...,
     ) -> None: ...
     def get_byte_order(self) -> DataStreamByteOrder: ...
@@ -3638,7 +3681,7 @@ class DataOutputStream(FilterOutputStream, Seekable):
     def put_uint16(self, data: int, cancellable: Cancellable | None = None) -> bool: ...
     def put_uint32(self, data: int, cancellable: Cancellable | None = None) -> bool: ...
     def put_uint64(self, data: int, cancellable: Cancellable | None = None) -> bool: ...
-    def set_byte_order(self, order: DataStreamByteOrder) -> None: ...
+    def set_byte_order(self, order: _DataStreamByteOrderValueType) -> None: ...
 
 class DataOutputStreamClass(_gi.Struct):
     """
@@ -3660,15 +3703,19 @@ class DatagramBased(GObject.GInterface, Protocol):
     Signals from GObject:
       notify (GParam)
     """
-    def condition_check(self, condition: GLib.IOCondition) -> GLib.IOCondition: ...
+    def condition_check(
+        self, condition: GLib._IOConditionValueType
+    ) -> GLib.IOCondition: ...
     def condition_wait(
         self,
-        condition: GLib.IOCondition,
+        condition: GLib._IOConditionValueType,
         timeout: int,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def create_source(
-        self, condition: GLib.IOCondition, cancellable: Cancellable | None = None
+        self,
+        condition: GLib._IOConditionValueType,
+        cancellable: Cancellable | None = None,
     ) -> GLib.Source: ...
     def receive_messages(
         self,
@@ -3711,16 +3758,18 @@ class DatagramBasedInterface(_gi.Struct):
     def create_source(
         self,
     ) -> Callable[
-        [DatagramBased, GLib.IOCondition, Cancellable | None], GLib.Source
+        [DatagramBased, GLib._IOConditionValueType, Cancellable | None], GLib.Source
     ]: ...
     @property
     def condition_check(
         self,
-    ) -> Callable[[DatagramBased, GLib.IOCondition], GLib.IOCondition]: ...
+    ) -> Callable[[DatagramBased, GLib._IOConditionValueType], GLib.IOCondition]: ...
     @property
     def condition_wait(
         self,
-    ) -> Callable[[DatagramBased, GLib.IOCondition, int, Cancellable | None], bool]: ...
+    ) -> Callable[
+        [DatagramBased, GLib._IOConditionValueType, int, Cancellable | None], bool
+    ]: ...
 
 class DebugController(GObject.GInterface, Protocol):
     """
@@ -3755,7 +3804,7 @@ class DebugControllerDBus(GObject.Object, DebugController, Initable):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def connection(self) -> DBusConnection: ...
+        def connection(self) -> DBusConnection | None: ...
         debug_enabled: bool
 
     @property
@@ -3763,7 +3812,7 @@ class DebugControllerDBus(GObject.Object, DebugController, Initable):
     @property
     def parent_instance(self) -> GObject.Object: ...
     def __init__(
-        self, *, connection: DBusConnection = ..., debug_enabled: bool = ...
+        self, *, connection: DBusConnection | None = ..., debug_enabled: bool = ...
     ) -> None: ...
     def do_authorize(self, invocation: DBusMethodInvocation) -> bool: ...
     @classmethod
@@ -3817,7 +3866,7 @@ class Drive(GObject.GInterface, Protocol):
     def can_stop(self) -> bool: ...
     def eject(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -3826,7 +3875,7 @@ class Drive(GObject.GInterface, Protocol):
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -3857,7 +3906,7 @@ class Drive(GObject.GInterface, Protocol):
     def poll_for_media_finish(self, result: AsyncResult) -> bool: ...
     def start(
         self,
-        flags: DriveStartFlags,
+        flags: _DriveStartFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -3867,7 +3916,7 @@ class Drive(GObject.GInterface, Protocol):
     def start_finish(self, result: AsyncResult) -> bool: ...
     def stop(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -3916,7 +3965,7 @@ class DriveIface(_gi.Struct):
     ) -> Callable[
         [
             Drive,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -3955,7 +4004,7 @@ class DriveIface(_gi.Struct):
     ) -> Callable[
         [
             Drive,
-            DriveStartFlags,
+            _DriveStartFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -3973,7 +4022,7 @@ class DriveIface(_gi.Struct):
     ) -> Callable[
         [
             Drive,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -3991,7 +4040,7 @@ class DriveIface(_gi.Struct):
     ) -> Callable[
         [
             Drive,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -4023,7 +4072,7 @@ class DtlsClientConnection(GObject.GInterface, Protocol):
         base_socket: DatagramBased, server_identity: SocketConnectable | None = None
     ) -> DtlsClientConnection: ...
     def set_server_identity(self, identity: SocketConnectable) -> None: ...
-    def set_validation_flags(self, flags: TlsCertificateFlags) -> None: ...
+    def set_validation_flags(self, flags: _TlsCertificateFlagsValueType) -> None: ...
 
 class DtlsClientConnectionInterface(_gi.Struct):
     """
@@ -4054,11 +4103,11 @@ class DtlsConnection(GObject.GInterface, Protocol):
     ) -> None: ...
     def close_finish(self, result: AsyncResult) -> bool: ...
     def emit_accept_certificate(
-        self, peer_cert: TlsCertificate, errors: TlsCertificateFlags
+        self, peer_cert: TlsCertificate, errors: _TlsCertificateFlagsValueType
     ) -> bool: ...
     def get_certificate(self) -> TlsCertificate | None: ...
     def get_channel_binding_data(
-        self, type: TlsChannelBindingType
+        self, type: _TlsChannelBindingTypeValueType
     ) -> tuple[bool, bytes]: ...
     def get_ciphersuite_name(self) -> str | None: ...
     def get_database(self) -> TlsDatabase | None: ...
@@ -4085,7 +4134,7 @@ class DtlsConnection(GObject.GInterface, Protocol):
     def set_certificate(self, certificate: TlsCertificate) -> None: ...
     def set_database(self, database: TlsDatabase | None = None) -> None: ...
     def set_interaction(self, interaction: TlsInteraction | None = None) -> None: ...
-    def set_rehandshake_mode(self, mode: TlsRehandshakeMode) -> None: ...
+    def set_rehandshake_mode(self, mode: _TlsRehandshakeModeValueType) -> None: ...
     def set_require_close_notify(self, require_close_notify: bool) -> None: ...
     def shutdown(
         self,
@@ -4118,7 +4167,9 @@ class DtlsConnectionInterface(_gi.Struct):
     @property
     def accept_certificate(
         self,
-    ) -> Callable[[DtlsConnection, TlsCertificate, TlsCertificateFlags], bool]: ...
+    ) -> Callable[
+        [DtlsConnection, TlsCertificate, _TlsCertificateFlagsValueType], bool
+    ]: ...
     @property
     def handshake(self) -> Callable[[DtlsConnection, Cancellable | None], bool]: ...
     @property
@@ -4166,7 +4217,9 @@ class DtlsConnectionInterface(_gi.Struct):
     @property
     def get_binding_data(
         self,
-    ) -> Callable[[DtlsConnection, TlsChannelBindingType, Sequence[int]], bool]: ...
+    ) -> Callable[
+        [DtlsConnection, _TlsChannelBindingTypeValueType, Sequence[int]], bool
+    ]: ...
 
 class DtlsServerConnection(GObject.GInterface, Protocol):
     """
@@ -4220,14 +4273,14 @@ class Emblem(GObject.Object, Icon):
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, *, icon: GObject.Object = ..., origin: EmblemOrigin = ...
+        self, *, icon: GObject.Object | None = ..., origin: _EmblemOriginValueType = ...
     ) -> None: ...
     def get_icon(self) -> Icon: ...
     def get_origin(self) -> EmblemOrigin: ...
     @classmethod
     def new(cls, icon: Icon) -> Emblem: ...
     @classmethod
-    def new_with_origin(cls, icon: Icon, origin: EmblemOrigin) -> Emblem: ...
+    def new_with_origin(cls, icon: Icon, origin: _EmblemOriginValueType) -> Emblem: ...
 
 class EmblemClass(_gi.Struct): ...
 
@@ -4251,7 +4304,7 @@ class EmblemedIcon(GObject.Object, Icon):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def gicon(self) -> Icon: ...
+        def gicon(self) -> Icon | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -4259,7 +4312,7 @@ class EmblemedIcon(GObject.Object, Icon):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> EmblemedIconPrivate: ...
-    def __init__(self, *, gicon: Icon = ...) -> None: ...
+    def __init__(self, *, gicon: Icon | None = ...) -> None: ...
     def add_emblem(self, emblem: Emblem) -> None: ...
     def clear_emblems(self) -> None: ...
     def get_emblems(self) -> list[Emblem]: ...
@@ -4288,11 +4341,11 @@ class File(GObject.GInterface, Protocol):
       notify (GParam)
     """
     def append_to(
-        self, flags: FileCreateFlags, cancellable: Cancellable | None = None
+        self, flags: _FileCreateFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileOutputStream: ...
     def append_to_async(
         self,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4301,12 +4354,12 @@ class File(GObject.GInterface, Protocol):
     ) -> None: ...
     def append_to_finish(self, res: AsyncResult) -> FileOutputStream: ...
     def build_attribute_list_for_copy(
-        self, flags: FileCopyFlags, cancellable: Cancellable | None = None
+        self, flags: _FileCopyFlagsValueType, cancellable: Cancellable | None = None
     ) -> str: ...
     def copy(
         self,
         destination: File,
-        flags: FileCopyFlags,
+        flags: _FileCopyFlagsValueType,
         cancellable: Cancellable | None = None,
         progress_callback: Callable[[int, int, Unpack[_DataTs]], None] | None = None,
         *progress_callback_data: Unpack[_DataTs],
@@ -4314,7 +4367,7 @@ class File(GObject.GInterface, Protocol):
     def copy_async(
         self,
         destination: File,
-        flags: FileCopyFlags,
+        flags: _FileCopyFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None,
         progress_callback_closure: Callable[..., Any] | None,
@@ -4323,16 +4376,16 @@ class File(GObject.GInterface, Protocol):
     def copy_attributes(
         self,
         destination: File,
-        flags: FileCopyFlags,
+        flags: _FileCopyFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def copy_finish(self, res: AsyncResult) -> bool: ...
     def create(
-        self, flags: FileCreateFlags, cancellable: Cancellable | None = None
+        self, flags: _FileCreateFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileOutputStream: ...
     def create_async(
         self,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4341,11 +4394,11 @@ class File(GObject.GInterface, Protocol):
     ) -> None: ...
     def create_finish(self, res: AsyncResult) -> FileOutputStream: ...
     def create_readwrite(
-        self, flags: FileCreateFlags, cancellable: Cancellable | None = None
+        self, flags: _FileCreateFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileIOStream: ...
     def create_readwrite_async(
         self,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4366,7 +4419,7 @@ class File(GObject.GInterface, Protocol):
     def dup(self) -> File: ...
     def eject_mountable(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -4375,7 +4428,7 @@ class File(GObject.GInterface, Protocol):
     def eject_mountable_finish(self, result: AsyncResult) -> bool: ...
     def eject_mountable_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4386,13 +4439,13 @@ class File(GObject.GInterface, Protocol):
     def enumerate_children(
         self,
         attributes: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> FileEnumerator: ...
     def enumerate_children_async(
         self,
         attributes: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4482,7 +4535,7 @@ class File(GObject.GInterface, Protocol):
     def make_symbolic_link_finish(self, result: AsyncResult) -> bool: ...
     def measure_disk_usage(
         self,
-        flags: FileMeasureFlags,
+        flags: _FileMeasureFlagsValueType,
         cancellable: Cancellable | None = None,
         progress_callback: Callable[[bool, int, int, int, Unpack[_DataTs]], None]
         | None = None,
@@ -4492,17 +4545,17 @@ class File(GObject.GInterface, Protocol):
         self, result: AsyncResult
     ) -> tuple[bool, int, int, int]: ...
     def monitor(
-        self, flags: FileMonitorFlags, cancellable: Cancellable | None = None
+        self, flags: _FileMonitorFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileMonitor: ...
     def monitor_directory(
-        self, flags: FileMonitorFlags, cancellable: Cancellable | None = None
+        self, flags: _FileMonitorFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileMonitor: ...
     def monitor_file(
-        self, flags: FileMonitorFlags, cancellable: Cancellable | None = None
+        self, flags: _FileMonitorFlagsValueType, cancellable: Cancellable | None = None
     ) -> FileMonitor: ...
     def mount_enclosing_volume(
         self,
-        flags: MountMountFlags,
+        flags: _MountMountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4512,7 +4565,7 @@ class File(GObject.GInterface, Protocol):
     def mount_enclosing_volume_finish(self, result: AsyncResult) -> bool: ...
     def mount_mountable(
         self,
-        flags: MountMountFlags,
+        flags: _MountMountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4523,7 +4576,7 @@ class File(GObject.GInterface, Protocol):
     def move(
         self,
         destination: File,
-        flags: FileCopyFlags,
+        flags: _FileCopyFlagsValueType,
         cancellable: Cancellable | None = None,
         progress_callback: Callable[[int, int, Unpack[_DataTs]], None] | None = None,
         *progress_callback_data: Unpack[_DataTs],
@@ -4531,7 +4584,7 @@ class File(GObject.GInterface, Protocol):
     def move_async(
         self,
         destination: File,
-        flags: FileCopyFlags,
+        flags: _FileCopyFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None,
         progress_callback_closure: Callable[..., Any] | None,
@@ -4609,7 +4662,9 @@ class File(GObject.GInterface, Protocol):
     def query_default_handler_finish(self, result: AsyncResult) -> AppInfo: ...
     def query_exists(self, cancellable: Cancellable | None = None) -> bool: ...
     def query_file_type(
-        self, flags: FileQueryInfoFlags, cancellable: Cancellable | None = None
+        self,
+        flags: _FileQueryInfoFlagsValueType,
+        cancellable: Cancellable | None = None,
     ) -> FileType: ...
     def query_filesystem_info(
         self, attributes: str, cancellable: Cancellable | None = None
@@ -4627,13 +4682,13 @@ class File(GObject.GInterface, Protocol):
     def query_info(
         self,
         attributes: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> FileInfo: ...
     def query_info_async(
         self,
         attributes: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4661,14 +4716,14 @@ class File(GObject.GInterface, Protocol):
         self,
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> FileOutputStream: ...
     def replace_async(
         self,
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4680,7 +4735,7 @@ class File(GObject.GInterface, Protocol):
         contents: Sequence[int],
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> tuple[bool, str | None]: ...
     def replace_contents_async(
@@ -4688,7 +4743,7 @@ class File(GObject.GInterface, Protocol):
         contents: Sequence[int],
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -4699,7 +4754,7 @@ class File(GObject.GInterface, Protocol):
         contents: GLib.Bytes,
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -4711,14 +4766,14 @@ class File(GObject.GInterface, Protocol):
         self,
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> FileIOStream: ...
     def replace_readwrite_async(
         self,
         etag: str | None,
         make_backup: bool,
-        flags: FileCreateFlags,
+        flags: _FileCreateFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4730,57 +4785,57 @@ class File(GObject.GInterface, Protocol):
     def set_attribute(
         self,
         attribute: str,
-        type: FileAttributeType,
+        type: _FileAttributeTypeValueType,
         value_p: int | Any | None,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_byte_string(
         self,
         attribute: str,
         value: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_int32(
         self,
         attribute: str,
         value: int,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_int64(
         self,
         attribute: str,
         value: int,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_string(
         self,
         attribute: str,
         value: str,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_uint32(
         self,
         attribute: str,
         value: int,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attribute_uint64(
         self,
         attribute: str,
         value: int,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_attributes_async(
         self,
         info: FileInfo,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4791,7 +4846,7 @@ class File(GObject.GInterface, Protocol):
     def set_attributes_from_info(
         self,
         info: FileInfo,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def set_display_name(
@@ -4809,7 +4864,7 @@ class File(GObject.GInterface, Protocol):
     def set_display_name_finish(self, res: AsyncResult) -> File: ...
     def start_mountable(
         self,
-        flags: DriveStartFlags,
+        flags: _DriveStartFlagsValueType,
         start_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4819,7 +4874,7 @@ class File(GObject.GInterface, Protocol):
     def start_mountable_finish(self, result: AsyncResult) -> bool: ...
     def stop_mountable(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4840,7 +4895,7 @@ class File(GObject.GInterface, Protocol):
     def trash_finish(self, result: AsyncResult) -> bool: ...
     def unmount_mountable(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -4849,7 +4904,7 @@ class File(GObject.GInterface, Protocol):
     def unmount_mountable_finish(self, result: AsyncResult) -> bool: ...
     def unmount_mountable_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -4885,7 +4940,10 @@ class FileAttributeInfoList(GObject.GBoxed):
     n_infos: int
     def __init__(self) -> None: ...
     def add(
-        self, name: str, type: FileAttributeType, flags: FileAttributeInfoFlags
+        self,
+        name: str,
+        type: _FileAttributeTypeValueType,
+        flags: _FileAttributeInfoFlagsValueType,
     ) -> None: ...
     def dup(self) -> FileAttributeInfoList: ...
     def lookup(self, name: str) -> FileAttributeInfo: ...
@@ -4938,7 +4996,7 @@ class FileEnumerator(GObject.Object):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> FileEnumeratorPrivate: ...
-    def __init__(self, *, container: File = ...) -> None: ...
+    def __init__(self, *, container: File | None = ...) -> None: ...
     # override
     def __iter__(self) -> Self: ...
     # override
@@ -5177,7 +5235,7 @@ class FileIcon(GObject.Object, Icon, LoadableIcon):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, file: File = ...) -> None: ...
+    def __init__(self, *, file: File | None = ...) -> None: ...
     def get_file(self) -> File: ...
     @classmethod
     def new(cls, file: File) -> FileIcon: ...
@@ -5228,7 +5286,7 @@ class FileIface(_gi.Struct):
     def enumerate_children(
         self,
     ) -> Callable[
-        [File, str, FileQueryInfoFlags, Cancellable | None], FileEnumerator
+        [File, str, _FileQueryInfoFlagsValueType, Cancellable | None], FileEnumerator
     ]: ...
     @property
     def enumerate_children_async(
@@ -5237,7 +5295,7 @@ class FileIface(_gi.Struct):
         [
             File,
             str,
-            FileQueryInfoFlags,
+            _FileQueryInfoFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5252,7 +5310,9 @@ class FileIface(_gi.Struct):
     @property
     def query_info(
         self,
-    ) -> Callable[[File, str, FileQueryInfoFlags, Cancellable | None], FileInfo]: ...
+    ) -> Callable[
+        [File, str, _FileQueryInfoFlagsValueType, Cancellable | None], FileInfo
+    ]: ...
     @property
     def query_info_async(
         self,
@@ -5260,7 +5320,7 @@ class FileIface(_gi.Struct):
         [
             File,
             str,
-            FileQueryInfoFlags,
+            _FileQueryInfoFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5342,9 +5402,9 @@ class FileIface(_gi.Struct):
         [
             File,
             str,
-            FileAttributeType,
+            _FileAttributeTypeValueType,
             Any | None,
-            FileQueryInfoFlags,
+            _FileQueryInfoFlagsValueType,
             Cancellable | None,
         ],
         bool,
@@ -5352,7 +5412,9 @@ class FileIface(_gi.Struct):
     @property
     def set_attributes_from_info(
         self,
-    ) -> Callable[[File, FileInfo, FileQueryInfoFlags, Cancellable | None], bool]: ...
+    ) -> Callable[
+        [File, FileInfo, _FileQueryInfoFlagsValueType, Cancellable | None], bool
+    ]: ...
     @property
     def set_attributes_async(
         self,
@@ -5360,7 +5422,7 @@ class FileIface(_gi.Struct):
         [
             File,
             FileInfo,
-            FileQueryInfoFlags,
+            _FileQueryInfoFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5392,14 +5454,16 @@ class FileIface(_gi.Struct):
     @property
     def append_to(
         self,
-    ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileOutputStream]: ...
+    ) -> Callable[
+        [File, _FileCreateFlagsValueType, Cancellable | None], FileOutputStream
+    ]: ...
     @property
     def append_to_async(
         self,
     ) -> Callable[
         [
             File,
-            FileCreateFlags,
+            _FileCreateFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5412,14 +5476,16 @@ class FileIface(_gi.Struct):
     @property
     def create(
         self,
-    ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileOutputStream]: ...
+    ) -> Callable[
+        [File, _FileCreateFlagsValueType, Cancellable | None], FileOutputStream
+    ]: ...
     @property
     def create_async(
         self,
     ) -> Callable[
         [
             File,
-            FileCreateFlags,
+            _FileCreateFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5433,7 +5499,8 @@ class FileIface(_gi.Struct):
     def replace(
         self,
     ) -> Callable[
-        [File, str | None, bool, FileCreateFlags, Cancellable | None], FileOutputStream
+        [File, str | None, bool, _FileCreateFlagsValueType, Cancellable | None],
+        FileOutputStream,
     ]: ...
     @property
     def replace_async(
@@ -5443,7 +5510,7 @@ class FileIface(_gi.Struct):
             File,
             str | None,
             bool,
-            FileCreateFlags,
+            _FileCreateFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5529,7 +5596,7 @@ class FileIface(_gi.Struct):
         [
             File,
             File,
-            FileCopyFlags,
+            _FileCopyFlagsValueType,
             Cancellable | None,
             Callable[[int, int, Any | None], None] | None,
             Any | None,
@@ -5543,7 +5610,7 @@ class FileIface(_gi.Struct):
         [
             File,
             File,
-            FileCopyFlags,
+            _FileCopyFlagsValueType,
             int,
             Cancellable | None,
             Callable[[int, int, Any | None], None] | None,
@@ -5562,7 +5629,7 @@ class FileIface(_gi.Struct):
         [
             File,
             File,
-            FileCopyFlags,
+            _FileCopyFlagsValueType,
             Cancellable | None,
             Callable[[int, int, Any | None], None] | None,
             Any | None,
@@ -5576,7 +5643,7 @@ class FileIface(_gi.Struct):
         [
             File,
             File,
-            FileCopyFlags,
+            _FileCopyFlagsValueType,
             int,
             Cancellable | None,
             Callable[[int, int, Any | None], None] | None,
@@ -5594,7 +5661,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountMountFlags,
+            _MountMountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5610,7 +5677,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -5625,7 +5692,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -5640,7 +5707,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountMountFlags,
+            _MountMountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5653,11 +5720,15 @@ class FileIface(_gi.Struct):
     @property
     def monitor_dir(
         self,
-    ) -> Callable[[File, FileMonitorFlags, Cancellable | None], FileMonitor]: ...
+    ) -> Callable[
+        [File, _FileMonitorFlagsValueType, Cancellable | None], FileMonitor
+    ]: ...
     @property
     def monitor_file(
         self,
-    ) -> Callable[[File, FileMonitorFlags, Cancellable | None], FileMonitor]: ...
+    ) -> Callable[
+        [File, _FileMonitorFlagsValueType, Cancellable | None], FileMonitor
+    ]: ...
     @property
     def open_readwrite(self) -> Callable[[File, Cancellable | None], FileIOStream]: ...
     @property
@@ -5678,14 +5749,16 @@ class FileIface(_gi.Struct):
     @property
     def create_readwrite(
         self,
-    ) -> Callable[[File, FileCreateFlags, Cancellable | None], FileIOStream]: ...
+    ) -> Callable[
+        [File, _FileCreateFlagsValueType, Cancellable | None], FileIOStream
+    ]: ...
     @property
     def create_readwrite_async(
         self,
     ) -> Callable[
         [
             File,
-            FileCreateFlags,
+            _FileCreateFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5701,7 +5774,8 @@ class FileIface(_gi.Struct):
     def replace_readwrite(
         self,
     ) -> Callable[
-        [File, str | None, bool, FileCreateFlags, Cancellable | None], FileIOStream
+        [File, str | None, bool, _FileCreateFlagsValueType, Cancellable | None],
+        FileIOStream,
     ]: ...
     @property
     def replace_readwrite_async(
@@ -5711,7 +5785,7 @@ class FileIface(_gi.Struct):
             File,
             str | None,
             bool,
-            FileCreateFlags,
+            _FileCreateFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5729,7 +5803,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            DriveStartFlags,
+            _DriveStartFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5745,7 +5819,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5763,7 +5837,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5781,7 +5855,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -5813,7 +5887,7 @@ class FileIface(_gi.Struct):
     ) -> Callable[
         [
             File,
-            FileMeasureFlags,
+            _FileMeasureFlagsValueType,
             Cancellable | None,
             Callable[[bool, int, int, int, Any | None], None] | None,
             Any | None,
@@ -5889,7 +5963,10 @@ class FileInfo(GObject.Object):
     def remove_attribute(self, attribute: str) -> None: ...
     def set_access_date_time(self, atime: GLib.DateTime) -> None: ...
     def set_attribute(
-        self, attribute: str, type: FileAttributeType, value_p: int | Any | None
+        self,
+        attribute: str,
+        type: _FileAttributeTypeValueType,
+        value_p: int | Any | None,
     ) -> None: ...
     def set_attribute_boolean(self, attribute: str, attr_value: bool) -> None: ...
     def set_attribute_byte_string(self, attribute: str, attr_value: str) -> None: ...
@@ -5901,7 +5978,7 @@ class FileInfo(GObject.Object):
         self, attribute: str, attr_value: GObject.Object
     ) -> None: ...
     def set_attribute_status(
-        self, attribute: str, status: FileAttributeStatus
+        self, attribute: str, status: _FileAttributeStatusValueType
     ) -> bool: ...
     def set_attribute_string(self, attribute: str, attr_value: str) -> None: ...
     def set_attribute_stringv(
@@ -5913,7 +5990,7 @@ class FileInfo(GObject.Object):
     def set_creation_date_time(self, creation_time: GLib.DateTime) -> None: ...
     def set_display_name(self, display_name: str) -> None: ...
     def set_edit_name(self, edit_name: str) -> None: ...
-    def set_file_type(self, type: FileType) -> None: ...
+    def set_file_type(self, type: _FileTypeValueType) -> None: ...
     def set_icon(self, icon: Icon) -> None: ...
     def set_is_hidden(self, is_hidden: bool) -> None: ...
     def set_is_symlink(self, is_symlink: bool) -> None: ...
@@ -6056,10 +6133,13 @@ class FileMonitor(GObject.Object):
     def cancel(self) -> bool: ...
     def do_cancel(self) -> bool: ...
     def do_changed(
-        self, file: File, other_file: File, event_type: FileMonitorEvent
+        self, file: File, other_file: File, event_type: _FileMonitorEventValueType
     ) -> None: ...
     def emit_event(
-        self, child: File, other_file: File | None, event_type: FileMonitorEvent
+        self,
+        child: File,
+        other_file: File | None,
+        event_type: _FileMonitorEventValueType,
     ) -> None: ...
     def is_cancelled(self) -> bool: ...
     def set_rate_limit(self, limit_msecs: int) -> None: ...
@@ -6077,7 +6157,7 @@ class FileMonitorClass(_gi.Struct):
     @property
     def changed(
         self,
-    ) -> Callable[[FileMonitor, File, File, FileMonitorEvent], None]: ...
+    ) -> Callable[[FileMonitor, File, File, _FileMonitorEventValueType], None]: ...
     @property
     def cancel(self) -> Callable[[FileMonitor], bool]: ...
 
@@ -6254,7 +6334,7 @@ class FilterInputStream(InputStream):
     @property
     def base_stream(self) -> InputStream: ...
     def __init__(
-        self, *, base_stream: InputStream = ..., close_base_stream: bool = ...
+        self, *, base_stream: InputStream | None = ..., close_base_stream: bool = ...
     ) -> None: ...
     def get_base_stream(self) -> InputStream: ...
     def get_close_base_stream(self) -> bool: ...
@@ -6302,7 +6382,7 @@ class FilterOutputStream(OutputStream):
     @property
     def base_stream(self) -> OutputStream: ...
     def __init__(
-        self, *, base_stream: OutputStream = ..., close_base_stream: bool = ...
+        self, *, base_stream: OutputStream | None = ..., close_base_stream: bool = ...
     ) -> None: ...
     def get_base_stream(self) -> OutputStream: ...
     def get_close_base_stream(self) -> bool: ...
@@ -6435,7 +6515,7 @@ class IOStream(GObject.Object):
     def splice_async(
         self,
         stream2: IOStream,
-        flags: IOStreamSpliceFlags,
+        flags: _IOStreamSpliceFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -6593,7 +6673,7 @@ class InetAddress(GObject.Object):
         self,
         *,
         bytes: int | Any | None = ...,
-        family: SocketFamily = ...,
+        family: _SocketFamilyValueType = ...,
         flowinfo: int = ...,
         scope_id: int = ...,
     ) -> None: ...
@@ -6614,19 +6694,23 @@ class InetAddress(GObject.Object):
     def get_native_size(self) -> int: ...
     def get_scope_id(self) -> int: ...
     @classmethod
-    def new_any(cls, family: SocketFamily) -> InetAddress: ...
+    def new_any(cls, family: _SocketFamilyValueType) -> InetAddress: ...
     @classmethod
     def new_from_bytes(
-        cls, bytes: Sequence[int], family: SocketFamily
+        cls, bytes: Sequence[int], family: _SocketFamilyValueType
     ) -> InetAddress: ...
     @classmethod
     def new_from_bytes_with_ipv6_info(
-        cls, bytes: Sequence[int], family: SocketFamily, flowinfo: int, scope_id: int
+        cls,
+        bytes: Sequence[int],
+        family: _SocketFamilyValueType,
+        flowinfo: int,
+        scope_id: int,
     ) -> InetAddress: ...
     @classmethod
     def new_from_string(cls, string: str) -> InetAddress | None: ...
     @classmethod
-    def new_loopback(cls, family: SocketFamily) -> InetAddress: ...
+    def new_loopback(cls, family: _SocketFamilyValueType) -> InetAddress: ...
     def to_string(self) -> str: ...
 
 class InetAddressClass(_gi.Struct):
@@ -6666,7 +6750,10 @@ class InetAddressMask(GObject.Object, Initable):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        address: InetAddress
+        @property
+        def address(self) -> InetAddress: ...
+        @address.setter
+        def address(self, value: InetAddress | None) -> None: ...
         @property
         def family(self) -> SocketFamily: ...
         length: int
@@ -6677,7 +6764,9 @@ class InetAddressMask(GObject.Object, Initable):
     def parent_instance(self) -> GObject.Object: ...
     @property
     def priv(self) -> InetAddressMaskPrivate: ...
-    def __init__(self, *, address: InetAddress = ..., length: int = ...) -> None: ...
+    def __init__(
+        self, *, address: InetAddress | None = ..., length: int = ...
+    ) -> None: ...
     def equal(self, mask2: InetAddressMask) -> bool: ...
     def get_address(self) -> InetAddress: ...
     def get_family(self) -> SocketFamily: ...
@@ -6747,7 +6836,7 @@ class InetSocketAddress(SocketAddress):
     def __init__(
         self,
         *,
-        address: InetAddress = ...,
+        address: InetAddress | None = ...,
         flowinfo: int = ...,
         port: int = ...,
         scope_id: int = ...,
@@ -7260,7 +7349,7 @@ class MemoryMonitorInterface(_gi.Struct):
     @property
     def low_memory_warning(
         self,
-    ) -> Callable[[MemoryMonitor, MemoryMonitorWarningLevel], None]: ...
+    ) -> Callable[[MemoryMonitor, _MemoryMonitorWarningLevelValueType], None]: ...
 
 class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     """
@@ -7286,7 +7375,7 @@ class MemoryOutputStream(OutputStream, PollableOutputStream, Seekable):
     @type_check_only
     class Props(OutputStream.Props):
         @property
-        def data(self) -> int | None: ...
+        def data(self) -> int: ...
         @property
         def data_size(self) -> int: ...
         @property
@@ -7583,7 +7672,7 @@ class Mount(GObject.GInterface, Protocol):
     def can_unmount(self) -> bool: ...
     def eject(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -7592,7 +7681,7 @@ class Mount(GObject.GInterface, Protocol):
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -7624,7 +7713,7 @@ class Mount(GObject.GInterface, Protocol):
     def is_shadowed(self) -> bool: ...
     def remount(
         self,
-        flags: MountMountFlags,
+        flags: _MountMountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -7635,7 +7724,7 @@ class Mount(GObject.GInterface, Protocol):
     def shadow(self) -> None: ...
     def unmount(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -7644,7 +7733,7 @@ class Mount(GObject.GInterface, Protocol):
     def unmount_finish(self, result: AsyncResult) -> bool: ...
     def unmount_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -7690,7 +7779,7 @@ class MountIface(_gi.Struct):
     ) -> Callable[
         [
             Mount,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -7705,7 +7794,7 @@ class MountIface(_gi.Struct):
     ) -> Callable[
         [
             Mount,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -7720,7 +7809,7 @@ class MountIface(_gi.Struct):
     ) -> Callable[
         [
             Mount,
-            MountMountFlags,
+            _MountMountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -7759,7 +7848,7 @@ class MountIface(_gi.Struct):
     ) -> Callable[
         [
             Mount,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -7775,7 +7864,7 @@ class MountIface(_gi.Struct):
     ) -> Callable[
         [
             Mount,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -7833,7 +7922,10 @@ class MountOperation(GObject.Object):
         is_tcrypt_hidden_volume: bool
         is_tcrypt_system_volume: bool
         password: str | None
-        password_save: PasswordSave
+        @property
+        def password_save(self) -> PasswordSave: ...
+        @password_save.setter
+        def password_save(self, value: _PasswordSaveValueType) -> None: ...
         pim: int
         username: str | None
 
@@ -7852,7 +7944,7 @@ class MountOperation(GObject.Object):
         is_tcrypt_hidden_volume: bool = ...,
         is_tcrypt_system_volume: bool = ...,
         password: str | None = ...,
-        password_save: PasswordSave = ...,
+        password_save: _PasswordSaveValueType = ...,
         pim: int = ...,
         username: str | None = ...,
     ) -> None: ...
@@ -7862,10 +7954,10 @@ class MountOperation(GObject.Object):
         message: str,
         default_user: str,
         default_domain: str,
-        flags: AskPasswordFlags,
+        flags: _AskPasswordFlagsValueType,
     ) -> None: ...
     def do_ask_question(self, message: str, choices: Sequence[str]) -> None: ...
-    def do_reply(self, result: MountOperationResult) -> None: ...
+    def do_reply(self, result: _MountOperationResultValueType) -> None: ...
     def do_show_processes(
         self, message: str, processes: Sequence[int], choices: Sequence[str]
     ) -> None: ...
@@ -7883,14 +7975,14 @@ class MountOperation(GObject.Object):
     def get_username(self) -> str | None: ...
     @classmethod
     def new(cls) -> MountOperation: ...
-    def reply(self, result: MountOperationResult) -> None: ...
+    def reply(self, result: _MountOperationResultValueType) -> None: ...
     def set_anonymous(self, anonymous: bool) -> None: ...
     def set_choice(self, choice: int) -> None: ...
     def set_domain(self, domain: str | None = None) -> None: ...
     def set_is_tcrypt_hidden_volume(self, hidden_volume: bool) -> None: ...
     def set_is_tcrypt_system_volume(self, system_volume: bool) -> None: ...
     def set_password(self, password: str | None = None) -> None: ...
-    def set_password_save(self, save: PasswordSave) -> None: ...
+    def set_password_save(self, save: _PasswordSaveValueType) -> None: ...
     def set_pim(self, pim: int) -> None: ...
     def set_username(self, username: str | None = None) -> None: ...
 
@@ -7907,11 +7999,15 @@ class MountOperationClass(_gi.Struct):
     @property
     def ask_password(
         self,
-    ) -> Callable[[MountOperation, str, str, str, AskPasswordFlags], None]: ...
+    ) -> Callable[
+        [MountOperation, str, str, str, _AskPasswordFlagsValueType], None
+    ]: ...
     @property
     def ask_question(self) -> Callable[[MountOperation, str, Sequence[str]], None]: ...
     @property
-    def reply(self) -> Callable[[MountOperation, MountOperationResult], None]: ...
+    def reply(
+        self,
+    ) -> Callable[[MountOperation, _MountOperationResultValueType], None]: ...
     @property
     def aborted(self) -> Callable[[MountOperation], None]: ...
     @property
@@ -8041,7 +8137,7 @@ class NetworkAddress(GObject.Object, SocketConnectable):
     @property
     def priv(self) -> NetworkAddressPrivate: ...
     def __init__(
-        self, *, hostname: str = ..., port: int = ..., scheme: str = ...
+        self, *, hostname: str | None = ..., port: int = ..., scheme: str | None = ...
     ) -> None: ...
     def get_hostname(self) -> str: ...
     def get_port(self) -> int: ...
@@ -8164,10 +8260,10 @@ class NetworkService(GObject.Object, SocketConnectable):
     def __init__(
         self,
         *,
-        domain: str = ...,
-        protocol: str = ...,
+        domain: str | None = ...,
+        protocol: str | None = ...,
         scheme: str = ...,
-        service: str = ...,
+        service: str | None = ...,
     ) -> None: ...
     def get_domain(self) -> str: ...
     def get_protocol(self) -> str: ...
@@ -8217,7 +8313,7 @@ class Notification(GObject.Object):
         self, action: str, target: GLib.Variant | None = None
     ) -> None: ...
     def set_icon(self, icon: Icon) -> None: ...
-    def set_priority(self, priority: NotificationPriority) -> None: ...
+    def set_priority(self, priority: _NotificationPriorityValueType) -> None: ...
     def set_title(self, title: str) -> None: ...
     def set_urgent(self, urgent: bool) -> None: ...
 
@@ -8288,13 +8384,13 @@ class OutputStream(GObject.Object):
     def do_splice(
         self,
         source: InputStream,
-        flags: OutputStreamSpliceFlags,
+        flags: _OutputStreamSpliceFlagsValueType,
         cancellable: Cancellable | None,
     ) -> int: ...
     def do_splice_async(
         self,
         source: InputStream,
-        flags: OutputStreamSpliceFlags,
+        flags: _OutputStreamSpliceFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -8345,13 +8441,13 @@ class OutputStream(GObject.Object):
     def splice(
         self,
         source: InputStream,
-        flags: OutputStreamSpliceFlags,
+        flags: _OutputStreamSpliceFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> int: ...
     def splice_async(
         self,
         source: InputStream,
-        flags: OutputStreamSpliceFlags,
+        flags: _OutputStreamSpliceFlagsValueType,
         io_priority: int,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -8445,7 +8541,13 @@ class OutputStreamClass(_gi.Struct):
     def splice(
         self,
     ) -> Callable[
-        [OutputStream, InputStream, OutputStreamSpliceFlags, Cancellable | None], int
+        [
+            OutputStream,
+            InputStream,
+            _OutputStreamSpliceFlagsValueType,
+            Cancellable | None,
+        ],
+        int,
     ]: ...
     @property
     def flush(self) -> Callable[[OutputStream, Cancellable | None], bool]: ...
@@ -8475,7 +8577,7 @@ class OutputStreamClass(_gi.Struct):
         [
             OutputStream,
             InputStream,
-            OutputStreamSpliceFlags,
+            _OutputStreamSpliceFlagsValueType,
             int,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -8815,13 +8917,13 @@ class PropertyAction(GObject.Object, Action):
         @property
         def invert_boolean(self) -> bool: ...
         @property
-        def name(self) -> str: ...
+        def name(self) -> str | None: ...
         @property
-        def parameter_type(self) -> GLib.VariantType: ...
+        def parameter_type(self) -> GLib.VariantType | None: ...
         @property
-        def state(self) -> GLib.Variant: ...
+        def state(self) -> GLib.Variant | None: ...
         @property
-        def state_type(self) -> GLib.VariantType: ...
+        def state_type(self) -> GLib.VariantType | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -8829,9 +8931,9 @@ class PropertyAction(GObject.Object, Action):
         self,
         *,
         invert_boolean: bool = ...,
-        name: str = ...,
-        object: GObject.Object = ...,
-        property_name: str = ...,
+        name: str | None = ...,
+        object: GObject.Object | None = ...,
+        property_name: str | None = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -8923,14 +9025,14 @@ class ProxyAddress(InetSocketAddress):
     def __init__(
         self,
         *,
-        destination_hostname: str = ...,
+        destination_hostname: str | None = ...,
         destination_port: int = ...,
-        destination_protocol: str = ...,
-        password: str = ...,
-        protocol: str = ...,
-        uri: str = ...,
-        username: str = ...,
-        address: InetAddress = ...,
+        destination_protocol: str | None = ...,
+        password: str | None = ...,
+        protocol: str | None = ...,
+        uri: str | None = ...,
+        username: str | None = ...,
+        address: InetAddress | None = ...,
         flowinfo: int = ...,
         port: int = ...,
         scope_id: int = ...,
@@ -8987,12 +9089,12 @@ class ProxyAddressEnumerator(SocketAddressEnumerator):
     @type_check_only
     class Props(SocketAddressEnumerator.Props):
         @property
-        def connectable(self) -> SocketConnectable: ...
+        def connectable(self) -> SocketConnectable | None: ...
         @property
         def default_port(self) -> int: ...
-        proxy_resolver: ProxyResolver
+        proxy_resolver: ProxyResolver | None
         @property
-        def uri(self) -> str: ...
+        def uri(self) -> str | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -9003,10 +9105,10 @@ class ProxyAddressEnumerator(SocketAddressEnumerator):
     def __init__(
         self,
         *,
-        connectable: SocketConnectable = ...,
+        connectable: SocketConnectable | None = ...,
         default_port: int = ...,
-        proxy_resolver: ProxyResolver = ...,
-        uri: str = ...,
+        proxy_resolver: ProxyResolver | None = ...,
+        uri: str | None = ...,
     ) -> None: ...
 
 class ProxyAddressEnumeratorClass(_gi.Struct):
@@ -9204,13 +9306,13 @@ class Resolver(GObject.Object):
     def do_lookup_by_name_with_flags(
         self,
         hostname: str,
-        flags: ResolverNameLookupFlags,
+        flags: _ResolverNameLookupFlagsValueType,
         cancellable: Cancellable | None,
     ) -> list[InetAddress]: ...
     def do_lookup_by_name_with_flags_async(
         self,
         hostname: str,
-        flags: ResolverNameLookupFlags,
+        flags: _ResolverNameLookupFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -9222,13 +9324,13 @@ class Resolver(GObject.Object):
     def do_lookup_records(
         self,
         rrname: str,
-        record_type: ResolverRecordType,
+        record_type: _ResolverRecordTypeValueType,
         cancellable: Cancellable | None,
     ) -> list[GLib.Variant]: ...
     def do_lookup_records_async(
         self,
         rrname: str,
-        record_type: ResolverRecordType,
+        record_type: _ResolverRecordTypeValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -9275,13 +9377,13 @@ class Resolver(GObject.Object):
     def lookup_by_name_with_flags(
         self,
         hostname: str,
-        flags: ResolverNameLookupFlags,
+        flags: _ResolverNameLookupFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> list[InetAddress]: ...
     def lookup_by_name_with_flags_async(
         self,
         hostname: str,
-        flags: ResolverNameLookupFlags,
+        flags: _ResolverNameLookupFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -9293,13 +9395,13 @@ class Resolver(GObject.Object):
     def lookup_records(
         self,
         rrname: str,
-        record_type: ResolverRecordType,
+        record_type: _ResolverRecordTypeValueType,
         cancellable: Cancellable | None = None,
     ) -> list[GLib.Variant]: ...
     def lookup_records_async(
         self,
         rrname: str,
-        record_type: ResolverRecordType,
+        record_type: _ResolverRecordTypeValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -9402,7 +9504,8 @@ class ResolverClass(_gi.Struct):
     def lookup_records(
         self,
     ) -> Callable[
-        [Resolver, str, ResolverRecordType, Cancellable | None], list[GLib.Variant]
+        [Resolver, str, _ResolverRecordTypeValueType, Cancellable | None],
+        list[GLib.Variant],
     ]: ...
     @property
     def lookup_records_async(
@@ -9411,7 +9514,7 @@ class ResolverClass(_gi.Struct):
         [
             Resolver,
             str,
-            ResolverRecordType,
+            _ResolverRecordTypeValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -9429,7 +9532,7 @@ class ResolverClass(_gi.Struct):
         [
             Resolver,
             str,
-            ResolverNameLookupFlags,
+            _ResolverNameLookupFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -9444,7 +9547,8 @@ class ResolverClass(_gi.Struct):
     def lookup_by_name_with_flags(
         self,
     ) -> Callable[
-        [Resolver, str, ResolverNameLookupFlags, Cancellable | None], list[InetAddress]
+        [Resolver, str, _ResolverNameLookupFlagsValueType, Cancellable | None],
+        list[InetAddress],
     ]: ...
 
 class ResolverPrivate(_gi.Struct): ...
@@ -9458,21 +9562,21 @@ class Resource(GObject.GBoxed):
         new_from_data(data:GLib.Bytes) -> Gio.Resource
     """
     def enumerate_children(
-        self, path: str, lookup_flags: ResourceLookupFlags
+        self, path: str, lookup_flags: _ResourceLookupFlagsValueType
     ) -> list[str]: ...
     def get_info(
-        self, path: str, lookup_flags: ResourceLookupFlags
+        self, path: str, lookup_flags: _ResourceLookupFlagsValueType
     ) -> tuple[bool, int, int]: ...
     def has_children(self, path: str) -> bool: ...
     @staticmethod
     def load(filename: str) -> Resource: ...
     def lookup_data(
-        self, path: str, lookup_flags: ResourceLookupFlags
+        self, path: str, lookup_flags: _ResourceLookupFlagsValueType
     ) -> GLib.Bytes: ...
     @classmethod
     def new_from_data(cls, data: GLib.Bytes) -> Resource: ...
     def open_stream(
-        self, path: str, lookup_flags: ResourceLookupFlags
+        self, path: str, lookup_flags: _ResourceLookupFlagsValueType
     ) -> InputStream: ...
     def ref(self) -> Resource: ...
     def unref(self) -> None: ...
@@ -9544,19 +9648,19 @@ class Settings(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def backend(self) -> SettingsBackend: ...
+        def backend(self) -> SettingsBackend | None: ...
         @property
         def delay_apply(self) -> bool: ...
         @property
         def has_unapplied(self) -> bool: ...
         @property
-        def path(self) -> str: ...
+        def path(self) -> str | None: ...
         @property
-        def schema(self) -> str: ...
+        def schema(self) -> str | None: ...
         @property
-        def schema_id(self) -> str: ...
+        def schema_id(self) -> str | None: ...
         @property
-        def settings_schema(self) -> SettingsSchema: ...
+        def settings_schema(self) -> SettingsSchema | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -9567,11 +9671,11 @@ class Settings(GObject.Object):
     def __init__(
         self,
         *,
-        backend: SettingsBackend = ...,
-        path: str = ...,
-        schema: str = ...,
-        schema_id: str = ...,
-        settings_schema: SettingsSchema = ...,
+        backend: SettingsBackend | None = ...,
+        path: str | None = ...,
+        schema: str | None = ...,
+        schema_id: str | None = ...,
+        settings_schema: SettingsSchema | None = ...,
     ) -> None: ...
     def __bool__(self): ...  # FIXME: Override is missing typing annotation
     def __contains__(self, key): ...  # FIXME: Override is missing typing annotation
@@ -9583,14 +9687,18 @@ class Settings(GObject.Object):
     ): ...  # FIXME: Override is missing typing annotation
     def apply(self) -> None: ...
     def bind(
-        self, key: str, object: GObject.Object, property: str, flags: SettingsBindFlags
+        self,
+        key: str,
+        object: GObject.Object,
+        property: str,
+        flags: _SettingsBindFlagsValueType,
     ) -> None: ...
     def bind_with_mapping(
         self,
         key: str,
         object: GObject.Object,
         property: str,
-        flags: SettingsBindFlags,
+        flags: _SettingsBindFlagsValueType,
         get_mapping: Callable[..., Any] | None = None,
         set_mapping: Callable[..., Any] | None = None,
     ) -> None: ...
@@ -9852,12 +9960,15 @@ class SimpleAction(GObject.Object, Action):
     class Props(GObject.Object.Props):
         enabled: bool
         @property
-        def name(self) -> str: ...
+        def name(self) -> str | None: ...
         @property
-        def parameter_type(self) -> GLib.VariantType: ...
-        state: GLib.Variant
+        def parameter_type(self) -> GLib.VariantType | None: ...
         @property
-        def state_type(self) -> GLib.VariantType: ...
+        def state(self) -> GLib.Variant | None: ...
+        @state.setter
+        def state(self, value: GLib.Variant) -> None: ...
+        @property
+        def state_type(self) -> GLib.VariantType | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -9865,8 +9976,8 @@ class SimpleAction(GObject.Object, Action):
         self,
         *,
         enabled: bool = ...,
-        name: str = ...,
-        parameter_type: GLib.VariantType = ...,
+        name: str | None = ...,
+        parameter_type: GLib.VariantType | None = ...,
         state: GLib.Variant = ...,
     ) -> None: ...
     @classmethod
@@ -10009,14 +10120,17 @@ class SimpleIOStream(IOStream):
     @type_check_only
     class Props(IOStream.Props):
         @property
-        def input_stream(self) -> InputStream: ...
+        def input_stream(self) -> InputStream | None: ...
         @property
-        def output_stream(self) -> OutputStream: ...
+        def output_stream(self) -> OutputStream | None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
-        self, *, input_stream: InputStream = ..., output_stream: OutputStream = ...
+        self,
+        *,
+        input_stream: InputStream | None = ...,
+        output_stream: OutputStream | None = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -10065,7 +10179,10 @@ class SimpleProxyResolver(GObject.Object, ProxyResolver):
     @type_check_only
     class Props(GObject.Object.Props):
         default_proxy: str | None
-        ignore_hosts: list[str]
+        @property
+        def ignore_hosts(self) -> list[str]: ...
+        @ignore_hosts.setter
+        def ignore_hosts(self, value: Sequence[str]) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10162,30 +10279,34 @@ class Socket(GObject.Object, DatagramBased, Initable):
         *,
         blocking: bool = ...,
         broadcast: bool = ...,
-        family: SocketFamily = ...,
+        family: _SocketFamilyValueType = ...,
         fd: int = ...,
         keepalive: bool = ...,
         listen_backlog: int = ...,
         multicast_loopback: bool = ...,
         multicast_ttl: int = ...,
-        protocol: SocketProtocol = ...,
+        protocol: _SocketProtocolValueType = ...,
         timeout: int = ...,
         ttl: int = ...,
-        type: SocketType = ...,
+        type: _SocketTypeValueType = ...,
     ) -> None: ...
     def accept(self, cancellable: Cancellable | None = None) -> Socket: ...
     def bind(self, address: SocketAddress, allow_reuse: bool) -> bool: ...
     def check_connect_result(self) -> bool: ...
     def close(self) -> bool: ...
-    def condition_check(self, condition: GLib.IOCondition) -> GLib.IOCondition: ...
+    def condition_check(
+        self, condition: GLib._IOConditionValueType
+    ) -> GLib.IOCondition: ...
     def condition_timed_wait(
         self,
-        condition: GLib.IOCondition,
+        condition: GLib._IOConditionValueType,
         timeout_us: int,
         cancellable: Cancellable | None = None,
     ) -> bool: ...
     def condition_wait(
-        self, condition: GLib.IOCondition, cancellable: Cancellable | None = None
+        self,
+        condition: GLib._IOConditionValueType,
+        cancellable: Cancellable | None = None,
     ) -> bool: ...
     def connect(
         self, address: SocketAddress, cancellable: Cancellable | None = None
@@ -10231,7 +10352,10 @@ class Socket(GObject.Object, DatagramBased, Initable):
     def listen(self) -> bool: ...
     @classmethod
     def new(
-        cls, family: SocketFamily, type: SocketType, protocol: SocketProtocol
+        cls,
+        family: _SocketFamilyValueType,
+        type: _SocketTypeValueType,
+        protocol: _SocketProtocolValueType,
     ) -> Socket: ...
     @classmethod
     def new_from_fd(cls, fd: int) -> Socket: ...
@@ -10471,14 +10595,31 @@ class SocketClient(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         enable_proxy: bool
-        family: SocketFamily
+        @property
+        def family(self) -> SocketFamily: ...
+        @family.setter
+        def family(self, value: _SocketFamilyValueType) -> None: ...
         local_address: SocketAddress | None
-        protocol: SocketProtocol
-        proxy_resolver: ProxyResolver | None
+        @property
+        def protocol(self) -> SocketProtocol: ...
+        @protocol.setter
+        def protocol(self, value: _SocketProtocolValueType) -> None: ...
+        @property
+        def proxy_resolver(self) -> ProxyResolver: ...
+        @proxy_resolver.setter
+        def proxy_resolver(self, value: ProxyResolver | None) -> None: ...
         timeout: int
         tls: bool
-        tls_validation_flags: TlsCertificateFlags
-        type: SocketType
+        @property
+        def tls_validation_flags(self) -> TlsCertificateFlags: ...
+        @tls_validation_flags.setter
+        def tls_validation_flags(
+            self, value: _TlsCertificateFlagsValueType
+        ) -> None: ...
+        @property
+        def type(self) -> SocketType: ...
+        @type.setter
+        def type(self, value: _SocketTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -10490,14 +10631,14 @@ class SocketClient(GObject.Object):
         self,
         *,
         enable_proxy: bool = ...,
-        family: SocketFamily = ...,
+        family: _SocketFamilyValueType = ...,
         local_address: SocketAddress | None = ...,
-        protocol: SocketProtocol = ...,
+        protocol: _SocketProtocolValueType = ...,
         proxy_resolver: ProxyResolver | None = ...,
         timeout: int = ...,
         tls: bool = ...,
-        tls_validation_flags: TlsCertificateFlags = ...,
-        type: SocketType = ...,
+        tls_validation_flags: _TlsCertificateFlagsValueType = ...,
+        type: _SocketTypeValueType = ...,
     ) -> None: ...
     def add_application_proxy(self, protocol: str) -> None: ...
     def connect(
@@ -10556,7 +10697,7 @@ class SocketClient(GObject.Object):
     def connect_to_uri_finish(self, result: AsyncResult) -> SocketConnection: ...
     def do_event(
         self,
-        event: SocketClientEvent,
+        event: _SocketClientEventValueType,
         connectable: SocketConnectable,
         connection: IOStream,
     ) -> None: ...
@@ -10572,16 +10713,18 @@ class SocketClient(GObject.Object):
     @classmethod
     def new(cls) -> SocketClient: ...
     def set_enable_proxy(self, enable: bool) -> None: ...
-    def set_family(self, family: SocketFamily) -> None: ...
+    def set_family(self, family: _SocketFamilyValueType) -> None: ...
     def set_local_address(self, address: SocketAddress | None = None) -> None: ...
-    def set_protocol(self, protocol: SocketProtocol) -> None: ...
+    def set_protocol(self, protocol: _SocketProtocolValueType) -> None: ...
     def set_proxy_resolver(
         self, proxy_resolver: ProxyResolver | None = None
     ) -> None: ...
-    def set_socket_type(self, type: SocketType) -> None: ...
+    def set_socket_type(self, type: _SocketTypeValueType) -> None: ...
     def set_timeout(self, timeout: int) -> None: ...
     def set_tls(self, tls: bool) -> None: ...
-    def set_tls_validation_flags(self, flags: TlsCertificateFlags) -> None: ...
+    def set_tls_validation_flags(
+        self, flags: _TlsCertificateFlagsValueType
+    ) -> None: ...
 
 class SocketClientClass(_gi.Struct):
     """
@@ -10597,7 +10740,7 @@ class SocketClientClass(_gi.Struct):
     def event(
         self,
     ) -> Callable[
-        [SocketClient, SocketClientEvent, SocketConnectable, IOStream], None
+        [SocketClient, _SocketClientEventValueType, SocketConnectable, IOStream], None
     ]: ...
 
 class SocketClientPrivate(_gi.Struct): ...
@@ -10664,7 +10807,7 @@ class SocketConnection(IOStream):
     def parent_instance(self) -> IOStream: ...
     @property
     def priv(self) -> SocketConnectionPrivate: ...
-    def __init__(self, *, socket: Socket = ...) -> None: ...
+    def __init__(self, *, socket: Socket | None = ...) -> None: ...
     def connect(
         self, address: SocketAddress, cancellable: Cancellable | None = None
     ) -> bool: ...
@@ -10679,11 +10822,14 @@ class SocketConnection(IOStream):
     def connect_finish(self, result: AsyncResult) -> bool: ...
     @staticmethod
     def factory_lookup_type(
-        family: SocketFamily, type: SocketType, protocol_id: int
+        family: _SocketFamilyValueType, type: _SocketTypeValueType, protocol_id: int
     ) -> type[Any]: ...
     @staticmethod
     def factory_register_type(
-        g_type: type[Any], family: SocketFamily, type: SocketType, protocol: int
+        g_type: type[Any],
+        family: _SocketFamilyValueType,
+        type: _SocketTypeValueType,
+        protocol: int,
     ) -> None: ...
     def get_local_address(self) -> SocketAddress: ...
     def get_remote_address(self) -> SocketAddress: ...
@@ -10816,8 +10962,8 @@ class SocketListener(GObject.Object):
     def add_address(
         self,
         address: SocketAddress,
-        type: SocketType,
-        protocol: SocketProtocol,
+        type: _SocketTypeValueType,
+        protocol: _SocketProtocolValueType,
         source_object: GObject.Object | None = None,
     ) -> tuple[bool, SocketAddress]: ...
     def add_any_inet_port(self, source_object: GObject.Object | None = None) -> int: ...
@@ -10829,7 +10975,9 @@ class SocketListener(GObject.Object):
     ) -> bool: ...
     def close(self) -> None: ...
     def do_changed(self) -> None: ...
-    def do_event(self, event: SocketListenerEvent, socket: Socket) -> None: ...
+    def do_event(
+        self, event: _SocketListenerEventValueType, socket: Socket
+    ) -> None: ...
     @classmethod
     def new(cls) -> SocketListener: ...
     def set_backlog(self, listen_backlog: int) -> None: ...
@@ -10849,7 +10997,7 @@ class SocketListenerClass(_gi.Struct):
     @property
     def event(
         self,
-    ) -> Callable[[SocketListener, SocketListenerEvent, Socket], None]: ...
+    ) -> Callable[[SocketListener, _SocketListenerEventValueType, Socket], None]: ...
 
 class SocketListenerPrivate(_gi.Struct): ...
 class SocketPrivate(_gi.Struct): ...
@@ -10978,7 +11126,10 @@ class Subprocess(GObject.Object, Initable):
       notify (GParam)
     """
     def __init__(
-        self, *, argv: Sequence[str] = ..., flags: SubprocessFlags = ...
+        self,
+        *,
+        argv: Sequence[str] | None = ...,
+        flags: _SubprocessFlagsValueType = ...,
     ) -> None: ...
     def communicate(
         self,
@@ -11022,7 +11173,9 @@ class Subprocess(GObject.Object, Initable):
     def get_successful(self) -> bool: ...
     def get_term_sig(self) -> int: ...
     @classmethod
-    def new(cls, argv: Sequence[str], flags: SubprocessFlags) -> Subprocess: ...
+    def new(
+        cls, argv: Sequence[str], flags: _SubprocessFlagsValueType
+    ) -> Subprocess: ...
     def send_signal(self, signal_num: int) -> None: ...
     def wait(self, cancellable: Cancellable | None = None) -> bool: ...
     def wait_async(
@@ -11060,14 +11213,14 @@ class SubprocessLauncher(GObject.Object):
     Signals from GObject:
       notify (GParam)
     """
-    def __init__(self, *, flags: SubprocessFlags = ...) -> None: ...
+    def __init__(self, *, flags: _SubprocessFlagsValueType = ...) -> None: ...
     def close(self) -> None: ...
     def getenv(self, variable: str) -> str | None: ...
     @classmethod
-    def new(cls, flags: SubprocessFlags) -> SubprocessLauncher: ...
+    def new(cls, flags: _SubprocessFlagsValueType) -> SubprocessLauncher: ...
     def set_cwd(self, cwd: str) -> None: ...
     def set_environ(self, env: Sequence[str]) -> None: ...
-    def set_flags(self, flags: SubprocessFlags) -> None: ...
+    def set_flags(self, flags: _SubprocessFlagsValueType) -> None: ...
     def set_stderr_file_path(self, path: str | None = None) -> None: ...
     def set_stdin_file_path(self, path: str | None = None) -> None: ...
     def set_stdout_file_path(self, path: str | None = None) -> None: ...
@@ -11214,7 +11367,7 @@ class TcpConnection(SocketConnection):
     @property
     def priv(self) -> TcpConnectionPrivate: ...
     def __init__(
-        self, *, graceful_disconnect: bool = ..., socket: Socket = ...
+        self, *, graceful_disconnect: bool = ..., socket: Socket | None = ...
     ) -> None: ...
     def get_graceful_disconnect(self) -> bool: ...
     def set_graceful_disconnect(self, graceful_disconnect: bool) -> None: ...
@@ -11274,9 +11427,9 @@ class TcpWrapperConnection(TcpConnection):
     def __init__(
         self,
         *,
-        base_io_stream: IOStream = ...,
+        base_io_stream: IOStream | None = ...,
         graceful_disconnect: bool = ...,
-        socket: Socket = ...,
+        socket: Socket | None = ...,
     ) -> None: ...
     def get_base_io_stream(self) -> IOStream: ...
     @classmethod
@@ -11319,13 +11472,13 @@ class TestDBus(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, flags: TestDBusFlags = ...) -> None: ...
+    def __init__(self, *, flags: _TestDBusFlagsValueType = ...) -> None: ...
     def add_service_dir(self, path: str) -> None: ...
     def down(self) -> None: ...
     def get_bus_address(self) -> str | None: ...
     def get_flags(self) -> TestDBusFlags: ...
     @classmethod
-    def new(cls, flags: TestDBusFlags) -> TestDBus: ...
+    def new(cls, flags: _TestDBusFlagsValueType) -> TestDBus: ...
     def stop(self) -> None: ...
     @staticmethod
     def unset() -> None: ...
@@ -11364,8 +11517,8 @@ class ThemedIcon(GObject.Object, Icon):
     def __init__(
         self,
         *,
-        name: str = ...,
-        names: Sequence[str] = ...,
+        name: str | None = ...,
+        names: Sequence[str] | None = ...,
         use_default_fallbacks: bool = ...,
     ) -> None: ...
     def append_name(self, iconname: str) -> None: ...
@@ -11571,11 +11724,11 @@ class TlsCertificate(GObject.Object):
         @property
         def certificate(self) -> bytes: ...
         @property
-        def certificate_pem(self) -> str: ...
+        def certificate_pem(self) -> str | None: ...
         @property
-        def dns_names(self) -> list[int] | None: ...
+        def dns_names(self) -> list[int]: ...
         @property
-        def ip_addresses(self) -> list[int] | None: ...
+        def ip_addresses(self) -> list[int]: ...
         @property
         def issuer(self) -> TlsCertificate | None: ...
         @property
@@ -11585,13 +11738,13 @@ class TlsCertificate(GObject.Object):
         @property
         def not_valid_before(self) -> GLib.DateTime | None: ...
         @property
-        def pkcs11_uri(self) -> str: ...
+        def pkcs11_uri(self) -> str | None: ...
         @property
         def private_key(self) -> bytes: ...
         @property
-        def private_key_pem(self) -> str: ...
+        def private_key_pem(self) -> str | None: ...
         @property
-        def private_key_pkcs11_uri(self) -> str: ...
+        def private_key_pkcs11_uri(self) -> str | None: ...
         @property
         def subject_name(self) -> str | None: ...
 
@@ -11604,15 +11757,15 @@ class TlsCertificate(GObject.Object):
     def __init__(
         self,
         *,
-        certificate: Sequence[int] = ...,
-        certificate_pem: str = ...,
-        issuer: TlsCertificate = ...,
-        password: str = ...,
-        pkcs11_uri: str = ...,
-        pkcs12_data: Sequence[int] = ...,
-        private_key: Sequence[int] = ...,
-        private_key_pem: str = ...,
-        private_key_pkcs11_uri: str = ...,
+        certificate: Sequence[int] | None = ...,
+        certificate_pem: str | None = ...,
+        issuer: TlsCertificate | None = ...,
+        password: str | None = ...,
+        pkcs11_uri: str | None = ...,
+        pkcs12_data: Sequence[int] | None = ...,
+        private_key: Sequence[int] | None = ...,
+        private_key_pem: str | None = ...,
+        private_key_pkcs11_uri: str | None = ...,
     ) -> None: ...
     def do_verify(
         self, identity: SocketConnectable | None, trusted_ca: TlsCertificate | None
@@ -11691,7 +11844,7 @@ class TlsClientConnection(GObject.GInterface, Protocol):
     ) -> TlsClientConnection: ...
     def set_server_identity(self, identity: SocketConnectable) -> None: ...
     def set_use_ssl3(self, use_ssl3: bool) -> None: ...
-    def set_validation_flags(self, flags: TlsCertificateFlags) -> None: ...
+    def set_validation_flags(self, flags: _TlsCertificateFlagsValueType) -> None: ...
 
 class TlsClientConnectionInterface(_gi.Struct):
     """
@@ -11746,10 +11899,16 @@ class TlsConnection(IOStream):
     """
     @type_check_only
     class Props(IOStream.Props):
-        advertised_protocols: list[str] | None
         @property
-        def base_io_stream(self) -> IOStream: ...
-        certificate: TlsCertificate | None
+        def advertised_protocols(self) -> list[str]: ...
+        @advertised_protocols.setter
+        def advertised_protocols(self, value: Sequence[str] | None) -> None: ...
+        @property
+        def base_io_stream(self) -> IOStream | None: ...
+        @property
+        def certificate(self) -> TlsCertificate | None: ...
+        @certificate.setter
+        def certificate(self, value: TlsCertificate) -> None: ...
         @property
         def ciphersuite_name(self) -> str | None: ...
         database: TlsDatabase | None
@@ -11762,7 +11921,10 @@ class TlsConnection(IOStream):
         def peer_certificate_errors(self) -> TlsCertificateFlags: ...
         @property
         def protocol_version(self) -> TlsProtocolVersion: ...
-        rehandshake_mode: TlsRehandshakeMode
+        @property
+        def rehandshake_mode(self) -> TlsRehandshakeMode: ...
+        @rehandshake_mode.setter
+        def rehandshake_mode(self, value: _TlsRehandshakeModeValueType) -> None: ...
         require_close_notify: bool
         use_system_certdb: bool
 
@@ -11776,19 +11938,19 @@ class TlsConnection(IOStream):
         self,
         *,
         advertised_protocols: Sequence[str] | None = ...,
-        base_io_stream: IOStream = ...,
+        base_io_stream: IOStream | None = ...,
         certificate: TlsCertificate = ...,
         database: TlsDatabase | None = ...,
         interaction: TlsInteraction | None = ...,
-        rehandshake_mode: TlsRehandshakeMode = ...,
+        rehandshake_mode: _TlsRehandshakeModeValueType = ...,
         require_close_notify: bool = ...,
         use_system_certdb: bool = ...,
     ) -> None: ...
     def do_accept_certificate(
-        self, peer_cert: TlsCertificate, errors: TlsCertificateFlags
+        self, peer_cert: TlsCertificate, errors: _TlsCertificateFlagsValueType
     ) -> bool: ...
     def do_get_binding_data(
-        self, type: TlsChannelBindingType, data: Sequence[int]
+        self, type: _TlsChannelBindingTypeValueType, data: Sequence[int]
     ) -> bool: ...
     def do_get_negotiated_protocol(self) -> str | None: ...
     def do_handshake(self, cancellable: Cancellable | None) -> bool: ...
@@ -11802,11 +11964,11 @@ class TlsConnection(IOStream):
     ) -> None: ...
     def do_handshake_finish(self, result: AsyncResult) -> bool: ...
     def emit_accept_certificate(
-        self, peer_cert: TlsCertificate, errors: TlsCertificateFlags
+        self, peer_cert: TlsCertificate, errors: _TlsCertificateFlagsValueType
     ) -> bool: ...
     def get_certificate(self) -> TlsCertificate | None: ...
     def get_channel_binding_data(
-        self, type: TlsChannelBindingType
+        self, type: _TlsChannelBindingTypeValueType
     ) -> tuple[bool, bytes]: ...
     def get_ciphersuite_name(self) -> str | None: ...
     def get_database(self) -> TlsDatabase | None: ...
@@ -11834,7 +11996,7 @@ class TlsConnection(IOStream):
     def set_certificate(self, certificate: TlsCertificate) -> None: ...
     def set_database(self, database: TlsDatabase | None = None) -> None: ...
     def set_interaction(self, interaction: TlsInteraction | None = None) -> None: ...
-    def set_rehandshake_mode(self, mode: TlsRehandshakeMode) -> None: ...
+    def set_rehandshake_mode(self, mode: _TlsRehandshakeModeValueType) -> None: ...
     def set_require_close_notify(self, require_close_notify: bool) -> None: ...
     def set_use_system_certdb(self, use_system_certdb: bool) -> None: ...
 
@@ -11851,7 +12013,9 @@ class TlsConnectionClass(_gi.Struct):
     @property
     def accept_certificate(
         self,
-    ) -> Callable[[TlsConnection, TlsCertificate, TlsCertificateFlags], bool]: ...
+    ) -> Callable[
+        [TlsConnection, TlsCertificate, _TlsCertificateFlagsValueType], bool
+    ]: ...
     @property
     def handshake(self) -> Callable[[TlsConnection, Cancellable | None], bool]: ...
     @property
@@ -11872,7 +12036,9 @@ class TlsConnectionClass(_gi.Struct):
     @property
     def get_binding_data(
         self,
-    ) -> Callable[[TlsConnection, TlsChannelBindingType, Sequence[int]], bool]: ...
+    ) -> Callable[
+        [TlsConnection, _TlsChannelBindingTypeValueType, Sequence[int]], bool
+    ]: ...
     @property
     def get_negotiated_protocol(self) -> Callable[[TlsConnection], str | None]: ...
     @property
@@ -11905,14 +12071,14 @@ class TlsDatabase(GObject.Object):
         self,
         handle: str,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
     ) -> TlsCertificate | None: ...
     def do_lookup_certificate_for_handle_async(
         self,
         handle: str,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -11925,14 +12091,14 @@ class TlsDatabase(GObject.Object):
         self,
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
     ) -> TlsCertificate: ...
     def do_lookup_certificate_issuer_async(
         self,
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -11945,14 +12111,14 @@ class TlsDatabase(GObject.Object):
         self,
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
     ) -> list[TlsCertificate]: ...
     def do_lookup_certificates_issued_by_async(
         self,
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -11967,7 +12133,7 @@ class TlsDatabase(GObject.Object):
         purpose: str,
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseVerifyFlags,
+        flags: _TlsDatabaseVerifyFlagsValueType,
         cancellable: Cancellable | None,
     ) -> TlsCertificateFlags: ...
     def do_verify_chain_async(
@@ -11976,7 +12142,7 @@ class TlsDatabase(GObject.Object):
         purpose: str,
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseVerifyFlags,
+        flags: _TlsDatabaseVerifyFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -11987,14 +12153,14 @@ class TlsDatabase(GObject.Object):
         self,
         handle: str,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> TlsCertificate | None: ...
     def lookup_certificate_for_handle_async(
         self,
         handle: str,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12007,14 +12173,14 @@ class TlsDatabase(GObject.Object):
         self,
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> TlsCertificate: ...
     def lookup_certificate_issuer_async(
         self,
         certificate: TlsCertificate,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12027,14 +12193,14 @@ class TlsDatabase(GObject.Object):
         self,
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> list[TlsCertificate]: ...
     def lookup_certificates_issued_by_async(
         self,
         issuer_raw_dn: Sequence[int],
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseLookupFlags,
+        flags: _TlsDatabaseLookupFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12049,7 +12215,7 @@ class TlsDatabase(GObject.Object):
         purpose: str,
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseVerifyFlags,
+        flags: _TlsDatabaseVerifyFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> TlsCertificateFlags: ...
     def verify_chain_async(
@@ -12058,7 +12224,7 @@ class TlsDatabase(GObject.Object):
         purpose: str,
         identity: SocketConnectable | None,
         interaction: TlsInteraction | None,
-        flags: TlsDatabaseVerifyFlags,
+        flags: _TlsDatabaseVerifyFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12086,7 +12252,7 @@ class TlsDatabaseClass(_gi.Struct):
             str,
             SocketConnectable | None,
             TlsInteraction | None,
-            TlsDatabaseVerifyFlags,
+            _TlsDatabaseVerifyFlagsValueType,
             Cancellable | None,
         ],
         TlsCertificateFlags,
@@ -12101,7 +12267,7 @@ class TlsDatabaseClass(_gi.Struct):
             str,
             SocketConnectable | None,
             TlsInteraction | None,
-            TlsDatabaseVerifyFlags,
+            _TlsDatabaseVerifyFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12124,7 +12290,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             str,
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
         ],
         TlsCertificate | None,
@@ -12137,7 +12303,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             str,
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12156,7 +12322,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             TlsCertificate,
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
         ],
         TlsCertificate,
@@ -12169,7 +12335,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             TlsCertificate,
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12188,7 +12354,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             Sequence[int],
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
         ],
         list[TlsCertificate],
@@ -12201,7 +12367,7 @@ class TlsDatabaseClass(_gi.Struct):
             TlsDatabase,
             Sequence[int],
             TlsInteraction | None,
-            TlsDatabaseLookupFlags,
+            _TlsDatabaseLookupFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12284,13 +12450,13 @@ class TlsInteraction(GObject.Object):
     def do_request_certificate(
         self,
         connection: TlsConnection,
-        flags: TlsCertificateRequestFlags,
+        flags: _TlsCertificateRequestFlagsValueType,
         cancellable: Cancellable | None,
     ) -> TlsInteractionResult: ...
     def do_request_certificate_async(
         self,
         connection: TlsConnection,
-        flags: TlsCertificateRequestFlags,
+        flags: _TlsCertificateRequestFlagsValueType,
         cancellable: Cancellable | None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None,
@@ -12305,19 +12471,19 @@ class TlsInteraction(GObject.Object):
     def invoke_request_certificate(
         self,
         connection: TlsConnection,
-        flags: TlsCertificateRequestFlags,
+        flags: _TlsCertificateRequestFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> TlsInteractionResult: ...
     def request_certificate(
         self,
         connection: TlsConnection,
-        flags: TlsCertificateRequestFlags,
+        flags: _TlsCertificateRequestFlagsValueType,
         cancellable: Cancellable | None = None,
     ) -> TlsInteractionResult: ...
     def request_certificate_async(
         self,
         connection: TlsConnection,
-        flags: TlsCertificateRequestFlags,
+        flags: _TlsCertificateRequestFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12364,7 +12530,12 @@ class TlsInteractionClass(_gi.Struct):
     def request_certificate(
         self,
     ) -> Callable[
-        [TlsInteraction, TlsConnection, TlsCertificateRequestFlags, Cancellable | None],
+        [
+            TlsInteraction,
+            TlsConnection,
+            _TlsCertificateRequestFlagsValueType,
+            Cancellable | None,
+        ],
         TlsInteractionResult,
     ]: ...
     @property
@@ -12374,7 +12545,7 @@ class TlsInteractionClass(_gi.Struct):
         [
             TlsInteraction,
             TlsConnection,
-            TlsCertificateRequestFlags,
+            _TlsCertificateRequestFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12412,7 +12583,10 @@ class TlsPassword(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         description: str
-        flags: TlsPasswordFlags
+        @property
+        def flags(self) -> TlsPasswordFlags: ...
+        @flags.setter
+        def flags(self, value: _TlsPasswordFlagsValueType) -> None: ...
         warning: str
 
     @property
@@ -12425,7 +12599,7 @@ class TlsPassword(GObject.Object):
         self,
         *,
         description: str = ...,
-        flags: TlsPasswordFlags = ...,
+        flags: _TlsPasswordFlagsValueType = ...,
         warning: str = ...,
     ) -> None: ...
     def do_get_default_warning(self) -> str: ...
@@ -12438,9 +12612,11 @@ class TlsPassword(GObject.Object):
     def get_value(self) -> bytes: ...
     def get_warning(self) -> str: ...
     @classmethod
-    def new(cls, flags: TlsPasswordFlags, description: str) -> TlsPassword: ...
+    def new(
+        cls, flags: _TlsPasswordFlagsValueType, description: str
+    ) -> TlsPassword: ...
     def set_description(self, description: str) -> None: ...
-    def set_flags(self, flags: TlsPasswordFlags) -> None: ...
+    def set_flags(self, flags: _TlsPasswordFlagsValueType) -> None: ...
     def set_value(self, value: Sequence[int]) -> None: ...
     def set_value_full(
         self, value: Sequence[int], destroy: Callable[[Any | None], None] | None = None
@@ -12520,7 +12696,7 @@ class UnixConnection(SocketConnection):
     def parent_instance(self) -> SocketConnection: ...
     @property
     def priv(self) -> UnixConnectionPrivate: ...
-    def __init__(self, *, socket: Socket = ...) -> None: ...
+    def __init__(self, *, socket: Socket | None = ...) -> None: ...
     def receive_credentials(
         self, cancellable: Cancellable | None = None
     ) -> Credentials: ...
@@ -12586,7 +12762,7 @@ class UnixCredentialsMessage(SocketControlMessage):
     def parent_instance(self) -> SocketControlMessage: ...
     @property
     def priv(self) -> UnixCredentialsMessagePrivate: ...
-    def __init__(self, *, credentials: Credentials = ...) -> None: ...
+    def __init__(self, *, credentials: Credentials | None = ...) -> None: ...
     def get_credentials(self) -> Credentials: ...
     @staticmethod
     def is_supported() -> bool: ...
@@ -12716,9 +12892,9 @@ class UnixSocketAddress(SocketAddress):
         self,
         *,
         abstract: bool = ...,
-        address_type: UnixSocketAddressType = ...,
-        path: str = ...,
-        path_as_array: Sequence[int] = ...,
+        address_type: _UnixSocketAddressTypeValueType = ...,
+        path: str | None = ...,
+        path_as_array: Sequence[int] | None = ...,
     ) -> None: ...
     @staticmethod
     def abstract_names_supported() -> bool: ...
@@ -12732,7 +12908,7 @@ class UnixSocketAddress(SocketAddress):
     def new_abstract(cls, path: Sequence[int]) -> UnixSocketAddress: ...
     @classmethod
     def new_with_type(
-        cls, path: Sequence[int], type: UnixSocketAddressType
+        cls, path: Sequence[int], type: _UnixSocketAddressTypeValueType
     ) -> UnixSocketAddress: ...
 
 class UnixSocketAddressClass(_gi.Struct):
@@ -12784,7 +12960,7 @@ class Vfs(GObject.Object):
         self,
         filename: str,
         info: FileInfo,
-        flags: FileQueryInfoFlags,
+        flags: _FileQueryInfoFlagsValueType,
         cancellable: Cancellable | None,
     ) -> bool: ...
     def do_parse_name(self, parse_name: str) -> File: ...
@@ -12852,7 +13028,7 @@ class VfsClass(_gi.Struct):
     def local_file_set_attributes(
         self,
     ) -> Callable[
-        [Vfs, str, FileInfo, FileQueryInfoFlags, Cancellable | None], bool
+        [Vfs, str, FileInfo, _FileQueryInfoFlagsValueType, Cancellable | None], bool
     ]: ...
     @property
     def local_file_removed(self) -> Callable[[Vfs, str], None]: ...
@@ -12872,7 +13048,7 @@ class Volume(GObject.GInterface, Protocol):
     def can_mount(self) -> bool: ...
     def eject(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
         | None = None,
@@ -12881,7 +13057,7 @@ class Volume(GObject.GInterface, Protocol):
     def eject_finish(self, result: AsyncResult) -> bool: ...
     def eject_with_operation(
         self,
-        flags: MountUnmountFlags,
+        flags: _MountUnmountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -12901,7 +13077,7 @@ class Volume(GObject.GInterface, Protocol):
     def get_uuid(self) -> str | None: ...
     def mount(
         self,
-        flags: MountMountFlags,
+        flags: _MountMountFlagsValueType,
         mount_operation: MountOperation | None = None,
         cancellable: Cancellable | None = None,
         callback: Callable[[GObject.Object | None, AsyncResult, Unpack[_DataTs]], None]
@@ -12945,7 +13121,7 @@ class VolumeIface(_gi.Struct):
     ) -> Callable[
         [
             Volume,
-            MountMountFlags,
+            _MountMountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -12961,7 +13137,7 @@ class VolumeIface(_gi.Struct):
     ) -> Callable[
         [
             Volume,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
             Any | None,
@@ -12984,7 +13160,7 @@ class VolumeIface(_gi.Struct):
     ) -> Callable[
         [
             Volume,
-            MountUnmountFlags,
+            _MountUnmountFlagsValueType,
             MountOperation | None,
             Cancellable | None,
             Callable[[GObject.Object | None, AsyncResult, Any | None], None] | None,
@@ -13141,14 +13317,16 @@ class ZlibCompressor(GObject.Object, Converter):
         self,
         *,
         file_info: FileInfo | None = ...,
-        format: ZlibCompressorFormat = ...,
+        format: _ZlibCompressorFormatValueType = ...,
         level: int = ...,
         os: int = ...,
     ) -> None: ...
     def get_file_info(self) -> FileInfo | None: ...
     def get_os(self) -> int: ...
     @classmethod
-    def new(cls, format: ZlibCompressorFormat, level: int) -> ZlibCompressor: ...
+    def new(
+        cls, format: _ZlibCompressorFormatValueType, level: int
+    ) -> ZlibCompressor: ...
     def set_file_info(self, file_info: FileInfo | None = None) -> None: ...
     def set_os(self, os: int) -> None: ...
 
@@ -13190,10 +13368,10 @@ class ZlibDecompressor(GObject.Object, Converter):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, format: ZlibCompressorFormat = ...) -> None: ...
+    def __init__(self, *, format: _ZlibCompressorFormatValueType = ...) -> None: ...
     def get_file_info(self) -> FileInfo | None: ...
     @classmethod
-    def new(cls, format: ZlibCompressorFormat) -> ZlibDecompressor: ...
+    def new(cls, format: _ZlibCompressorFormatValueType) -> ZlibDecompressor: ...
 
 class ZlibDecompressorClass(_gi.Struct):
     """
@@ -13212,6 +13390,22 @@ class AppInfoCreateFlags(GObject.GFlags):
     SUPPORTS_STARTUP_NOTIFICATION = 4
     SUPPORTS_URIS = 2
 
+_AppInfoCreateFlagsLiteralType: TypeAlias = Literal[
+    "G_APP_INFO_CREATE_NEEDS_TERMINAL",
+    "G_APP_INFO_CREATE_NONE",
+    "G_APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION",
+    "G_APP_INFO_CREATE_SUPPORTS_URIS",
+    "needs-terminal",
+    "none",
+    "supports-startup-notification",
+    "supports-uris",
+]
+_AppInfoCreateFlagsValueType: TypeAlias = (
+    AppInfoCreateFlags
+    | _AppInfoCreateFlagsLiteralType
+    | tuple[_AppInfoCreateFlagsLiteralType, ...]
+)
+
 class ApplicationFlags(GObject.GFlags):
     ALLOW_REPLACEMENT = 128
     CAN_OVERRIDE_APP_ID = 64
@@ -13225,6 +13419,36 @@ class ApplicationFlags(GObject.GFlags):
     REPLACE = 256
     SEND_ENVIRONMENT = 16
 
+_ApplicationFlagsLiteralType: TypeAlias = Literal[
+    "G_APPLICATION_ALLOW_REPLACEMENT",
+    "G_APPLICATION_CAN_OVERRIDE_APP_ID",
+    "G_APPLICATION_DEFAULT_FLAGS",
+    "G_APPLICATION_FLAGS_NONE",
+    "G_APPLICATION_HANDLES_COMMAND_LINE",
+    "G_APPLICATION_HANDLES_OPEN",
+    "G_APPLICATION_IS_LAUNCHER",
+    "G_APPLICATION_IS_SERVICE",
+    "G_APPLICATION_NON_UNIQUE",
+    "G_APPLICATION_REPLACE",
+    "G_APPLICATION_SEND_ENVIRONMENT",
+    "allow-replacement",
+    "can-override-app-id",
+    "default-flags",
+    "flags-none",
+    "handles-command-line",
+    "handles-open",
+    "is-launcher",
+    "is-service",
+    "non-unique",
+    "replace",
+    "send-environment",
+]
+_ApplicationFlagsValueType: TypeAlias = (
+    ApplicationFlags
+    | _ApplicationFlagsLiteralType
+    | tuple[_ApplicationFlagsLiteralType, ...]
+)
+
 class AskPasswordFlags(GObject.GFlags):
     ANONYMOUS_SUPPORTED = 16
     NEED_DOMAIN = 4
@@ -13233,29 +13457,113 @@ class AskPasswordFlags(GObject.GFlags):
     SAVING_SUPPORTED = 8
     TCRYPT = 32
 
+_AskPasswordFlagsLiteralType: TypeAlias = Literal[
+    "G_ASK_PASSWORD_ANONYMOUS_SUPPORTED",
+    "G_ASK_PASSWORD_NEED_DOMAIN",
+    "G_ASK_PASSWORD_NEED_PASSWORD",
+    "G_ASK_PASSWORD_NEED_USERNAME",
+    "G_ASK_PASSWORD_SAVING_SUPPORTED",
+    "G_ASK_PASSWORD_TCRYPT",
+    "anonymous-supported",
+    "need-domain",
+    "need-password",
+    "need-username",
+    "saving-supported",
+    "tcrypt",
+]
+_AskPasswordFlagsValueType: TypeAlias = (
+    AskPasswordFlags
+    | _AskPasswordFlagsLiteralType
+    | tuple[_AskPasswordFlagsLiteralType, ...]
+)
+
 class BusNameOwnerFlags(GObject.GFlags):
     ALLOW_REPLACEMENT = 1
     DO_NOT_QUEUE = 4
     NONE = 0
     REPLACE = 2
 
+_BusNameOwnerFlagsLiteralType: TypeAlias = Literal[
+    "G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT",
+    "G_BUS_NAME_OWNER_FLAGS_DO_NOT_QUEUE",
+    "G_BUS_NAME_OWNER_FLAGS_NONE",
+    "G_BUS_NAME_OWNER_FLAGS_REPLACE",
+    "allow-replacement",
+    "do-not-queue",
+    "none",
+    "replace",
+]
+_BusNameOwnerFlagsValueType: TypeAlias = (
+    BusNameOwnerFlags
+    | _BusNameOwnerFlagsLiteralType
+    | tuple[_BusNameOwnerFlagsLiteralType, ...]
+)
+
 class BusNameWatcherFlags(GObject.GFlags):
     AUTO_START = 1
     NONE = 0
+
+_BusNameWatcherFlagsLiteralType: TypeAlias = Literal[
+    "G_BUS_NAME_WATCHER_FLAGS_AUTO_START",
+    "G_BUS_NAME_WATCHER_FLAGS_NONE",
+    "auto-start",
+    "none",
+]
+_BusNameWatcherFlagsValueType: TypeAlias = (
+    BusNameWatcherFlags
+    | _BusNameWatcherFlagsLiteralType
+    | tuple[_BusNameWatcherFlagsLiteralType, ...]
+)
 
 class ConverterFlags(GObject.GFlags):
     FLUSH = 2
     INPUT_AT_END = 1
     NONE = 0
 
+_ConverterFlagsLiteralType: TypeAlias = Literal[
+    "G_CONVERTER_FLUSH",
+    "G_CONVERTER_INPUT_AT_END",
+    "G_CONVERTER_NO_FLAGS",
+    "flush",
+    "input-at-end",
+    "none",
+]
+_ConverterFlagsValueType: TypeAlias = (
+    ConverterFlags | _ConverterFlagsLiteralType | tuple[_ConverterFlagsLiteralType, ...]
+)
+
 class DBusCallFlags(GObject.GFlags):
     ALLOW_INTERACTIVE_AUTHORIZATION = 2
     NONE = 0
     NO_AUTO_START = 1
 
+_DBusCallFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_CALL_FLAGS_ALLOW_INTERACTIVE_AUTHORIZATION",
+    "G_DBUS_CALL_FLAGS_NONE",
+    "G_DBUS_CALL_FLAGS_NO_AUTO_START",
+    "allow-interactive-authorization",
+    "no-auto-start",
+    "none",
+]
+_DBusCallFlagsValueType: TypeAlias = (
+    DBusCallFlags | _DBusCallFlagsLiteralType | tuple[_DBusCallFlagsLiteralType, ...]
+)
+
 class DBusCapabilityFlags(GObject.GFlags):
     NONE = 0
     UNIX_FD_PASSING = 1
+
+_DBusCapabilityFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_CAPABILITY_FLAGS_NONE",
+    "G_DBUS_CAPABILITY_FLAGS_UNIX_FD_PASSING",
+    "none",
+    "unix-fd-passing",
+]
+_DBusCapabilityFlagsValueType: TypeAlias = (
+    DBusCapabilityFlags
+    | _DBusCapabilityFlagsLiteralType
+    | tuple[_DBusCapabilityFlagsLiteralType, ...]
+)
 
 class DBusConnectionFlags(GObject.GFlags):
     AUTHENTICATION_ALLOW_ANONYMOUS = 4
@@ -13267,9 +13575,45 @@ class DBusConnectionFlags(GObject.GFlags):
     MESSAGE_BUS_CONNECTION = 8
     NONE = 0
 
+_DBusConnectionFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS",
+    "G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT",
+    "G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER",
+    "G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER",
+    "G_DBUS_CONNECTION_FLAGS_CROSS_NAMESPACE",
+    "G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING",
+    "G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION",
+    "G_DBUS_CONNECTION_FLAGS_NONE",
+    "authentication-allow-anonymous",
+    "authentication-client",
+    "authentication-require-same-user",
+    "authentication-server",
+    "cross-namespace",
+    "delay-message-processing",
+    "message-bus-connection",
+    "none",
+]
+_DBusConnectionFlagsValueType: TypeAlias = (
+    DBusConnectionFlags
+    | _DBusConnectionFlagsLiteralType
+    | tuple[_DBusConnectionFlagsLiteralType, ...]
+)
+
 class DBusInterfaceSkeletonFlags(GObject.GFlags):
     HANDLE_METHOD_INVOCATIONS_IN_THREAD = 1
     NONE = 0
+
+_DBusInterfaceSkeletonFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD",
+    "G_DBUS_INTERFACE_SKELETON_FLAGS_NONE",
+    "handle-method-invocations-in-thread",
+    "none",
+]
+_DBusInterfaceSkeletonFlagsValueType: TypeAlias = (
+    DBusInterfaceSkeletonFlags
+    | _DBusInterfaceSkeletonFlagsLiteralType
+    | tuple[_DBusInterfaceSkeletonFlagsLiteralType, ...]
+)
 
 class DBusMessageFlags(GObject.GFlags):
     ALLOW_INTERACTIVE_AUTHORIZATION = 4
@@ -13277,14 +13621,56 @@ class DBusMessageFlags(GObject.GFlags):
     NO_AUTO_START = 2
     NO_REPLY_EXPECTED = 1
 
+_DBusMessageFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_MESSAGE_FLAGS_ALLOW_INTERACTIVE_AUTHORIZATION",
+    "G_DBUS_MESSAGE_FLAGS_NONE",
+    "G_DBUS_MESSAGE_FLAGS_NO_AUTO_START",
+    "G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED",
+    "allow-interactive-authorization",
+    "no-auto-start",
+    "no-reply-expected",
+    "none",
+]
+_DBusMessageFlagsValueType: TypeAlias = (
+    DBusMessageFlags
+    | _DBusMessageFlagsLiteralType
+    | tuple[_DBusMessageFlagsLiteralType, ...]
+)
+
 class DBusObjectManagerClientFlags(GObject.GFlags):
     DO_NOT_AUTO_START = 1
     NONE = 0
+
+_DBusObjectManagerClientFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_DO_NOT_AUTO_START",
+    "G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE",
+    "do-not-auto-start",
+    "none",
+]
+_DBusObjectManagerClientFlagsValueType: TypeAlias = (
+    DBusObjectManagerClientFlags
+    | _DBusObjectManagerClientFlagsLiteralType
+    | tuple[_DBusObjectManagerClientFlagsLiteralType, ...]
+)
 
 class DBusPropertyInfoFlags(GObject.GFlags):
     NONE = 0
     READABLE = 1
     WRITABLE = 2
+
+_DBusPropertyInfoFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_PROPERTY_INFO_FLAGS_NONE",
+    "G_DBUS_PROPERTY_INFO_FLAGS_READABLE",
+    "G_DBUS_PROPERTY_INFO_FLAGS_WRITABLE",
+    "none",
+    "readable",
+    "writable",
+]
+_DBusPropertyInfoFlagsValueType: TypeAlias = (
+    DBusPropertyInfoFlags
+    | _DBusPropertyInfoFlagsLiteralType
+    | tuple[_DBusPropertyInfoFlagsLiteralType, ...]
+)
 
 class DBusProxyFlags(GObject.GFlags):
     DO_NOT_AUTO_START = 4
@@ -13295,9 +13681,41 @@ class DBusProxyFlags(GObject.GFlags):
     NONE = 0
     NO_MATCH_RULE = 32
 
+_DBusProxyFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START",
+    "G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION",
+    "G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS",
+    "G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES",
+    "G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES",
+    "G_DBUS_PROXY_FLAGS_NONE",
+    "G_DBUS_PROXY_FLAGS_NO_MATCH_RULE",
+    "do-not-auto-start",
+    "do-not-auto-start-at-construction",
+    "do-not-connect-signals",
+    "do-not-load-properties",
+    "get-invalidated-properties",
+    "no-match-rule",
+    "none",
+]
+_DBusProxyFlagsValueType: TypeAlias = (
+    DBusProxyFlags | _DBusProxyFlagsLiteralType | tuple[_DBusProxyFlagsLiteralType, ...]
+)
+
 class DBusSendMessageFlags(GObject.GFlags):
     NONE = 0
     PRESERVE_SERIAL = 1
+
+_DBusSendMessageFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_SEND_MESSAGE_FLAGS_NONE",
+    "G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL",
+    "none",
+    "preserve-serial",
+]
+_DBusSendMessageFlagsValueType: TypeAlias = (
+    DBusSendMessageFlags
+    | _DBusSendMessageFlagsLiteralType
+    | tuple[_DBusSendMessageFlagsLiteralType, ...]
+)
 
 class DBusServerFlags(GObject.GFlags):
     AUTHENTICATION_ALLOW_ANONYMOUS = 2
@@ -13305,23 +13723,88 @@ class DBusServerFlags(GObject.GFlags):
     NONE = 0
     RUN_IN_THREAD = 1
 
+_DBusServerFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS",
+    "G_DBUS_SERVER_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER",
+    "G_DBUS_SERVER_FLAGS_NONE",
+    "G_DBUS_SERVER_FLAGS_RUN_IN_THREAD",
+    "authentication-allow-anonymous",
+    "authentication-require-same-user",
+    "none",
+    "run-in-thread",
+]
+_DBusServerFlagsValueType: TypeAlias = (
+    DBusServerFlags
+    | _DBusServerFlagsLiteralType
+    | tuple[_DBusServerFlagsLiteralType, ...]
+)
+
 class DBusSignalFlags(GObject.GFlags):
     MATCH_ARG0_NAMESPACE = 2
     MATCH_ARG0_PATH = 4
     NONE = 0
     NO_MATCH_RULE = 1
 
+_DBusSignalFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_NAMESPACE",
+    "G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_PATH",
+    "G_DBUS_SIGNAL_FLAGS_NONE",
+    "G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE",
+    "match-arg0-namespace",
+    "match-arg0-path",
+    "no-match-rule",
+    "none",
+]
+_DBusSignalFlagsValueType: TypeAlias = (
+    DBusSignalFlags
+    | _DBusSignalFlagsLiteralType
+    | tuple[_DBusSignalFlagsLiteralType, ...]
+)
+
 class DBusSubtreeFlags(GObject.GFlags):
     DISPATCH_TO_UNENUMERATED_NODES = 1
     NONE = 0
 
+_DBusSubtreeFlagsLiteralType: TypeAlias = Literal[
+    "G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES",
+    "G_DBUS_SUBTREE_FLAGS_NONE",
+    "dispatch-to-unenumerated-nodes",
+    "none",
+]
+_DBusSubtreeFlagsValueType: TypeAlias = (
+    DBusSubtreeFlags
+    | _DBusSubtreeFlagsLiteralType
+    | tuple[_DBusSubtreeFlagsLiteralType, ...]
+)
+
 class DriveStartFlags(GObject.GFlags):
     NONE = 0
+
+_DriveStartFlagsLiteralType: TypeAlias = Literal["G_DRIVE_START_NONE", "none"]
+_DriveStartFlagsValueType: TypeAlias = (
+    DriveStartFlags
+    | _DriveStartFlagsLiteralType
+    | tuple[_DriveStartFlagsLiteralType, ...]
+)
 
 class FileAttributeInfoFlags(GObject.GFlags):
     COPY_WHEN_MOVED = 2
     COPY_WITH_FILE = 1
     NONE = 0
+
+_FileAttributeInfoFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_ATTRIBUTE_INFO_COPY_WHEN_MOVED",
+    "G_FILE_ATTRIBUTE_INFO_COPY_WITH_FILE",
+    "G_FILE_ATTRIBUTE_INFO_NONE",
+    "copy-when-moved",
+    "copy-with-file",
+    "none",
+]
+_FileAttributeInfoFlagsValueType: TypeAlias = (
+    FileAttributeInfoFlags
+    | _FileAttributeInfoFlagsLiteralType
+    | tuple[_FileAttributeInfoFlagsLiteralType, ...]
+)
 
 class FileCopyFlags(GObject.GFlags):
     ALL_METADATA = 8
@@ -13333,16 +13816,68 @@ class FileCopyFlags(GObject.GFlags):
     TARGET_DEFAULT_MODIFIED_TIME = 64
     TARGET_DEFAULT_PERMS = 32
 
+_FileCopyFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_COPY_ALL_METADATA",
+    "G_FILE_COPY_BACKUP",
+    "G_FILE_COPY_NOFOLLOW_SYMLINKS",
+    "G_FILE_COPY_NONE",
+    "G_FILE_COPY_NO_FALLBACK_FOR_MOVE",
+    "G_FILE_COPY_OVERWRITE",
+    "G_FILE_COPY_TARGET_DEFAULT_MODIFIED_TIME",
+    "G_FILE_COPY_TARGET_DEFAULT_PERMS",
+    "all-metadata",
+    "backup",
+    "no-fallback-for-move",
+    "nofollow-symlinks",
+    "none",
+    "overwrite",
+    "target-default-modified-time",
+    "target-default-perms",
+]
+_FileCopyFlagsValueType: TypeAlias = (
+    FileCopyFlags | _FileCopyFlagsLiteralType | tuple[_FileCopyFlagsLiteralType, ...]
+)
+
 class FileCreateFlags(GObject.GFlags):
     NONE = 0
     PRIVATE = 1
     REPLACE_DESTINATION = 2
+
+_FileCreateFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_CREATE_NONE",
+    "G_FILE_CREATE_PRIVATE",
+    "G_FILE_CREATE_REPLACE_DESTINATION",
+    "none",
+    "private",
+    "replace-destination",
+]
+_FileCreateFlagsValueType: TypeAlias = (
+    FileCreateFlags
+    | _FileCreateFlagsLiteralType
+    | tuple[_FileCreateFlagsLiteralType, ...]
+)
 
 class FileMeasureFlags(GObject.GFlags):
     APPARENT_SIZE = 4
     NONE = 0
     NO_XDEV = 8
     REPORT_ANY_ERROR = 2
+
+_FileMeasureFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_MEASURE_APPARENT_SIZE",
+    "G_FILE_MEASURE_NONE",
+    "G_FILE_MEASURE_NO_XDEV",
+    "G_FILE_MEASURE_REPORT_ANY_ERROR",
+    "apparent-size",
+    "no-xdev",
+    "none",
+    "report-any-error",
+]
+_FileMeasureFlagsValueType: TypeAlias = (
+    FileMeasureFlags
+    | _FileMeasureFlagsLiteralType
+    | tuple[_FileMeasureFlagsLiteralType, ...]
+)
 
 class FileMonitorFlags(GObject.GFlags):
     NONE = 0
@@ -13351,9 +13886,39 @@ class FileMonitorFlags(GObject.GFlags):
     WATCH_MOUNTS = 1
     WATCH_MOVES = 8
 
+_FileMonitorFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_MONITOR_NONE",
+    "G_FILE_MONITOR_SEND_MOVED",
+    "G_FILE_MONITOR_WATCH_HARD_LINKS",
+    "G_FILE_MONITOR_WATCH_MOUNTS",
+    "G_FILE_MONITOR_WATCH_MOVES",
+    "none",
+    "send-moved",
+    "watch-hard-links",
+    "watch-mounts",
+    "watch-moves",
+]
+_FileMonitorFlagsValueType: TypeAlias = (
+    FileMonitorFlags
+    | _FileMonitorFlagsLiteralType
+    | tuple[_FileMonitorFlagsLiteralType, ...]
+)
+
 class FileQueryInfoFlags(GObject.GFlags):
     NOFOLLOW_SYMLINKS = 1
     NONE = 0
+
+_FileQueryInfoFlagsLiteralType: TypeAlias = Literal[
+    "G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS",
+    "G_FILE_QUERY_INFO_NONE",
+    "nofollow-symlinks",
+    "none",
+]
+_FileQueryInfoFlagsValueType: TypeAlias = (
+    FileQueryInfoFlags
+    | _FileQueryInfoFlagsLiteralType
+    | tuple[_FileQueryInfoFlagsLiteralType, ...]
+)
 
 class IOStreamSpliceFlags(GObject.GFlags):
     CLOSE_STREAM1 = 1
@@ -13361,29 +13926,105 @@ class IOStreamSpliceFlags(GObject.GFlags):
     NONE = 0
     WAIT_FOR_BOTH = 4
 
+_IOStreamSpliceFlagsLiteralType: TypeAlias = Literal[
+    "G_IO_STREAM_SPLICE_CLOSE_STREAM1",
+    "G_IO_STREAM_SPLICE_CLOSE_STREAM2",
+    "G_IO_STREAM_SPLICE_NONE",
+    "G_IO_STREAM_SPLICE_WAIT_FOR_BOTH",
+    "close-stream1",
+    "close-stream2",
+    "none",
+    "wait-for-both",
+]
+_IOStreamSpliceFlagsValueType: TypeAlias = (
+    IOStreamSpliceFlags
+    | _IOStreamSpliceFlagsLiteralType
+    | tuple[_IOStreamSpliceFlagsLiteralType, ...]
+)
+
 class MountMountFlags(GObject.GFlags):
     NONE = 0
+
+_MountMountFlagsLiteralType: TypeAlias = Literal["G_MOUNT_MOUNT_NONE", "none"]
+_MountMountFlagsValueType: TypeAlias = (
+    MountMountFlags
+    | _MountMountFlagsLiteralType
+    | tuple[_MountMountFlagsLiteralType, ...]
+)
 
 class MountUnmountFlags(GObject.GFlags):
     FORCE = 1
     NONE = 0
+
+_MountUnmountFlagsLiteralType: TypeAlias = Literal[
+    "G_MOUNT_UNMOUNT_FORCE", "G_MOUNT_UNMOUNT_NONE", "force", "none"
+]
+_MountUnmountFlagsValueType: TypeAlias = (
+    MountUnmountFlags
+    | _MountUnmountFlagsLiteralType
+    | tuple[_MountUnmountFlagsLiteralType, ...]
+)
 
 class OutputStreamSpliceFlags(GObject.GFlags):
     CLOSE_SOURCE = 1
     CLOSE_TARGET = 2
     NONE = 0
 
+_OutputStreamSpliceFlagsLiteralType: TypeAlias = Literal[
+    "G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE",
+    "G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET",
+    "G_OUTPUT_STREAM_SPLICE_NONE",
+    "close-source",
+    "close-target",
+    "none",
+]
+_OutputStreamSpliceFlagsValueType: TypeAlias = (
+    OutputStreamSpliceFlags
+    | _OutputStreamSpliceFlagsLiteralType
+    | tuple[_OutputStreamSpliceFlagsLiteralType, ...]
+)
+
 class ResolverNameLookupFlags(GObject.GFlags):
     DEFAULT = 0
     IPV4_ONLY = 1
     IPV6_ONLY = 2
 
+_ResolverNameLookupFlagsLiteralType: TypeAlias = Literal[
+    "G_RESOLVER_NAME_LOOKUP_FLAGS_DEFAULT",
+    "G_RESOLVER_NAME_LOOKUP_FLAGS_IPV4_ONLY",
+    "G_RESOLVER_NAME_LOOKUP_FLAGS_IPV6_ONLY",
+    "default",
+    "ipv4-only",
+    "ipv6-only",
+]
+_ResolverNameLookupFlagsValueType: TypeAlias = (
+    ResolverNameLookupFlags
+    | _ResolverNameLookupFlagsLiteralType
+    | tuple[_ResolverNameLookupFlagsLiteralType, ...]
+)
+
 class ResourceFlags(GObject.GFlags):
     COMPRESSED = 1
     NONE = 0
 
+_ResourceFlagsLiteralType: TypeAlias = Literal[
+    "G_RESOURCE_FLAGS_COMPRESSED", "G_RESOURCE_FLAGS_NONE", "compressed", "none"
+]
+_ResourceFlagsValueType: TypeAlias = (
+    ResourceFlags | _ResourceFlagsLiteralType | tuple[_ResourceFlagsLiteralType, ...]
+)
+
 class ResourceLookupFlags(GObject.GFlags):
     NONE = 0
+
+_ResourceLookupFlagsLiteralType: TypeAlias = Literal[
+    "G_RESOURCE_LOOKUP_FLAGS_NONE", "none"
+]
+_ResourceLookupFlagsValueType: TypeAlias = (
+    ResourceLookupFlags
+    | _ResourceLookupFlagsLiteralType
+    | tuple[_ResourceLookupFlagsLiteralType, ...]
+)
 
 class SettingsBindFlags(GObject.GFlags):
     DEFAULT = 0
@@ -13393,11 +14034,45 @@ class SettingsBindFlags(GObject.GFlags):
     NO_SENSITIVITY = 4
     SET = 2
 
+_SettingsBindFlagsLiteralType: TypeAlias = Literal[
+    "G_SETTINGS_BIND_DEFAULT",
+    "G_SETTINGS_BIND_GET",
+    "G_SETTINGS_BIND_GET_NO_CHANGES",
+    "G_SETTINGS_BIND_INVERT_BOOLEAN",
+    "G_SETTINGS_BIND_NO_SENSITIVITY",
+    "G_SETTINGS_BIND_SET",
+    "default",
+    "get",
+    "get-no-changes",
+    "invert-boolean",
+    "no-sensitivity",
+    "set",
+]
+_SettingsBindFlagsValueType: TypeAlias = (
+    SettingsBindFlags
+    | _SettingsBindFlagsLiteralType
+    | tuple[_SettingsBindFlagsLiteralType, ...]
+)
+
 class SocketMsgFlags(GObject.GFlags):
     DONTROUTE = 4
     NONE = 0
     OOB = 1
     PEEK = 2
+
+_SocketMsgFlagsLiteralType: TypeAlias = Literal[
+    "G_SOCKET_MSG_DONTROUTE",
+    "G_SOCKET_MSG_NONE",
+    "G_SOCKET_MSG_OOB",
+    "G_SOCKET_MSG_PEEK",
+    "dontroute",
+    "none",
+    "oob",
+    "peek",
+]
+_SocketMsgFlagsValueType: TypeAlias = (
+    SocketMsgFlags | _SocketMsgFlagsLiteralType | tuple[_SocketMsgFlagsLiteralType, ...]
+)
 
 class SubprocessFlags(GObject.GFlags):
     INHERIT_FDS = 128
@@ -13411,8 +14086,41 @@ class SubprocessFlags(GObject.GFlags):
     STDOUT_PIPE = 4
     STDOUT_SILENCE = 8
 
+_SubprocessFlagsLiteralType: TypeAlias = Literal[
+    "G_SUBPROCESS_FLAGS_INHERIT_FDS",
+    "G_SUBPROCESS_FLAGS_NONE",
+    "G_SUBPROCESS_FLAGS_SEARCH_PATH_FROM_ENVP",
+    "G_SUBPROCESS_FLAGS_STDERR_MERGE",
+    "G_SUBPROCESS_FLAGS_STDERR_PIPE",
+    "G_SUBPROCESS_FLAGS_STDERR_SILENCE",
+    "G_SUBPROCESS_FLAGS_STDIN_INHERIT",
+    "G_SUBPROCESS_FLAGS_STDIN_PIPE",
+    "G_SUBPROCESS_FLAGS_STDOUT_PIPE",
+    "G_SUBPROCESS_FLAGS_STDOUT_SILENCE",
+    "inherit-fds",
+    "none",
+    "search-path-from-envp",
+    "stderr-merge",
+    "stderr-pipe",
+    "stderr-silence",
+    "stdin-inherit",
+    "stdin-pipe",
+    "stdout-pipe",
+    "stdout-silence",
+]
+_SubprocessFlagsValueType: TypeAlias = (
+    SubprocessFlags
+    | _SubprocessFlagsLiteralType
+    | tuple[_SubprocessFlagsLiteralType, ...]
+)
+
 class TestDBusFlags(GObject.GFlags):
     NONE = 0
+
+_TestDBusFlagsLiteralType: TypeAlias = Literal["G_TEST_DBUS_NONE", "none"]
+_TestDBusFlagsValueType: TypeAlias = (
+    TestDBusFlags | _TestDBusFlagsLiteralType | tuple[_TestDBusFlagsLiteralType, ...]
+)
 
 class TlsCertificateFlags(GObject.GFlags):
     BAD_IDENTITY = 2
@@ -13425,8 +14133,43 @@ class TlsCertificateFlags(GObject.GFlags):
     UNKNOWN_CA = 1
     VALIDATE_ALL = 127
 
+_TlsCertificateFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_CERTIFICATE_BAD_IDENTITY",
+    "G_TLS_CERTIFICATE_EXPIRED",
+    "G_TLS_CERTIFICATE_GENERIC_ERROR",
+    "G_TLS_CERTIFICATE_INSECURE",
+    "G_TLS_CERTIFICATE_NOT_ACTIVATED",
+    "G_TLS_CERTIFICATE_NO_FLAGS",
+    "G_TLS_CERTIFICATE_REVOKED",
+    "G_TLS_CERTIFICATE_UNKNOWN_CA",
+    "G_TLS_CERTIFICATE_VALIDATE_ALL",
+    "bad-identity",
+    "expired",
+    "generic-error",
+    "insecure",
+    "no-flags",
+    "not-activated",
+    "revoked",
+    "unknown-ca",
+    "validate-all",
+]
+_TlsCertificateFlagsValueType: TypeAlias = (
+    TlsCertificateFlags
+    | _TlsCertificateFlagsLiteralType
+    | tuple[_TlsCertificateFlagsLiteralType, ...]
+)
+
 class TlsDatabaseVerifyFlags(GObject.GFlags):
     NONE = 0
+
+_TlsDatabaseVerifyFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_DATABASE_VERIFY_NONE", "none"
+]
+_TlsDatabaseVerifyFlagsValueType: TypeAlias = (
+    TlsDatabaseVerifyFlags
+    | _TlsDatabaseVerifyFlagsLiteralType
+    | tuple[_TlsDatabaseVerifyFlagsLiteralType, ...]
+)
 
 class TlsPasswordFlags(GObject.GFlags):
     FINAL_TRY = 8
@@ -13437,17 +14180,63 @@ class TlsPasswordFlags(GObject.GFlags):
     PKCS11_USER = 16
     RETRY = 2
 
+_TlsPasswordFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_PASSWORD_FINAL_TRY",
+    "G_TLS_PASSWORD_MANY_TRIES",
+    "G_TLS_PASSWORD_NONE",
+    "G_TLS_PASSWORD_PKCS11_CONTEXT_SPECIFIC",
+    "G_TLS_PASSWORD_PKCS11_SECURITY_OFFICER",
+    "G_TLS_PASSWORD_PKCS11_USER",
+    "G_TLS_PASSWORD_RETRY",
+    "final-try",
+    "many-tries",
+    "none",
+    "pkcs11-context-specific",
+    "pkcs11-security-officer",
+    "pkcs11-user",
+    "retry",
+]
+_TlsPasswordFlagsValueType: TypeAlias = (
+    TlsPasswordFlags
+    | _TlsPasswordFlagsLiteralType
+    | tuple[_TlsPasswordFlagsLiteralType, ...]
+)
+
 class BusType(GObject.GEnum):
     NONE = 0
     SESSION = 2
     STARTER = -1
     SYSTEM = 1
 
+_BusTypeLiteralType: TypeAlias = Literal[
+    "G_BUS_TYPE_NONE",
+    "G_BUS_TYPE_SESSION",
+    "G_BUS_TYPE_STARTER",
+    "G_BUS_TYPE_SYSTEM",
+    "none",
+    "session",
+    "starter",
+    "system",
+]
+_BusTypeValueType: TypeAlias = BusType | _BusTypeLiteralType
+
 class ConverterResult(GObject.GEnum):
     CONVERTED = 1
     ERROR = 0
     FINISHED = 2
     FLUSHED = 3
+
+_ConverterResultLiteralType: TypeAlias = Literal[
+    "G_CONVERTER_CONVERTED",
+    "G_CONVERTER_ERROR",
+    "G_CONVERTER_FINISHED",
+    "G_CONVERTER_FLUSHED",
+    "converted",
+    "error",
+    "finished",
+    "flushed",
+]
+_ConverterResultValueType: TypeAlias = ConverterResult | _ConverterResultLiteralType
 
 class CredentialsType(GObject.GEnum):
     APPLE_XUCRED = 6
@@ -13458,6 +14247,26 @@ class CredentialsType(GObject.GEnum):
     OPENBSD_SOCKPEERCRED = 3
     SOLARIS_UCRED = 4
     WIN32_PID = 7
+
+_CredentialsTypeLiteralType: TypeAlias = Literal[
+    "G_CREDENTIALS_TYPE_APPLE_XUCRED",
+    "G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED",
+    "G_CREDENTIALS_TYPE_INVALID",
+    "G_CREDENTIALS_TYPE_LINUX_UCRED",
+    "G_CREDENTIALS_TYPE_NETBSD_UNPCBID",
+    "G_CREDENTIALS_TYPE_OPENBSD_SOCKPEERCRED",
+    "G_CREDENTIALS_TYPE_SOLARIS_UCRED",
+    "G_CREDENTIALS_TYPE_WIN32_PID",
+    "apple-xucred",
+    "freebsd-cmsgcred",
+    "invalid",
+    "linux-ucred",
+    "netbsd-unpcbid",
+    "openbsd-sockpeercred",
+    "solaris-ucred",
+    "win32-pid",
+]
+_CredentialsTypeValueType: TypeAlias = CredentialsType | _CredentialsTypeLiteralType
 
 class DBusError(GObject.GEnum):
     ACCESS_DENIED = 9
@@ -13534,9 +14343,113 @@ class DBusError(GObject.GEnum):
         error_domain: int, error_code: int, dbus_error_name: str
     ) -> bool: ...
 
+_DBusErrorLiteralType: TypeAlias = Literal[
+    "G_DBUS_ERROR_ACCESS_DENIED",
+    "G_DBUS_ERROR_ADDRESS_IN_USE",
+    "G_DBUS_ERROR_ADT_AUDIT_DATA_UNKNOWN",
+    "G_DBUS_ERROR_AUTH_FAILED",
+    "G_DBUS_ERROR_BAD_ADDRESS",
+    "G_DBUS_ERROR_DISCONNECTED",
+    "G_DBUS_ERROR_FAILED",
+    "G_DBUS_ERROR_FILE_EXISTS",
+    "G_DBUS_ERROR_FILE_NOT_FOUND",
+    "G_DBUS_ERROR_INVALID_ARGS",
+    "G_DBUS_ERROR_INVALID_FILE_CONTENT",
+    "G_DBUS_ERROR_INVALID_SIGNATURE",
+    "G_DBUS_ERROR_IO_ERROR",
+    "G_DBUS_ERROR_LIMITS_EXCEEDED",
+    "G_DBUS_ERROR_MATCH_RULE_INVALID",
+    "G_DBUS_ERROR_MATCH_RULE_NOT_FOUND",
+    "G_DBUS_ERROR_NAME_HAS_NO_OWNER",
+    "G_DBUS_ERROR_NOT_SUPPORTED",
+    "G_DBUS_ERROR_NO_MEMORY",
+    "G_DBUS_ERROR_NO_NETWORK",
+    "G_DBUS_ERROR_NO_REPLY",
+    "G_DBUS_ERROR_NO_SERVER",
+    "G_DBUS_ERROR_OBJECT_PATH_IN_USE",
+    "G_DBUS_ERROR_PROPERTY_READ_ONLY",
+    "G_DBUS_ERROR_SELINUX_SECURITY_CONTEXT_UNKNOWN",
+    "G_DBUS_ERROR_SERVICE_UNKNOWN",
+    "G_DBUS_ERROR_SPAWN_CHILD_EXITED",
+    "G_DBUS_ERROR_SPAWN_CHILD_SIGNALED",
+    "G_DBUS_ERROR_SPAWN_CONFIG_INVALID",
+    "G_DBUS_ERROR_SPAWN_EXEC_FAILED",
+    "G_DBUS_ERROR_SPAWN_FAILED",
+    "G_DBUS_ERROR_SPAWN_FILE_INVALID",
+    "G_DBUS_ERROR_SPAWN_FORK_FAILED",
+    "G_DBUS_ERROR_SPAWN_NO_MEMORY",
+    "G_DBUS_ERROR_SPAWN_PERMISSIONS_INVALID",
+    "G_DBUS_ERROR_SPAWN_SERVICE_INVALID",
+    "G_DBUS_ERROR_SPAWN_SERVICE_NOT_FOUND",
+    "G_DBUS_ERROR_SPAWN_SETUP_FAILED",
+    "G_DBUS_ERROR_TIMED_OUT",
+    "G_DBUS_ERROR_TIMEOUT",
+    "G_DBUS_ERROR_UNIX_PROCESS_ID_UNKNOWN",
+    "G_DBUS_ERROR_UNKNOWN_INTERFACE",
+    "G_DBUS_ERROR_UNKNOWN_METHOD",
+    "G_DBUS_ERROR_UNKNOWN_OBJECT",
+    "G_DBUS_ERROR_UNKNOWN_PROPERTY",
+    "access-denied",
+    "address-in-use",
+    "adt-audit-data-unknown",
+    "auth-failed",
+    "bad-address",
+    "disconnected",
+    "failed",
+    "file-exists",
+    "file-not-found",
+    "invalid-args",
+    "invalid-file-content",
+    "invalid-signature",
+    "io-error",
+    "limits-exceeded",
+    "match-rule-invalid",
+    "match-rule-not-found",
+    "name-has-no-owner",
+    "no-memory",
+    "no-network",
+    "no-reply",
+    "no-server",
+    "not-supported",
+    "object-path-in-use",
+    "property-read-only",
+    "selinux-security-context-unknown",
+    "service-unknown",
+    "spawn-child-exited",
+    "spawn-child-signaled",
+    "spawn-config-invalid",
+    "spawn-exec-failed",
+    "spawn-failed",
+    "spawn-file-invalid",
+    "spawn-fork-failed",
+    "spawn-no-memory",
+    "spawn-permissions-invalid",
+    "spawn-service-invalid",
+    "spawn-service-not-found",
+    "spawn-setup-failed",
+    "timed-out",
+    "timeout",
+    "unix-process-id-unknown",
+    "unknown-interface",
+    "unknown-method",
+    "unknown-object",
+    "unknown-property",
+]
+_DBusErrorValueType: TypeAlias = DBusError | _DBusErrorLiteralType
+
 class DBusMessageByteOrder(GObject.GEnum):
     BIG_ENDIAN = 66
     LITTLE_ENDIAN = 108
+
+_DBusMessageByteOrderLiteralType: TypeAlias = Literal[
+    "G_DBUS_MESSAGE_BYTE_ORDER_BIG_ENDIAN",
+    "G_DBUS_MESSAGE_BYTE_ORDER_LITTLE_ENDIAN",
+    "big-endian",
+    "little-endian",
+]
+_DBusMessageByteOrderValueType: TypeAlias = (
+    DBusMessageByteOrder | _DBusMessageByteOrderLiteralType
+)
 
 class DBusMessageHeaderField(GObject.GEnum):
     DESTINATION = 6
@@ -13550,6 +14463,32 @@ class DBusMessageHeaderField(GObject.GEnum):
     SENDER = 7
     SIGNATURE = 8
 
+_DBusMessageHeaderFieldLiteralType: TypeAlias = Literal[
+    "G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION",
+    "G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME",
+    "G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE",
+    "G_DBUS_MESSAGE_HEADER_FIELD_INVALID",
+    "G_DBUS_MESSAGE_HEADER_FIELD_MEMBER",
+    "G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS",
+    "G_DBUS_MESSAGE_HEADER_FIELD_PATH",
+    "G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL",
+    "G_DBUS_MESSAGE_HEADER_FIELD_SENDER",
+    "G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE",
+    "destination",
+    "error-name",
+    "interface",
+    "invalid",
+    "member",
+    "num-unix-fds",
+    "path",
+    "reply-serial",
+    "sender",
+    "signature",
+]
+_DBusMessageHeaderFieldValueType: TypeAlias = (
+    DBusMessageHeaderField | _DBusMessageHeaderFieldLiteralType
+)
+
 class DBusMessageType(GObject.GEnum):
     ERROR = 3
     INVALID = 0
@@ -13557,16 +14496,56 @@ class DBusMessageType(GObject.GEnum):
     METHOD_RETURN = 2
     SIGNAL = 4
 
+_DBusMessageTypeLiteralType: TypeAlias = Literal[
+    "G_DBUS_MESSAGE_TYPE_ERROR",
+    "G_DBUS_MESSAGE_TYPE_INVALID",
+    "G_DBUS_MESSAGE_TYPE_METHOD_CALL",
+    "G_DBUS_MESSAGE_TYPE_METHOD_RETURN",
+    "G_DBUS_MESSAGE_TYPE_SIGNAL",
+    "error",
+    "invalid",
+    "method-call",
+    "method-return",
+    "signal",
+]
+_DBusMessageTypeValueType: TypeAlias = DBusMessageType | _DBusMessageTypeLiteralType
+
 class DataStreamByteOrder(GObject.GEnum):
     BIG_ENDIAN = 0
     HOST_ENDIAN = 2
     LITTLE_ENDIAN = 1
+
+_DataStreamByteOrderLiteralType: TypeAlias = Literal[
+    "G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN",
+    "G_DATA_STREAM_BYTE_ORDER_HOST_ENDIAN",
+    "G_DATA_STREAM_BYTE_ORDER_LITTLE_ENDIAN",
+    "big-endian",
+    "host-endian",
+    "little-endian",
+]
+_DataStreamByteOrderValueType: TypeAlias = (
+    DataStreamByteOrder | _DataStreamByteOrderLiteralType
+)
 
 class DataStreamNewlineType(GObject.GEnum):
     ANY = 3
     CR = 1
     CR_LF = 2
     LF = 0
+
+_DataStreamNewlineTypeLiteralType: TypeAlias = Literal[
+    "G_DATA_STREAM_NEWLINE_TYPE_ANY",
+    "G_DATA_STREAM_NEWLINE_TYPE_CR",
+    "G_DATA_STREAM_NEWLINE_TYPE_CR_LF",
+    "G_DATA_STREAM_NEWLINE_TYPE_LF",
+    "any",
+    "cr",
+    "cr-lf",
+    "lf",
+]
+_DataStreamNewlineTypeValueType: TypeAlias = (
+    DataStreamNewlineType | _DataStreamNewlineTypeLiteralType
+)
 
 class DriveStartStopType(GObject.GEnum):
     MULTIDISK = 3
@@ -13575,16 +14554,56 @@ class DriveStartStopType(GObject.GEnum):
     SHUTDOWN = 1
     UNKNOWN = 0
 
+_DriveStartStopTypeLiteralType: TypeAlias = Literal[
+    "G_DRIVE_START_STOP_TYPE_MULTIDISK",
+    "G_DRIVE_START_STOP_TYPE_NETWORK",
+    "G_DRIVE_START_STOP_TYPE_PASSWORD",
+    "G_DRIVE_START_STOP_TYPE_SHUTDOWN",
+    "G_DRIVE_START_STOP_TYPE_UNKNOWN",
+    "multidisk",
+    "network",
+    "password",
+    "shutdown",
+    "unknown",
+]
+_DriveStartStopTypeValueType: TypeAlias = (
+    DriveStartStopType | _DriveStartStopTypeLiteralType
+)
+
 class EmblemOrigin(GObject.GEnum):
     DEVICE = 1
     LIVEMETADATA = 2
     TAG = 3
     UNKNOWN = 0
 
+_EmblemOriginLiteralType: TypeAlias = Literal[
+    "G_EMBLEM_ORIGIN_DEVICE",
+    "G_EMBLEM_ORIGIN_LIVEMETADATA",
+    "G_EMBLEM_ORIGIN_TAG",
+    "G_EMBLEM_ORIGIN_UNKNOWN",
+    "device",
+    "livemetadata",
+    "tag",
+    "unknown",
+]
+_EmblemOriginValueType: TypeAlias = EmblemOrigin | _EmblemOriginLiteralType
+
 class FileAttributeStatus(GObject.GEnum):
     ERROR_SETTING = 2
     SET = 1
     UNSET = 0
+
+_FileAttributeStatusLiteralType: TypeAlias = Literal[
+    "G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING",
+    "G_FILE_ATTRIBUTE_STATUS_SET",
+    "G_FILE_ATTRIBUTE_STATUS_UNSET",
+    "error-setting",
+    "set",
+    "unset",
+]
+_FileAttributeStatusValueType: TypeAlias = (
+    FileAttributeStatus | _FileAttributeStatusLiteralType
+)
 
 class FileAttributeType(GObject.GEnum):
     BOOLEAN = 3
@@ -13597,6 +14616,32 @@ class FileAttributeType(GObject.GEnum):
     STRINGV = 9
     UINT32 = 4
     UINT64 = 6
+
+_FileAttributeTypeLiteralType: TypeAlias = Literal[
+    "G_FILE_ATTRIBUTE_TYPE_BOOLEAN",
+    "G_FILE_ATTRIBUTE_TYPE_BYTE_STRING",
+    "G_FILE_ATTRIBUTE_TYPE_INT32",
+    "G_FILE_ATTRIBUTE_TYPE_INT64",
+    "G_FILE_ATTRIBUTE_TYPE_INVALID",
+    "G_FILE_ATTRIBUTE_TYPE_OBJECT",
+    "G_FILE_ATTRIBUTE_TYPE_STRING",
+    "G_FILE_ATTRIBUTE_TYPE_STRINGV",
+    "G_FILE_ATTRIBUTE_TYPE_UINT32",
+    "G_FILE_ATTRIBUTE_TYPE_UINT64",
+    "boolean",
+    "byte-string",
+    "int32",
+    "int64",
+    "invalid",
+    "object",
+    "string",
+    "stringv",
+    "uint32",
+    "uint64",
+]
+_FileAttributeTypeValueType: TypeAlias = (
+    FileAttributeType | _FileAttributeTypeLiteralType
+)
 
 class FileMonitorEvent(GObject.GEnum):
     ATTRIBUTE_CHANGED = 4
@@ -13611,6 +14656,32 @@ class FileMonitorEvent(GObject.GEnum):
     RENAMED = 8
     UNMOUNTED = 6
 
+_FileMonitorEventLiteralType: TypeAlias = Literal[
+    "G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED",
+    "G_FILE_MONITOR_EVENT_CHANGED",
+    "G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT",
+    "G_FILE_MONITOR_EVENT_CREATED",
+    "G_FILE_MONITOR_EVENT_DELETED",
+    "G_FILE_MONITOR_EVENT_MOVED",
+    "G_FILE_MONITOR_EVENT_MOVED_IN",
+    "G_FILE_MONITOR_EVENT_MOVED_OUT",
+    "G_FILE_MONITOR_EVENT_PRE_UNMOUNT",
+    "G_FILE_MONITOR_EVENT_RENAMED",
+    "G_FILE_MONITOR_EVENT_UNMOUNTED",
+    "attribute-changed",
+    "changed",
+    "changes-done-hint",
+    "created",
+    "deleted",
+    "moved",
+    "moved-in",
+    "moved-out",
+    "pre-unmount",
+    "renamed",
+    "unmounted",
+]
+_FileMonitorEventValueType: TypeAlias = FileMonitorEvent | _FileMonitorEventLiteralType
+
 class FileType(GObject.GEnum):
     DIRECTORY = 2
     MOUNTABLE = 6
@@ -13620,10 +14691,40 @@ class FileType(GObject.GEnum):
     SYMBOLIC_LINK = 3
     UNKNOWN = 0
 
+_FileTypeLiteralType: TypeAlias = Literal[
+    "G_FILE_TYPE_DIRECTORY",
+    "G_FILE_TYPE_MOUNTABLE",
+    "G_FILE_TYPE_REGULAR",
+    "G_FILE_TYPE_SHORTCUT",
+    "G_FILE_TYPE_SPECIAL",
+    "G_FILE_TYPE_SYMBOLIC_LINK",
+    "G_FILE_TYPE_UNKNOWN",
+    "directory",
+    "mountable",
+    "regular",
+    "shortcut",
+    "special",
+    "symbolic-link",
+    "unknown",
+]
+_FileTypeValueType: TypeAlias = FileType | _FileTypeLiteralType
+
 class FilesystemPreviewType(GObject.GEnum):
     IF_ALWAYS = 0
     IF_LOCAL = 1
     NEVER = 2
+
+_FilesystemPreviewTypeLiteralType: TypeAlias = Literal[
+    "G_FILESYSTEM_PREVIEW_TYPE_IF_ALWAYS",
+    "G_FILESYSTEM_PREVIEW_TYPE_IF_LOCAL",
+    "G_FILESYSTEM_PREVIEW_TYPE_NEVER",
+    "if-always",
+    "if-local",
+    "never",
+]
+_FilesystemPreviewTypeValueType: TypeAlias = (
+    FilesystemPreviewType | _FilesystemPreviewTypeLiteralType
+)
 
 class IOErrorEnum(GObject.GEnum):
     ADDRESS_IN_USE = 33
@@ -13677,19 +14778,155 @@ class IOErrorEnum(GObject.GEnum):
     WOULD_RECURSE = 25
     WRONG_ETAG = 23
 
+_IOErrorEnumLiteralType: TypeAlias = Literal[
+    "G_IO_ERROR_ADDRESS_IN_USE",
+    "G_IO_ERROR_ALREADY_MOUNTED",
+    "G_IO_ERROR_BROKEN_PIPE",
+    "G_IO_ERROR_BUSY",
+    "G_IO_ERROR_CANCELLED",
+    "G_IO_ERROR_CANT_CREATE_BACKUP",
+    "G_IO_ERROR_CLOSED",
+    "G_IO_ERROR_CONNECTION_REFUSED",
+    "G_IO_ERROR_DBUS_ERROR",
+    "G_IO_ERROR_DESTINATION_UNSET",
+    "G_IO_ERROR_EXISTS",
+    "G_IO_ERROR_FAILED",
+    "G_IO_ERROR_FAILED_HANDLED",
+    "G_IO_ERROR_FILENAME_TOO_LONG",
+    "G_IO_ERROR_HOST_NOT_FOUND",
+    "G_IO_ERROR_HOST_UNREACHABLE",
+    "G_IO_ERROR_INVALID_ARGUMENT",
+    "G_IO_ERROR_INVALID_DATA",
+    "G_IO_ERROR_INVALID_FILENAME",
+    "G_IO_ERROR_IS_DIRECTORY",
+    "G_IO_ERROR_MESSAGE_TOO_LARGE",
+    "G_IO_ERROR_NETWORK_UNREACHABLE",
+    "G_IO_ERROR_NOT_CONNECTED",
+    "G_IO_ERROR_NOT_DIRECTORY",
+    "G_IO_ERROR_NOT_EMPTY",
+    "G_IO_ERROR_NOT_FOUND",
+    "G_IO_ERROR_NOT_INITIALIZED",
+    "G_IO_ERROR_NOT_MOUNTABLE_FILE",
+    "G_IO_ERROR_NOT_MOUNTED",
+    "G_IO_ERROR_NOT_REGULAR_FILE",
+    "G_IO_ERROR_NOT_SUPPORTED",
+    "G_IO_ERROR_NOT_SYMBOLIC_LINK",
+    "G_IO_ERROR_NO_SPACE",
+    "G_IO_ERROR_NO_SUCH_DEVICE",
+    "G_IO_ERROR_PARTIAL_INPUT",
+    "G_IO_ERROR_PENDING",
+    "G_IO_ERROR_PERMISSION_DENIED",
+    "G_IO_ERROR_PROXY_AUTH_FAILED",
+    "G_IO_ERROR_PROXY_FAILED",
+    "G_IO_ERROR_PROXY_NEED_AUTH",
+    "G_IO_ERROR_PROXY_NOT_ALLOWED",
+    "G_IO_ERROR_READ_ONLY",
+    "G_IO_ERROR_TIMED_OUT",
+    "G_IO_ERROR_TOO_MANY_LINKS",
+    "G_IO_ERROR_TOO_MANY_OPEN_FILES",
+    "G_IO_ERROR_WOULD_BLOCK",
+    "G_IO_ERROR_WOULD_MERGE",
+    "G_IO_ERROR_WOULD_RECURSE",
+    "G_IO_ERROR_WRONG_ETAG",
+    "address-in-use",
+    "already-mounted",
+    "broken-pipe",
+    "busy",
+    "cancelled",
+    "cant-create-backup",
+    "closed",
+    "connection-refused",
+    "dbus-error",
+    "destination-unset",
+    "exists",
+    "failed",
+    "failed-handled",
+    "filename-too-long",
+    "host-not-found",
+    "host-unreachable",
+    "invalid-argument",
+    "invalid-data",
+    "invalid-filename",
+    "is-directory",
+    "message-too-large",
+    "network-unreachable",
+    "no-space",
+    "no-such-device",
+    "not-connected",
+    "not-directory",
+    "not-empty",
+    "not-found",
+    "not-initialized",
+    "not-mountable-file",
+    "not-mounted",
+    "not-regular-file",
+    "not-supported",
+    "not-symbolic-link",
+    "partial-input",
+    "pending",
+    "permission-denied",
+    "proxy-auth-failed",
+    "proxy-failed",
+    "proxy-need-auth",
+    "proxy-not-allowed",
+    "read-only",
+    "timed-out",
+    "too-many-links",
+    "too-many-open-files",
+    "would-block",
+    "would-merge",
+    "would-recurse",
+    "wrong-etag",
+]
+_IOErrorEnumValueType: TypeAlias = IOErrorEnum | _IOErrorEnumLiteralType
+
 class IOModuleScopeFlags(GObject.GEnum):
     BLOCK_DUPLICATES = 1
     NONE = 0
+
+_IOModuleScopeFlagsLiteralType: TypeAlias = Literal[
+    "G_IO_MODULE_SCOPE_BLOCK_DUPLICATES",
+    "G_IO_MODULE_SCOPE_NONE",
+    "block-duplicates",
+    "none",
+]
+_IOModuleScopeFlagsValueType: TypeAlias = (
+    IOModuleScopeFlags | _IOModuleScopeFlagsLiteralType
+)
 
 class MemoryMonitorWarningLevel(GObject.GEnum):
     CRITICAL = 255
     LOW = 50
     MEDIUM = 100
 
+_MemoryMonitorWarningLevelLiteralType: TypeAlias = Literal[
+    "G_MEMORY_MONITOR_WARNING_LEVEL_CRITICAL",
+    "G_MEMORY_MONITOR_WARNING_LEVEL_LOW",
+    "G_MEMORY_MONITOR_WARNING_LEVEL_MEDIUM",
+    "critical",
+    "low",
+    "medium",
+]
+_MemoryMonitorWarningLevelValueType: TypeAlias = (
+    MemoryMonitorWarningLevel | _MemoryMonitorWarningLevelLiteralType
+)
+
 class MountOperationResult(GObject.GEnum):
     ABORTED = 1
     HANDLED = 0
     UNHANDLED = 2
+
+_MountOperationResultLiteralType: TypeAlias = Literal[
+    "G_MOUNT_OPERATION_ABORTED",
+    "G_MOUNT_OPERATION_HANDLED",
+    "G_MOUNT_OPERATION_UNHANDLED",
+    "aborted",
+    "handled",
+    "unhandled",
+]
+_MountOperationResultValueType: TypeAlias = (
+    MountOperationResult | _MountOperationResultLiteralType
+)
 
 class NetworkConnectivity(GObject.GEnum):
     FULL = 4
@@ -13697,21 +14934,69 @@ class NetworkConnectivity(GObject.GEnum):
     LOCAL = 1
     PORTAL = 3
 
+_NetworkConnectivityLiteralType: TypeAlias = Literal[
+    "G_NETWORK_CONNECTIVITY_FULL",
+    "G_NETWORK_CONNECTIVITY_LIMITED",
+    "G_NETWORK_CONNECTIVITY_LOCAL",
+    "G_NETWORK_CONNECTIVITY_PORTAL",
+    "full",
+    "limited",
+    "local",
+    "portal",
+]
+_NetworkConnectivityValueType: TypeAlias = (
+    NetworkConnectivity | _NetworkConnectivityLiteralType
+)
+
 class NotificationPriority(GObject.GEnum):
     HIGH = 2
     LOW = 1
     NORMAL = 0
     URGENT = 3
 
+_NotificationPriorityLiteralType: TypeAlias = Literal[
+    "G_NOTIFICATION_PRIORITY_HIGH",
+    "G_NOTIFICATION_PRIORITY_LOW",
+    "G_NOTIFICATION_PRIORITY_NORMAL",
+    "G_NOTIFICATION_PRIORITY_URGENT",
+    "high",
+    "low",
+    "normal",
+    "urgent",
+]
+_NotificationPriorityValueType: TypeAlias = (
+    NotificationPriority | _NotificationPriorityLiteralType
+)
+
 class PasswordSave(GObject.GEnum):
     FOR_SESSION = 1
     NEVER = 0
     PERMANENTLY = 2
 
+_PasswordSaveLiteralType: TypeAlias = Literal[
+    "G_PASSWORD_SAVE_FOR_SESSION",
+    "G_PASSWORD_SAVE_NEVER",
+    "G_PASSWORD_SAVE_PERMANENTLY",
+    "for-session",
+    "never",
+    "permanently",
+]
+_PasswordSaveValueType: TypeAlias = PasswordSave | _PasswordSaveLiteralType
+
 class PollableReturn(GObject.GEnum):
     FAILED = 0
     OK = 1
     WOULD_BLOCK = -27
+
+_PollableReturnLiteralType: TypeAlias = Literal[
+    "G_POLLABLE_RETURN_FAILED",
+    "G_POLLABLE_RETURN_OK",
+    "G_POLLABLE_RETURN_WOULD_BLOCK",
+    "failed",
+    "ok",
+    "would-block",
+]
+_PollableReturnValueType: TypeAlias = PollableReturn | _PollableReturnLiteralType
 
 class ResolverError(GObject.GEnum):
     INTERNAL = 2
@@ -13720,6 +15005,16 @@ class ResolverError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_ResolverErrorLiteralType: TypeAlias = Literal[
+    "G_RESOLVER_ERROR_INTERNAL",
+    "G_RESOLVER_ERROR_NOT_FOUND",
+    "G_RESOLVER_ERROR_TEMPORARY_FAILURE",
+    "internal",
+    "not-found",
+    "temporary-failure",
+]
+_ResolverErrorValueType: TypeAlias = ResolverError | _ResolverErrorLiteralType
+
 class ResolverRecordType(GObject.GEnum):
     MX = 2
     NS = 5
@@ -13727,11 +15022,32 @@ class ResolverRecordType(GObject.GEnum):
     SRV = 1
     TXT = 3
 
+_ResolverRecordTypeLiteralType: TypeAlias = Literal[
+    "G_RESOLVER_RECORD_MX",
+    "G_RESOLVER_RECORD_NS",
+    "G_RESOLVER_RECORD_SOA",
+    "G_RESOLVER_RECORD_SRV",
+    "G_RESOLVER_RECORD_TXT",
+    "mx",
+    "ns",
+    "soa",
+    "srv",
+    "txt",
+]
+_ResolverRecordTypeValueType: TypeAlias = (
+    ResolverRecordType | _ResolverRecordTypeLiteralType
+)
+
 class ResourceError(GObject.GEnum):
     INTERNAL = 1
     NOT_FOUND = 0
     @staticmethod
     def quark() -> int: ...
+
+_ResourceErrorLiteralType: TypeAlias = Literal[
+    "G_RESOURCE_ERROR_INTERNAL", "G_RESOURCE_ERROR_NOT_FOUND", "internal", "not-found"
+]
+_ResourceErrorValueType: TypeAlias = ResourceError | _ResourceErrorLiteralType
 
 class SocketClientEvent(GObject.GEnum):
     COMPLETE = 8
@@ -13744,17 +15060,67 @@ class SocketClientEvent(GObject.GEnum):
     TLS_HANDSHAKED = 7
     TLS_HANDSHAKING = 6
 
+_SocketClientEventLiteralType: TypeAlias = Literal[
+    "G_SOCKET_CLIENT_COMPLETE",
+    "G_SOCKET_CLIENT_CONNECTED",
+    "G_SOCKET_CLIENT_CONNECTING",
+    "G_SOCKET_CLIENT_PROXY_NEGOTIATED",
+    "G_SOCKET_CLIENT_PROXY_NEGOTIATING",
+    "G_SOCKET_CLIENT_RESOLVED",
+    "G_SOCKET_CLIENT_RESOLVING",
+    "G_SOCKET_CLIENT_TLS_HANDSHAKED",
+    "G_SOCKET_CLIENT_TLS_HANDSHAKING",
+    "complete",
+    "connected",
+    "connecting",
+    "proxy-negotiated",
+    "proxy-negotiating",
+    "resolved",
+    "resolving",
+    "tls-handshaked",
+    "tls-handshaking",
+]
+_SocketClientEventValueType: TypeAlias = (
+    SocketClientEvent | _SocketClientEventLiteralType
+)
+
 class SocketFamily(GObject.GEnum):
     INVALID = 0
     IPV4 = 2
     IPV6 = 10
     UNIX = 1
 
+_SocketFamilyLiteralType: TypeAlias = Literal[
+    "G_SOCKET_FAMILY_INVALID",
+    "G_SOCKET_FAMILY_IPV4",
+    "G_SOCKET_FAMILY_IPV6",
+    "G_SOCKET_FAMILY_UNIX",
+    "invalid",
+    "ipv4",
+    "ipv6",
+    "unix",
+]
+_SocketFamilyValueType: TypeAlias = SocketFamily | _SocketFamilyLiteralType
+
 class SocketListenerEvent(GObject.GEnum):
     BINDING = 0
     BOUND = 1
     LISTENED = 3
     LISTENING = 2
+
+_SocketListenerEventLiteralType: TypeAlias = Literal[
+    "G_SOCKET_LISTENER_BINDING",
+    "G_SOCKET_LISTENER_BOUND",
+    "G_SOCKET_LISTENER_LISTENED",
+    "G_SOCKET_LISTENER_LISTENING",
+    "binding",
+    "bound",
+    "listened",
+    "listening",
+]
+_SocketListenerEventValueType: TypeAlias = (
+    SocketListenerEvent | _SocketListenerEventLiteralType
+)
 
 class SocketProtocol(GObject.GEnum):
     DEFAULT = 0
@@ -13763,19 +15129,64 @@ class SocketProtocol(GObject.GEnum):
     UDP = 17
     UNKNOWN = -1
 
+_SocketProtocolLiteralType: TypeAlias = Literal[
+    "G_SOCKET_PROTOCOL_DEFAULT",
+    "G_SOCKET_PROTOCOL_SCTP",
+    "G_SOCKET_PROTOCOL_TCP",
+    "G_SOCKET_PROTOCOL_UDP",
+    "G_SOCKET_PROTOCOL_UNKNOWN",
+    "default",
+    "sctp",
+    "tcp",
+    "udp",
+    "unknown",
+]
+_SocketProtocolValueType: TypeAlias = SocketProtocol | _SocketProtocolLiteralType
+
 class SocketType(GObject.GEnum):
     DATAGRAM = 2
     INVALID = 0
     SEQPACKET = 3
     STREAM = 1
 
+_SocketTypeLiteralType: TypeAlias = Literal[
+    "G_SOCKET_TYPE_DATAGRAM",
+    "G_SOCKET_TYPE_INVALID",
+    "G_SOCKET_TYPE_SEQPACKET",
+    "G_SOCKET_TYPE_STREAM",
+    "datagram",
+    "invalid",
+    "seqpacket",
+    "stream",
+]
+_SocketTypeValueType: TypeAlias = SocketType | _SocketTypeLiteralType
+
 class TlsAuthenticationMode(GObject.GEnum):
     NONE = 0
     REQUESTED = 1
     REQUIRED = 2
 
+_TlsAuthenticationModeLiteralType: TypeAlias = Literal[
+    "G_TLS_AUTHENTICATION_NONE",
+    "G_TLS_AUTHENTICATION_REQUESTED",
+    "G_TLS_AUTHENTICATION_REQUIRED",
+    "none",
+    "requested",
+    "required",
+]
+_TlsAuthenticationModeValueType: TypeAlias = (
+    TlsAuthenticationMode | _TlsAuthenticationModeLiteralType
+)
+
 class TlsCertificateRequestFlags(GObject.GEnum):
     NONE = 0
+
+_TlsCertificateRequestFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_CERTIFICATE_REQUEST_NONE", "none"
+]
+_TlsCertificateRequestFlagsValueType: TypeAlias = (
+    TlsCertificateRequestFlags | _TlsCertificateRequestFlagsLiteralType
+)
 
 class TlsChannelBindingError(GObject.GEnum):
     GENERAL_ERROR = 4
@@ -13786,14 +15197,49 @@ class TlsChannelBindingError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_TlsChannelBindingErrorLiteralType: TypeAlias = Literal[
+    "G_TLS_CHANNEL_BINDING_ERROR_GENERAL_ERROR",
+    "G_TLS_CHANNEL_BINDING_ERROR_INVALID_STATE",
+    "G_TLS_CHANNEL_BINDING_ERROR_NOT_AVAILABLE",
+    "G_TLS_CHANNEL_BINDING_ERROR_NOT_IMPLEMENTED",
+    "G_TLS_CHANNEL_BINDING_ERROR_NOT_SUPPORTED",
+    "general-error",
+    "invalid-state",
+    "not-available",
+    "not-implemented",
+    "not-supported",
+]
+_TlsChannelBindingErrorValueType: TypeAlias = (
+    TlsChannelBindingError | _TlsChannelBindingErrorLiteralType
+)
+
 class TlsChannelBindingType(GObject.GEnum):
     EXPORTER = 2
     SERVER_END_POINT = 1
     UNIQUE = 0
 
+_TlsChannelBindingTypeLiteralType: TypeAlias = Literal[
+    "G_TLS_CHANNEL_BINDING_TLS_EXPORTER",
+    "G_TLS_CHANNEL_BINDING_TLS_SERVER_END_POINT",
+    "G_TLS_CHANNEL_BINDING_TLS_UNIQUE",
+    "exporter",
+    "server-end-point",
+    "unique",
+]
+_TlsChannelBindingTypeValueType: TypeAlias = (
+    TlsChannelBindingType | _TlsChannelBindingTypeLiteralType
+)
+
 class TlsDatabaseLookupFlags(GObject.GEnum):
     KEYPAIR = 1
     NONE = 0
+
+_TlsDatabaseLookupFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_DATABASE_LOOKUP_KEYPAIR", "G_TLS_DATABASE_LOOKUP_NONE", "keypair", "none"
+]
+_TlsDatabaseLookupFlagsValueType: TypeAlias = (
+    TlsDatabaseLookupFlags | _TlsDatabaseLookupFlagsLiteralType
+)
 
 class TlsError(GObject.GEnum):
     BAD_CERTIFICATE = 2
@@ -13808,10 +15254,44 @@ class TlsError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_TlsErrorLiteralType: TypeAlias = Literal[
+    "G_TLS_ERROR_BAD_CERTIFICATE",
+    "G_TLS_ERROR_BAD_CERTIFICATE_PASSWORD",
+    "G_TLS_ERROR_CERTIFICATE_REQUIRED",
+    "G_TLS_ERROR_EOF",
+    "G_TLS_ERROR_HANDSHAKE",
+    "G_TLS_ERROR_INAPPROPRIATE_FALLBACK",
+    "G_TLS_ERROR_MISC",
+    "G_TLS_ERROR_NOT_TLS",
+    "G_TLS_ERROR_UNAVAILABLE",
+    "bad-certificate",
+    "bad-certificate-password",
+    "certificate-required",
+    "eof",
+    "handshake",
+    "inappropriate-fallback",
+    "misc",
+    "not-tls",
+    "unavailable",
+]
+_TlsErrorValueType: TypeAlias = TlsError | _TlsErrorLiteralType
+
 class TlsInteractionResult(GObject.GEnum):
     FAILED = 2
     HANDLED = 1
     UNHANDLED = 0
+
+_TlsInteractionResultLiteralType: TypeAlias = Literal[
+    "G_TLS_INTERACTION_FAILED",
+    "G_TLS_INTERACTION_HANDLED",
+    "G_TLS_INTERACTION_UNHANDLED",
+    "failed",
+    "handled",
+    "unhandled",
+]
+_TlsInteractionResultValueType: TypeAlias = (
+    TlsInteractionResult | _TlsInteractionResultLiteralType
+)
 
 class TlsProtocolVersion(GObject.GEnum):
     DTLS_1_0 = 201
@@ -13823,10 +15303,44 @@ class TlsProtocolVersion(GObject.GEnum):
     TLS_1_3 = 5
     UNKNOWN = 0
 
+_TlsProtocolVersionLiteralType: TypeAlias = Literal[
+    "G_TLS_PROTOCOL_VERSION_DTLS_1_0",
+    "G_TLS_PROTOCOL_VERSION_DTLS_1_2",
+    "G_TLS_PROTOCOL_VERSION_SSL_3_0",
+    "G_TLS_PROTOCOL_VERSION_TLS_1_0",
+    "G_TLS_PROTOCOL_VERSION_TLS_1_1",
+    "G_TLS_PROTOCOL_VERSION_TLS_1_2",
+    "G_TLS_PROTOCOL_VERSION_TLS_1_3",
+    "G_TLS_PROTOCOL_VERSION_UNKNOWN",
+    "dtls-1-0",
+    "dtls-1-2",
+    "ssl-3-0",
+    "tls-1-0",
+    "tls-1-1",
+    "tls-1-2",
+    "tls-1-3",
+    "unknown",
+]
+_TlsProtocolVersionValueType: TypeAlias = (
+    TlsProtocolVersion | _TlsProtocolVersionLiteralType
+)
+
 class TlsRehandshakeMode(GObject.GEnum):
     NEVER = 0
     SAFELY = 1
     UNSAFELY = 2
+
+_TlsRehandshakeModeLiteralType: TypeAlias = Literal[
+    "G_TLS_REHANDSHAKE_NEVER",
+    "G_TLS_REHANDSHAKE_SAFELY",
+    "G_TLS_REHANDSHAKE_UNSAFELY",
+    "never",
+    "safely",
+    "unsafely",
+]
+_TlsRehandshakeModeValueType: TypeAlias = (
+    TlsRehandshakeMode | _TlsRehandshakeModeLiteralType
+)
 
 class UnixSocketAddressType(GObject.GEnum):
     ABSTRACT = 3
@@ -13835,7 +15349,35 @@ class UnixSocketAddressType(GObject.GEnum):
     INVALID = 0
     PATH = 2
 
+_UnixSocketAddressTypeLiteralType: TypeAlias = Literal[
+    "G_UNIX_SOCKET_ADDRESS_ABSTRACT",
+    "G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED",
+    "G_UNIX_SOCKET_ADDRESS_ANONYMOUS",
+    "G_UNIX_SOCKET_ADDRESS_INVALID",
+    "G_UNIX_SOCKET_ADDRESS_PATH",
+    "abstract",
+    "abstract-padded",
+    "anonymous",
+    "invalid",
+    "path",
+]
+_UnixSocketAddressTypeValueType: TypeAlias = (
+    UnixSocketAddressType | _UnixSocketAddressTypeLiteralType
+)
+
 class ZlibCompressorFormat(GObject.GEnum):
     GZIP = 1
     RAW = 2
     ZLIB = 0
+
+_ZlibCompressorFormatLiteralType: TypeAlias = Literal[
+    "G_ZLIB_COMPRESSOR_FORMAT_GZIP",
+    "G_ZLIB_COMPRESSOR_FORMAT_RAW",
+    "G_ZLIB_COMPRESSOR_FORMAT_ZLIB",
+    "gzip",
+    "raw",
+    "zlib",
+]
+_ZlibCompressorFormatValueType: TypeAlias = (
+    ZlibCompressorFormat | _ZlibCompressorFormatLiteralType
+)

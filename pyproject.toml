@@ -62,25 +62,25 @@ exclude = [
 [tool.ruff.lint]
 select = [
     "ANN",  # flake8-annotations
-	"B",    # flake8-bugbear
-	"C4",   # flake8-comprehensions
-	"E",    # pycodestyle errors
-	"EXE",  # flake8-executable
-	"F",    # pyflakes
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "E",    # pycodestyle errors
+    "EXE",  # flake8-executable
+    "F",    # pyflakes
     "I",    # isort
-	"INP",  # flake8-no-pep420
-	"ISC",  # flake8-implicit-str-concat
-	"PIE",  # flake8-pie
-	"PTH",  # flake8-use-pathlib
+    "INP",  # flake8-no-pep420
+    "ISC",  # flake8-implicit-str-concat
+    "PIE",  # flake8-pie
+    "PTH",  # flake8-use-pathlib
     "PYI",  # flake8-pyi
-	"Q",    # flake8-quotes
-	"RET",  # flake8-return
-	"RSE",  # flake8-raise
-	"SIM",  # flake8-simplify
+    "Q",    # flake8-quotes
+    "RET",  # flake8-return
+    "RSE",  # flake8-raise
+    "SIM",  # flake8-simplify
     "T10",  # flake8-debugger
     "TC",   # flake8-type-checking
     "UP",   # pyupgrade
-	"W",    # pycodestyle warnings
+    "W",    # pycodestyle warnings
     "RUF",  # ruff-specific rules
 ]
 ignore = [
@@ -89,6 +89,7 @@ ignore = [
   "PYI019",  # Methods like `__or__` should return `typing.Self` instead of a custom `TypeVar`
   "PYI021",  # Docstrings should not be included in stubs
   "PYI026",  # Use `typing_extensions.TypeAlias`
+  "PYI047",  # Private `TypeAlias` is never used
   "PYI052",  # Need type annotation
   "PYI054",  # Numeric literals with a string representation longer than ten characters are not permitted
   "PYI016",  # Duplicate union member `None`
@@ -110,3 +111,5 @@ typing = ["_typeshed", "typing", "typing_extensions"]
 
 [tool.pyright]
 pythonVersion = "3.10"
+
+reportMissingModuleSource = "none"

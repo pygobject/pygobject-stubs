@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -112,7 +114,10 @@ def ancillary_meta_api_get_type() -> type[Any]: ...
 def ancillary_meta_get_info() -> Gst.MetaInfo: ...
 def buffer_add_ancillary_meta(buffer: Gst.Buffer) -> AncillaryMeta: ...
 def buffer_add_video_afd_meta(
-    buffer: Gst.Buffer, field: int, spec: VideoAFDSpec, afd: VideoAFDValue
+    buffer: Gst.Buffer,
+    field: int,
+    spec: _VideoAFDSpecValueType,
+    afd: _VideoAFDValueValueType,
 ) -> VideoAFDMeta: ...
 def buffer_add_video_affine_transformation_meta(
     buffer: Gst.Buffer,
@@ -121,16 +126,16 @@ def buffer_add_video_bar_meta(
     buffer: Gst.Buffer, field: int, is_letterbox: bool, bar_data1: int, bar_data2: int
 ) -> VideoBarMeta: ...
 def buffer_add_video_caption_meta(
-    buffer: Gst.Buffer, caption_type: VideoCaptionType, data: Sequence[int]
+    buffer: Gst.Buffer, caption_type: _VideoCaptionTypeValueType, data: Sequence[int]
 ) -> VideoCaptionMeta: ...
 def buffer_add_video_codec_alpha_meta(
     buffer: Gst.Buffer, alpha_buffer: Gst.Buffer
 ) -> VideoCodecAlphaMeta: ...
 def buffer_add_video_gl_texture_upload_meta(
     buffer: Gst.Buffer,
-    texture_orientation: VideoGLTextureOrientation,
+    texture_orientation: _VideoGLTextureOrientationValueType,
     n_textures: int,
-    texture_type: VideoGLTextureType,
+    texture_type: _VideoGLTextureTypeValueType,
     upload: Callable[[VideoGLTextureUploadMeta, int], bool],
     user_data: Any | None,
     user_data_copy: Callable[[Any | None], int],
@@ -138,15 +143,15 @@ def buffer_add_video_gl_texture_upload_meta(
 ) -> VideoGLTextureUploadMeta: ...
 def buffer_add_video_meta(
     buffer: Gst.Buffer,
-    flags: VideoFrameFlags,
-    format: VideoFormat,
+    flags: _VideoFrameFlagsValueType,
+    format: _VideoFormatValueType,
     width: int,
     height: int,
 ) -> VideoMeta: ...
 def buffer_add_video_meta_full(
     buffer: Gst.Buffer,
-    flags: VideoFrameFlags,
-    format: VideoFormat,
+    flags: _VideoFrameFlagsValueType,
+    format: _VideoFormatValueType,
     width: int,
     height: int,
     n_planes: int,
@@ -173,7 +178,7 @@ def buffer_add_video_time_code_meta_full(
     fps_n: int,
     fps_d: int,
     latest_daily_jam: GLib.DateTime,
-    flags: VideoTimeCodeFlags,
+    flags: _VideoTimeCodeFlagsValueType,
     hours: int,
     minutes: int,
     seconds: int,
@@ -194,38 +199,54 @@ def buffer_pool_config_set_video_alignment(
 def is_video_overlay_prepare_window_handle_message(msg: Gst.Message) -> bool: ...
 def navigation_event_get_coordinates(event: Gst.Event) -> tuple[bool, float, float]: ...
 def navigation_event_get_type(event: Gst.Event) -> NavigationEventType: ...
-def navigation_event_new_command(command: NavigationCommand) -> Gst.Event: ...
+def navigation_event_new_command(command: _NavigationCommandValueType) -> Gst.Event: ...
 def navigation_event_new_key_press(
-    key: str, state: NavigationModifierType
+    key: str, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_key_release(
-    key: str, state: NavigationModifierType
+    key: str, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_mouse_button_press(
-    button: int, x: float, y: float, state: NavigationModifierType
+    button: int, x: float, y: float, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_mouse_button_release(
-    button: int, x: float, y: float, state: NavigationModifierType
+    button: int, x: float, y: float, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_mouse_double_click(
-    button: int, x: float, y: float, state: NavigationModifierType
+    button: int, x: float, y: float, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_mouse_move(
-    x: float, y: float, state: NavigationModifierType
+    x: float, y: float, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_new_mouse_scroll(
-    x: float, y: float, delta_x: float, delta_y: float, state: NavigationModifierType
+    x: float,
+    y: float,
+    delta_x: float,
+    delta_y: float,
+    state: _NavigationModifierTypeValueType,
 ) -> Gst.Event: ...
-def navigation_event_new_touch_cancel(state: NavigationModifierType) -> Gst.Event: ...
+def navigation_event_new_touch_cancel(
+    state: _NavigationModifierTypeValueType,
+) -> Gst.Event: ...
 def navigation_event_new_touch_down(
-    identifier: int, x: float, y: float, pressure: float, state: NavigationModifierType
+    identifier: int,
+    x: float,
+    y: float,
+    pressure: float,
+    state: _NavigationModifierTypeValueType,
 ) -> Gst.Event: ...
-def navigation_event_new_touch_frame(state: NavigationModifierType) -> Gst.Event: ...
+def navigation_event_new_touch_frame(
+    state: _NavigationModifierTypeValueType,
+) -> Gst.Event: ...
 def navigation_event_new_touch_motion(
-    identifier: int, x: float, y: float, pressure: float, state: NavigationModifierType
+    identifier: int,
+    x: float,
+    y: float,
+    pressure: float,
+    state: _NavigationModifierTypeValueType,
 ) -> Gst.Event: ...
 def navigation_event_new_touch_up(
-    identifier: int, x: float, y: float, state: NavigationModifierType
+    identifier: int, x: float, y: float, state: _NavigationModifierTypeValueType
 ) -> Gst.Event: ...
 def navigation_event_parse_command(
     event: Gst.Event,
@@ -274,7 +295,7 @@ def navigation_query_set_angles(
     query: Gst.Query, cur_angle: int, n_angles: int
 ) -> None: ...
 def navigation_query_set_commandsv(
-    query: Gst.Query, cmds: Sequence[NavigationCommand]
+    query: Gst.Query, cmds: Sequence[_NavigationCommandValueType]
 ) -> None: ...
 def video_afd_meta_api_get_type() -> type[Any]: ...
 def video_afd_meta_get_info() -> Gst.MetaInfo: ...
@@ -299,7 +320,7 @@ def video_calculate_display_ratio(
 def video_caption_meta_api_get_type() -> type[Any]: ...
 def video_caption_meta_get_info() -> Gst.MetaInfo: ...
 def video_caption_type_from_caps(caps: Gst.Caps) -> VideoCaptionType: ...
-def video_caption_type_to_caps(type: VideoCaptionType) -> Gst.Caps: ...
+def video_caption_type_to_caps(type: _VideoCaptionTypeValueType) -> Gst.Caps: ...
 def video_center_rect(
     src: VideoRectangle, dst: VideoRectangle, scaling: bool
 ) -> VideoRectangle: ...
@@ -308,28 +329,32 @@ def video_chroma_resample(
     resample: VideoChromaResample, lines: int | Any | None, width: int
 ) -> None: ...
 def video_chroma_site_from_string(s: str) -> VideoChromaSite: ...
-def video_chroma_site_to_string(site: VideoChromaSite) -> str | None: ...
-def video_chroma_to_string(site: VideoChromaSite) -> str: ...
+def video_chroma_site_to_string(site: _VideoChromaSiteValueType) -> str | None: ...
+def video_chroma_to_string(site: _VideoChromaSiteValueType) -> str: ...
 def video_codec_alpha_meta_api_get_type() -> type[Any]: ...
 def video_codec_alpha_meta_get_info() -> Gst.MetaInfo: ...
 def video_color_matrix_from_iso(value: int) -> VideoColorMatrix: ...
 def video_color_matrix_get_Kr_Kb(
-    matrix: VideoColorMatrix,
+    matrix: _VideoColorMatrixValueType,
 ) -> tuple[bool, float, float]: ...
-def video_color_matrix_to_iso(matrix: VideoColorMatrix) -> int: ...
+def video_color_matrix_to_iso(matrix: _VideoColorMatrixValueType) -> int: ...
 def video_color_primaries_from_iso(value: int) -> VideoColorPrimaries: ...
 def video_color_primaries_get_info(
-    primaries: VideoColorPrimaries,
+    primaries: _VideoColorPrimariesValueType,
 ) -> VideoColorPrimariesInfo: ...
 def video_color_primaries_is_equivalent(
-    primaries: VideoColorPrimaries, other: VideoColorPrimaries
+    primaries: _VideoColorPrimariesValueType, other: _VideoColorPrimariesValueType
 ) -> bool: ...
-def video_color_primaries_to_iso(primaries: VideoColorPrimaries) -> int: ...
+def video_color_primaries_to_iso(primaries: _VideoColorPrimariesValueType) -> int: ...
 def video_color_range_offsets(
-    range: VideoColorRange, info: VideoFormatInfo
+    range: _VideoColorRangeValueType, info: VideoFormatInfo
 ) -> tuple[list[int], list[int]]: ...
-def video_color_transfer_decode(func: VideoTransferFunction, val: float) -> float: ...
-def video_color_transfer_encode(func: VideoTransferFunction, val: float) -> float: ...
+def video_color_transfer_decode(
+    func: _VideoTransferFunctionValueType, val: float
+) -> float: ...
+def video_color_transfer_encode(
+    func: _VideoTransferFunctionValueType, val: float
+) -> float: ...
 def video_convert_sample(
     sample: Gst.Sample, to_caps: Gst.Caps, timeout: int
 ) -> Gst.Sample | None: ...
@@ -342,9 +367,11 @@ def video_convert_sample_async(
 ) -> None: ...
 def video_crop_meta_api_get_type() -> type[Any]: ...
 def video_crop_meta_get_info() -> Gst.MetaInfo: ...
-def video_dma_drm_format_from_gst_format(format: VideoFormat) -> tuple[int, int]: ...
+def video_dma_drm_format_from_gst_format(
+    format: _VideoFormatValueType,
+) -> tuple[int, int]: ...
 def video_dma_drm_format_to_gst_format(fourcc: int, modifier: int) -> VideoFormat: ...
-def video_dma_drm_fourcc_from_format(format: VideoFormat) -> int: ...
+def video_dma_drm_fourcc_from_format(format: _VideoFormatValueType) -> int: ...
 def video_dma_drm_fourcc_from_string(format_str: str) -> tuple[int, int]: ...
 def video_dma_drm_fourcc_to_format(fourcc: int) -> VideoFormat: ...
 def video_dma_drm_fourcc_to_string(fourcc: int, modifier: int) -> str | None: ...
@@ -364,7 +391,7 @@ def video_event_parse_upstream_force_key_unit(
     event: Gst.Event,
 ) -> tuple[bool, int, bool, int]: ...
 def video_field_order_from_string(order: str) -> VideoFieldOrder: ...
-def video_field_order_to_string(order: VideoFieldOrder) -> str: ...
+def video_field_order_to_string(order: _VideoFieldOrderValueType) -> str: ...
 def video_format_from_fourcc(fourcc: int) -> VideoFormat: ...
 def video_format_from_masks(
     depth: int,
@@ -376,17 +403,17 @@ def video_format_from_masks(
     alpha_mask: int,
 ) -> VideoFormat: ...
 def video_format_from_string(format: str) -> VideoFormat: ...
-def video_format_get_info(format: VideoFormat) -> VideoFormatInfo: ...
-def video_format_get_palette(format: VideoFormat) -> tuple[int, int]: ...
-def video_format_to_fourcc(format: VideoFormat) -> int: ...
-def video_format_to_string(format: VideoFormat) -> str: ...
+def video_format_get_info(format: _VideoFormatValueType) -> VideoFormatInfo: ...
+def video_format_get_palette(format: _VideoFormatValueType) -> tuple[int, int]: ...
+def video_format_to_fourcc(format: _VideoFormatValueType) -> int: ...
+def video_format_to_string(format: _VideoFormatValueType) -> str: ...
 def video_formats_any() -> list[VideoFormat]: ...
 def video_formats_raw() -> list[VideoFormat]: ...
 def video_frame_map(
-    info: VideoInfo, buffer: Gst.Buffer, flags: Gst.MapFlags
+    info: VideoInfo, buffer: Gst.Buffer, flags: Gst._MapFlagsValueType
 ) -> tuple[bool, VideoFrame]: ...
 def video_frame_map_id(
-    info: VideoInfo, buffer: Gst.Buffer, id: int, flags: Gst.MapFlags
+    info: VideoInfo, buffer: Gst.Buffer, id: int, flags: Gst._MapFlagsValueType
 ) -> tuple[bool, VideoFrame]: ...
 def video_gl_texture_upload_meta_api_get_type() -> type[Any]: ...
 def video_gl_texture_upload_meta_get_info() -> Gst.MetaInfo: ...
@@ -399,14 +426,16 @@ def video_info_dma_drm_init() -> VideoInfoDmaDrm: ...
 def video_info_from_caps(caps: Gst.Caps) -> tuple[bool, VideoInfo]: ...
 def video_info_init() -> VideoInfo: ...
 def video_interlace_mode_from_string(mode: str) -> VideoInterlaceMode: ...
-def video_interlace_mode_to_string(mode: VideoInterlaceMode) -> str: ...
+def video_interlace_mode_to_string(mode: _VideoInterlaceModeValueType) -> str: ...
 def video_is_common_aspect_ratio(
     width: int, height: int, par_n: int, par_d: int
 ) -> bool: ...
 def video_is_dma_drm_caps(caps: Gst.Caps) -> bool: ...
-def video_make_raw_caps(formats: Sequence[VideoFormat] | None = None) -> Gst.Caps: ...
+def video_make_raw_caps(
+    formats: Sequence[_VideoFormatValueType] | None = None,
+) -> Gst.Caps: ...
 def video_make_raw_caps_with_features(
-    formats: Sequence[VideoFormat] | None = None,
+    formats: Sequence[_VideoFormatValueType] | None = None,
     features: Gst.CapsFeatures | None = None,
 ) -> Gst.Caps: ...
 def video_mastering_display_info_from_string(
@@ -422,18 +451,22 @@ def video_multiview_get_doubled_width_modes() -> Any: ...
 def video_multiview_get_mono_modes() -> Any: ...
 def video_multiview_get_unpacked_modes() -> Any: ...
 def video_multiview_guess_half_aspect(
-    mv_mode: VideoMultiviewMode, width: int, height: int, par_n: int, par_d: int
+    mv_mode: _VideoMultiviewModeValueType,
+    width: int,
+    height: int,
+    par_n: int,
+    par_d: int,
 ) -> bool: ...
 def video_multiview_mode_from_caps_string(
     caps_mview_mode: str,
 ) -> VideoMultiviewMode: ...
 def video_multiview_mode_to_caps_string(
-    mview_mode: VideoMultiviewMode,
+    mview_mode: _VideoMultiviewModeValueType,
 ) -> str | None: ...
 def video_multiview_video_info_change_mode(
     info: VideoInfo,
-    out_mview_mode: VideoMultiviewMode,
-    out_mview_flags: VideoMultiviewFlags,
+    out_mview_mode: _VideoMultiviewModeValueType,
+    out_mview_flags: _VideoMultiviewFlagsValueType,
 ) -> None: ...
 def video_orientation_from_tag(
     taglist: Gst.TagList,
@@ -454,24 +487,24 @@ def video_sei_user_data_unregistered_parse_precision_time_stamp(
     user_data: VideoSEIUserDataUnregisteredMeta,
 ) -> tuple[bool, int, int]: ...
 def video_tile_get_index(
-    mode: VideoTileMode, x: int, y: int, x_tiles: int, y_tiles: int
+    mode: _VideoTileModeValueType, x: int, y: int, x_tiles: int, y_tiles: int
 ) -> int: ...
 def video_time_code_meta_api_get_type() -> type[Any]: ...
 def video_time_code_meta_get_info() -> Gst.MetaInfo: ...
 def video_transfer_function_decode(
-    func: VideoTransferFunction, val: float
+    func: _VideoTransferFunctionValueType, val: float
 ) -> float: ...
 def video_transfer_function_encode(
-    func: VideoTransferFunction, val: float
+    func: _VideoTransferFunctionValueType, val: float
 ) -> float: ...
 def video_transfer_function_from_iso(value: int) -> VideoTransferFunction: ...
 def video_transfer_function_is_equivalent(
-    from_func: VideoTransferFunction,
+    from_func: _VideoTransferFunctionValueType,
     from_bpp: int,
-    to_func: VideoTransferFunction,
+    to_func: _VideoTransferFunctionValueType,
     to_bpp: int,
 ) -> bool: ...
-def video_transfer_function_to_iso(func: VideoTransferFunction) -> int: ...
+def video_transfer_function_to_iso(func: _VideoTransferFunctionValueType) -> int: ...
 
 class AncillaryMeta(_gi.Struct):
     """
@@ -576,26 +609,30 @@ class Navigation(GObject.GInterface, Protocol):
     @staticmethod
     def event_get_type(event: Gst.Event) -> NavigationEventType: ...
     @staticmethod
-    def event_new_command(command: NavigationCommand) -> Gst.Event: ...
+    def event_new_command(command: _NavigationCommandValueType) -> Gst.Event: ...
     @staticmethod
-    def event_new_key_press(key: str, state: NavigationModifierType) -> Gst.Event: ...
+    def event_new_key_press(
+        key: str, state: _NavigationModifierTypeValueType
+    ) -> Gst.Event: ...
     @staticmethod
-    def event_new_key_release(key: str, state: NavigationModifierType) -> Gst.Event: ...
+    def event_new_key_release(
+        key: str, state: _NavigationModifierTypeValueType
+    ) -> Gst.Event: ...
     @staticmethod
     def event_new_mouse_button_press(
-        button: int, x: float, y: float, state: NavigationModifierType
+        button: int, x: float, y: float, state: _NavigationModifierTypeValueType
     ) -> Gst.Event: ...
     @staticmethod
     def event_new_mouse_button_release(
-        button: int, x: float, y: float, state: NavigationModifierType
+        button: int, x: float, y: float, state: _NavigationModifierTypeValueType
     ) -> Gst.Event: ...
     @staticmethod
     def event_new_mouse_double_click(
-        button: int, x: float, y: float, state: NavigationModifierType
+        button: int, x: float, y: float, state: _NavigationModifierTypeValueType
     ) -> Gst.Event: ...
     @staticmethod
     def event_new_mouse_move(
-        x: float, y: float, state: NavigationModifierType
+        x: float, y: float, state: _NavigationModifierTypeValueType
     ) -> Gst.Event: ...
     @staticmethod
     def event_new_mouse_scroll(
@@ -603,31 +640,33 @@ class Navigation(GObject.GInterface, Protocol):
         y: float,
         delta_x: float,
         delta_y: float,
-        state: NavigationModifierType,
+        state: _NavigationModifierTypeValueType,
     ) -> Gst.Event: ...
     @staticmethod
-    def event_new_touch_cancel(state: NavigationModifierType) -> Gst.Event: ...
+    def event_new_touch_cancel(
+        state: _NavigationModifierTypeValueType,
+    ) -> Gst.Event: ...
     @staticmethod
     def event_new_touch_down(
         identifier: int,
         x: float,
         y: float,
         pressure: float,
-        state: NavigationModifierType,
+        state: _NavigationModifierTypeValueType,
     ) -> Gst.Event: ...
     @staticmethod
-    def event_new_touch_frame(state: NavigationModifierType) -> Gst.Event: ...
+    def event_new_touch_frame(state: _NavigationModifierTypeValueType) -> Gst.Event: ...
     @staticmethod
     def event_new_touch_motion(
         identifier: int,
         x: float,
         y: float,
         pressure: float,
-        state: NavigationModifierType,
+        state: _NavigationModifierTypeValueType,
     ) -> Gst.Event: ...
     @staticmethod
     def event_new_touch_up(
-        identifier: int, x: float, y: float, state: NavigationModifierType
+        identifier: int, x: float, y: float, state: _NavigationModifierTypeValueType
     ) -> Gst.Event: ...
     @staticmethod
     def event_parse_command(event: Gst.Event) -> tuple[bool, NavigationCommand]: ...
@@ -693,9 +732,9 @@ class Navigation(GObject.GInterface, Protocol):
     def query_set_angles(query: Gst.Query, cur_angle: int, n_angles: int) -> None: ...
     @staticmethod
     def query_set_commandsv(
-        query: Gst.Query, cmds: Sequence[NavigationCommand]
+        query: Gst.Query, cmds: Sequence[_NavigationCommandValueType]
     ) -> None: ...
-    def send_command(self, command: NavigationCommand) -> None: ...
+    def send_command(self, command: _NavigationCommandValueType) -> None: ...
     def send_event(self, structure: Gst.Structure) -> None: ...
     def send_event_simple(self, event: Gst.Event) -> None: ...
     def send_key_event(self, event: str, key: str) -> None: ...
@@ -817,7 +856,7 @@ class VideoAggregator(GstBase.Aggregator):
         latency: int = ...,
         min_upstream_latency: int = ...,
         start_time: int = ...,
-        start_time_selection: GstBase.AggregatorStartTimeSelection = ...,
+        start_time_selection: GstBase._AggregatorStartTimeSelectionValueType = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -917,7 +956,7 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     """
     @type_check_only
     class Props(VideoAggregatorPad.Props):
-        converter_config: Gst.Structure
+        converter_config: Gst.Structure | None
 
     @property
     def props(self) -> Props: ...
@@ -928,14 +967,14 @@ class VideoAggregatorConvertPad(VideoAggregatorPad):
     def __init__(
         self,
         *,
-        converter_config: Gst.Structure = ...,
+        converter_config: Gst.Structure | None = ...,
         max_last_buffer_repeat: int = ...,
         repeat_after_eos: bool = ...,
         zorder: int = ...,
         emit_signals: bool = ...,
-        direction: Gst.PadDirection = ...,
+        direction: Gst._PadDirectionValueType = ...,
         offset: int = ...,
-        template: Gst.PadTemplate = ...,
+        template: Gst.PadTemplate | None = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -1039,9 +1078,9 @@ class VideoAggregatorPad(GstBase.AggregatorPad):
         repeat_after_eos: bool = ...,
         zorder: int = ...,
         emit_signals: bool = ...,
-        direction: Gst.PadDirection = ...,
+        direction: Gst._PadDirectionValueType = ...,
         offset: int = ...,
-        template: Gst.PadTemplate = ...,
+        template: Gst.PadTemplate | None = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -1170,14 +1209,14 @@ class VideoAggregatorParallelConvertPad(VideoAggregatorConvertPad):
     def __init__(
         self,
         *,
-        converter_config: Gst.Structure = ...,
+        converter_config: Gst.Structure | None = ...,
         max_last_buffer_repeat: int = ...,
         repeat_after_eos: bool = ...,
         zorder: int = ...,
         emit_signals: bool = ...,
-        direction: Gst.PadDirection = ...,
+        direction: Gst._PadDirectionValueType = ...,
         offset: int = ...,
-        template: Gst.PadTemplate = ...,
+        template: Gst.PadTemplate | None = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -1505,7 +1544,14 @@ class VideoDecoder(Gst.Element):
     """
     @type_check_only
     class Props(Gst.Element.Props):
-        automatic_request_sync_point_flags: VideoDecoderRequestSyncPointFlags
+        @property
+        def automatic_request_sync_point_flags(
+            self,
+        ) -> VideoDecoderRequestSyncPointFlags: ...
+        @automatic_request_sync_point_flags.setter
+        def automatic_request_sync_point_flags(
+            self, value: _VideoDecoderRequestSyncPointFlagsValueType
+        ) -> None: ...
         automatic_request_sync_points: bool
         discard_corrupted_frames: bool
         max_errors: int
@@ -1533,7 +1579,7 @@ class VideoDecoder(Gst.Element):
     def __init__(
         self,
         *,
-        automatic_request_sync_point_flags: VideoDecoderRequestSyncPointFlags = ...,
+        automatic_request_sync_point_flags: _VideoDecoderRequestSyncPointFlagsValueType = ...,
         automatic_request_sync_points: bool = ...,
         discard_corrupted_frames: bool = ...,
         max_errors: int = ...,
@@ -1595,20 +1641,22 @@ class VideoDecoder(Gst.Element):
     def get_subframe_mode(self) -> bool: ...
     def have_frame(self) -> Gst.FlowReturn: ...
     def have_last_subframe(self, frame: VideoCodecFrame) -> Gst.FlowReturn: ...
-    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: Gst.TagList | None, mode: Gst._TagMergeModeValueType
+    ) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
     ) -> Gst.Caps: ...
     def release_frame(self, frame: VideoCodecFrame) -> None: ...
     def request_sync_point(
-        self, frame: VideoCodecFrame, flags: VideoDecoderRequestSyncPointFlags
+        self, frame: VideoCodecFrame, flags: _VideoDecoderRequestSyncPointFlagsValueType
     ) -> None: ...
     def set_estimate_rate(self, enabled: bool) -> None: ...
     def set_interlaced_output_state(
         self,
-        fmt: VideoFormat,
-        interlace_mode: VideoInterlaceMode,
+        fmt: _VideoFormatValueType,
+        interlace_mode: _VideoInterlaceModeValueType,
         width: int,
         height: int,
         reference: VideoCodecState | None = None,
@@ -1619,7 +1667,7 @@ class VideoDecoder(Gst.Element):
     def set_needs_sync_point(self, enabled: bool) -> None: ...
     def set_output_state(
         self,
-        fmt: VideoFormat,
+        fmt: _VideoFormatValueType,
         width: int,
         height: int,
         reference: VideoCodecState | None = None,
@@ -1850,7 +1898,9 @@ class VideoEncoder(Gst.Element, Gst.Preset):
     def get_oldest_frame(self) -> VideoCodecFrame | None: ...
     def get_output_state(self) -> VideoCodecState | None: ...
     def is_qos_enabled(self) -> bool: ...
-    def merge_tags(self, tags: Gst.TagList | None, mode: Gst.TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: Gst.TagList | None, mode: Gst._TagMergeModeValueType
+    ) -> None: ...
     def negotiate(self) -> bool: ...
     def proxy_getcaps(
         self, caps: Gst.Caps | None = None, filter: Gst.Caps | None = None
@@ -2024,7 +2074,7 @@ class VideoFormatInfo(_gi.Struct):
     unpack_func: Callable[
         [
             VideoFormatInfo,
-            VideoPackFlags,
+            _VideoPackFlagsValueType,
             Any | None,
             int | Any | None,
             int,
@@ -2038,12 +2088,12 @@ class VideoFormatInfo(_gi.Struct):
     pack_func: Callable[
         [
             VideoFormatInfo,
-            VideoPackFlags,
+            _VideoPackFlagsValueType,
             Any | None,
             int,
             int | Any | None,
             int,
-            VideoChromaSite,
+            _VideoChromaSiteValueType,
             int,
             int,
         ],
@@ -2075,11 +2125,11 @@ class VideoFrame(_gi.Struct):
     def copy_plane(self, src: VideoFrame, plane: int) -> bool: ...
     @staticmethod
     def map(
-        info: VideoInfo, buffer: Gst.Buffer, flags: Gst.MapFlags
+        info: VideoInfo, buffer: Gst.Buffer, flags: Gst._MapFlagsValueType
     ) -> tuple[bool, VideoFrame]: ...
     @staticmethod
     def map_id(
-        info: VideoInfo, buffer: Gst.Buffer, id: int, flags: Gst.MapFlags
+        info: VideoInfo, buffer: Gst.Buffer, id: int, flags: Gst._MapFlagsValueType
     ) -> tuple[bool, VideoFrame]: ...
     def unmap(self) -> None: ...
 
@@ -2138,7 +2188,10 @@ class VideoInfo(GObject.GBoxed):
     def align(self, align: VideoAlignment) -> bool: ...
     def align_full(self, align: VideoAlignment) -> tuple[bool, int]: ...
     def convert(
-        self, src_format: Gst.Format, src_value: int, dest_format: Gst.Format
+        self,
+        src_format: Gst._FormatValueType,
+        src_value: int,
+        dest_format: Gst._FormatValueType,
     ) -> tuple[bool, int]: ...
     def copy(self) -> VideoInfo: ...
     def free(self) -> None: ...
@@ -2150,9 +2203,15 @@ class VideoInfo(GObject.GBoxed):
     def new(cls) -> VideoInfo: ...
     @classmethod
     def new_from_caps(cls, caps: Gst.Caps) -> VideoInfo | None: ...
-    def set_format(self, format: VideoFormat, width: int, height: int) -> bool: ...
+    def set_format(
+        self, format: _VideoFormatValueType, width: int, height: int
+    ) -> bool: ...
     def set_interlaced_format(
-        self, format: VideoFormat, mode: VideoInterlaceMode, width: int, height: int
+        self,
+        format: _VideoFormatValueType,
+        mode: _VideoInterlaceModeValueType,
+        width: int,
+        height: int,
     ) -> bool: ...
     def to_caps(self) -> Gst.Caps: ...
 
@@ -2245,7 +2304,7 @@ class VideoMeta(_gi.Struct):
     def get_plane_height(self) -> tuple[bool, list[int]]: ...
     def get_plane_size(self) -> tuple[bool, list[int]]: ...
     def map(
-        self, plane: int, info: Gst.MapInfo, flags: Gst.MapFlags
+        self, plane: int, info: Gst.MapInfo, flags: Gst._MapFlagsValueType
     ) -> tuple[bool, int, int]: ...
     def set_alignment(self, alignment: VideoAlignment) -> bool: ...
     def set_alignment_full(self, alignment: VideoAlignment) -> bool: ...
@@ -2430,16 +2489,24 @@ class VideoOverlayRectangle(GObject.GBoxed):
     def copy(self) -> VideoOverlayRectangle: ...
     def get_flags(self) -> VideoOverlayFormatFlags: ...
     def get_global_alpha(self) -> float: ...
-    def get_pixels_argb(self, flags: VideoOverlayFormatFlags) -> Gst.Buffer: ...
-    def get_pixels_ayuv(self, flags: VideoOverlayFormatFlags) -> Gst.Buffer: ...
-    def get_pixels_raw(self, flags: VideoOverlayFormatFlags) -> Gst.Buffer: ...
+    def get_pixels_argb(
+        self, flags: _VideoOverlayFormatFlagsValueType
+    ) -> Gst.Buffer: ...
+    def get_pixels_ayuv(
+        self, flags: _VideoOverlayFormatFlagsValueType
+    ) -> Gst.Buffer: ...
+    def get_pixels_raw(
+        self, flags: _VideoOverlayFormatFlagsValueType
+    ) -> Gst.Buffer: ...
     def get_pixels_unscaled_argb(
-        self, flags: VideoOverlayFormatFlags
+        self, flags: _VideoOverlayFormatFlagsValueType
     ) -> Gst.Buffer: ...
     def get_pixels_unscaled_ayuv(
-        self, flags: VideoOverlayFormatFlags
+        self, flags: _VideoOverlayFormatFlagsValueType
     ) -> Gst.Buffer: ...
-    def get_pixels_unscaled_raw(self, flags: VideoOverlayFormatFlags) -> Gst.Buffer: ...
+    def get_pixels_unscaled_raw(
+        self, flags: _VideoOverlayFormatFlagsValueType
+    ) -> Gst.Buffer: ...
     def get_render_rectangle(self) -> tuple[bool, int, int, int, int]: ...
     def get_seqnum(self) -> int: ...
     @classmethod
@@ -2450,7 +2517,7 @@ class VideoOverlayRectangle(GObject.GBoxed):
         render_y: int,
         render_width: int,
         render_height: int,
-        flags: VideoOverlayFormatFlags,
+        flags: _VideoOverlayFormatFlagsValueType,
     ) -> VideoOverlayRectangle: ...
     def set_global_alpha(self, global_alpha: float) -> None: ...
     def set_render_rectangle(
@@ -2514,8 +2581,8 @@ class VideoResampler(_gi.Struct):
     def clear(self) -> None: ...
     def init(
         self,
-        method: VideoResamplerMethod,
-        flags: VideoResamplerFlags,
+        method: _VideoResamplerMethodValueType,
+        flags: _VideoResamplerFlagsValueType,
         n_phases: int,
         n_taps: int,
         shift: float,
@@ -2546,7 +2613,7 @@ class VideoScaler(_gi.Struct):
     def get_max_taps(self) -> int: ...
     def horizontal(
         self,
-        format: VideoFormat,
+        format: _VideoFormatValueType,
         src: int | Any | None,
         dest: int | Any | None,
         dest_offset: int,
@@ -2554,7 +2621,7 @@ class VideoScaler(_gi.Struct):
     ) -> None: ...
     def vertical(
         self,
-        format: VideoFormat,
+        format: _VideoFormatValueType,
         src_lines: int | Any | None,
         dest: int | Any | None,
         dest_offset: int,
@@ -2724,7 +2791,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         latest_daily_jam: GLib.DateTime | None,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         hours: int,
         minutes: int,
         seconds: int,
@@ -2736,7 +2803,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         dt: GLib.DateTime,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         field_count: int,
     ) -> None: ...
     def init_from_date_time_full(
@@ -2744,7 +2811,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         dt: GLib.DateTime,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         field_count: int,
     ) -> bool: ...
     def is_valid(self) -> bool: ...
@@ -2754,7 +2821,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         latest_daily_jam: GLib.DateTime,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         hours: int,
         minutes: int,
         seconds: int,
@@ -2769,7 +2836,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         dt: GLib.DateTime,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         field_count: int,
     ) -> VideoTimeCode: ...
     @classmethod
@@ -2778,7 +2845,7 @@ class VideoTimeCode(GObject.GBoxed):
         fps_n: int,
         fps_d: int,
         dt: GLib.DateTime,
-        flags: VideoTimeCodeFlags,
+        flags: _VideoTimeCodeFlagsValueType,
         field_count: int,
     ) -> VideoTimeCode | None: ...
     @classmethod
@@ -2849,14 +2916,16 @@ class VideoVBIEncoder(GObject.GBoxed):
 
         new(format:GstVideo.VideoFormat, pixel_width:int) -> GstVideo.VideoVBIEncoder or None
     """
-    def __init__(self, format: VideoFormat, pixel_width: int) -> None: ...
+    def __init__(self, format: _VideoFormatValueType, pixel_width: int) -> None: ...
     def add_ancillary(
         self, composite: bool, DID: int, SDID_block_number: int, data: Sequence[int]
     ) -> bool: ...
     def copy(self) -> VideoVBIEncoder: ...
     def free(self) -> None: ...
     @classmethod
-    def new(cls, format: VideoFormat, pixel_width: int) -> VideoVBIEncoder | None: ...
+    def new(
+        cls, format: _VideoFormatValueType, pixel_width: int
+    ) -> VideoVBIEncoder | None: ...
     def write_line(self, data: Sequence[int]) -> None: ...
 
 class VideoVBIParser(GObject.GBoxed):
@@ -2867,13 +2936,15 @@ class VideoVBIParser(GObject.GBoxed):
 
         new(format:GstVideo.VideoFormat, pixel_width:int) -> GstVideo.VideoVBIParser or None
     """
-    def __init__(self, format: VideoFormat, pixel_width: int) -> None: ...
+    def __init__(self, format: _VideoFormatValueType, pixel_width: int) -> None: ...
     def add_line(self, data: Sequence[int]) -> None: ...
     def copy(self) -> VideoVBIParser: ...
     def free(self) -> None: ...
     def get_ancillary(self) -> tuple[VideoVBIParserResult, VideoAncillary]: ...
     @classmethod
-    def new(cls, format: VideoFormat, pixel_width: int) -> VideoVBIParser | None: ...
+    def new(
+        cls, format: _VideoFormatValueType, pixel_width: int
+    ) -> VideoVBIParser | None: ...
 
 class NavigationModifierType(GObject.GFlags):
     BUTTON1_MASK = 256
@@ -2895,6 +2966,50 @@ class NavigationModifierType(GObject.GFlags):
     SHIFT_MASK = 1
     SUPER_MASK = 67108864
 
+_NavigationModifierTypeLiteralType: TypeAlias = Literal[
+    "GST_NAVIGATION_MODIFIER_BUTTON1_MASK",
+    "GST_NAVIGATION_MODIFIER_BUTTON2_MASK",
+    "GST_NAVIGATION_MODIFIER_BUTTON3_MASK",
+    "GST_NAVIGATION_MODIFIER_BUTTON4_MASK",
+    "GST_NAVIGATION_MODIFIER_BUTTON5_MASK",
+    "GST_NAVIGATION_MODIFIER_CONTROL_MASK",
+    "GST_NAVIGATION_MODIFIER_HYPER_MASK",
+    "GST_NAVIGATION_MODIFIER_LOCK_MASK",
+    "GST_NAVIGATION_MODIFIER_MASK",
+    "GST_NAVIGATION_MODIFIER_META_MASK",
+    "GST_NAVIGATION_MODIFIER_MOD1_MASK",
+    "GST_NAVIGATION_MODIFIER_MOD2_MASK",
+    "GST_NAVIGATION_MODIFIER_MOD3_MASK",
+    "GST_NAVIGATION_MODIFIER_MOD4_MASK",
+    "GST_NAVIGATION_MODIFIER_MOD5_MASK",
+    "GST_NAVIGATION_MODIFIER_NONE",
+    "GST_NAVIGATION_MODIFIER_SHIFT_MASK",
+    "GST_NAVIGATION_MODIFIER_SUPER_MASK",
+    "button1-mask",
+    "button2-mask",
+    "button3-mask",
+    "button4-mask",
+    "button5-mask",
+    "control-mask",
+    "hyper-mask",
+    "lock-mask",
+    "mask",
+    "meta-mask",
+    "mod1-mask",
+    "mod2-mask",
+    "mod3-mask",
+    "mod4-mask",
+    "mod5-mask",
+    "none",
+    "shift-mask",
+    "super-mask",
+]
+_NavigationModifierTypeValueType: TypeAlias = (
+    NavigationModifierType
+    | _NavigationModifierTypeLiteralType
+    | tuple[_NavigationModifierTypeLiteralType, ...]
+)
+
 class VideoBufferFlags(GObject.GFlags):
     BOTTOM_FIELD = 8388608
     FIRST_IN_BUNDLE = 33554432
@@ -2907,9 +3022,49 @@ class VideoBufferFlags(GObject.GFlags):
     TFF = 2097152
     TOP_FIELD = 10485760
 
+_VideoBufferFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_BUFFER_FLAG_BOTTOM_FIELD",
+    "GST_VIDEO_BUFFER_FLAG_FIRST_IN_BUNDLE",
+    "GST_VIDEO_BUFFER_FLAG_INTERLACED",
+    "GST_VIDEO_BUFFER_FLAG_LAST",
+    "GST_VIDEO_BUFFER_FLAG_MARKER",
+    "GST_VIDEO_BUFFER_FLAG_MULTIPLE_VIEW",
+    "GST_VIDEO_BUFFER_FLAG_ONEFIELD",
+    "GST_VIDEO_BUFFER_FLAG_RFF",
+    "GST_VIDEO_BUFFER_FLAG_TFF",
+    "GST_VIDEO_BUFFER_FLAG_TOP_FIELD",
+    "bottom-field",
+    "first-in-bundle",
+    "interlaced",
+    "last",
+    "marker",
+    "multiple-view",
+    "onefield",
+    "rff",
+    "tff",
+    "top-field",
+]
+_VideoBufferFlagsValueType: TypeAlias = (
+    VideoBufferFlags
+    | _VideoBufferFlagsLiteralType
+    | tuple[_VideoBufferFlagsLiteralType, ...]
+)
+
 class VideoChromaFlags(GObject.GFlags):
     INTERLACED = 1
     NONE = 0
+
+_VideoChromaFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CHROMA_FLAG_INTERLACED",
+    "GST_VIDEO_CHROMA_FLAG_NONE",
+    "interlaced",
+    "none",
+]
+_VideoChromaFlagsValueType: TypeAlias = (
+    VideoChromaFlags
+    | _VideoChromaFlagsLiteralType
+    | tuple[_VideoChromaFlagsLiteralType, ...]
+)
 
 class VideoChromaSite(GObject.GFlags):
     ALT_LINE = 8
@@ -2924,7 +3079,33 @@ class VideoChromaSite(GObject.GFlags):
     @staticmethod
     def from_string(s: str) -> VideoChromaSite: ...
     @staticmethod
-    def to_string(site: VideoChromaSite) -> str | None: ...
+    def to_string(site: _VideoChromaSiteValueType) -> str | None: ...
+
+_VideoChromaSiteLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CHROMA_SITE_ALT_LINE",
+    "GST_VIDEO_CHROMA_SITE_COSITED",
+    "GST_VIDEO_CHROMA_SITE_DV",
+    "GST_VIDEO_CHROMA_SITE_H_COSITED",
+    "GST_VIDEO_CHROMA_SITE_JPEG",
+    "GST_VIDEO_CHROMA_SITE_MPEG2",
+    "GST_VIDEO_CHROMA_SITE_NONE",
+    "GST_VIDEO_CHROMA_SITE_UNKNOWN",
+    "GST_VIDEO_CHROMA_SITE_V_COSITED",
+    "alt-line",
+    "cosited",
+    "dv",
+    "h-cosited",
+    "jpeg",
+    "mpeg2",
+    "none",
+    "unknown",
+    "v-cosited",
+]
+_VideoChromaSiteValueType: TypeAlias = (
+    VideoChromaSite
+    | _VideoChromaSiteLiteralType
+    | tuple[_VideoChromaSiteLiteralType, ...]
+)
 
 class VideoCodecFrameFlags(GObject.GFlags):
     CORRUPTED = 16
@@ -2933,19 +3114,75 @@ class VideoCodecFrameFlags(GObject.GFlags):
     FORCE_KEYFRAME_HEADERS = 8
     SYNC_POINT = 2
 
+_VideoCodecFrameFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CODEC_FRAME_FLAG_CORRUPTED",
+    "GST_VIDEO_CODEC_FRAME_FLAG_DECODE_ONLY",
+    "GST_VIDEO_CODEC_FRAME_FLAG_FORCE_KEYFRAME",
+    "GST_VIDEO_CODEC_FRAME_FLAG_FORCE_KEYFRAME_HEADERS",
+    "GST_VIDEO_CODEC_FRAME_FLAG_SYNC_POINT",
+    "corrupted",
+    "decode-only",
+    "force-keyframe",
+    "force-keyframe-headers",
+    "sync-point",
+]
+_VideoCodecFrameFlagsValueType: TypeAlias = (
+    VideoCodecFrameFlags
+    | _VideoCodecFrameFlagsLiteralType
+    | tuple[_VideoCodecFrameFlagsLiteralType, ...]
+)
+
 class VideoDecoderRequestSyncPointFlags(GObject.GFlags):
     CORRUPT_OUTPUT = 2
     DISCARD_INPUT = 1
+
+_VideoDecoderRequestSyncPointFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_DECODER_REQUEST_SYNC_POINT_CORRUPT_OUTPUT",
+    "GST_VIDEO_DECODER_REQUEST_SYNC_POINT_DISCARD_INPUT",
+    "corrupt-output",
+    "discard-input",
+]
+_VideoDecoderRequestSyncPointFlagsValueType: TypeAlias = (
+    VideoDecoderRequestSyncPointFlags
+    | _VideoDecoderRequestSyncPointFlagsLiteralType
+    | tuple[_VideoDecoderRequestSyncPointFlagsLiteralType, ...]
+)
 
 class VideoDitherFlags(GObject.GFlags):
     INTERLACED = 1
     NONE = 0
     QUANTIZE = 2
 
+_VideoDitherFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_DITHER_FLAG_INTERLACED",
+    "GST_VIDEO_DITHER_FLAG_NONE",
+    "GST_VIDEO_DITHER_FLAG_QUANTIZE",
+    "interlaced",
+    "none",
+    "quantize",
+]
+_VideoDitherFlagsValueType: TypeAlias = (
+    VideoDitherFlags
+    | _VideoDitherFlagsLiteralType
+    | tuple[_VideoDitherFlagsLiteralType, ...]
+)
+
 class VideoFlags(GObject.GFlags):
     NONE = 0
     PREMULTIPLIED_ALPHA = 2
     VARIABLE_FPS = 1
+
+_VideoFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FLAG_NONE",
+    "GST_VIDEO_FLAG_PREMULTIPLIED_ALPHA",
+    "GST_VIDEO_FLAG_VARIABLE_FPS",
+    "none",
+    "premultiplied-alpha",
+    "variable-fps",
+]
+_VideoFlagsValueType: TypeAlias = (
+    VideoFlags | _VideoFlagsLiteralType | tuple[_VideoFlagsLiteralType, ...]
+)
 
 class VideoFormatFlags(GObject.GFlags):
     ALPHA = 8
@@ -2959,6 +3196,34 @@ class VideoFormatFlags(GObject.GFlags):
     UNPACK = 128
     YUV = 1
 
+_VideoFormatFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FORMAT_FLAG_ALPHA",
+    "GST_VIDEO_FORMAT_FLAG_COMPLEX",
+    "GST_VIDEO_FORMAT_FLAG_GRAY",
+    "GST_VIDEO_FORMAT_FLAG_LE",
+    "GST_VIDEO_FORMAT_FLAG_PALETTE",
+    "GST_VIDEO_FORMAT_FLAG_RGB",
+    "GST_VIDEO_FORMAT_FLAG_SUBTILES",
+    "GST_VIDEO_FORMAT_FLAG_TILED",
+    "GST_VIDEO_FORMAT_FLAG_UNPACK",
+    "GST_VIDEO_FORMAT_FLAG_YUV",
+    "alpha",
+    "complex",
+    "gray",
+    "le",
+    "palette",
+    "rgb",
+    "subtiles",
+    "tiled",
+    "unpack",
+    "yuv",
+]
+_VideoFormatFlagsValueType: TypeAlias = (
+    VideoFormatFlags
+    | _VideoFormatFlagsLiteralType
+    | tuple[_VideoFormatFlagsLiteralType, ...]
+)
+
 class VideoFrameFlags(GObject.GFlags):
     BOTTOM_FIELD = 8
     FIRST_IN_BUNDLE = 32
@@ -2970,9 +3235,44 @@ class VideoFrameFlags(GObject.GFlags):
     TFF = 2
     TOP_FIELD = 10
 
+_VideoFrameFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FRAME_FLAG_BOTTOM_FIELD",
+    "GST_VIDEO_FRAME_FLAG_FIRST_IN_BUNDLE",
+    "GST_VIDEO_FRAME_FLAG_INTERLACED",
+    "GST_VIDEO_FRAME_FLAG_MULTIPLE_VIEW",
+    "GST_VIDEO_FRAME_FLAG_NONE",
+    "GST_VIDEO_FRAME_FLAG_ONEFIELD",
+    "GST_VIDEO_FRAME_FLAG_RFF",
+    "GST_VIDEO_FRAME_FLAG_TFF",
+    "GST_VIDEO_FRAME_FLAG_TOP_FIELD",
+    "bottom-field",
+    "first-in-bundle",
+    "interlaced",
+    "multiple-view",
+    "none",
+    "onefield",
+    "rff",
+    "tff",
+    "top-field",
+]
+_VideoFrameFlagsValueType: TypeAlias = (
+    VideoFrameFlags
+    | _VideoFrameFlagsLiteralType
+    | tuple[_VideoFrameFlagsLiteralType, ...]
+)
+
 class VideoFrameMapFlags(GObject.GFlags):
     LAST = 16777216
     NO_REF = 65536
+
+_VideoFrameMapFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FRAME_MAP_FLAG_LAST", "GST_VIDEO_FRAME_MAP_FLAG_NO_REF", "last", "no-ref"
+]
+_VideoFrameMapFlagsValueType: TypeAlias = (
+    VideoFrameMapFlags
+    | _VideoFrameMapFlagsLiteralType
+    | tuple[_VideoFrameMapFlagsLiteralType, ...]
+)
 
 class VideoMultiviewFlags(GObject.GFlags):
     HALF_ASPECT = 16384
@@ -2984,37 +3284,142 @@ class VideoMultiviewFlags(GObject.GFlags):
     RIGHT_FLOPPED = 16
     RIGHT_VIEW_FIRST = 1
 
+_VideoMultiviewFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_MULTIVIEW_FLAGS_HALF_ASPECT",
+    "GST_VIDEO_MULTIVIEW_FLAGS_LEFT_FLIPPED",
+    "GST_VIDEO_MULTIVIEW_FLAGS_LEFT_FLOPPED",
+    "GST_VIDEO_MULTIVIEW_FLAGS_MIXED_MONO",
+    "GST_VIDEO_MULTIVIEW_FLAGS_NONE",
+    "GST_VIDEO_MULTIVIEW_FLAGS_RIGHT_FLIPPED",
+    "GST_VIDEO_MULTIVIEW_FLAGS_RIGHT_FLOPPED",
+    "GST_VIDEO_MULTIVIEW_FLAGS_RIGHT_VIEW_FIRST",
+    "half-aspect",
+    "left-flipped",
+    "left-flopped",
+    "mixed-mono",
+    "none",
+    "right-flipped",
+    "right-flopped",
+    "right-view-first",
+]
+_VideoMultiviewFlagsValueType: TypeAlias = (
+    VideoMultiviewFlags
+    | _VideoMultiviewFlagsLiteralType
+    | tuple[_VideoMultiviewFlagsLiteralType, ...]
+)
+
 class VideoOverlayFormatFlags(GObject.GFlags):
     GLOBAL_ALPHA = 2
     NONE = 0
     PREMULTIPLIED_ALPHA = 1
+
+_VideoOverlayFormatFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_OVERLAY_FORMAT_FLAG_GLOBAL_ALPHA",
+    "GST_VIDEO_OVERLAY_FORMAT_FLAG_NONE",
+    "GST_VIDEO_OVERLAY_FORMAT_FLAG_PREMULTIPLIED_ALPHA",
+    "global-alpha",
+    "none",
+    "premultiplied-alpha",
+]
+_VideoOverlayFormatFlagsValueType: TypeAlias = (
+    VideoOverlayFormatFlags
+    | _VideoOverlayFormatFlagsLiteralType
+    | tuple[_VideoOverlayFormatFlagsLiteralType, ...]
+)
 
 class VideoPackFlags(GObject.GFlags):
     INTERLACED = 2
     NONE = 0
     TRUNCATE_RANGE = 1
 
+_VideoPackFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_PACK_FLAG_INTERLACED",
+    "GST_VIDEO_PACK_FLAG_NONE",
+    "GST_VIDEO_PACK_FLAG_TRUNCATE_RANGE",
+    "interlaced",
+    "none",
+    "truncate-range",
+]
+_VideoPackFlagsValueType: TypeAlias = (
+    VideoPackFlags | _VideoPackFlagsLiteralType | tuple[_VideoPackFlagsLiteralType, ...]
+)
+
 class VideoResamplerFlags(GObject.GFlags):
     HALF_TAPS = 1
     NONE = 0
 
+_VideoResamplerFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_RESAMPLER_FLAG_HALF_TAPS",
+    "GST_VIDEO_RESAMPLER_FLAG_NONE",
+    "half-taps",
+    "none",
+]
+_VideoResamplerFlagsValueType: TypeAlias = (
+    VideoResamplerFlags
+    | _VideoResamplerFlagsLiteralType
+    | tuple[_VideoResamplerFlagsLiteralType, ...]
+)
+
 class VideoScalerFlags(GObject.GFlags):
     INTERLACED = 1
     NONE = 0
+
+_VideoScalerFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_SCALER_FLAG_INTERLACED",
+    "GST_VIDEO_SCALER_FLAG_NONE",
+    "interlaced",
+    "none",
+]
+_VideoScalerFlagsValueType: TypeAlias = (
+    VideoScalerFlags
+    | _VideoScalerFlagsLiteralType
+    | tuple[_VideoScalerFlagsLiteralType, ...]
+)
 
 class VideoTimeCodeFlags(GObject.GFlags):
     DROP_FRAME = 1
     INTERLACED = 2
     NONE = 0
 
+_VideoTimeCodeFlagsLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_TIME_CODE_FLAGS_DROP_FRAME",
+    "GST_VIDEO_TIME_CODE_FLAGS_INTERLACED",
+    "GST_VIDEO_TIME_CODE_FLAGS_NONE",
+    "drop-frame",
+    "interlaced",
+    "none",
+]
+_VideoTimeCodeFlagsValueType: TypeAlias = (
+    VideoTimeCodeFlags
+    | _VideoTimeCodeFlagsLiteralType
+    | tuple[_VideoTimeCodeFlagsLiteralType, ...]
+)
+
 class AncillaryMetaField(GObject.GEnum):
     INTERLACED_FIRST = 16
     INTERLACED_SECOND = 17
     PROGRESSIVE = 0
 
+_AncillaryMetaFieldLiteralType: TypeAlias = Literal[
+    "GST_ANCILLARY_META_FIELD_INTERLACED_FIRST",
+    "GST_ANCILLARY_META_FIELD_INTERLACED_SECOND",
+    "GST_ANCILLARY_META_FIELD_PROGRESSIVE",
+    "interlaced-first",
+    "interlaced-second",
+    "progressive",
+]
+_AncillaryMetaFieldValueType: TypeAlias = (
+    AncillaryMetaField | _AncillaryMetaFieldLiteralType
+)
+
 class ColorBalanceType(GObject.GEnum):
     HARDWARE = 0
     SOFTWARE = 1
+
+_ColorBalanceTypeLiteralType: TypeAlias = Literal[
+    "GST_COLOR_BALANCE_HARDWARE", "GST_COLOR_BALANCE_SOFTWARE", "hardware", "software"
+]
+_ColorBalanceTypeValueType: TypeAlias = ColorBalanceType | _ColorBalanceTypeLiteralType
 
 class NavigationCommand(GObject.GEnum):
     ACTIVATE = 24
@@ -3033,6 +3438,42 @@ class NavigationCommand(GObject.GEnum):
     RIGHT = 21
     UP = 22
 
+_NavigationCommandLiteralType: TypeAlias = Literal[
+    "GST_NAVIGATION_COMMAND_ACTIVATE",
+    "GST_NAVIGATION_COMMAND_DOWN",
+    "GST_NAVIGATION_COMMAND_INVALID",
+    "GST_NAVIGATION_COMMAND_LEFT",
+    "GST_NAVIGATION_COMMAND_MENU1",
+    "GST_NAVIGATION_COMMAND_MENU2",
+    "GST_NAVIGATION_COMMAND_MENU3",
+    "GST_NAVIGATION_COMMAND_MENU4",
+    "GST_NAVIGATION_COMMAND_MENU5",
+    "GST_NAVIGATION_COMMAND_MENU6",
+    "GST_NAVIGATION_COMMAND_MENU7",
+    "GST_NAVIGATION_COMMAND_NEXT_ANGLE",
+    "GST_NAVIGATION_COMMAND_PREV_ANGLE",
+    "GST_NAVIGATION_COMMAND_RIGHT",
+    "GST_NAVIGATION_COMMAND_UP",
+    "activate",
+    "down",
+    "invalid",
+    "left",
+    "menu1",
+    "menu2",
+    "menu3",
+    "menu4",
+    "menu5",
+    "menu6",
+    "menu7",
+    "next-angle",
+    "prev-angle",
+    "right",
+    "up",
+]
+_NavigationCommandValueType: TypeAlias = (
+    NavigationCommand | _NavigationCommandLiteralType
+)
+
 class NavigationEventType(GObject.GEnum):
     COMMAND = 6
     INVALID = 0
@@ -3049,6 +3490,40 @@ class NavigationEventType(GObject.GEnum):
     TOUCH_MOTION = 9
     TOUCH_UP = 10
 
+_NavigationEventTypeLiteralType: TypeAlias = Literal[
+    "GST_NAVIGATION_EVENT_COMMAND",
+    "GST_NAVIGATION_EVENT_INVALID",
+    "GST_NAVIGATION_EVENT_KEY_PRESS",
+    "GST_NAVIGATION_EVENT_KEY_RELEASE",
+    "GST_NAVIGATION_EVENT_MOUSE_BUTTON_PRESS",
+    "GST_NAVIGATION_EVENT_MOUSE_BUTTON_RELEASE",
+    "GST_NAVIGATION_EVENT_MOUSE_DOUBLE_CLICK",
+    "GST_NAVIGATION_EVENT_MOUSE_MOVE",
+    "GST_NAVIGATION_EVENT_MOUSE_SCROLL",
+    "GST_NAVIGATION_EVENT_TOUCH_CANCEL",
+    "GST_NAVIGATION_EVENT_TOUCH_DOWN",
+    "GST_NAVIGATION_EVENT_TOUCH_FRAME",
+    "GST_NAVIGATION_EVENT_TOUCH_MOTION",
+    "GST_NAVIGATION_EVENT_TOUCH_UP",
+    "command",
+    "invalid",
+    "key-press",
+    "key-release",
+    "mouse-button-press",
+    "mouse-button-release",
+    "mouse-double-click",
+    "mouse-move",
+    "mouse-scroll",
+    "touch-cancel",
+    "touch-down",
+    "touch-frame",
+    "touch-motion",
+    "touch-up",
+]
+_NavigationEventTypeValueType: TypeAlias = (
+    NavigationEventType | _NavigationEventTypeLiteralType
+)
+
 class NavigationMessageType(GObject.GEnum):
     ANGLES_CHANGED = 3
     COMMANDS_CHANGED = 2
@@ -3056,24 +3531,80 @@ class NavigationMessageType(GObject.GEnum):
     INVALID = 0
     MOUSE_OVER = 1
 
+_NavigationMessageTypeLiteralType: TypeAlias = Literal[
+    "GST_NAVIGATION_MESSAGE_ANGLES_CHANGED",
+    "GST_NAVIGATION_MESSAGE_COMMANDS_CHANGED",
+    "GST_NAVIGATION_MESSAGE_EVENT",
+    "GST_NAVIGATION_MESSAGE_INVALID",
+    "GST_NAVIGATION_MESSAGE_MOUSE_OVER",
+    "angles-changed",
+    "commands-changed",
+    "event",
+    "invalid",
+    "mouse-over",
+]
+_NavigationMessageTypeValueType: TypeAlias = (
+    NavigationMessageType | _NavigationMessageTypeLiteralType
+)
+
 class NavigationQueryType(GObject.GEnum):
     ANGLES = 2
     COMMANDS = 1
     INVALID = 0
+
+_NavigationQueryTypeLiteralType: TypeAlias = Literal[
+    "GST_NAVIGATION_QUERY_ANGLES",
+    "GST_NAVIGATION_QUERY_COMMANDS",
+    "GST_NAVIGATION_QUERY_INVALID",
+    "angles",
+    "commands",
+    "invalid",
+]
+_NavigationQueryTypeValueType: TypeAlias = (
+    NavigationQueryType | _NavigationQueryTypeLiteralType
+)
 
 class VideoAFDSpec(GObject.GEnum):
     ATSC_A53 = 1
     DVB_ETSI = 0
     SMPTE_ST2016_1 = 2
 
+_VideoAFDSpecLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_AFD_SPEC_ATSC_A53",
+    "GST_VIDEO_AFD_SPEC_DVB_ETSI",
+    "GST_VIDEO_AFD_SPEC_SMPTE_ST2016_1",
+    "atsc-a53",
+    "dvb-etsi",
+    "smpte-st2016-1",
+]
+_VideoAFDSpecValueType: TypeAlias = VideoAFDSpec | _VideoAFDSpecLiteralType
+
 class VideoAFDValue(GObject.GEnum):
     GREATER_THAN_16_9 = 4
     UNAVAILABLE = 0
+
+_VideoAFDValueLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_AFD_GREATER_THAN_16_9",
+    "GST_VIDEO_AFD_UNAVAILABLE",
+    "greater-than-16-9",
+    "unavailable",
+]
+_VideoAFDValueValueType: TypeAlias = VideoAFDValue | _VideoAFDValueLiteralType
 
 class VideoAlphaMode(GObject.GEnum):
     COPY = 0
     MULT = 2
     SET = 1
+
+_VideoAlphaModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_ALPHA_MODE_COPY",
+    "GST_VIDEO_ALPHA_MODE_MULT",
+    "GST_VIDEO_ALPHA_MODE_SET",
+    "copy",
+    "mult",
+    "set",
+]
+_VideoAlphaModeValueType: TypeAlias = VideoAlphaMode | _VideoAlphaModeLiteralType
 
 class VideoAncillaryDID(GObject.GEnum):
     CAMERA_POSITION = 240
@@ -3089,10 +3620,52 @@ class VideoAncillaryDID(GObject.GEnum):
     HANC_SDTV_AUDIO_DATA_2_LAST = 255
     UNDEFINED = 0
 
+_VideoAncillaryDIDLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_ANCILLARY_DID_CAMERA_POSITION",
+    "GST_VIDEO_ANCILLARY_DID_DELETION",
+    "GST_VIDEO_ANCILLARY_DID_HANC_3G_AUDIO_DATA_FIRST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_3G_AUDIO_DATA_LAST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_ERROR_DETECTION",
+    "GST_VIDEO_ANCILLARY_DID_HANC_HDTV_AUDIO_DATA_FIRST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_HDTV_AUDIO_DATA_LAST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_SDTV_AUDIO_DATA_1_FIRST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_SDTV_AUDIO_DATA_1_LAST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_SDTV_AUDIO_DATA_2_FIRST",
+    "GST_VIDEO_ANCILLARY_DID_HANC_SDTV_AUDIO_DATA_2_LAST",
+    "GST_VIDEO_ANCILLARY_DID_UNDEFINED",
+    "camera-position",
+    "deletion",
+    "hanc-3g-audio-data-first",
+    "hanc-3g-audio-data-last",
+    "hanc-error-detection",
+    "hanc-hdtv-audio-data-first",
+    "hanc-hdtv-audio-data-last",
+    "hanc-sdtv-audio-data-1-first",
+    "hanc-sdtv-audio-data-1-last",
+    "hanc-sdtv-audio-data-2-first",
+    "hanc-sdtv-audio-data-2-last",
+    "undefined",
+]
+_VideoAncillaryDIDValueType: TypeAlias = (
+    VideoAncillaryDID | _VideoAncillaryDIDLiteralType
+)
+
 class VideoAncillaryDID16(GObject.GEnum):
     S2016_3_AFD_BAR = 16645
     S334_EIA_608 = 24834
     S334_EIA_708 = 24833
+
+_VideoAncillaryDID16LiteralType: TypeAlias = Literal[
+    "GST_VIDEO_ANCILLARY_DID16_S2016_3_AFD_BAR",
+    "GST_VIDEO_ANCILLARY_DID16_S334_EIA_608",
+    "GST_VIDEO_ANCILLARY_DID16_S334_EIA_708",
+    "s2016-3-afd-bar",
+    "s334-eia-608",
+    "s334-eia-708",
+]
+_VideoAncillaryDID16ValueType: TypeAlias = (
+    VideoAncillaryDID16 | _VideoAncillaryDID16LiteralType
+)
 
 class VideoCaptionType(GObject.GEnum):
     CEA608_RAW = 1
@@ -3103,17 +3676,53 @@ class VideoCaptionType(GObject.GEnum):
     @staticmethod
     def from_caps(caps: Gst.Caps) -> VideoCaptionType: ...
     @staticmethod
-    def to_caps(type: VideoCaptionType) -> Gst.Caps: ...
+    def to_caps(type: _VideoCaptionTypeValueType) -> Gst.Caps: ...
+
+_VideoCaptionTypeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CAPTION_TYPE_CEA608_RAW",
+    "GST_VIDEO_CAPTION_TYPE_CEA608_S334_1A",
+    "GST_VIDEO_CAPTION_TYPE_CEA708_CDP",
+    "GST_VIDEO_CAPTION_TYPE_CEA708_RAW",
+    "GST_VIDEO_CAPTION_TYPE_UNKNOWN",
+    "cea608-raw",
+    "cea608-s334-1a",
+    "cea708-cdp",
+    "cea708-raw",
+    "unknown",
+]
+_VideoCaptionTypeValueType: TypeAlias = VideoCaptionType | _VideoCaptionTypeLiteralType
 
 class VideoChromaMethod(GObject.GEnum):
     LINEAR = 1
     NEAREST = 0
+
+_VideoChromaMethodLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CHROMA_METHOD_LINEAR",
+    "GST_VIDEO_CHROMA_METHOD_NEAREST",
+    "linear",
+    "nearest",
+]
+_VideoChromaMethodValueType: TypeAlias = (
+    VideoChromaMethod | _VideoChromaMethodLiteralType
+)
 
 class VideoChromaMode(GObject.GEnum):
     DOWNSAMPLE_ONLY = 2
     FULL = 0
     NONE = 3
     UPSAMPLE_ONLY = 1
+
+_VideoChromaModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_CHROMA_MODE_DOWNSAMPLE_ONLY",
+    "GST_VIDEO_CHROMA_MODE_FULL",
+    "GST_VIDEO_CHROMA_MODE_NONE",
+    "GST_VIDEO_CHROMA_MODE_UPSAMPLE_ONLY",
+    "downsample-only",
+    "full",
+    "none",
+    "upsample-only",
+]
+_VideoChromaModeValueType: TypeAlias = VideoChromaMode | _VideoChromaModeLiteralType
 
 class VideoColorMatrix(GObject.GEnum):
     BT2020 = 6
@@ -3126,9 +3735,27 @@ class VideoColorMatrix(GObject.GEnum):
     @staticmethod
     def from_iso(value: int) -> VideoColorMatrix: ...
     @staticmethod
-    def get_Kr_Kb(matrix: VideoColorMatrix) -> tuple[bool, float, float]: ...
+    def get_Kr_Kb(matrix: _VideoColorMatrixValueType) -> tuple[bool, float, float]: ...
     @staticmethod
-    def to_iso(matrix: VideoColorMatrix) -> int: ...
+    def to_iso(matrix: _VideoColorMatrixValueType) -> int: ...
+
+_VideoColorMatrixLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_COLOR_MATRIX_BT2020",
+    "GST_VIDEO_COLOR_MATRIX_BT601",
+    "GST_VIDEO_COLOR_MATRIX_BT709",
+    "GST_VIDEO_COLOR_MATRIX_FCC",
+    "GST_VIDEO_COLOR_MATRIX_RGB",
+    "GST_VIDEO_COLOR_MATRIX_SMPTE240M",
+    "GST_VIDEO_COLOR_MATRIX_UNKNOWN",
+    "bt2020",
+    "bt601",
+    "bt709",
+    "fcc",
+    "rgb",
+    "smpte240m",
+    "unknown",
+]
+_VideoColorMatrixValueType: TypeAlias = VideoColorMatrix | _VideoColorMatrixLiteralType
 
 class VideoColorPrimaries(GObject.GEnum):
     ADOBERGB = 8
@@ -3147,20 +3774,59 @@ class VideoColorPrimaries(GObject.GEnum):
     @staticmethod
     def from_iso(value: int) -> VideoColorPrimaries: ...
     @staticmethod
-    def get_info(primaries: VideoColorPrimaries) -> VideoColorPrimariesInfo: ...
+    def get_info(
+        primaries: _VideoColorPrimariesValueType,
+    ) -> VideoColorPrimariesInfo: ...
     @staticmethod
     def is_equivalent(
-        primaries: VideoColorPrimaries, other: VideoColorPrimaries
+        primaries: _VideoColorPrimariesValueType, other: _VideoColorPrimariesValueType
     ) -> bool: ...
     @staticmethod
-    def to_iso(primaries: VideoColorPrimaries) -> int: ...
+    def to_iso(primaries: _VideoColorPrimariesValueType) -> int: ...
+
+_VideoColorPrimariesLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_COLOR_PRIMARIES_ADOBERGB",
+    "GST_VIDEO_COLOR_PRIMARIES_BT2020",
+    "GST_VIDEO_COLOR_PRIMARIES_BT470BG",
+    "GST_VIDEO_COLOR_PRIMARIES_BT470M",
+    "GST_VIDEO_COLOR_PRIMARIES_BT709",
+    "GST_VIDEO_COLOR_PRIMARIES_EBU3213",
+    "GST_VIDEO_COLOR_PRIMARIES_FILM",
+    "GST_VIDEO_COLOR_PRIMARIES_SMPTE170M",
+    "GST_VIDEO_COLOR_PRIMARIES_SMPTE240M",
+    "GST_VIDEO_COLOR_PRIMARIES_SMPTEEG432",
+    "GST_VIDEO_COLOR_PRIMARIES_SMPTERP431",
+    "GST_VIDEO_COLOR_PRIMARIES_SMPTEST428",
+    "GST_VIDEO_COLOR_PRIMARIES_UNKNOWN",
+    "adobergb",
+    "bt2020",
+    "bt470bg",
+    "bt470m",
+    "bt709",
+    "ebu3213",
+    "film",
+    "smpte170m",
+    "smpte240m",
+    "smpteeg432",
+    "smpterp431",
+    "smptest428",
+    "unknown",
+]
+_VideoColorPrimariesValueType: TypeAlias = (
+    VideoColorPrimaries | _VideoColorPrimariesLiteralType
+)
 
 class VideoColorRange(GObject.GEnum):
     UNKNOWN = 0
     @staticmethod
     def offsets(
-        range: VideoColorRange, info: VideoFormatInfo
+        range: _VideoColorRangeValueType, info: VideoFormatInfo
     ) -> tuple[list[int], list[int]]: ...
+
+_VideoColorRangeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_COLOR_RANGE_UNKNOWN", "unknown"
+]
+_VideoColorRangeValueType: TypeAlias = VideoColorRange | _VideoColorRangeLiteralType
 
 class VideoDitherMethod(GObject.GEnum):
     BAYER = 4
@@ -3169,6 +3835,22 @@ class VideoDitherMethod(GObject.GEnum):
     SIERRA_LITE = 3
     VERTERR = 1
 
+_VideoDitherMethodLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_DITHER_BAYER",
+    "GST_VIDEO_DITHER_FLOYD_STEINBERG",
+    "GST_VIDEO_DITHER_NONE",
+    "GST_VIDEO_DITHER_SIERRA_LITE",
+    "GST_VIDEO_DITHER_VERTERR",
+    "bayer",
+    "floyd-steinberg",
+    "none",
+    "sierra-lite",
+    "verterr",
+]
+_VideoDitherMethodValueType: TypeAlias = (
+    VideoDitherMethod | _VideoDitherMethodLiteralType
+)
+
 class VideoFieldOrder(GObject.GEnum):
     BOTTOM_FIELD_FIRST = 2
     TOP_FIELD_FIRST = 1
@@ -3176,7 +3858,17 @@ class VideoFieldOrder(GObject.GEnum):
     @staticmethod
     def from_string(order: str) -> VideoFieldOrder: ...
     @staticmethod
-    def to_string(order: VideoFieldOrder) -> str: ...
+    def to_string(order: _VideoFieldOrderValueType) -> str: ...
+
+_VideoFieldOrderLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FIELD_ORDER_BOTTOM_FIELD_FIRST",
+    "GST_VIDEO_FIELD_ORDER_TOP_FIELD_FIRST",
+    "GST_VIDEO_FIELD_ORDER_UNKNOWN",
+    "bottom-field-first",
+    "top-field-first",
+    "unknown",
+]
+_VideoFieldOrderValueType: TypeAlias = VideoFieldOrder | _VideoFieldOrderLiteralType
 
 class VideoFormat(GObject.GEnum):
     A420 = 34
@@ -3336,19 +4028,321 @@ class VideoFormat(GObject.GEnum):
     @staticmethod
     def from_string(format: str) -> VideoFormat: ...
     @staticmethod
-    def get_info(format: VideoFormat) -> VideoFormatInfo: ...
+    def get_info(format: _VideoFormatValueType) -> VideoFormatInfo: ...
     @staticmethod
-    def get_palette(format: VideoFormat) -> tuple[int, int]: ...
+    def get_palette(format: _VideoFormatValueType) -> tuple[int, int]: ...
     @staticmethod
-    def to_fourcc(format: VideoFormat) -> int: ...
+    def to_fourcc(format: _VideoFormatValueType) -> int: ...
     @staticmethod
-    def to_string(format: VideoFormat) -> str: ...
+    def to_string(format: _VideoFormatValueType) -> str: ...
+
+_VideoFormatLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_FORMAT_A420",
+    "GST_VIDEO_FORMAT_A420_10BE",
+    "GST_VIDEO_FORMAT_A420_10LE",
+    "GST_VIDEO_FORMAT_A420_12BE",
+    "GST_VIDEO_FORMAT_A420_12LE",
+    "GST_VIDEO_FORMAT_A420_16BE",
+    "GST_VIDEO_FORMAT_A420_16LE",
+    "GST_VIDEO_FORMAT_A422",
+    "GST_VIDEO_FORMAT_A422_10BE",
+    "GST_VIDEO_FORMAT_A422_10LE",
+    "GST_VIDEO_FORMAT_A422_12BE",
+    "GST_VIDEO_FORMAT_A422_12LE",
+    "GST_VIDEO_FORMAT_A422_16BE",
+    "GST_VIDEO_FORMAT_A422_16LE",
+    "GST_VIDEO_FORMAT_A444",
+    "GST_VIDEO_FORMAT_A444_10BE",
+    "GST_VIDEO_FORMAT_A444_10LE",
+    "GST_VIDEO_FORMAT_A444_12BE",
+    "GST_VIDEO_FORMAT_A444_12LE",
+    "GST_VIDEO_FORMAT_A444_16BE",
+    "GST_VIDEO_FORMAT_A444_16LE",
+    "GST_VIDEO_FORMAT_ABGR",
+    "GST_VIDEO_FORMAT_ABGR64_BE",
+    "GST_VIDEO_FORMAT_ABGR64_LE",
+    "GST_VIDEO_FORMAT_ARGB",
+    "GST_VIDEO_FORMAT_ARGB64",
+    "GST_VIDEO_FORMAT_ARGB64_BE",
+    "GST_VIDEO_FORMAT_ARGB64_LE",
+    "GST_VIDEO_FORMAT_AV12",
+    "GST_VIDEO_FORMAT_AYUV",
+    "GST_VIDEO_FORMAT_AYUV64",
+    "GST_VIDEO_FORMAT_BGR",
+    "GST_VIDEO_FORMAT_BGR10A2_LE",
+    "GST_VIDEO_FORMAT_BGR10x2_LE",
+    "GST_VIDEO_FORMAT_BGR15",
+    "GST_VIDEO_FORMAT_BGR16",
+    "GST_VIDEO_FORMAT_BGRA",
+    "GST_VIDEO_FORMAT_BGRA64_BE",
+    "GST_VIDEO_FORMAT_BGRA64_LE",
+    "GST_VIDEO_FORMAT_BGRP",
+    "GST_VIDEO_FORMAT_BGRx",
+    "GST_VIDEO_FORMAT_DMA_DRM",
+    "GST_VIDEO_FORMAT_ENCODED",
+    "GST_VIDEO_FORMAT_GBR",
+    "GST_VIDEO_FORMAT_GBRA",
+    "GST_VIDEO_FORMAT_GBRA_10BE",
+    "GST_VIDEO_FORMAT_GBRA_10LE",
+    "GST_VIDEO_FORMAT_GBRA_12BE",
+    "GST_VIDEO_FORMAT_GBRA_12LE",
+    "GST_VIDEO_FORMAT_GBR_10BE",
+    "GST_VIDEO_FORMAT_GBR_10LE",
+    "GST_VIDEO_FORMAT_GBR_12BE",
+    "GST_VIDEO_FORMAT_GBR_12LE",
+    "GST_VIDEO_FORMAT_GBR_16BE",
+    "GST_VIDEO_FORMAT_GBR_16LE",
+    "GST_VIDEO_FORMAT_GRAY10_LE16",
+    "GST_VIDEO_FORMAT_GRAY10_LE32",
+    "GST_VIDEO_FORMAT_GRAY16_BE",
+    "GST_VIDEO_FORMAT_GRAY16_LE",
+    "GST_VIDEO_FORMAT_GRAY8",
+    "GST_VIDEO_FORMAT_I420",
+    "GST_VIDEO_FORMAT_I420_10BE",
+    "GST_VIDEO_FORMAT_I420_10LE",
+    "GST_VIDEO_FORMAT_I420_12BE",
+    "GST_VIDEO_FORMAT_I420_12LE",
+    "GST_VIDEO_FORMAT_I422_10BE",
+    "GST_VIDEO_FORMAT_I422_10LE",
+    "GST_VIDEO_FORMAT_I422_12BE",
+    "GST_VIDEO_FORMAT_I422_12LE",
+    "GST_VIDEO_FORMAT_IYU1",
+    "GST_VIDEO_FORMAT_IYU2",
+    "GST_VIDEO_FORMAT_MT2110R",
+    "GST_VIDEO_FORMAT_MT2110T",
+    "GST_VIDEO_FORMAT_NV12",
+    "GST_VIDEO_FORMAT_NV12_10BE_8L128",
+    "GST_VIDEO_FORMAT_NV12_10LE32",
+    "GST_VIDEO_FORMAT_NV12_10LE40",
+    "GST_VIDEO_FORMAT_NV12_10LE40_4L4",
+    "GST_VIDEO_FORMAT_NV12_16L32S",
+    "GST_VIDEO_FORMAT_NV12_32L32",
+    "GST_VIDEO_FORMAT_NV12_4L4",
+    "GST_VIDEO_FORMAT_NV12_64Z32",
+    "GST_VIDEO_FORMAT_NV12_8L128",
+    "GST_VIDEO_FORMAT_NV16",
+    "GST_VIDEO_FORMAT_NV16_10LE32",
+    "GST_VIDEO_FORMAT_NV16_10LE40",
+    "GST_VIDEO_FORMAT_NV21",
+    "GST_VIDEO_FORMAT_NV24",
+    "GST_VIDEO_FORMAT_NV61",
+    "GST_VIDEO_FORMAT_P010_10BE",
+    "GST_VIDEO_FORMAT_P010_10LE",
+    "GST_VIDEO_FORMAT_P012_BE",
+    "GST_VIDEO_FORMAT_P012_LE",
+    "GST_VIDEO_FORMAT_P016_BE",
+    "GST_VIDEO_FORMAT_P016_LE",
+    "GST_VIDEO_FORMAT_RBGA",
+    "GST_VIDEO_FORMAT_RGB",
+    "GST_VIDEO_FORMAT_RGB10A2_LE",
+    "GST_VIDEO_FORMAT_RGB10x2_LE",
+    "GST_VIDEO_FORMAT_RGB15",
+    "GST_VIDEO_FORMAT_RGB16",
+    "GST_VIDEO_FORMAT_RGB8P",
+    "GST_VIDEO_FORMAT_RGBA",
+    "GST_VIDEO_FORMAT_RGBA64_BE",
+    "GST_VIDEO_FORMAT_RGBA64_LE",
+    "GST_VIDEO_FORMAT_RGBP",
+    "GST_VIDEO_FORMAT_RGBx",
+    "GST_VIDEO_FORMAT_UNKNOWN",
+    "GST_VIDEO_FORMAT_UYVP",
+    "GST_VIDEO_FORMAT_UYVY",
+    "GST_VIDEO_FORMAT_VUYA",
+    "GST_VIDEO_FORMAT_VYUY",
+    "GST_VIDEO_FORMAT_Y210",
+    "GST_VIDEO_FORMAT_Y212_BE",
+    "GST_VIDEO_FORMAT_Y212_LE",
+    "GST_VIDEO_FORMAT_Y216_BE",
+    "GST_VIDEO_FORMAT_Y216_LE",
+    "GST_VIDEO_FORMAT_Y410",
+    "GST_VIDEO_FORMAT_Y412_BE",
+    "GST_VIDEO_FORMAT_Y412_LE",
+    "GST_VIDEO_FORMAT_Y416_BE",
+    "GST_VIDEO_FORMAT_Y416_LE",
+    "GST_VIDEO_FORMAT_Y41B",
+    "GST_VIDEO_FORMAT_Y42B",
+    "GST_VIDEO_FORMAT_Y444",
+    "GST_VIDEO_FORMAT_Y444_10BE",
+    "GST_VIDEO_FORMAT_Y444_10LE",
+    "GST_VIDEO_FORMAT_Y444_12BE",
+    "GST_VIDEO_FORMAT_Y444_12LE",
+    "GST_VIDEO_FORMAT_Y444_16BE",
+    "GST_VIDEO_FORMAT_Y444_16LE",
+    "GST_VIDEO_FORMAT_YUV9",
+    "GST_VIDEO_FORMAT_YUY2",
+    "GST_VIDEO_FORMAT_YV12",
+    "GST_VIDEO_FORMAT_YVU9",
+    "GST_VIDEO_FORMAT_YVYU",
+    "GST_VIDEO_FORMAT_r210",
+    "GST_VIDEO_FORMAT_v210",
+    "GST_VIDEO_FORMAT_v216",
+    "GST_VIDEO_FORMAT_v308",
+    "GST_VIDEO_FORMAT_xBGR",
+    "GST_VIDEO_FORMAT_xRGB",
+    "a420",
+    "a420-10be",
+    "a420-10le",
+    "a420-12be",
+    "a420-12le",
+    "a420-16be",
+    "a420-16le",
+    "a422",
+    "a422-10be",
+    "a422-10le",
+    "a422-12be",
+    "a422-12le",
+    "a422-16be",
+    "a422-16le",
+    "a444",
+    "a444-10be",
+    "a444-10le",
+    "a444-12be",
+    "a444-12le",
+    "a444-16be",
+    "a444-16le",
+    "abgr",
+    "abgr64-be",
+    "abgr64-le",
+    "argb",
+    "argb64",
+    "argb64-be",
+    "argb64-le",
+    "av12",
+    "ayuv",
+    "ayuv64",
+    "bgr",
+    "bgr10a2-le",
+    "bgr10x2-le",
+    "bgr15",
+    "bgr16",
+    "bgra",
+    "bgra64-be",
+    "bgra64-le",
+    "bgrp",
+    "bgrx",
+    "dma-drm",
+    "encoded",
+    "gbr",
+    "gbr-10be",
+    "gbr-10le",
+    "gbr-12be",
+    "gbr-12le",
+    "gbr-16be",
+    "gbr-16le",
+    "gbra",
+    "gbra-10be",
+    "gbra-10le",
+    "gbra-12be",
+    "gbra-12le",
+    "gray10-le16",
+    "gray10-le32",
+    "gray16-be",
+    "gray16-le",
+    "gray8",
+    "i420",
+    "i420-10be",
+    "i420-10le",
+    "i420-12be",
+    "i420-12le",
+    "i422-10be",
+    "i422-10le",
+    "i422-12be",
+    "i422-12le",
+    "iyu1",
+    "iyu2",
+    "mt2110r",
+    "mt2110t",
+    "nv12",
+    "nv12-10be-8l128",
+    "nv12-10le32",
+    "nv12-10le40",
+    "nv12-10le40-4l4",
+    "nv12-16l32s",
+    "nv12-32l32",
+    "nv12-4l4",
+    "nv12-64z32",
+    "nv12-8l128",
+    "nv16",
+    "nv16-10le32",
+    "nv16-10le40",
+    "nv21",
+    "nv24",
+    "nv61",
+    "p010-10be",
+    "p010-10le",
+    "p012-be",
+    "p012-le",
+    "p016-be",
+    "p016-le",
+    "r210",
+    "rbga",
+    "rgb",
+    "rgb10a2-le",
+    "rgb10x2-le",
+    "rgb15",
+    "rgb16",
+    "rgb8p",
+    "rgba",
+    "rgba64-be",
+    "rgba64-le",
+    "rgbp",
+    "rgbx",
+    "unknown",
+    "uyvp",
+    "uyvy",
+    "v210",
+    "v216",
+    "v308",
+    "vuya",
+    "vyuy",
+    "xbgr",
+    "xrgb",
+    "y210",
+    "y212-be",
+    "y212-le",
+    "y216-be",
+    "y216-le",
+    "y410",
+    "y412-be",
+    "y412-le",
+    "y416-be",
+    "y416-le",
+    "y41b",
+    "y42b",
+    "y444",
+    "y444-10be",
+    "y444-10le",
+    "y444-12be",
+    "y444-12le",
+    "y444-16be",
+    "y444-16le",
+    "yuv9",
+    "yuy2",
+    "yv12",
+    "yvu9",
+    "yvyu",
+]
+_VideoFormatValueType: TypeAlias = VideoFormat | _VideoFormatLiteralType
 
 class VideoGLTextureOrientation(GObject.GEnum):
     FLIP_Y_FLIP = 3
     FLIP_Y_NORMAL = 2
     NORMAL_Y_FLIP = 1
     NORMAL_Y_NORMAL = 0
+
+_VideoGLTextureOrientationLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_GL_TEXTURE_ORIENTATION_X_FLIP_Y_FLIP",
+    "GST_VIDEO_GL_TEXTURE_ORIENTATION_X_FLIP_Y_NORMAL",
+    "GST_VIDEO_GL_TEXTURE_ORIENTATION_X_NORMAL_Y_FLIP",
+    "GST_VIDEO_GL_TEXTURE_ORIENTATION_X_NORMAL_Y_NORMAL",
+    "flip-y-flip",
+    "flip-y-normal",
+    "normal-y-flip",
+    "normal-y-normal",
+]
+_VideoGLTextureOrientationValueType: TypeAlias = (
+    VideoGLTextureOrientation | _VideoGLTextureOrientationLiteralType
+)
 
 class VideoGLTextureType(GObject.GEnum):
     LUMINANCE = 0
@@ -3359,9 +4353,34 @@ class VideoGLTextureType(GObject.GEnum):
     RGB16 = 2
     RGBA = 4
 
+_VideoGLTextureTypeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_GL_TEXTURE_TYPE_LUMINANCE",
+    "GST_VIDEO_GL_TEXTURE_TYPE_LUMINANCE_ALPHA",
+    "GST_VIDEO_GL_TEXTURE_TYPE_R",
+    "GST_VIDEO_GL_TEXTURE_TYPE_RG",
+    "GST_VIDEO_GL_TEXTURE_TYPE_RGB",
+    "GST_VIDEO_GL_TEXTURE_TYPE_RGB16",
+    "GST_VIDEO_GL_TEXTURE_TYPE_RGBA",
+    "luminance",
+    "luminance-alpha",
+    "r",
+    "rg",
+    "rgb",
+    "rgb16",
+    "rgba",
+]
+_VideoGLTextureTypeValueType: TypeAlias = (
+    VideoGLTextureType | _VideoGLTextureTypeLiteralType
+)
+
 class VideoGammaMode(GObject.GEnum):
     NONE = 0
     REMAP = 1
+
+_VideoGammaModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_GAMMA_MODE_NONE", "GST_VIDEO_GAMMA_MODE_REMAP", "none", "remap"
+]
+_VideoGammaModeValueType: TypeAlias = VideoGammaMode | _VideoGammaModeLiteralType
 
 class VideoInterlaceMode(GObject.GEnum):
     ALTERNATE = 4
@@ -3372,13 +4391,41 @@ class VideoInterlaceMode(GObject.GEnum):
     @staticmethod
     def from_string(mode: str) -> VideoInterlaceMode: ...
     @staticmethod
-    def to_string(mode: VideoInterlaceMode) -> str: ...
+    def to_string(mode: _VideoInterlaceModeValueType) -> str: ...
+
+_VideoInterlaceModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_INTERLACE_MODE_ALTERNATE",
+    "GST_VIDEO_INTERLACE_MODE_FIELDS",
+    "GST_VIDEO_INTERLACE_MODE_INTERLEAVED",
+    "GST_VIDEO_INTERLACE_MODE_MIXED",
+    "GST_VIDEO_INTERLACE_MODE_PROGRESSIVE",
+    "alternate",
+    "fields",
+    "interleaved",
+    "mixed",
+    "progressive",
+]
+_VideoInterlaceModeValueType: TypeAlias = (
+    VideoInterlaceMode | _VideoInterlaceModeLiteralType
+)
 
 class VideoMatrixMode(GObject.GEnum):
     FULL = 0
     INPUT_ONLY = 1
     NONE = 3
     OUTPUT_ONLY = 2
+
+_VideoMatrixModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_MATRIX_MODE_FULL",
+    "GST_VIDEO_MATRIX_MODE_INPUT_ONLY",
+    "GST_VIDEO_MATRIX_MODE_NONE",
+    "GST_VIDEO_MATRIX_MODE_OUTPUT_ONLY",
+    "full",
+    "input-only",
+    "none",
+    "output-only",
+]
+_VideoMatrixModeValueType: TypeAlias = VideoMatrixMode | _VideoMatrixModeLiteralType
 
 class VideoMultiviewFramePacking(GObject.GEnum):
     CHECKERBOARD = 8
@@ -3391,6 +4438,32 @@ class VideoMultiviewFramePacking(GObject.GEnum):
     SIDE_BY_SIDE = 3
     SIDE_BY_SIDE_QUINCUNX = 4
     TOP_BOTTOM = 7
+
+_VideoMultiviewFramePackingLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_CHECKERBOARD",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_COLUMN_INTERLEAVED",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_LEFT",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_MONO",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_NONE",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_RIGHT",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_ROW_INTERLEAVED",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_SIDE_BY_SIDE",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_SIDE_BY_SIDE_QUINCUNX",
+    "GST_VIDEO_MULTIVIEW_FRAME_PACKING_TOP_BOTTOM",
+    "checkerboard",
+    "column-interleaved",
+    "left",
+    "mono",
+    "none",
+    "right",
+    "row-interleaved",
+    "side-by-side",
+    "side-by-side-quincunx",
+    "top-bottom",
+]
+_VideoMultiviewFramePackingValueType: TypeAlias = (
+    VideoMultiviewFramePacking | _VideoMultiviewFramePackingLiteralType
+)
 
 class VideoMultiviewMode(GObject.GEnum):
     CHECKERBOARD = 8
@@ -3409,7 +4482,39 @@ class VideoMultiviewMode(GObject.GEnum):
     @staticmethod
     def from_caps_string(caps_mview_mode: str) -> VideoMultiviewMode: ...
     @staticmethod
-    def to_caps_string(mview_mode: VideoMultiviewMode) -> str | None: ...
+    def to_caps_string(mview_mode: _VideoMultiviewModeValueType) -> str | None: ...
+
+_VideoMultiviewModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_MULTIVIEW_MODE_CHECKERBOARD",
+    "GST_VIDEO_MULTIVIEW_MODE_COLUMN_INTERLEAVED",
+    "GST_VIDEO_MULTIVIEW_MODE_FRAME_BY_FRAME",
+    "GST_VIDEO_MULTIVIEW_MODE_LEFT",
+    "GST_VIDEO_MULTIVIEW_MODE_MONO",
+    "GST_VIDEO_MULTIVIEW_MODE_MULTIVIEW_FRAME_BY_FRAME",
+    "GST_VIDEO_MULTIVIEW_MODE_NONE",
+    "GST_VIDEO_MULTIVIEW_MODE_RIGHT",
+    "GST_VIDEO_MULTIVIEW_MODE_ROW_INTERLEAVED",
+    "GST_VIDEO_MULTIVIEW_MODE_SEPARATED",
+    "GST_VIDEO_MULTIVIEW_MODE_SIDE_BY_SIDE",
+    "GST_VIDEO_MULTIVIEW_MODE_SIDE_BY_SIDE_QUINCUNX",
+    "GST_VIDEO_MULTIVIEW_MODE_TOP_BOTTOM",
+    "checkerboard",
+    "column-interleaved",
+    "frame-by-frame",
+    "left",
+    "mono",
+    "multiview-frame-by-frame",
+    "none",
+    "right",
+    "row-interleaved",
+    "separated",
+    "side-by-side",
+    "side-by-side-quincunx",
+    "top-bottom",
+]
+_VideoMultiviewModeValueType: TypeAlias = (
+    VideoMultiviewMode | _VideoMultiviewModeLiteralType
+)
 
 class VideoOrientationMethod(GObject.GEnum):
     AUTO = 8
@@ -3420,10 +4525,42 @@ class VideoOrientationMethod(GObject.GEnum):
     UR_LL = 7
     VERT = 5
 
+_VideoOrientationMethodLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_ORIENTATION_AUTO",
+    "GST_VIDEO_ORIENTATION_CUSTOM",
+    "GST_VIDEO_ORIENTATION_HORIZ",
+    "GST_VIDEO_ORIENTATION_IDENTITY",
+    "GST_VIDEO_ORIENTATION_UL_LR",
+    "GST_VIDEO_ORIENTATION_UR_LL",
+    "GST_VIDEO_ORIENTATION_VERT",
+    "auto",
+    "custom",
+    "horiz",
+    "identity",
+    "ul-lr",
+    "ur-ll",
+    "vert",
+]
+_VideoOrientationMethodValueType: TypeAlias = (
+    VideoOrientationMethod | _VideoOrientationMethodLiteralType
+)
+
 class VideoPrimariesMode(GObject.GEnum):
     FAST = 2
     MERGE_ONLY = 1
     NONE = 0
+
+_VideoPrimariesModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_PRIMARIES_MODE_FAST",
+    "GST_VIDEO_PRIMARIES_MODE_MERGE_ONLY",
+    "GST_VIDEO_PRIMARIES_MODE_NONE",
+    "fast",
+    "merge-only",
+    "none",
+]
+_VideoPrimariesModeValueType: TypeAlias = (
+    VideoPrimariesMode | _VideoPrimariesModeLiteralType
+)
 
 class VideoResamplerMethod(GObject.GEnum):
     CUBIC = 2
@@ -3432,13 +4569,42 @@ class VideoResamplerMethod(GObject.GEnum):
     NEAREST = 0
     SINC = 3
 
+_VideoResamplerMethodLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_RESAMPLER_METHOD_CUBIC",
+    "GST_VIDEO_RESAMPLER_METHOD_LANCZOS",
+    "GST_VIDEO_RESAMPLER_METHOD_LINEAR",
+    "GST_VIDEO_RESAMPLER_METHOD_NEAREST",
+    "GST_VIDEO_RESAMPLER_METHOD_SINC",
+    "cubic",
+    "lanczos",
+    "linear",
+    "nearest",
+    "sinc",
+]
+_VideoResamplerMethodValueType: TypeAlias = (
+    VideoResamplerMethod | _VideoResamplerMethodLiteralType
+)
+
 class VideoTileMode(GObject.GEnum):
     LINEAR = 131072
     UNKNOWN = 0
     ZFLIPZ_2X2 = 65536
 
+_VideoTileModeLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_TILE_MODE_LINEAR",
+    "GST_VIDEO_TILE_MODE_UNKNOWN",
+    "GST_VIDEO_TILE_MODE_ZFLIPZ_2X2",
+    "linear",
+    "unknown",
+    "zflipz-2x2",
+]
+_VideoTileModeValueType: TypeAlias = VideoTileMode | _VideoTileModeLiteralType
+
 class VideoTileType(GObject.GEnum):
     INDEXED = 0
+
+_VideoTileTypeLiteralType: TypeAlias = Literal["GST_VIDEO_TILE_TYPE_INDEXED", "indexed"]
+_VideoTileTypeValueType: TypeAlias = VideoTileType | _VideoTileTypeLiteralType
 
 class VideoTransferFunction(GObject.GEnum):
     ADOBERGB = 12
@@ -3459,22 +4625,74 @@ class VideoTransferFunction(GObject.GEnum):
     SRGB = 7
     UNKNOWN = 0
     @staticmethod
-    def decode(func: VideoTransferFunction, val: float) -> float: ...
+    def decode(func: _VideoTransferFunctionValueType, val: float) -> float: ...
     @staticmethod
-    def encode(func: VideoTransferFunction, val: float) -> float: ...
+    def encode(func: _VideoTransferFunctionValueType, val: float) -> float: ...
     @staticmethod
     def from_iso(value: int) -> VideoTransferFunction: ...
     @staticmethod
     def is_equivalent(
-        from_func: VideoTransferFunction,
+        from_func: _VideoTransferFunctionValueType,
         from_bpp: int,
-        to_func: VideoTransferFunction,
+        to_func: _VideoTransferFunctionValueType,
         to_bpp: int,
     ) -> bool: ...
     @staticmethod
-    def to_iso(func: VideoTransferFunction) -> int: ...
+    def to_iso(func: _VideoTransferFunctionValueType) -> int: ...
+
+_VideoTransferFunctionLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_TRANSFER_ADOBERGB",
+    "GST_VIDEO_TRANSFER_ARIB_STD_B67",
+    "GST_VIDEO_TRANSFER_BT2020_10",
+    "GST_VIDEO_TRANSFER_BT2020_12",
+    "GST_VIDEO_TRANSFER_BT601",
+    "GST_VIDEO_TRANSFER_BT709",
+    "GST_VIDEO_TRANSFER_GAMMA10",
+    "GST_VIDEO_TRANSFER_GAMMA18",
+    "GST_VIDEO_TRANSFER_GAMMA20",
+    "GST_VIDEO_TRANSFER_GAMMA22",
+    "GST_VIDEO_TRANSFER_GAMMA28",
+    "GST_VIDEO_TRANSFER_LOG100",
+    "GST_VIDEO_TRANSFER_LOG316",
+    "GST_VIDEO_TRANSFER_SMPTE2084",
+    "GST_VIDEO_TRANSFER_SMPTE240M",
+    "GST_VIDEO_TRANSFER_SRGB",
+    "GST_VIDEO_TRANSFER_UNKNOWN",
+    "adobergb",
+    "arib-std-b67",
+    "bt2020-10",
+    "bt2020-12",
+    "bt601",
+    "bt709",
+    "gamma10",
+    "gamma18",
+    "gamma20",
+    "gamma22",
+    "gamma28",
+    "log100",
+    "log316",
+    "smpte2084",
+    "smpte240m",
+    "srgb",
+    "unknown",
+]
+_VideoTransferFunctionValueType: TypeAlias = (
+    VideoTransferFunction | _VideoTransferFunctionLiteralType
+)
 
 class VideoVBIParserResult(GObject.GEnum):
     DONE = 0
     ERROR = 2
     OK = 1
+
+_VideoVBIParserResultLiteralType: TypeAlias = Literal[
+    "GST_VIDEO_VBI_PARSER_RESULT_DONE",
+    "GST_VIDEO_VBI_PARSER_RESULT_ERROR",
+    "GST_VIDEO_VBI_PARSER_RESULT_OK",
+    "done",
+    "error",
+    "ok",
+]
+_VideoVBIParserResultValueType: TypeAlias = (
+    VideoVBIParserResult | _VideoVBIParserResultLiteralType
+)

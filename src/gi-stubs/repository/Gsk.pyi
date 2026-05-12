@@ -1,5 +1,7 @@
 from typing import Any
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -46,7 +48,7 @@ class BlendNode(RenderNode):
     def get_top_child(self) -> RenderNode: ...
     @classmethod
     def new(
-        cls, bottom: RenderNode, top: RenderNode, blend_mode: BlendMode
+        cls, bottom: RenderNode, top: RenderNode, blend_mode: _BlendModeValueType
     ) -> BlendNode: ...
 
 class BlurNode(RenderNode):
@@ -335,7 +337,9 @@ class FillNode(RenderNode):
     def get_fill_rule(self) -> FillRule: ...
     def get_path(self) -> Path: ...
     @classmethod
-    def new(cls, child: RenderNode, path: Path, fill_rule: FillRule) -> FillNode: ...
+    def new(
+        cls, child: RenderNode, path: Path, fill_rule: _FillRuleValueType
+    ) -> FillNode: ...
 
 class GLRenderer(Renderer):
     """
@@ -388,7 +392,9 @@ class GLShader(GObject.Object):
 
     @property
     def props(self) -> Props: ...
-    def __init__(self, *, resource: str = ..., source: GLib.Bytes = ...) -> None: ...
+    def __init__(
+        self, *, resource: str | None = ..., source: GLib.Bytes | None = ...
+    ) -> None: ...
     def compile(self, renderer: Renderer) -> bool: ...
     def find_uniform_by_name(self, name: str) -> int: ...
     def get_arg_bool(self, args: GLib.Bytes, idx: int) -> bool: ...
@@ -512,7 +518,7 @@ class MaskNode(RenderNode):
     def get_source(self) -> RenderNode: ...
     @classmethod
     def new(
-        cls, source: RenderNode, mask: RenderNode, mask_mode: MaskMode
+        cls, source: RenderNode, mask: RenderNode, mask_mode: _MaskModeValueType
     ) -> MaskNode: ...
 
 class NglRenderer(Renderer):
@@ -594,9 +600,16 @@ class ParseLocation(_gi.Struct):
 class Path(GObject.GBoxed):
     def foreach(
         self,
-        flags: PathForeachFlags,
+        flags: _PathForeachFlagsValueType,
         func: Callable[
-            [PathOperation, Sequence[Graphene.Point], int, float, Unpack[_DataTs]], bool
+            [
+                _PathOperationValueType,
+                Sequence[Graphene.Point],
+                int,
+                float,
+                Unpack[_DataTs],
+            ],
+            bool,
         ],
         *user_data: Unpack[_DataTs],
     ) -> bool: ...
@@ -604,7 +617,15 @@ class Path(GObject.GBoxed):
         self,
         path2: Path | None,
         func: Callable[
-            [Path, PathPoint, Path, PathPoint, PathIntersection, Unpack[_DataTs]], bool
+            [
+                Path,
+                PathPoint,
+                Path,
+                PathPoint,
+                _PathIntersectionValueType,
+                Unpack[_DataTs],
+            ],
+            bool,
         ],
         *user_data: Unpack[_DataTs],
     ) -> bool: ...
@@ -615,7 +636,7 @@ class Path(GObject.GBoxed):
     def get_end_point(self) -> tuple[bool, PathPoint]: ...
     def get_start_point(self) -> tuple[bool, PathPoint]: ...
     def get_stroke_bounds(self, stroke: Stroke) -> tuple[bool, Graphene.Rect]: ...
-    def in_fill(self, point: Graphene.Point, fill_rule: FillRule) -> bool: ...
+    def in_fill(self, point: Graphene.Point, fill_rule: _FillRuleValueType) -> bool: ...
     def is_closed(self) -> bool: ...
     def is_empty(self) -> bool: ...
     @staticmethod
@@ -724,12 +745,14 @@ class PathPoint(GObject.GBoxed):
     def equal(self, point2: PathPoint) -> bool: ...
     def free(self) -> None: ...
     def get_curvature(
-        self, path: Path, direction: PathDirection
+        self, path: Path, direction: _PathDirectionValueType
     ) -> tuple[float, Graphene.Point | None]: ...
     def get_distance(self, measure: PathMeasure) -> float: ...
     def get_position(self, path: Path) -> Graphene.Point: ...
-    def get_rotation(self, path: Path, direction: PathDirection) -> float: ...
-    def get_tangent(self, path: Path, direction: PathDirection) -> Graphene.Vec2: ...
+    def get_rotation(self, path: Path, direction: _PathDirectionValueType) -> float: ...
+    def get_tangent(
+        self, path: Path, direction: _PathDirectionValueType
+    ) -> Graphene.Vec2: ...
 
 class RadialGradientNode(RenderNode):
     """
@@ -1009,8 +1032,8 @@ class Stroke(GObject.GBoxed):
     def new(cls, line_width: float) -> Stroke: ...
     def set_dash(self, dash: Sequence[float] | None = None) -> None: ...
     def set_dash_offset(self, offset: float) -> None: ...
-    def set_line_cap(self, line_cap: LineCap) -> None: ...
-    def set_line_join(self, line_join: LineJoin) -> None: ...
+    def set_line_cap(self, line_cap: _LineCapValueType) -> None: ...
+    def set_line_join(self, line_join: _LineJoinValueType) -> None: ...
     def set_line_width(self, line_width: float) -> None: ...
     def set_miter_limit(self, limit: float) -> None: ...
     def to_cairo(self, cr: cairo.Context[_SomeSurface]) -> None: ...
@@ -1090,7 +1113,10 @@ class TextureScaleNode(RenderNode):
     def get_texture(self) -> _Gdk4.Texture: ...
     @classmethod
     def new(
-        cls, texture: _Gdk4.Texture, bounds: Graphene.Rect, filter: ScalingFilter
+        cls,
+        texture: _Gdk4.Texture,
+        bounds: Graphene.Rect,
+        filter: _ScalingFilterValueType,
     ) -> TextureScaleNode: ...
 
 class Transform(GObject.GBoxed):
@@ -1181,6 +1207,22 @@ class PathForeachFlags(GObject.GFlags):
     ONLY_LINES = 0
     QUAD = 1
 
+_PathForeachFlagsLiteralType: TypeAlias = Literal[
+    "GSK_PATH_FOREACH_ALLOW_CONIC",
+    "GSK_PATH_FOREACH_ALLOW_CUBIC",
+    "GSK_PATH_FOREACH_ALLOW_ONLY_LINES",
+    "GSK_PATH_FOREACH_ALLOW_QUAD",
+    "conic",
+    "cubic",
+    "only-lines",
+    "quad",
+]
+_PathForeachFlagsValueType: TypeAlias = (
+    PathForeachFlags
+    | _PathForeachFlagsLiteralType
+    | tuple[_PathForeachFlagsLiteralType, ...]
+)
+
 class BlendMode(GObject.GEnum):
     COLOR = 12
     COLOR_BURN = 7
@@ -1199,15 +1241,68 @@ class BlendMode(GObject.GEnum):
     SCREEN = 2
     SOFT_LIGHT = 9
 
+_BlendModeLiteralType: TypeAlias = Literal[
+    "GSK_BLEND_MODE_COLOR",
+    "GSK_BLEND_MODE_COLOR_BURN",
+    "GSK_BLEND_MODE_COLOR_DODGE",
+    "GSK_BLEND_MODE_DARKEN",
+    "GSK_BLEND_MODE_DEFAULT",
+    "GSK_BLEND_MODE_DIFFERENCE",
+    "GSK_BLEND_MODE_EXCLUSION",
+    "GSK_BLEND_MODE_HARD_LIGHT",
+    "GSK_BLEND_MODE_HUE",
+    "GSK_BLEND_MODE_LIGHTEN",
+    "GSK_BLEND_MODE_LUMINOSITY",
+    "GSK_BLEND_MODE_MULTIPLY",
+    "GSK_BLEND_MODE_OVERLAY",
+    "GSK_BLEND_MODE_SATURATION",
+    "GSK_BLEND_MODE_SCREEN",
+    "GSK_BLEND_MODE_SOFT_LIGHT",
+    "color",
+    "color-burn",
+    "color-dodge",
+    "darken",
+    "default",
+    "difference",
+    "exclusion",
+    "hard-light",
+    "hue",
+    "lighten",
+    "luminosity",
+    "multiply",
+    "overlay",
+    "saturation",
+    "screen",
+    "soft-light",
+]
+_BlendModeValueType: TypeAlias = BlendMode | _BlendModeLiteralType
+
 class Corner(GObject.GEnum):
     BOTTOM_LEFT = 3
     BOTTOM_RIGHT = 2
     TOP_LEFT = 0
     TOP_RIGHT = 1
 
+_CornerLiteralType: TypeAlias = Literal[
+    "GSK_CORNER_BOTTOM_LEFT",
+    "GSK_CORNER_BOTTOM_RIGHT",
+    "GSK_CORNER_TOP_LEFT",
+    "GSK_CORNER_TOP_RIGHT",
+    "bottom-left",
+    "bottom-right",
+    "top-left",
+    "top-right",
+]
+_CornerValueType: TypeAlias = Corner | _CornerLiteralType
+
 class FillRule(GObject.GEnum):
     EVEN_ODD = 1
     WINDING = 0
+
+_FillRuleLiteralType: TypeAlias = Literal[
+    "GSK_FILL_RULE_EVEN_ODD", "GSK_FILL_RULE_WINDING", "even-odd", "winding"
+]
+_FillRuleValueType: TypeAlias = FillRule | _FillRuleLiteralType
 
 class GLUniformType(GObject.GEnum):
     BOOL = 4
@@ -1219,15 +1314,55 @@ class GLUniformType(GObject.GEnum):
     VEC3 = 6
     VEC4 = 7
 
+_GLUniformTypeLiteralType: TypeAlias = Literal[
+    "GSK_GL_UNIFORM_TYPE_BOOL",
+    "GSK_GL_UNIFORM_TYPE_FLOAT",
+    "GSK_GL_UNIFORM_TYPE_INT",
+    "GSK_GL_UNIFORM_TYPE_NONE",
+    "GSK_GL_UNIFORM_TYPE_UINT",
+    "GSK_GL_UNIFORM_TYPE_VEC2",
+    "GSK_GL_UNIFORM_TYPE_VEC3",
+    "GSK_GL_UNIFORM_TYPE_VEC4",
+    "bool",
+    "float",
+    "int",
+    "none",
+    "uint",
+    "vec2",
+    "vec3",
+    "vec4",
+]
+_GLUniformTypeValueType: TypeAlias = GLUniformType | _GLUniformTypeLiteralType
+
 class LineCap(GObject.GEnum):
     BUTT = 0
     ROUND = 1
     SQUARE = 2
 
+_LineCapLiteralType: TypeAlias = Literal[
+    "GSK_LINE_CAP_BUTT",
+    "GSK_LINE_CAP_ROUND",
+    "GSK_LINE_CAP_SQUARE",
+    "butt",
+    "round",
+    "square",
+]
+_LineCapValueType: TypeAlias = LineCap | _LineCapLiteralType
+
 class LineJoin(GObject.GEnum):
     BEVEL = 2
     MITER = 0
     ROUND = 1
+
+_LineJoinLiteralType: TypeAlias = Literal[
+    "GSK_LINE_JOIN_BEVEL",
+    "GSK_LINE_JOIN_MITER",
+    "GSK_LINE_JOIN_ROUND",
+    "bevel",
+    "miter",
+    "round",
+]
+_LineJoinValueType: TypeAlias = LineJoin | _LineJoinLiteralType
 
 class MaskMode(GObject.GEnum):
     ALPHA = 0
@@ -1235,17 +1370,53 @@ class MaskMode(GObject.GEnum):
     INVERTED_LUMINANCE = 3
     LUMINANCE = 2
 
+_MaskModeLiteralType: TypeAlias = Literal[
+    "GSK_MASK_MODE_ALPHA",
+    "GSK_MASK_MODE_INVERTED_ALPHA",
+    "GSK_MASK_MODE_INVERTED_LUMINANCE",
+    "GSK_MASK_MODE_LUMINANCE",
+    "alpha",
+    "inverted-alpha",
+    "inverted-luminance",
+    "luminance",
+]
+_MaskModeValueType: TypeAlias = MaskMode | _MaskModeLiteralType
+
 class PathDirection(GObject.GEnum):
     FROM_END = 3
     FROM_START = 0
     TO_END = 2
     TO_START = 1
 
+_PathDirectionLiteralType: TypeAlias = Literal[
+    "GSK_PATH_FROM_END",
+    "GSK_PATH_FROM_START",
+    "GSK_PATH_TO_END",
+    "GSK_PATH_TO_START",
+    "from-end",
+    "from-start",
+    "to-end",
+    "to-start",
+]
+_PathDirectionValueType: TypeAlias = PathDirection | _PathDirectionLiteralType
+
 class PathIntersection(GObject.GEnum):
     END = 3
     NONE = 0
     NORMAL = 1
     START = 2
+
+_PathIntersectionLiteralType: TypeAlias = Literal[
+    "GSK_PATH_INTERSECTION_END",
+    "GSK_PATH_INTERSECTION_NONE",
+    "GSK_PATH_INTERSECTION_NORMAL",
+    "GSK_PATH_INTERSECTION_START",
+    "end",
+    "none",
+    "normal",
+    "start",
+]
+_PathIntersectionValueType: TypeAlias = PathIntersection | _PathIntersectionLiteralType
 
 class PathOperation(GObject.GEnum):
     CLOSE = 1
@@ -1254,6 +1425,22 @@ class PathOperation(GObject.GEnum):
     LINE = 2
     MOVE = 0
     QUAD = 3
+
+_PathOperationLiteralType: TypeAlias = Literal[
+    "GSK_PATH_CLOSE",
+    "GSK_PATH_CONIC",
+    "GSK_PATH_CUBIC",
+    "GSK_PATH_LINE",
+    "GSK_PATH_MOVE",
+    "GSK_PATH_QUAD",
+    "close",
+    "conic",
+    "cubic",
+    "line",
+    "move",
+    "quad",
+]
+_PathOperationValueType: TypeAlias = PathOperation | _PathOperationLiteralType
 
 class RenderNodeType(GObject.GEnum):
     BLEND_NODE = 20
@@ -1289,10 +1476,88 @@ class RenderNodeType(GObject.GEnum):
     TEXT_NODE = 22
     TRANSFORM_NODE = 13
 
+_RenderNodeTypeLiteralType: TypeAlias = Literal[
+    "GSK_BLEND_NODE",
+    "GSK_BLUR_NODE",
+    "GSK_BORDER_NODE",
+    "GSK_CAIRO_NODE",
+    "GSK_CLIP_NODE",
+    "GSK_COLOR_MATRIX_NODE",
+    "GSK_COLOR_NODE",
+    "GSK_COMPONENT_TRANSFER_NODE",
+    "GSK_CONIC_GRADIENT_NODE",
+    "GSK_CONTAINER_NODE",
+    "GSK_CROSS_FADE_NODE",
+    "GSK_DEBUG_NODE",
+    "GSK_FILL_NODE",
+    "GSK_GL_SHADER_NODE",
+    "GSK_INSET_SHADOW_NODE",
+    "GSK_LINEAR_GRADIENT_NODE",
+    "GSK_MASK_NODE",
+    "GSK_NOT_A_RENDER_NODE",
+    "GSK_OPACITY_NODE",
+    "GSK_OUTSET_SHADOW_NODE",
+    "GSK_RADIAL_GRADIENT_NODE",
+    "GSK_REPEATING_LINEAR_GRADIENT_NODE",
+    "GSK_REPEATING_RADIAL_GRADIENT_NODE",
+    "GSK_REPEAT_NODE",
+    "GSK_ROUNDED_CLIP_NODE",
+    "GSK_SHADOW_NODE",
+    "GSK_STROKE_NODE",
+    "GSK_SUBSURFACE_NODE",
+    "GSK_TEXTURE_NODE",
+    "GSK_TEXTURE_SCALE_NODE",
+    "GSK_TEXT_NODE",
+    "GSK_TRANSFORM_NODE",
+    "blend-node",
+    "blur-node",
+    "border-node",
+    "cairo-node",
+    "clip-node",
+    "color-matrix-node",
+    "color-node",
+    "component-transfer-node",
+    "conic-gradient-node",
+    "container-node",
+    "cross-fade-node",
+    "debug-node",
+    "fill-node",
+    "gl-shader-node",
+    "inset-shadow-node",
+    "linear-gradient-node",
+    "mask-node",
+    "not-a-render-node",
+    "opacity-node",
+    "outset-shadow-node",
+    "radial-gradient-node",
+    "repeat-node",
+    "repeating-linear-gradient-node",
+    "repeating-radial-gradient-node",
+    "rounded-clip-node",
+    "shadow-node",
+    "stroke-node",
+    "subsurface-node",
+    "text-node",
+    "texture-node",
+    "texture-scale-node",
+    "transform-node",
+]
+_RenderNodeTypeValueType: TypeAlias = RenderNodeType | _RenderNodeTypeLiteralType
+
 class ScalingFilter(GObject.GEnum):
     LINEAR = 0
     NEAREST = 1
     TRILINEAR = 2
+
+_ScalingFilterLiteralType: TypeAlias = Literal[
+    "GSK_SCALING_FILTER_LINEAR",
+    "GSK_SCALING_FILTER_NEAREST",
+    "GSK_SCALING_FILTER_TRILINEAR",
+    "linear",
+    "nearest",
+    "trilinear",
+]
+_ScalingFilterValueType: TypeAlias = ScalingFilter | _ScalingFilterLiteralType
 
 class SerializationError(GObject.GEnum):
     INVALID_DATA = 2
@@ -1301,7 +1566,31 @@ class SerializationError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_SerializationErrorLiteralType: TypeAlias = Literal[
+    "GSK_SERIALIZATION_INVALID_DATA",
+    "GSK_SERIALIZATION_UNSUPPORTED_FORMAT",
+    "GSK_SERIALIZATION_UNSUPPORTED_VERSION",
+    "invalid-data",
+    "unsupported-format",
+    "unsupported-version",
+]
+_SerializationErrorValueType: TypeAlias = (
+    SerializationError | _SerializationErrorLiteralType
+)
+
 class TransformCategory(GObject.GEnum):
     ANY = 1
     IDENTITY = 6
     UNKNOWN = 0
+
+_TransformCategoryLiteralType: TypeAlias = Literal[
+    "GSK_TRANSFORM_CATEGORY_ANY",
+    "GSK_TRANSFORM_CATEGORY_IDENTITY",
+    "GSK_TRANSFORM_CATEGORY_UNKNOWN",
+    "any",
+    "identity",
+    "unknown",
+]
+_TransformCategoryValueType: TypeAlias = (
+    TransformCategory | _TransformCategoryLiteralType
+)

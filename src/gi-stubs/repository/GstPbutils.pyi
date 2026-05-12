@@ -1,6 +1,8 @@
 from typing import Any
 from typing import Final
+from typing import Literal
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -104,11 +106,11 @@ def init(): ...  # FIXME: Override is missing typing annotation
 def install_plugins_async(
     details: Sequence[str],
     ctx: InstallPluginsContext | None,
-    func: Callable[[InstallPluginsReturn, Unpack[_DataTs]], None],
+    func: Callable[[_InstallPluginsReturnValueType, Unpack[_DataTs]], None],
     *user_data: Unpack[_DataTs],
 ) -> InstallPluginsReturn: ...
 def install_plugins_installation_in_progress() -> bool: ...
-def install_plugins_return_get_name(ret: InstallPluginsReturn) -> str: ...
+def install_plugins_return_get_name(ret: _InstallPluginsReturnValueType) -> str: ...
 def install_plugins_supported() -> bool: ...
 def install_plugins_sync(
     details: Sequence[str], ctx: InstallPluginsContext | None = None
@@ -193,7 +195,10 @@ class AudioVisualizer(Gst.Element):
     @type_check_only
     class Props(Gst.Element.Props):
         shade_amount: int
-        shader: AudioVisualizerShader
+        @property
+        def shader(self) -> AudioVisualizerShader: ...
+        @shader.setter
+        def shader(self, value: _AudioVisualizerShaderValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -211,7 +216,7 @@ class AudioVisualizer(Gst.Element):
         self,
         *,
         shade_amount: int = ...,
-        shader: AudioVisualizerShader = ...,
+        shader: _AudioVisualizerShaderValueType = ...,
         name: str | None = ...,
         parent: Gst.Object = ...,
     ) -> None: ...
@@ -383,7 +388,7 @@ class DiscovererInfo(GObject.Object):
     def get_toc(self) -> Gst.Toc | None: ...
     def get_uri(self) -> str: ...
     def get_video_streams(self) -> list[DiscovererVideoInfo]: ...
-    def to_variant(self, flags: DiscovererSerializeFlags) -> GLib.Variant: ...
+    def to_variant(self, flags: _DiscovererSerializeFlagsValueType) -> GLib.Variant: ...
 
 class DiscovererPrivate(_gi.Struct): ...
 
@@ -476,7 +481,7 @@ class EncodingAudioProfile(EncodingProfile):
         self,
         *,
         element_properties: Gst.Structure = ...,
-        restriction_caps: Gst.Caps = ...,
+        restriction_caps: Gst.Caps | None = ...,
     ) -> None: ...
     @classmethod
     def new(
@@ -513,7 +518,7 @@ class EncodingContainerProfile(EncodingProfile):
         self,
         *,
         element_properties: Gst.Structure = ...,
-        restriction_caps: Gst.Caps = ...,
+        restriction_caps: Gst.Caps | None = ...,
     ) -> None: ...
     def add_profile(self, profile: EncodingProfile) -> bool: ...
     def contains_profile(self, profile: EncodingProfile) -> bool: ...
@@ -550,8 +555,11 @@ class EncodingProfile(GObject.Object):
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        element_properties: Gst.Structure | None
-        restriction_caps: Gst.Caps
+        @property
+        def element_properties(self) -> Gst.Structure | None: ...
+        @element_properties.setter
+        def element_properties(self, value: Gst.Structure) -> None: ...
+        restriction_caps: Gst.Caps | None
 
     @property
     def props(self) -> Props: ...
@@ -559,7 +567,7 @@ class EncodingProfile(GObject.Object):
         self,
         *,
         element_properties: Gst.Structure = ...,
-        restriction_caps: Gst.Caps = ...,
+        restriction_caps: Gst.Caps | None = ...,
     ) -> None: ...
     def copy(self) -> EncodingProfile: ...
     @staticmethod
@@ -656,7 +664,7 @@ class EncodingVideoProfile(EncodingProfile):
         self,
         *,
         element_properties: Gst.Structure = ...,
-        restriction_caps: Gst.Caps = ...,
+        restriction_caps: Gst.Caps | None = ...,
     ) -> None: ...
     def get_pass(self) -> int: ...
     def get_variableframerate(self) -> bool: ...
@@ -698,6 +706,24 @@ class DiscovererSerializeFlags(GObject.GFlags):
     MISC = 4
     TAGS = 2
 
+_DiscovererSerializeFlagsLiteralType: TypeAlias = Literal[
+    "GST_DISCOVERER_SERIALIZE_ALL",
+    "GST_DISCOVERER_SERIALIZE_BASIC",
+    "GST_DISCOVERER_SERIALIZE_CAPS",
+    "GST_DISCOVERER_SERIALIZE_MISC",
+    "GST_DISCOVERER_SERIALIZE_TAGS",
+    "all",
+    "basic",
+    "caps",
+    "misc",
+    "tags",
+]
+_DiscovererSerializeFlagsValueType: TypeAlias = (
+    DiscovererSerializeFlags
+    | _DiscovererSerializeFlagsLiteralType
+    | tuple[_DiscovererSerializeFlagsLiteralType, ...]
+)
+
 class PbUtilsCapsDescriptionFlags(GObject.GFlags):
     AUDIO = 2
     CONTAINER = 1
@@ -707,6 +733,30 @@ class PbUtilsCapsDescriptionFlags(GObject.GFlags):
     SUBTITLE = 16
     TAG = 32
     VIDEO = 4
+
+_PbUtilsCapsDescriptionFlagsLiteralType: TypeAlias = Literal[
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_AUDIO",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_CONTAINER",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_GENERIC",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_IMAGE",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_METADATA",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_SUBTITLE",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_TAG",
+    "GST_PBUTILS_CAPS_DESCRIPTION_FLAG_VIDEO",
+    "audio",
+    "container",
+    "generic",
+    "image",
+    "metadata",
+    "subtitle",
+    "tag",
+    "video",
+]
+_PbUtilsCapsDescriptionFlagsValueType: TypeAlias = (
+    PbUtilsCapsDescriptionFlags
+    | _PbUtilsCapsDescriptionFlagsLiteralType
+    | tuple[_PbUtilsCapsDescriptionFlagsLiteralType, ...]
+)
 
 class AudioVisualizerShader(GObject.GEnum):
     FADE = 1
@@ -720,6 +770,32 @@ class AudioVisualizerShader(GObject.GEnum):
     FADE_AND_MOVE_VERT_OUT = 8
     NONE = 0
 
+_AudioVisualizerShaderLiteralType: TypeAlias = Literal[
+    "GST_AUDIO_VISUALIZER_SHADER_FADE",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_DOWN",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_HORIZ_IN",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_HORIZ_OUT",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_LEFT",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_RIGHT",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_UP",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_VERT_IN",
+    "GST_AUDIO_VISUALIZER_SHADER_FADE_AND_MOVE_VERT_OUT",
+    "GST_AUDIO_VISUALIZER_SHADER_NONE",
+    "fade",
+    "fade-and-move-down",
+    "fade-and-move-horiz-in",
+    "fade-and-move-horiz-out",
+    "fade-and-move-left",
+    "fade-and-move-right",
+    "fade-and-move-up",
+    "fade-and-move-vert-in",
+    "fade-and-move-vert-out",
+    "none",
+]
+_AudioVisualizerShaderValueType: TypeAlias = (
+    AudioVisualizerShader | _AudioVisualizerShaderLiteralType
+)
+
 class DiscovererResult(GObject.GEnum):
     BUSY = 4
     ERROR = 2
@@ -727,6 +803,22 @@ class DiscovererResult(GObject.GEnum):
     OK = 0
     TIMEOUT = 3
     URI_INVALID = 1
+
+_DiscovererResultLiteralType: TypeAlias = Literal[
+    "GST_DISCOVERER_BUSY",
+    "GST_DISCOVERER_ERROR",
+    "GST_DISCOVERER_MISSING_PLUGINS",
+    "GST_DISCOVERER_OK",
+    "GST_DISCOVERER_TIMEOUT",
+    "GST_DISCOVERER_URI_INVALID",
+    "busy",
+    "error",
+    "missing-plugins",
+    "ok",
+    "timeout",
+    "uri-invalid",
+]
+_DiscovererResultValueType: TypeAlias = DiscovererResult | _DiscovererResultLiteralType
 
 class InstallPluginsReturn(GObject.GEnum):
     CRASHED = 100
@@ -741,4 +833,32 @@ class InstallPluginsReturn(GObject.GEnum):
     SUCCESS = 0
     USER_ABORT = 4
     @staticmethod
-    def get_name(ret: InstallPluginsReturn) -> str: ...
+    def get_name(ret: _InstallPluginsReturnValueType) -> str: ...
+
+_InstallPluginsReturnLiteralType: TypeAlias = Literal[
+    "GST_INSTALL_PLUGINS_CRASHED",
+    "GST_INSTALL_PLUGINS_ERROR",
+    "GST_INSTALL_PLUGINS_HELPER_MISSING",
+    "GST_INSTALL_PLUGINS_INSTALL_IN_PROGRESS",
+    "GST_INSTALL_PLUGINS_INTERNAL_FAILURE",
+    "GST_INSTALL_PLUGINS_INVALID",
+    "GST_INSTALL_PLUGINS_NOT_FOUND",
+    "GST_INSTALL_PLUGINS_PARTIAL_SUCCESS",
+    "GST_INSTALL_PLUGINS_STARTED_OK",
+    "GST_INSTALL_PLUGINS_SUCCESS",
+    "GST_INSTALL_PLUGINS_USER_ABORT",
+    "crashed",
+    "error",
+    "helper-missing",
+    "install-in-progress",
+    "internal-failure",
+    "invalid",
+    "not-found",
+    "partial-success",
+    "started-ok",
+    "success",
+    "user-abort",
+]
+_InstallPluginsReturnValueType: TypeAlias = (
+    InstallPluginsReturn | _InstallPluginsReturnLiteralType
+)

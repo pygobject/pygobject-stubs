@@ -1,8 +1,10 @@
 from typing import Any
 from typing import Final
 from typing import Generic
+from typing import Literal
 from typing import Protocol
 from typing import type_check_only
+from typing import TypeAlias
 from typing_extensions import Self
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
@@ -247,7 +249,7 @@ def debug_add_log_function(
     func: Callable[
         [
             DebugCategory,
-            DebugLevel,
+            _DebugLevelValueType,
             str,
             str,
             int,
@@ -262,25 +264,25 @@ def debug_add_log_function(
 def debug_add_ring_buffer_logger(
     max_size_per_thread: int, thread_timeout: int
 ) -> None: ...
-def debug_bin_to_dot_data(bin: Bin, details: DebugGraphDetails) -> str: ...
+def debug_bin_to_dot_data(bin: Bin, details: _DebugGraphDetailsValueType) -> str: ...
 def debug_bin_to_dot_file(
-    bin: Bin, details: DebugGraphDetails, file_name: str
+    bin: Bin, details: _DebugGraphDetailsValueType, file_name: str
 ) -> None: ...
 def debug_bin_to_dot_file_with_ts(
-    bin: Bin, details: DebugGraphDetails, file_name: str
+    bin: Bin, details: _DebugGraphDetailsValueType, file_name: str
 ) -> None: ...
 def debug_construct_term_color(colorinfo: int) -> str: ...
 def debug_construct_win_color(colorinfo: int) -> int: ...
 def debug_get_all_categories() -> list[DebugCategory]: ...
 def debug_get_color_mode() -> DebugColorMode: ...
 def debug_get_default_threshold() -> DebugLevel: ...
-def debug_get_stack_trace(flags: StackTraceFlags) -> str | None: ...
+def debug_get_stack_trace(flags: _StackTraceFlagsValueType) -> str | None: ...
 def debug_is_active() -> bool: ...
 def debug_is_colored() -> bool: ...
-def debug_level_get_name(level: DebugLevel) -> str: ...
+def debug_level_get_name(level: _DebugLevelValueType) -> str: ...
 def debug_log_default(
     category: DebugCategory,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -290,7 +292,7 @@ def debug_log_default(
 ) -> None: ...
 def debug_log_get_line(
     category: DebugCategory,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -299,7 +301,7 @@ def debug_log_get_line(
 ) -> str: ...
 def debug_log_id_literal(
     category: DebugCategory,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -308,7 +310,7 @@ def debug_log_id_literal(
 ) -> None: ...
 def debug_log_id_literal_with_context(
     ctx: LogContext,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -317,7 +319,7 @@ def debug_log_id_literal_with_context(
 ) -> None: ...
 def debug_log_literal(
     category: DebugCategory,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -326,7 +328,7 @@ def debug_log_literal(
 ) -> None: ...
 def debug_log_literal_with_context(
     ctx: LogContext,
-    level: DebugLevel,
+    level: _DebugLevelValueType,
     file: str,
     function: str,
     line: int,
@@ -340,7 +342,7 @@ def debug_remove_log_function(
     func: Callable[
         [
             DebugCategory,
-            DebugLevel,
+            _DebugLevelValueType,
             str,
             str,
             int,
@@ -356,11 +358,11 @@ def debug_remove_log_function_by_data(data: int | Any | None = None) -> int: ...
 def debug_remove_ring_buffer_logger() -> None: ...
 def debug_ring_buffer_logger_get_logs() -> list[str]: ...
 def debug_set_active(active: bool) -> None: ...
-def debug_set_color_mode(mode: DebugColorMode) -> None: ...
+def debug_set_color_mode(mode: _DebugColorModeValueType) -> None: ...
 def debug_set_color_mode_from_string(mode: str) -> None: ...
 def debug_set_colored(colored: bool) -> None: ...
-def debug_set_default_threshold(level: DebugLevel) -> None: ...
-def debug_set_threshold_for_name(name: str, level: DebugLevel) -> None: ...
+def debug_set_default_threshold(level: _DebugLevelValueType) -> None: ...
+def debug_set_threshold_for_name(name: str, level: _DebugLevelValueType) -> None: ...
 def debug_set_threshold_from_string(list: str, reset: bool) -> None: ...
 def debug_unset_threshold_for_name(name: str) -> None: ...
 def deinit() -> None: ...
@@ -369,23 +371,25 @@ def dynamic_type_register(plugin: Plugin, type: type[Any]) -> bool: ...
 error: Final = _gi_gst.error
 
 def error_get_message(domain: int, code: int) -> str: ...
-def event_type_get_flags(type: EventType) -> EventTypeFlags: ...
-def event_type_get_name(type: EventType) -> str: ...
-def event_type_to_quark(type: EventType) -> int: ...
-def event_type_to_sticky_ordering(type: EventType) -> int: ...
+def event_type_get_flags(type: _EventTypeValueType) -> EventTypeFlags: ...
+def event_type_get_name(type: _EventTypeValueType) -> str: ...
+def event_type_to_quark(type: _EventTypeValueType) -> int: ...
+def event_type_to_sticky_ordering(type: _EventTypeValueType) -> int: ...
 def filename_to_uri(filename: str) -> str | None: ...
 
 fixme: Final = _gi_gst.fixme
 
-def flow_get_name(ret: FlowReturn) -> str: ...
-def flow_to_quark(ret: FlowReturn) -> int: ...
+def flow_get_name(ret: _FlowReturnValueType) -> str: ...
+def flow_to_quark(ret: _FlowReturnValueType) -> int: ...
 def format_get_by_nick(nick: str) -> Format: ...
-def format_get_details(format: Format) -> FormatDefinition | None: ...
-def format_get_name(format: Format) -> str | None: ...
+def format_get_details(format: _FormatValueType) -> FormatDefinition | None: ...
+def format_get_name(format: _FormatValueType) -> str | None: ...
 def format_iterate_definitions() -> Iterator: ...
 def format_register(nick: str, description: str) -> Format: ...
-def format_to_quark(format: Format) -> int: ...
-def formats_contains(formats: Sequence[Format], format: Format) -> bool: ...
+def format_to_quark(format: _FormatValueType) -> int: ...
+def formats_contains(
+    formats: Sequence[_FormatValueType], format: _FormatValueType
+) -> bool: ...
 def get_main_executable_path() -> str | None: ...
 
 info: Final = _gi_gst.info
@@ -403,8 +407,8 @@ memdump: Final = _gi_gst.memdump
 def message_take(
     old_message: Message, new_message: Message | None = None
 ) -> tuple[bool, Message]: ...
-def message_type_get_name(type: MessageType) -> str: ...
-def message_type_to_quark(type: MessageType) -> int: ...
+def message_type_get_name(type: _MessageTypeValueType) -> str: ...
+def message_type_to_quark(type: _MessageTypeValueType) -> int: ...
 def meta_api_type_aggregate_params(
     api: type[Any], aggregated_params: Structure, params0: Structure, params1: Structure
 ) -> bool: ...
@@ -437,7 +441,7 @@ def mini_object_replace(
 def mini_object_take(
     olddata: MiniObject, newdata: MiniObject
 ) -> tuple[bool, MiniObject]: ...
-def pad_mode_get_name(mode: PadMode) -> str: ...
+def pad_mode_get_name(mode: _PadModeValueType) -> str: ...
 def param_spec_array(
     name: str,
     nick: str,
@@ -466,16 +470,16 @@ def parse_bin_from_description_full(
     bin_description: str,
     ghost_unlinked_pads: bool,
     context: ParseContext | None,
-    flags: ParseFlags,
+    flags: _ParseFlagsValueType,
 ) -> Element: ...
 def parse_error_quark() -> int: ...
 def parse_launch(pipeline_description: str) -> Element: ...
 def parse_launch_full(
-    pipeline_description: str, context: ParseContext | None, flags: ParseFlags
+    pipeline_description: str, context: ParseContext | None, flags: _ParseFlagsValueType
 ) -> Element: ...
 def parse_launchv(argv: Sequence[str]) -> Element: ...
 def parse_launchv_full(
-    argv: Sequence[str], context: ParseContext | None, flags: ParseFlags
+    argv: Sequence[str], context: ParseContext | None, flags: _ParseFlagsValueType
 ) -> Element: ...
 def plugin_error_quark() -> int: ...
 def preset_get_app_dir() -> str | None: ...
@@ -489,19 +493,19 @@ def protection_select_system(system_identifiers: Sequence[str]) -> str | None: .
 def query_take(
     old_query: Query | None = None, new_query: Query | None = None
 ) -> tuple[bool, Query | None]: ...
-def query_type_get_flags(type: QueryType) -> QueryTypeFlags: ...
-def query_type_get_name(type: QueryType) -> str: ...
-def query_type_to_quark(type: QueryType) -> int: ...
+def query_type_get_flags(type: _QueryTypeValueType) -> QueryTypeFlags: ...
+def query_type_get_name(type: _QueryTypeValueType) -> str: ...
+def query_type_to_quark(type: _QueryTypeValueType) -> int: ...
 def reference_timestamp_meta_api_get_type() -> type[Any]: ...
 def reference_timestamp_meta_get_info() -> MetaInfo: ...
 def resource_error_quark() -> int: ...
 def segtrap_is_enabled() -> bool: ...
 def segtrap_set_enabled(enabled: bool) -> None: ...
-def state_change_get_name(transition: StateChange) -> str: ...
-def state_change_return_get_name(state_ret: StateChangeReturn) -> str: ...
-def state_get_name(state: State) -> str: ...
+def state_change_get_name(transition: _StateChangeValueType) -> str: ...
+def state_change_return_get_name(state_ret: _StateChangeReturnValueType) -> str: ...
+def state_get_name(state: _StateValueType) -> str: ...
 def stream_error_quark() -> int: ...
-def stream_type_get_name(stype: StreamType) -> str: ...
+def stream_type_get_name(stype: _StreamTypeValueType) -> str: ...
 def structure_take(
     oldstr_ptr: Structure | None = None, newstr: Structure | None = None
 ) -> tuple[bool, Structure | None]: ...
@@ -520,7 +524,7 @@ def tag_list_take(
 ) -> tuple[bool, TagList]: ...
 def tag_merge_strings_with_comma(src: Any) -> Any: ...
 def tag_merge_use_first(src: Any) -> Any: ...
-def toc_entry_type_get_nick(type: TocEntryType) -> str: ...
+def toc_entry_type_get_nick(type: _TocEntryTypeValueType) -> str: ...
 
 trace: Final = _gi_gst.trace
 
@@ -538,7 +542,9 @@ def type_find_register(
     *data: Unpack[_DataTs],
 ) -> bool: ...
 def type_is_plugin_api(type: type[Any]) -> tuple[bool, PluginAPIFlags]: ...
-def type_mark_as_plugin_api(type: type[Any], flags: PluginAPIFlags) -> None: ...
+def type_mark_as_plugin_api(
+    type: type[Any], flags: _PluginAPIFlagsValueType
+) -> None: ...
 def update_registry() -> bool: ...
 def uri_construct(protocol: str, location: str) -> str: ...
 def uri_error_quark() -> int: ...
@@ -549,14 +555,14 @@ def uri_get_protocol(uri: str) -> str | None: ...
 def uri_has_protocol(uri: str, protocol: str) -> bool: ...
 def uri_is_valid(uri: str) -> bool: ...
 def uri_join_strings(base_uri: str, ref_uri: str) -> str | None: ...
-def uri_protocol_is_supported(type: URIType, protocol: str) -> bool: ...
+def uri_protocol_is_supported(type: _URITypeValueType, protocol: str) -> bool: ...
 def uri_protocol_is_valid(protocol: str) -> bool: ...
 def util_array_binary_search(
     array: int | Any | None,
     num_elements: int,
     element_size: int,
     search_func: Callable[[int | Any | None, int | Any | None, Unpack[_DataTs]], int],
-    mode: SearchMode,
+    mode: _SearchModeValueType,
     search_data: int | Any | None = None,
     *user_data: Unpack[_DataTs],
 ) -> int: ...
@@ -715,7 +721,7 @@ class Allocator(Object):
     @property
     def mem_type(self) -> str: ...
     @property
-    def mem_map(self) -> Callable[[Memory, int, MapFlags], int]: ...
+    def mem_map(self) -> Callable[[Memory, int, _MapFlagsValueType], int]: ...
     @property
     def mem_unmap(self) -> Callable[[Memory], None]: ...
     @property
@@ -877,7 +883,7 @@ class Bin(Element, ChildProxy):
     def do_element_removed(self, child: Element) -> None: ...
     def do_handle_message(self, message: Message) -> None: ...
     def do_remove_element(self, element: Element) -> bool: ...
-    def find_unlinked_pad(self, direction: PadDirection) -> Pad | None: ...
+    def find_unlinked_pad(self, direction: _PadDirectionValueType) -> Pad | None: ...
     def get_by_interface(self, iface: type[Any]) -> Element | None: ...
     def get_by_name(self, name: str) -> Element | None: ...
     def get_by_name_recurse_up(self, name: str) -> Element | None: ...
@@ -900,7 +906,7 @@ class Bin(Element, ChildProxy):
     def new(cls, name: str | None = None) -> Bin: ...
     def recalculate_latency(self) -> bool: ...
     def remove(self, element: Element) -> bool: ...
-    def set_suppressed_flags(self, flags: ElementFlags) -> None: ...
+    def set_suppressed_flags(self, flags: _ElementFlagsValueType) -> None: ...
     def sync_children_states(self) -> bool: ...
 
 class BinClass(_gi.Struct):
@@ -986,10 +992,10 @@ class Buffer(MiniObjectMixin, GObject.GBoxed):
     def append_region(self, buf2: Buffer, offset: int, size: int) -> Buffer: ...
     def copy_deep(self) -> Buffer | None: ...
     def copy_into(
-        self, src: Buffer, flags: BufferCopyFlags, offset: int, size: int
+        self, src: Buffer, flags: _BufferCopyFlagsValueType, offset: int, size: int
     ) -> bool: ...
     def copy_region(
-        self, flags: BufferCopyFlags, offset: int, size: int
+        self, flags: _BufferCopyFlagsValueType, offset: int, size: int
     ) -> Buffer | None: ...
     def extract(self, offset: int) -> tuple[int, bytes]: ...
     def extract_dup(self, offset: int, size: int) -> bytes: ...
@@ -1017,7 +1023,7 @@ class Buffer(MiniObjectMixin, GObject.GBoxed):
     def get_size(self) -> int: ...
     def get_sizes(self) -> tuple[int, int, int]: ...
     def get_sizes_range(self, idx: int, length: int) -> tuple[int, int, int]: ...
-    def has_flags(self, flags: BufferFlags) -> bool: ...
+    def has_flags(self, flags: _BufferFlagsValueType) -> bool: ...
     def insert_memory(self, idx: int, mem: Memory) -> None: ...
     def is_all_memory_writable(self) -> bool: ...
     def is_memory_range_writable(self, idx: int, length: int) -> bool: ...
@@ -1044,7 +1050,7 @@ class Buffer(MiniObjectMixin, GObject.GBoxed):
     @classmethod
     def new_wrapped_full(
         cls,
-        flags: MemoryFlags,
+        flags: _MemoryFlagsValueType,
         data: Sequence[int],
         maxsize: int,
         offset: int,
@@ -1062,10 +1068,10 @@ class Buffer(MiniObjectMixin, GObject.GBoxed):
     def replace_memory_range(self, idx: int, length: int, mem: Memory) -> None: ...
     def resize(self, offset: int, size: int) -> None: ...
     def resize_range(self, idx: int, length: int, offset: int, size: int) -> bool: ...
-    def set_flags(self, flags: BufferFlags) -> bool: ...
+    def set_flags(self, flags: _BufferFlagsValueType) -> bool: ...
     def set_size(self, size: int) -> None: ...
     def unmap(self, mapinfo: MapInfo) -> bool: ...
-    def unset_flags(self, flags: BufferFlags) -> bool: ...
+    def unset_flags(self, flags: _BufferFlagsValueType) -> bool: ...
 
 class BufferList(GObject.GBoxed):
     """
@@ -1319,9 +1325,9 @@ class Bus(Object):
     @classmethod
     def new(cls) -> Bus: ...
     def peek(self) -> Message | None: ...
-    def poll(self, events: MessageType, timeout: int) -> Message | None: ...
+    def poll(self, events: _MessageTypeValueType, timeout: int) -> Message | None: ...
     def pop(self) -> Message | None: ...
-    def pop_filtered(self, types: MessageType) -> Message | None: ...
+    def pop_filtered(self, types: _MessageTypeValueType) -> Message | None: ...
     def post(self, message: Message) -> bool: ...
     def remove_signal_watch(self) -> None: ...
     def remove_watch(self) -> bool: ...
@@ -1336,7 +1342,7 @@ class Bus(Object):
     ) -> BusSyncReply: ...
     def timed_pop(self, timeout: int) -> Message | None: ...
     def timed_pop_filtered(
-        self, timeout: int, types: MessageType
+        self, timeout: int, types: _MessageTypeValueType
     ) -> Message | None: ...
 
 class BusClass(_gi.Struct):
@@ -1423,7 +1429,9 @@ class Caps(MiniObjectMixin, GObject.GBoxed):
     def get_structure(self, index: int) -> Structure: ...
     def id_str_set_value(self, field: IdStr, value: Any) -> None: ...
     def intersect(self, caps2: Caps) -> Caps: ...
-    def intersect_full(self, caps2: Caps, mode: CapsIntersectMode) -> Caps: ...
+    def intersect_full(
+        self, caps2: Caps, mode: _CapsIntersectModeValueType
+    ) -> Caps: ...
     def is_always_compatible(self, caps2: Caps) -> bool: ...
     def is_any(self) -> bool: ...
     def is_empty(self) -> bool: ...
@@ -1460,7 +1468,7 @@ class Caps(MiniObjectMixin, GObject.GBoxed):
     def new_static_str_empty_simple(cls, media_type: str) -> Caps: ...
     def normalize(self) -> Caps: ...
     def remove_structure(self, idx: int) -> None: ...
-    def serialize(self, flags: SerializeFlags) -> str: ...
+    def serialize(self, flags: _SerializeFlagsValueType) -> str: ...
     def set_features(
         self, index: int, features: CapsFeatures | None = None
     ) -> None: ...
@@ -1803,9 +1811,9 @@ class ControlBinding(Object):
     @type_check_only
     class Props(Object.Props):
         @property
-        def name(self) -> str: ...
+        def name(self) -> str | None: ...
         @property
-        def object(self) -> Object: ...
+        def object(self) -> Object | None: ...
 
     @property
     def props(self) -> Props: ...
@@ -1820,7 +1828,11 @@ class ControlBinding(Object):
     @property
     def disabled(self) -> bool: ...
     def __init__(
-        self, *, name: str = ..., object: Object = ..., parent: Object = ...
+        self,
+        *,
+        name: str | None = ...,
+        object: Object | None = ...,
+        parent: Object = ...,
     ) -> None: ...
     def do_get_g_value_array(
         self, timestamp: int, interval: int, values: Sequence[Any]
@@ -2030,7 +2042,7 @@ class DebugCategory(_gi.Struct):
     def get_name(self) -> str: ...
     def get_threshold(self) -> DebugLevel: ...
     def reset_threshold(self) -> None: ...
-    def set_threshold(self, level: DebugLevel) -> None: ...
+    def set_threshold(self, level: _DebugLevelValueType) -> None: ...
 
 class DebugMessage(_gi.Struct):
     def get(self) -> str | None: ...
@@ -2091,10 +2103,10 @@ class Device(Object):
     def __init__(
         self,
         *,
-        caps: Caps = ...,
-        device_class: str = ...,
-        display_name: str = ...,
-        properties: Structure = ...,
+        caps: Caps | None = ...,
+        device_class: str | None = ...,
+        display_name: str | None = ...,
+        properties: Structure | None = ...,
         name: str | None = ...,
         parent: Object = ...,
     ) -> None: ...
@@ -2318,7 +2330,9 @@ class DeviceProviderFactory(PluginFeature):
     def has_classes(self, classes: str | None = None) -> bool: ...
     def has_classesv(self, classes: Sequence[str] | None = None) -> bool: ...
     @staticmethod
-    def list_get_device_providers(minrank: Rank) -> list[DeviceProviderFactory]: ...
+    def list_get_device_providers(
+        minrank: _RankValueType,
+    ) -> list[DeviceProviderFactory]: ...
 
 class DeviceProviderFactoryClass(_gi.Struct): ...
 class DeviceProviderPrivate(_gi.Struct): ...
@@ -2455,11 +2469,13 @@ class Element(Object):
         func: Callable[[Element, Unpack[_DataTs]], None],
         *user_data: Unpack[_DataTs],
     ) -> None: ...
-    def change_state(self, transition: StateChange) -> StateChangeReturn: ...
-    def continue_state(self, ret: StateChangeReturn) -> StateChangeReturn: ...
+    def change_state(self, transition: _StateChangeValueType) -> StateChangeReturn: ...
+    def continue_state(self, ret: _StateChangeReturnValueType) -> StateChangeReturn: ...
     def create_all_pads(self) -> None: ...
     def decorate_stream_id(self, stream_id: str) -> str: ...
-    def do_change_state(self, transition: StateChange) -> StateChangeReturn: ...
+    def do_change_state(
+        self, transition: _StateChangeValueType
+    ) -> StateChangeReturn: ...
     def do_get_state(self, timeout: int) -> tuple[StateChangeReturn, State, State]: ...
     def do_no_more_pads(self) -> None: ...
     def do_pad_added(self, pad: Pad) -> None: ...
@@ -2475,9 +2491,12 @@ class Element(Object):
     def do_set_bus(self, bus: Bus | None) -> None: ...
     def do_set_clock(self, clock: Clock | None) -> bool: ...
     def do_set_context(self, context: Context) -> None: ...
-    def do_set_state(self, state: State) -> StateChangeReturn: ...
+    def do_set_state(self, state: _StateValueType) -> StateChangeReturn: ...
     def do_state_changed(
-        self, oldstate: State, newstate: State, pending: State
+        self,
+        oldstate: _StateValueType,
+        newstate: _StateValueType,
+        pending: _StateValueType,
     ) -> None: ...
     def foreach_pad(
         self,
@@ -2540,16 +2559,16 @@ class Element(Object):
         srcpadname: str | None,
         dest: Element,
         destpadname: str | None,
-        flags: PadLinkCheck,
+        flags: _PadLinkCheckValueType,
     ) -> bool: ...
     def lost_state(self) -> None: ...
     @staticmethod
     def make_from_uri(
-        type: URIType, uri: str, elementname: str | None = None
+        type: _URITypeValueType, uri: str, elementname: str | None = None
     ) -> Element: ...
     def message_full(
         self,
-        type: MessageType,
+        type: _MessageTypeValueType,
         domain: int,
         code: int,
         text: str | None,
@@ -2560,7 +2579,7 @@ class Element(Object):
     ) -> None: ...
     def message_full_with_details(
         self,
-        type: MessageType,
+        type: _MessageTypeValueType,
         domain: int,
         code: int,
         text: str | None,
@@ -2575,10 +2594,10 @@ class Element(Object):
     def provide_clock(self) -> Clock | None: ...
     def query(self, query: Query) -> bool: ...
     def query_convert(
-        self, src_format: Format, src_val: int, dest_format: Format
+        self, src_format: _FormatValueType, src_val: int, dest_format: _FormatValueType
     ) -> tuple[bool, int]: ...
-    def query_duration(self, format: Format) -> tuple[bool, int]: ...
-    def query_position(self, format: Format) -> tuple[bool, int]: ...
+    def query_duration(self, format: _FormatValueType) -> tuple[bool, int]: ...
+    def query_position(self, format: _FormatValueType) -> tuple[bool, int]: ...
     @staticmethod
     def register(
         plugin: Plugin | None, name: str, rank: int, type: type[Any]
@@ -2593,15 +2612,15 @@ class Element(Object):
     def seek(
         self,
         rate: float,
-        format: Format,
-        flags: SeekFlags,
-        start_type: SeekType,
+        format: _FormatValueType,
+        flags: _SeekFlagsValueType,
+        start_type: _SeekTypeValueType,
         start: int,
-        stop_type: SeekType,
+        stop_type: _SeekTypeValueType,
         stop: int,
     ) -> bool: ...
     def seek_simple(
-        self, format: Format, seek_flags: SeekFlags, seek_pos: int
+        self, format: _FormatValueType, seek_flags: _SeekFlagsValueType, seek_pos: int
     ) -> bool: ...
     def send_event(self, event: Event) -> bool: ...
     def set_base_time(self, time: int) -> None: ...
@@ -2613,14 +2632,14 @@ class Element(Object):
         self, longname: str, classification: str, description: str, author: str
     ) -> None: ...
     def set_start_time(self, time: int) -> None: ...
-    def set_state(self, state: State) -> StateChangeReturn: ...
+    def set_state(self, state: _StateValueType) -> StateChangeReturn: ...
     def set_static_metadata(
         self, longname: str, classification: str, description: str, author: str
     ) -> None: ...
     @staticmethod
-    def state_change_return_get_name(state_ret: StateChangeReturn) -> str: ...
+    def state_change_return_get_name(state_ret: _StateChangeReturnValueType) -> str: ...
     @staticmethod
-    def state_get_name(state: State) -> str: ...
+    def state_get_name(state: _StateValueType) -> str: ...
     def sync_state_with_parent(self) -> bool: ...
     @staticmethod
     def type_set_skip_documentation(type: type[Any]) -> None: ...
@@ -2664,11 +2683,17 @@ class ElementClass(_gi.Struct):
         self,
     ) -> Callable[[Element, int], tuple[StateChangeReturn, State, State]]: ...
     @property
-    def set_state(self) -> Callable[[Element, State], StateChangeReturn]: ...
+    def set_state(self) -> Callable[[Element, _StateValueType], StateChangeReturn]: ...
     @property
-    def change_state(self) -> Callable[[Element, StateChange], StateChangeReturn]: ...
+    def change_state(
+        self,
+    ) -> Callable[[Element, _StateChangeValueType], StateChangeReturn]: ...
     @property
-    def state_changed(self) -> Callable[[Element, State, State, State], None]: ...
+    def state_changed(
+        self,
+    ) -> Callable[
+        [Element, _StateValueType, _StateValueType, _StateValueType], None
+    ]: ...
     @property
     def set_bus(self) -> Callable[[Element, Bus | None], None]: ...
     @property
@@ -2749,11 +2774,13 @@ class ElementFactory(PluginFeature):
     def list_filter(
         list: list[ElementFactory],
         caps: Caps,
-        direction: PadDirection,
+        direction: _PadDirectionValueType,
         subsetonly: bool,
     ) -> list[ElementFactory]: ...
     @staticmethod
-    def list_get_elements(type: int, minrank: Rank) -> list[ElementFactory]: ...
+    def list_get_elements(
+        type: int, minrank: _RankValueType
+    ) -> list[ElementFactory]: ...
     def list_is_type(self, type: int) -> bool: ...
     @staticmethod
     def make(factoryname: str, name: str | None = None) -> Element:
@@ -2818,12 +2845,12 @@ class Event(MiniObjectMixin, GObject.GBoxed):
     def make_writable(self) -> bool: ...
     @classmethod
     def new_buffer_size(
-        cls, format: Format, minsize: int, maxsize: int, async_: bool
+        cls, format: _FormatValueType, minsize: int, maxsize: int, async_: bool
     ) -> Event: ...
     @classmethod
     def new_caps(cls, caps: Caps) -> Event: ...
     @classmethod
-    def new_custom(cls, type: EventType, structure: Structure) -> Event: ...
+    def new_custom(cls, type: _EventTypeValueType, structure: Structure) -> Event: ...
     @classmethod
     def new_eos(cls) -> Event: ...
     @classmethod
@@ -2834,7 +2861,7 @@ class Event(MiniObjectMixin, GObject.GBoxed):
     def new_gap(cls, timestamp: int, duration: int) -> Event: ...
     @classmethod
     def new_instant_rate_change(
-        cls, rate_multiplier: float, new_flags: SegmentFlags
+        cls, rate_multiplier: float, new_flags: _SegmentFlagsValueType
     ) -> Event: ...
     @classmethod
     def new_instant_rate_sync_time(
@@ -2848,7 +2875,7 @@ class Event(MiniObjectMixin, GObject.GBoxed):
     def new_protection(cls, system_id: str, data: Buffer, origin: str) -> Event: ...
     @classmethod
     def new_qos(
-        cls, type: QOSType, proportion: float, diff: int, timestamp: int
+        cls, type: _QOSTypeValueType, proportion: float, diff: int, timestamp: int
     ) -> Event: ...
     @classmethod
     def new_reconfigure(cls) -> Event: ...
@@ -2856,24 +2883,29 @@ class Event(MiniObjectMixin, GObject.GBoxed):
     def new_seek(
         cls,
         rate: float,
-        format: Format,
-        flags: SeekFlags,
-        start_type: SeekType,
+        format: _FormatValueType,
+        flags: _SeekFlagsValueType,
+        start_type: _SeekTypeValueType,
         start: int,
-        stop_type: SeekType,
+        stop_type: _SeekTypeValueType,
         stop: int,
     ) -> Event: ...
     @classmethod
     def new_segment(cls, segment: Segment) -> Event: ...
     @classmethod
-    def new_segment_done(cls, format: Format, position: int) -> Event: ...
+    def new_segment_done(cls, format: _FormatValueType, position: int) -> Event: ...
     @classmethod
     def new_select_streams(cls, streams: list[str]) -> Event: ...
     @classmethod
     def new_sink_message(cls, name: str, msg: Message) -> Event: ...
     @classmethod
     def new_step(
-        cls, format: Format, amount: int, rate: float, flush: bool, intermediate: bool
+        cls,
+        format: _FormatValueType,
+        amount: int,
+        rate: float,
+        flush: bool,
+        intermediate: bool,
     ) -> Event: ...
     @classmethod
     def new_stream_collection(cls, collection: StreamCollection) -> Event: ...
@@ -2915,13 +2947,13 @@ class Event(MiniObjectMixin, GObject.GBoxed):
     def parse_tag(self) -> TagList: ...
     def parse_toc(self) -> tuple[Toc, bool]: ...
     def parse_toc_select(self) -> str: ...
-    def set_gap_flags(self, flags: GapFlags) -> None: ...
+    def set_gap_flags(self, flags: _GapFlagsValueType) -> None: ...
     def set_group_id(self, group_id: int) -> None: ...
     def set_running_time_offset(self, offset: int) -> None: ...
     def set_seek_trickmode_interval(self, interval: int) -> None: ...
     def set_seqnum(self, seqnum: int) -> None: ...
     def set_stream(self, stream: Stream) -> None: ...
-    def set_stream_flags(self, flags: StreamFlags) -> None: ...
+    def set_stream_flags(self, flags: _StreamFlagsValueType) -> None: ...
     def writable_structure(self) -> StructureContextManager: ...
 
 class FlagSet:
@@ -3031,21 +3063,21 @@ class GhostPad(ProxyPad):
     def __init__(
         self,
         *,
-        direction: PadDirection = ...,
+        direction: _PadDirectionValueType = ...,
         offset: int = ...,
-        template: PadTemplate = ...,
+        template: PadTemplate | None = ...,
         name: str | None = ...,
         parent: Object = ...,
     ) -> None: ...
     @staticmethod
     def activate_mode_default(
-        pad: Pad, parent: Object | None, mode: PadMode, active: bool
+        pad: Pad, parent: Object | None, mode: _PadModeValueType, active: bool
     ) -> bool: ...
     def construct(self) -> bool: ...
     def get_target(self) -> Pad | None: ...
     @staticmethod
     def internal_activate_mode_default(
-        pad: Pad, parent: Object | None, mode: PadMode, active: bool
+        pad: Pad, parent: Object | None, mode: _PadModeValueType, active: bool
     ) -> bool: ...
     @classmethod
     def new(cls, name: str | None, target: Pad) -> GhostPad: ...
@@ -3054,7 +3086,9 @@ class GhostPad(ProxyPad):
         cls, name: str | None, target: Pad, templ: PadTemplate
     ) -> GhostPad: ...
     @classmethod
-    def new_no_target(cls, name: str | None, dir: PadDirection) -> GhostPad: ...
+    def new_no_target(
+        cls, name: str | None, dir: _PadDirectionValueType
+    ) -> GhostPad: ...
     @classmethod
     def new_no_target_from_template(
         cls, name: str | None, templ: PadTemplate
@@ -3217,13 +3251,15 @@ class Memory(GObject.GBoxed):
     def is_span(self, mem2: Memory) -> tuple[bool, int]: ...
     def is_type(self, mem_type: str) -> bool: ...
     def is_writable(self) -> bool: ...
-    def make_mapped(self, flags: MapFlags) -> tuple[Memory | None, MapInfo]: ...
+    def make_mapped(
+        self, flags: _MapFlagsValueType
+    ) -> tuple[Memory | None, MapInfo]: ...
     def make_writable(self) -> Memory: ...
     def map(self, flags: MapFlags) -> MapInfo: ...
     @classmethod
     def new_wrapped(
         cls,
-        flags: MemoryFlags,
+        flags: _MemoryFlagsValueType,
         data: Sequence[int],
         maxsize: int,
         offset: int,
@@ -3327,7 +3363,7 @@ class Message(GObject.GBoxed):
     @classmethod
     def new_custom(
         cls,
-        type: MessageType,
+        type: _MessageTypeValueType,
         src: Object | None = None,
         structure: Structure | None = None,
     ) -> Message: ...
@@ -3387,7 +3423,7 @@ class Message(GObject.GBoxed):
     def new_new_clock(cls, src: Object | None, clock: Clock) -> Message: ...
     @classmethod
     def new_progress(
-        cls, src: Object | None, type: ProgressType, code: str, text: str
+        cls, src: Object | None, type: _ProgressTypeValueType, code: str, text: str
     ) -> Message: ...
     @classmethod
     def new_property_notify(
@@ -3412,20 +3448,26 @@ class Message(GObject.GBoxed):
         entry_struct: Structure | None = None,
     ) -> Message: ...
     @classmethod
-    def new_request_state(cls, src: Object | None, state: State) -> Message: ...
+    def new_request_state(
+        cls, src: Object | None, state: _StateValueType
+    ) -> Message: ...
     @classmethod
     def new_reset_time(cls, src: Object | None, running_time: int) -> Message: ...
     @classmethod
     def new_segment_done(
-        cls, src: Object | None, format: Format, position: int
+        cls, src: Object | None, format: _FormatValueType, position: int
     ) -> Message: ...
     @classmethod
     def new_segment_start(
-        cls, src: Object | None, format: Format, position: int
+        cls, src: Object | None, format: _FormatValueType, position: int
     ) -> Message: ...
     @classmethod
     def new_state_changed(
-        cls, src: Object | None, oldstate: State, newstate: State, pending: State
+        cls,
+        src: Object | None,
+        oldstate: _StateValueType,
+        newstate: _StateValueType,
+        pending: _StateValueType,
     ) -> Message: ...
     @classmethod
     def new_state_dirty(cls, src: Object | None = None) -> Message: ...
@@ -3433,7 +3475,7 @@ class Message(GObject.GBoxed):
     def new_step_done(
         cls,
         src: Object | None,
-        format: Format,
+        format: _FormatValueType,
         amount: int,
         rate: float,
         flush: bool,
@@ -3446,7 +3488,7 @@ class Message(GObject.GBoxed):
         cls,
         src: Object | None,
         active: bool,
-        format: Format,
+        format: _FormatValueType,
         amount: int,
         rate: float,
         flush: bool,
@@ -3460,7 +3502,7 @@ class Message(GObject.GBoxed):
     def new_stream_start(cls, src: Object | None = None) -> Message: ...
     @classmethod
     def new_stream_status(
-        cls, src: Object | None, type: StreamStatusType, owner: Element
+        cls, src: Object | None, type: _StreamStatusTypeValueType, owner: Element
     ) -> Message: ...
     @classmethod
     def new_streams_selected(
@@ -3468,7 +3510,11 @@ class Message(GObject.GBoxed):
     ) -> Message: ...
     @classmethod
     def new_structure_change(
-        cls, src: Object | None, type: StructureChangeType, owner: Element, busy: bool
+        cls,
+        src: Object | None,
+        type: _StructureChangeTypeValueType,
+        owner: Element,
+        busy: bool,
     ) -> Message: ...
     @classmethod
     def new_tag(cls, src: Object | None, tag_list: TagList) -> Message: ...
@@ -3531,11 +3577,17 @@ class Message(GObject.GBoxed):
     def parse_warning_details(self) -> Structure | None: ...
     def parse_warning_writable_details(self) -> Structure | None: ...
     def set_buffering_stats(
-        self, mode: BufferingMode, avg_in: int, avg_out: int, buffering_left: int
+        self,
+        mode: _BufferingModeValueType,
+        avg_in: int,
+        avg_out: int,
+        buffering_left: int,
     ) -> None: ...
     def set_details(self, details: Structure | None = None) -> None: ...
     def set_group_id(self, group_id: int) -> None: ...
-    def set_qos_stats(self, format: Format, processed: int, dropped: int) -> None: ...
+    def set_qos_stats(
+        self, format: _FormatValueType, processed: int, dropped: int
+    ) -> None: ...
     def set_qos_values(self, jitter: int, proportion: float, quality: int) -> None: ...
     def set_seqnum(self, seqnum: int) -> None: ...
     def set_stream_status_object(self, object: Any) -> None: ...
@@ -3689,7 +3741,7 @@ class MiniObject(GObject.GBoxed):
     def add_parent(self, parent: MiniObject) -> None: ...
     def get_qdata(self, quark: int) -> int: ...
     def is_writable(self) -> bool: ...
-    def lock(self, flags: LockFlags) -> bool: ...
+    def lock(self, flags: _LockFlagsValueType) -> bool: ...
     def remove_parent(self, parent: MiniObject) -> None: ...
     @staticmethod
     def replace(
@@ -3701,7 +3753,7 @@ class MiniObject(GObject.GBoxed):
     def steal_qdata(self, quark: int) -> int: ...
     @staticmethod
     def take(olddata: MiniObject, newdata: MiniObject) -> tuple[bool, MiniObject]: ...
-    def unlock(self, flags: LockFlags) -> None: ...
+    def unlock(self, flags: _LockFlagsValueType) -> None: ...
 
 class MiniObjectMixin:
     flags = ...  # FIXME: Constant is missing typing annotation
@@ -3743,7 +3795,10 @@ class Object(GObject.InitiallyUnowned):
     @type_check_only
     class Props(GObject.InitiallyUnowned.Props):
         name: str | None
-        parent: Object | None
+        @property
+        def parent(self) -> Object | None: ...
+        @parent.setter
+        def parent(self, value: Object) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -3870,11 +3925,11 @@ class Pad(Object):
     @type_check_only
     class Props(Object.Props):
         @property
-        def caps(self) -> Caps: ...
+        def caps(self) -> Caps | None: ...
         @property
         def direction(self) -> PadDirection: ...
         offset: int
-        template: PadTemplate
+        template: PadTemplate | None
 
     @property
     def props(self) -> Props: ...
@@ -3903,7 +3958,9 @@ class Pad(Object):
     @property
     def activatenotify(self) -> Callable[[Any | None], None]: ...
     @property
-    def activatemodefunc(self) -> Callable[[Pad, Object, PadMode, bool], bool]: ...
+    def activatemodefunc(
+        self,
+    ) -> Callable[[Pad, Object, _PadModeValueType, bool], bool]: ...
     @property
     def activatemodedata(self) -> int: ...
     @property
@@ -3973,16 +4030,16 @@ class Pad(Object):
     def __init__(
         self,
         *,
-        direction: PadDirection = ...,
+        direction: _PadDirectionValueType = ...,
         offset: int = ...,
-        template: PadTemplate = ...,
+        template: PadTemplate | None = ...,
         name: str | None = ...,
         parent: Object = ...,
     ) -> None: ...
-    def activate_mode(self, mode: PadMode, active: bool) -> bool: ...
+    def activate_mode(self, mode: _PadModeValueType, active: bool) -> bool: ...
     def add_probe(
         self,
-        mask: PadProbeType,
+        mask: _PadProbeTypeValueType,
         callback: Callable[[Pad, PadProbeInfo, Unpack[_DataTs]], PadProbeReturn],
         *user_data: Unpack[_DataTs],
     ) -> int: ...
@@ -4013,7 +4070,9 @@ class Pad(Object):
     def get_peer(self) -> Pad | None: ...
     def get_range(self, offset: int, size: int) -> tuple[FlowReturn, Buffer]: ...
     def get_single_internal_link(self) -> Pad | None: ...
-    def get_sticky_event(self, event_type: EventType, idx: int) -> Event | None: ...
+    def get_sticky_event(
+        self, event_type: _EventTypeValueType, idx: int
+    ) -> Event | None: ...
     def get_stream(self) -> Stream | None: ...
     def get_stream_id(self) -> str | None: ...
     def get_task_state(self) -> TaskState: ...
@@ -4027,15 +4086,19 @@ class Pad(Object):
         self, parent: Object | None = None
     ) -> Iterator | None: ...
     def link(self, pad: Pad) -> PadLinkReturn: ...
-    def link_full(self, sinkpad: Pad, flags: PadLinkCheck) -> PadLinkReturn: ...
+    def link_full(
+        self, sinkpad: Pad, flags: _PadLinkCheckValueType
+    ) -> PadLinkReturn: ...
     @staticmethod
-    def link_get_name(ret: PadLinkReturn) -> str: ...
+    def link_get_name(ret: _PadLinkReturnValueType) -> str: ...
     def link_maybe_ghosting(self, sink: Pad) -> bool: ...
-    def link_maybe_ghosting_full(self, sink: Pad, flags: PadLinkCheck) -> bool: ...
+    def link_maybe_ghosting_full(
+        self, sink: Pad, flags: _PadLinkCheckValueType
+    ) -> bool: ...
     def mark_reconfigure(self) -> None: ...
     def needs_reconfigure(self) -> bool: ...
     @classmethod
-    def new(cls, name: str | None, direction: PadDirection) -> Pad: ...
+    def new(cls, name: str | None, direction: _PadDirectionValueType) -> Pad: ...
     @classmethod
     def new_from_static_template(cls, templ: StaticPadTemplate, name: str) -> Pad: ...
     @classmethod
@@ -4045,10 +4108,10 @@ class Pad(Object):
     def peer_query_accept_caps(self, caps: Caps) -> bool: ...
     def peer_query_caps(self, filter: Caps | None = None) -> Caps: ...
     def peer_query_convert(
-        self, src_format: Format, src_val: int, dest_format: Format
+        self, src_format: _FormatValueType, src_val: int, dest_format: _FormatValueType
     ) -> tuple[bool, int]: ...
-    def peer_query_duration(self, format: Format) -> tuple[bool, int]: ...
-    def peer_query_position(self, format: Format) -> tuple[bool, int]: ...
+    def peer_query_duration(self, format: _FormatValueType) -> tuple[bool, int]: ...
+    def peer_query_position(self, format: _FormatValueType) -> tuple[bool, int]: ...
     def proxy_query_accept_caps(self, query: Query) -> bool: ...
     def proxy_query_caps(self, query: Query) -> bool: ...
     def pull_range(self, offset: int, size: int) -> tuple[FlowReturn, Buffer]: ...
@@ -4061,11 +4124,11 @@ class Pad(Object):
         self, filter=None
     ): ...  # FIXME: Override is missing typing annotation
     def query_convert(
-        self, src_format: Format, src_val: int, dest_format: Format
+        self, src_format: _FormatValueType, src_val: int, dest_format: _FormatValueType
     ) -> tuple[bool, int]: ...
     def query_default(self, parent: Object | None, query: Query) -> bool: ...
-    def query_duration(self, format: Format) -> tuple[bool, int]: ...
-    def query_position(self, format: Format) -> tuple[bool, int]: ...
+    def query_duration(self, format: _FormatValueType) -> tuple[bool, int]: ...
+    def query_position(self, format: _FormatValueType) -> tuple[bool, int]: ...
     def remove_probe(self, id: int) -> None: ...
     def send_event(self, event: Event) -> bool: ...
     def set_activate_function_full(
@@ -4073,7 +4136,7 @@ class Pad(Object):
     ) -> None: ...
     def set_activatemode_function_full(
         self,
-        activatemode: Callable[[Pad, Object, PadMode, bool], bool],
+        activatemode: Callable[[Pad, Object, _PadModeValueType, bool], bool],
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_active(self, active: bool) -> bool: ...
@@ -4184,7 +4247,7 @@ class PadProbeInfo(_gi.Struct):
     def set_buffer(self, buffer: Buffer | None = None) -> None: ...
     def set_buffer_list(self, list: BufferList | None = None) -> None: ...
     def set_event(self, event: Event | None = None) -> None: ...
-    def set_flow_return(self, flow_ret: FlowReturn) -> None: ...
+    def set_flow_return(self, flow_ret: _FlowReturnValueType) -> None: ...
     def set_object(self, obj: MiniObject | None) -> None: ...
     def writable_object(self) -> PadProbeInfoObjectContextManager:
         """
@@ -4249,7 +4312,7 @@ class PadTemplate(Object):
         @property
         def gtype(self) -> type[Any]: ...
         @property
-        def name_template(self) -> str: ...
+        def name_template(self) -> str | None: ...
         @property
         def presence(self) -> PadPresence: ...
 
@@ -4268,11 +4331,11 @@ class PadTemplate(Object):
     def __init__(
         self,
         *,
-        caps: Caps = ...,
-        direction: PadDirection = ...,
+        caps: Caps | None = ...,
+        direction: _PadDirectionValueType = ...,
         gtype: type[Any] = ...,
-        name_template: str = ...,
-        presence: PadPresence = ...,
+        name_template: str | None = ...,
+        presence: _PadPresenceValueType = ...,
         name: str | None = ...,
         parent: Object = ...,
     ) -> None: ...
@@ -4283,8 +4346,8 @@ class PadTemplate(Object):
     def new(
         cls,
         name_template: str,
-        direction: PadDirection,
-        presence: PadPresence,
+        direction: _PadDirectionValueType,
+        presence: _PadPresenceValueType,
         caps: Caps,
     ) -> PadTemplate | None: ...
     @classmethod
@@ -4295,8 +4358,8 @@ class PadTemplate(Object):
     def new_with_gtype(
         cls,
         name_template: str,
-        direction: PadDirection,
-        presence: PadPresence,
+        direction: _PadDirectionValueType,
+        presence: _PadPresenceValueType,
         caps: Caps,
         pad_type: type[Any],
     ) -> PadTemplate | None: ...
@@ -4534,14 +4597,14 @@ class Plugin(Object):
         env_vars: Sequence[str] | None,
         paths: Sequence[str] | None,
         names: Sequence[str] | None,
-        flags: PluginDependencyFlags,
+        flags: _PluginDependencyFlagsValueType,
     ) -> None: ...
     def add_dependency_simple(
         self,
         env_vars: str | None,
         paths: str | None,
         names: str | None,
-        flags: PluginDependencyFlags,
+        flags: _PluginDependencyFlagsValueType,
     ) -> None: ...
     def add_status_error(self, message: str) -> None: ...
     def add_status_info(self, message: str) -> None: ...
@@ -4827,9 +4890,9 @@ class ProxyPad(Pad):
     def __init__(
         self,
         *,
-        direction: PadDirection = ...,
+        direction: _PadDirectionValueType = ...,
         offset: int = ...,
-        template: PadTemplate = ...,
+        template: PadTemplate | None = ...,
         name: str | None = ...,
         parent: Object = ...,
     ) -> None: ...
@@ -4903,7 +4966,7 @@ class Query(MiniObjectMixin, GObject.GBoxed):
         self, pool: BufferPool | None, size: int, min_buffers: int, max_buffers: int
     ) -> None: ...
     def add_buffering_range(self, start: int, stop: int) -> bool: ...
-    def add_scheduling_mode(self, mode: PadMode) -> None: ...
+    def add_scheduling_mode(self, mode: _PadModeValueType) -> None: ...
     def find_allocation_meta(self, api: type[Any]) -> tuple[bool, int]: ...
     def get_n_allocation_metas(self) -> int: ...
     def get_n_allocation_params(self) -> int: ...
@@ -4911,9 +4974,9 @@ class Query(MiniObjectMixin, GObject.GBoxed):
     def get_n_buffering_ranges(self) -> int: ...
     def get_n_scheduling_modes(self) -> int: ...
     def get_structure(self) -> Structure | None: ...
-    def has_scheduling_mode(self, mode: PadMode) -> bool: ...
+    def has_scheduling_mode(self, mode: _PadModeValueType) -> bool: ...
     def has_scheduling_mode_with_flags(
-        self, mode: PadMode, flags: SchedulingFlags
+        self, mode: _PadModeValueType, flags: _SchedulingFlagsValueType
     ) -> bool: ...
     def is_writable(self) -> bool: ...
     def make_writable(self) -> bool: ...
@@ -4924,35 +4987,35 @@ class Query(MiniObjectMixin, GObject.GBoxed):
     @classmethod
     def new_bitrate(cls) -> Query: ...
     @classmethod
-    def new_buffering(cls, format: Format) -> Query: ...
+    def new_buffering(cls, format: _FormatValueType) -> Query: ...
     @classmethod
     def new_caps(cls, filter: Caps) -> Query: ...
     @classmethod
     def new_context(cls, context_type: str) -> Query: ...
     @classmethod
     def new_convert(
-        cls, src_format: Format, value: int, dest_format: Format
+        cls, src_format: _FormatValueType, value: int, dest_format: _FormatValueType
     ) -> Query: ...
     @classmethod
     def new_custom(
-        cls, type: QueryType, structure: Structure | None = None
+        cls, type: _QueryTypeValueType, structure: Structure | None = None
     ) -> Query: ...
     @classmethod
     def new_drain(cls) -> Query: ...
     @classmethod
-    def new_duration(cls, format: Format) -> Query: ...
+    def new_duration(cls, format: _FormatValueType) -> Query: ...
     @classmethod
     def new_formats(cls) -> Query: ...
     @classmethod
     def new_latency(cls) -> Query: ...
     @classmethod
-    def new_position(cls, format: Format) -> Query: ...
+    def new_position(cls, format: _FormatValueType) -> Query: ...
     @classmethod
     def new_scheduling(cls) -> Query: ...
     @classmethod
-    def new_seeking(cls, format: Format) -> Query: ...
+    def new_seeking(cls, format: _FormatValueType) -> Query: ...
     @classmethod
-    def new_segment(cls, format: Format) -> Query: ...
+    def new_segment(cls, format: _FormatValueType) -> Query: ...
     @classmethod
     def new_selectable(cls) -> Query: ...
     @classmethod
@@ -4998,18 +5061,26 @@ class Query(MiniObjectMixin, GObject.GBoxed):
     def set_bitrate(self, nominal_bitrate: int) -> None: ...
     def set_buffering_percent(self, busy: bool, percent: int) -> None: ...
     def set_buffering_range(
-        self, format: Format, start: int, stop: int, estimated_total: int
+        self, format: _FormatValueType, start: int, stop: int, estimated_total: int
     ) -> None: ...
     def set_buffering_stats(
-        self, mode: BufferingMode, avg_in: int, avg_out: int, buffering_left: int
+        self,
+        mode: _BufferingModeValueType,
+        avg_in: int,
+        avg_out: int,
+        buffering_left: int,
     ) -> None: ...
     def set_caps_result(self, caps: Caps | None = None) -> None: ...
     def set_context(self, context: Context | None = None) -> None: ...
     def set_convert(
-        self, src_format: Format, src_value: int, dest_format: Format, dest_value: int
+        self,
+        src_format: _FormatValueType,
+        src_value: int,
+        dest_format: _FormatValueType,
+        dest_value: int,
     ) -> None: ...
-    def set_duration(self, format: Format, duration: int) -> None: ...
-    def set_formatsv(self, formats: Sequence[Format]) -> None: ...
+    def set_duration(self, format: _FormatValueType, duration: int) -> None: ...
+    def set_formatsv(self, formats: Sequence[_FormatValueType]) -> None: ...
     def set_latency(self, live: bool, min_latency: int, max_latency: int) -> None: ...
     def set_nth_allocation_param(
         self,
@@ -5025,15 +5096,19 @@ class Query(MiniObjectMixin, GObject.GBoxed):
         min_buffers: int,
         max_buffers: int,
     ) -> None: ...
-    def set_position(self, format: Format, cur: int) -> None: ...
+    def set_position(self, format: _FormatValueType, cur: int) -> None: ...
     def set_scheduling(
-        self, flags: SchedulingFlags, minsize: int, maxsize: int, align: int
+        self, flags: _SchedulingFlagsValueType, minsize: int, maxsize: int, align: int
     ) -> None: ...
     def set_seeking(
-        self, format: Format, seekable: bool, segment_start: int, segment_end: int
+        self,
+        format: _FormatValueType,
+        seekable: bool,
+        segment_start: int,
+        segment_end: int,
     ) -> None: ...
     def set_segment(
-        self, rate: float, format: Format, start_value: int, stop_value: int
+        self, rate: float, format: _FormatValueType, start_value: int, stop_value: int
     ) -> None: ...
     def set_selectable(self, selectable: bool) -> None: ...
     def set_uri(self, uri: str | None = None) -> None: ...
@@ -5199,41 +5274,49 @@ class Segment(GObject.GBoxed):
     position: int
     duration: int
     def __init__(self) -> None: ...
-    def clip(self, format: Format, start: int, stop: int) -> tuple[bool, int, int]: ...
+    def clip(
+        self, format: _FormatValueType, start: int, stop: int
+    ) -> tuple[bool, int, int]: ...
     def copy(self) -> Segment: ...
     def copy_into(self, dest: Segment) -> None: ...
     def do_seek(
         self,
         rate: float,
-        format: Format,
-        flags: SeekFlags,
-        start_type: SeekType,
+        format: _FormatValueType,
+        flags: _SeekFlagsValueType,
+        start_type: _SeekTypeValueType,
         start: int,
-        stop_type: SeekType,
+        stop_type: _SeekTypeValueType,
         stop: int,
     ) -> tuple[bool, bool]: ...
     def free(self) -> None: ...
-    def init(self, format: Format) -> None: ...
+    def init(self, format: _FormatValueType) -> None: ...
     def is_equal(self, s1: Segment) -> bool: ...
     @classmethod
     def new(cls) -> Segment: ...
-    def offset_running_time(self, format: Format, offset: int) -> bool: ...
-    def position_from_running_time(self, format: Format, running_time: int) -> int: ...
+    def offset_running_time(self, format: _FormatValueType, offset: int) -> bool: ...
+    def position_from_running_time(
+        self, format: _FormatValueType, running_time: int
+    ) -> int: ...
     def position_from_running_time_full(
-        self, format: Format, running_time: int
+        self, format: _FormatValueType, running_time: int
     ) -> tuple[int, int]: ...
-    def position_from_stream_time(self, format: Format, stream_time: int) -> int: ...
+    def position_from_stream_time(
+        self, format: _FormatValueType, stream_time: int
+    ) -> int: ...
     def position_from_stream_time_full(
-        self, format: Format, stream_time: int
+        self, format: _FormatValueType, stream_time: int
     ) -> tuple[int, int]: ...
-    def set_running_time(self, format: Format, running_time: int) -> bool: ...
-    def to_position(self, format: Format, running_time: int) -> int: ...
-    def to_running_time(self, format: Format, position: int) -> int: ...
+    def set_running_time(self, format: _FormatValueType, running_time: int) -> bool: ...
+    def to_position(self, format: _FormatValueType, running_time: int) -> int: ...
+    def to_running_time(self, format: _FormatValueType, position: int) -> int: ...
     def to_running_time_full(
-        self, format: Format, position: int
+        self, format: _FormatValueType, position: int
     ) -> tuple[int, int]: ...
-    def to_stream_time(self, format: Format, position: int) -> int: ...
-    def to_stream_time_full(self, format: Format, position: int) -> tuple[int, int]: ...
+    def to_stream_time(self, format: _FormatValueType, position: int) -> int: ...
+    def to_stream_time_full(
+        self, format: _FormatValueType, position: int
+    ) -> tuple[int, int]: ...
 
 class SharedTaskPool(TaskPool):
     """
@@ -5349,10 +5432,16 @@ class Stream(Object):
     @type_check_only
     class Props(Object.Props):
         caps: Caps | None
-        stream_flags: StreamFlags
+        @property
+        def stream_flags(self) -> StreamFlags: ...
+        @stream_flags.setter
+        def stream_flags(self, value: _StreamFlagsValueType) -> None: ...
         @property
         def stream_id(self) -> str | None: ...
-        stream_type: StreamType
+        @property
+        def stream_type(self) -> StreamType: ...
+        @stream_type.setter
+        def stream_type(self, value: _StreamTypeValueType) -> None: ...
         tags: TagList | None
 
     @property
@@ -5367,9 +5456,9 @@ class Stream(Object):
         self,
         *,
         caps: Caps | None = ...,
-        stream_flags: StreamFlags = ...,
-        stream_id: str = ...,
-        stream_type: StreamType = ...,
+        stream_flags: _StreamFlagsValueType = ...,
+        stream_id: str | None = ...,
+        stream_type: _StreamTypeValueType = ...,
         tags: TagList | None = ...,
         name: str | None = ...,
         parent: Object = ...,
@@ -5384,12 +5473,12 @@ class Stream(Object):
         cls,
         stream_id: str | None,
         caps: Caps | None,
-        type: StreamType,
-        flags: StreamFlags,
+        type: _StreamTypeValueType,
+        flags: _StreamFlagsValueType,
     ) -> Stream: ...
     def set_caps(self, caps: Caps | None = None) -> None: ...
-    def set_stream_flags(self, flags: StreamFlags) -> None: ...
-    def set_stream_type(self, stream_type: StreamType) -> None: ...
+    def set_stream_flags(self, flags: _StreamFlagsValueType) -> None: ...
+    def set_stream_type(self, stream_type: _StreamTypeValueType) -> None: ...
     def set_tags(self, tags: TagList | None = None) -> None: ...
 
 class StreamClass(_gi.Struct):
@@ -5446,7 +5535,11 @@ class StreamCollection(Object):
     @property
     def priv(self) -> StreamCollectionPrivate: ...
     def __init__(
-        self, *, upstream_id: str = ..., name: str | None = ..., parent: Object = ...
+        self,
+        *,
+        upstream_id: str | None = ...,
+        name: str | None = ...,
+        parent: Object = ...,
     ) -> None: ...
     def add_stream(self, stream: Stream) -> bool: ...
     def do_stream_notify(self, stream: Stream, pspec: GObject.ParamSpec) -> None: ...
@@ -5605,8 +5698,8 @@ class Structure(GObject.GBoxed):
     def nth_field_name(self, index: int) -> str: ...
     def remove_all_fields(self) -> None: ...
     def remove_field(self, fieldname: str) -> None: ...
-    def serialize(self, flags: SerializeFlags) -> str: ...
-    def serialize_full(self, flags: SerializeFlags) -> str | None: ...
+    def serialize(self, flags: _SerializeFlagsValueType) -> str: ...
+    def serialize_full(self, flags: _SerializeFlagsValueType) -> str | None: ...
     def set_array(self, fieldname: str, array: GObject.ValueArray) -> None: ...
     def set_list(self, fieldname: str, array: GObject.ValueArray) -> None: ...
     def set_name(self, name: str) -> None: ...
@@ -5671,7 +5764,10 @@ class SystemClock(Clock):
     """
     @type_check_only
     class Props(Clock.Props):
-        clock_type: ClockType
+        @property
+        def clock_type(self) -> ClockType: ...
+        @clock_type.setter
+        def clock_type(self, value: _ClockTypeValueType) -> None: ...
 
     @property
     def props(self) -> Props: ...
@@ -5682,7 +5778,7 @@ class SystemClock(Clock):
     def __init__(
         self,
         *,
-        clock_type: ClockType = ...,
+        clock_type: _ClockTypeValueType = ...,
         timeout: int = ...,
         window_size: int = ...,
         window_threshold: int = ...,
@@ -5723,7 +5819,7 @@ class TagList(GObject.GBoxed):
     def __getitem__(self, index: int) -> Any: ...
     def __len__(self) -> int: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
-    def add_value(self, mode: TagMergeMode, tag: str, value: Any) -> None: ...
+    def add_value(self, mode: _TagMergeModeValueType, tag: str, value: Any) -> None: ...
     def copy(self) -> TagList: ...
     @staticmethod
     def copy_value(list: TagList, tag: str) -> tuple[bool, Any]: ...
@@ -5760,13 +5856,15 @@ class TagList(GObject.GBoxed):
     def get_uint64_index(self, tag: str, index: int) -> tuple[bool, int]: ...
     def get_uint_index(self, tag: str, index: int) -> tuple[bool, int]: ...
     def get_value_index(self, tag: str, index: int) -> Any | None: ...
-    def insert(self, from_: TagList, mode: TagMergeMode) -> None: ...
+    def insert(self, from_: TagList, mode: _TagMergeModeValueType) -> None: ...
     def is_empty(self) -> bool: ...
     def is_equal(self, list2: TagList) -> bool: ...
     def is_writable(self) -> bool: ...
     def keys(self) -> Iterable[str]: ...
     def make_writable(self) -> TagList: ...
-    def merge(self, list2: TagList | None, mode: TagMergeMode) -> TagList | None: ...
+    def merge(
+        self, list2: TagList | None, mode: _TagMergeModeValueType
+    ) -> TagList | None: ...
     def n_tags(self) -> int: ...
     @classmethod
     def new_empty(cls) -> TagList: ...
@@ -5779,7 +5877,7 @@ class TagList(GObject.GBoxed):
     def replace(
         old_taglist: TagList | None = None, new_taglist: TagList | None = None
     ) -> tuple[bool, TagList | None]: ...
-    def set_scope(self, scope: TagScope) -> None: ...
+    def set_scope(self, scope: _TagScopeValueType) -> None: ...
     @staticmethod
     def take(
         old_taglist: TagList, new_taglist: TagList | None = None
@@ -5793,12 +5891,14 @@ class TagSetter(GObject.GInterface, Protocol):
     Signals from GObject:
       notify (GParam)
     """
-    def add_tag_value(self, mode: TagMergeMode, tag: str, value: Any) -> None: ...
+    def add_tag_value(
+        self, mode: _TagMergeModeValueType, tag: str, value: Any
+    ) -> None: ...
     def get_tag_list(self) -> TagList | None: ...
     def get_tag_merge_mode(self) -> TagMergeMode: ...
-    def merge_tags(self, list: TagList, mode: TagMergeMode) -> None: ...
+    def merge_tags(self, list: TagList, mode: _TagMergeModeValueType) -> None: ...
     def reset_tags(self) -> None: ...
-    def set_tag_merge_mode(self, mode: TagMergeMode) -> None: ...
+    def set_tag_merge_mode(self, mode: _TagMergeModeValueType) -> None: ...
 
 class TagSetterInterface(_gi.Struct):
     """
@@ -5878,7 +5978,7 @@ class Task(Object):
     ) -> None: ...
     def set_lock(self, mutex: GLib.RecMutex) -> None: ...
     def set_pool(self, pool: TaskPool) -> None: ...
-    def set_state(self, state: TaskState) -> bool: ...
+    def set_state(self, state: _TaskStateValueType) -> bool: ...
     def start(self) -> bool: ...
     def stop(self) -> bool: ...
 
@@ -5985,16 +6085,18 @@ class Toc(GObject.GBoxed):
 
         new(scope:Gst.TocScope) -> Gst.Toc
     """
-    def __init__(self, scope: TocScope) -> None: ...
+    def __init__(self, scope: _TocScopeValueType) -> None: ...
     def append_entry(self, entry: TocEntry) -> None: ...
     def dump(self) -> None: ...
     def find_entry(self, uid: str) -> TocEntry | None: ...
     def get_entries(self) -> list[TocEntry]: ...
     def get_scope(self) -> TocScope: ...
     def get_tags(self) -> TagList | None: ...
-    def merge_tags(self, tags: TagList | None, mode: TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: TagList | None, mode: _TagMergeModeValueType
+    ) -> None: ...
     @classmethod
-    def new(cls, scope: TocScope) -> Toc: ...
+    def new(cls, scope: _TocScopeValueType) -> Toc: ...
     def set_tags(self, tags: TagList | None = None) -> None: ...
 
 class TocEntry(GObject.GBoxed):
@@ -6005,7 +6107,7 @@ class TocEntry(GObject.GBoxed):
 
         new(type:Gst.TocEntryType, uid:str) -> Gst.TocEntry
     """
-    def __init__(self, type: TocEntryType, uid: str) -> None: ...
+    def __init__(self, type: _TocEntryTypeValueType, uid: str) -> None: ...
     def append_sub_entry(self, subentry: TocEntry) -> None: ...
     def get_entry_type(self) -> TocEntryType: ...
     def get_loop(self) -> tuple[bool, TocLoopType, int]: ...
@@ -6017,10 +6119,12 @@ class TocEntry(GObject.GBoxed):
     def get_uid(self) -> str: ...
     def is_alternative(self) -> bool: ...
     def is_sequence(self) -> bool: ...
-    def merge_tags(self, tags: TagList | None, mode: TagMergeMode) -> None: ...
+    def merge_tags(
+        self, tags: TagList | None, mode: _TagMergeModeValueType
+    ) -> None: ...
     @classmethod
-    def new(cls, type: TocEntryType, uid: str) -> TocEntry: ...
-    def set_loop(self, loop_type: TocLoopType, repeat_count: int) -> None: ...
+    def new(cls, type: _TocEntryTypeValueType, uid: str) -> TocEntry: ...
+    def set_loop(self, loop_type: _TocLoopTypeValueType, repeat_count: int) -> None: ...
     def set_start_stop_times(self, start: int, stop: int) -> None: ...
     def set_tags(self, tags: TagList | None = None) -> None: ...
 
@@ -6074,7 +6178,7 @@ class Tracer(Object):
     """
     @type_check_only
     class Props(Object.Props):
-        params: str
+        params: str | None
 
     @property
     def props(self) -> Props: ...
@@ -6083,7 +6187,7 @@ class Tracer(Object):
     @property
     def priv(self) -> TracerPrivate: ...
     def __init__(
-        self, *, params: str = ..., name: str | None = ..., parent: Object = ...
+        self, *, params: str | None = ..., name: str | None = ..., parent: Object = ...
     ) -> None: ...
     @staticmethod
     def register(plugin: Plugin | None, name: str, type: type[Any]) -> bool: ...
@@ -6324,7 +6428,7 @@ class Uri(GObject.GBoxed):
     ) -> Uri: ...
     def normalize(self) -> bool: ...
     @staticmethod
-    def protocol_is_supported(type: URIType, protocol: str) -> bool: ...
+    def protocol_is_supported(type: _URITypeValueType, protocol: str) -> bool: ...
     @staticmethod
     def protocol_is_valid(protocol: str) -> bool: ...
     def query_has_key(self, query_key: str) -> bool: ...
@@ -6449,10 +6553,34 @@ class AllocatorFlags(GObject.GFlags):
     LAST = 1048576
     NO_COPY = 32
 
+_AllocatorFlagsLiteralType: TypeAlias = Literal[
+    "GST_ALLOCATOR_FLAG_CUSTOM_ALLOC",
+    "GST_ALLOCATOR_FLAG_LAST",
+    "GST_ALLOCATOR_FLAG_NO_COPY",
+    "custom-alloc",
+    "last",
+    "no-copy",
+]
+_AllocatorFlagsValueType: TypeAlias = (
+    AllocatorFlags | _AllocatorFlagsLiteralType | tuple[_AllocatorFlagsLiteralType, ...]
+)
+
 class BinFlags(GObject.GFlags):
     LAST = 524288
     NO_RESYNC = 16384
     STREAMS_AWARE = 32768
+
+_BinFlagsLiteralType: TypeAlias = Literal[
+    "GST_BIN_FLAG_LAST",
+    "GST_BIN_FLAG_NO_RESYNC",
+    "GST_BIN_FLAG_STREAMS_AWARE",
+    "last",
+    "no-resync",
+    "streams-aware",
+]
+_BinFlagsValueType: TypeAlias = (
+    BinFlags | _BinFlagsLiteralType | tuple[_BinFlagsLiteralType, ...]
+)
 
 class BufferCopyFlags(GObject.GFlags):
     DEEP = 32
@@ -6462,6 +6590,28 @@ class BufferCopyFlags(GObject.GFlags):
     META = 4
     NONE = 0
     TIMESTAMPS = 2
+
+_BufferCopyFlagsLiteralType: TypeAlias = Literal[
+    "GST_BUFFER_COPY_DEEP",
+    "GST_BUFFER_COPY_FLAGS",
+    "GST_BUFFER_COPY_MEMORY",
+    "GST_BUFFER_COPY_MERGE",
+    "GST_BUFFER_COPY_META",
+    "GST_BUFFER_COPY_NONE",
+    "GST_BUFFER_COPY_TIMESTAMPS",
+    "deep",
+    "flags",
+    "memory",
+    "merge",
+    "meta",
+    "none",
+    "timestamps",
+]
+_BufferCopyFlagsValueType: TypeAlias = (
+    BufferCopyFlags
+    | _BufferCopyFlagsLiteralType
+    | tuple[_BufferCopyFlagsLiteralType, ...]
+)
 
 class BufferFlags(GObject.GFlags):
     CORRUPTED = 256
@@ -6479,6 +6629,40 @@ class BufferFlags(GObject.GFlags):
     SYNC_AFTER = 32768
     TAG_MEMORY = 16384
 
+_BufferFlagsLiteralType: TypeAlias = Literal[
+    "GST_BUFFER_FLAG_CORRUPTED",
+    "GST_BUFFER_FLAG_DECODE_ONLY",
+    "GST_BUFFER_FLAG_DELTA_UNIT",
+    "GST_BUFFER_FLAG_DISCONT",
+    "GST_BUFFER_FLAG_DROPPABLE",
+    "GST_BUFFER_FLAG_GAP",
+    "GST_BUFFER_FLAG_HEADER",
+    "GST_BUFFER_FLAG_LAST",
+    "GST_BUFFER_FLAG_LIVE",
+    "GST_BUFFER_FLAG_MARKER",
+    "GST_BUFFER_FLAG_NON_DROPPABLE",
+    "GST_BUFFER_FLAG_RESYNC",
+    "GST_BUFFER_FLAG_SYNC_AFTER",
+    "GST_BUFFER_FLAG_TAG_MEMORY",
+    "corrupted",
+    "decode-only",
+    "delta-unit",
+    "discont",
+    "droppable",
+    "gap",
+    "header",
+    "last",
+    "live",
+    "marker",
+    "non-droppable",
+    "resync",
+    "sync-after",
+    "tag-memory",
+]
+_BufferFlagsValueType: TypeAlias = (
+    BufferFlags | _BufferFlagsLiteralType | tuple[_BufferFlagsLiteralType, ...]
+)
+
 class BufferPoolAcquireFlags(GObject.GFlags):
     DISCONT = 4
     DONTWAIT = 2
@@ -6486,12 +6670,42 @@ class BufferPoolAcquireFlags(GObject.GFlags):
     LAST = 65536
     NONE = 0
 
+_BufferPoolAcquireFlagsLiteralType: TypeAlias = Literal[
+    "GST_BUFFER_POOL_ACQUIRE_FLAG_DISCONT",
+    "GST_BUFFER_POOL_ACQUIRE_FLAG_DONTWAIT",
+    "GST_BUFFER_POOL_ACQUIRE_FLAG_KEY_UNIT",
+    "GST_BUFFER_POOL_ACQUIRE_FLAG_LAST",
+    "GST_BUFFER_POOL_ACQUIRE_FLAG_NONE",
+    "discont",
+    "dontwait",
+    "key-unit",
+    "last",
+    "none",
+]
+_BufferPoolAcquireFlagsValueType: TypeAlias = (
+    BufferPoolAcquireFlags
+    | _BufferPoolAcquireFlagsLiteralType
+    | tuple[_BufferPoolAcquireFlagsLiteralType, ...]
+)
+
 class BusFlags(GObject.GFlags):
     FLAG_LAST = 32
     FLUSHING = 16
 
+_BusFlagsLiteralType: TypeAlias = Literal[
+    "GST_BUS_FLAG_LAST", "GST_BUS_FLUSHING", "flag-last", "flushing"
+]
+_BusFlagsValueType: TypeAlias = (
+    BusFlags | _BusFlagsLiteralType | tuple[_BusFlagsLiteralType, ...]
+)
+
 class CapsFlags(GObject.GFlags):
     ANY = 16
+
+_CapsFlagsLiteralType: TypeAlias = Literal["GST_CAPS_FLAG_ANY", "any"]
+_CapsFlagsValueType: TypeAlias = (
+    CapsFlags | _CapsFlagsLiteralType | tuple[_CapsFlagsLiteralType, ...]
+)
 
 class ClockFlags(GObject.GFlags):
     CAN_DO_PERIODIC_ASYNC = 128
@@ -6502,6 +6716,28 @@ class ClockFlags(GObject.GFlags):
     CAN_SET_RESOLUTION = 256
     LAST = 4096
     NEEDS_STARTUP_SYNC = 1024
+
+_ClockFlagsLiteralType: TypeAlias = Literal[
+    "GST_CLOCK_FLAG_CAN_DO_PERIODIC_ASYNC",
+    "GST_CLOCK_FLAG_CAN_DO_PERIODIC_SYNC",
+    "GST_CLOCK_FLAG_CAN_DO_SINGLE_ASYNC",
+    "GST_CLOCK_FLAG_CAN_DO_SINGLE_SYNC",
+    "GST_CLOCK_FLAG_CAN_SET_MASTER",
+    "GST_CLOCK_FLAG_CAN_SET_RESOLUTION",
+    "GST_CLOCK_FLAG_LAST",
+    "GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC",
+    "can-do-periodic-async",
+    "can-do-periodic-sync",
+    "can-do-single-async",
+    "can-do-single-sync",
+    "can-set-master",
+    "can-set-resolution",
+    "last",
+    "needs-startup-sync",
+]
+_ClockFlagsValueType: TypeAlias = (
+    ClockFlags | _ClockFlagsLiteralType | tuple[_ClockFlagsLiteralType, ...]
+)
 
 class DebugColorFlags(GObject.GFlags):
     BG_BLACK = 0
@@ -6523,6 +6759,50 @@ class DebugColorFlags(GObject.GFlags):
     FG_YELLOW = 3
     UNDERLINE = 512
 
+_DebugColorFlagsLiteralType: TypeAlias = Literal[
+    "GST_DEBUG_BG_BLACK",
+    "GST_DEBUG_BG_BLUE",
+    "GST_DEBUG_BG_CYAN",
+    "GST_DEBUG_BG_GREEN",
+    "GST_DEBUG_BG_MAGENTA",
+    "GST_DEBUG_BG_RED",
+    "GST_DEBUG_BG_WHITE",
+    "GST_DEBUG_BG_YELLOW",
+    "GST_DEBUG_BOLD",
+    "GST_DEBUG_FG_BLACK",
+    "GST_DEBUG_FG_BLUE",
+    "GST_DEBUG_FG_CYAN",
+    "GST_DEBUG_FG_GREEN",
+    "GST_DEBUG_FG_MAGENTA",
+    "GST_DEBUG_FG_RED",
+    "GST_DEBUG_FG_WHITE",
+    "GST_DEBUG_FG_YELLOW",
+    "GST_DEBUG_UNDERLINE",
+    "bg-black",
+    "bg-blue",
+    "bg-cyan",
+    "bg-green",
+    "bg-magenta",
+    "bg-red",
+    "bg-white",
+    "bg-yellow",
+    "bold",
+    "fg-black",
+    "fg-blue",
+    "fg-cyan",
+    "fg-green",
+    "fg-magenta",
+    "fg-red",
+    "fg-white",
+    "fg-yellow",
+    "underline",
+]
+_DebugColorFlagsValueType: TypeAlias = (
+    DebugColorFlags
+    | _DebugColorFlagsLiteralType
+    | tuple[_DebugColorFlagsLiteralType, ...]
+)
+
 class DebugGraphDetails(GObject.GFlags):
     ALL = 15
     CAPS_DETAILS = 2
@@ -6531,6 +6811,28 @@ class DebugGraphDetails(GObject.GFlags):
     NON_DEFAULT_PARAMS = 4
     STATES = 8
     VERBOSE = 4294967295
+
+_DebugGraphDetailsLiteralType: TypeAlias = Literal[
+    "GST_DEBUG_GRAPH_SHOW_ALL",
+    "GST_DEBUG_GRAPH_SHOW_CAPS_DETAILS",
+    "GST_DEBUG_GRAPH_SHOW_FULL_PARAMS",
+    "GST_DEBUG_GRAPH_SHOW_MEDIA_TYPE",
+    "GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS",
+    "GST_DEBUG_GRAPH_SHOW_STATES",
+    "GST_DEBUG_GRAPH_SHOW_VERBOSE",
+    "all",
+    "caps-details",
+    "full-params",
+    "media-type",
+    "non-default-params",
+    "states",
+    "verbose",
+]
+_DebugGraphDetailsValueType: TypeAlias = (
+    DebugGraphDetails
+    | _DebugGraphDetailsLiteralType
+    | tuple[_DebugGraphDetailsLiteralType, ...]
+)
 
 class ElementFlags(GObject.GFlags):
     INDEXABLE = 512
@@ -6541,6 +6843,26 @@ class ElementFlags(GObject.GFlags):
     SINK = 32
     SOURCE = 64
 
+_ElementFlagsLiteralType: TypeAlias = Literal[
+    "GST_ELEMENT_FLAG_INDEXABLE",
+    "GST_ELEMENT_FLAG_LAST",
+    "GST_ELEMENT_FLAG_LOCKED_STATE",
+    "GST_ELEMENT_FLAG_PROVIDE_CLOCK",
+    "GST_ELEMENT_FLAG_REQUIRE_CLOCK",
+    "GST_ELEMENT_FLAG_SINK",
+    "GST_ELEMENT_FLAG_SOURCE",
+    "indexable",
+    "last",
+    "locked-state",
+    "provide-clock",
+    "require-clock",
+    "sink",
+    "source",
+]
+_ElementFlagsValueType: TypeAlias = (
+    ElementFlags | _ElementFlagsLiteralType | tuple[_ElementFlagsLiteralType, ...]
+)
+
 class EventTypeFlags(GObject.GFlags):
     DOWNSTREAM = 2
     SERIALIZED = 4
@@ -6548,8 +6870,29 @@ class EventTypeFlags(GObject.GFlags):
     STICKY_MULTI = 16
     UPSTREAM = 1
 
+_EventTypeFlagsLiteralType: TypeAlias = Literal[
+    "GST_EVENT_TYPE_DOWNSTREAM",
+    "GST_EVENT_TYPE_SERIALIZED",
+    "GST_EVENT_TYPE_STICKY",
+    "GST_EVENT_TYPE_STICKY_MULTI",
+    "GST_EVENT_TYPE_UPSTREAM",
+    "downstream",
+    "serialized",
+    "sticky",
+    "sticky-multi",
+    "upstream",
+]
+_EventTypeFlagsValueType: TypeAlias = (
+    EventTypeFlags | _EventTypeFlagsLiteralType | tuple[_EventTypeFlagsLiteralType, ...]
+)
+
 class GapFlags(GObject.GFlags):
     DATA = 1
+
+_GapFlagsLiteralType: TypeAlias = Literal["GST_GAP_FLAG_MISSING_DATA", "data"]
+_GapFlagsValueType: TypeAlias = (
+    GapFlags | _GapFlagsLiteralType | tuple[_GapFlagsLiteralType, ...]
+)
 
 class LockFlags(GObject.GFlags):
     EXCLUSIVE = 4
@@ -6557,9 +6900,32 @@ class LockFlags(GObject.GFlags):
     READ = 1
     WRITE = 2
 
+_LockFlagsLiteralType: TypeAlias = Literal[
+    "GST_LOCK_FLAG_EXCLUSIVE",
+    "GST_LOCK_FLAG_LAST",
+    "GST_LOCK_FLAG_READ",
+    "GST_LOCK_FLAG_WRITE",
+    "exclusive",
+    "last",
+    "read",
+    "write",
+]
+_LockFlagsValueType: TypeAlias = (
+    LockFlags | _LockFlagsLiteralType | tuple[_LockFlagsLiteralType, ...]
+)
+
 class LogContextFlags(GObject.GFlags):
     NONE = 0
     THROTTLE = 1
+
+_LogContextFlagsLiteralType: TypeAlias = Literal[
+    "GST_LOG_CONTEXT_FLAG_NONE", "GST_LOG_CONTEXT_FLAG_THROTTLE", "none", "throttle"
+]
+_LogContextFlagsValueType: TypeAlias = (
+    LogContextFlags
+    | _LogContextFlagsLiteralType
+    | tuple[_LogContextFlagsLiteralType, ...]
+)
 
 class LogContextHashFlags(GObject.GFlags):
     DEFAULT = 0
@@ -6569,11 +6935,45 @@ class LogContextHashFlags(GObject.GFlags):
     USE_LINE_NUMBER = 8
     USE_STRING_ARGS = 16
 
+_LogContextHashFlagsLiteralType: TypeAlias = Literal[
+    "GST_LOG_CONTEXT_DEFAULT",
+    "GST_LOG_CONTEXT_IGNORE_FILE",
+    "GST_LOG_CONTEXT_IGNORE_FORMAT",
+    "GST_LOG_CONTEXT_IGNORE_OBJECT",
+    "GST_LOG_CONTEXT_USE_LINE_NUMBER",
+    "GST_LOG_CONTEXT_USE_STRING_ARGS",
+    "default",
+    "ignore-file",
+    "ignore-format",
+    "ignore-object",
+    "use-line-number",
+    "use-string-args",
+]
+_LogContextHashFlagsValueType: TypeAlias = (
+    LogContextHashFlags
+    | _LogContextHashFlagsLiteralType
+    | tuple[_LogContextHashFlagsLiteralType, ...]
+)
+
 class MapFlags(GObject.GFlags):
     FLAG_LAST = 65536
     READ = 1
     REF_MEMORY = 256
     WRITE = 2
+
+_MapFlagsLiteralType: TypeAlias = Literal[
+    "GST_MAP_FLAG_LAST",
+    "GST_MAP_READ",
+    "GST_MAP_REF_MEMORY",
+    "GST_MAP_WRITE",
+    "flag-last",
+    "read",
+    "ref-memory",
+    "write",
+]
+_MapFlagsValueType: TypeAlias = (
+    MapFlags | _MapFlagsLiteralType | tuple[_MapFlagsLiteralType, ...]
+)
 
 class MemoryFlags(GObject.GFlags):
     LAST = 1048576
@@ -6583,6 +6983,26 @@ class MemoryFlags(GObject.GFlags):
     READONLY = 2
     ZERO_PADDED = 64
     ZERO_PREFIXED = 32
+
+_MemoryFlagsLiteralType: TypeAlias = Literal[
+    "GST_MEMORY_FLAG_LAST",
+    "GST_MEMORY_FLAG_NOT_MAPPABLE",
+    "GST_MEMORY_FLAG_NO_SHARE",
+    "GST_MEMORY_FLAG_PHYSICALLY_CONTIGUOUS",
+    "GST_MEMORY_FLAG_READONLY",
+    "GST_MEMORY_FLAG_ZERO_PADDED",
+    "GST_MEMORY_FLAG_ZERO_PREFIXED",
+    "last",
+    "no-share",
+    "not-mappable",
+    "physically-contiguous",
+    "readonly",
+    "zero-padded",
+    "zero-prefixed",
+]
+_MemoryFlagsValueType: TypeAlias = (
+    MemoryFlags | _MemoryFlagsLiteralType | tuple[_MemoryFlagsLiteralType, ...]
+)
 
 class MessageType(GObject.GFlags):
     ANY = 4294967295
@@ -6629,9 +7049,101 @@ class MessageType(GObject.GFlags):
     UNKNOWN = 0
     WARNING = 4
     @staticmethod
-    def get_name(type: MessageType) -> str: ...
+    def get_name(type: _MessageTypeValueType) -> str: ...
     @staticmethod
-    def to_quark(type: MessageType) -> int: ...
+    def to_quark(type: _MessageTypeValueType) -> int: ...
+
+_MessageTypeLiteralType: TypeAlias = Literal[
+    "GST_MESSAGE_ANY",
+    "GST_MESSAGE_APPLICATION",
+    "GST_MESSAGE_ASYNC_DONE",
+    "GST_MESSAGE_ASYNC_START",
+    "GST_MESSAGE_BUFFERING",
+    "GST_MESSAGE_CLOCK_LOST",
+    "GST_MESSAGE_CLOCK_PROVIDE",
+    "GST_MESSAGE_DEVICE_ADDED",
+    "GST_MESSAGE_DEVICE_CHANGED",
+    "GST_MESSAGE_DEVICE_MONITOR_STARTED",
+    "GST_MESSAGE_DEVICE_REMOVED",
+    "GST_MESSAGE_DURATION_CHANGED",
+    "GST_MESSAGE_ELEMENT",
+    "GST_MESSAGE_EOS",
+    "GST_MESSAGE_ERROR",
+    "GST_MESSAGE_EXTENDED",
+    "GST_MESSAGE_HAVE_CONTEXT",
+    "GST_MESSAGE_INFO",
+    "GST_MESSAGE_INSTANT_RATE_REQUEST",
+    "GST_MESSAGE_LATENCY",
+    "GST_MESSAGE_NEED_CONTEXT",
+    "GST_MESSAGE_NEW_CLOCK",
+    "GST_MESSAGE_PROGRESS",
+    "GST_MESSAGE_PROPERTY_NOTIFY",
+    "GST_MESSAGE_QOS",
+    "GST_MESSAGE_REDIRECT",
+    "GST_MESSAGE_REQUEST_STATE",
+    "GST_MESSAGE_RESET_TIME",
+    "GST_MESSAGE_SEGMENT_DONE",
+    "GST_MESSAGE_SEGMENT_START",
+    "GST_MESSAGE_STATE_CHANGED",
+    "GST_MESSAGE_STATE_DIRTY",
+    "GST_MESSAGE_STEP_DONE",
+    "GST_MESSAGE_STEP_START",
+    "GST_MESSAGE_STREAMS_SELECTED",
+    "GST_MESSAGE_STREAM_COLLECTION",
+    "GST_MESSAGE_STREAM_START",
+    "GST_MESSAGE_STREAM_STATUS",
+    "GST_MESSAGE_STRUCTURE_CHANGE",
+    "GST_MESSAGE_TAG",
+    "GST_MESSAGE_TOC",
+    "GST_MESSAGE_UNKNOWN",
+    "GST_MESSAGE_WARNING",
+    "any",
+    "application",
+    "async-done",
+    "async-start",
+    "buffering",
+    "clock-lost",
+    "clock-provide",
+    "device-added",
+    "device-changed",
+    "device-monitor-started",
+    "device-removed",
+    "duration-changed",
+    "element",
+    "eos",
+    "error",
+    "extended",
+    "have-context",
+    "info",
+    "instant-rate-request",
+    "latency",
+    "need-context",
+    "new-clock",
+    "progress",
+    "property-notify",
+    "qos",
+    "redirect",
+    "request-state",
+    "reset-time",
+    "segment-done",
+    "segment-start",
+    "state-changed",
+    "state-dirty",
+    "step-done",
+    "step-start",
+    "stream-collection",
+    "stream-start",
+    "stream-status",
+    "streams-selected",
+    "structure-change",
+    "tag",
+    "toc",
+    "unknown",
+    "warning",
+]
+_MessageTypeValueType: TypeAlias = (
+    MessageType | _MessageTypeLiteralType | tuple[_MessageTypeLiteralType, ...]
+)
 
 class MetaFlags(GObject.GFlags):
     LAST = 65536
@@ -6640,16 +7152,60 @@ class MetaFlags(GObject.GFlags):
     POOLED = 2
     READONLY = 1
 
+_MetaFlagsLiteralType: TypeAlias = Literal[
+    "GST_META_FLAG_LAST",
+    "GST_META_FLAG_LOCKED",
+    "GST_META_FLAG_NONE",
+    "GST_META_FLAG_POOLED",
+    "GST_META_FLAG_READONLY",
+    "last",
+    "locked",
+    "none",
+    "pooled",
+    "readonly",
+]
+_MetaFlagsValueType: TypeAlias = (
+    MetaFlags | _MetaFlagsLiteralType | tuple[_MetaFlagsLiteralType, ...]
+)
+
 class MiniObjectFlags(GObject.GFlags):
     LAST = 16
     LOCKABLE = 1
     LOCK_READONLY = 2
     MAY_BE_LEAKED = 4
 
+_MiniObjectFlagsLiteralType: TypeAlias = Literal[
+    "GST_MINI_OBJECT_FLAG_LAST",
+    "GST_MINI_OBJECT_FLAG_LOCKABLE",
+    "GST_MINI_OBJECT_FLAG_LOCK_READONLY",
+    "GST_MINI_OBJECT_FLAG_MAY_BE_LEAKED",
+    "last",
+    "lock-readonly",
+    "lockable",
+    "may-be-leaked",
+]
+_MiniObjectFlagsValueType: TypeAlias = (
+    MiniObjectFlags
+    | _MiniObjectFlagsLiteralType
+    | tuple[_MiniObjectFlagsLiteralType, ...]
+)
+
 class ObjectFlags(GObject.GFlags):
     CONSTRUCTED = 2
     LAST = 16
     MAY_BE_LEAKED = 1
+
+_ObjectFlagsLiteralType: TypeAlias = Literal[
+    "GST_OBJECT_FLAG_CONSTRUCTED",
+    "GST_OBJECT_FLAG_LAST",
+    "GST_OBJECT_FLAG_MAY_BE_LEAKED",
+    "constructed",
+    "last",
+    "may-be-leaked",
+]
+_ObjectFlagsValueType: TypeAlias = (
+    ObjectFlags | _ObjectFlagsLiteralType | tuple[_ObjectFlagsLiteralType, ...]
+)
 
 class PadFlags(GObject.GFlags):
     ACCEPT_INTERSECT = 32768
@@ -6667,6 +7223,40 @@ class PadFlags(GObject.GFlags):
     PROXY_CAPS = 4096
     PROXY_SCHEDULING = 16384
 
+_PadFlagsLiteralType: TypeAlias = Literal[
+    "GST_PAD_FLAG_ACCEPT_INTERSECT",
+    "GST_PAD_FLAG_ACCEPT_TEMPLATE",
+    "GST_PAD_FLAG_BLOCKED",
+    "GST_PAD_FLAG_BLOCKING",
+    "GST_PAD_FLAG_EOS",
+    "GST_PAD_FLAG_FIXED_CAPS",
+    "GST_PAD_FLAG_FLUSHING",
+    "GST_PAD_FLAG_LAST",
+    "GST_PAD_FLAG_NEED_PARENT",
+    "GST_PAD_FLAG_NEED_RECONFIGURE",
+    "GST_PAD_FLAG_PENDING_EVENTS",
+    "GST_PAD_FLAG_PROXY_ALLOCATION",
+    "GST_PAD_FLAG_PROXY_CAPS",
+    "GST_PAD_FLAG_PROXY_SCHEDULING",
+    "accept-intersect",
+    "accept-template",
+    "blocked",
+    "blocking",
+    "eos",
+    "fixed-caps",
+    "flushing",
+    "last",
+    "need-parent",
+    "need-reconfigure",
+    "pending-events",
+    "proxy-allocation",
+    "proxy-caps",
+    "proxy-scheduling",
+]
+_PadFlagsValueType: TypeAlias = (
+    PadFlags | _PadFlagsLiteralType | tuple[_PadFlagsLiteralType, ...]
+)
+
 class PadLinkCheck(GObject.GFlags):
     CAPS = 4
     DEFAULT = 5
@@ -6674,6 +7264,24 @@ class PadLinkCheck(GObject.GFlags):
     NOTHING = 0
     NO_RECONFIGURE = 8
     TEMPLATE_CAPS = 2
+
+_PadLinkCheckLiteralType: TypeAlias = Literal[
+    "GST_PAD_LINK_CHECK_CAPS",
+    "GST_PAD_LINK_CHECK_DEFAULT",
+    "GST_PAD_LINK_CHECK_HIERARCHY",
+    "GST_PAD_LINK_CHECK_NOTHING",
+    "GST_PAD_LINK_CHECK_NO_RECONFIGURE",
+    "GST_PAD_LINK_CHECK_TEMPLATE_CAPS",
+    "caps",
+    "default",
+    "hierarchy",
+    "no-reconfigure",
+    "nothing",
+    "template-caps",
+]
+_PadLinkCheckValueType: TypeAlias = (
+    PadLinkCheck | _PadLinkCheckLiteralType | tuple[_PadLinkCheckLiteralType, ...]
+)
 
 class PadProbeType(GObject.GFlags):
     ALL_BOTH = 1776
@@ -6699,8 +7307,65 @@ class PadProbeType(GObject.GFlags):
     QUERY_UPSTREAM = 1024
     SCHEDULING = 12288
 
+_PadProbeTypeLiteralType: TypeAlias = Literal[
+    "GST_PAD_PROBE_TYPE_ALL_BOTH",
+    "GST_PAD_PROBE_TYPE_BLOCK",
+    "GST_PAD_PROBE_TYPE_BLOCKING",
+    "GST_PAD_PROBE_TYPE_BLOCK_DOWNSTREAM",
+    "GST_PAD_PROBE_TYPE_BLOCK_UPSTREAM",
+    "GST_PAD_PROBE_TYPE_BUFFER",
+    "GST_PAD_PROBE_TYPE_BUFFER_LIST",
+    "GST_PAD_PROBE_TYPE_DATA_BOTH",
+    "GST_PAD_PROBE_TYPE_DATA_DOWNSTREAM",
+    "GST_PAD_PROBE_TYPE_DATA_UPSTREAM",
+    "GST_PAD_PROBE_TYPE_EVENT_BOTH",
+    "GST_PAD_PROBE_TYPE_EVENT_DOWNSTREAM",
+    "GST_PAD_PROBE_TYPE_EVENT_FLUSH",
+    "GST_PAD_PROBE_TYPE_EVENT_UPSTREAM",
+    "GST_PAD_PROBE_TYPE_IDLE",
+    "GST_PAD_PROBE_TYPE_INVALID",
+    "GST_PAD_PROBE_TYPE_PULL",
+    "GST_PAD_PROBE_TYPE_PUSH",
+    "GST_PAD_PROBE_TYPE_QUERY_BOTH",
+    "GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM",
+    "GST_PAD_PROBE_TYPE_QUERY_UPSTREAM",
+    "GST_PAD_PROBE_TYPE_SCHEDULING",
+    "all-both",
+    "block",
+    "block-downstream",
+    "block-upstream",
+    "blocking",
+    "buffer",
+    "buffer-list",
+    "data-both",
+    "data-downstream",
+    "data-upstream",
+    "event-both",
+    "event-downstream",
+    "event-flush",
+    "event-upstream",
+    "idle",
+    "invalid",
+    "pull",
+    "push",
+    "query-both",
+    "query-downstream",
+    "query-upstream",
+    "scheduling",
+]
+_PadProbeTypeValueType: TypeAlias = (
+    PadProbeType | _PadProbeTypeLiteralType | tuple[_PadProbeTypeLiteralType, ...]
+)
+
 class PadTemplateFlags(GObject.GFlags):
     LAST = 256
+
+_PadTemplateFlagsLiteralType: TypeAlias = Literal["GST_PAD_TEMPLATE_FLAG_LAST", "last"]
+_PadTemplateFlagsValueType: TypeAlias = (
+    PadTemplateFlags
+    | _PadTemplateFlagsLiteralType
+    | tuple[_PadTemplateFlagsLiteralType, ...]
+)
 
 class ParseFlags(GObject.GFlags):
     FATAL_ERRORS = 1
@@ -6708,12 +7373,40 @@ class ParseFlags(GObject.GFlags):
     NO_SINGLE_ELEMENT_BINS = 2
     PLACE_IN_BIN = 4
 
+_ParseFlagsLiteralType: TypeAlias = Literal[
+    "GST_PARSE_FLAG_FATAL_ERRORS",
+    "GST_PARSE_FLAG_NONE",
+    "GST_PARSE_FLAG_NO_SINGLE_ELEMENT_BINS",
+    "GST_PARSE_FLAG_PLACE_IN_BIN",
+    "fatal-errors",
+    "no-single-element-bins",
+    "none",
+    "place-in-bin",
+]
+_ParseFlagsValueType: TypeAlias = (
+    ParseFlags | _ParseFlagsLiteralType | tuple[_ParseFlagsLiteralType, ...]
+)
+
 class PipelineFlags(GObject.GFlags):
     FIXED_CLOCK = 524288
     LAST = 8388608
 
+_PipelineFlagsLiteralType: TypeAlias = Literal[
+    "GST_PIPELINE_FLAG_FIXED_CLOCK", "GST_PIPELINE_FLAG_LAST", "fixed-clock", "last"
+]
+_PipelineFlagsValueType: TypeAlias = (
+    PipelineFlags | _PipelineFlagsLiteralType | tuple[_PipelineFlagsLiteralType, ...]
+)
+
 class PluginAPIFlags(GObject.GFlags):
     MEMBERS = 1
+
+_PluginAPIFlagsLiteralType: TypeAlias = Literal[
+    "GST_PLUGIN_API_FLAG_IGNORE_ENUM_MEMBERS", "members"
+]
+_PluginAPIFlagsValueType: TypeAlias = (
+    PluginAPIFlags | _PluginAPIFlagsLiteralType | tuple[_PluginAPIFlagsLiteralType, ...]
+)
 
 class PluginDependencyFlags(GObject.GFlags):
     FILE_NAME_IS_PREFIX = 8
@@ -6723,19 +7416,72 @@ class PluginDependencyFlags(GObject.GFlags):
     PATHS_ARE_RELATIVE_TO_EXE = 16
     RECURSE = 1
 
+_PluginDependencyFlagsLiteralType: TypeAlias = Literal[
+    "GST_PLUGIN_DEPENDENCY_FLAG_FILE_NAME_IS_PREFIX",
+    "GST_PLUGIN_DEPENDENCY_FLAG_FILE_NAME_IS_SUFFIX",
+    "GST_PLUGIN_DEPENDENCY_FLAG_NONE",
+    "GST_PLUGIN_DEPENDENCY_FLAG_PATHS_ARE_DEFAULT_ONLY",
+    "GST_PLUGIN_DEPENDENCY_FLAG_PATHS_ARE_RELATIVE_TO_EXE",
+    "GST_PLUGIN_DEPENDENCY_FLAG_RECURSE",
+    "file-name-is-prefix",
+    "file-name-is-suffix",
+    "none",
+    "paths-are-default-only",
+    "paths-are-relative-to-exe",
+    "recurse",
+]
+_PluginDependencyFlagsValueType: TypeAlias = (
+    PluginDependencyFlags
+    | _PluginDependencyFlagsLiteralType
+    | tuple[_PluginDependencyFlagsLiteralType, ...]
+)
+
 class PluginFlags(GObject.GFlags):
     BLACKLISTED = 32
     CACHED = 16
+
+_PluginFlagsLiteralType: TypeAlias = Literal[
+    "GST_PLUGIN_FLAG_BLACKLISTED", "GST_PLUGIN_FLAG_CACHED", "blacklisted", "cached"
+]
+_PluginFlagsValueType: TypeAlias = (
+    PluginFlags | _PluginFlagsLiteralType | tuple[_PluginFlagsLiteralType, ...]
+)
 
 class QueryTypeFlags(GObject.GFlags):
     DOWNSTREAM = 2
     SERIALIZED = 4
     UPSTREAM = 1
 
+_QueryTypeFlagsLiteralType: TypeAlias = Literal[
+    "GST_QUERY_TYPE_DOWNSTREAM",
+    "GST_QUERY_TYPE_SERIALIZED",
+    "GST_QUERY_TYPE_UPSTREAM",
+    "downstream",
+    "serialized",
+    "upstream",
+]
+_QueryTypeFlagsValueType: TypeAlias = (
+    QueryTypeFlags | _QueryTypeFlagsLiteralType | tuple[_QueryTypeFlagsLiteralType, ...]
+)
+
 class SchedulingFlags(GObject.GFlags):
     BANDWIDTH_LIMITED = 4
     SEEKABLE = 1
     SEQUENTIAL = 2
+
+_SchedulingFlagsLiteralType: TypeAlias = Literal[
+    "GST_SCHEDULING_FLAG_BANDWIDTH_LIMITED",
+    "GST_SCHEDULING_FLAG_SEEKABLE",
+    "GST_SCHEDULING_FLAG_SEQUENTIAL",
+    "bandwidth-limited",
+    "seekable",
+    "sequential",
+]
+_SchedulingFlagsValueType: TypeAlias = (
+    SchedulingFlags
+    | _SchedulingFlagsLiteralType
+    | tuple[_SchedulingFlagsLiteralType, ...]
+)
 
 class SeekFlags(GObject.GFlags):
     ACCURATE = 2
@@ -6753,6 +7499,40 @@ class SeekFlags(GObject.GFlags):
     TRICKMODE_KEY_UNITS = 128
     TRICKMODE_NO_AUDIO = 256
 
+_SeekFlagsLiteralType: TypeAlias = Literal[
+    "GST_SEEK_FLAG_ACCURATE",
+    "GST_SEEK_FLAG_FLUSH",
+    "GST_SEEK_FLAG_INSTANT_RATE_CHANGE",
+    "GST_SEEK_FLAG_KEY_UNIT",
+    "GST_SEEK_FLAG_NONE",
+    "GST_SEEK_FLAG_SEGMENT",
+    "GST_SEEK_FLAG_SKIP",
+    "GST_SEEK_FLAG_SNAP_AFTER",
+    "GST_SEEK_FLAG_SNAP_BEFORE",
+    "GST_SEEK_FLAG_SNAP_NEAREST",
+    "GST_SEEK_FLAG_TRICKMODE",
+    "GST_SEEK_FLAG_TRICKMODE_FORWARD_PREDICTED",
+    "GST_SEEK_FLAG_TRICKMODE_KEY_UNITS",
+    "GST_SEEK_FLAG_TRICKMODE_NO_AUDIO",
+    "accurate",
+    "flush",
+    "instant-rate-change",
+    "key-unit",
+    "none",
+    "segment",
+    "skip",
+    "snap-after",
+    "snap-before",
+    "snap-nearest",
+    "trickmode",
+    "trickmode-forward-predicted",
+    "trickmode-key-units",
+    "trickmode-no-audio",
+]
+_SeekFlagsValueType: TypeAlias = (
+    SeekFlags | _SeekFlagsLiteralType | tuple[_SeekFlagsLiteralType, ...]
+)
+
 class SegmentFlags(GObject.GFlags):
     NONE = 0
     RESET = 1
@@ -6763,20 +7543,77 @@ class SegmentFlags(GObject.GFlags):
     TRICKMODE_KEY_UNITS = 128
     TRICKMODE_NO_AUDIO = 256
 
+_SegmentFlagsLiteralType: TypeAlias = Literal[
+    "GST_SEGMENT_FLAG_NONE",
+    "GST_SEGMENT_FLAG_RESET",
+    "GST_SEGMENT_FLAG_SEGMENT",
+    "GST_SEGMENT_FLAG_SKIP",
+    "GST_SEGMENT_FLAG_TRICKMODE",
+    "GST_SEGMENT_FLAG_TRICKMODE_FORWARD_PREDICTED",
+    "GST_SEGMENT_FLAG_TRICKMODE_KEY_UNITS",
+    "GST_SEGMENT_FLAG_TRICKMODE_NO_AUDIO",
+    "none",
+    "reset",
+    "segment",
+    "skip",
+    "trickmode",
+    "trickmode-forward-predicted",
+    "trickmode-key-units",
+    "trickmode-no-audio",
+]
+_SegmentFlagsValueType: TypeAlias = (
+    SegmentFlags | _SegmentFlagsLiteralType | tuple[_SegmentFlagsLiteralType, ...]
+)
+
 class SerializeFlags(GObject.GFlags):
     BACKWARD_COMPAT = 1
     NONE = 0
     STRICT = 2
 
+_SerializeFlagsLiteralType: TypeAlias = Literal[
+    "GST_SERIALIZE_FLAG_BACKWARD_COMPAT",
+    "GST_SERIALIZE_FLAG_NONE",
+    "GST_SERIALIZE_FLAG_STRICT",
+    "backward-compat",
+    "none",
+    "strict",
+]
+_SerializeFlagsValueType: TypeAlias = (
+    SerializeFlags | _SerializeFlagsLiteralType | tuple[_SerializeFlagsLiteralType, ...]
+)
+
 class StackTraceFlags(GObject.GFlags):
     FULL = 1
     NONE = 0
+
+_StackTraceFlagsLiteralType: TypeAlias = Literal[
+    "GST_STACK_TRACE_SHOW_FULL", "GST_STACK_TRACE_SHOW_NONE", "full", "none"
+]
+_StackTraceFlagsValueType: TypeAlias = (
+    StackTraceFlags
+    | _StackTraceFlagsLiteralType
+    | tuple[_StackTraceFlagsLiteralType, ...]
+)
 
 class StreamFlags(GObject.GFlags):
     NONE = 0
     SELECT = 2
     SPARSE = 1
     UNSELECT = 4
+
+_StreamFlagsLiteralType: TypeAlias = Literal[
+    "GST_STREAM_FLAG_NONE",
+    "GST_STREAM_FLAG_SELECT",
+    "GST_STREAM_FLAG_SPARSE",
+    "GST_STREAM_FLAG_UNSELECT",
+    "none",
+    "select",
+    "sparse",
+    "unselect",
+]
+_StreamFlagsValueType: TypeAlias = (
+    StreamFlags | _StreamFlagsLiteralType | tuple[_StreamFlagsLiteralType, ...]
+)
 
 class StreamType(GObject.GFlags):
     AUDIO = 2
@@ -6786,12 +7623,44 @@ class StreamType(GObject.GFlags):
     UNKNOWN = 1
     VIDEO = 4
     @staticmethod
-    def get_name(stype: StreamType) -> str: ...
+    def get_name(stype: _StreamTypeValueType) -> str: ...
+
+_StreamTypeLiteralType: TypeAlias = Literal[
+    "GST_STREAM_TYPE_AUDIO",
+    "GST_STREAM_TYPE_CONTAINER",
+    "GST_STREAM_TYPE_METADATA",
+    "GST_STREAM_TYPE_TEXT",
+    "GST_STREAM_TYPE_UNKNOWN",
+    "GST_STREAM_TYPE_VIDEO",
+    "audio",
+    "container",
+    "metadata",
+    "text",
+    "unknown",
+    "video",
+]
+_StreamTypeValueType: TypeAlias = (
+    StreamType | _StreamTypeLiteralType | tuple[_StreamTypeLiteralType, ...]
+)
 
 class TracerValueFlags(GObject.GFlags):
     AGGREGATED = 2
     NONE = 0
     OPTIONAL = 1
+
+_TracerValueFlagsLiteralType: TypeAlias = Literal[
+    "GST_TRACER_VALUE_FLAGS_AGGREGATED",
+    "GST_TRACER_VALUE_FLAGS_NONE",
+    "GST_TRACER_VALUE_FLAGS_OPTIONAL",
+    "aggregated",
+    "none",
+    "optional",
+]
+_TracerValueFlagsValueType: TypeAlias = (
+    TracerValueFlags
+    | _TracerValueFlagsLiteralType
+    | tuple[_TracerValueFlagsLiteralType, ...]
+)
 
 class BufferingMode(GObject.GEnum):
     DOWNLOAD = 1
@@ -6799,18 +7668,47 @@ class BufferingMode(GObject.GEnum):
     STREAM = 0
     TIMESHIFT = 2
 
+_BufferingModeLiteralType: TypeAlias = Literal[
+    "GST_BUFFERING_DOWNLOAD",
+    "GST_BUFFERING_LIVE",
+    "GST_BUFFERING_STREAM",
+    "GST_BUFFERING_TIMESHIFT",
+    "download",
+    "live",
+    "stream",
+    "timeshift",
+]
+_BufferingModeValueType: TypeAlias = BufferingMode | _BufferingModeLiteralType
+
 class BusSyncReply(GObject.GEnum):
     ASYNC = 2
     DROP = 0
     PASS = 1
 
+_BusSyncReplyLiteralType: TypeAlias = Literal[
+    "GST_BUS_ASYNC", "GST_BUS_DROP", "GST_BUS_PASS", "async", "drop", "pass"
+]
+_BusSyncReplyValueType: TypeAlias = BusSyncReply | _BusSyncReplyLiteralType
+
 class CapsIntersectMode(GObject.GEnum):
     FIRST = 1
     ZIG_ZAG = 0
 
+_CapsIntersectModeLiteralType: TypeAlias = Literal[
+    "GST_CAPS_INTERSECT_FIRST", "GST_CAPS_INTERSECT_ZIG_ZAG", "first", "zig-zag"
+]
+_CapsIntersectModeValueType: TypeAlias = (
+    CapsIntersectMode | _CapsIntersectModeLiteralType
+)
+
 class ClockEntryType(GObject.GEnum):
     PERIODIC = 1
     SINGLE = 0
+
+_ClockEntryTypeLiteralType: TypeAlias = Literal[
+    "GST_CLOCK_ENTRY_PERIODIC", "GST_CLOCK_ENTRY_SINGLE", "periodic", "single"
+]
+_ClockEntryTypeValueType: TypeAlias = ClockEntryType | _ClockEntryTypeLiteralType
 
 class ClockReturn(GObject.GEnum):
     BADTIME = 4
@@ -6822,11 +7720,43 @@ class ClockReturn(GObject.GEnum):
     UNSCHEDULED = 2
     UNSUPPORTED = 6
 
+_ClockReturnLiteralType: TypeAlias = Literal[
+    "GST_CLOCK_BADTIME",
+    "GST_CLOCK_BUSY",
+    "GST_CLOCK_DONE",
+    "GST_CLOCK_EARLY",
+    "GST_CLOCK_ERROR",
+    "GST_CLOCK_OK",
+    "GST_CLOCK_UNSCHEDULED",
+    "GST_CLOCK_UNSUPPORTED",
+    "badtime",
+    "busy",
+    "done",
+    "early",
+    "error",
+    "ok",
+    "unscheduled",
+    "unsupported",
+]
+_ClockReturnValueType: TypeAlias = ClockReturn | _ClockReturnLiteralType
+
 class ClockType(GObject.GEnum):
     MONOTONIC = 1
     OTHER = 2
     REALTIME = 0
     TAI = 3
+
+_ClockTypeLiteralType: TypeAlias = Literal[
+    "GST_CLOCK_TYPE_MONOTONIC",
+    "GST_CLOCK_TYPE_OTHER",
+    "GST_CLOCK_TYPE_REALTIME",
+    "GST_CLOCK_TYPE_TAI",
+    "monotonic",
+    "other",
+    "realtime",
+    "tai",
+]
+_ClockTypeValueType: TypeAlias = ClockType | _ClockTypeLiteralType
 
 class CoreError(GObject.GEnum):
     CAPS = 10
@@ -6847,10 +7777,54 @@ class CoreError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_CoreErrorLiteralType: TypeAlias = Literal[
+    "GST_CORE_ERROR_CAPS",
+    "GST_CORE_ERROR_CLOCK",
+    "GST_CORE_ERROR_DISABLED",
+    "GST_CORE_ERROR_EVENT",
+    "GST_CORE_ERROR_FAILED",
+    "GST_CORE_ERROR_MISSING_PLUGIN",
+    "GST_CORE_ERROR_NEGOTIATION",
+    "GST_CORE_ERROR_NOT_IMPLEMENTED",
+    "GST_CORE_ERROR_NUM_ERRORS",
+    "GST_CORE_ERROR_PAD",
+    "GST_CORE_ERROR_SEEK",
+    "GST_CORE_ERROR_STATE_CHANGE",
+    "GST_CORE_ERROR_TAG",
+    "GST_CORE_ERROR_THREAD",
+    "GST_CORE_ERROR_TOO_LAZY",
+    "caps",
+    "clock",
+    "disabled",
+    "event",
+    "failed",
+    "missing-plugin",
+    "negotiation",
+    "not-implemented",
+    "num-errors",
+    "pad",
+    "seek",
+    "state-change",
+    "tag",
+    "thread",
+    "too-lazy",
+]
+_CoreErrorValueType: TypeAlias = CoreError | _CoreErrorLiteralType
+
 class DebugColorMode(GObject.GEnum):
     OFF = 0
     ON = 1
     UNIX = 2
+
+_DebugColorModeLiteralType: TypeAlias = Literal[
+    "GST_DEBUG_COLOR_MODE_OFF",
+    "GST_DEBUG_COLOR_MODE_ON",
+    "GST_DEBUG_COLOR_MODE_UNIX",
+    "off",
+    "on",
+    "unix",
+]
+_DebugColorModeValueType: TypeAlias = DebugColorMode | _DebugColorModeLiteralType
 
 class DebugLevel(GObject.GEnum):
     COUNT = 10
@@ -6864,7 +7838,31 @@ class DebugLevel(GObject.GEnum):
     TRACE = 7
     WARNING = 2
     @staticmethod
-    def get_name(level: DebugLevel) -> str: ...
+    def get_name(level: _DebugLevelValueType) -> str: ...
+
+_DebugLevelLiteralType: TypeAlias = Literal[
+    "GST_LEVEL_COUNT",
+    "GST_LEVEL_DEBUG",
+    "GST_LEVEL_ERROR",
+    "GST_LEVEL_FIXME",
+    "GST_LEVEL_INFO",
+    "GST_LEVEL_LOG",
+    "GST_LEVEL_MEMDUMP",
+    "GST_LEVEL_NONE",
+    "GST_LEVEL_TRACE",
+    "GST_LEVEL_WARNING",
+    "count",
+    "debug",
+    "error",
+    "fixme",
+    "info",
+    "log",
+    "memdump",
+    "none",
+    "trace",
+    "warning",
+]
+_DebugLevelValueType: TypeAlias = DebugLevel | _DebugLevelLiteralType
 
 class EventType(GObject.GEnum):
     BUFFERSIZE = 23054
@@ -6900,13 +7898,81 @@ class EventType(GObject.GEnum):
     TOC_SELECT = 64001
     UNKNOWN = 0
     @staticmethod
-    def get_flags(type: EventType) -> EventTypeFlags: ...
+    def get_flags(type: _EventTypeValueType) -> EventTypeFlags: ...
     @staticmethod
-    def get_name(type: EventType) -> str: ...
+    def get_name(type: _EventTypeValueType) -> str: ...
     @staticmethod
-    def to_quark(type: EventType) -> int: ...
+    def to_quark(type: _EventTypeValueType) -> int: ...
     @staticmethod
-    def to_sticky_ordering(type: EventType) -> int: ...
+    def to_sticky_ordering(type: _EventTypeValueType) -> int: ...
+
+_EventTypeLiteralType: TypeAlias = Literal[
+    "GST_EVENT_BUFFERSIZE",
+    "GST_EVENT_CAPS",
+    "GST_EVENT_CUSTOM_BOTH",
+    "GST_EVENT_CUSTOM_BOTH_OOB",
+    "GST_EVENT_CUSTOM_DOWNSTREAM",
+    "GST_EVENT_CUSTOM_DOWNSTREAM_OOB",
+    "GST_EVENT_CUSTOM_DOWNSTREAM_STICKY",
+    "GST_EVENT_CUSTOM_UPSTREAM",
+    "GST_EVENT_EOS",
+    "GST_EVENT_FLUSH_START",
+    "GST_EVENT_FLUSH_STOP",
+    "GST_EVENT_GAP",
+    "GST_EVENT_INSTANT_RATE_CHANGE",
+    "GST_EVENT_INSTANT_RATE_SYNC_TIME",
+    "GST_EVENT_LATENCY",
+    "GST_EVENT_NAVIGATION",
+    "GST_EVENT_PROTECTION",
+    "GST_EVENT_QOS",
+    "GST_EVENT_RECONFIGURE",
+    "GST_EVENT_SEEK",
+    "GST_EVENT_SEGMENT",
+    "GST_EVENT_SEGMENT_DONE",
+    "GST_EVENT_SELECT_STREAMS",
+    "GST_EVENT_SINK_MESSAGE",
+    "GST_EVENT_STEP",
+    "GST_EVENT_STREAM_COLLECTION",
+    "GST_EVENT_STREAM_GROUP_DONE",
+    "GST_EVENT_STREAM_START",
+    "GST_EVENT_TAG",
+    "GST_EVENT_TOC",
+    "GST_EVENT_TOC_SELECT",
+    "GST_EVENT_UNKNOWN",
+    "buffersize",
+    "caps",
+    "custom-both",
+    "custom-both-oob",
+    "custom-downstream",
+    "custom-downstream-oob",
+    "custom-downstream-sticky",
+    "custom-upstream",
+    "eos",
+    "flush-start",
+    "flush-stop",
+    "gap",
+    "instant-rate-change",
+    "instant-rate-sync-time",
+    "latency",
+    "navigation",
+    "protection",
+    "qos",
+    "reconfigure",
+    "seek",
+    "segment",
+    "segment-done",
+    "select-streams",
+    "sink-message",
+    "step",
+    "stream-collection",
+    "stream-group-done",
+    "stream-start",
+    "tag",
+    "toc",
+    "toc-select",
+    "unknown",
+]
+_EventTypeValueType: TypeAlias = EventType | _EventTypeLiteralType
 
 class FlowReturn(GObject.GEnum):
     CUSTOM_ERROR = -100
@@ -6923,6 +7989,36 @@ class FlowReturn(GObject.GEnum):
     NOT_SUPPORTED = -6
     OK = 0
 
+_FlowReturnLiteralType: TypeAlias = Literal[
+    "GST_FLOW_CUSTOM_ERROR",
+    "GST_FLOW_CUSTOM_ERROR_1",
+    "GST_FLOW_CUSTOM_ERROR_2",
+    "GST_FLOW_CUSTOM_SUCCESS",
+    "GST_FLOW_CUSTOM_SUCCESS_1",
+    "GST_FLOW_CUSTOM_SUCCESS_2",
+    "GST_FLOW_EOS",
+    "GST_FLOW_ERROR",
+    "GST_FLOW_FLUSHING",
+    "GST_FLOW_NOT_LINKED",
+    "GST_FLOW_NOT_NEGOTIATED",
+    "GST_FLOW_NOT_SUPPORTED",
+    "GST_FLOW_OK",
+    "custom-error",
+    "custom-error-1",
+    "custom-error-2",
+    "custom-success",
+    "custom-success-1",
+    "custom-success-2",
+    "eos",
+    "error",
+    "flushing",
+    "not-linked",
+    "not-negotiated",
+    "not-supported",
+    "ok",
+]
+_FlowReturnValueType: TypeAlias = FlowReturn | _FlowReturnLiteralType
+
 class Format(GObject.GEnum):
     BUFFERS = 4
     BYTES = 2
@@ -6933,26 +8029,64 @@ class Format(GObject.GEnum):
     @staticmethod
     def get_by_nick(nick: str) -> Format: ...
     @staticmethod
-    def get_details(format: Format) -> FormatDefinition | None: ...
+    def get_details(format: _FormatValueType) -> FormatDefinition | None: ...
     @staticmethod
-    def get_name(format: Format) -> str | None: ...
+    def get_name(format: _FormatValueType) -> str | None: ...
     @staticmethod
     def iterate_definitions() -> Iterator: ...
     @staticmethod
     def register(nick: str, description: str) -> Format: ...
     @staticmethod
-    def to_quark(format: Format) -> int: ...
+    def to_quark(format: _FormatValueType) -> int: ...
+
+_FormatLiteralType: TypeAlias = Literal[
+    "GST_FORMAT_BUFFERS",
+    "GST_FORMAT_BYTES",
+    "GST_FORMAT_DEFAULT",
+    "GST_FORMAT_PERCENT",
+    "GST_FORMAT_TIME",
+    "GST_FORMAT_UNDEFINED",
+    "buffers",
+    "bytes",
+    "default",
+    "percent",
+    "time",
+    "undefined",
+]
+_FormatValueType: TypeAlias = Format | _FormatLiteralType
 
 class IteratorItem(GObject.GEnum):
     END = 2
     PASS = 1
     SKIP = 0
 
+_IteratorItemLiteralType: TypeAlias = Literal[
+    "GST_ITERATOR_ITEM_END",
+    "GST_ITERATOR_ITEM_PASS",
+    "GST_ITERATOR_ITEM_SKIP",
+    "end",
+    "pass",
+    "skip",
+]
+_IteratorItemValueType: TypeAlias = IteratorItem | _IteratorItemLiteralType
+
 class IteratorResult(GObject.GEnum):
     DONE = 0
     ERROR = 3
     OK = 1
     RESYNC = 2
+
+_IteratorResultLiteralType: TypeAlias = Literal[
+    "GST_ITERATOR_DONE",
+    "GST_ITERATOR_ERROR",
+    "GST_ITERATOR_OK",
+    "GST_ITERATOR_RESYNC",
+    "done",
+    "error",
+    "ok",
+    "resync",
+]
+_IteratorResultValueType: TypeAlias = IteratorResult | _IteratorResultLiteralType
 
 class LibraryError(GObject.GEnum):
     ENCODE = 6
@@ -6965,10 +8099,33 @@ class LibraryError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_LibraryErrorLiteralType: TypeAlias = Literal[
+    "GST_LIBRARY_ERROR_ENCODE",
+    "GST_LIBRARY_ERROR_FAILED",
+    "GST_LIBRARY_ERROR_INIT",
+    "GST_LIBRARY_ERROR_NUM_ERRORS",
+    "GST_LIBRARY_ERROR_SETTINGS",
+    "GST_LIBRARY_ERROR_SHUTDOWN",
+    "GST_LIBRARY_ERROR_TOO_LAZY",
+    "encode",
+    "failed",
+    "init",
+    "num-errors",
+    "settings",
+    "shutdown",
+    "too-lazy",
+]
+_LibraryErrorValueType: TypeAlias = LibraryError | _LibraryErrorLiteralType
+
 class PadDirection(GObject.GEnum):
     SINK = 2
     SRC = 1
     UNKNOWN = 0
+
+_PadDirectionLiteralType: TypeAlias = Literal[
+    "GST_PAD_SINK", "GST_PAD_SRC", "GST_PAD_UNKNOWN", "sink", "src", "unknown"
+]
+_PadDirectionValueType: TypeAlias = PadDirection | _PadDirectionLiteralType
 
 class PadLinkReturn(GObject.GEnum):
     NOFORMAT = -4
@@ -6979,17 +8136,55 @@ class PadLinkReturn(GObject.GEnum):
     WRONG_DIRECTION = -3
     WRONG_HIERARCHY = -1
 
+_PadLinkReturnLiteralType: TypeAlias = Literal[
+    "GST_PAD_LINK_NOFORMAT",
+    "GST_PAD_LINK_NOSCHED",
+    "GST_PAD_LINK_OK",
+    "GST_PAD_LINK_REFUSED",
+    "GST_PAD_LINK_WAS_LINKED",
+    "GST_PAD_LINK_WRONG_DIRECTION",
+    "GST_PAD_LINK_WRONG_HIERARCHY",
+    "noformat",
+    "nosched",
+    "ok",
+    "refused",
+    "was-linked",
+    "wrong-direction",
+    "wrong-hierarchy",
+]
+_PadLinkReturnValueType: TypeAlias = PadLinkReturn | _PadLinkReturnLiteralType
+
 class PadMode(GObject.GEnum):
     NONE = 0
     PULL = 2
     PUSH = 1
     @staticmethod
-    def get_name(mode: PadMode) -> str: ...
+    def get_name(mode: _PadModeValueType) -> str: ...
+
+_PadModeLiteralType: TypeAlias = Literal[
+    "GST_PAD_MODE_NONE",
+    "GST_PAD_MODE_PULL",
+    "GST_PAD_MODE_PUSH",
+    "none",
+    "pull",
+    "push",
+]
+_PadModeValueType: TypeAlias = PadMode | _PadModeLiteralType
 
 class PadPresence(GObject.GEnum):
     ALWAYS = 0
     REQUEST = 2
     SOMETIMES = 1
+
+_PadPresenceLiteralType: TypeAlias = Literal[
+    "GST_PAD_ALWAYS",
+    "GST_PAD_REQUEST",
+    "GST_PAD_SOMETIMES",
+    "always",
+    "request",
+    "sometimes",
+]
+_PadPresenceValueType: TypeAlias = PadPresence | _PadPresenceLiteralType
 
 class PadProbeReturn(GObject.GEnum):
     DROP = 0
@@ -6997,6 +8192,20 @@ class PadProbeReturn(GObject.GEnum):
     OK = 1
     PASS = 3
     REMOVE = 2
+
+_PadProbeReturnLiteralType: TypeAlias = Literal[
+    "GST_PAD_PROBE_DROP",
+    "GST_PAD_PROBE_HANDLED",
+    "GST_PAD_PROBE_OK",
+    "GST_PAD_PROBE_PASS",
+    "GST_PAD_PROBE_REMOVE",
+    "drop",
+    "handled",
+    "ok",
+    "pass",
+    "remove",
+]
+_PadProbeReturnValueType: TypeAlias = PadProbeReturn | _PadProbeReturnLiteralType
 
 class ParseError(GObject.GEnum):
     COULD_NOT_SET_PROPERTY = 4
@@ -7010,12 +8219,42 @@ class ParseError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_ParseErrorLiteralType: TypeAlias = Literal[
+    "GST_PARSE_ERROR_COULD_NOT_SET_PROPERTY",
+    "GST_PARSE_ERROR_DELAYED_LINK",
+    "GST_PARSE_ERROR_EMPTY",
+    "GST_PARSE_ERROR_EMPTY_BIN",
+    "GST_PARSE_ERROR_LINK",
+    "GST_PARSE_ERROR_NO_SUCH_ELEMENT",
+    "GST_PARSE_ERROR_NO_SUCH_PROPERTY",
+    "GST_PARSE_ERROR_SYNTAX",
+    "could-not-set-property",
+    "delayed-link",
+    "empty",
+    "empty-bin",
+    "link",
+    "no-such-element",
+    "no-such-property",
+    "syntax",
+]
+_ParseErrorValueType: TypeAlias = ParseError | _ParseErrorLiteralType
+
 class PluginError(GObject.GEnum):
     DEPENDENCIES = 1
     MODULE = 0
     NAME_MISMATCH = 2
     @staticmethod
     def quark() -> int: ...
+
+_PluginErrorLiteralType: TypeAlias = Literal[
+    "GST_PLUGIN_ERROR_DEPENDENCIES",
+    "GST_PLUGIN_ERROR_MODULE",
+    "GST_PLUGIN_ERROR_NAME_MISMATCH",
+    "dependencies",
+    "module",
+    "name-mismatch",
+]
+_PluginErrorValueType: TypeAlias = PluginError | _PluginErrorLiteralType
 
 class ProgressType(GObject.GEnum):
     CANCELED = 3
@@ -7024,16 +8263,52 @@ class ProgressType(GObject.GEnum):
     ERROR = 4
     START = 0
 
+_ProgressTypeLiteralType: TypeAlias = Literal[
+    "GST_PROGRESS_TYPE_CANCELED",
+    "GST_PROGRESS_TYPE_COMPLETE",
+    "GST_PROGRESS_TYPE_CONTINUE",
+    "GST_PROGRESS_TYPE_ERROR",
+    "GST_PROGRESS_TYPE_START",
+    "canceled",
+    "complete",
+    "continue",
+    "error",
+    "start",
+]
+_ProgressTypeValueType: TypeAlias = ProgressType | _ProgressTypeLiteralType
+
 class PromiseResult(GObject.GEnum):
     EXPIRED = 3
     INTERRUPTED = 1
     PENDING = 0
     REPLIED = 2
 
+_PromiseResultLiteralType: TypeAlias = Literal[
+    "GST_PROMISE_RESULT_EXPIRED",
+    "GST_PROMISE_RESULT_INTERRUPTED",
+    "GST_PROMISE_RESULT_PENDING",
+    "GST_PROMISE_RESULT_REPLIED",
+    "expired",
+    "interrupted",
+    "pending",
+    "replied",
+]
+_PromiseResultValueType: TypeAlias = PromiseResult | _PromiseResultLiteralType
+
 class QOSType(GObject.GEnum):
     OVERFLOW = 0
     THROTTLE = 2
     UNDERFLOW = 1
+
+_QOSTypeLiteralType: TypeAlias = Literal[
+    "GST_QOS_TYPE_OVERFLOW",
+    "GST_QOS_TYPE_THROTTLE",
+    "GST_QOS_TYPE_UNDERFLOW",
+    "overflow",
+    "throttle",
+    "underflow",
+]
+_QOSTypeValueType: TypeAlias = QOSType | _QOSTypeLiteralType
 
 class QueryType(GObject.GEnum):
     ACCEPT_CAPS = 40963
@@ -7058,17 +8333,75 @@ class QueryType(GObject.GEnum):
     UNKNOWN = 0
     URI = 33283
     @staticmethod
-    def get_flags(type: QueryType) -> QueryTypeFlags: ...
+    def get_flags(type: _QueryTypeValueType) -> QueryTypeFlags: ...
     @staticmethod
-    def get_name(type: QueryType) -> str: ...
+    def get_name(type: _QueryTypeValueType) -> str: ...
     @staticmethod
-    def to_quark(type: QueryType) -> int: ...
+    def to_quark(type: _QueryTypeValueType) -> int: ...
+
+_QueryTypeLiteralType: TypeAlias = Literal[
+    "GST_QUERY_ACCEPT_CAPS",
+    "GST_QUERY_ALLOCATION",
+    "GST_QUERY_BITRATE",
+    "GST_QUERY_BUFFERING",
+    "GST_QUERY_CAPS",
+    "GST_QUERY_CONTEXT",
+    "GST_QUERY_CONVERT",
+    "GST_QUERY_CUSTOM",
+    "GST_QUERY_DRAIN",
+    "GST_QUERY_DURATION",
+    "GST_QUERY_FORMATS",
+    "GST_QUERY_JITTER",
+    "GST_QUERY_LATENCY",
+    "GST_QUERY_POSITION",
+    "GST_QUERY_RATE",
+    "GST_QUERY_SCHEDULING",
+    "GST_QUERY_SEEKING",
+    "GST_QUERY_SEGMENT",
+    "GST_QUERY_SELECTABLE",
+    "GST_QUERY_UNKNOWN",
+    "GST_QUERY_URI",
+    "accept-caps",
+    "allocation",
+    "bitrate",
+    "buffering",
+    "caps",
+    "context",
+    "convert",
+    "custom",
+    "drain",
+    "duration",
+    "formats",
+    "jitter",
+    "latency",
+    "position",
+    "rate",
+    "scheduling",
+    "seeking",
+    "segment",
+    "selectable",
+    "unknown",
+    "uri",
+]
+_QueryTypeValueType: TypeAlias = QueryType | _QueryTypeLiteralType
 
 class Rank(GObject.GEnum):
     MARGINAL = 64
     NONE = 0
     PRIMARY = 256
     SECONDARY = 128
+
+_RankLiteralType: TypeAlias = Literal[
+    "GST_RANK_MARGINAL",
+    "GST_RANK_NONE",
+    "GST_RANK_PRIMARY",
+    "GST_RANK_SECONDARY",
+    "marginal",
+    "none",
+    "primary",
+    "secondary",
+]
+_RankValueType: TypeAlias = Rank | _RankLiteralType
 
 class ResourceError(GObject.GEnum):
     BUSY = 4
@@ -7090,15 +8423,66 @@ class ResourceError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_ResourceErrorLiteralType: TypeAlias = Literal[
+    "GST_RESOURCE_ERROR_BUSY",
+    "GST_RESOURCE_ERROR_CLOSE",
+    "GST_RESOURCE_ERROR_FAILED",
+    "GST_RESOURCE_ERROR_NOT_AUTHORIZED",
+    "GST_RESOURCE_ERROR_NOT_FOUND",
+    "GST_RESOURCE_ERROR_NO_SPACE_LEFT",
+    "GST_RESOURCE_ERROR_NUM_ERRORS",
+    "GST_RESOURCE_ERROR_OPEN_READ",
+    "GST_RESOURCE_ERROR_OPEN_READ_WRITE",
+    "GST_RESOURCE_ERROR_OPEN_WRITE",
+    "GST_RESOURCE_ERROR_READ",
+    "GST_RESOURCE_ERROR_SEEK",
+    "GST_RESOURCE_ERROR_SETTINGS",
+    "GST_RESOURCE_ERROR_SYNC",
+    "GST_RESOURCE_ERROR_TOO_LAZY",
+    "GST_RESOURCE_ERROR_WRITE",
+    "busy",
+    "close",
+    "failed",
+    "no-space-left",
+    "not-authorized",
+    "not-found",
+    "num-errors",
+    "open-read",
+    "open-read-write",
+    "open-write",
+    "read",
+    "seek",
+    "settings",
+    "sync",
+    "too-lazy",
+    "write",
+]
+_ResourceErrorValueType: TypeAlias = ResourceError | _ResourceErrorLiteralType
+
 class SearchMode(GObject.GEnum):
     AFTER = 2
     BEFORE = 1
     EXACT = 0
 
+_SearchModeLiteralType: TypeAlias = Literal[
+    "GST_SEARCH_MODE_AFTER",
+    "GST_SEARCH_MODE_BEFORE",
+    "GST_SEARCH_MODE_EXACT",
+    "after",
+    "before",
+    "exact",
+]
+_SearchModeValueType: TypeAlias = SearchMode | _SearchModeLiteralType
+
 class SeekType(GObject.GEnum):
     END = 2
     NONE = 0
     SET = 1
+
+_SeekTypeLiteralType: TypeAlias = Literal[
+    "GST_SEEK_TYPE_END", "GST_SEEK_TYPE_NONE", "GST_SEEK_TYPE_SET", "end", "none", "set"
+]
+_SeekTypeValueType: TypeAlias = SeekType | _SeekTypeLiteralType
 
 class State(GObject.GEnum):
     NULL = 1
@@ -7107,7 +8491,21 @@ class State(GObject.GEnum):
     READY = 2
     VOID_PENDING = 0
     @staticmethod
-    def get_name(state: State) -> str: ...
+    def get_name(state: _StateValueType) -> str: ...
+
+_StateLiteralType: TypeAlias = Literal[
+    "GST_STATE_NULL",
+    "GST_STATE_PAUSED",
+    "GST_STATE_PLAYING",
+    "GST_STATE_READY",
+    "GST_STATE_VOID_PENDING",
+    "null",
+    "paused",
+    "playing",
+    "ready",
+    "void-pending",
+]
+_StateValueType: TypeAlias = State | _StateLiteralType
 
 class StateChange(GObject.GEnum):
     NULL_TO_NULL = 9
@@ -7121,7 +8519,31 @@ class StateChange(GObject.GEnum):
     READY_TO_PAUSED = 19
     READY_TO_READY = 18
     @staticmethod
-    def get_name(transition: StateChange) -> str: ...
+    def get_name(transition: _StateChangeValueType) -> str: ...
+
+_StateChangeLiteralType: TypeAlias = Literal[
+    "GST_STATE_CHANGE_NULL_TO_NULL",
+    "GST_STATE_CHANGE_NULL_TO_READY",
+    "GST_STATE_CHANGE_PAUSED_TO_PAUSED",
+    "GST_STATE_CHANGE_PAUSED_TO_PLAYING",
+    "GST_STATE_CHANGE_PAUSED_TO_READY",
+    "GST_STATE_CHANGE_PLAYING_TO_PAUSED",
+    "GST_STATE_CHANGE_PLAYING_TO_PLAYING",
+    "GST_STATE_CHANGE_READY_TO_NULL",
+    "GST_STATE_CHANGE_READY_TO_PAUSED",
+    "GST_STATE_CHANGE_READY_TO_READY",
+    "null-to-null",
+    "null-to-ready",
+    "paused-to-paused",
+    "paused-to-playing",
+    "paused-to-ready",
+    "playing-to-paused",
+    "playing-to-playing",
+    "ready-to-null",
+    "ready-to-paused",
+    "ready-to-ready",
+]
+_StateChangeValueType: TypeAlias = StateChange | _StateChangeLiteralType
 
 class StateChangeReturn(GObject.GEnum):
     ASYNC = 2
@@ -7129,7 +8551,21 @@ class StateChangeReturn(GObject.GEnum):
     NO_PREROLL = 3
     SUCCESS = 1
     @staticmethod
-    def get_name(state_ret: StateChangeReturn) -> str: ...
+    def get_name(state_ret: _StateChangeReturnValueType) -> str: ...
+
+_StateChangeReturnLiteralType: TypeAlias = Literal[
+    "GST_STATE_CHANGE_ASYNC",
+    "GST_STATE_CHANGE_FAILURE",
+    "GST_STATE_CHANGE_NO_PREROLL",
+    "GST_STATE_CHANGE_SUCCESS",
+    "async",
+    "failure",
+    "no-preroll",
+    "success",
+]
+_StateChangeReturnValueType: TypeAlias = (
+    StateChangeReturn | _StateChangeReturnLiteralType
+)
 
 class StreamError(GObject.GEnum):
     CODEC_NOT_FOUND = 6
@@ -7149,6 +8585,38 @@ class StreamError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_StreamErrorLiteralType: TypeAlias = Literal[
+    "GST_STREAM_ERROR_CODEC_NOT_FOUND",
+    "GST_STREAM_ERROR_DECODE",
+    "GST_STREAM_ERROR_DECRYPT",
+    "GST_STREAM_ERROR_DECRYPT_NOKEY",
+    "GST_STREAM_ERROR_DEMUX",
+    "GST_STREAM_ERROR_ENCODE",
+    "GST_STREAM_ERROR_FAILED",
+    "GST_STREAM_ERROR_FORMAT",
+    "GST_STREAM_ERROR_MUX",
+    "GST_STREAM_ERROR_NOT_IMPLEMENTED",
+    "GST_STREAM_ERROR_NUM_ERRORS",
+    "GST_STREAM_ERROR_TOO_LAZY",
+    "GST_STREAM_ERROR_TYPE_NOT_FOUND",
+    "GST_STREAM_ERROR_WRONG_TYPE",
+    "codec-not-found",
+    "decode",
+    "decrypt",
+    "decrypt-nokey",
+    "demux",
+    "encode",
+    "failed",
+    "format",
+    "mux",
+    "not-implemented",
+    "num-errors",
+    "too-lazy",
+    "type-not-found",
+    "wrong-type",
+]
+_StreamErrorValueType: TypeAlias = StreamError | _StreamErrorLiteralType
+
 class StreamStatusType(GObject.GEnum):
     CREATE = 0
     DESTROY = 3
@@ -7158,9 +8626,37 @@ class StreamStatusType(GObject.GEnum):
     START = 8
     STOP = 10
 
+_StreamStatusTypeLiteralType: TypeAlias = Literal[
+    "GST_STREAM_STATUS_TYPE_CREATE",
+    "GST_STREAM_STATUS_TYPE_DESTROY",
+    "GST_STREAM_STATUS_TYPE_ENTER",
+    "GST_STREAM_STATUS_TYPE_LEAVE",
+    "GST_STREAM_STATUS_TYPE_PAUSE",
+    "GST_STREAM_STATUS_TYPE_START",
+    "GST_STREAM_STATUS_TYPE_STOP",
+    "create",
+    "destroy",
+    "enter",
+    "leave",
+    "pause",
+    "start",
+    "stop",
+]
+_StreamStatusTypeValueType: TypeAlias = StreamStatusType | _StreamStatusTypeLiteralType
+
 class StructureChangeType(GObject.GEnum):
     LINK = 0
     UNLINK = 1
+
+_StructureChangeTypeLiteralType: TypeAlias = Literal[
+    "GST_STRUCTURE_CHANGE_TYPE_PAD_LINK",
+    "GST_STRUCTURE_CHANGE_TYPE_PAD_UNLINK",
+    "link",
+    "unlink",
+]
+_StructureChangeTypeValueType: TypeAlias = (
+    StructureChangeType | _StructureChangeTypeLiteralType
+)
 
 class TagFlag(GObject.GEnum):
     COUNT = 4
@@ -7168,6 +8664,20 @@ class TagFlag(GObject.GEnum):
     ENCODED = 2
     META = 1
     UNDEFINED = 0
+
+_TagFlagLiteralType: TypeAlias = Literal[
+    "GST_TAG_FLAG_COUNT",
+    "GST_TAG_FLAG_DECODED",
+    "GST_TAG_FLAG_ENCODED",
+    "GST_TAG_FLAG_META",
+    "GST_TAG_FLAG_UNDEFINED",
+    "count",
+    "decoded",
+    "encoded",
+    "meta",
+    "undefined",
+]
+_TagFlagValueType: TypeAlias = TagFlag | _TagFlagLiteralType
 
 class TagMergeMode(GObject.GEnum):
     APPEND = 3
@@ -7179,14 +8689,49 @@ class TagMergeMode(GObject.GEnum):
     REPLACE_ALL = 1
     UNDEFINED = 0
 
+_TagMergeModeLiteralType: TypeAlias = Literal[
+    "GST_TAG_MERGE_APPEND",
+    "GST_TAG_MERGE_COUNT",
+    "GST_TAG_MERGE_KEEP",
+    "GST_TAG_MERGE_KEEP_ALL",
+    "GST_TAG_MERGE_PREPEND",
+    "GST_TAG_MERGE_REPLACE",
+    "GST_TAG_MERGE_REPLACE_ALL",
+    "GST_TAG_MERGE_UNDEFINED",
+    "append",
+    "count",
+    "keep",
+    "keep-all",
+    "prepend",
+    "replace",
+    "replace-all",
+    "undefined",
+]
+_TagMergeModeValueType: TypeAlias = TagMergeMode | _TagMergeModeLiteralType
+
 class TagScope(GObject.GEnum):
     GLOBAL = 1
     STREAM = 0
+
+_TagScopeLiteralType: TypeAlias = Literal[
+    "GST_TAG_SCOPE_GLOBAL", "GST_TAG_SCOPE_STREAM", "global", "stream"
+]
+_TagScopeValueType: TypeAlias = TagScope | _TagScopeLiteralType
 
 class TaskState(GObject.GEnum):
     PAUSED = 2
     STARTED = 0
     STOPPED = 1
+
+_TaskStateLiteralType: TypeAlias = Literal[
+    "GST_TASK_PAUSED",
+    "GST_TASK_STARTED",
+    "GST_TASK_STOPPED",
+    "paused",
+    "started",
+    "stopped",
+]
+_TaskStateValueType: TypeAlias = TaskState | _TaskStateLiteralType
 
 class TocEntryType(GObject.GEnum):
     ANGLE = -3
@@ -7197,7 +8742,25 @@ class TocEntryType(GObject.GEnum):
     TRACK = 2
     VERSION = -2
     @staticmethod
-    def get_nick(type: TocEntryType) -> str: ...
+    def get_nick(type: _TocEntryTypeValueType) -> str: ...
+
+_TocEntryTypeLiteralType: TypeAlias = Literal[
+    "GST_TOC_ENTRY_TYPE_ANGLE",
+    "GST_TOC_ENTRY_TYPE_CHAPTER",
+    "GST_TOC_ENTRY_TYPE_EDITION",
+    "GST_TOC_ENTRY_TYPE_INVALID",
+    "GST_TOC_ENTRY_TYPE_TITLE",
+    "GST_TOC_ENTRY_TYPE_TRACK",
+    "GST_TOC_ENTRY_TYPE_VERSION",
+    "angle",
+    "chapter",
+    "edition",
+    "invalid",
+    "title",
+    "track",
+    "version",
+]
+_TocEntryTypeValueType: TypeAlias = TocEntryType | _TocEntryTypeLiteralType
 
 class TocLoopType(GObject.GEnum):
     FORWARD = 1
@@ -7205,15 +8768,44 @@ class TocLoopType(GObject.GEnum):
     PING_PONG = 3
     REVERSE = 2
 
+_TocLoopTypeLiteralType: TypeAlias = Literal[
+    "GST_TOC_LOOP_FORWARD",
+    "GST_TOC_LOOP_NONE",
+    "GST_TOC_LOOP_PING_PONG",
+    "GST_TOC_LOOP_REVERSE",
+    "forward",
+    "none",
+    "ping-pong",
+    "reverse",
+]
+_TocLoopTypeValueType: TypeAlias = TocLoopType | _TocLoopTypeLiteralType
+
 class TocScope(GObject.GEnum):
     CURRENT = 2
     GLOBAL = 1
+
+_TocScopeLiteralType: TypeAlias = Literal[
+    "GST_TOC_SCOPE_CURRENT", "GST_TOC_SCOPE_GLOBAL", "current", "global"
+]
+_TocScopeValueType: TypeAlias = TocScope | _TocScopeLiteralType
 
 class TracerValueScope(GObject.GEnum):
     ELEMENT = 2
     PAD = 3
     PROCESS = 0
     THREAD = 1
+
+_TracerValueScopeLiteralType: TypeAlias = Literal[
+    "GST_TRACER_VALUE_SCOPE_ELEMENT",
+    "GST_TRACER_VALUE_SCOPE_PAD",
+    "GST_TRACER_VALUE_SCOPE_PROCESS",
+    "GST_TRACER_VALUE_SCOPE_THREAD",
+    "element",
+    "pad",
+    "process",
+    "thread",
+]
+_TracerValueScopeValueType: TypeAlias = TracerValueScope | _TracerValueScopeLiteralType
 
 class TypeFindProbability(GObject.GEnum):
     LIKELY = 80
@@ -7223,6 +8815,24 @@ class TypeFindProbability(GObject.GEnum):
     NONE = 0
     POSSIBLE = 50
 
+_TypeFindProbabilityLiteralType: TypeAlias = Literal[
+    "GST_TYPE_FIND_LIKELY",
+    "GST_TYPE_FIND_MAXIMUM",
+    "GST_TYPE_FIND_MINIMUM",
+    "GST_TYPE_FIND_NEARLY_CERTAIN",
+    "GST_TYPE_FIND_NONE",
+    "GST_TYPE_FIND_POSSIBLE",
+    "likely",
+    "maximum",
+    "minimum",
+    "nearly-certain",
+    "none",
+    "possible",
+]
+_TypeFindProbabilityValueType: TypeAlias = (
+    TypeFindProbability | _TypeFindProbabilityLiteralType
+)
+
 class URIError(GObject.GEnum):
     BAD_REFERENCE = 3
     BAD_STATE = 2
@@ -7231,7 +8841,24 @@ class URIError(GObject.GEnum):
     @staticmethod
     def quark() -> int: ...
 
+_URIErrorLiteralType: TypeAlias = Literal[
+    "GST_URI_ERROR_BAD_REFERENCE",
+    "GST_URI_ERROR_BAD_STATE",
+    "GST_URI_ERROR_BAD_URI",
+    "GST_URI_ERROR_UNSUPPORTED_PROTOCOL",
+    "bad-reference",
+    "bad-state",
+    "bad-uri",
+    "unsupported-protocol",
+]
+_URIErrorValueType: TypeAlias = URIError | _URIErrorLiteralType
+
 class URIType(GObject.GEnum):
     SINK = 1
     SRC = 2
     UNKNOWN = 0
+
+_URITypeLiteralType: TypeAlias = Literal[
+    "GST_URI_SINK", "GST_URI_SRC", "GST_URI_UNKNOWN", "sink", "src", "unknown"
+]
+_URITypeValueType: TypeAlias = URIType | _URITypeLiteralType

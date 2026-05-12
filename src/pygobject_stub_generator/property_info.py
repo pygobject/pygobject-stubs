@@ -7,7 +7,7 @@ from dataclasses import field
 
 from gi.repository import GObject
 
-from .utils import make_nullable
+from .utils import is_ref_type
 
 if TYPE_CHECKING:
     import gi._gi as GI
@@ -27,8 +27,10 @@ class PropertyInfo:
     gobject_name: str = field(init=False)
     name: str = field(init=False)
 
+    _type_info: GI.TypeInfo | None = field(init=False, default=None)
+    _nullability: tuple[bool, bool] | None = field(init=False, default=None)
     _init_type: str | None = field(init=False, default=None)
-    _prop_type: str | None = field(init=False, default=None)
+    _prop_type: tuple[str | None, str | None] | None = field(init=False, default=None)
 
     def __post_init__(self) -> None:
         self.gobject_name = f"{self.gi_info.get_name()}"
@@ -51,33 +53,78 @@ class PropertyInfo:
         return bool(self.gi_info.get_flags() & GObject.ParamFlags.CONSTRUCT_ONLY)
 
     @property
-    def prop_type(self) -> str:
-        if self._prop_type is not None:
-            return self._prop_type
+    def type_info(self) -> GI.TypeInfo:
+        if self._type_info is None:
+            self._type_info = self.gi_info.get_type_info()
 
-        py_type = self.stub.type_info_to_python(self.gi_info.get_type_info(), out=True)
+        return self._type_info
+
+    @property
+    def nullability(self) -> tuple[bool, bool]:
+        if self._nullability is not None:
+            return self._nullability
+
         getter = self.gir_info.get_getter()
         setter = self.gir_info.get_setter()
 
-        if (getter and getter.may_return_null()) or (
-            # If it is wratable only prop, check if setter can accept NULL
-            setter and setter.get_arg(0).may_be_null()
-        ):
-            py_type = make_nullable(py_type)
+        getter_nullable = bool(getter and getter.may_return_null())
+        setter_nullable = bool(setter and setter.get_arg(0).may_be_null())
 
-        self._prop_type = py_type
+        is_ref = is_ref_type(self.type_info)
 
-        return py_type
+        if getter is not None:
+            read_nullable = getter_nullable
+        elif setter is not None:
+            read_nullable = setter_nullable or is_ref
+        else:
+            read_nullable = is_ref
+
+        if setter is not None:
+            write_nullable = setter_nullable
+        elif getter is not None:
+            write_nullable = getter_nullable or is_ref
+        else:
+            write_nullable = is_ref
+
+        self._nullability = (read_nullable, write_nullable)
+
+        return self._nullability
+
+    @property
+    def prop_type(self) -> tuple[str | None, str | None]:
+        if self._prop_type is not None:
+            return self._prop_type
+
+        read_nullable, write_nullable = self.nullability
+
+        self._prop_type = (
+            self.stub.type_info_to_python(
+                self.type_info,
+                nullable=read_nullable,
+                out=True,
+            )
+            if self.readable
+            else None,
+            self.stub.type_info_to_python(
+                self.type_info,
+                nullable=write_nullable,
+            )
+            if self.writable and not self.construct_only
+            else None,
+        )
+
+        return self._prop_type
 
     @property
     def init_type(self) -> str:
         if self._init_type is not None:
             return self._init_type
 
-        setter = self.gir_info.get_setter()
+        write_nullable = self.nullability[1]
+
         py_type = self.stub.type_info_to_python(
-            self.gi_info.get_type_info(),
-            nullable=bool(setter and setter.get_arg(0).may_be_null()),
+            self.type_info,
+            nullable=write_nullable,
         )
 
         self._init_type = py_type

@@ -5,6 +5,7 @@ from typing import cast
 from typing import Final
 from typing import get_args
 from typing import get_origin
+from typing import Literal
 from typing import TYPE_CHECKING
 from typing import TypeAlias
 from typing_extensions import get_overloads
@@ -95,6 +96,7 @@ _MODULE_NORMALIZATION: Final[dict[tuple[str, str | None], str]] = {
     ("typing", "TypeVar"): "typing_extensions",  # default= 3.13+, infer_variance= 3.12+
     ("typing", "Unpack"): "typing_extensions",  # 3.11+
     ("typing", "TypeVarTuple"): "typing_extensions",  # 3.11+
+    ("typing", "Never"): "typing_extensions",  # 3.11+
 }
 
 
@@ -335,6 +337,12 @@ class Stub:
             else f"{final_symbol}[{annotation}]"
         )
 
+    def get_literal(self, annotation: str, /) -> str:
+        return f"{self.get_import('typing', 'Literal')}[{annotation}]"
+
+    def get_type_alias(self, name: str, /) -> str:
+        return f"{name}: {self.get_import('typing', 'TypeAlias')}"
+
     def get_alias(self, name: str, obj: object, /) -> str | None:
         if obj.__module__.startswith(("gi.overrides.", "gi.repository.")):
             namespace = obj.__module__.rsplit(".", 1)[1]
@@ -351,12 +359,39 @@ class Stub:
         return None
 
     def get_property(
-        self, name: str, return_annotation: str, /, *, indent: str = ""
+        self,
+        name: str,
+        annotations: tuple[str | None, str | None],
+        /,
+        *,
+        indent: str = "",
     ) -> str:
         property_symbol = self.get_import("builtins", "property")
-        return f"{indent}@{property_symbol}\n{indent}def {name}(self) -> {
-            return_annotation
-        }: ..."
+        get_annotation, set_annotation = annotations
+
+        if get_annotation is None and set_annotation is None:
+            return ""
+
+        if get_annotation == set_annotation:
+            return f"{indent}{name}: {get_annotation}"
+
+        if get_annotation is None:
+            get_annotation = self.get_import("typing", "Never")
+
+        lines: list[str] = [
+            f"@{property_symbol}",
+            f"def {name}(self) -> {get_annotation}: ...",
+        ]
+
+        if set_annotation is not None:
+            lines.extend(
+                [
+                    f"@{name}.setter",
+                    f"def {name}(self, value: {set_annotation}) -> None: ...",
+                ]
+            )
+
+        return textwrap.indent("\n".join(lines), indent)
 
     def get_class_import(self, cls: type[Any], /) -> str:
         # Things like Generic and Protocol show up in the MRO as `Generic` rather than
@@ -573,6 +608,20 @@ class Stub:
                     py_type = f"{self.get_import('collections.abc', 'Callable')}[[{
                         ', '.join(callback_args.values())
                     }], {callback_return_type}]"
+                elif (
+                    isinstance(interface_info, GI.EnumInfo)
+                    and interface_info.get_g_type() != GObject.TYPE_NONE
+                ):
+                    interface_namespace = interface_info.get_namespace()
+                    interface_name = f"{interface_info.get_name()}"
+
+                    # cairo doesn't use the `_<iface>ValueType` convention
+                    if not out and interface_namespace != "cairo":
+                        interface_name = f"_{interface_name}ValueType"
+
+                    py_type = self.get_namespace_member(
+                        interface_namespace, interface_name
+                    )
                 elif interface_info is not None:
                     interface_namespace = interface_info.get_namespace()
                     interface_name = interface_info.get_name()
@@ -981,6 +1030,87 @@ class Stub:
 
         return definition
 
+    def __build_enum(
+        self,
+        name: str,
+        enum_obj: type[Any],
+        in_class: type[Any] | None,
+        prefix_name: str,
+        /,
+        enum_type: Literal["enum", "flags"],
+    ) -> str:
+        override = self.check_override(prefix_name, name)
+        if override:
+            return override
+
+        if in_class is None and (alias := self.get_alias(name, enum_obj)) is not None:
+            return f"{name} = {alias}"
+
+        full_name = generate_full_name(prefix_name, name)
+        gobject_enum_base_name = "GEnum" if enum_type == "enum" else "GFlags"
+        GObjectEnumBase = getattr(GObject, gobject_enum_base_name)
+        int_enum_base = "IntEnum" if enum_type == "enum" else "IntFlag"
+
+        enum_base = (
+            self.get_namespace_member("GObject", gobject_enum_base_name)
+            if issubclass(enum_obj, GObjectEnumBase)
+            else self.get_import("enum", int_enum_base)
+        )
+
+        names: set[str] = set()
+        lines: list[str] = []
+
+        for key in sorted(vars(enum_obj)):
+            if key.startswith(("__", "_")) or key[0].isdigit():
+                continue
+
+            enum_attr = getattr(enum_obj, key)
+
+            override = self.check_override(full_name, key)
+            if override:
+                lines.append(override)
+                continue
+
+            if isinstance(enum_attr, GI.FunctionInfo):
+                lines.append(self.build_function(key, enum_attr, enum_obj))
+            elif hasattr(enum_attr, "real"):
+                value = enum_attr.real
+                lines.append(f"{key} = {value}")
+
+                if isinstance(enum_attr, GObjectEnumBase):
+                    names.update(
+                        (enum_attr.value_name, enum_attr.value_nick)
+                        if GObjectEnumBase is GObject.GEnum
+                        else (*enum_attr.value_names, *enum_attr.value_nicks)
+                    )
+            else:
+                lines.append(f"{key} = ...  # FIXME: {enum_type.title()}")
+
+        if not lines:
+            # No attributes were found
+            lines = ["..."]
+
+        cls_body = textwrap.indent("\n".join(lines), "    ")
+        cls_definition = f"class {name}({enum_base}):\n{cls_body}"
+        enum_value_definition = ""
+
+        if names:
+            literal_type_name = f"_{name}LiteralType"
+            literal_type_symbol = self.get_type_alias(literal_type_name)
+            value_type_symbol = self.get_type_alias(f"_{name}ValueType")
+
+            names_joined = ", ".join(repr(n) for n in sorted(names))
+
+            value_type = f"{name} | {literal_type_name}"
+            if enum_type == "flags":
+                value_type = f"{value_type} | tuple[{literal_type_name}, ...]"
+
+            enum_value_definition = f"""
+{literal_type_symbol} = {self.get_literal(names_joined)}
+{value_type_symbol} = {value_type}"""
+
+        return f"{cls_definition}{enum_value_definition}"
+
     def build_contents_and_fields(
         self,
         parent: _Object,
@@ -1130,95 +1260,20 @@ class Stub:
 
         # Flags
         for name, obj in sorted(flags.items()):
-            override = self.check_override(prefix_name, name)
-            if override:
-                ret += override + "\n\n"
-                continue
-
-            if in_class is None and (alias := self.get_alias(name, obj)) is not None:
-                ret += f"{name} = {alias}\n"
-                continue
-
-            full_name = generate_full_name(prefix_name, name)
-            flag_base = (
-                self.get_namespace_member("GObject", "GFlags")
-                if issubclass(obj, GObject.GFlags)
-                else self.get_import("enum", "IntFlag")
+            ret += (
+                self.__build_enum(name, obj, in_class, prefix_name, enum_type="flags")
+                + "\n"
             )
-
-            ret += f"class {name}({flag_base}):\n"
-            for key in sorted(vars(obj)):
-                if key.startswith(("__", "_")) or key[0].isdigit():
-                    continue
-
-                override = self.check_override(full_name, key)
-                if override:
-                    for line in override.splitlines():
-                        ret += "    " + line + "\n"
-                    continue
-
-                o = getattr(obj, key)
-                if isinstance(o, GI.FunctionInfo):
-                    function_ret = self.build_function(key, o, obj)
-                    for line in function_ret.splitlines():
-                        ret += "    " + line + "\n"
-                elif hasattr(o, "real"):
-                    value = o.real
-                    ret += f"    {key} = {value}\n"
-                else:
-                    ret += f"    {key} = ... # FIXME Flags\n"
-            ret += "\n"
 
         if ret and enums:
             ret += "\n"
 
         # Enums
         for name, obj in sorted(enums.items()):
-            override = self.check_override(prefix_name, name)
-            if override:
-                ret += override + "\n\n"
-                continue
-
-            if in_class is None and (alias := self.get_alias(name, obj)) is not None:
-                ret += f"{name} = {alias}\n"
-                continue
-
-            full_name = generate_full_name(prefix_name, name)
-            enum_base = (
-                self.get_namespace_member("GObject", "GEnum")
-                if issubclass(obj, GObject.GEnum)
-                else self.get_import("enum", "IntEnum")
+            ret += (
+                self.__build_enum(name, obj, in_class, prefix_name, enum_type="enum")
+                + "\n"
             )
-
-            # Some Enums can be empty in the end
-            ret += f"class {name}({enum_base}):\n"
-            length_before = len(ret)
-            for key in sorted(vars(obj)):
-                if key.startswith(("__", "_")) or key[0].isdigit():
-                    continue
-
-                override = self.check_override(full_name, key)
-                if override:
-                    for line in override.splitlines():
-                        ret += "    " + line + "\n"
-                    continue
-
-                o = getattr(obj, key)
-                if isinstance(o, GI.FunctionInfo):
-                    function_ret = self.build_function(key, o, obj)
-                    for line in function_ret.splitlines():
-                        ret += "    " + line + "\n"
-                elif hasattr(o, "real"):
-                    value = o.real
-                    ret += f"    {key} = {value}\n"
-                else:
-                    ret += f"    {key} = ... # FIXME Enum\n"
-
-            if len(ret) == length_before:
-                # No attributes were found
-                ret += "    ...\n"
-
-            ret += "\n"
 
         return ret, fields
 
