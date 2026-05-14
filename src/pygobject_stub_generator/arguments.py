@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+from typing import cast
 from typing import Final
 from typing import TYPE_CHECKING
 from typing_extensions import Self
 
 from dataclasses import dataclass
+from dataclasses import field
+from dataclasses import replace
 
 import gi._gi as GI
+
+from .utils import cache_slot
+from .utils import MISSING
+from .utils import MissingType
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -27,6 +34,30 @@ class VisibleArgument:
     is_varargs_slot: bool
     is_varargs_callback: bool
 
+    _callable_info: GI.CallableInfo | None = field(init=False, default=None, hash=False)
+    _callable_container: GI.BaseInfo | MissingType | None = field(
+        init=False, default=MISSING, hash=False
+    )
+
+    @property
+    @cache_slot
+    def callable_info(self) -> GI.CallableInfo:
+        return cast("GI.CallableInfo", self.info.get_container())
+
+    @property
+    def callable_flags(self) -> int:
+        info = self.callable_info
+
+        if isinstance(info, GI.FunctionInfo):
+            return info.get_flags()
+
+        return 0
+
+    @property
+    @cache_slot(default=MISSING)
+    def callable_container(self) -> GI.BaseInfo | None:
+        return self.callable_info.get_container()
+
 
 @dataclass(slots=True, frozen=True)
 class Arguments:
@@ -35,6 +66,9 @@ class Arguments:
     hidden: frozenset[int]
     closure_targets: frozenset[int]
     varargs_index: int | None
+    async_callback_index: int | None
+    async_cancellable_index: int | None
+    async_user_data_index: int | None
 
     @property
     def varargs_info(self) -> GI.ArgInfo | None:
@@ -65,6 +99,40 @@ class Arguments:
                 is_varargs_callback=closure_index == self.varargs_index,
             )
 
+    def as_async(self) -> Self | None:
+        if (
+            self.async_callback_index is None
+            or self.async_cancellable_index is None
+            or self.async_user_data_index is None
+        ):
+            return None
+
+        return replace(
+            self,
+            hidden=self.hidden
+            | {
+                self.async_callback_index,
+                self.async_user_data_index,
+            },
+            varargs_index=None,
+            closure_targets=self.closure_targets - {self.async_user_data_index},
+        )
+
+    def as_async_callback_kwargs(self) -> Self | None:
+        if (
+            self.async_callback_index is None
+            or self.async_cancellable_index is None
+            or self.async_user_data_index is None
+        ):
+            return None
+
+        return replace(
+            self,
+            hidden=self.hidden | {self.async_user_data_index},
+            varargs_index=None,
+            closure_targets=self.closure_targets - {self.async_user_data_index},
+        )
+
     @classmethod
     def for_callable(
         cls, info: GI.CallableInfo, /, *, allow_varargs: bool = True
@@ -74,6 +142,9 @@ class Arguments:
         hidden_indexes: set[int] = set()
         closure_indexes: set[int] = set()
         from_python_indexes: set[int] = set()
+        async_callback_index: int | None = None
+        async_cancellable_index: int | None = None
+        async_user_data_index: int | None = None
 
         if (
             return_array_length_index := info.get_return_type().get_array_length_index()
@@ -121,20 +192,37 @@ class Arguments:
                 ):
                     hidden_indexes.add(array_length_index)
 
-                # Hide destroy and closure args for callbacks
-                if (
-                    tag == GI.TypeTag.INTERFACE
-                    and isinstance(type_info.get_interface(), GI.CallbackInfo)
-                    and arg_index not in hidden_indexes
-                    and arg_index not in closure_indexes
-                ):
-                    if (
-                        closure_index := arg.get_closure_index()
-                    ) > -1 and is_from_python:
-                        closure_indexes.add(closure_index)
+                if tag == GI.TypeTag.INTERFACE:
+                    iface_info = type_info.get_interface()
 
-                    if (destroy_index := arg.get_destroy_index()) > -1:
-                        hidden_indexes.add(destroy_index)
+                    if isinstance(iface_info, GI.CallbackInfo):
+                        # Hide destroy and closure args for callbacks
+                        if (
+                            arg_index not in hidden_indexes
+                            and arg_index not in closure_indexes
+                        ):
+                            if (
+                                closure_index := arg.get_closure_index()
+                            ) > -1 and is_from_python:
+                                closure_indexes.add(closure_index)
+
+                            if (destroy_index := arg.get_destroy_index()) > -1:
+                                hidden_indexes.add(destroy_index)
+
+                        if arg.get_scope() == GI.ScopeType.ASYNC:
+                            async_callback_index = arg_index
+
+                            if (
+                                closure_index := arg.get_closure_index()
+                            ) > -1 and is_from_python:
+                                async_user_data_index = closure_index
+
+                    if (
+                        isinstance(iface_info, GI.ObjectInfo)
+                        and f"{iface_info.get_namespace()}.{iface_info.get_name()}"
+                        == "Gio.Cancellable"
+                    ):
+                        async_cancellable_index = arg_index
 
                 if is_from_python:
                     from_python_indexes.add(arg_index)
@@ -161,4 +249,7 @@ class Arguments:
             hidden=frozenset(hidden_indexes),
             closure_targets=frozenset(closure_indexes),
             varargs_index=varargs_index,
+            async_callback_index=async_callback_index,
+            async_cancellable_index=async_cancellable_index,
+            async_user_data_index=async_user_data_index,
         )

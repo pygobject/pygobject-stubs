@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Literal
+from typing import overload
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
@@ -1031,15 +1032,27 @@ class AlertDialog(Dialog):
         width_request: int = ...,
     ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
+    @overload
     def choose(
         self,
         parent: _Gtk4.Widget | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[str]: ...
+    @overload
+    def choose(
+        self,
+        parent: _Gtk4.Widget | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[AlertDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def choose(
+        self,
+        parent: _Gtk4.Widget | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[AlertDialog] | None,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...
@@ -5706,14 +5719,21 @@ class MessageDialog(_Gtk4.Window):
         width_request: int = ...,
     ) -> None: ...
     def add_response(self, id: str, label: str) -> None: ...
+    @overload
+    def choose(self, cancellable: Gio.Cancellable | None = None) -> _gi.Async[str]: ...
+    @overload
+    def choose(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[MessageDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def choose(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[MessageDialog] | None,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> str: ...
     def do_response(self, response: str) -> None: ...

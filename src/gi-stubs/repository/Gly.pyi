@@ -1,10 +1,9 @@
 from typing import Literal
+from typing import overload
 from typing import type_check_only
 from typing import TypeAlias
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
-
-from collections.abc import Callable
 
 from gi import _gi
 from gi.repository import Gio
@@ -85,14 +84,23 @@ class Creator(GObject.Object):
     ) -> NewFrame: ...
     def add_metadata_key_value(self, key: str, value: str) -> bool: ...
     def create(self) -> EncodedImage | None: ...
+    @overload
+    def create_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[EncodedImage]: ...
+    @overload
+    def create_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Creator, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def create_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Creator] | None,
     ) -> None: ...
     def create_finish(self, result: Gio.AsyncResult) -> EncodedImage: ...
     @classmethod
@@ -246,28 +254,47 @@ class Image(GObject.Object):
     def get_metadata_keys(self) -> list[str]: ...
     def get_mime_type(self) -> str: ...
     def get_specific_frame(self, frame_request: FrameRequest) -> Frame: ...
+    @overload
+    def get_specific_frame_async(
+        self, frame_request: FrameRequest, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Frame]: ...
+    @overload
+    def get_specific_frame_async(
+        self,
+        frame_request: FrameRequest,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Image, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def get_specific_frame_async(
         self,
         frame_request: FrameRequest,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Image] | None,
     ) -> None: ...
     def get_specific_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
     def get_transformation_orientation(self) -> int: ...
     def get_width(self) -> int: ...
     def next_frame(self) -> Frame: ...
+    @overload
+    def next_frame_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Frame]: ...
+    @overload
+    def next_frame_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Image, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def next_frame_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Image] | None,
     ) -> None: ...
     def next_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
 
@@ -343,26 +370,45 @@ class Loader(GObject.Object):
     ) -> None: ...
     @staticmethod
     def get_mime_types() -> list[str]: ...
+    @overload
     @staticmethod
     def get_mime_types_async(
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[list[str]]: ...
+    @overload
+    @staticmethod
+    def get_mime_types_async(
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    @staticmethod
+    def get_mime_types_async(
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[None] | None,
     ) -> None: ...
     @staticmethod
     def get_mime_types_finish(result: Gio.AsyncResult) -> list[str]: ...
     def load(self) -> Image: ...
+    @overload
+    def load_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Image]: ...
+    @overload
+    def load_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Loader, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def load_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Loader] | None,
     ) -> None: ...
     def load_finish(self, result: Gio.AsyncResult) -> Image: ...
     @classmethod

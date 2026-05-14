@@ -334,14 +334,30 @@ def render_option(
 def rgb_to_hsv(r: float, g: float, b: float) -> tuple[float, float, float]: ...
 def set_debug_flags(flags: _DebugFlagsValueType) -> None: ...
 def show_uri(parent: Window | None, uri: str, timestamp: int) -> None: ...
+@overload
 def show_uri_full(
     parent: Window | None,
     uri: str,
     timestamp: int,
     cancellable: Gio.Cancellable | None = None,
-    callback: Callable[[GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None]
-    | None = None,
+) -> _gi.Async[bool]: ...
+@overload
+def show_uri_full(
+    parent: Window | None,
+    uri: str,
+    timestamp: int,
+    cancellable: Gio.Cancellable | None,
+    callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
     *user_data: Unpack[_DataTs],
+) -> None: ...
+@overload
+def show_uri_full(
+    parent: Window | None,
+    uri: str,
+    timestamp: int,
+    cancellable: Gio.Cancellable | None = None,
+    *,
+    callback: Gio.AsyncReadyCallback[None] | None,
 ) -> None: ...
 def show_uri_full_finish(parent: Window, result: Gio.AsyncResult) -> bool: ...
 def test_accessible_assertion_message_role(
@@ -1208,15 +1224,25 @@ class AlertDialog(GObject.Object):
         message: str = ...,
         modal: bool = ...,
     ) -> None: ...
+    @overload
+    def choose(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[int]: ...
+    @overload
+    def choose(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[AlertDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def choose(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[AlertDialog] | None,
     ) -> None: ...
     def choose_finish(self, result: Gio.AsyncResult) -> int: ...
     def get_buttons(self) -> list[str]: ...
@@ -6851,16 +6877,30 @@ class ColorDialog(GObject.Object):
     def __init__(
         self, *, modal: bool = ..., title: str = ..., with_alpha: bool = ...
     ) -> None: ...
+    @overload
     def choose_rgba(
         self,
         parent: Window | None = None,
         initial_color: _Gdk4.RGBA | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[_Gdk4.RGBA]: ...
+    @overload
+    def choose_rgba(
+        self,
+        parent: Window | None,
+        initial_color: _Gdk4.RGBA | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[ColorDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def choose_rgba(
+        self,
+        parent: Window | None = None,
+        initial_color: _Gdk4.RGBA | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[ColorDialog] | None,
     ) -> None: ...
     def choose_rgba_finish(self, result: Gio.AsyncResult) -> _Gdk4.RGBA: ...
     def get_modal(self) -> bool: ...
@@ -11449,98 +11489,178 @@ class FileDialog(GObject.Object):
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> FileDialog: ...
+    @overload
+    def open(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Gio.File]: ...
+    @overload
+    def open(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def open(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def open_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
+    @overload
+    def open_multiple(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Gio.ListModel]: ...
+    @overload
+    def open_multiple(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def open_multiple(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def open_multiple_finish(self, result: Gio.AsyncResult) -> Gio.ListModel: ...
+    @overload
+    def open_multiple_text_files(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[tuple[Gio.ListModel, str]]: ...
+    @overload
+    def open_multiple_text_files(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def open_multiple_text_files(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def open_multiple_text_files_finish(
         self, result: Gio.AsyncResult
     ) -> tuple[Gio.ListModel, str]: ...
+    @overload
+    def open_text_file(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[tuple[Gio.File, str]]: ...
+    @overload
+    def open_text_file(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def open_text_file(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def open_text_file_finish(
         self, result: Gio.AsyncResult
     ) -> tuple[Gio.File, str]: ...
+    @overload
+    def save(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Gio.File]: ...
+    @overload
+    def save(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def save(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def save_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
+    @overload
+    def save_text_file(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[tuple[Gio.File, str, str]]: ...
+    @overload
+    def save_text_file(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def save_text_file(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def save_text_file_finish(
         self, result: Gio.AsyncResult
     ) -> tuple[Gio.File, str, str]: ...
+    @overload
+    def select_folder(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Gio.File]: ...
+    @overload
+    def select_folder(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def select_folder(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def select_folder_finish(self, result: Gio.AsyncResult) -> Gio.File: ...
+    @overload
+    def select_multiple_folders(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Gio.ListModel]: ...
+    @overload
+    def select_multiple_folders(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def select_multiple_folders(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileDialog] | None,
     ) -> None: ...
     def select_multiple_folders_finish(
         self, result: Gio.AsyncResult
@@ -11654,28 +11774,48 @@ class FileLauncher(GObject.Object):
     def get_always_ask(self) -> bool: ...
     def get_file(self) -> Gio.File | None: ...
     def get_writable(self) -> bool: ...
+    @overload
+    def launch(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def launch(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileLauncher, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def launch(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileLauncher] | None,
     ) -> None: ...
     def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
     @classmethod
     def new(cls, file: Gio.File | None = None) -> FileLauncher: ...
+    @overload
+    def open_containing_folder(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def open_containing_folder(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FileLauncher, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def open_containing_folder(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[FileLauncher] | None,
     ) -> None: ...
     def open_containing_folder_finish(self, result: Gio.AsyncResult) -> bool: ...
     def set_always_ask(self, always_ask: bool) -> None: ...
@@ -13060,51 +13200,107 @@ class FontDialog(GObject.Object):
         modal: bool = ...,
         title: str = ...,
     ) -> None: ...
+    @overload
     def choose_face(
         self,
         parent: Window | None = None,
         initial_value: Pango.FontFace | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Pango.FontFace]: ...
+    @overload
+    def choose_face(
+        self,
+        parent: Window | None,
+        initial_value: Pango.FontFace | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FontDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
+    @overload
+    def choose_face(
+        self,
+        parent: Window | None = None,
+        initial_value: Pango.FontFace | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[FontDialog] | None,
+    ) -> None: ...
     def choose_face_finish(self, result: Gio.AsyncResult) -> Pango.FontFace: ...
+    @overload
     def choose_family(
         self,
         parent: Window | None = None,
         initial_value: Pango.FontFamily | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Pango.FontFamily]: ...
+    @overload
+    def choose_family(
+        self,
+        parent: Window | None,
+        initial_value: Pango.FontFamily | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FontDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
+    @overload
+    def choose_family(
+        self,
+        parent: Window | None = None,
+        initial_value: Pango.FontFamily | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[FontDialog] | None,
+    ) -> None: ...
     def choose_family_finish(self, result: Gio.AsyncResult) -> Pango.FontFamily: ...
+    @overload
     def choose_font(
         self,
         parent: Window | None = None,
         initial_value: Pango.FontDescription | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Pango.FontDescription]: ...
+    @overload
+    def choose_font(
+        self,
+        parent: Window | None,
+        initial_value: Pango.FontDescription | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FontDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
+    @overload
+    def choose_font(
+        self,
+        parent: Window | None = None,
+        initial_value: Pango.FontDescription | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[FontDialog] | None,
+    ) -> None: ...
+    @overload
     def choose_font_and_features(
         self,
         parent: Window | None = None,
         initial_value: Pango.FontDescription | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[tuple[bool, Pango.FontDescription, str, Pango.Language]]: ...
+    @overload
+    def choose_font_and_features(
+        self,
+        parent: Window | None,
+        initial_value: Pango.FontDescription | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[FontDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def choose_font_and_features(
+        self,
+        parent: Window | None = None,
+        initial_value: Pango.FontDescription | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[FontDialog] | None,
     ) -> None: ...
     def choose_font_and_features_finish(
         self, result: Gio.AsyncResult
@@ -21441,28 +21637,58 @@ class PrintDialog(GObject.Object):
     def get_title(self) -> str: ...
     @classmethod
     def new(cls) -> PrintDialog: ...
+    @overload
     def print_(
         self,
         parent: Window | None = None,
         setup: PrintSetup | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Gio.OutputStream]: ...
+    @overload
+    def print_(
+        self,
+        parent: Window | None,
+        setup: PrintSetup | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[PrintDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
+    @overload
+    def print_(
+        self,
+        parent: Window | None = None,
+        setup: PrintSetup | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[PrintDialog] | None,
+    ) -> None: ...
+    @overload
     def print_file(
         self,
         parent: Window | None,
         setup: PrintSetup | None,
         file: Gio.File,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def print_file(
+        self,
+        parent: Window | None,
+        setup: PrintSetup | None,
+        file: Gio.File,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[PrintDialog, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def print_file(
+        self,
+        parent: Window | None,
+        setup: PrintSetup | None,
+        file: Gio.File,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[PrintDialog] | None,
     ) -> None: ...
     def print_file_finish(self, result: Gio.AsyncResult) -> bool: ...
     def print_finish(self, result: Gio.AsyncResult) -> Gio.OutputStream: ...
@@ -21471,15 +21697,25 @@ class PrintDialog(GObject.Object):
     def set_page_setup(self, page_setup: PageSetup) -> None: ...
     def set_print_settings(self, print_settings: PrintSettings) -> None: ...
     def set_title(self, title: str) -> None: ...
+    @overload
+    def setup(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[PrintSetup]: ...
+    @overload
+    def setup(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[PrintDialog, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def setup(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[PrintDialog] | None,
     ) -> None: ...
     def setup_finish(self, result: Gio.AsyncResult) -> PrintSetup: ...
 
@@ -30771,7 +31007,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
     def set_alignment(self, xalign: float) -> None: ...
     # override
     def set_attributes(
-        self, cell_renderer: CellRenderer, **attributes: Any
+        self, cell_renderer: CellRenderer, **attributes: object
     ) -> None: ...
     # override
     @overload
@@ -30832,15 +31068,25 @@ class UriLauncher(GObject.Object):
     def __init__(self, *, uri: str | None = ...) -> None: ...
     def can_launch(self, parent: Window | None = None) -> bool: ...
     def get_uri(self) -> str | None: ...
+    @overload
+    def launch(
+        self, parent: Window | None = None, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def launch(
+        self,
+        parent: Window | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[UriLauncher, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def launch(
         self,
         parent: Window | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[UriLauncher] | None,
     ) -> None: ...
     def launch_finish(self, result: Gio.AsyncResult) -> bool: ...
     @classmethod
