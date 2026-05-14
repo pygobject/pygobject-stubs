@@ -26416,14 +26416,23 @@ class IconInfo(GObject.Object):
     def get_filename(self) -> str | None: ...
     def is_symbolic(self) -> bool: ...
     def load_icon(self) -> GdkPixbuf.Pixbuf: ...
+    @overload
+    def load_icon_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[GdkPixbuf.Pixbuf]: ...
+    @overload
+    def load_icon_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[IconInfo, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def load_icon_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[IconInfo] | None,
     ) -> None: ...
     def load_icon_finish(self, res: Gio.AsyncResult) -> GdkPixbuf.Pixbuf: ...
     # override
@@ -26437,6 +26446,7 @@ class IconInfo(GObject.Object):
         warning_color: _Gdk3.RGBA | None = None,
         error_color: _Gdk3.RGBA | None = None,
     ) -> tuple[GdkPixbuf.Pixbuf, bool]: ...
+    @overload
     def load_symbolic_async(
         self,
         fg: _Gdk3.RGBA,
@@ -26444,11 +26454,28 @@ class IconInfo(GObject.Object):
         warning_color: _Gdk3.RGBA | None = None,
         error_color: _Gdk3.RGBA | None = None,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[tuple[GdkPixbuf.Pixbuf, bool]]: ...
+    @overload
+    def load_symbolic_async(
+        self,
+        fg: _Gdk3.RGBA,
+        success_color: _Gdk3.RGBA | None,
+        warning_color: _Gdk3.RGBA | None,
+        error_color: _Gdk3.RGBA | None,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[IconInfo, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def load_symbolic_async(
+        self,
+        fg: _Gdk3.RGBA,
+        success_color: _Gdk3.RGBA | None = None,
+        warning_color: _Gdk3.RGBA | None = None,
+        error_color: _Gdk3.RGBA | None = None,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[IconInfo] | None,
     ) -> None: ...
     def load_symbolic_finish(
         self, res: Gio.AsyncResult
@@ -26456,15 +26483,25 @@ class IconInfo(GObject.Object):
     def load_symbolic_for_context(
         self, context: StyleContext
     ) -> tuple[GdkPixbuf.Pixbuf, bool]: ...
+    @overload
+    def load_symbolic_for_context_async(
+        self, context: StyleContext, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[tuple[GdkPixbuf.Pixbuf, bool]]: ...
+    @overload
+    def load_symbolic_for_context_async(
+        self,
+        context: StyleContext,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[IconInfo, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def load_symbolic_for_context_async(
         self,
         context: StyleContext,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[IconInfo] | None,
     ) -> None: ...
     def load_symbolic_for_context_finish(
         self, res: Gio.AsyncResult

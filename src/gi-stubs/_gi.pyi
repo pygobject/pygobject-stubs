@@ -1,15 +1,20 @@
 from typing import Any
 from typing import ClassVar
 from typing import Final
+from typing import final
+from typing import Generic
 from typing import Protocol
 from typing import type_check_only
 from typing_extensions import Self
+from typing_extensions import TypeVar
 
 from builtins import Warning as _Warning
 from collections.abc import Callable
+from collections.abc import Generator
 from collections.abc import Mapping
 from collections.abc import Sequence
 from contextlib import AbstractContextManager
+from contextvars import Context
 from enum import IntEnum
 from enum import IntFlag
 from inspect import Signature
@@ -17,6 +22,8 @@ from inspect import Signature
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject as _GObject
+
+_T_co = TypeVar("_T_co", covariant=True, default=Any)
 
 G_MAXDOUBLE: Final[float]
 G_MAXFLOAT: Final[float]
@@ -60,23 +67,24 @@ class ArrayType(int):
     C: ClassVar[int]
     PTR_ARRAY: ClassVar[int]
 
-class Async:
+@final
+class Async(Generic[_T_co]):
     cancellable: Gio.Cancellable | None
     def __init__(
         self, finish_func: CallableInfo, cancellable: Gio.Cancellable | None = None
     ) -> None: ...
     def add_done_callback(
-        self, callback: Callable[..., Any], *, context: object = None
+        self, callback: Callable[[Self], object], *, context: Context | None = None
     ) -> None: ...
-    def cancel(self) -> None: ...
+    def cancel(self, msg: str | None = None) -> None: ...
     def done(self) -> bool: ...
     def exception(self) -> BaseException | None: ...
-    def remove_done_callback(self, callback: Callable[..., Any], /) -> int: ...
-    def result(self) -> Any: ...
-    def __await__(self) -> Async: ...
+    def remove_done_callback(self, callback: Callable[[Self], object], /) -> int: ...
+    def result(self) -> _T_co: ...
+    def __await__(self) -> Generator[Self, Any, _T_co]: ...
     def __del__(self) -> None: ...
-    def __iter__(self) -> Async: ...
-    def __next__(self) -> Async: ...
+    def __iter__(self) -> Self: ...
+    def __next__(self) -> Self: ...
 
 class BaseInfo:
     def equal(self, object: BaseInfo, /) -> bool: ...
@@ -333,6 +341,7 @@ class ObjectProtocol(GObjectProtocol, Protocol):
 
 class GObject(GObjectProtocol):
     __gtype__: ClassVar[GType]
+    @type_check_only
     class Props: ...
 
     @property

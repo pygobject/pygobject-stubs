@@ -6,6 +6,7 @@ from typing import Final
 from typing import get_args
 from typing import get_origin
 from typing import Literal
+from typing import overload
 from typing import TYPE_CHECKING
 from typing import TypeAlias
 from typing_extensions import get_overloads
@@ -32,8 +33,12 @@ from .import_info import ImportInfo
 from .type_var_info import TypeVarInfo
 from .type_var_info import TypeVarTupleInfo
 from .utils import generate_full_name
+from .utils import get_finish_func
 from .utils import get_return_type
+from .utils import get_value
 from .utils import make_nullable
+from .utils import MISSING
+from .utils import MissingType
 
 gi.require_version("GIRepository", "3.0")
 
@@ -51,6 +56,9 @@ else:
     from gi.repository import GIRepository
 
 _Object: TypeAlias = ModuleType | type[Any]
+_FunctionMode: TypeAlias = Literal[
+    "sync", "awaitable", "async_callback", "async_callback_kwargs"
+]
 
 _identifier_re: Final = re.compile(r"^[A-Za-z_]\w*$")
 _typing_re: Final = re.compile(r"(?:typing\.)(?P<name>\w+)\b")
@@ -252,12 +260,24 @@ class Stub:
         self.__add_import(module, name, None if import_as == name else import_as)
         return import_as
 
+    @overload
+    def get_namespace_member(self, info: GI.BaseInfo, /) -> str: ...
+    @overload
+    def get_namespace_member(self, namespace: str, name: str, /) -> str: ...
+
     def get_namespace_member(
         self,
-        namespace: str,
-        name: str,
+        namespace: str | GI.BaseInfo,
+        name: str | None = None,
         /,
     ) -> str:
+        if isinstance(namespace, GI.BaseInfo):
+            name = f"{namespace.get_name()}"
+            namespace = namespace.get_namespace()
+
+        if name is None:
+            raise ValueError("Name must be provided when namespace is a string")
+
         if namespace == self.namespace:
             return name
 
@@ -312,8 +332,7 @@ class Stub:
 
     def get_typevar_tuple(self, name: str, /, *, default: str | None = None) -> str:
         if default is not None:
-            unpack_symbol = self.get_import("typing", "Unpack")
-            default = f"{unpack_symbol}[{default}]"
+            default = self.get_unpack(default)
 
         typevar_tuple = TypeVarTupleInfo(name, default)
 
@@ -339,6 +358,12 @@ class Stub:
 
     def get_literal(self, annotation: str, /) -> str:
         return f"{self.get_import('typing', 'Literal')}[{annotation}]"
+
+    def get_unpack(self, annotation: str, /) -> str:
+        return f"{self.get_import('typing', 'Unpack')}[{annotation}]"
+
+    def get_unpack_data_ts(self) -> str:
+        return self.get_unpack(self.get_callback_typevar_tuple())
 
     def get_type_alias(self, name: str, /) -> str:
         return f"{name}: {self.get_import('typing', 'TypeAlias')}"
@@ -433,9 +458,26 @@ class Stub:
         return name.replace("-", "_")
 
     def get_callable_arguments(
-        self, info: GI.CallableInfo, /, *, allow_varargs: bool = True
+        self,
+        info: GI.CallableInfo,
+        /,
+        *,
+        allow_varargs: bool = True,
+        mode: _FunctionMode = "sync",
     ) -> tuple[dict[str, str], list[str]]:
         arguments = Arguments.for_callable(info, allow_varargs=allow_varargs)
+
+        is_awaitable_eligible = (
+            isinstance(info, GI.FunctionInfo) and get_finish_func(info) is not None
+        )
+
+        if mode == "awaitable":
+            arguments = arguments.as_async()
+        elif mode == "async_callback_kwargs":
+            arguments = arguments.as_async_callback_kwargs()
+
+        if arguments is None:
+            raise ValueError("Callable is not eligible for async transformation")
 
         py_args: list[VisibleArgument] = []
         return_args: list[str] = []
@@ -448,6 +490,16 @@ class Stub:
                 if arg.required:
                     required_indexes.add(arg.c_index)
 
+                if (
+                    mode in {"async_callback", "async_callback_kwargs"}
+                    and arg.c_index == arguments.async_callback_index
+                ):
+                    py_args[-1] = replace(py_args[-1], required=True)
+
+                    # the kwargs variant doesn't require the callback
+                    if mode == "async_callback":
+                        required_indexes.add(arg.c_index)
+
             if arg.to_python:
                 return_args.append(
                     self.type_info_to_python(
@@ -459,22 +511,47 @@ class Stub:
         args: dict[str, str] = {}
 
         for py_arg in py_args:
-            arg_type = self.type_info_to_python(
-                py_arg.info.get_type_info(),
-                nullable=py_arg.nullable,
-                varargs_callback=py_arg.is_varargs_callback,
-                closure_argument=py_arg.is_closure_target,
+            if (
+                is_awaitable_eligible
+                and py_arg.c_index == arguments.async_callback_index
+            ):
+                arg_type = self.type_info_to_python(
+                    py_arg.info.get_type_info(),
+                    nullable=py_arg.nullable,
+                    async_callback_argument=py_arg,
+                )
+            else:
+                arg_type = self.type_info_to_python(
+                    py_arg.info.get_type_info(),
+                    nullable=py_arg.nullable,
+                    varargs_callback=py_arg.is_varargs_callback,
+                    closure_argument=py_arg.is_closure_target,
+                )
+
+            is_kw_only_callback = (
+                mode == "async_callback_kwargs"
+                and py_arg.c_index == arguments.async_callback_index
             )
 
-            if arguments.can_have_defaults and py_arg.c_index > last_required:
+            if (
+                arguments.can_have_defaults
+                and py_arg.c_index > last_required
+                and not is_kw_only_callback
+            ):
                 arg_type = f"{arg_type} = {'None' if py_arg.nullable else '...'}"
+
+            if (
+                mode == "async_callback_kwargs"
+                and py_arg.c_index == arguments.async_callback_index
+            ):
+                args["*"] = ""
 
             args[self.fix_argument_name(py_arg.info.get_name())] = arg_type
 
         if (varargs_info := arguments.varargs_info) is not None:
-            args[f"*{self.fix_argument_name(varargs_info.get_name())}"] = f"{
-                self.get_import('typing', 'Unpack')
-            }[{self.get_callback_typevar_tuple()}]"
+            args[f"*{self.fix_argument_name(varargs_info.get_name())}"] = (
+                self.get_unpack_data_ts()
+            )
 
         return_type = info.get_return_type()
         if not info.skip_return() and (
@@ -491,14 +568,28 @@ class Stub:
 
     def type_info_to_python(
         self,
-        info: GI.TypeInfo,
+        info: GI.TypeInfo | VisibleArgument,
         /,
         *,
         out: bool = False,
-        nullable: bool = False,
-        varargs_callback: bool = False,
-        closure_argument: bool = False,
+        nullable: bool | MissingType = MISSING,
+        varargs_callback: bool | MissingType = MISSING,
+        closure_argument: bool | MissingType = MISSING,
+        async_callback_argument: VisibleArgument | None = None,
     ) -> str:
+        py_arg: VisibleArgument | None = None
+        if isinstance(info, VisibleArgument):
+            py_arg = info
+            info = py_arg.info.get_type_info()
+
+        nullable = get_value(nullable, False if py_arg is None else py_arg.nullable)
+        varargs_callback = get_value(
+            varargs_callback, False if py_arg is None else py_arg.is_varargs_callback
+        )
+        closure_argument = get_value(
+            closure_argument, False if py_arg is None else py_arg.is_closure_target
+        )
+
         tag = info.get_tag()
 
         py_type: str | None = None
@@ -583,9 +674,7 @@ class Stub:
                     #         )
                     #         not in _EXCLUDED_VARARGS_CALLBACKS
                     #     ):
-                    #         py_type = f"{py_type}[{
-                    #             self.get_import('typing', 'Unpack')
-                    #         }[{self.get_callback_typevar_tuple()}]]"
+                    #         py_type = f"{py_type}[{self.get_unpack_data_ts()}]"
                     # else:
                     #     # Generate the `Callable[]` annotation for anonymous callbacks
                     #     (callback_args, callback_return_args) = (
@@ -600,14 +689,49 @@ class Stub:
                     #     }[[{
                     #         ', '.join(callback_args.values())
                     #     }], {callback_return_type}]"
-                    (callback_args, callback_return_args) = self.get_callable_arguments(
-                        interface_info, allow_varargs=varargs_callback
-                    )
-                    callback_return_type = get_return_type(callback_return_args)
 
-                    py_type = f"{self.get_import('collections.abc', 'Callable')}[[{
-                        ', '.join(callback_args.values())
-                    }], {callback_return_type}]"
+                    if (
+                        async_callback_argument is not None
+                        and f"{interface_info.get_namespace()}.{
+                            interface_info.get_name()
+                        }"
+                        == "Gio.AsyncReadyCallback"
+                    ):
+                        callback_symbol = self.get_namespace_member(
+                            "Gio", "AsyncReadyCallback"
+                        )
+                        class_info = async_callback_argument.callable_container
+                        source_type = (
+                            "None"
+                            if class_info is None
+                            or not (
+                                async_callback_argument.callable_flags
+                                & (
+                                    GI.FunctionInfoFlags.IS_METHOD
+                                    | GI.FunctionInfoFlags.IS_CONSTRUCTOR
+                                )
+                            )
+                            else self.get_namespace_member(class_info)
+                        )
+                        user_data_args = (
+                            f", {self.get_unpack_data_ts()}"
+                            if async_callback_argument.is_varargs_callback
+                            else ""
+                        )
+
+                        py_type = f"{callback_symbol}[{source_type}{user_data_args}]"
+                    else:
+                        (callback_args, callback_return_args) = (
+                            self.get_callable_arguments(
+                                interface_info,
+                                allow_varargs=varargs_callback,
+                            )
+                        )
+                        callback_return_type = get_return_type(callback_return_args)
+
+                        py_type = f"{self.get_import('collections.abc', 'Callable')}[[{
+                            ', '.join(callback_args.values())
+                        }], {callback_return_type}]"
                 elif (
                     isinstance(interface_info, GI.EnumInfo)
                     and interface_info.get_g_type() != GObject.TYPE_NONE
@@ -810,7 +934,7 @@ class Stub:
     #         unpack_symbol = self.get_import("typing", "Unpack")
     #         annotation = re.sub(
     #             r"""['"]_DataTs['"]""",
-    #             f"{unpack_symbol}[_DataTs]",
+    #             self.get_unpack_data_ts(),
     #             annotation,
     #         )
     #
@@ -833,9 +957,14 @@ class Stub:
         name: str,
         function: GI.FunctionInfo | GI.VFuncInfo,
         in_class: type[Any] | None,
+        *,
         return_signature: str | None = None,
         comment: str | None = None,
+        mode: _FunctionMode = "sync",
+        finish_func: GI.FunctionInfo | None = None,
     ) -> str:
+        lines: list[str] = []
+
         constructor: bool = False
         method: bool = isinstance(function, GI.VFuncInfo)
         static: bool = False
@@ -852,18 +981,36 @@ class Stub:
         if in_class and not method and not constructor:
             static = True
 
+        if mode != "sync":
+            lines.append(f"@{self.get_import('typing', 'overload')}")
+
         # Arguments
-        args, return_args = self.get_callable_arguments(function)
+        if mode == "awaitable":
+            assert finish_func is not None
+            # awaitable
+            _, finish_return_args = self.get_callable_arguments(finish_func)
+            args, return_args = self.get_callable_arguments(
+                function, allow_varargs=False, mode=mode
+            )
+            return_type = f"{self.get_namespace_member('_gi', 'Async')}[{
+                get_return_type(finish_return_args)
+            }]"
+        else:
+            if mode in {"async_callback", "async_callback_kwargs"}:
+                args, return_args = self.get_callable_arguments(function, mode=mode)
+            else:
+                args, return_args = self.get_callable_arguments(function)
+
+            return_type = (
+                return_signature if return_signature else get_return_type(return_args)
+            )
+
         args_types = [
-            f"{self.fix_argument_name(name)}: {arg}" for name, arg in args.items()
+            name if name == "*" else f"{self.fix_argument_name(name)}: {arg}"
+            for name, arg in args.items()
         ]
 
-        return_type = (
-            return_signature if return_signature else get_return_type(return_args)
-        )
-
         # Generate string
-        prepend = ""
         if constructor:
             if name == "__init__":
                 # We pass the "new" constructor with the name __init__ because type
@@ -872,7 +1019,7 @@ class Stub:
                 args_types.insert(0, "self")
                 return_type = "None"
             else:
-                prepend = "@classmethod\n"
+                lines.append("@classmethod")
                 args_types.insert(0, "cls")
                 # Override return value, for example Gtk.Button.new returns a Gtk.Widget
                 # instead of Gtk.Button
@@ -882,16 +1029,16 @@ class Stub:
         elif method:
             args_types.insert(0, "self")
         elif static:
-            prepend = "@staticmethod\n"
+            lines.append("@staticmethod")
+
+        lines.append(
+            f"def {name}({', '.join(str(a) for a in args_types)}) -> {return_type}: ..."
+        )
 
         if comment:
-            return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {
-                return_type
-            }: ... # {comment}\n"
+            lines[-1] += f" # {comment}"
 
-        return f"{prepend}def {name}({', '.join(str(a) for a in args_types)}) -> {
-            return_type
-        }: ...\n"
+        return "\n".join(lines) + "\n"
 
     def __wrapped_strip_boolean_result(
         self,
@@ -926,8 +1073,8 @@ class Stub:
             name,
             real_function,
             in_class,
-            return_signature,
-            "CHECK Wrapped function",
+            return_signature=return_signature,
+            comment="CHECK Wrapped function",
         )
 
     def build_function(
@@ -950,10 +1097,36 @@ class Stub:
             if in_class is None and function.get_namespace() != self.namespace:
                 # Set up a constant for functions that are aliases
                 return f"{name}: {self.get_final()} = {
-                    self.get_namespace_member(
-                        function.get_namespace(), f'{function.get_name()}'
-                    )
+                    self.get_namespace_member(function)
                 }\n"
+
+            if isinstance(function, GI.FunctionInfo):
+                finish_func = get_finish_func(function)
+
+                if finish_func is not None and not (
+                    function.get_flags() & GI.FunctionInfoFlags.IS_CONSTRUCTOR
+                ):
+                    return (
+                        self.__build_function(
+                            name,
+                            function,
+                            in_class,
+                            mode="awaitable",
+                            finish_func=finish_func,
+                        )
+                        + self.__build_function(
+                            name,
+                            function,
+                            in_class,
+                            mode="async_callback",
+                        )
+                        + self.__build_function(
+                            name,
+                            function,
+                            in_class,
+                            mode="async_callback_kwargs",
+                        )
+                    )
 
             return self.__build_function(name, function, in_class)
 
@@ -1293,6 +1466,23 @@ class Stub:
         # TODO: enable this when PyGObject exposes CallbackInfos
         # This must be called before generating the imports
         # callbacks = self.__build_callback_types()
+
+        if self.namespace == "Gio":
+            type_alias = self.get_import("typing", "TypeAlias")
+            callable_symbol = self.get_import("collections.abc", "Callable")
+            unpack_data_ts_symbol = self.get_unpack_data_ts()
+            gobject_protocol_symbol = self.get_namespace_member(
+                "GObject", "ObjectProtocol"
+            )
+            source_typevar_symbol = self.get_typevar(
+                "_SourceObjectT", bound=f"{gobject_protocol_symbol} | None"
+            )
+            async_result_symbol = self.get_namespace_member("Gio", "AsyncResult")
+            extras.append(
+                f"AsyncReadyCallback: {type_alias} = {callable_symbol}[[{
+                    source_typevar_symbol
+                }, {async_result_symbol}, {unpack_data_ts_symbol}], None]"
+            )
 
         imports = [f"{_import}" for _import in self.needed_imports.values()]
         extras_str = "\n".join(extras)

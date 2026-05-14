@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Literal
+from typing import overload
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
@@ -2510,15 +2511,33 @@ def color_state_get_rec2100_linear() -> ColorState: ...
 def color_state_get_rec2100_pq() -> ColorState: ...
 def color_state_get_srgb() -> ColorState: ...
 def color_state_get_srgb_linear() -> ColorState: ...
+@overload
 def content_deserialize_async(
     stream: Gio.InputStream,
     mime_type: str,
     type: type[Any],
     io_priority: int,
     cancellable: Gio.Cancellable | None = None,
-    callback: Callable[[GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None]
-    | None = None,
+) -> _gi.Async[tuple[bool, Any]]: ...
+@overload
+def content_deserialize_async(
+    stream: Gio.InputStream,
+    mime_type: str,
+    type: type[Any],
+    io_priority: int,
+    cancellable: Gio.Cancellable | None,
+    callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
     *user_data: Unpack[_DataTs],
+) -> None: ...
+@overload
+def content_deserialize_async(
+    stream: Gio.InputStream,
+    mime_type: str,
+    type: type[Any],
+    io_priority: int,
+    cancellable: Gio.Cancellable | None = None,
+    *,
+    callback: Gio.AsyncReadyCallback[None] | None,
 ) -> None: ...
 def content_deserialize_finish(result: Gio.AsyncResult) -> tuple[bool, Any]: ...
 def content_formats_parse(string: str) -> ContentFormats | None: ...
@@ -2534,15 +2553,33 @@ def content_register_serializer(
     serialize: Callable[[ContentSerializer], None],
     *data: Unpack[_DataTs],
 ) -> None: ...
+@overload
 def content_serialize_async(
     stream: Gio.OutputStream,
     mime_type: str,
     value: Any,
     io_priority: int,
     cancellable: Gio.Cancellable | None = None,
-    callback: Callable[[GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None]
-    | None = None,
+) -> _gi.Async[bool]: ...
+@overload
+def content_serialize_async(
+    stream: Gio.OutputStream,
+    mime_type: str,
+    value: Any,
+    io_priority: int,
+    cancellable: Gio.Cancellable | None,
+    callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
     *user_data: Unpack[_DataTs],
+) -> None: ...
+@overload
+def content_serialize_async(
+    stream: Gio.OutputStream,
+    mime_type: str,
+    value: Any,
+    io_priority: int,
+    cancellable: Gio.Cancellable | None = None,
+    *,
+    callback: Gio.AsyncReadyCallback[None] | None,
 ) -> None: ...
 def content_serialize_finish(result: Gio.AsyncResult) -> bool: ...
 def dmabuf_error_quark() -> int: ...
@@ -2731,65 +2768,119 @@ class Clipboard(GObject.Object):
     def get_display(self) -> Display: ...
     def get_formats(self) -> ContentFormats: ...
     def is_local(self) -> bool: ...
+    @overload
     def read_async(
         self,
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[tuple[Gio.InputStream | None, str]]: ...
+    @overload
+    def read_async(
+        self,
+        mime_types: Sequence[str],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Clipboard, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def read_async(
+        self,
+        mime_types: Sequence[str],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[Clipboard] | None,
     ) -> None: ...
     def read_finish(
         self, result: Gio.AsyncResult
     ) -> tuple[Gio.InputStream | None, str]: ...
+    @overload
+    def read_text_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[str | None]: ...
+    @overload
+    def read_text_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Clipboard, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def read_text_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[Clipboard] | None,
+    ) -> None: ...
+    def read_text_finish(self, result: Gio.AsyncResult) -> str | None: ...
+    @overload
+    def read_texture_async(
+        self, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Texture | None]: ...
+    @overload
+    def read_texture_async(
+        self,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Clipboard, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
-    # override
-    def read_text_finish(self, result: Gio.AsyncResult) -> str | None: ...
+    @overload
     def read_texture_async(
         self,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Clipboard] | None,
     ) -> None: ...
-    # override
     def read_texture_finish(self, result: Gio.AsyncResult) -> Texture | None: ...
+    @overload
     def read_value_async(
         self,
         type: type[Any],
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Any]: ...
+    @overload
+    def read_value_async(
+        self,
+        type: type[Any],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Clipboard, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def read_value_async(
+        self,
+        type: type[Any],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[Clipboard] | None,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
     def set(self, value: Any) -> None: ...
     def set_content(self, provider: ContentProvider | None = None) -> bool: ...
+    @overload
+    def store_async(
+        self, io_priority: int, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def store_async(
+        self,
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Clipboard, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     def store_async(
         self,
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[Clipboard] | None,
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
 
@@ -2958,17 +3049,33 @@ class ContentProvider(GObject.Object):
     ) -> ContentProvider: ...
     def ref_formats(self) -> ContentFormats: ...
     def ref_storable_formats(self) -> ContentFormats: ...
+    @overload
     def write_mime_type_async(
         self,
         mime_type: str,
         stream: Gio.OutputStream,
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[bool]: ...
+    @overload
+    def write_mime_type_async(
+        self,
+        mime_type: str,
+        stream: Gio.OutputStream,
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[ContentProvider, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def write_mime_type_async(
+        self,
+        mime_type: str,
+        stream: Gio.OutputStream,
+        io_priority: int,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[ContentProvider] | None,
     ) -> None: ...
     def write_mime_type_finish(self, result: Gio.AsyncResult) -> bool: ...
 
@@ -3753,30 +3860,58 @@ class Drop(GObject.Object):
     def get_drag(self) -> Drag | None: ...
     def get_formats(self) -> ContentFormats: ...
     def get_surface(self) -> Surface: ...
+    @overload
     def read_async(
         self,
         mime_types: Sequence[str],
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[tuple[Gio.InputStream | None, str]]: ...
+    @overload
+    def read_async(
+        self,
+        mime_types: Sequence[str],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Drop, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def read_async(
+        self,
+        mime_types: Sequence[str],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[Drop] | None,
     ) -> None: ...
     def read_finish(
         self, result: Gio.AsyncResult
     ) -> tuple[Gio.InputStream | None, str]: ...
+    @overload
     def read_value_async(
         self,
         type: type[Any],
         io_priority: int,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
+    ) -> _gi.Async[Any]: ...
+    @overload
+    def read_value_async(
+        self,
+        type: type[Any],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[Drop, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
+    def read_value_async(
+        self,
+        type: type[Any],
+        io_priority: int,
+        cancellable: Gio.Cancellable | None = None,
+        *,
+        callback: Gio.AsyncReadyCallback[Drop] | None,
     ) -> None: ...
     def read_value_finish(self, result: Gio.AsyncResult) -> Any: ...
     def status(

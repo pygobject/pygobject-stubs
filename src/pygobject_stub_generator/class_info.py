@@ -21,6 +21,8 @@ import gi._gi as GI
 
 from .property_info import PropertyInfo
 from .utils import generate_full_name
+from .utils import MISSING
+from .utils import MissingType
 
 gi.require_version("GIRepository", "3.0")
 
@@ -36,7 +38,6 @@ else:
     from gi.repository import GIRepository
 
 PropertyInfoDict: TypeAlias = dict[str, PropertyInfo]
-_MISSING = object()
 
 
 def _find_attributes(obj: type[Any]) -> list[str]:
@@ -64,8 +65,8 @@ class ClassInfo:
     full_name: str = field(init=False)
 
     _bases: tuple[type[Any], ...] | None = field(init=False, default=None)
-    _gi_info: GI.RegisteredTypeInfo | None = field(
-        init=False, default=cast("Any", _MISSING)
+    _gi_info: GI.RegisteredTypeInfo | MissingType | None = field(
+        init=False, default=MISSING
     )
     _class_properties: PropertyInfoDict | None = field(init=False, default=None)
     _init_properties: PropertyInfoDict | None = field(init=False, default=None)
@@ -94,7 +95,7 @@ class ClassInfo:
 
     @property
     def gi_info(self) -> GI.RegisteredTypeInfo | None:
-        if self._gi_info is not _MISSING:
+        if self._gi_info is not MISSING:
             return self._gi_info
 
         self._bases, self._gi_info = self.__get_bases_and_gi_info()

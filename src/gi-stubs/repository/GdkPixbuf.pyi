@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Final
 from typing import Literal
+from typing import overload
 from typing import type_check_only
 from typing import TypeAlias
 from typing_extensions import TypeVarTuple
@@ -181,15 +182,26 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def get_colorspace(self) -> Colorspace: ...
     @staticmethod
     def get_file_info(filename: str) -> tuple[PixbufFormat | None, int, int]: ...
+    @overload
+    @staticmethod
+    def get_file_info_async(
+        filename: str, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[tuple[PixbufFormat | None, int, int]]: ...
+    @overload
+    @staticmethod
+    def get_file_info_async(
+        filename: str,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     @staticmethod
     def get_file_info_async(
         filename: str,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[None] | None,
     ) -> None: ...
     @staticmethod
     def get_file_info_finish(
@@ -263,15 +275,26 @@ class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
     def new_from_stream(
         cls, stream: Gio.InputStream, cancellable: Gio.Cancellable | None = None
     ) -> Pixbuf | None: ...
+    @overload
+    @staticmethod
+    def new_from_stream_async(
+        stream: Gio.InputStream, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[Pixbuf | None]: ...
+    @overload
+    @staticmethod
+    def new_from_stream_async(
+        stream: Gio.InputStream,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     @staticmethod
     def new_from_stream_async(
         stream: Gio.InputStream,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[None] | None,
     ) -> None: ...
     @classmethod
     def new_from_stream_at_scale(
@@ -409,15 +432,26 @@ class PixbufAnimation(GObject.Object):
     def new_from_stream(
         cls, stream: Gio.InputStream, cancellable: Gio.Cancellable | None = None
     ) -> PixbufAnimation | None: ...
+    @overload
+    @staticmethod
+    def new_from_stream_async(
+        stream: Gio.InputStream, cancellable: Gio.Cancellable | None = None
+    ) -> _gi.Async[PixbufAnimation | None]: ...
+    @overload
+    @staticmethod
+    def new_from_stream_async(
+        stream: Gio.InputStream,
+        cancellable: Gio.Cancellable | None,
+        callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    @overload
     @staticmethod
     def new_from_stream_async(
         stream: Gio.InputStream,
         cancellable: Gio.Cancellable | None = None,
-        callback: Callable[
-            [GObject.Object | None, Gio.AsyncResult, Unpack[_DataTs]], None
-        ]
-        | None = None,
-        *user_data: Unpack[_DataTs],
+        *,
+        callback: Gio.AsyncReadyCallback[None] | None,
     ) -> None: ...
     @classmethod
     def new_from_stream_finish(
