@@ -51,6 +51,11 @@ class VisibleArgument:
         if isinstance(info, GI.FunctionInfo):
             return info.get_flags()
 
+        if isinstance(info, GI.VFuncInfo) and isinstance(
+            self.callable_container, (GI.ObjectInfo, GI.InterfaceInfo)
+        ):
+            return GI.FunctionInfoFlags.IS_METHOD
+
         return 0
 
     @property
@@ -151,6 +156,7 @@ class Arguments:
         ) > -1:
             hidden_indexes.add(return_array_length_index)
 
+        is_vfunc = isinstance(info, GI.VFuncInfo)
         is_callback = isinstance(info, GI.CallbackInfo)
 
         if is_callback:
@@ -196,9 +202,11 @@ class Arguments:
                     iface_info = type_info.get_interface()
 
                     if isinstance(iface_info, GI.CallbackInfo):
-                        # Hide destroy and closure args for callbacks
+                        # Hide destroy and closure args for callbacks if this
+                        # isn't a vfunc
                         if (
-                            arg_index not in hidden_indexes
+                            not is_vfunc
+                            and arg_index not in hidden_indexes
                             and arg_index not in closure_indexes
                         ):
                             if (

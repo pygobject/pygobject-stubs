@@ -92,7 +92,7 @@ class Creator(GObject.Object):
     def create_async(
         self,
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback[Creator, Unpack[_DataTs]] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Creator, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     @overload
@@ -100,7 +100,7 @@ class Creator(GObject.Object):
         self,
         cancellable: Gio.Cancellable | None = None,
         *,
-        callback: Gio.AsyncReadyCallback[Creator] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Creator] | None,
     ) -> None: ...
     def create_finish(self, result: Gio.AsyncResult) -> EncodedImage: ...
     @classmethod
@@ -263,7 +263,7 @@ class Image(GObject.Object):
         self,
         frame_request: FrameRequest,
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback[Image, Unpack[_DataTs]] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Image, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     @overload
@@ -272,7 +272,7 @@ class Image(GObject.Object):
         frame_request: FrameRequest,
         cancellable: Gio.Cancellable | None = None,
         *,
-        callback: Gio.AsyncReadyCallback[Image] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Image] | None,
     ) -> None: ...
     def get_specific_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
     def get_transformation_orientation(self) -> int: ...
@@ -286,7 +286,7 @@ class Image(GObject.Object):
     def next_frame_async(
         self,
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback[Image, Unpack[_DataTs]] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Image, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     @overload
@@ -294,7 +294,7 @@ class Image(GObject.Object):
         self,
         cancellable: Gio.Cancellable | None = None,
         *,
-        callback: Gio.AsyncReadyCallback[Image] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Image] | None,
     ) -> None: ...
     def next_frame_finish(self, result: Gio.AsyncResult) -> Frame: ...
 
@@ -379,7 +379,7 @@ class Loader(GObject.Object):
     @staticmethod
     def get_mime_types_async(
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback[None, Unpack[_DataTs]] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[None, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     @overload
@@ -387,7 +387,7 @@ class Loader(GObject.Object):
     def get_mime_types_async(
         cancellable: Gio.Cancellable | None = None,
         *,
-        callback: Gio.AsyncReadyCallback[None] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[None] | None,
     ) -> None: ...
     @staticmethod
     def get_mime_types_finish(result: Gio.AsyncResult) -> list[str]: ...
@@ -400,7 +400,7 @@ class Loader(GObject.Object):
     def load_async(
         self,
         cancellable: Gio.Cancellable | None,
-        callback: Gio.AsyncReadyCallback[Loader, Unpack[_DataTs]] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Loader, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     @overload
@@ -408,7 +408,7 @@ class Loader(GObject.Object):
         self,
         cancellable: Gio.Cancellable | None = None,
         *,
-        callback: Gio.AsyncReadyCallback[Loader] | None,
+        callback: Gio._AsyncReadyVarArgsCallback[Loader] | None,
     ) -> None: ...
     def load_finish(self, result: Gio.AsyncResult) -> Image: ...
     @classmethod
