@@ -12,6 +12,7 @@ from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
+import asyncio
 from collections.abc import Callable
 from collections.abc import Iterator
 from collections.abc import Sequence
@@ -21,6 +22,7 @@ from gi.repository import GioUnix
 from gi.repository import GLib
 from gi.repository import GObject
 
+_T = TypeVar("_T")
 ObjectItemType = TypeVar("ObjectItemType", bound=GObject.Object, default=Any)
 ObjectPropsItemType = TypeVar("ObjectPropsItemType", bound=GObject.Object, default=Any)
 _DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
@@ -1230,7 +1232,8 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     def add_main_option_entries(self, entries: Sequence[GLib.OptionEntry]) -> None: ...
     def add_option_group(self, group: GLib.OptionGroup) -> None: ...
     def bind_busy_property(self, object: GObject.Object, property: str) -> None: ...
-    def create_asyncio_task(self, coro):
+    # override
+    def create_asyncio_task(self, coro: asyncio._CoroutineLike[_T]) -> asyncio.Task[_T]:
         """
         Safely create an asyncio task. The application will not quit until the
         task completes. For potentially longer running tasks, you should add
@@ -1245,7 +1248,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
         You can deal with this by either only storing a weak reference to the
         Task, by explicitly collecting the result, or by only cancelling it if
         it is not done already.
-        """  # FIXME: Override is missing typing annotation
+        """
     def do_activate(self) -> None: ...
     def do_add_platform_data(self, builder: GLib.VariantBuilder, /) -> None: ...
     def do_after_emit(self, platform_data: GLib.Variant, /) -> None: ...
@@ -1293,7 +1296,7 @@ class Application(GObject.Object, ActionGroup, ActionMap):
     def register(self, cancellable: Cancellable | None = None) -> bool: ...
     def release(self) -> None: ...
     # override
-    def run(self, argv: list[str] | None) -> int: ...
+    def run(self, argv: list[str] | None = None) -> int: ...
     def send_notification(self, id: str | None, notification: Notification) -> None: ...
     def set_action_group(self, action_group: ActionGroup | None = None) -> None: ...
     def set_application_id(self, application_id: str | None = None) -> None: ...
