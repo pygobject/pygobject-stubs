@@ -467,10 +467,6 @@ class Stub:
     ) -> tuple[dict[str, str], list[str]]:
         arguments = Arguments.for_callable(info, allow_varargs=allow_varargs)
 
-        is_awaitable_eligible = (
-            isinstance(info, GI.FunctionInfo) and get_finish_func(info) is not None
-        )
-
         if mode == "awaitable":
             arguments = arguments.as_async()
         elif mode == "async_callback_kwargs":
@@ -512,13 +508,19 @@ class Stub:
 
         for py_arg in py_args:
             if (
-                is_awaitable_eligible
-                and py_arg.c_index == arguments.async_callback_index
+                py_arg.c_index == arguments.async_callback_index
+                and isinstance(
+                    iface := py_arg.info.get_type_info().get_interface(),
+                    GI.CallbackInfo,
+                )
+                and f"{iface.get_namespace()}.{iface.get_name()}"
+                == "Gio.AsyncReadyCallback"
             ):
                 arg_type = self.type_info_to_python(
                     py_arg.info.get_type_info(),
                     nullable=py_arg.nullable,
                     async_callback_argument=py_arg,
+                    async_callback_kwargs=(mode == "async_callback_kwargs"),
                 )
             else:
                 arg_type = self.type_info_to_python(
@@ -576,6 +578,7 @@ class Stub:
         varargs_callback: bool | MissingType = MISSING,
         closure_argument: bool | MissingType = MISSING,
         async_callback_argument: VisibleArgument | None = None,
+        async_callback_kwargs: bool | MissingType = MISSING,
     ) -> str:
         py_arg: VisibleArgument | None = None
         if isinstance(info, VisibleArgument):
@@ -589,6 +592,7 @@ class Stub:
         closure_argument = get_value(
             closure_argument, False if py_arg is None else py_arg.is_closure_target
         )
+        async_callback_kwargs = get_value(async_callback_kwargs, False)
 
         tag = info.get_tag()
 
@@ -698,7 +702,7 @@ class Stub:
                         == "Gio.AsyncReadyCallback"
                     ):
                         callback_symbol = self.get_namespace_member(
-                            "Gio", "AsyncReadyCallback"
+                            "Gio", "_AsyncReadyCallback"
                         )
                         class_info = async_callback_argument.callable_container
                         source_type = (
@@ -713,11 +717,41 @@ class Stub:
                             )
                             else self.get_namespace_member(class_info)
                         )
-                        user_data_args = (
-                            f", {self.get_unpack_data_ts()}"
-                            if async_callback_argument.is_varargs_callback
-                            else ""
-                        )
+
+                        if isinstance(
+                            async_callback_argument.callable_info, GI.VFuncInfo
+                        ):
+                            pointer_type = (
+                                f"int | {self.get_import('typing', 'Any')} | None"
+                            )
+                            user_data_args = f", {pointer_type}"
+                        elif async_callback_kwargs:
+                            callback_symbol = self.get_namespace_member(
+                                "Gio", "_AsyncReadyVarArgsCallback"
+                            )
+                            user_data_args = ""
+                        elif async_callback_argument.is_varargs_callback:
+                            callback_symbol = self.get_namespace_member(
+                                "Gio", "_AsyncReadyVarArgsCallback"
+                            )
+                            user_data_args = f", {self.get_unpack_data_ts()}"
+                        elif (
+                            closure_index
+                            := async_callback_argument.info.get_closure_index()
+                        ) > -1:
+                            user_data_arg = (
+                                async_callback_argument.callable_info.get_arguments()[
+                                    closure_index
+                                ]
+                            )
+                            user_data_type = self.type_info_to_python(
+                                user_data_arg.get_type_info(),
+                                nullable=user_data_arg.may_be_null(),
+                                closure_argument=True,
+                            )
+                            user_data_args = f", {user_data_type}"
+                        else:
+                            user_data_args = ""
 
                         py_type = f"{callback_symbol}[{source_type}{user_data_args}]"
                     else:
@@ -965,8 +999,10 @@ class Stub:
     ) -> str:
         lines: list[str] = []
 
+        is_vfunc = isinstance(function, GI.VFuncInfo)
+
+        method: bool = False
         constructor: bool = False
-        method: bool = isinstance(function, GI.VFuncInfo)
         static: bool = False
 
         # Flags
@@ -975,7 +1011,7 @@ class Stub:
         if function_flags & GI.FunctionInfoFlags.IS_CONSTRUCTOR:
             constructor = True
 
-        if function_flags & GI.FunctionInfoFlags.IS_METHOD:
+        if is_vfunc or (function_flags & GI.FunctionInfoFlags.IS_METHOD):
             method = True
 
         if in_class and not method and not constructor:
@@ -1009,6 +1045,12 @@ class Stub:
             name if name == "*" else f"{self.fix_argument_name(name)}: {arg}"
             for name, arg in args.items()
         ]
+
+        if is_vfunc and args_types:
+            # vfuncs are invoked by PyGObject's C marshaller with a positional tuple;
+            # this means it doesn't matter what the names of the arguments are, so stubs
+            # need to be positional-only
+            args_types.append("/")
 
         # Generate string
         if constructor:
@@ -1468,8 +1510,10 @@ class Stub:
         # callbacks = self.__build_callback_types()
 
         if self.namespace == "Gio":
-            type_alias = self.get_import("typing", "TypeAlias")
-            callable_symbol = self.get_import("collections.abc", "Callable")
+            async_ready_callback = self.get_type_alias("_AsyncReadyCallback")
+            async_ready_var_args_callback = self.get_type_alias(
+                "_AsyncReadyVarArgsCallback"
+            )
             unpack_data_ts_symbol = self.get_unpack_data_ts()
             gobject_protocol_symbol = self.get_namespace_member(
                 "GObject", "ObjectProtocol"
@@ -1477,11 +1521,21 @@ class Stub:
             source_typevar_symbol = self.get_typevar(
                 "_SourceObjectT", bound=f"{gobject_protocol_symbol} | None"
             )
+            t_co_symbol = self.get_typevar(
+                "_T", covariant=True, default=self.get_import("typing", "Any")
+            )
+
             async_result_symbol = self.get_namespace_member("Gio", "AsyncResult")
-            extras.append(
-                f"AsyncReadyCallback: {type_alias} = {callable_symbol}[[{
-                    source_typevar_symbol
-                }, {async_result_symbol}, {unpack_data_ts_symbol}], None]"
+            callable_symbol = self.get_import("collections.abc", "Callable")
+            extras.extend(
+                [
+                    f"{async_ready_callback} = {callable_symbol}[[{
+                        source_typevar_symbol
+                    }, {async_result_symbol}, {t_co_symbol}], None]",
+                    f"{async_ready_var_args_callback} = {callable_symbol}[[{
+                        source_typevar_symbol
+                    }, {async_result_symbol}, {unpack_data_ts_symbol}], None]",
+                ]
             )
 
         imports = [f"{_import}" for _import in self.needed_imports.values()]
