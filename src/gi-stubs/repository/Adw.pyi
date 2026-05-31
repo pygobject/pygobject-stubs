@@ -25,7 +25,7 @@ DURATION_INFINITE: Final[int]
 MAJOR_VERSION: Final[int]
 MICRO_VERSION: Final[int]
 MINOR_VERSION: Final[int]
-VERSION_S: Final = "1.8.5.1"
+VERSION_S: Final = "1.9.1"
 
 def accent_color_to_rgba(self: _AccentColorValueType) -> _Gdk4.RGBA: ...
 def accent_color_to_standalone_rgba(
@@ -64,6 +64,7 @@ class AboutDialog(Dialog):
       activate-link (gchararray) -> gboolean
 
     Properties from AdwAboutDialog:
+      appdata-resource-path -> gchararray: appdata-resource-path
       application-icon -> gchararray: application-icon
       application-name -> gchararray: application-name
       developer-name -> gchararray: developer-name
@@ -158,6 +159,8 @@ class AboutDialog(Dialog):
     """
     @type_check_only
     class Props(Dialog.Props):
+        @property
+        def appdata_resource_path(self) -> str | None: ...
         application_icon: str
         application_name: str
         @property
@@ -203,6 +206,7 @@ class AboutDialog(Dialog):
     def __init__(
         self,
         *,
+        appdata_resource_path: str | None = ...,
         application_icon: str = ...,
         application_name: str = ...,
         artists: Sequence[str] | None = ...,
@@ -277,6 +281,7 @@ class AboutDialog(Dialog):
     ) -> None: ...
     def add_link(self, title: str, url: str) -> None: ...
     def add_other_app(self, appid: str, name: str, summary: str) -> None: ...
+    def get_appdata_resource_path(self) -> str | None: ...
     def get_application_icon(self) -> str: ...
     def get_application_name(self) -> str: ...
     def get_artists(self) -> list[str]: ...
@@ -4284,6 +4289,8 @@ class EnumListModel(GObject.Object, Gio.ListModel):
 
     Properties from AdwEnumListModel:
       enum-type -> GType: enum-type
+      item-type -> GType: item-type
+      n-items -> guint: n-items
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
@@ -4295,6 +4302,10 @@ class EnumListModel(GObject.Object, Gio.ListModel):
     class Props(GObject.Object.Props):
         @property
         def enum_type(self) -> type[Any]: ...
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -6457,6 +6468,25 @@ class NavigationViewClass(_gi.Struct):
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
 
+class NoneAnimationTarget(AnimationTarget):
+    """
+    :Constructors:
+
+    ::
+
+        NoneAnimationTarget(**properties)
+        new() -> Adw.AnimationTarget
+
+    Object AdwNoneAnimationTarget
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @classmethod
+    def new(cls) -> NoneAnimationTarget: ...
+
+class NoneAnimationTargetClass(_gi.Struct): ...
+
 class OverlaySplitView(_Gtk4.Widget, Swipeable):
     """
     :Constructors:
@@ -8173,6 +8203,8 @@ class ShortcutsSection(GObject.Object, Gio.ListModel, _Gtk4.Buildable):
 
     Properties from AdwShortcutsSection:
       title -> gchararray: title
+      item-type -> GType: item-type
+      n-items -> guint: n-items
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
@@ -8182,6 +8214,10 @@ class ShortcutsSection(GObject.Object, Gio.ListModel, _Gtk4.Buildable):
     """
     @type_check_only
     class Props(GObject.Object.Props):
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
         title: str | None
 
     @property
@@ -8200,6 +8236,362 @@ class ShortcutsSectionClass(_gi.Struct):
     ::
 
         ShortcutsSectionClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
+class Sidebar(_Gtk4.Widget):
+    """
+    :Constructors:
+
+    ::
+
+        Sidebar(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwSidebar
+
+    Signals from AdwSidebar:
+      activated (guint)
+      drop (guint, GValue, GdkDragAction) -> gboolean
+      drop-enter (guint) -> GdkDragAction
+      drop-value-loaded (guint, GValue) -> GdkDragAction
+      setup-menu (AdwSidebarItem)
+
+    Properties from AdwSidebar:
+      mode -> AdwSidebarMode: mode
+      selected -> guint: selected
+      selected-item -> AdwSidebarItem: selected-item
+      items -> GtkSelectionModel: items
+      sections -> GListModel: sections
+      filter -> GtkFilter: filter
+      placeholder -> GtkWidget: placeholder
+      drop-preload -> gboolean: drop-preload
+      menu-model -> GMenuModel: menu-model
+
+    Signals from GtkWidget:
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(_Gtk4.Widget.Props):
+        drop_preload: bool
+        filter: _Gtk4.Filter | None
+        @property
+        def items(self) -> _Gtk4.SelectionModel: ...
+        menu_model: Gio.MenuModel | None
+        @property
+        def mode(self) -> SidebarMode: ...
+        @mode.setter
+        def mode(self, value: _SidebarModeValueType) -> None: ...
+        placeholder: _Gtk4.Widget | None
+        @property
+        def sections(self) -> Gio.ListModel: ...
+        selected: int
+        @property
+        def selected_item(self) -> SidebarItem | None: ...
+        @property
+        def accessible_role(self) -> _Gtk4.AccessibleRole: ...
+        @accessible_role.setter
+        def accessible_role(self, value: _Gtk4._AccessibleRoleValueType) -> None: ...
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(
+        self,
+        *,
+        drop_preload: bool = ...,
+        filter: _Gtk4.Filter | None = ...,
+        menu_model: Gio.MenuModel | None = ...,
+        mode: _SidebarModeValueType = ...,
+        placeholder: _Gtk4.Widget | None = ...,
+        selected: int = ...,
+        accessible_role: _Gtk4._AccessibleRoleValueType = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str | None = ...,
+        cursor: _Gdk4.Cursor | None = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: _Gtk4._AlignValueType = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: _Gtk4.LayoutManager | None = ...,
+        limit_events: bool = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: _Gtk4._OverflowValueType = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
+        valign: _Gtk4._AlignValueType = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+    ) -> None: ...
+    def append(self, section: SidebarSection) -> None: ...
+    def get_drop_preload(self) -> bool: ...
+    def get_filter(self) -> _Gtk4.Filter | None: ...
+    def get_item(self, index: int) -> SidebarItem | None: ...
+    def get_items(self) -> _Gtk4.SelectionModel: ...
+    def get_menu_model(self) -> Gio.MenuModel | None: ...
+    def get_mode(self) -> SidebarMode: ...
+    def get_placeholder(self) -> _Gtk4.Widget | None: ...
+    def get_section(self, index: int) -> SidebarSection | None: ...
+    def get_sections(self) -> Gio.ListModel: ...
+    def get_selected(self) -> int: ...
+    def get_selected_item(self) -> SidebarItem | None: ...
+    def insert(self, section: SidebarSection, position: int) -> None: ...
+    @classmethod
+    def new(cls) -> Sidebar: ...
+    def prepend(self, section: SidebarSection) -> None: ...
+    def remove(self, section: SidebarSection) -> None: ...
+    def remove_all(self) -> None: ...
+    def set_drop_preload(self, preload: bool) -> None: ...
+    def set_filter(self, filter: _Gtk4.Filter | None = None) -> None: ...
+    def set_menu_model(self, menu_model: Gio.MenuModel | None = None) -> None: ...
+    def set_mode(self, mode: _SidebarModeValueType) -> None: ...
+    def set_placeholder(self, placeholder: _Gtk4.Widget | None = None) -> None: ...
+    def set_selected(self, selected: int) -> None: ...
+    def setup_drop_target(
+        self,
+        actions: _Gdk4._DragActionValueType,
+        types: Sequence[type[Any]] | None = None,
+    ) -> None: ...
+
+class SidebarClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        SidebarClass()
+    """
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
+
+class SidebarItem(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        SidebarItem(**properties)
+        new(title:str) -> Adw.SidebarItem
+
+    Object AdwSidebarItem
+
+    Properties from AdwSidebarItem:
+      title -> gchararray: title
+      subtitle -> gchararray: subtitle
+      use-underline -> gboolean: use-underline
+      icon-name -> gchararray: icon-name
+      icon-paintable -> GdkPaintable: icon-paintable
+      tooltip -> gchararray: tooltip
+      suffix -> GtkWidget: suffix
+      visible -> gboolean: visible
+      enabled -> gboolean: enabled
+      drag-motion-activate -> gboolean: drag-motion-activate
+      section -> AdwSidebarSection: section
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(GObject.Object.Props):
+        drag_motion_activate: bool
+        enabled: bool
+        icon_name: str | None
+        icon_paintable: _Gdk4.Paintable | None
+        @property
+        def section(self) -> SidebarSection | None: ...
+        subtitle: str | None
+        suffix: _Gtk4.Widget | None
+        title: str | None
+        tooltip: str | None
+        use_underline: bool
+        visible: bool
+
+    @property
+    def props(self) -> Props: ...
+    @property
+    def parent_instance(self) -> GObject.Object: ...
+    def __init__(
+        self,
+        *,
+        drag_motion_activate: bool = ...,
+        enabled: bool = ...,
+        icon_name: str | None = ...,
+        icon_paintable: _Gdk4.Paintable | None = ...,
+        subtitle: str | None = ...,
+        suffix: _Gtk4.Widget | None = ...,
+        title: str | None = ...,
+        tooltip: str | None = ...,
+        use_underline: bool = ...,
+        visible: bool = ...,
+    ) -> None: ...
+    def get_drag_motion_activate(self) -> bool: ...
+    def get_enabled(self) -> bool: ...
+    def get_icon_name(self) -> str | None: ...
+    def get_icon_paintable(self) -> _Gdk4.Paintable | None: ...
+    def get_index(self) -> int: ...
+    def get_section(self) -> SidebarSection | None: ...
+    def get_section_index(self) -> int: ...
+    def get_subtitle(self) -> str | None: ...
+    def get_suffix(self) -> _Gtk4.Widget | None: ...
+    def get_title(self) -> str | None: ...
+    def get_tooltip(self) -> str | None: ...
+    def get_use_underline(self) -> bool: ...
+    def get_visible(self) -> bool: ...
+    @classmethod
+    def new(cls, title: str) -> SidebarItem: ...
+    def set_drag_motion_activate(self, drag_motion_activate: bool) -> None: ...
+    def set_enabled(self, enabled: bool) -> None: ...
+    def set_icon_name(self, icon_name: str | None = None) -> None: ...
+    def set_icon_paintable(self, paintable: _Gdk4.Paintable | None = None) -> None: ...
+    def set_subtitle(self, subtitle: str | None = None) -> None: ...
+    def set_suffix(self, suffix: _Gtk4.Widget | None = None) -> None: ...
+    def set_title(self, title: str | None = None) -> None: ...
+    def set_tooltip(self, tooltip: str | None = None) -> None: ...
+    def set_use_underline(self, use_underline: bool) -> None: ...
+    def set_visible(self, visible: bool) -> None: ...
+
+class SidebarItemClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        SidebarItemClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+    @property
+    def padding(self) -> list[int]: ...
+
+class SidebarSection(GObject.Object, _Gtk4.Buildable):
+    """
+    :Constructors:
+
+    ::
+
+        SidebarSection(**properties)
+        new() -> Adw.SidebarSection
+
+    Object AdwSidebarSection
+
+    Properties from AdwSidebarSection:
+      title -> gchararray: title
+      menu-model -> GMenuModel: menu-model
+      items -> GListModel: items
+      sidebar -> AdwSidebar: sidebar
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(GObject.Object.Props):
+        @property
+        def items(self) -> Gio.ListModel: ...
+        menu_model: Gio.MenuModel | None
+        @property
+        def sidebar(self) -> Sidebar | None: ...
+        title: str | None
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(
+        self, *, menu_model: Gio.MenuModel | None = ..., title: str | None = ...
+    ) -> None: ...
+    def append(self, item: SidebarItem) -> None: ...
+    def bind_model(
+        self,
+        model: Gio.ListModel | None = None,
+        create_item_func: Callable[[GObject.Object, Unpack[_DataTs]], SidebarItem]
+        | None = None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    def get_item(self, index: int) -> SidebarItem | None: ...
+    def get_items(self) -> Gio.ListModel: ...
+    def get_menu_model(self) -> Gio.MenuModel | None: ...
+    def get_sidebar(self) -> Sidebar | None: ...
+    def get_title(self) -> str | None: ...
+    def insert(self, item: SidebarItem, position: int) -> None: ...
+    @classmethod
+    def new(cls) -> SidebarSection: ...
+    def prepend(self, item: SidebarItem) -> None: ...
+    def remove(self, item: SidebarItem) -> None: ...
+    def remove_all(self) -> None: ...
+    def set_menu_model(self, menu_model: Gio.MenuModel | None = None) -> None: ...
+    def set_title(self, title: str | None = None) -> None: ...
+
+class SidebarSectionClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        SidebarSectionClass()
     """
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
@@ -10910,6 +11302,7 @@ class Toggle(GObject.Object):
       use-underline -> gboolean: use-underline
       icon-name -> gchararray: icon-name
       tooltip -> gchararray: tooltip
+      description -> gchararray: description
       child -> GtkWidget: child
       enabled -> gboolean: enabled
 
@@ -10919,6 +11312,7 @@ class Toggle(GObject.Object):
     @type_check_only
     class Props(GObject.Object.Props):
         child: _Gtk4.Widget | None
+        description: str
         enabled: bool
         icon_name: str | None
         label: str | None
@@ -10935,6 +11329,7 @@ class Toggle(GObject.Object):
         self,
         *,
         child: _Gtk4.Widget | None = ...,
+        description: str = ...,
         enabled: bool = ...,
         icon_name: str | None = ...,
         label: str | None = ...,
@@ -10943,6 +11338,7 @@ class Toggle(GObject.Object):
         use_underline: bool = ...,
     ) -> None: ...
     def get_child(self) -> _Gtk4.Widget | None: ...
+    def get_description(self) -> str: ...
     def get_enabled(self) -> bool: ...
     def get_icon_name(self) -> str | None: ...
     def get_index(self) -> int: ...
@@ -10953,6 +11349,7 @@ class Toggle(GObject.Object):
     @classmethod
     def new(cls) -> Toggle: ...
     def set_child(self, child: _Gtk4.Widget | None = None) -> None: ...
+    def set_description(self, description: str) -> None: ...
     def set_enabled(self, enabled: bool) -> None: ...
     def set_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_label(self, label: str | None = None) -> None: ...
@@ -11515,6 +11912,8 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
       needs-attention -> gboolean: needs-attention
       badge-number -> guint: badge-number
       visible -> gboolean: visible
+      starts-section -> gboolean: starts-section
+      section-title -> gchararray: section-title
 
     Signals from GObject:
       notify (GParam)
@@ -11527,6 +11926,8 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
         icon_name: str | None
         name: str | None
         needs_attention: bool
+        section_title: str | None
+        starts_section: bool
         title: str | None
         use_underline: bool
         visible: bool
@@ -11545,6 +11946,8 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
         icon_name: str | None = ...,
         name: str | None = ...,
         needs_attention: bool = ...,
+        section_title: str | None = ...,
+        starts_section: bool = ...,
         title: str | None = ...,
         use_underline: bool = ...,
         visible: bool = ...,
@@ -11555,6 +11958,8 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
     def get_icon_name(self) -> str | None: ...
     def get_name(self) -> str | None: ...
     def get_needs_attention(self) -> bool: ...
+    def get_section_title(self) -> str | None: ...
+    def get_starts_section(self) -> bool: ...
     def get_title(self) -> str | None: ...
     def get_use_underline(self) -> bool: ...
     def get_visible(self) -> bool: ...
@@ -11562,6 +11967,8 @@ class ViewStackPage(GObject.Object, _Gtk4.Accessible):
     def set_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_name(self, name: str | None = None) -> None: ...
     def set_needs_attention(self, needs_attention: bool) -> None: ...
+    def set_section_title(self, section_title: str | None = None) -> None: ...
+    def set_starts_section(self, starts_section: bool) -> None: ...
     def set_title(self, title: str | None = None) -> None: ...
     def set_use_underline(self, use_underline: bool) -> None: ...
     def set_visible(self, visible: bool) -> None: ...
@@ -11577,7 +11984,9 @@ class ViewStackPageClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
-class ViewStackPages(GObject.Object, Gio.ListModel, _Gtk4.SelectionModel):
+class ViewStackPages(
+    GObject.Object, Gio.ListModel, _Gtk4.SectionModel, _Gtk4.SelectionModel
+):
     """
     :Constructors:
 
@@ -11588,10 +11997,15 @@ class ViewStackPages(GObject.Object, Gio.ListModel, _Gtk4.SelectionModel):
     Object AdwViewStackPages
 
     Properties from AdwViewStackPages:
+      item-type -> GType: item-type
+      n-items -> guint: n-items
       selected-page -> AdwViewStackPage: selected-page
 
     Signals from GListModel:
       items-changed (guint, guint, guint)
+
+    Signals from GtkSectionModel:
+      sections-changed (guint, guint)
 
     Signals from GtkSelectionModel:
       selection-changed (guint, guint)
@@ -11601,6 +12015,10 @@ class ViewStackPages(GObject.Object, Gio.ListModel, _Gtk4.SelectionModel):
     """
     @type_check_only
     class Props(GObject.Object.Props):
+        @property
+        def item_type(self) -> type[Any]: ...
+        @property
+        def n_items(self) -> int: ...
         @property
         def selected_page(self) -> ViewStackPage | None: ...
         @selected_page.setter
@@ -11894,6 +12312,158 @@ class ViewSwitcherClass(_gi.Struct):
     ::
 
         ViewSwitcherClass()
+    """
+    @property
+    def parent_class(self) -> _Gtk4.WidgetClass: ...
+
+class ViewSwitcherSidebar(_Gtk4.Widget):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherSidebar(**properties)
+        new() -> Gtk.Widget
+
+    Object AdwViewSwitcherSidebar
+
+    Signals from AdwViewSwitcherSidebar:
+      activated ()
+
+    Properties from AdwViewSwitcherSidebar:
+      stack -> AdwViewStack: stack
+      mode -> AdwSidebarMode: mode
+      filter -> GtkFilter: filter
+      placeholder -> GtkWidget: placeholder
+
+    Signals from GtkWidget:
+      destroy ()
+      show ()
+      hide ()
+      map ()
+      unmap ()
+      realize ()
+      unrealize ()
+      state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
+      mnemonic-activate (gboolean) -> gboolean
+      move-focus (GtkDirectionType)
+      keynav-failed (GtkDirectionType) -> gboolean
+      query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
+
+    Properties from GtkWidget:
+      name -> gchararray: name
+      parent -> GtkWidget: parent
+      root -> GtkRoot: root
+      width-request -> gint: width-request
+      height-request -> gint: height-request
+      visible -> gboolean: visible
+      sensitive -> gboolean: sensitive
+      can-focus -> gboolean: can-focus
+      has-focus -> gboolean: has-focus
+      can-target -> gboolean: can-target
+      focus-on-click -> gboolean: focus-on-click
+      focusable -> gboolean: focusable
+      has-default -> gboolean: has-default
+      receives-default -> gboolean: receives-default
+      cursor -> GdkCursor: cursor
+      has-tooltip -> gboolean: has-tooltip
+      tooltip-markup -> gchararray: tooltip-markup
+      tooltip-text -> gchararray: tooltip-text
+      opacity -> gdouble: opacity
+      overflow -> GtkOverflow: overflow
+      halign -> GtkAlign: halign
+      valign -> GtkAlign: valign
+      margin-start -> gint: margin-start
+      margin-end -> gint: margin-end
+      margin-top -> gint: margin-top
+      margin-bottom -> gint: margin-bottom
+      hexpand -> gboolean: hexpand
+      vexpand -> gboolean: vexpand
+      hexpand-set -> gboolean: hexpand-set
+      vexpand-set -> gboolean: vexpand-set
+      scale-factor -> gint: scale-factor
+      css-name -> gchararray: css-name
+      css-classes -> GStrv: css-classes
+      layout-manager -> GtkLayoutManager: layout-manager
+      limit-events -> gboolean: limit-events
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(_Gtk4.Widget.Props):
+        filter: _Gtk4.Filter | None
+        @property
+        def mode(self) -> SidebarMode: ...
+        @mode.setter
+        def mode(self, value: _SidebarModeValueType) -> None: ...
+        placeholder: _Gtk4.Widget | None
+        stack: ViewStack | None
+        @property
+        def accessible_role(self) -> _Gtk4.AccessibleRole: ...
+        @accessible_role.setter
+        def accessible_role(self, value: _Gtk4._AccessibleRoleValueType) -> None: ...
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(
+        self,
+        *,
+        filter: _Gtk4.Filter | None = ...,
+        mode: _SidebarModeValueType = ...,
+        placeholder: _Gtk4.Widget | None = ...,
+        stack: ViewStack | None = ...,
+        accessible_role: _Gtk4._AccessibleRoleValueType = ...,
+        can_focus: bool = ...,
+        can_target: bool = ...,
+        css_classes: Sequence[str] = ...,
+        css_name: str | None = ...,
+        cursor: _Gdk4.Cursor | None = ...,
+        focus_on_click: bool = ...,
+        focusable: bool = ...,
+        halign: _Gtk4._AlignValueType = ...,
+        has_tooltip: bool = ...,
+        height_request: int = ...,
+        hexpand: bool = ...,
+        hexpand_set: bool = ...,
+        layout_manager: _Gtk4.LayoutManager | None = ...,
+        limit_events: bool = ...,
+        margin_bottom: int = ...,
+        margin_end: int = ...,
+        margin_start: int = ...,
+        margin_top: int = ...,
+        name: str = ...,
+        opacity: float = ...,
+        overflow: _Gtk4._OverflowValueType = ...,
+        receives_default: bool = ...,
+        sensitive: bool = ...,
+        tooltip_markup: str | None = ...,
+        tooltip_text: str | None = ...,
+        valign: _Gtk4._AlignValueType = ...,
+        vexpand: bool = ...,
+        vexpand_set: bool = ...,
+        visible: bool = ...,
+        width_request: int = ...,
+    ) -> None: ...
+    def get_filter(self) -> _Gtk4.Filter | None: ...
+    def get_mode(self) -> SidebarMode: ...
+    def get_placeholder(self) -> _Gtk4.Widget | None: ...
+    def get_stack(self) -> ViewStack | None: ...
+    @classmethod
+    def new(cls) -> ViewSwitcherSidebar: ...
+    def set_filter(self, filter: _Gtk4.Filter | None = None) -> None: ...
+    def set_mode(self, mode: _SidebarModeValueType) -> None: ...
+    def set_placeholder(self, placeholder: _Gtk4.Widget | None = None) -> None: ...
+    def set_stack(self, stack: ViewStack | None = None) -> None: ...
+
+class ViewSwitcherSidebarClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ViewSwitcherSidebarClass()
     """
     @property
     def parent_class(self) -> _Gtk4.WidgetClass: ...
@@ -13211,6 +13781,15 @@ _ResponseAppearanceLiteralType: TypeAlias = Literal[
 _ResponseAppearanceValueType: TypeAlias = (
     ResponseAppearance | _ResponseAppearanceLiteralType
 )
+
+class SidebarMode(GObject.GEnum):
+    PAGE = 1
+    SIDEBAR = 0
+
+_SidebarModeLiteralType: TypeAlias = Literal[
+    "ADW_SIDEBAR_MODE_PAGE", "ADW_SIDEBAR_MODE_SIDEBAR", "page", "sidebar"
+]
+_SidebarModeValueType: TypeAlias = SidebarMode | _SidebarModeLiteralType
 
 class SqueezerTransitionType(GObject.GEnum):
     CROSSFADE = 1
