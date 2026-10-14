@@ -11,6 +11,7 @@ dist
 uv.lock
 
 src/gi-stubs/repository/Gdk.pyi
+src/gi-stubs/repository/GdkMacos.pyi
 src/gi-stubs/repository/GdkWin32.pyi
 src/gi-stubs/repository/GIRepository.pyi
 src/gi-stubs/repository/Gtk.pyi
