@@ -2789,8 +2789,9 @@ class ElementFactory(PluginFeature):
         type: int, minrank: _RankValueType
     ) -> list[ElementFactory]: ...
     def list_is_type(self, type: int) -> bool: ...
+    # override
     @staticmethod
-    def make(factoryname: str, name: str | None = None) -> Element:
+    def make(factoryname: str, name: str | None = None) -> Element | None:
         """
         :raises Gst.PluginMissingError:
         """

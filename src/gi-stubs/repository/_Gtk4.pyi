@@ -8341,12 +8341,12 @@ class CustomFilter(Filter):
     @classmethod
     def new(
         cls,
-        match_func: Callable[[GObject.Object, Unpack[_DataTs]], bool] | None = None,
+        match_func: Callable[[Any, Unpack[_DataTs]], bool] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> CustomFilter: ...
     def set_filter_func(
         self,
-        match_func: Callable[[GObject.Object, Unpack[_DataTs]], bool] | None = None,
+        match_func: Callable[[Any, Unpack[_DataTs]], bool] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
 
@@ -17490,31 +17490,33 @@ class ListBox(Widget):
     def remove_all(self) -> None: ...
     def select_all(self) -> None: ...
     def select_row(self, row: ListBoxRow | None = None) -> None: ...
+    # override
     def selected_foreach(
         self,
-        func: Callable[[ListBox, ListBoxRow, Unpack[_DataTs]], None],
+        func: Callable[[ListBox, Any, Unpack[_DataTs]], None],
         *data: Unpack[_DataTs],
     ) -> None: ...
     def set_activate_on_single_click(self, single: bool) -> None: ...
     def set_adjustment(self, adjustment: Adjustment | None = None) -> None: ...
+    # override
     def set_filter_func(
         self,
-        filter_func: Callable[[ListBoxRow, Unpack[_DataTs]], bool] | None = None,
+        filter_func: Callable[[Any, Unpack[_DataTs]], bool] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
+    # override
     def set_header_func(
         self,
-        update_header: Callable[[ListBoxRow, ListBoxRow | None, Unpack[_DataTs]], None]
-        | None = None,
+        update_header: Callable[[Any, Any | None, Unpack[_DataTs]], None] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_placeholder(self, placeholder: Widget | None = None) -> None: ...
     def set_selection_mode(self, mode: _SelectionModeValueType) -> None: ...
     def set_show_separators(self, show_separators: bool) -> None: ...
+    # override
     def set_sort_func(
         self,
-        sort_func: Callable[[ListBoxRow, ListBoxRow, Unpack[_DataTs]], int]
-        | None = None,
+        sort_func: Callable[[Any, Any, Unpack[_DataTs]], int] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_tab_behavior(self, behavior: _ListTabBehaviorValueType) -> None: ...
@@ -18858,9 +18860,10 @@ class MenuButton(Widget):
     def set_always_show_arrow(self, always_show_arrow: bool) -> None: ...
     def set_can_shrink(self, can_shrink: bool) -> None: ...
     def set_child(self, child: Widget | None = None) -> None: ...
+    # override
     def set_create_popup_func(
         self,
-        func: Callable[[MenuButton, Unpack[_DataTs]], None] | None = None,
+        func: Callable[[Self, Unpack[_DataTs]], None] | None = None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
     def set_direction(self, direction: _ArrowTypeValueType) -> None: ...
@@ -29920,12 +29923,13 @@ class TreeModelFilter(GObject.Object, TreeDragSource, TreeModel):
     @overload
     def set_visible_func(
         self,
-        func: Callable[[TreeModel, TreeIter, int, None], GObject.Value],
+        func: Callable[[TreeModel, TreeIter, None], bool],
         data: None = None,
     ) -> None: ...
+    # override
     @overload
     def set_visible_func(
-        self, func: Callable[[TreeModel, TreeIter, int, _T], GObject.Value], data: _T
+        self, func: Callable[[TreeModel, TreeIter, _T], bool], data: _T
     ) -> None: ...
 
 class TreeModelFilterClass(_gi.Struct):
@@ -30956,23 +30960,7 @@ class TreeViewColumn(GObject.InitiallyUnowned, Buildable, CellLayout):
         self,
         title: str = ...,
         cell_renderer: CellRenderer | None = None,
-        *,
-        alignment: float = ...,
-        cell_area: CellArea = ...,
-        clickable: bool = ...,
-        expand: bool = ...,
-        fixed_width: int = ...,
-        max_width: int = ...,
-        min_width: int = ...,
-        reorderable: bool = ...,
-        resizable: bool = ...,
-        sizing: TreeViewColumnSizing = ...,
-        sort_column_id: int = ...,
-        sort_indicator: bool = ...,
-        sort_order: SortType = ...,
-        spacing: int = ...,
-        visible: bool = ...,
-        widget: Widget | None = ...,
+        **attributes: Any,
     ) -> None: ...
     def add_attribute(
         self, cell_renderer: CellRenderer, attribute: str, column: int
