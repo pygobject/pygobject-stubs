@@ -1,3 +1,43 @@
+# 2.18.0 (14 Oct 2026)
+
+## Feature
+
+* new update script with stub selection options ([#303](https://github.com/pygobject/pygobject-stubs/issues/303)) (#303)
+
+## Improvements
+
+* asyncio-related stubs in events and Gio ([#309](https://github.com/pygobject/pygobject-stubs/issues/309)) (#309)
+* vfunc and AsyncReadyCallback signatures ([#308](https://github.com/pygobject/pygobject-stubs/issues/308)) (#308)
+* generate async overloads for finish-func methods ([#307](https://github.com/pygobject/pygobject-stubs/issues/307)) (#307#220#302)
+* property and enum stub generation ([#306](https://github.com/pygobject/pygobject-stubs/issues/306)) (#306#259)
+* add `--format` to run formatters on the generated stub ([#301](https://github.com/pygobject/pygobject-stubs/issues/301)) (#301)
+* rewrite generator type/callback handling ([#298](https://github.com/pygobject/pygobject-stubs/issues/298)) (#298#299)
+* always use `__init__` instead of `__new__` ([#295](https://github.com/pygobject/pygobject-stubs/issues/295)) (#295)
+* class generation, props typing, and `__init__` arguments ([#294](https://github.com/pygobject/pygobject-stubs/issues/294)) (#294)
+* constant and property annotations ([#288](https://github.com/pygobject/pygobject-stubs/issues/288)) (#288)
+* properly type read-only properties ([#286](https://github.com/pygobject/pygobject-stubs/issues/286)) (#286)
+* assign aliases, update inheritance ([#285](https://github.com/pygobject/pygobject-stubs/issues/285)) (#285)
+* use versioned imports to improve type checking
+* typing in generate script
+* bump and use ruff instead of isort
+* enum and flags classes inheritance
+* Add typings for `gi._gi` ([#272](https://github.com/pygobject/pygobject-stubs/issues/272)) (#272)
+* Add default for ListModel type param ([#271](https://github.com/pygobject/pygobject-stubs/issues/271)) (#271)
+
+## Typing
+
+* Almost all libs where updated due to generator improvements
+
+## Bug Fixes
+
+* `__get__` for `FunctionInfo` and `VFuncInfo` should return `Self` ([#310](https://github.com/pygobject/pygobject-stubs/issues/310)) (#310)
+* accept `bytes` in `GdkPixbuf.Pixbuf.new_from_data()` ([#300](https://github.com/pygobject/pygobject-stubs/issues/300)) (#300#261)
+* gstreamer stubs ([#289](https://github.com/pygobject/pygobject-stubs/issues/289)) (#289)
+* class bases generation ([#293](https://github.com/pygobject/pygobject-stubs/issues/293)) (#293#291)
+* `GInterface` and `GObject.Object` shape and inheritance ([#290](https://github.com/pygobject/pygobject-stubs/issues/290)) (#290#287)
+* actually add the `Gio.ListModel` default to the stub (#238)
+* use `main()` and call `gi.require()`
+
 # 2.17.0 (18 Mar 2026)
 
 ## Feature
