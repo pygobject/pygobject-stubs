@@ -18,6 +18,7 @@ from enum import IntFlag
 import gi
 from gi import _gi
 from gi._error import GError as _GError
+from gi.repository import GLibUnix
 from gi.repository import GObject
 
 _T = TypeVar("_T")
@@ -174,6 +175,7 @@ MINSHORT: Final[int]
 MINSSIZE: Final[int]
 # override
 MODULE_SUFFIX: Final[str]
+NSEC_PER_SEC: Final[int]
 OPTION_ERROR_BAD_VALUE: Final[int]
 OPTION_ERROR_FAILED: Final[int]
 OPTION_ERROR_UNKNOWN_OPTION: Final[int]
@@ -243,6 +245,7 @@ USER_DIRECTORY_PICTURES: Final[int]
 USER_DIRECTORY_PUBLIC_SHARE: Final[int]
 USER_DIRECTORY_TEMPLATES: Final[int]
 USER_DIRECTORY_VIDEOS: Final[int]
+VA_COPY_AS_ARRAY: Final[int]
 VERSION_MIN_REQUIRED: Final[int]
 WIN32_MSG_HANDLE: Final[int]
 # override
@@ -483,7 +486,9 @@ def child_watch_source_new(pid: int) -> Source: ...
 def chmod(filename: str, mode: int) -> int: ...
 def clear_error() -> None: ...
 def close(fd: int) -> bool: ...
-def closefrom(lowfd: int) -> int: ...
+
+closefrom: Final = GLibUnix.closefrom
+
 def compute_checksum_for_bytes(
     checksum_type: ChecksumType, data: Bytes
 ) -> str | None: ...
@@ -569,7 +574,9 @@ def error_domain_register_static(
     error_type_copy: Callable[[Error, Error], None],
     error_type_clear: Callable[[Error], None],
 ) -> int: ...
-def fdwalk_set_cloexec(lowfd: int) -> int: ...
+
+fdwalk_set_cloexec: Final = GLibUnix.fdwalk_set_cloexec
+
 def file_error_from_errno(err_no: int) -> FileError: ...
 def file_error_quark() -> int: ...
 def file_get_contents(filename: str) -> tuple[bool, bytes]: ...
@@ -609,6 +616,7 @@ def get_language_names() -> list[str]: ...
 def get_language_names_with_category(category_name: str) -> list[str]: ...
 def get_locale_variants(locale: str) -> list[str]: ...
 def get_monotonic_time() -> int: ...
+def get_monotonic_time_ns() -> int: ...
 def get_num_processors() -> int: ...
 def get_os_info(key_name: str) -> str | None: ...
 def get_prgname() -> str | None: ...
@@ -966,7 +974,6 @@ def sequence_swap(a: SequenceIter, b: SequenceIter) -> None: ...
 def set_application_name(application_name: str) -> None: ...
 def set_error_literal(domain: int, code: int, message: str) -> Error: ...
 def set_prgname(prgname: str) -> None: ...
-def set_prgname_once(prgname: str) -> bool: ...
 def setenv(variable: str, value: str, overwrite: bool) -> bool: ...
 def shell_error_quark() -> int: ...
 def shell_parse_argv(command_line: str) -> tuple[bool, list[str]]: ...
@@ -1116,7 +1123,9 @@ def strrstr(haystack: str, needle: str) -> str | None: ...
 def strrstr_len(haystack: str, haystack_len: int, needle: str) -> str | None: ...
 def strsignal(signum: int) -> str: ...
 def strsplit(string: str, delimiter: str, max_tokens: int) -> list[str]: ...
-def strsplit_set(string: str, delimiters: str, max_tokens: int) -> list[str]: ...
+def strsplit_set(
+    string: str, delimiters: _Sequence[int], max_tokens: int
+) -> list[str]: ...
 def strstr_len(haystack: str, haystack_len: int, needle: str) -> str | None: ...
 def strtod(nptr: str) -> tuple[float, str]: ...
 def strup(string: str) -> str: ...
@@ -1168,6 +1177,7 @@ def test_trap_assertions(
 ) -> None: ...
 def test_trap_fork(usec_timeout: int, test_trap_flags: TestTrapFlags) -> bool: ...
 def test_trap_has_passed() -> bool: ...
+def test_trap_has_skipped() -> bool: ...
 def test_trap_reached_timeout() -> bool: ...
 def test_trap_subprocess(
     test_path: str | None, usec_timeout: int, test_flags: TestSubprocessFlags
@@ -1258,31 +1268,18 @@ def unicode_canonical_decomposition(ch: str, result_len: int) -> str: ...
 def unicode_canonical_ordering(string: _Sequence[str]) -> None: ...
 def unicode_script_from_iso15924(iso15924: int) -> UnicodeScript: ...
 def unicode_script_to_iso15924(script: _UnicodeScriptValueType) -> int: ...
-def unix_error_quark() -> int: ...
-def unix_fd_add_full(
-    priority: int,
-    fd: int,
-    condition: _IOConditionValueType,
-    function: Callable[[int, _IOConditionValueType, Unpack[_DataTs]], bool],
-    *user_data: Unpack[_DataTs],
-) -> int: ...
-def unix_fd_source_new(fd: int, condition: _IOConditionValueType) -> Source: ...
-def unix_get_passwd_entry(user_name: str) -> int: ...
-def unix_open_pipe(fds: _Sequence[int], flags: int) -> bool: ...
-def unix_set_fd_nonblocking(fd: int, nonblock: bool) -> bool: ...
-def unix_signal_add(
-    priority: int,
-    signum: int,
-    handler: Callable[[Unpack[_DataTs]], bool],
-    *user_data: Unpack[_DataTs],
-) -> int: ...
-def unix_signal_add_full(
-    priority: int,
-    signum: int,
-    handler: Callable[[Unpack[_DataTs]], bool],
-    *user_data: Unpack[_DataTs],
-) -> int: ...
-def unix_signal_source_new(signum: int) -> Source: ...
+
+unix_error_quark: Final = GLibUnix.error_quark
+unix_fd_add_full: Final = GLibUnix.fd_add_full
+unix_fd_query_path: Final = GLibUnix.fd_query_path
+unix_fd_source_new: Final = GLibUnix.fd_source_new
+unix_get_passwd_entry: Final = GLibUnix.get_passwd_entry
+unix_open_pipe: Final = GLibUnix.open_pipe
+unix_set_fd_nonblocking: Final = GLibUnix.set_fd_nonblocking
+unix_signal_add: Final = GLibUnix.signal_add
+unix_signal_add_full: Final = GLibUnix.signal_add
+unix_signal_source_new: Final = GLibUnix.signal_source_new
+
 def unlink(filename: str) -> int: ...
 def unsetenv(variable: str) -> None: ...
 def uri_build(
@@ -1625,6 +1622,7 @@ class Bytes(GObject.GBoxed):
     ::
 
         new(data:list=None) -> GLib.Bytes
+        new_from_bytes(bytes:GLib.Bytes, offset:int, length:int) -> GLib.Bytes
         new_take(data:list=None) -> GLib.Bytes
     """
     def __init__(self, data: _Sequence[int] | None = None) -> None: ...
@@ -1636,7 +1634,8 @@ class Bytes(GObject.GBoxed):
     def hash(self) -> int: ...
     @classmethod
     def new(cls, data: _Sequence[int] | None = None) -> Bytes: ...
-    def new_from_bytes(self, offset: int, length: int) -> Bytes: ...
+    @classmethod
+    def new_from_bytes(cls, bytes: Bytes, offset: int, length: int) -> Bytes: ...
     @classmethod
     def new_take(cls, data: _Sequence[int] | None = None) -> Bytes: ...
     def ref(self) -> Bytes: ...
@@ -2091,17 +2090,17 @@ class Hmac(GObject.GBoxed):
 
     ::
 
-        new(digest_type:GLib.ChecksumType, key:int, key_len:int) -> GLib.Hmac
+        new(digest_type:GLib.ChecksumType, key:list) -> GLib.Hmac or None
     """
-    def __init__(self, digest_type: ChecksumType, key: int, key_len: int) -> None: ...
+    def __init__(self, digest_type: ChecksumType, key: _Sequence[int]) -> None: ...
     def copy(self) -> Hmac: ...
-    def get_digest(self, buffer: int, digest_len: int) -> None: ...
+    def get_digest(self, buffer: _Sequence[int]) -> None: ...
     def get_string(self) -> str: ...
     @classmethod
-    def new(cls, digest_type: ChecksumType, key: int, key_len: int) -> Hmac: ...
+    def new(cls, digest_type: ChecksumType, key: _Sequence[int]) -> Hmac | None: ...
     def ref(self) -> Hmac: ...
     def unref(self) -> None: ...
-    def update(self, data: int, length: int) -> None: ...
+    def update(self, data: _Sequence[int]) -> None: ...
 
 class Hook(_gi.Struct):
     """
@@ -2567,7 +2566,9 @@ class MarkupParseContext(GObject.GBoxed):
     def free(self) -> None: ...
     def get_element(self) -> str: ...
     def get_element_stack(self) -> list[str]: ...
+    def get_offset(self) -> int: ...
     def get_position(self) -> tuple[int, int]: ...
+    def get_tag_start(self) -> tuple[int, int, int]: ...
     def get_user_data(self) -> int: ...
     @classmethod
     def new(
@@ -2858,13 +2859,7 @@ class PatternSpec(GObject.GBoxed):
     @classmethod
     def new(cls, pattern: str) -> PatternSpec: ...
 
-class Pid:
-    # override
-    def __init__(self, pid: int) -> None: ...
-    # override
-    def __int__(self) -> int: ...
-    # override
-    def close(self) -> None: ...
+Pid = _gi.Pid
 
 class PollFD(GObject.GBoxed):
     """
@@ -3903,16 +3898,7 @@ class Tuples(_gi.Struct):
     def destroy(self) -> None: ...
     def index(self, index_: int, field: int) -> int: ...
 
-class UnixPipe(_gi.Struct):
-    """
-    :Constructors:
-
-    ::
-
-        UnixPipe()
-    """
-
-    fds: list[int]
+UnixPipe = GLibUnix.Pipe
 
 class Uri(GObject.GBoxed):
     @staticmethod
@@ -4396,7 +4382,7 @@ class FormatSizeFlags(IntFlag):
 class HookFlagMask(IntFlag):
     ACTIVE = 1
     IN_CALL = 2
-    MASK = 15
+    RESERVED1 = 4
 
 class IOCondition(GObject.GFlags):
     ERR = 8
@@ -4484,7 +4470,6 @@ class OptionFlags(IntFlag):
 
 class RegexCompileFlags(IntFlag):
     ANCHORED = 16
-    BSR_ANYCRLF = 8388608
     CASELESS = 1
     DEFAULT = 0
     DOLLAR_ENDONLY = 32
@@ -4492,12 +4477,10 @@ class RegexCompileFlags(IntFlag):
     DUPNAMES = 524288
     EXTENDED = 8
     FIRSTLINE = 262144
-    JAVASCRIPT_COMPAT = 33554432
     MULTILINE = 2
-    NEWLINE_ANYCRLF = 5242880
     NEWLINE_CR = 1048576
-    NEWLINE_CRLF = 3145728
     NEWLINE_LF = 2097152
+    NEWLINE_RESERVED1 = 4194304
     NO_AUTO_CAPTURE = 4096
     OPTIMIZE = 8192
     RAW = 2048
@@ -4538,6 +4521,7 @@ class SpawnFlags(IntFlag):
 
 class TestSubprocessFlags(IntFlag):
     DEFAULT = 0
+    INHERIT_DESCRIPTORS = 8
     INHERIT_STDERR = 4
     INHERIT_STDIN = 1
     INHERIT_STDOUT = 2
@@ -4973,6 +4957,7 @@ class UnicodeBreakType(GObject.GEnum):
     SPACE = 9
     SURROGATE = 4
     SYMBOL = 22
+    UNAMBIGUOUS_HYPHEN = 48
     UNKNOWN = 28
     VIRAMA = 47
     VIRAMA_FINAL = 46
@@ -5023,6 +5008,7 @@ _UnicodeBreakTypeLiteralType: TypeAlias = Literal[
     "G_UNICODE_BREAK_SPACE",
     "G_UNICODE_BREAK_SURROGATE",
     "G_UNICODE_BREAK_SYMBOL",
+    "G_UNICODE_BREAK_UNAMBIGUOUS_HYPHEN",
     "G_UNICODE_BREAK_UNKNOWN",
     "G_UNICODE_BREAK_VIRAMA",
     "G_UNICODE_BREAK_VIRAMA_FINAL",
@@ -5071,6 +5057,7 @@ _UnicodeBreakTypeLiteralType: TypeAlias = Literal[
     "space",
     "surrogate",
     "symbol",
+    "unambiguous-hyphen",
     "unknown",
     "virama",
     "virama-final",
@@ -5092,6 +5079,7 @@ class UnicodeScript(GObject.GEnum):
     BASSA_VAH = 103
     BATAK = 93
     BENGALI = 4
+    BERIA_ERFE = 175
     BHAIKSUKI = 133
     BOPOMOFO = 5
     BRAHMI = 94
@@ -5218,6 +5206,7 @@ class UnicodeScript(GObject.GEnum):
     SHARADA = 100
     SHAVIAN = 50
     SIDDHAM = 123
+    SIDETIC = 172
     SIGNWRITING = 131
     SINHALA = 33
     SOGDIAN = 148
@@ -5232,6 +5221,7 @@ class UnicodeScript(GObject.GEnum):
     TAI_LE = 52
     TAI_THAM = 91
     TAI_VIET = 92
+    TAI_YO = 174
     TAKRI = 102
     TAMIL = 35
     TANGSA = 159
@@ -5243,6 +5233,7 @@ class UnicodeScript(GObject.GEnum):
     TIFINAGH = 57
     TIRHUTA = 124
     TODHRI = 165
+    TOLONG_SIKI = 173
     TOTO = 160
     TULU_TIGALARI = 167
     UGARITIC = 53
@@ -5271,6 +5262,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "G_UNICODE_SCRIPT_BASSA_VAH",
     "G_UNICODE_SCRIPT_BATAK",
     "G_UNICODE_SCRIPT_BENGALI",
+    "G_UNICODE_SCRIPT_BERIA_ERFE",
     "G_UNICODE_SCRIPT_BHAIKSUKI",
     "G_UNICODE_SCRIPT_BOPOMOFO",
     "G_UNICODE_SCRIPT_BRAHMI",
@@ -5397,6 +5389,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "G_UNICODE_SCRIPT_SHARADA",
     "G_UNICODE_SCRIPT_SHAVIAN",
     "G_UNICODE_SCRIPT_SIDDHAM",
+    "G_UNICODE_SCRIPT_SIDETIC",
     "G_UNICODE_SCRIPT_SIGNWRITING",
     "G_UNICODE_SCRIPT_SINHALA",
     "G_UNICODE_SCRIPT_SOGDIAN",
@@ -5411,6 +5404,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "G_UNICODE_SCRIPT_TAI_LE",
     "G_UNICODE_SCRIPT_TAI_THAM",
     "G_UNICODE_SCRIPT_TAI_VIET",
+    "G_UNICODE_SCRIPT_TAI_YO",
     "G_UNICODE_SCRIPT_TAKRI",
     "G_UNICODE_SCRIPT_TAMIL",
     "G_UNICODE_SCRIPT_TANGSA",
@@ -5422,6 +5416,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "G_UNICODE_SCRIPT_TIFINAGH",
     "G_UNICODE_SCRIPT_TIRHUTA",
     "G_UNICODE_SCRIPT_TODHRI",
+    "G_UNICODE_SCRIPT_TOLONG_SIKI",
     "G_UNICODE_SCRIPT_TOTO",
     "G_UNICODE_SCRIPT_TULU_TIGALARI",
     "G_UNICODE_SCRIPT_UGARITIC",
@@ -5444,6 +5439,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "bassa-vah",
     "batak",
     "bengali",
+    "beria-erfe",
     "bhaiksuki",
     "bopomofo",
     "brahmi",
@@ -5570,6 +5566,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "sharada",
     "shavian",
     "siddham",
+    "sidetic",
     "signwriting",
     "sinhala",
     "sogdian",
@@ -5584,6 +5581,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "tai-le",
     "tai-tham",
     "tai-viet",
+    "tai-yo",
     "takri",
     "tamil",
     "tangsa",
@@ -5595,6 +5593,7 @@ _UnicodeScriptLiteralType: TypeAlias = Literal[
     "tifinagh",
     "tirhuta",
     "todhri",
+    "tolong-siki",
     "toto",
     "tulu-tigalari",
     "ugaritic",
@@ -5704,10 +5703,7 @@ _UnicodeTypeLiteralType: TypeAlias = Literal[
     "uppercase-letter",
 ]
 _UnicodeTypeValueType: TypeAlias = UnicodeType | _UnicodeTypeLiteralType
-
-class UnixPipeEnd(IntEnum):
-    READ = 0
-    WRITE = 1
+UnixPipeEnd = GLibUnix.PipeEnd
 
 class UriError(IntEnum):
     BAD_AUTH_PARAMS = 4
