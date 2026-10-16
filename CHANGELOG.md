@@ -1,3 +1,16 @@
+# 2.19.0 (16 Oct 2026)
+
+## Typing
+
+* Improve type hints for
+    - GLib
+    - GLibUnix
+
+## Bug Fixes
+
+* GLib: Fix annotation for io_add_watch()
+* Fix regressions
+
 # 2.18.0 (14 Oct 2026)
 
 ## Feature
