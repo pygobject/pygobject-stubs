@@ -1,5 +1,6 @@
 from typing import Any
 from typing import type_check_only
+from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
 from collections.abc import Callable

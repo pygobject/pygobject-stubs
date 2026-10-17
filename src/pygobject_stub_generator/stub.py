@@ -1538,7 +1538,6 @@ class Stub:
                 ]
             )
 
-        imports = [f"{_import}" for _import in self.needed_imports.values()]
         extras_str = "\n".join(extras)
 
         # Only keep the typevars that are actually used in the generated stubs
@@ -1551,6 +1550,8 @@ class Stub:
                 or typevar_re.search(ret) is not None
             ):
                 used_typevars.append(typevar.build(self))
+
+        imports = [f"{_import}" for _import in self.needed_imports.values()]
 
         return (
             "\n".join(imports)
