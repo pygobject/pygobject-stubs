@@ -85,6 +85,12 @@ class ClassInfo:
         return isinstance(self.gi_info, GI.ObjectInfo)
 
     @property
+    def alias(self) -> str | None:
+        if self.in_class or self.stub.check_override(self.prefix, self.name):
+            return None
+        return self.stub.get_alias(self.name, self.cls)
+
+    @property
     def bases(self) -> tuple[type[Any], ...]:
         if self._bases is not None:
             return self._bases
@@ -423,10 +429,7 @@ class Props{parents_string}:
         if override := self.stub.check_override(self.prefix, self.name):
             return override
 
-        if (
-            not self.in_class
-            and (alias := self.stub.get_alias(self.name, self.cls)) is not None
-        ):
+        if (alias := self.alias) is not None:
             # Set up a constant for classes that are aliases
             # NOTE: this should not use `Final` because doing so turns the alias into
             # a variable rather than a class
