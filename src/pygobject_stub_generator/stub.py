@@ -1466,9 +1466,15 @@ class Stub:
             ret += "\n"
 
         # Classes
+        aliases = ""
         for _, class_info in sorted(classes.items()):
             if class_string := class_info.build():
-                ret += f"{class_string}\n"
+                if class_info.alias in classes:
+                    aliases += f"{class_string}\n"
+                else:
+                    ret += f"{class_string}\n"
+        # Aliases of classes in this namespace come after the classes
+        ret += aliases
 
         if ret and flags:
             ret += "\n"

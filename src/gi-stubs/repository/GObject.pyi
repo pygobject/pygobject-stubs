@@ -1279,9 +1279,7 @@ class Float(float):
 GBoxed = _gi.GBoxed
 GError = GLib.GError
 GInterface = _gi.GInterface
-GObject = Object
 GObjectWeakRef = _gi.GObjectWeakRef
-GParamSpec = ParamSpec
 GPointer = _gi.GPointer
 GType = _gi.GType
 
@@ -2437,6 +2435,8 @@ class _Value__data__union(_gi.Struct):
 
 # override
 property = Property
+GObject = Object
+GParamSpec = ParamSpec
 
 class BindingFlags(GFlags):
     BIDIRECTIONAL = 1
