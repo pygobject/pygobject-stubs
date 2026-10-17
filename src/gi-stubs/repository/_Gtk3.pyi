@@ -53271,8 +53271,8 @@ class Table(Container):
         right_attach: int,
         top_attach: int,
         bottom_attach: int,
-        xoptions: AttachOptions = AttachOptions.EXPAND | AttachOptions.FILL,
-        yoptions: AttachOptions = AttachOptions.EXPAND | AttachOptions.FILL,
+        xoptions: AttachOptions = ...,
+        yoptions: AttachOptions = ...,
         xpadding: int = 0,
         ypadding: int = 0,
     ): ...
