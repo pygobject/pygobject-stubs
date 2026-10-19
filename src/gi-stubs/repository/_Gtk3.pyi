@@ -11,6 +11,7 @@ from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
 from collections.abc import Callable
+from collections.abc import Collection
 from collections.abc import Iterable
 from collections.abc import Iterator
 from collections.abc import Sequence
