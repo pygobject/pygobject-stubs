@@ -31,10 +31,11 @@ repository = "https://github.com/pygobject/pygobject-stubs"
 
 [dependency-groups]
 dev = [
-    "PyGObject@git+https://gitlab.gnome.org/GNOME/pygobject.git",
     "codespell>=2.4.1",
-    "ruff==0.15.8",
     "pre-commit",
+    "PyGObject@git+https://gitlab.gnome.org/GNOME/pygobject.git",
+    "ruff==0.15.8",
+    "ty>=0.0.89",
 ]
 
 [tool.setuptools.packages.find]
@@ -109,7 +110,9 @@ required-imports = ["from __future__ import annotations"]
 [tool.ruff.lint.isort.sections]
 typing = ["_typeshed", "typing", "typing_extensions"]
 
-[tool.pyright]
-pythonVersion = "3.10"
+[tool.ty.environment]
+python-version = "3.12"
 
-reportMissingModuleSource = "none"
+[tool.ty.rules]
+all = "ignore"
+unresolved-reference = "error"
