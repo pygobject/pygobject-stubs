@@ -1,3 +1,19 @@
+# 2.20.0 (19 Oct 2026)
+
+## Typing
+
+* Improve type hints for
+    - Adw: Update to 1.10.0
+    - Gtk4: Update to 4.24.1
+    - Atspi: Update to 2.62.1 (#325)
+    - Rsvg: Update to 2.63.3 (#315)
+
+## Bug Fixes
+
+* Generator: Write aliases after the classes in the same module
+* Gtk3: Add missing import of Collection ([#324](https://github.com/pygobject/pygobject-stubs/issues/324)) (#324)
+* Generator: Build type vars before writing imports ([#321](https://github.com/pygobject/pygobject-stubs/issues/321)) (#321)
+
 # 2.19.0 (16 Oct 2026)
 
 ## Typing
