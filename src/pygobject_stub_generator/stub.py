@@ -74,20 +74,21 @@ _strip_boolean_result_re: Final = re.compile(r"\bstrip_boolean_result\b")
 
 _RESERVED_KEYWORDS: Final = {"async"}
 _ALLOWED_FUNCTIONS: Final = {
-    "__new__",
-    "__init__",
-    "__enter__",
-    "__exit__",
-    "__iter__",
-    "__next__",
-    "__getitem__",
-    "__setitem__",
-    "__delitem__",
-    "__len__",
-    "__int__",
-    "__float__",
     "__bool__",
     "__contains__",
+    "__delitem__",
+    "__enter__",
+    "__exit__",
+    "__float__",
+    "__getitem__",
+    "__init__",
+    "__int__",
+    "__iter__",
+    "__len__",
+    "__new__",
+    "__next__",
+    "__nonzero__",
+    "__setitem__",
 }
 
 _GI_IMPORT_ALIASES: Final = {
