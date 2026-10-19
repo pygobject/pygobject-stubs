@@ -1021,10 +1021,10 @@ class AboutDialog(Dialog):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -1112,6 +1112,8 @@ class AboutDialog(Dialog):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1120,13 +1122,11 @@ class AboutDialog(Dialog):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -1669,6 +1669,8 @@ class AccelLabel(Label):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -1677,13 +1679,11 @@ class AccelLabel(Label):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2297,6 +2297,8 @@ class ActionBar(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2305,13 +2307,11 @@ class ActionBar(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -2957,6 +2957,8 @@ class Alignment(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -2965,13 +2967,11 @@ class Alignment(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -3304,6 +3304,8 @@ class AppChooserButton(ComboBox, AppChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -3312,13 +3314,11 @@ class AppChooserButton(ComboBox, AppChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -3593,10 +3593,10 @@ class AppChooserDialog(Dialog, AppChooser):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -3684,6 +3684,8 @@ class AppChooserDialog(Dialog, AppChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -3692,13 +3694,11 @@ class AppChooserDialog(Dialog, AppChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -4010,6 +4010,8 @@ class AppChooserWidget(Box, AppChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -4018,13 +4020,11 @@ class AppChooserWidget(Box, AppChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -4455,10 +4455,10 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
       action-state-changed (gchararray, GVariant)
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -4546,6 +4546,8 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -4554,13 +4556,11 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -4833,6 +4833,8 @@ class Arrow(Misc):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -4841,13 +4843,11 @@ class Arrow(Misc):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5225,6 +5225,8 @@ class AspectFrame(Frame):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5233,13 +5235,11 @@ class AspectFrame(Frame):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5479,8 +5479,8 @@ class Assistant(Window):
     Object GtkAssistant
 
     Signals from GtkAssistant:
-      close ()
       cancel ()
+      close ()
       prepare (GtkWidget)
       apply ()
       escape ()
@@ -5490,10 +5490,10 @@ class Assistant(Window):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -5581,6 +5581,8 @@ class Assistant(Window):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5589,13 +5591,11 @@ class Assistant(Window):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -5908,6 +5908,8 @@ class Bin(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -5916,13 +5918,11 @@ class Bin(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -6388,6 +6388,8 @@ class Box(Container, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -6396,13 +6398,11 @@ class Box(Container, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -6907,6 +6907,8 @@ class Button(Bin, Actionable, Activatable, Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -6915,13 +6917,11 @@ class Button(Bin, Actionable, Activatable, Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -7340,6 +7340,8 @@ class ButtonBox(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -7348,13 +7350,11 @@ class ButtonBox(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -7650,6 +7650,8 @@ class Calendar(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -7658,13 +7660,11 @@ class Calendar(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -10759,6 +10759,8 @@ class CellView(Widget, CellLayout, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -10767,13 +10769,11 @@ class CellView(Widget, CellLayout, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -11094,6 +11094,8 @@ class CheckButton(ToggleButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -11102,13 +11104,11 @@ class CheckButton(ToggleButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -11402,6 +11402,8 @@ class CheckMenuItem(MenuItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -11410,13 +11412,11 @@ class CheckMenuItem(MenuItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -11937,6 +11937,8 @@ class ColorButton(Button, ColorChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -11945,13 +11947,11 @@ class ColorButton(Button, ColorChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -12248,10 +12248,10 @@ class ColorChooserDialog(Dialog, ColorChooser):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -12339,6 +12339,8 @@ class ColorChooserDialog(Dialog, ColorChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -12347,13 +12349,11 @@ class ColorChooserDialog(Dialog, ColorChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -12665,6 +12665,8 @@ class ColorChooserWidget(Box, ColorChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -12673,13 +12675,11 @@ class ColorChooserWidget(Box, ColorChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -12949,6 +12949,8 @@ class ColorSelection(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -12957,13 +12959,11 @@ class ColorSelection(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -13238,10 +13238,10 @@ class ColorSelectionDialog(Dialog):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -13329,6 +13329,8 @@ class ColorSelectionDialog(Dialog):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -13337,13 +13339,11 @@ class ColorSelectionDialog(Dialog):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -13666,6 +13666,8 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -13674,13 +13676,11 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -14174,6 +14174,8 @@ class ComboBoxText(ComboBox):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -14182,13 +14184,11 @@ class ComboBoxText(ComboBox):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -14449,6 +14449,8 @@ class Container(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -14457,13 +14459,11 @@ class Container(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -15103,10 +15103,10 @@ class Dialog(Window, Container):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -15194,6 +15194,8 @@ class Dialog(Window, Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -15202,13 +15204,11 @@ class Dialog(Window, Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -15496,6 +15496,8 @@ class DrawingArea(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -15504,13 +15506,11 @@ class DrawingArea(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -15771,10 +15771,10 @@ class Entry(Widget, CellEditable, Editable):
     Object GtkEntry
 
     Signals from GtkEntry:
+      activate ()
       move-cursor (GtkMovementStep, gint, gboolean)
       copy-clipboard ()
       populate-popup (GtkWidget)
-      activate ()
       insert-at-cursor (gchararray)
       delete-from-cursor (GtkDeleteType, gint)
       backspace ()
@@ -15903,6 +15903,8 @@ class Entry(Widget, CellEditable, Editable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -15911,13 +15913,11 @@ class Entry(Widget, CellEditable, Editable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -16862,6 +16862,8 @@ class EventBox(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -16870,13 +16872,11 @@ class EventBox(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -17317,6 +17317,8 @@ class Expander(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -17325,13 +17327,11 @@ class Expander(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -17817,6 +17817,8 @@ class FileChooserButton(Box, FileChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -17825,13 +17827,11 @@ class FileChooserButton(Box, FileChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -18122,10 +18122,10 @@ class FileChooserDialog(Dialog, FileChooser):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -18213,6 +18213,8 @@ class FileChooserDialog(Dialog, FileChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -18221,13 +18223,11 @@ class FileChooserDialog(Dialog, FileChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -18677,6 +18677,8 @@ class FileChooserWidget(Box, FileChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -18685,13 +18687,11 @@ class FileChooserWidget(Box, FileChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -19129,6 +19129,8 @@ class Fixed(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -19137,13 +19139,11 @@ class Fixed(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -19411,6 +19411,8 @@ class FlowBox(Container, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -19419,13 +19421,11 @@ class FlowBox(Container, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -19836,6 +19836,8 @@ class FlowBoxChild(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -19844,13 +19846,11 @@ class FlowBoxChild(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -20260,6 +20260,8 @@ class FontButton(Button, FontChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -20268,13 +20270,11 @@ class FontButton(Button, FontChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -20606,10 +20606,10 @@ class FontChooserDialog(Dialog, FontChooser):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -20697,6 +20697,8 @@ class FontChooserDialog(Dialog, FontChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -20705,13 +20707,11 @@ class FontChooserDialog(Dialog, FontChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -21051,6 +21051,8 @@ class FontChooserWidget(Box, FontChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -21059,13 +21061,11 @@ class FontChooserWidget(Box, FontChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -21345,6 +21345,8 @@ class FontSelection(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -21353,13 +21355,11 @@ class FontSelection(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -21606,10 +21606,10 @@ class FontSelectionDialog(Dialog):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -21697,6 +21697,8 @@ class FontSelectionDialog(Dialog):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -21705,13 +21707,11 @@ class FontSelectionDialog(Dialog):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -21989,6 +21989,8 @@ class Frame(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -21997,13 +21999,11 @@ class Frame(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -22354,8 +22354,8 @@ class GLArea(Widget):
     Object GtkGLArea
 
     Signals from GtkGLArea:
-      render (GdkGLContext) -> gboolean
       resize (gint, gint)
+      render (GdkGLContext) -> gboolean
       create-context () -> GdkGLContext
 
     Properties from GtkGLArea:
@@ -22375,6 +22375,8 @@ class GLArea(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -22383,13 +22385,11 @@ class GLArea(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -22636,10 +22636,10 @@ class Gesture(EventController):
     Object GtkGesture
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -22728,10 +22728,10 @@ class GestureDrag(GestureSingle):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -22779,8 +22779,8 @@ class GestureLongPress(GestureSingle):
     Object GtkGestureLongPress
 
     Signals from GtkGestureLongPress:
-      pressed (gdouble, gdouble)
       cancelled ()
+      pressed (gdouble, gdouble)
 
     Properties from GtkGestureLongPress:
       delay-factor -> gdouble: Delay factor
@@ -22795,10 +22795,10 @@ class GestureLongPress(GestureSingle):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -22864,10 +22864,10 @@ class GestureMultiPress(GestureSingle):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -22935,10 +22935,10 @@ class GesturePan(GestureDrag):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -22999,10 +22999,10 @@ class GestureRotate(Gesture):
       angle-changed (gdouble, gdouble)
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -23053,10 +23053,10 @@ class GestureSingle(Gesture):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -23130,10 +23130,10 @@ class GestureStylus(GestureSingle):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -23195,10 +23195,10 @@ class GestureSwipe(GestureSingle):
         Button number to listen to
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -23248,10 +23248,10 @@ class GestureZoom(Gesture):
       scale-changed (gdouble)
 
     Signals from GtkGesture:
+      update (GdkEventSequence)
       cancel (GdkEventSequence)
       begin (GdkEventSequence)
       end (GdkEventSequence)
-      update (GdkEventSequence)
       sequence-state-changed (GdkEventSequence, GtkEventSequenceState)
 
     Properties from GtkGesture:
@@ -23345,6 +23345,8 @@ class Grid(Container, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -23353,13 +23355,11 @@ class Grid(Container, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -23646,6 +23646,8 @@ class HBox(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -23654,13 +23656,11 @@ class HBox(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -23909,6 +23909,8 @@ class HButtonBox(ButtonBox):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -23917,13 +23919,11 @@ class HButtonBox(ButtonBox):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -24181,6 +24181,8 @@ class HPaned(Paned):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -24189,13 +24191,11 @@ class HPaned(Paned):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -24422,6 +24422,8 @@ class HSV(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -24430,13 +24432,11 @@ class HSV(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -24698,6 +24698,8 @@ class HScale(Scale):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -24706,13 +24708,11 @@ class HScale(Scale):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -24967,6 +24967,8 @@ class HScrollbar(Scrollbar):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -24975,13 +24977,11 @@ class HScrollbar(Scrollbar):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -25206,6 +25206,8 @@ class HSeparator(Separator):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -25214,13 +25216,11 @@ class HSeparator(Separator):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -25467,6 +25467,8 @@ class HandleBox(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -25475,13 +25477,11 @@ class HandleBox(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -25764,6 +25764,8 @@ class HeaderBar(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -25772,13 +25774,11 @@ class HeaderBar(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -26781,6 +26781,8 @@ class IconView(Container, CellLayout, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -26789,13 +26791,11 @@ class IconView(Container, CellLayout, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -27356,6 +27356,8 @@ class Image(Misc):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -27364,13 +27366,11 @@ class Image(Misc):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -27932,6 +27932,8 @@ class ImageMenuItem(MenuItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -27940,13 +27942,11 @@ class ImageMenuItem(MenuItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -28245,6 +28245,8 @@ class InfoBar(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -28253,13 +28255,11 @@ class InfoBar(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -28519,6 +28519,8 @@ class Invisible(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -28527,13 +28529,11 @@ class Invisible(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -28819,6 +28819,8 @@ class Label(Misc):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -28827,13 +28829,11 @@ class Label(Misc):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -29312,6 +29312,8 @@ class Layout(Container, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -29320,13 +29322,11 @@ class Layout(Container, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -29598,6 +29598,8 @@ class LevelBar(Widget, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -29606,13 +29608,11 @@ class LevelBar(Widget, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -30028,6 +30028,8 @@ class LinkButton(Button):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -30036,13 +30038,11 @@ class LinkButton(Button):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -30437,6 +30437,8 @@ class ListBox(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -30445,13 +30447,11 @@ class ListBox(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -30884,6 +30884,8 @@ class ListBoxRow(Bin, Actionable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -30892,13 +30894,11 @@ class ListBoxRow(Bin, Actionable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -31385,6 +31385,8 @@ class LockButton(Button):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -31393,13 +31395,11 @@ class LockButton(Button):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -31843,6 +31843,8 @@ class Menu(MenuShell):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -31851,13 +31853,11 @@ class Menu(MenuShell):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -32331,6 +32331,8 @@ class MenuBar(MenuShell):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -32339,13 +32341,11 @@ class MenuBar(MenuShell):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -32650,6 +32650,8 @@ class MenuButton(ToggleButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -32658,13 +32660,11 @@ class MenuButton(ToggleButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -33096,6 +33096,8 @@ class MenuItem(Bin, Actionable, Activatable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -33104,13 +33106,11 @@ class MenuItem(Bin, Actionable, Activatable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -33538,6 +33538,8 @@ class MenuShell(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -33546,13 +33548,11 @@ class MenuShell(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -33985,6 +33985,8 @@ class MenuToolButton(ToolButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -33993,13 +33995,11 @@ class MenuToolButton(ToolButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -34274,10 +34274,10 @@ class MessageDialog(Dialog):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -34365,6 +34365,8 @@ class MessageDialog(Dialog):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -34373,13 +34375,11 @@ class MessageDialog(Dialog):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -34661,6 +34661,8 @@ class Misc(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -34669,13 +34671,11 @@ class Misc(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -34963,6 +34963,8 @@ class ModelButton(Button):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -34971,13 +34973,11 @@ class ModelButton(Button):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -35435,6 +35435,8 @@ class Notebook(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -35443,13 +35445,11 @@ class Notebook(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -36091,10 +36091,10 @@ class OffscreenWindow(Window):
     Object GtkOffscreenWindow
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -36182,6 +36182,8 @@ class OffscreenWindow(Window):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -36190,13 +36192,11 @@ class OffscreenWindow(Window):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -36475,6 +36475,8 @@ class Overlay(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -36483,13 +36485,11 @@ class Overlay(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -36889,6 +36889,8 @@ class Paned(Container, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -36897,13 +36899,11 @@ class Paned(Container, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -37435,6 +37435,8 @@ class PlacesSidebar(ScrolledWindow):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -37443,13 +37445,11 @@ class PlacesSidebar(ScrolledWindow):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -37728,10 +37728,10 @@ class Plug(Window):
         The window of the socket the plug is embedded in
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -37819,6 +37819,8 @@ class Plug(Window):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -37827,13 +37829,11 @@ class Plug(Window):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -38082,12 +38082,12 @@ class PlugAccessible(WindowAccessible):
     Signals from AtkWindow:
       destroy ()
       activate ()
-      resize ()
-      move ()
       deactivate ()
       create ()
       maximize ()
       minimize ()
+      move ()
+      resize ()
       restore ()
 
     Signals from AtkComponent:
@@ -38096,12 +38096,12 @@ class PlugAccessible(WindowAccessible):
     Signals from AtkWindow:
       destroy ()
       activate ()
-      resize ()
-      move ()
       deactivate ()
       create ()
       maximize ()
       minimize ()
+      move ()
+      resize ()
       restore ()
 
     Signals from AtkComponent:
@@ -38263,6 +38263,8 @@ class Popover(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -38271,13 +38273,11 @@ class Popover(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -38684,6 +38684,8 @@ class PopoverMenu(Popover):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -38692,13 +38694,11 @@ class PopoverMenu(Popover):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -39341,6 +39341,8 @@ class ProgressBar(Widget, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -39349,13 +39351,11 @@ class ProgressBar(Widget, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -39938,6 +39938,8 @@ class RadioButton(CheckButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -39946,13 +39948,11 @@ class RadioButton(CheckButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -40398,6 +40398,8 @@ class RadioMenuItem(CheckMenuItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -40406,13 +40408,11 @@ class RadioMenuItem(CheckMenuItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -40861,6 +40861,8 @@ class RadioToolButton(ToggleToolButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -40869,13 +40871,11 @@ class RadioToolButton(ToggleToolButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -41153,6 +41153,8 @@ class Range(Widget, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -41161,13 +41163,11 @@ class Range(Widget, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -41887,10 +41887,10 @@ class RecentChooserDialog(Dialog, RecentChooser):
         Use Header Bar for actions.
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -41978,6 +41978,8 @@ class RecentChooserDialog(Dialog, RecentChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -41986,13 +41988,11 @@ class RecentChooserDialog(Dialog, RecentChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -42380,6 +42380,8 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -42388,13 +42390,11 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -42696,6 +42696,8 @@ class RecentChooserWidget(Box, RecentChooser):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -42704,13 +42706,11 @@ class RecentChooserWidget(Box, RecentChooser):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -43303,6 +43303,8 @@ class Revealer(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -43311,13 +43313,11 @@ class Revealer(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -43590,6 +43590,8 @@ class Scale(Range):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -43598,13 +43600,11 @@ class Scale(Range):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -44027,6 +44027,8 @@ class ScaleButton(Button, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -44035,13 +44037,11 @@ class ScaleButton(Button, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -44506,6 +44506,8 @@ class Scrollbar(Range):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -44514,13 +44516,11 @@ class Scrollbar(Range):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -44799,6 +44799,8 @@ class ScrolledWindow(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -44807,13 +44809,11 @@ class ScrolledWindow(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -45264,6 +45264,8 @@ class SearchBar(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -45272,13 +45274,11 @@ class SearchBar(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -45516,10 +45516,10 @@ class SearchEntry(Entry):
       remove-widget ()
 
     Signals from GtkEntry:
+      activate ()
       move-cursor (GtkMovementStep, gint, gboolean)
       copy-clipboard ()
       populate-popup (GtkWidget)
-      activate ()
       insert-at-cursor (gchararray)
       delete-from-cursor (GtkDeleteType, gint)
       backspace ()
@@ -45648,6 +45648,8 @@ class SearchEntry(Entry):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -45656,13 +45658,11 @@ class SearchEntry(Entry):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -45957,6 +45957,8 @@ class Separator(Widget, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -45965,13 +45967,11 @@ class Separator(Widget, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -46224,6 +46224,8 @@ class SeparatorMenuItem(MenuItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -46232,13 +46234,11 @@ class SeparatorMenuItem(MenuItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -46501,6 +46501,8 @@ class SeparatorToolItem(ToolItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -46509,13 +46511,11 @@ class SeparatorToolItem(ToolItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -47206,6 +47206,8 @@ class ShortcutLabel(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -47214,13 +47216,11 @@ class ShortcutLabel(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -47479,6 +47479,8 @@ class ShortcutsGroup(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -47487,13 +47489,11 @@ class ShortcutsGroup(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -47753,6 +47753,8 @@ class ShortcutsSection(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -47761,13 +47763,11 @@ class ShortcutsSection(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -48030,6 +48030,8 @@ class ShortcutsShortcut(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -48038,13 +48040,11 @@ class ShortcutsShortcut(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -48295,10 +48295,10 @@ class ShortcutsWindow(Window):
         View Name
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -48386,6 +48386,8 @@ class ShortcutsWindow(Window):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -48394,13 +48396,11 @@ class ShortcutsWindow(Window):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -48730,6 +48730,8 @@ class Socket(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -48738,13 +48740,11 @@ class Socket(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -49111,10 +49111,10 @@ class SpinButton(Entry, Orientable):
       remove-widget ()
 
     Signals from GtkEntry:
+      activate ()
       move-cursor (GtkMovementStep, gint, gboolean)
       copy-clipboard ()
       populate-popup (GtkWidget)
-      activate ()
       insert-at-cursor (gchararray)
       delete-from-cursor (GtkDeleteType, gint)
       backspace ()
@@ -49243,6 +49243,8 @@ class SpinButton(Entry, Orientable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -49251,13 +49253,11 @@ class SpinButton(Entry, Orientable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -49720,6 +49720,8 @@ class Spinner(Widget):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -49728,13 +49730,11 @@ class Spinner(Widget):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -50095,6 +50095,8 @@ class Stack(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -50103,13 +50105,11 @@ class Stack(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -50500,6 +50500,8 @@ class StackSidebar(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -50508,13 +50510,11 @@ class StackSidebar(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -50766,6 +50766,8 @@ class StackSwitcher(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -50774,13 +50776,11 @@ class StackSwitcher(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -51230,6 +51230,8 @@ class Statusbar(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -51238,13 +51240,11 @@ class Statusbar(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -52628,6 +52628,8 @@ class Switch(Widget, Actionable, Activatable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -52636,13 +52638,11 @@ class Switch(Widget, Actionable, Activatable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -53050,6 +53050,8 @@ class Table(Container):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -53058,13 +53060,11 @@ class Table(Container):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -53456,6 +53456,8 @@ class TearoffMenuItem(MenuItem):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -53464,13 +53466,11 @@ class TearoffMenuItem(MenuItem):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -54926,6 +54926,8 @@ class TextView(Container, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -54934,13 +54936,11 @@ class TextView(Container, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -56061,6 +56061,8 @@ class ToggleButton(Button):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -56069,13 +56071,11 @@ class ToggleButton(Button):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -56498,6 +56498,8 @@ class ToggleToolButton(ToolButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -56506,13 +56508,11 @@ class ToggleToolButton(ToolButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -56804,6 +56804,8 @@ class ToolButton(ToolItem, Actionable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -56812,13 +56814,11 @@ class ToolButton(ToolItem, Actionable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -57113,6 +57113,8 @@ class ToolItem(Bin, Activatable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -57121,13 +57123,11 @@ class ToolItem(Bin, Activatable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -57415,6 +57415,8 @@ class ToolItemGroup(Container, ToolShell):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -57423,13 +57425,11 @@ class ToolItemGroup(Container, ToolShell):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -57703,6 +57703,8 @@ class ToolPalette(Container, Orientable, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -57711,13 +57713,11 @@ class ToolPalette(Container, Orientable, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -58078,6 +58078,8 @@ class Toolbar(Container, Orientable, ToolShell):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -58086,13 +58088,11 @@ class Toolbar(Container, Orientable, ToolShell):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -59256,6 +59256,8 @@ class TreeView(Container, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -59264,13 +59266,11 @@ class TreeView(Container, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -60276,6 +60276,8 @@ class VBox(Box):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -60284,13 +60286,11 @@ class VBox(Box):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -60539,6 +60539,8 @@ class VButtonBox(ButtonBox):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -60547,13 +60549,11 @@ class VButtonBox(ButtonBox):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -60811,6 +60811,8 @@ class VPaned(Paned):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -60819,13 +60821,11 @@ class VPaned(Paned):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -61086,6 +61086,8 @@ class VScale(Scale):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -61094,13 +61096,11 @@ class VScale(Scale):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -61355,6 +61355,8 @@ class VScrollbar(Scrollbar):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -61363,13 +61365,11 @@ class VScrollbar(Scrollbar):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -61594,6 +61594,8 @@ class VSeparator(Separator):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -61602,13 +61604,11 @@ class VSeparator(Separator):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -61843,6 +61843,8 @@ class Viewport(Bin, Scrollable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -61851,13 +61853,11 @@ class Viewport(Bin, Scrollable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -62174,6 +62174,8 @@ class VolumeButton(ScaleButton):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -62182,13 +62184,11 @@ class VolumeButton(ScaleButton):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -62433,6 +62433,8 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -62441,13 +62443,11 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -63648,10 +63648,10 @@ class Window(Bin):
     Object GtkWindow
 
     Signals from GtkWindow:
+      keys-changed ()
       set-focus (GtkWidget)
       activate-focus ()
       activate-default ()
-      keys-changed ()
       enable-debugging (gboolean) -> gboolean
 
     Properties from GtkWindow:
@@ -63739,6 +63739,8 @@ class Window(Bin):
     Signals from GtkWidget:
       composited-changed ()
       event (GdkEvent) -> gboolean
+      direction-changed (GtkTextDirection)
+      state-changed (GtkStateType)
       destroy ()
       show ()
       hide ()
@@ -63747,13 +63749,11 @@ class Window(Bin):
       realize ()
       unrealize ()
       size-allocate (GdkRectangle)
-      state-changed (GtkStateType)
       state-flags-changed (GtkStateFlags)
       parent-set (GtkWidget)
       hierarchy-changed (GtkWidget)
       style-set (GtkStyle)
       style-updated ()
-      direction-changed (GtkTextDirection)
       grab-notify (gboolean)
       child-notify (GParam)
       draw (CairoContext) -> gboolean
@@ -64194,12 +64194,12 @@ class WindowAccessible(ContainerAccessible, Atk.Window):
     Signals from AtkWindow:
       destroy ()
       activate ()
-      resize ()
-      move ()
       deactivate ()
       create ()
       maximize ()
       minimize ()
+      move ()
+      resize ()
       restore ()
 
     Signals from AtkComponent:
