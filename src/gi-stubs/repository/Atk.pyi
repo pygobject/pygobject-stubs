@@ -2819,8 +2819,9 @@ class TextAttribute(GObject.GEnum):
     INVISIBLE = 4
     JUSTIFICATION = 24
     LANGUAGE = 16
-    LAST_DEFINED = 29
+    LAST_DEFINED = 30
     LEFT_MARGIN = 1
+    MARK = 29
     PIXELS_ABOVE_LINES = 6
     PIXELS_BELOW_LINES = 7
     PIXELS_INSIDE_WRAP = 8
@@ -2861,6 +2862,7 @@ _TextAttributeLiteralType: TypeAlias = Literal[
     "ATK_TEXT_ATTR_LANGUAGE",
     "ATK_TEXT_ATTR_LAST_DEFINED",
     "ATK_TEXT_ATTR_LEFT_MARGIN",
+    "ATK_TEXT_ATTR_MARK",
     "ATK_TEXT_ATTR_PIXELS_ABOVE_LINES",
     "ATK_TEXT_ATTR_PIXELS_BELOW_LINES",
     "ATK_TEXT_ATTR_PIXELS_INSIDE_WRAP",
@@ -2891,6 +2893,7 @@ _TextAttributeLiteralType: TypeAlias = Literal[
     "language",
     "last-defined",
     "left-margin",
+    "mark",
     "pixels-above-lines",
     "pixels-below-lines",
     "pixels-inside-wrap",

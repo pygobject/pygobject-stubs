@@ -1226,7 +1226,7 @@ class EnumClass(_gi.Struct):
     minimum: int
     maximum: int
     n_values: int
-    values: EnumValue
+    values: list[EnumValue]
 
 class EnumValue(_gi.Struct):
     """
@@ -1255,7 +1255,7 @@ class FlagsClass(_gi.Struct):
     g_type_class: TypeClass
     mask: int
     n_values: int
-    values: FlagsValue
+    values: list[FlagsValue]
 
 class FlagsValue(_gi.Struct):
     """

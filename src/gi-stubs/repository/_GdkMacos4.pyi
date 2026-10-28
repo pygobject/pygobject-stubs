@@ -1,10 +1,8 @@
-from typing import TypeVar
+from typing import type_check_only
 
+from gi import _gi
 from gi.repository import _Gdk4
 from gi.repository import GObject
-from gi.repository import Pango
-
-T = TypeVar("T")
 
 class MacosDevice(_Gdk4.Device):
     """
@@ -43,42 +41,20 @@ class MacosDevice(_Gdk4.Device):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Device.Props):
-        active_layout_index: int
-        caps_lock_state: bool
-        direction: Pango.Direction
-        display: _Gdk4.Display
-        has_bidi_layouts: bool
-        has_cursor: bool
-        layout_names: list[str] | None
-        modifier_state: _Gdk4.ModifierType
-        n_axes: int
-        name: str
-        num_lock_state: bool
-        num_touches: int
-        product_id: str | None
-        scroll_lock_state: bool
-        seat: _Gdk4.Seat
-        source: _Gdk4.InputSource
-        tool: _Gdk4.DeviceTool | None
-        vendor_id: str | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        display: _Gdk4.Display = ...,
+        display: _Gdk4.Display | None = ...,
         has_cursor: bool = ...,
-        name: str = ...,
+        name: str | None = ...,
         num_touches: int = ...,
-        product_id: str = ...,
-        seat: _Gdk4.Seat = ...,
-        source: _Gdk4.InputSource = ...,
-        vendor_id: str = ...,
+        product_id: str | None = ...,
+        seat: _Gdk4.Seat | None = ...,
+        source: _Gdk4._InputSourceValueType = ...,
+        vendor_id: str | None = ...,
     ) -> None: ...
 
-class MacosDeviceClass(GObject.GPointer): ...
+class MacosDeviceClass(_gi.Struct): ...
 
 class MacosDisplay(_Gdk4.Display):
     """
@@ -107,17 +83,8 @@ class MacosDisplay(_Gdk4.Display):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Display.Props):
-        composited: bool
-        dmabuf_formats: _Gdk4.DmabufFormats
-        input_shapes: bool
-        rgba: bool
-        shadow_width: bool
 
-    @property
-    def props(self) -> Props: ...
-
-class MacosDisplayClass(GObject.GPointer): ...
+class MacosDisplayClass(_gi.Struct): ...
 
 class MacosGLContext(_Gdk4.GLContext):
     """
@@ -141,27 +108,40 @@ class MacosGLContext(_Gdk4.GLContext):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.GLContext.Props):
-        allowed_apis: _Gdk4.GLAPI
-        api: _Gdk4.GLAPI
-        shared_context: _Gdk4.GLContext | None
-        display: _Gdk4.Display | None
-        surface: _Gdk4.Surface | None
-
-    @property
-    def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        allowed_apis: _Gdk4.GLAPI = ...,
-        shared_context: _Gdk4.GLContext = ...,
-        display: _Gdk4.Display = ...,
-        surface: _Gdk4.Surface = ...,
+        allowed_apis: _Gdk4._GLAPIValueType = ...,
+        shared_context: _Gdk4.GLContext | None = ...,
+        display: _Gdk4.Display | None = ...,
+        surface: _Gdk4.Surface | None = ...,
     ) -> None: ...
 
-class MacosGLContextClass(GObject.GPointer): ...
-class MacosKeymap(GObject.Object): ...
-class MacosKeymapClass(GObject.GPointer): ...
+class MacosGLContextClass(_gi.Struct): ...
+
+class MacosKeymap(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        MacosKeymap(**properties)
+
+    Object GdkMacosKeymap
+
+    Signals from GdkKeymap:
+      direction-changed ()
+      keys-changed ()
+      state-changed ()
+
+    Properties from GdkKeymap:
+      display -> GdkDisplay: display
+
+    Signals from GObject:
+      notify (GParam)
+    """
+
+class MacosKeymapClass(_gi.Struct): ...
 
 class MacosMonitor(_Gdk4.Monitor):
     """
@@ -194,30 +174,11 @@ class MacosMonitor(_Gdk4.Monitor):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Monitor.Props):
-        connector: str | None
-        description: str | None
-        display: _Gdk4.Display
-        geometry: _Gdk4.Rectangle
-        height_mm: int
-        manufacturer: str | None
-        model: str | None
-        refresh_rate: int
-        scale: float
-        scale_factor: int
-        subpixel_layout: _Gdk4.SubpixelLayout
-        valid: bool
-        width_mm: int
-
-    @property
-    def props(self) -> Props: ...
-    def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
-    @staticmethod
-    def get_geometry(self: _Gdk4.Monitor, geometry: _Gdk4.Rectangle) -> None: ...
+    def __init__(self, *, display: _Gdk4.Display | None = ...) -> None: ...
     @staticmethod
     def get_workarea(monitor: _Gdk4.Monitor) -> _Gdk4.Rectangle: ...
 
-class MacosMonitorClass(GObject.GPointer): ...
+class MacosMonitorClass(_gi.Struct): ...
 
 class MacosSeat(_Gdk4.Seat):
     """
@@ -241,14 +202,9 @@ class MacosSeat(_Gdk4.Seat):
     Signals from GObject:
       notify (GParam)
     """
-    class Props(_Gdk4.Seat.Props):
-        display: _Gdk4.Display
+    def __init__(self, *, display: _Gdk4.Display | None = ...) -> None: ...
 
-    @property
-    def props(self) -> Props: ...
-    def __init__(self, *, display: _Gdk4.Display = ...) -> None: ...
-
-class MacosSeatClass(GObject.GPointer): ...
+class MacosSeatClass(_gi.Struct): ...
 
 class MacosSurface(_Gdk4.Surface):
     """
@@ -283,16 +239,10 @@ class MacosSurface(_Gdk4.Surface):
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
     class Props(_Gdk4.Surface.Props):
-        native: None
-        cursor: _Gdk4.Cursor | None
-        display: _Gdk4.Display
-        frame_clock: _Gdk4.FrameClock
-        height: int
-        mapped: bool
-        scale: float
-        scale_factor: int
-        width: int
+        @property
+        def native(self) -> int: ...
 
     @property
     def props(self) -> Props: ...
@@ -300,9 +250,9 @@ class MacosSurface(_Gdk4.Surface):
         self,
         *,
         cursor: _Gdk4.Cursor | None = ...,
-        display: _Gdk4.Display = ...,
-        frame_clock: _Gdk4.FrameClock = ...,
+        display: _Gdk4.Display | None = ...,
+        frame_clock: _Gdk4.FrameClock | None = ...,
     ) -> None: ...
-    def get_native_window(self) -> None: ...
+    def get_native_window(self) -> int: ...
 
-class MacosSurfaceClass(GObject.GPointer): ...
+class MacosSurfaceClass(_gi.Struct): ...

@@ -2,6 +2,7 @@ from typing import Literal
 from typing import overload
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import Never
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -173,7 +174,10 @@ class Frame(GObject.Object):
     """
     def get_buf_bytes(self) -> GLib.Bytes: ...
     def get_color_cicp(self) -> Cicp | None: ...
+    def get_color_icc_profile(self) -> GLib.Bytes | None: ...
+    def get_color_mode(self) -> ColorMode: ...
     def get_delay(self) -> int: ...
+    def get_details(self) -> FrameDetails: ...
     def get_height(self) -> int: ...
     def get_memory_format(self) -> MemoryFormat: ...
     def get_stride(self) -> int: ...
@@ -186,6 +190,42 @@ class FrameClass(_gi.Struct):
     ::
 
         FrameClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
+class FrameDetails(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        FrameDetails(**properties)
+
+    Object GlyFrameDetails
+
+    Properties from GlyFrameDetails:
+      pixel-density -> GlyPixelDensity: pixel-density
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(GObject.Object.Props):
+        @property
+        def pixel_density(self) -> PixelDensity: ...
+
+    @property
+    def props(self) -> Props: ...
+    def get_pixel_density(self) -> PixelDensity: ...
+
+class FrameDetailsClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        FrameDetailsClass()
     """
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
@@ -328,43 +368,46 @@ class Loader(GObject.Object):
       bytes -> GBytes: bytes
       cancellable -> GCancellable: cancellable
       sandbox-selector -> GlySandboxSelector: sandbox-selector
-      memory-format-selection -> GlyMemoryFormatSelection: memory-format-selection
-      apply-transformation -> gboolean: apply-transformation
+      accepted-memory-formats -> GlyMemoryFormatSelection: accepted-memory-formats
+      apply-transformations -> gboolean: apply-transformations
+      color-convert-icc-srgb -> gboolean: color-convert-icc-srgb
 
     Signals from GObject:
       notify (GParam)
     """
     @type_check_only
     class Props(GObject.Object.Props):
-        apply_transformation: bool
         @property
-        def bytes(self) -> GLib.Bytes | None: ...
-        cancellable: Gio.Cancellable | None
-        @property
-        def file(self) -> Gio.File | None: ...
-        @property
-        def memory_format_selection(self) -> MemoryFormatSelection: ...
-        @memory_format_selection.setter
-        def memory_format_selection(
+        def accepted_memory_formats(self) -> Never: ...
+        @accepted_memory_formats.setter
+        def accepted_memory_formats(
             self, value: _MemoryFormatSelectionValueType
         ) -> None: ...
         @property
-        def sandbox_selector(self) -> SandboxSelector: ...
+        def apply_transformations(self) -> Never: ...
+        @apply_transformations.setter
+        def apply_transformations(self, value: bool) -> None: ...
+        cancellable: Gio.Cancellable | None
+        @property
+        def color_convert_icc_srgb(self) -> Never: ...
+        @color_convert_icc_srgb.setter
+        def color_convert_icc_srgb(self, value: bool) -> None: ...
+        @property
+        def sandbox_selector(self) -> Never: ...
         @sandbox_selector.setter
         def sandbox_selector(self, value: _SandboxSelectorValueType) -> None: ...
-        @property
-        def stream(self) -> Gio.InputStream | None: ...
 
     @property
     def props(self) -> Props: ...
     def __init__(
         self,
         *,
-        apply_transformation: bool = ...,
+        accepted_memory_formats: _MemoryFormatSelectionValueType = ...,
+        apply_transformations: bool = ...,
         bytes: GLib.Bytes | None = ...,
         cancellable: Gio.Cancellable | None = ...,
+        color_convert_icc_srgb: bool = ...,
         file: Gio.File | None = ...,
-        memory_format_selection: _MemoryFormatSelectionValueType = ...,
         sandbox_selector: _SandboxSelectorValueType = ...,
         stream: Gio.InputStream | None = ...,
     ) -> None: ...
@@ -421,6 +464,7 @@ class Loader(GObject.Object):
         self, memory_format_selection: _MemoryFormatSelectionValueType
     ) -> None: ...
     def set_apply_transformations(self, apply_transformations: bool) -> None: ...
+    def set_color_convert_icc_srgb(self, convert: bool) -> None: ...
     def set_sandbox_selector(
         self, sandbox_selector: _SandboxSelectorValueType
     ) -> None: ...
@@ -446,10 +490,48 @@ class NewFrame(GObject.Object):
 
     Object GlyNewFrame
 
+    Properties from GlyNewFrame:
+      width -> guint: width
+      height -> guint: height
+      stride -> guint: stride
+      memory-format -> GlyMemoryFormat: memory-format
+      texture -> GBytes: texture
+      color-icc-profile -> GBytes: color-icc-profile
+
     Signals from GObject:
       notify (GParam)
     """
+    @type_check_only
+    class Props(GObject.Object.Props):
+        @property
+        def color_icc_profile(self) -> GLib.Bytes | None: ...
+        @color_icc_profile.setter
+        def color_icc_profile(self, value: GLib.Bytes) -> None: ...
+        @property
+        def height(self) -> int: ...
+        @property
+        def memory_format(self) -> MemoryFormat: ...
+        @property
+        def stride(self) -> int: ...
+        @property
+        def texture(self) -> GLib.Bytes | None: ...
+        @property
+        def width(self) -> int: ...
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(
+        self,
+        *,
+        color_icc_profile: GLib.Bytes = ...,
+        height: int = ...,
+        memory_format: _MemoryFormatValueType = ...,
+        stride: int = ...,
+        texture: GLib.Bytes | None = ...,
+        width: int = ...,
+    ) -> None: ...
     def set_color_icc_profile(self, icc_profile: GLib.Bytes) -> bool: ...
+    def set_pixel_density(self, pixel_density: PixelDensity) -> None: ...
 
 class NewFrameClass(_gi.Struct):
     """
@@ -458,6 +540,74 @@ class NewFrameClass(_gi.Struct):
     ::
 
         NewFrameClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
+class PixelDensity(GObject.Object):
+    """
+    :Constructors:
+
+    ::
+
+        PixelDensity(**properties)
+        new(x_value:float, x_unit:Gly.PhysicalDimensionUnit, y_value:float, y_unit:Gly.PhysicalDimensionUnit) -> Gly.PixelDensity
+
+    Object GlyPixelDensity
+
+    Properties from GlyPixelDensity:
+      x-value -> gdouble: x-value
+      x-unit -> GlyPhysicalDimensionUnit: x-unit
+      y-value -> gdouble: y-value
+      y-unit -> GlyPhysicalDimensionUnit: y-unit
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    @type_check_only
+    class Props(GObject.Object.Props):
+        @property
+        def x_unit(self) -> PhysicalDimensionUnit: ...
+        @x_unit.setter
+        def x_unit(self, value: _PhysicalDimensionUnitValueType) -> None: ...
+        x_value: float
+        @property
+        def y_unit(self) -> PhysicalDimensionUnit: ...
+        @y_unit.setter
+        def y_unit(self, value: _PhysicalDimensionUnitValueType) -> None: ...
+        y_value: float
+
+    @property
+    def props(self) -> Props: ...
+    def __init__(
+        self,
+        *,
+        x_unit: _PhysicalDimensionUnitValueType = ...,
+        x_value: float = ...,
+        y_unit: _PhysicalDimensionUnitValueType = ...,
+        y_value: float = ...,
+    ) -> None: ...
+    def convert(self, unit: _PhysicalDimensionUnitValueType) -> PixelDensity: ...
+    def get_x_unit(self) -> PhysicalDimensionUnit: ...
+    def get_x_value(self) -> float: ...
+    def get_y_unit(self) -> PhysicalDimensionUnit: ...
+    def get_y_value(self) -> float: ...
+    @classmethod
+    def new(
+        cls,
+        x_value: float,
+        x_unit: _PhysicalDimensionUnitValueType,
+        y_value: float,
+        y_unit: _PhysicalDimensionUnitValueType,
+    ) -> PixelDensity: ...
+
+class PixelDensityClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        PixelDensityClass()
     """
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
@@ -540,6 +690,16 @@ _MemoryFormatSelectionValueType: TypeAlias = (
     | _MemoryFormatSelectionLiteralType
     | tuple[_MemoryFormatSelectionLiteralType, ...]
 )
+
+class ColorMode(GObject.GEnum):
+    CICP = 2
+    ICC_PROFILE = 3
+    SRGB = 1
+
+_ColorModeLiteralType: TypeAlias = Literal[
+    "Cicp", "IccProfile", "Srgb", "cicp", "icc-profile", "srgb"
+]
+_ColorModeValueType: TypeAlias = ColorMode | _ColorModeLiteralType
 
 class LoaderError(GObject.GEnum):
     FAILED = 0
@@ -636,6 +796,32 @@ _MemoryFormatLiteralType: TypeAlias = Literal[
     "r8g8b8a8-premultiplied",
 ]
 _MemoryFormatValueType: TypeAlias = MemoryFormat | _MemoryFormatLiteralType
+
+class PhysicalDimensionUnit(GObject.GEnum):
+    CENTIMETER = 5
+    INCH = 1
+    METER = 4
+    MILLIMETER = 6
+    PICA = 2
+    POINT = 3
+
+_PhysicalDimensionUnitLiteralType: TypeAlias = Literal[
+    "Centimeter",
+    "Inch",
+    "Meter",
+    "Millimeter",
+    "Pica",
+    "Point",
+    "centimeter",
+    "inch",
+    "meter",
+    "millimeter",
+    "pica",
+    "point",
+]
+_PhysicalDimensionUnitValueType: TypeAlias = (
+    PhysicalDimensionUnit | _PhysicalDimensionUnitLiteralType
+)
 
 class SandboxSelector(GObject.GEnum):
     AUTO = 0

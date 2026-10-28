@@ -120,7 +120,6 @@ class AboutDialog(Dialog):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -129,6 +128,7 @@ class AboutDialog(Dialog):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -406,9 +406,9 @@ class AboutWindow(Window):
       adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
       force-close ()
@@ -442,7 +442,6 @@ class AboutWindow(Window):
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -451,6 +450,7 @@ class AboutWindow(Window):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -728,7 +728,6 @@ class ActionRow(PreferencesRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -737,6 +736,7 @@ class ActionRow(PreferencesRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -933,7 +933,6 @@ class AlertDialog(Dialog):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -942,6 +941,7 @@ class AlertDialog(Dialog):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1345,9 +1345,9 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
       action-state-changed (gchararray, GVariant)
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
       force-close ()
@@ -1381,7 +1381,6 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1390,6 +1389,7 @@ class ApplicationWindow(_Gtk4.ApplicationWindow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1559,7 +1559,6 @@ class Avatar(_Gtk4.Widget):
       size -> gint: size
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1568,6 +1567,7 @@ class Avatar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1714,7 +1714,6 @@ class Banner(_Gtk4.Widget, _Gtk4.Actionable):
       button-style -> AdwBannerButtonStyle: button-style
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1723,6 +1722,7 @@ class Banner(_Gtk4.Widget, _Gtk4.Actionable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -1871,7 +1871,6 @@ class Bin(_Gtk4.Widget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -1880,6 +1879,7 @@ class Bin(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2019,7 +2019,6 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
       reveal-bottom-bar -> gboolean: reveal-bottom-bar
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2028,6 +2027,7 @@ class BottomSheet(_Gtk4.Widget, Swipeable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2239,7 +2239,6 @@ class BreakpointBin(_Gtk4.Widget):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2248,6 +2247,7 @@ class BreakpointBin(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2429,7 +2429,6 @@ class ButtonContent(_Gtk4.Widget):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2438,6 +2437,7 @@ class ButtonContent(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2590,7 +2590,6 @@ class ButtonRow(PreferencesRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2599,6 +2598,7 @@ class ButtonRow(PreferencesRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2773,7 +2773,6 @@ class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       reveal-duration -> guint: reveal-duration
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2782,6 +2781,7 @@ class Carousel(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -2946,7 +2946,6 @@ class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
       carousel -> AdwCarousel: carousel
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -2955,6 +2954,7 @@ class CarouselIndicatorDots(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3082,7 +3082,6 @@ class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
       carousel -> AdwCarousel: carousel
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3091,6 +3090,7 @@ class CarouselIndicatorLines(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3221,7 +3221,6 @@ class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
       unit -> AdwLengthUnit: unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3230,6 +3229,7 @@ class Clamp(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3437,7 +3437,6 @@ class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
       unit -> AdwLengthUnit: unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3446,6 +3445,7 @@ class ClampScrollable(_Gtk4.Widget, _Gtk4.Orientable, _Gtk4.Scrollable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3637,7 +3637,6 @@ class ComboRow(ActionRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3646,6 +3645,7 @@ class ComboRow(ActionRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -3913,7 +3913,6 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -3922,6 +3921,7 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4133,7 +4133,6 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4142,6 +4141,7 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4451,7 +4451,6 @@ class ExpanderRow(PreferencesRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4460,6 +4459,7 @@ class ExpanderRow(PreferencesRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4644,7 +4644,6 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       swipe-to-close -> gboolean: swipe-to-close
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4653,6 +4652,7 @@ class Flap(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -4862,7 +4862,6 @@ class HeaderBar(_Gtk4.Widget):
       show-title -> gboolean: show-title
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -4871,6 +4870,7 @@ class HeaderBar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5028,7 +5028,6 @@ class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
       can-shrink -> gboolean: can-shrink
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5037,6 +5036,7 @@ class InlineViewSwitcher(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5229,7 +5229,6 @@ class LayoutSlot(_Gtk4.Widget):
       id -> gchararray: id
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5238,6 +5237,7 @@ class LayoutSlot(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5372,7 +5372,6 @@ class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5381,6 +5380,7 @@ class Leaflet(_Gtk4.Widget, Swipeable, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5646,9 +5646,9 @@ class MessageDialog(_Gtk4.Window):
       close-response -> gchararray: close-response
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
       force-close ()
@@ -5682,7 +5682,6 @@ class MessageDialog(_Gtk4.Window):
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5691,6 +5690,7 @@ class MessageDialog(_Gtk4.Window):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -5903,7 +5903,6 @@ class MultiLayoutView(_Gtk4.Widget):
       layout-name -> gchararray: layout-name
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -5912,6 +5911,7 @@ class MultiLayoutView(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6059,7 +6059,6 @@ class NavigationPage(_Gtk4.Widget):
       can-pop -> gboolean: can-pop
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6068,6 +6067,7 @@ class NavigationPage(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6230,7 +6230,6 @@ class NavigationSplitView(_Gtk4.Widget):
       sidebar-width-unit -> AdwLengthUnit: sidebar-width-unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6239,6 +6238,7 @@ class NavigationSplitView(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6411,7 +6411,6 @@ class NavigationView(_Gtk4.Widget, Swipeable):
       navigation-stack -> GListModel: navigation-stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6420,6 +6419,7 @@ class NavigationView(_Gtk4.Widget, Swipeable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6604,7 +6604,6 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
       sidebar-width-unit -> AdwLengthUnit: sidebar-width-unit
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6613,6 +6612,7 @@ class OverlaySplitView(_Gtk4.Widget, Swipeable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -6822,7 +6822,6 @@ class PasswordEntryRow(EntryRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -6831,6 +6830,7 @@ class PasswordEntryRow(EntryRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7008,7 +7008,6 @@ class PreferencesDialog(Dialog):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7017,6 +7016,7 @@ class PreferencesDialog(Dialog):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7174,7 +7174,6 @@ class PreferencesGroup(_Gtk4.Widget):
       separate-rows -> gboolean: separate-rows
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7183,6 +7182,7 @@ class PreferencesGroup(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7337,7 +7337,6 @@ class PreferencesPage(_Gtk4.Widget):
       banner -> AdwBanner: banner
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7346,6 +7345,7 @@ class PreferencesPage(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7511,7 +7511,6 @@ class PreferencesRow(_Gtk4.ListBoxRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7520,6 +7519,7 @@ class PreferencesRow(_Gtk4.ListBoxRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7678,9 +7678,9 @@ class PreferencesWindow(Window):
       adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
       force-close ()
@@ -7714,7 +7714,6 @@ class PreferencesWindow(Window):
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7723,6 +7722,7 @@ class PreferencesWindow(Window):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -7948,7 +7948,6 @@ class ShortcutLabel(_Gtk4.Widget):
       disabled-text -> gchararray: disabled-text
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -7957,6 +7956,7 @@ class ShortcutLabel(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8096,7 +8096,6 @@ class ShortcutsDialog(Dialog):
       current-breakpoint -> AdwBreakpoint: current-breakpoint
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8105,6 +8104,7 @@ class ShortcutsDialog(Dialog):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8370,7 +8370,6 @@ class Sidebar(_Gtk4.Widget):
       suffix -> GtkWidget: suffix
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8379,6 +8378,7 @@ class Sidebar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8776,7 +8776,6 @@ class SpinRow(ActionRow, _Gtk4.Editable):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -8785,6 +8784,7 @@ class SpinRow(ActionRow, _Gtk4.Editable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -8991,7 +8991,6 @@ class Spinner(_Gtk4.Widget):
     Object AdwSpinner
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9000,6 +8999,7 @@ class Spinner(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9174,7 +9174,6 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
       dropdown-tooltip -> gchararray: dropdown-tooltip
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9183,6 +9182,7 @@ class SplitButton(_Gtk4.Widget, _Gtk4.Actionable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9480,7 +9480,6 @@ class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9489,6 +9488,7 @@ class Squeezer(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -9715,7 +9715,6 @@ class StatusPage(_Gtk4.Widget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -9724,6 +9723,7 @@ class StatusPage(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10105,7 +10105,6 @@ class SwitchRow(ActionRow):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10114,6 +10113,7 @@ class SwitchRow(ActionRow):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10269,7 +10269,6 @@ class TabBar(_Gtk4.Widget):
       extra-drag-preferred-action -> GdkDragAction: extra-drag-preferred-action
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10278,6 +10277,7 @@ class TabBar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10442,7 +10442,6 @@ class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
       view -> AdwTabView: view
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10451,6 +10450,7 @@ class TabButton(_Gtk4.Widget, _Gtk4.Actionable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10596,7 +10596,6 @@ class TabOverview(_Gtk4.Widget):
       extra-drag-preload -> gboolean: extra-drag-preload
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10605,6 +10604,7 @@ class TabOverview(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -10918,7 +10918,6 @@ class TabView(_Gtk4.Widget):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -10927,6 +10926,7 @@ class TabView(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11293,7 +11293,6 @@ class ToastOverlay(_Gtk4.Widget):
       child -> GtkWidget: child
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11302,6 +11301,7 @@ class ToastOverlay(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11514,7 +11514,6 @@ class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
       toggles -> GtkSelectionModel: toggles
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11523,6 +11522,7 @@ class ToggleGroup(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11681,7 +11681,6 @@ class ToolbarView(_Gtk4.Widget):
       bottom-bar-height -> gint: bottom-bar-height
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11690,6 +11689,7 @@ class ToolbarView(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -11858,7 +11858,6 @@ class ViewStack(_Gtk4.Widget):
       pages -> GtkSelectionModel: pages
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -11867,6 +11866,7 @@ class ViewStack(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12183,7 +12183,6 @@ class ViewSwitcher(_Gtk4.Widget):
       stack -> AdwViewStack: stack
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12192,6 +12191,7 @@ class ViewSwitcher(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12311,7 +12311,6 @@ class ViewSwitcherBar(_Gtk4.Widget):
       reveal -> gboolean: reveal
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12320,6 +12319,7 @@ class ViewSwitcherBar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12465,7 +12465,6 @@ class ViewSwitcherSidebar(_Gtk4.Widget):
       suffix -> GtkWidget: suffix
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12474,6 +12473,7 @@ class ViewSwitcherSidebar(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12623,7 +12623,6 @@ class ViewSwitcherTitle(_Gtk4.Widget):
       title-visible -> gboolean: title-visible
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12632,6 +12631,7 @@ class ViewSwitcherTitle(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12773,9 +12773,9 @@ class Window(_Gtk4.Window):
       adaptive-preview -> gboolean: adaptive-preview
 
     Signals from GtkWindow:
-      keys-changed ()
       activate-focus ()
       activate-default ()
+      keys-changed ()
       enable-debugging (gboolean) -> gboolean
       close-request () -> gboolean
       force-close ()
@@ -12809,7 +12809,6 @@ class Window(_Gtk4.Window):
       fullscreened -> gboolean: fullscreened
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12818,6 +12817,7 @@ class Window(_Gtk4.Window):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -12983,7 +12983,6 @@ class WindowTitle(_Gtk4.Widget):
       subtitle -> gchararray: subtitle
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -12992,6 +12991,7 @@ class WindowTitle(_Gtk4.Widget):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
@@ -13130,7 +13130,6 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
       wrap-policy -> AdwWrapPolicy: wrap-policy
 
     Signals from GtkWidget:
-      direction-changed (GtkTextDirection)
       destroy ()
       show ()
       hide ()
@@ -13139,6 +13138,7 @@ class WrapBox(_Gtk4.Widget, _Gtk4.Orientable):
       realize ()
       unrealize ()
       state-flags-changed (GtkStateFlags)
+      direction-changed (GtkTextDirection)
       mnemonic-activate (gboolean) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
