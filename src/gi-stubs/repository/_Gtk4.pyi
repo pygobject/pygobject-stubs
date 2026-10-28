@@ -9886,8 +9886,8 @@ class EmojiChooser(Popover):
       emoji-picked (gchararray)
 
     Signals from GtkPopover:
-      closed ()
       activate-default ()
+      closed ()
 
     Properties from GtkPopover:
       pointing-to -> GdkRectangle: pointing-to
@@ -21355,8 +21355,8 @@ class Popover(Widget, Native, ShortcutManager):
     Object GtkPopover
 
     Signals from GtkPopover:
-      closed ()
       activate-default ()
+      closed ()
 
     Properties from GtkPopover:
       pointing-to -> GdkRectangle: pointing-to
@@ -21699,8 +21699,8 @@ class PopoverMenu(Popover):
       flags -> GtkPopoverMenuFlags: flags
 
     Signals from GtkPopover:
-      closed ()
       activate-default ()
+      closed ()
 
     Properties from GtkPopover:
       pointing-to -> GdkRectangle: pointing-to

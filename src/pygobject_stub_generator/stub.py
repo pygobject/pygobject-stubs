@@ -40,6 +40,7 @@ from .utils import make_nullable
 from .utils import MISSING
 from .utils import MissingType
 
+gi.disable_legacy_autoinit()
 gi.require_version("GIRepository", "3.0")
 
 from gi.repository import GObject  # noqa: E402

@@ -104,8 +104,8 @@ class AboutDialog(Dialog):
       other-apps-title -> gchararray: other-apps-title
 
     Signals from AdwDialog:
-      closed ()
       close-attempt ()
+      closed ()
 
     Properties from AdwDialog:
       child -> GtkWidget: child
@@ -917,8 +917,8 @@ class AlertDialog(Dialog):
       close-response -> gchararray: close-response
 
     Signals from AdwDialog:
-      closed ()
       close-attempt ()
+      closed ()
 
     Properties from AdwDialog:
       child -> GtkWidget: child
@@ -3897,8 +3897,8 @@ class Dialog(_Gtk4.Widget, _Gtk4.ShortcutManager):
     Object AdwDialog
 
     Signals from AdwDialog:
-      closed ()
       close-attempt ()
+      closed ()
 
     Properties from AdwDialog:
       child -> GtkWidget: child
@@ -4113,9 +4113,9 @@ class EntryRow(PreferencesRow, _Gtk4.Editable):
       max-length -> gint: max-length
 
     Signals from GtkEditable:
-      changed ()
       insert-text (gchararray, gint, gpointer)
       delete-text (gint, gint)
+      changed ()
       input-intercepted ()
 
     Properties from AdwPreferencesRow:
@@ -6782,9 +6782,9 @@ class PasswordEntryRow(EntryRow):
     Object AdwPasswordEntryRow
 
     Signals from GtkEditable:
-      changed ()
       insert-text (gchararray, gint, gpointer)
       delete-text (gint, gint)
+      changed ()
       input-intercepted ()
 
     Signals from AdwEntryRow:
@@ -6802,9 +6802,9 @@ class PasswordEntryRow(EntryRow):
       max-length -> gint: max-length
 
     Signals from GtkEditable:
-      changed ()
       insert-text (gchararray, gint, gpointer)
       delete-text (gint, gint)
+      changed ()
       input-intercepted ()
 
     Properties from AdwPreferencesRow:
@@ -6992,8 +6992,8 @@ class PreferencesDialog(Dialog):
       search-enabled -> gboolean: search-enabled
 
     Signals from AdwDialog:
-      closed ()
       close-attempt ()
+      closed ()
 
     Properties from AdwDialog:
       child -> GtkWidget: child
@@ -8080,8 +8080,8 @@ class ShortcutsDialog(Dialog):
     Object AdwShortcutsDialog
 
     Signals from AdwDialog:
-      closed ()
       close-attempt ()
+      closed ()
 
     Properties from AdwDialog:
       child -> GtkWidget: child
@@ -8745,9 +8745,9 @@ class SpinRow(ActionRow, _Gtk4.Editable):
       wrap -> gboolean: wrap
 
     Signals from GtkEditable:
-      changed ()
       insert-text (gchararray, gint, gpointer)
       delete-text (gint, gint)
+      changed ()
       input-intercepted ()
 
     Signals from AdwActionRow:
