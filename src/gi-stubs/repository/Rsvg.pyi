@@ -25,7 +25,7 @@ HAVE_SVGZ: Final = True
 MAJOR_VERSION: Final[int]
 MICRO_VERSION: Final[int]
 MINOR_VERSION: Final[int]
-VERSION: Final = "2.63.3"
+VERSION: Final = "2.63.2"
 
 def cleanup() -> None: ...
 def error_quark() -> int: ...

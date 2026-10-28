@@ -22,7 +22,7 @@ _DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 PIXBUF_MAJOR: Final[int]
 PIXBUF_MICRO: Final[int]
 PIXBUF_MINOR: Final[int]
-PIXBUF_VERSION: Final = "2.44.4"
+PIXBUF_VERSION: Final = "2.44.8"
 
 def pixbuf_error_quark() -> int: ...
 

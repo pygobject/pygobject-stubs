@@ -1002,6 +1002,15 @@ class Stub:
 
         is_vfunc = isinstance(function, GI.VFuncInfo)
 
+        # GI flags describe the C callable. PyGObject also exposes methods from
+        # an object's class struct as Python classmethods on the object class.
+        descriptor = (
+            inspect.getattr_static(in_class, name, None)
+            if in_class is not None
+            else None
+        )
+        is_class_method = isinstance(descriptor, classmethod)
+
         method: bool = False
         constructor: bool = False
         static: bool = False
@@ -1069,6 +1078,9 @@ class Stub:
                 rt = function.get_container().get_name()
                 if rt is not None and return_type != f"{rt} | None":
                     return_type = rt
+        elif is_class_method:
+            lines.append("@classmethod")
+            args_types.insert(0, "cls")
         elif method:
             args_types.insert(0, "self")
         elif static:
@@ -1179,6 +1191,12 @@ class Stub:
 
         signature_string: str
         missing_annotation = False
+        descriptor = (
+            inspect.getattr_static(in_class, name, None)
+            if in_class is not None and name != "__init__"
+            else None
+        )
+        class_method = isinstance(descriptor, classmethod)
 
         if not is_overload and (overloads := get_overloads(function)):
             lines = [
@@ -1204,7 +1222,10 @@ class Stub:
                     parameters=parameters, return_annotation=None
                 )
             for param in signature.parameters.values():
-                if param.name != "self" and param.annotation is inspect.Parameter.empty:
+                if (
+                    param.name not in ({"self", "cls"} if class_method else {"self"})
+                    and param.annotation is inspect.Parameter.empty
+                ):
                     missing_annotation = True
             if signature.return_annotation is inspect.Signature.empty:
                 missing_annotation = True
@@ -1212,25 +1233,18 @@ class Stub:
             signature_string = self.format_signature(signature)
         except Exception:
             missing_annotation = True
-            if in_class:
+            if class_method:
+                signature_string = "(cls, *args, **kwargs)"
+            elif in_class:
                 signature_string = "(self, *args, **kwargs)"
             else:
                 signature_string = "(*args, **kwargs)"
 
         definition = ""
-        if in_class:
-            if hasattr(function, "name"):
-                function_name: str = cast("Any", function).name
-            else:
-                function_name = function.__name__
-
-            static_function = inspect.getattr_static(in_class, function_name, None)
-            if (
-                static_function
-                and isinstance(static_function, staticmethod)
-                and name != "__init__"
-            ):
-                definition += "@staticmethod\n"
+        if class_method:
+            definition += "@classmethod\n"
+        elif isinstance(descriptor, staticmethod):
+            definition += "@staticmethod\n"
         definition += f"def {name}{signature_string}:"
         docstring = (function.__doc__ or "").strip()
         if docstring:

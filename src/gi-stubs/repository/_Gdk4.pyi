@@ -2591,6 +2591,7 @@ def gl_error_quark() -> int: ...
 def intern_mime_type(string: str) -> str | None: ...
 def keyval_convert_case(symbol: int) -> tuple[int, int]: ...
 def keyval_from_name(keyval_name: str) -> int: ...
+def keyval_get_aliases(keyval: int) -> list[int]: ...
 def keyval_is_lower(keyval: int) -> bool: ...
 def keyval_is_upper(keyval: int) -> bool: ...
 def keyval_name(keyval: int) -> str | None: ...
@@ -2642,6 +2643,8 @@ class AppLaunchContext(Gio.AppLaunchContext):
     def set_icon_name(self, icon_name: str | None = None) -> None: ...
     def set_timestamp(self, timestamp: int) -> None: ...
 
+class AppLaunchContextClass(_gi.Struct): ...
+
 class ButtonEvent(Event):
     """
     :Constructors:
@@ -2673,6 +2676,8 @@ class CairoContext(DrawContext):
         self, *, display: Display | None = ..., surface: Surface | None = ...
     ) -> None: ...
     def cairo_create(self) -> cairo.Context | None: ...
+
+class CairoContextClass(_gi.Struct): ...
 
 class CicpParams(GObject.Object):
     """
@@ -2884,6 +2889,8 @@ class Clipboard(GObject.Object):
     ) -> None: ...
     def store_finish(self, result: Gio.AsyncResult) -> bool: ...
 
+class ClipboardClass(_gi.Struct): ...
+
 class ColorState(GObject.GBoxed):
     def create_cicp_params(self) -> CicpParams | None: ...
     def equal(self, other: ColorState) -> bool: ...
@@ -2929,6 +2936,17 @@ class ContentDeserializer(GObject.Object, Gio.AsyncResult):
     def set_task_data(
         self, data: int | Any | None, notify: Callable[[Any | None], None]
     ) -> None: ...
+
+class ContentDeserializerClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ContentDeserializerClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class ContentFormats(GObject.GBoxed):
     """
@@ -3017,7 +3035,7 @@ class ContentProvider(GObject.Object):
     @property
     def props(self) -> Props: ...
     @property
-    def parent(self) -> GObject.Object: ...
+    def parent_instance(self) -> GObject.Object: ...
     def content_changed(self) -> None: ...
     def do_attach_clipboard(self, clipboard: Clipboard, /) -> None: ...
     def do_content_changed(self) -> None: ...
@@ -3149,6 +3167,17 @@ class ContentSerializer(GObject.Object, Gio.AsyncResult):
         self, data: int | Any | None, notify: Callable[[Any | None], None]
     ) -> None: ...
 
+class ContentSerializerClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        ContentSerializerClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
 class CrossingEvent(Event):
     """
     :Constructors:
@@ -3234,6 +3263,17 @@ class Cursor(GObject.Object):
         hotspot_y: int,
         fallback: Cursor | None = None,
     ) -> Cursor: ...
+
+class CursorClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        CursorClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class DNDEvent(Event):
     """
@@ -3366,6 +3406,8 @@ class Device(GObject.Object):
     def get_vendor_id(self) -> str | None: ...
     def has_bidi_layouts(self) -> bool: ...
 
+class DeviceClass(_gi.Struct): ...
+
 class DevicePad(GObject.GInterface, Protocol):
     """
     Interface GdkDevicePad
@@ -3380,6 +3422,7 @@ class DevicePad(GObject.GInterface, Protocol):
     def get_n_features(self, feature: _DevicePadFeatureValueType) -> int: ...
     def get_n_groups(self) -> int: ...
 
+class DevicePadClass(_gi.Struct): ...
 class DevicePadInterface(_gi.Struct): ...
 
 class DeviceTool(GObject.Object):
@@ -3426,6 +3469,8 @@ class DeviceTool(GObject.Object):
     def get_hardware_id(self) -> int: ...
     def get_serial(self) -> int: ...
     def get_tool_type(self) -> DeviceToolType: ...
+
+class DeviceToolClass(_gi.Struct): ...
 
 class Display(GObject.Object):
     """
@@ -3505,6 +3550,8 @@ class Display(GObject.Object):
         self, keycode: int, state: _ModifierTypeValueType, group: int
     ) -> tuple[bool, int, int, int, ModifierType]: ...
 
+class DisplayClass(_gi.Struct): ...
+
 class DisplayManager(GObject.Object):
     """
     :Constructors:
@@ -3540,6 +3587,8 @@ class DisplayManager(GObject.Object):
     def list_displays(self) -> list[Display]: ...
     def open_display(self, name: str | None = None) -> Display | None: ...
     def set_default_display(self, display: Display) -> None: ...
+
+class DisplayManagerClass(_gi.Struct): ...
 
 class DmabufFormats(GObject.GBoxed):
     def contains(self, fourcc: int, modifier: int) -> bool: ...
@@ -3755,6 +3804,8 @@ class Drag(GObject.Object):
     def get_surface(self) -> Surface: ...
     def set_hotspot(self, hot_x: int, hot_y: int) -> None: ...
 
+class DragClass(_gi.Struct): ...
+
 class DragSurface(GObject.GInterface, Protocol):
     """
     Interface GdkDragSurface
@@ -3804,6 +3855,8 @@ class DrawContext(GObject.Object):
     def get_frame_region(self) -> cairo.Region | None: ...
     def get_surface(self) -> Surface | None: ...
     def is_in_frame(self) -> bool: ...
+
+class DrawContextClass(_gi.Struct): ...
 
 class Drop(GObject.Object):
     """
@@ -3917,6 +3970,8 @@ class Drop(GObject.Object):
         self, actions: _DragActionValueType, preferred: _DragActionValueType
     ) -> None: ...
 
+class DropClass(_gi.Struct): ...
+
 class Event(_gi.Fundamental):
     """
     :Constructors:
@@ -4010,7 +4065,6 @@ class FrameClock(GObject.Object):
     def request_phase(self, phase: _FrameClockPhaseValueType) -> None: ...
 
 class FrameClockClass(_gi.Struct): ...
-class FrameClockPrivate(_gi.Struct): ...
 
 class FrameTimings(GObject.GBoxed):
     def get_complete(self) -> bool: ...
@@ -4019,6 +4073,7 @@ class FrameTimings(GObject.GBoxed):
     def get_predicted_presentation_time(self) -> int: ...
     def get_presentation_time(self) -> int: ...
     def get_refresh_interval(self) -> int: ...
+    def get_result(self) -> FrameResult: ...
     def ref(self) -> FrameTimings: ...
     def unref(self) -> None: ...
 
@@ -4088,6 +4143,8 @@ class GLContext(DrawContext):
     def set_forward_compatible(self, compatible: bool) -> None: ...
     def set_required_version(self, major: int, minor: int) -> None: ...
     def set_use_es(self, use_es: int) -> None: ...
+
+class GLContextClass(_gi.Struct): ...
 
 class GLTexture(Texture):
     """
@@ -4635,6 +4692,7 @@ class RGBA(GObject.GBoxed):
     def is_clear(self) -> bool: ...
     def is_opaque(self) -> bool: ...
     def parse(self, spec: str) -> bool: ...
+    def print_(self, string: GLib.String) -> GLib.String: ...
     def to_string(self) -> str: ...
 
 class Rectangle(GObject.GBoxed):
@@ -4665,8 +4723,7 @@ class ScrollEvent(Event):
     """
     def get_deltas(self) -> tuple[float, float]: ...
     def get_direction(self) -> ScrollDirection: ...
-    @staticmethod
-    def get_relative_direction(event: Event) -> ScrollRelativeDirection: ...
+    def get_relative_direction(self) -> ScrollRelativeDirection: ...
     def get_unit(self) -> ScrollUnit: ...
     def is_stop(self) -> bool: ...
 
@@ -4708,6 +4765,8 @@ class Seat(GObject.Object):
     def get_keyboard(self) -> Device | None: ...
     def get_pointer(self) -> Device | None: ...
     def get_tools(self) -> list[DeviceTool]: ...
+
+class SeatClass(_gi.Struct): ...
 
 class Snapshot(GObject.Object):
     """
@@ -5048,6 +5107,8 @@ class VulkanContext(DrawContext):
         self, *, display: Display | None = ..., surface: Surface | None = ...
     ) -> None: ...
 
+class VulkanContextClass(_gi.Struct): ...
+
 class AnchorHints(GObject.GFlags):
     FLIP = 3
     FLIP_X = 1
@@ -5240,9 +5301,14 @@ _ModifierTypeValueType: TypeAlias = (
 class PaintableFlags(GObject.GFlags):
     CONTENTS = 2
     SIZE = 1
+    STATIC_CONTENTS = 2
+    STATIC_SIZE = 1
 
 _PaintableFlagsLiteralType: TypeAlias = Literal[
-    "GDK_PAINTABLE_STATIC_CONTENTS", "GDK_PAINTABLE_STATIC_SIZE", "contents", "size"
+    "GDK_PAINTABLE_STATIC_CONTENTS",
+    "GDK_PAINTABLE_STATIC_SIZE",
+    "static-contents",
+    "static-size",
 ]
 _PaintableFlagsValueType: TypeAlias = (
     PaintableFlags | _PaintableFlagsLiteralType | tuple[_PaintableFlagsLiteralType, ...]
@@ -5428,6 +5494,24 @@ _CicpRangeLiteralType: TypeAlias = Literal[
     "GDK_CICP_RANGE_FULL", "GDK_CICP_RANGE_NARROW", "full", "narrow"
 ]
 _CicpRangeValueType: TypeAlias = CicpRange | _CicpRangeLiteralType
+
+class ColorChannel(GObject.GEnum):
+    ALPHA = 3
+    BLUE = 2
+    GREEN = 1
+    RED = 0
+
+_ColorChannelLiteralType: TypeAlias = Literal[
+    "GDK_COLOR_CHANNEL_ALPHA",
+    "GDK_COLOR_CHANNEL_BLUE",
+    "GDK_COLOR_CHANNEL_GREEN",
+    "GDK_COLOR_CHANNEL_RED",
+    "alpha",
+    "blue",
+    "green",
+    "red",
+]
+_ColorChannelValueType: TypeAlias = ColorChannel | _ColorChannelLiteralType
 
 class CrossingMode(GObject.GEnum):
     DEVICE_SWITCH = 8
@@ -5638,6 +5722,33 @@ _EventTypeLiteralType: TypeAlias = Literal[
 ]
 _EventTypeValueType: TypeAlias = EventType | _EventTypeLiteralType
 
+class FrameResult(GObject.GEnum):
+    DISCARDED = 5
+    EMPTY = 2
+    OUTSTANDING = 4
+    PREPARING = 0
+    PRESENTED = 6
+    SKIPPED = 1
+    SUBMITTED = 3
+
+_FrameResultLiteralType: TypeAlias = Literal[
+    "GDK_FRAME_DISCARDED",
+    "GDK_FRAME_EMPTY",
+    "GDK_FRAME_OUTSTANDING",
+    "GDK_FRAME_PREPARING",
+    "GDK_FRAME_PRESENTED",
+    "GDK_FRAME_SKIPPED",
+    "GDK_FRAME_SUBMITTED",
+    "discarded",
+    "empty",
+    "outstanding",
+    "preparing",
+    "presented",
+    "skipped",
+    "submitted",
+]
+_FrameResultValueType: TypeAlias = FrameResult | _FrameResultLiteralType
+
 class FullscreenMode(GObject.GEnum):
     ALL_MONITORS = 1
     CURRENT_MONITOR = 0
@@ -5760,6 +5871,10 @@ class MemoryFormat(GObject.GEnum):
     A8B8G8R8_PREMULTIPLIED = 28
     A8R8G8B8 = 4
     A8R8G8B8_PREMULTIPLIED = 1
+    ABGR2101010 = 69
+    ABGR2101010_PREMULTIPLIED = 68
+    ARGB2101010 = 66
+    ARGB2101010_PREMULTIPLIED = 65
     B8G8R8 = 8
     B8G8R8A8 = 3
     B8G8R8A8_PREMULTIPLIED = 0
@@ -5795,7 +5910,7 @@ class MemoryFormat(GObject.GEnum):
     G8_R8_B8_420 = 47
     G8_R8_B8_422 = 49
     G8_R8_B8_444 = 51
-    N_FORMATS = 65
+    N_FORMATS = 71
     R16G16B16 = 9
     R16G16B16A16 = 11
     R16G16B16A16_FLOAT = 14
@@ -5818,6 +5933,8 @@ class MemoryFormat(GObject.GEnum):
     X6G10_X6B10_X6R10_444 = 58
     X8B8G8R8 = 32
     X8R8G8B8 = 30
+    XBGR2101010 = 70
+    XRGB2101010 = 67
 
 _MemoryFormatLiteralType: TypeAlias = Literal[
     "GDK_MEMORY_A16",
@@ -5828,6 +5945,10 @@ _MemoryFormatLiteralType: TypeAlias = Literal[
     "GDK_MEMORY_A8B8G8R8_PREMULTIPLIED",
     "GDK_MEMORY_A8R8G8B8",
     "GDK_MEMORY_A8R8G8B8_PREMULTIPLIED",
+    "GDK_MEMORY_ABGR2101010",
+    "GDK_MEMORY_ABGR2101010_PREMULTIPLIED",
+    "GDK_MEMORY_ARGB2101010",
+    "GDK_MEMORY_ARGB2101010_PREMULTIPLIED",
     "GDK_MEMORY_B8G8R8",
     "GDK_MEMORY_B8G8R8A8",
     "GDK_MEMORY_B8G8R8A8_PREMULTIPLIED",
@@ -5886,6 +6007,8 @@ _MemoryFormatLiteralType: TypeAlias = Literal[
     "GDK_MEMORY_X6G10_X6B10_X6R10_444",
     "GDK_MEMORY_X8B8G8R8",
     "GDK_MEMORY_X8R8G8B8",
+    "GDK_MEMORY_XBGR2101010",
+    "GDK_MEMORY_XRGB2101010",
     "a16",
     "a16-float",
     "a32-float",
@@ -5894,6 +6017,10 @@ _MemoryFormatLiteralType: TypeAlias = Literal[
     "a8b8g8r8-premultiplied",
     "a8r8g8b8",
     "a8r8g8b8-premultiplied",
+    "abgr2101010",
+    "abgr2101010-premultiplied",
+    "argb2101010",
+    "argb2101010-premultiplied",
     "b8g8r8",
     "b8g8r8a8",
     "b8g8r8a8-premultiplied",
@@ -5952,6 +6079,8 @@ _MemoryFormatLiteralType: TypeAlias = Literal[
     "x6g10-x6b10-x6r10-444",
     "x8b8g8r8",
     "x8r8g8b8",
+    "xbgr2101010",
+    "xrgb2101010",
 ]
 _MemoryFormatValueType: TypeAlias = MemoryFormat | _MemoryFormatLiteralType
 

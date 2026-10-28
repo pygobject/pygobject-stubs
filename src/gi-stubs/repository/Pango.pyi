@@ -25,11 +25,12 @@ ATTR_INDEX_TO_TEXT_END: Final[int]
 GLYPH_EMPTY: Final[int]
 GLYPH_INVALID_INPUT: Final[int]
 GLYPH_UNKNOWN_FLAG: Final[int]
+RENDER_COMPONENT_ALL: Final[int]
 SCALE: Final[int]
 VERSION_MAJOR: Final[int]
 VERSION_MICRO: Final[int]
 VERSION_MINOR: Final[int]
-VERSION_STRING: Final = "1.57.1"
+VERSION_STRING: Final = "1.58.2"
 
 def attr_allow_breaks_new(allow_breaks: bool) -> Attribute: ...
 def attr_background_alpha_new(alpha: int) -> Attribute: ...
@@ -79,6 +80,7 @@ def attr_underline_color_new(red: int, green: int, blue: int) -> Attribute: ...
 def attr_underline_new(underline: _UnderlineValueType) -> Attribute: ...
 def attr_variant_new(variant: _VariantValueType) -> Attribute: ...
 def attr_weight_new(weight: _WeightValueType) -> Attribute: ...
+def attr_width_new(width: _WidthValueType) -> Attribute: ...
 def attr_word_new() -> Attribute: ...
 def bidi_type_for_unichar(ch: str) -> BidiType: ...
 def break_(text: str, length: int, analysis: Analysis) -> list[LogAttr]: ...
@@ -620,6 +622,7 @@ class FontDescription(GObject.GBoxed):
     def get_variant(self) -> Variant: ...
     def get_variations(self) -> str | None: ...
     def get_weight(self) -> Weight: ...
+    def get_width(self) -> Width: ...
     def hash(self) -> int: ...
     def merge(
         self, desc_to_merge: FontDescription | None, replace_existing: bool
@@ -643,6 +646,7 @@ class FontDescription(GObject.GBoxed):
     def set_variations(self, variations: str | None = None) -> None: ...
     def set_variations_static(self, variations: str) -> None: ...
     def set_weight(self, weight: _WeightValueType) -> None: ...
+    def set_width(self, width: _WidthValueType) -> None: ...
     def to_filename(self) -> str | None: ...
     def to_string(self) -> str: ...
     def unset_fields(self, to_unset: _FontMaskValueType) -> None: ...
@@ -1437,6 +1441,7 @@ class Renderer(GObject.Object):
     ) -> None: ...
     def get_alpha(self, part: _RenderPartValueType) -> int: ...
     def get_color(self, part: _RenderPartValueType) -> Color | None: ...
+    def get_components(self) -> RenderComponent: ...
     def get_layout(self) -> Layout | None: ...
     def get_layout_line(self) -> LayoutLine | None: ...
     def get_matrix(self) -> Matrix | None: ...
@@ -1445,6 +1450,7 @@ class Renderer(GObject.Object):
     def set_color(
         self, part: _RenderPartValueType, color: Color | None = None
     ) -> None: ...
+    def set_components(self, components: _RenderComponentValueType) -> None: ...
     def set_matrix(self, matrix: Matrix | None = None) -> None: ...
 
 class RendererClass(_gi.Struct):
@@ -1549,6 +1555,7 @@ class FontMask(GObject.GFlags):
     VARIANT = 4
     VARIATIONS = 128
     WEIGHT = 8
+    WIDTH = 16
 
 _FontMaskLiteralType: TypeAlias = Literal[
     "PANGO_FONT_MASK_COLOR",
@@ -1561,6 +1568,7 @@ _FontMaskLiteralType: TypeAlias = Literal[
     "PANGO_FONT_MASK_VARIANT",
     "PANGO_FONT_MASK_VARIATIONS",
     "PANGO_FONT_MASK_WEIGHT",
+    "PANGO_FONT_MASK_WIDTH",
     "color",
     "family",
     "features",
@@ -1571,6 +1579,7 @@ _FontMaskLiteralType: TypeAlias = Literal[
     "variant",
     "variations",
     "weight",
+    "width",
 ]
 _FontMaskValueType: TypeAlias = (
     FontMask | _FontMaskLiteralType | tuple[_FontMaskLiteralType, ...]
@@ -1609,6 +1618,37 @@ _LayoutSerializeFlagsValueType: TypeAlias = (
     LayoutSerializeFlags
     | _LayoutSerializeFlagsLiteralType
     | tuple[_LayoutSerializeFlagsLiteralType, ...]
+)
+
+class RenderComponent(GObject.GFlags):
+    BACKGROUND = 8
+    COLOR_GLYPH = 4
+    NONE = 0
+    OVERLINE = 32
+    PLAIN_GLYPH = 2
+    STRIKETHROUGH = 16
+    UNDERLINE = 8
+
+_RenderComponentLiteralType: TypeAlias = Literal[
+    "PANGO_RENDER_COMPONENT_BACKGROUND",
+    "PANGO_RENDER_COMPONENT_COLOR_GLYPH",
+    "PANGO_RENDER_COMPONENT_NONE",
+    "PANGO_RENDER_COMPONENT_OVERLINE",
+    "PANGO_RENDER_COMPONENT_PLAIN_GLYPH",
+    "PANGO_RENDER_COMPONENT_STRIKETHROUGH",
+    "PANGO_RENDER_COMPONENT_UNDERLINE",
+    "background",
+    "color-glyph",
+    "none",
+    "overline",
+    "plain-glyph",
+    "strikethrough",
+    "underline",
+]
+_RenderComponentValueType: TypeAlias = (
+    RenderComponent
+    | _RenderComponentLiteralType
+    | tuple[_RenderComponentLiteralType, ...]
 )
 
 class ShapeFlags(GObject.GFlags):
@@ -1695,6 +1735,7 @@ class AttrType(GObject.GEnum):
     UNDERLINE_COLOR = 18
     VARIANT = 5
     WEIGHT = 4
+    WIDTH = 38
     WORD = 34
     @staticmethod
     def get_name(type: _AttrTypeValueType) -> str | None: ...
@@ -1739,6 +1780,7 @@ _AttrTypeLiteralType: TypeAlias = Literal[
     "PANGO_ATTR_UNDERLINE_COLOR",
     "PANGO_ATTR_VARIANT",
     "PANGO_ATTR_WEIGHT",
+    "PANGO_ATTR_WIDTH",
     "PANGO_ATTR_WORD",
     "absolute-line-height",
     "absolute-size",
@@ -1777,6 +1819,7 @@ _AttrTypeLiteralType: TypeAlias = Literal[
     "underline-color",
     "variant",
     "weight",
+    "width",
     "word",
 ]
 _AttrTypeValueType: TypeAlias = AttrType | _AttrTypeLiteralType
@@ -2617,6 +2660,39 @@ _WeightLiteralType: TypeAlias = Literal[
     "ultralight",
 ]
 _WeightValueType: TypeAlias = Weight | _WeightLiteralType
+
+class Width(GObject.GEnum):
+    CONDENSED = 750
+    EXPANDED = 1250
+    EXTRA_CONDENSED = 625
+    EXTRA_EXPANDED = 1500
+    NORMAL = 1000
+    SEMI_CONDENSED = 875
+    SEMI_EXPANDED = 1125
+    ULTRA_CONDENSED = 500
+    ULTRA_EXPANDED = 2000
+
+_WidthLiteralType: TypeAlias = Literal[
+    "PANGO_WIDTH_CONDENSED",
+    "PANGO_WIDTH_EXPANDED",
+    "PANGO_WIDTH_EXTRA_CONDENSED",
+    "PANGO_WIDTH_EXTRA_EXPANDED",
+    "PANGO_WIDTH_NORMAL",
+    "PANGO_WIDTH_SEMI_CONDENSED",
+    "PANGO_WIDTH_SEMI_EXPANDED",
+    "PANGO_WIDTH_ULTRA_CONDENSED",
+    "PANGO_WIDTH_ULTRA_EXPANDED",
+    "condensed",
+    "expanded",
+    "extra-condensed",
+    "extra-expanded",
+    "normal",
+    "semi-condensed",
+    "semi-expanded",
+    "ultra-condensed",
+    "ultra-expanded",
+]
+_WidthValueType: TypeAlias = Width | _WidthLiteralType
 
 class WrapMode(GObject.GEnum):
     CHAR = 1

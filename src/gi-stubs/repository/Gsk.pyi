@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Final
 from typing import Literal
 from typing import type_check_only
 from typing import TypeAlias
@@ -20,10 +21,22 @@ from gi.repository import Pango
 _DataTs = TypeVarTuple("_DataTs", default=Unpack[tuple[()]])
 _SomeSurface = TypeVar("_SomeSurface", bound=cairo.Surface)
 
+RECT_SNAP_GROW: Final[int]
+RECT_SNAP_NONE: Final[int]
+RECT_SNAP_ROUND: Final[int]
+RECT_SNAP_SHRINK: Final[int]
+
 def component_transfer_equal(
     self: int | Any | None, other: int | Any | None
 ) -> bool: ...
 def path_parse(string: str) -> Path | None: ...
+def rect_snap_get_direction(snap: int, side: _SideValueType) -> SnapDirection: ...
+def rect_snap_new(
+    top: _SnapDirectionValueType,
+    right: _SnapDirectionValueType,
+    bottom: _SnapDirectionValueType,
+    left: _SnapDirectionValueType,
+) -> int: ...
 def serialization_error_quark() -> int: ...
 def stroke_equal(
     stroke1: int | Any | None = None, stroke2: int | Any | None = None
@@ -74,8 +87,10 @@ class BorderNode(RenderNode):
         BorderNode(**properties)
         new(outline:Gsk.RoundedRect, border_width:list, border_color:list) -> Gsk.BorderNode
     """
+    def get_border_snap(self) -> int: ...
     def get_colors(self) -> list[_Gdk4.RGBA]: ...
     def get_outline(self) -> RoundedRect: ...
+    def get_snap(self) -> int: ...
     def get_widths(self) -> list[float]: ...
     @classmethod
     def new(
@@ -156,6 +171,7 @@ class ClipNode(RenderNode):
     """
     def get_child(self) -> RenderNode: ...
     def get_clip(self) -> Graphene.Rect: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(cls, child: RenderNode, clip: Graphene.Rect) -> ClipNode: ...
 
@@ -171,6 +187,7 @@ class ColorMatrixNode(RenderNode):
     def get_child(self) -> RenderNode: ...
     def get_color_matrix(self) -> Graphene.Matrix: ...
     def get_color_offset(self) -> Graphene.Vec4: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(
         cls,
@@ -189,6 +206,7 @@ class ColorNode(RenderNode):
         new(rgba:Gdk.RGBA, bounds:Graphene.Rect) -> Gsk.ColorNode
     """
     def get_color(self) -> _Gdk4.RGBA: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(cls, rgba: _Gdk4.RGBA, bounds: Graphene.Rect) -> ColorNode: ...
 
@@ -245,7 +263,9 @@ class ComponentTransferNode(RenderNode):
         new(child:Gsk.RenderNode, r:Gsk.ComponentTransfer, g:Gsk.ComponentTransfer, b:Gsk.ComponentTransfer, a:Gsk.ComponentTransfer) -> Gsk.ComponentTransferNode
     """
     def get_child(self) -> RenderNode: ...
-    def get_transfer(self, component: int) -> ComponentTransfer: ...
+    def get_transfer(
+        self, component: _Gdk4._ColorChannelValueType
+    ) -> ComponentTransfer: ...
     @classmethod
     def new(
         cls,
@@ -255,6 +275,23 @@ class ComponentTransferNode(RenderNode):
         b: ComponentTransfer,
         a: ComponentTransfer,
     ) -> ComponentTransferNode: ...
+
+class CompositeNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        CompositeNode(**properties)
+        new(child:Gsk.RenderNode, mask:Gsk.RenderNode, op:Gsk.PorterDuff) -> Gsk.CompositeNode
+    """
+    def get_child(self) -> RenderNode: ...
+    def get_mask(self) -> RenderNode: ...
+    def get_operator(self) -> PorterDuff: ...
+    @classmethod
+    def new(
+        cls, child: RenderNode, mask: RenderNode, op: _PorterDuffValueType
+    ) -> CompositeNode: ...
 
 class ConicGradientNode(RenderNode):
     """
@@ -270,6 +307,7 @@ class ConicGradientNode(RenderNode):
     def get_color_stops(self) -> list[ColorStop]: ...
     def get_n_color_stops(self) -> int: ...
     def get_rotation(self) -> float: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(
         cls,
@@ -292,6 +330,19 @@ class ContainerNode(RenderNode):
     def get_n_children(self) -> int: ...
     @classmethod
     def new(cls, children: Sequence[RenderNode]) -> ContainerNode: ...
+
+class CopyNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        CopyNode(**properties)
+        new(child:Gsk.RenderNode) -> Gsk.CopyNode
+    """
+    def get_child(self) -> RenderNode: ...
+    @classmethod
+    def new(cls, child: RenderNode) -> CopyNode: ...
 
 class CrossFadeNode(RenderNode):
     """
@@ -470,6 +521,7 @@ class InsetShadowNode(RenderNode):
     def get_dx(self) -> float: ...
     def get_dy(self) -> float: ...
     def get_outline(self) -> RoundedRect: ...
+    def get_snap(self) -> int: ...
     def get_spread(self) -> float: ...
     @classmethod
     def new(
@@ -481,6 +533,22 @@ class InsetShadowNode(RenderNode):
         spread: float,
         blur_radius: float,
     ) -> InsetShadowNode: ...
+
+class IsolationNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        IsolationNode(**properties)
+        new(child:Gsk.RenderNode, isolations:Gsk.Isolation) -> Gsk.IsolationNode
+    """
+    def get_child(self) -> RenderNode: ...
+    def get_isolations(self) -> Isolation: ...
+    @classmethod
+    def new(
+        cls, child: RenderNode, isolations: _IsolationValueType
+    ) -> IsolationNode: ...
 
 class LinearGradientNode(RenderNode):
     """
@@ -494,6 +562,7 @@ class LinearGradientNode(RenderNode):
     def get_color_stops(self) -> list[ColorStop]: ...
     def get_end(self) -> Graphene.Point: ...
     def get_n_color_stops(self) -> int: ...
+    def get_snap(self) -> int: ...
     def get_start(self) -> Graphene.Point: ...
     @classmethod
     def new(
@@ -570,6 +639,7 @@ class OutsetShadowNode(RenderNode):
     def get_dx(self) -> float: ...
     def get_dy(self) -> float: ...
     def get_outline(self) -> RoundedRect: ...
+    def get_snap(self) -> int: ...
     def get_spread(self) -> float: ...
     @classmethod
     def new(
@@ -597,7 +667,22 @@ class ParseLocation(_gi.Struct):
     line_bytes: int
     line_chars: int
 
+class PasteNode(RenderNode):
+    """
+    :Constructors:
+
+    ::
+
+        PasteNode(**properties)
+        new(bounds:Graphene.Rect, depth:int) -> Gsk.PasteNode
+    """
+    def get_depth(self) -> int: ...
+    def get_snap(self) -> int: ...
+    @classmethod
+    def new(cls, bounds: Graphene.Rect, depth: int) -> PasteNode: ...
+
 class Path(GObject.GBoxed):
+    def equal(self, path2: Path) -> bool: ...
     def foreach(
         self,
         flags: _PathForeachFlagsValueType,
@@ -634,8 +719,11 @@ class Path(GObject.GBoxed):
         self, point: Graphene.Point, threshold: float
     ) -> tuple[bool, PathPoint, float]: ...
     def get_end_point(self) -> tuple[bool, PathPoint]: ...
+    def get_next(self, point: PathPoint) -> tuple[bool, PathPoint]: ...
+    def get_previous(self, point: PathPoint) -> tuple[bool, PathPoint]: ...
     def get_start_point(self) -> tuple[bool, PathPoint]: ...
     def get_stroke_bounds(self, stroke: Stroke) -> tuple[bool, Graphene.Rect]: ...
+    def get_tight_bounds(self) -> tuple[bool, Graphene.Rect]: ...
     def in_fill(self, point: Graphene.Point, fill_rule: _FillRuleValueType) -> bool: ...
     def is_closed(self) -> bool: ...
     def is_empty(self) -> bool: ...
@@ -768,6 +856,7 @@ class RadialGradientNode(RenderNode):
     def get_end(self) -> float: ...
     def get_hradius(self) -> float: ...
     def get_n_color_stops(self) -> int: ...
+    def get_snap(self) -> int: ...
     def get_start(self) -> float: ...
     def get_vradius(self) -> float: ...
     @classmethod
@@ -801,12 +890,48 @@ class RenderNode(_gi.Fundamental):
     ) -> RenderNode | None: ...
     def draw(self, cr: cairo.Context[_SomeSurface]) -> None: ...
     def get_bounds(self) -> Graphene.Rect: ...
+    def get_children(self) -> list[RenderNode]: ...
     def get_node_type(self) -> RenderNodeType: ...
     def get_opaque_rect(self) -> tuple[bool, Graphene.Rect]: ...
     def ref(self) -> RenderNode: ...
     def serialize(self) -> GLib.Bytes: ...
     def unref(self) -> None: ...
     def write_to_file(self, filename: str) -> bool: ...
+
+class RenderReplay(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        new() -> Gsk.RenderReplay
+    """
+    def __init__(self) -> None: ...
+    def default(self, node: RenderNode) -> RenderNode | None: ...
+    def filter_font(self, font: Pango.Font) -> Pango.Font: ...
+    def filter_node(self, node: RenderNode) -> RenderNode | None: ...
+    def filter_texture(self, texture: _Gdk4.Texture) -> _Gdk4.Texture: ...
+    def free(self) -> None: ...
+    @classmethod
+    def new(cls) -> RenderReplay: ...
+    def set_font_filter(
+        self,
+        filter: Callable[[RenderReplay, Pango.Font, Unpack[_DataTs]], Pango.Font]
+        | None = None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    def set_node_filter(
+        self,
+        filter: Callable[[RenderReplay, RenderNode, Unpack[_DataTs]], RenderNode | None]
+        | None = None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
+    def set_texture_filter(
+        self,
+        filter: Callable[[RenderReplay, _Gdk4.Texture, Unpack[_DataTs]], _Gdk4.Texture]
+        | None = None,
+        *user_data: Unpack[_DataTs],
+    ) -> None: ...
 
 class Renderer(GObject.Object):
     """
@@ -860,6 +985,8 @@ class RepeatNode(RenderNode):
     """
     def get_child(self) -> RenderNode: ...
     def get_child_bounds(self) -> Graphene.Rect: ...
+    def get_child_snap(self) -> int: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(
         cls,
@@ -918,6 +1045,7 @@ class RoundedClipNode(RenderNode):
     """
     def get_child(self) -> RenderNode: ...
     def get_clip(self) -> RoundedRect: ...
+    def get_snap(self) -> int: ...
     @classmethod
     def new(cls, child: RenderNode, clip: RoundedRect) -> RoundedClipNode: ...
 
@@ -1096,6 +1224,7 @@ class TextureNode(RenderNode):
         TextureNode(**properties)
         new(texture:Gdk.Texture, bounds:Graphene.Rect) -> Gsk.TextureNode
     """
+    def get_snap(self) -> int: ...
     def get_texture(self) -> _Gdk4.Texture: ...
     @classmethod
     def new(cls, texture: _Gdk4.Texture, bounds: Graphene.Rect) -> TextureNode: ...
@@ -1110,6 +1239,7 @@ class TextureScaleNode(RenderNode):
         new(texture:Gdk.Texture, bounds:Graphene.Rect, filter:Gsk.ScalingFilter) -> Gsk.TextureScaleNode
     """
     def get_filter(self) -> ScalingFilter: ...
+    def get_snap(self) -> int: ...
     def get_texture(self) -> _Gdk4.Texture: ...
     @classmethod
     def new(
@@ -1171,12 +1301,14 @@ class TransformNode(RenderNode):
     ::
 
         TransformNode(**properties)
-        new(child:Gsk.RenderNode, transform:Gsk.Transform) -> Gsk.TransformNode
+        new(child:Gsk.RenderNode, transform:Gsk.Transform=None) -> Gsk.TransformNode
     """
     def get_child(self) -> RenderNode: ...
     def get_transform(self) -> Transform: ...
     @classmethod
-    def new(cls, child: RenderNode, transform: Transform) -> TransformNode: ...
+    def new(
+        cls, child: RenderNode, transform: Transform | None = None
+    ) -> TransformNode: ...
 
 class VulkanRenderer(Renderer):
     """
@@ -1200,6 +1332,26 @@ class VulkanRenderer(Renderer):
     def new(cls) -> VulkanRenderer: ...
 
 class VulkanRendererClass(_gi.Struct): ...
+
+class Isolation(GObject.GFlags):
+    ALL = 4294967295
+    BACKGROUND = 1
+    COPY_PASTE = 2
+    NONE = 0
+
+_IsolationLiteralType: TypeAlias = Literal[
+    "GSK_ISOLATION_ALL",
+    "GSK_ISOLATION_BACKGROUND",
+    "GSK_ISOLATION_COPY_PASTE",
+    "GSK_ISOLATION_NONE",
+    "all",
+    "background",
+    "copy-paste",
+    "none",
+]
+_IsolationValueType: TypeAlias = (
+    Isolation | _IsolationLiteralType | tuple[_IsolationLiteralType, ...]
+)
 
 class PathForeachFlags(GObject.GFlags):
     CONIC = 4
@@ -1442,7 +1594,50 @@ _PathOperationLiteralType: TypeAlias = Literal[
 ]
 _PathOperationValueType: TypeAlias = PathOperation | _PathOperationLiteralType
 
+class PorterDuff(GObject.GEnum):
+    CLEAR = 11
+    DEST = 1
+    DEST_ATOP_SOURCE = 9
+    DEST_IN_SOURCE = 5
+    DEST_OUT_SOURCE = 7
+    DEST_OVER_SOURCE = 3
+    SOURCE = 0
+    SOURCE_ATOP_DEST = 8
+    SOURCE_IN_DEST = 4
+    SOURCE_OUT_DEST = 6
+    SOURCE_OVER_DEST = 2
+    XOR = 10
+
+_PorterDuffLiteralType: TypeAlias = Literal[
+    "GSK_PORTER_DUFF_CLEAR",
+    "GSK_PORTER_DUFF_DEST",
+    "GSK_PORTER_DUFF_DEST_ATOP_SOURCE",
+    "GSK_PORTER_DUFF_DEST_IN_SOURCE",
+    "GSK_PORTER_DUFF_DEST_OUT_SOURCE",
+    "GSK_PORTER_DUFF_DEST_OVER_SOURCE",
+    "GSK_PORTER_DUFF_SOURCE",
+    "GSK_PORTER_DUFF_SOURCE_ATOP_DEST",
+    "GSK_PORTER_DUFF_SOURCE_IN_DEST",
+    "GSK_PORTER_DUFF_SOURCE_OUT_DEST",
+    "GSK_PORTER_DUFF_SOURCE_OVER_DEST",
+    "GSK_PORTER_DUFF_XOR",
+    "clear",
+    "dest",
+    "dest-atop-source",
+    "dest-in-source",
+    "dest-out-source",
+    "dest-over-source",
+    "source",
+    "source-atop-dest",
+    "source-in-dest",
+    "source-out-dest",
+    "source-over-dest",
+    "xor",
+]
+_PorterDuffValueType: TypeAlias = PorterDuff | _PorterDuffLiteralType
+
 class RenderNodeType(GObject.GEnum):
+    ARITHMETIC_NODE = 37
     BLEND_NODE = 20
     BLUR_NODE = 23
     BORDER_NODE = 9
@@ -1451,18 +1646,23 @@ class RenderNodeType(GObject.GEnum):
     COLOR_MATRIX_NODE = 15
     COLOR_NODE = 3
     COMPONENT_TRANSFER_NODE = 31
+    COMPOSITE_NODE = 34
     CONIC_GRADIENT_NODE = 8
     CONTAINER_NODE = 1
+    COPY_NODE = 32
     CROSS_FADE_NODE = 21
     DEBUG_NODE = 24
+    DISPLACEMENT_NODE = 36
     FILL_NODE = 28
     GL_SHADER_NODE = 25
     INSET_SHADOW_NODE = 11
+    ISOLATION_NODE = 35
     LINEAR_GRADIENT_NODE = 4
     MASK_NODE = 27
     NOT_A_RENDER_NODE = 0
     OPACITY_NODE = 14
     OUTSET_SHADOW_NODE = 12
+    PASTE_NODE = 33
     RADIAL_GRADIENT_NODE = 6
     REPEATING_LINEAR_GRADIENT_NODE = 5
     REPEATING_RADIAL_GRADIENT_NODE = 7
@@ -1475,8 +1675,10 @@ class RenderNodeType(GObject.GEnum):
     TEXTURE_SCALE_NODE = 26
     TEXT_NODE = 22
     TRANSFORM_NODE = 13
+    TURBULENCE_NODE = 38
 
 _RenderNodeTypeLiteralType: TypeAlias = Literal[
+    "GSK_ARITHMETIC_NODE",
     "GSK_BLEND_NODE",
     "GSK_BLUR_NODE",
     "GSK_BORDER_NODE",
@@ -1485,18 +1687,23 @@ _RenderNodeTypeLiteralType: TypeAlias = Literal[
     "GSK_COLOR_MATRIX_NODE",
     "GSK_COLOR_NODE",
     "GSK_COMPONENT_TRANSFER_NODE",
+    "GSK_COMPOSITE_NODE",
     "GSK_CONIC_GRADIENT_NODE",
     "GSK_CONTAINER_NODE",
+    "GSK_COPY_NODE",
     "GSK_CROSS_FADE_NODE",
     "GSK_DEBUG_NODE",
+    "GSK_DISPLACEMENT_NODE",
     "GSK_FILL_NODE",
     "GSK_GL_SHADER_NODE",
     "GSK_INSET_SHADOW_NODE",
+    "GSK_ISOLATION_NODE",
     "GSK_LINEAR_GRADIENT_NODE",
     "GSK_MASK_NODE",
     "GSK_NOT_A_RENDER_NODE",
     "GSK_OPACITY_NODE",
     "GSK_OUTSET_SHADOW_NODE",
+    "GSK_PASTE_NODE",
     "GSK_RADIAL_GRADIENT_NODE",
     "GSK_REPEATING_LINEAR_GRADIENT_NODE",
     "GSK_REPEATING_RADIAL_GRADIENT_NODE",
@@ -1509,6 +1716,8 @@ _RenderNodeTypeLiteralType: TypeAlias = Literal[
     "GSK_TEXTURE_SCALE_NODE",
     "GSK_TEXT_NODE",
     "GSK_TRANSFORM_NODE",
+    "GSK_TURBULENCE_NODE",
+    "arithmetic-node",
     "blend-node",
     "blur-node",
     "border-node",
@@ -1517,18 +1726,23 @@ _RenderNodeTypeLiteralType: TypeAlias = Literal[
     "color-matrix-node",
     "color-node",
     "component-transfer-node",
+    "composite-node",
     "conic-gradient-node",
     "container-node",
+    "copy-node",
     "cross-fade-node",
     "debug-node",
+    "displacement-node",
     "fill-node",
     "gl-shader-node",
     "inset-shadow-node",
+    "isolation-node",
     "linear-gradient-node",
     "mask-node",
     "not-a-render-node",
     "opacity-node",
     "outset-shadow-node",
+    "paste-node",
     "radial-gradient-node",
     "repeat-node",
     "repeating-linear-gradient-node",
@@ -1541,6 +1755,7 @@ _RenderNodeTypeLiteralType: TypeAlias = Literal[
     "texture-node",
     "texture-scale-node",
     "transform-node",
+    "turbulence-node",
 ]
 _RenderNodeTypeValueType: TypeAlias = RenderNodeType | _RenderNodeTypeLiteralType
 
@@ -1577,6 +1792,42 @@ _SerializationErrorLiteralType: TypeAlias = Literal[
 _SerializationErrorValueType: TypeAlias = (
     SerializationError | _SerializationErrorLiteralType
 )
+
+class Side(GObject.GEnum):
+    BOTTOM = 2
+    LEFT = 3
+    RIGHT = 1
+    TOP = 0
+
+_SideLiteralType: TypeAlias = Literal[
+    "GSK_SIDE_BOTTOM",
+    "GSK_SIDE_LEFT",
+    "GSK_SIDE_RIGHT",
+    "GSK_SIDE_TOP",
+    "bottom",
+    "left",
+    "right",
+    "top",
+]
+_SideValueType: TypeAlias = Side | _SideLiteralType
+
+class SnapDirection(GObject.GEnum):
+    CEIL = 2
+    FLOOR = 1
+    NONE = 0
+    ROUND = 3
+
+_SnapDirectionLiteralType: TypeAlias = Literal[
+    "GSK_SNAP_CEIL",
+    "GSK_SNAP_FLOOR",
+    "GSK_SNAP_NONE",
+    "GSK_SNAP_ROUND",
+    "ceil",
+    "floor",
+    "none",
+    "round",
+]
+_SnapDirectionValueType: TypeAlias = SnapDirection | _SnapDirectionLiteralType
 
 class TransformCategory(GObject.GEnum):
     ANY = 1

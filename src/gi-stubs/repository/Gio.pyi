@@ -372,8 +372,8 @@ def dbus_error_register_error(
     error_domain: int, error_code: int, dbus_error_name: str
 ) -> bool: ...
 def dbus_error_register_error_domain(
-    error_domain_quark_name: str, quark_volatile: int, entries: Sequence[DBusErrorEntry]
-) -> None: ...
+    error_domain_quark_name: str, entries: Sequence[DBusErrorEntry]
+) -> int: ...
 def dbus_error_strip_remote_error(error: GLib.Error) -> bool: ...
 def dbus_error_unregister_error(
     error_domain: int, error_code: int, dbus_error_name: str
@@ -2069,6 +2069,17 @@ class DBusActionGroup(GObject.Object, ActionGroup, RemoteActionGroup):
         connection: DBusConnection, bus_name: str | None, object_path: str
     ) -> DBusActionGroup: ...
 
+class DBusActionGroupClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        DBusActionGroupClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
+
 class DBusAnnotationInfo(GObject.GBoxed):
     """
     :Constructors:
@@ -2566,7 +2577,7 @@ class DBusInterface(GObject.GInterface, Protocol):
     Signals from GObject:
       notify (GParam)
     """
-    def get_info(self) -> DBusInterfaceInfo: ...
+    def get_info(self) -> DBusInterfaceInfo | None: ...
     def get_object(self) -> DBusObject | None: ...
     def set_object(self, object: DBusObject | None = None) -> None: ...
 
@@ -2581,7 +2592,7 @@ class DBusInterfaceIface(_gi.Struct):
     @property
     def parent_iface(self) -> GObject.TypeInterface: ...
     @property
-    def get_info(self) -> Callable[[DBusInterface], DBusInterfaceInfo]: ...
+    def get_info(self) -> Callable[[DBusInterface], DBusInterfaceInfo | None]: ...
     @property
     def get_object(self) -> Callable[[DBusInterface], DBusObject | None]: ...
     @property
@@ -2688,6 +2699,8 @@ class DBusInterfaceSkeletonClass(_gi.Struct):
     def get_properties(self) -> Callable[[DBusInterfaceSkeleton], GLib.Variant]: ...
     @property
     def flush(self) -> Callable[[DBusInterfaceSkeleton], None]: ...
+    @property
+    def method_dispatch(self) -> int: ...
     @property
     def vfunc_padding(self) -> list[int]: ...
     @property
@@ -2835,7 +2848,7 @@ class DBusMessage(GObject.Object):
     def set_body(self, body: GLib.Variant) -> None: ...
     def set_byte_order(self, byte_order: _DBusMessageByteOrderValueType) -> None: ...
     def set_destination(self, value: str | None = None) -> None: ...
-    def set_error_name(self, value: str) -> None: ...
+    def set_error_name(self, value: str | None = None) -> None: ...
     def set_flags(self, flags: _DBusMessageFlagsValueType) -> None: ...
     def set_header(
         self,
@@ -3348,7 +3361,7 @@ class DBusObjectProxy(GObject.Object, DBusObject):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def g_connection(self) -> DBusConnection | None: ...
+        def g_connection(self) -> DBusConnection: ...
         @property
         def g_object_path(self) -> str | None: ...
 
@@ -3581,19 +3594,19 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     @type_check_only
     class Props(GObject.Object.Props):
         @property
-        def g_connection(self) -> DBusConnection | None: ...
+        def g_connection(self) -> DBusConnection: ...
         g_default_timeout: int
         @property
         def g_flags(self) -> DBusProxyFlags: ...
         g_interface_info: DBusInterfaceInfo | None
         @property
-        def g_interface_name(self) -> str | None: ...
+        def g_interface_name(self) -> str: ...
         @property
         def g_name(self) -> str | None: ...
         @property
         def g_name_owner(self) -> str | None: ...
         @property
-        def g_object_path(self) -> str | None: ...
+        def g_object_path(self) -> str: ...
 
     @property
     def props(self) -> Props: ...
@@ -3715,6 +3728,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     def get_name(self) -> str | None: ...
     def get_name_owner(self) -> str | None: ...
     def get_object_path(self) -> str: ...
+    # override
     @overload
     @staticmethod
     def new(
@@ -3726,7 +3740,6 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         interface_name: str,
         cancellable: Cancellable | None = None,
     ) -> _gi.Async[DBusProxy]: ...
-    # override
     @overload
     @staticmethod
     def new(
@@ -3740,7 +3753,6 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         callback: _AsyncReadyVarArgsCallback[DBusProxy, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
-    # override
     @overload
     @staticmethod
     def new(
@@ -3756,6 +3768,7 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
     ) -> None: ...
     @classmethod
     def new_finish(cls, res: AsyncResult) -> DBusProxy: ...
+    # override
     @overload
     @staticmethod
     def new_for_bus(
@@ -3767,7 +3780,6 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         interface_name: str,
         cancellable: Cancellable | None = None,
     ) -> _gi.Async[DBusProxy]: ...
-    # override
     @overload
     @staticmethod
     def new_for_bus(
@@ -3781,7 +3793,6 @@ class DBusProxy(GObject.Object, AsyncInitable, DBusInterface, Initable):
         callback: _AsyncReadyVarArgsCallback[DBusProxy, Unpack[_DataTs]] | None,
         *user_data: Unpack[_DataTs],
     ) -> None: ...
-    # override
     @overload
     @staticmethod
     def new_for_bus(
@@ -4888,7 +4899,16 @@ class Emblem(GObject.Object, Icon):
     @classmethod
     def new_with_origin(cls, icon: Icon, origin: _EmblemOriginValueType) -> Emblem: ...
 
-class EmblemClass(_gi.Struct): ...
+class EmblemClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        EmblemClass()
+    """
+    @property
+    def parent_class(self) -> GObject.ObjectClass: ...
 
 class EmblemedIcon(GObject.Object, Icon):
     """
@@ -7731,6 +7751,66 @@ class IOStreamClass(_gi.Struct):
     def close_finish(self) -> Callable[[IOStream, AsyncResult], bool]: ...
 
 class IOStreamPrivate(_gi.Struct): ...
+
+class IPTosMessage(SocketControlMessage):
+    """
+    :Constructors:
+
+    ::
+
+        IPTosMessage(**properties)
+        new(dscp:int, ecn:Gio.EcnCodePoint) -> Gio.SocketControlMessage
+
+    Object GIPTosMessage
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    def get_dscp(self) -> int: ...
+    def get_ecn(self) -> EcnCodePoint: ...
+    @classmethod
+    def new(cls, dscp: int, ecn: _EcnCodePointValueType) -> IPTosMessage: ...
+
+class IPTosMessageClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        IPTosMessageClass()
+    """
+    @property
+    def parent_class(self) -> SocketControlMessageClass: ...
+
+class IPv6TclassMessage(SocketControlMessage):
+    """
+    :Constructors:
+
+    ::
+
+        IPv6TclassMessage(**properties)
+        new(dscp:int, ecn:Gio.EcnCodePoint) -> Gio.SocketControlMessage
+
+    Object GIPv6TclassMessage
+
+    Signals from GObject:
+      notify (GParam)
+    """
+    def get_dscp(self) -> int: ...
+    def get_ecn(self) -> EcnCodePoint: ...
+    @classmethod
+    def new(cls, dscp: int, ecn: _EcnCodePointValueType) -> IPv6TclassMessage: ...
+
+class IPv6TclassMessageClass(_gi.Struct):
+    """
+    :Constructors:
+
+    ::
+
+        IPv6TclassMessageClass()
+    """
+    @property
+    def parent_class(self) -> SocketControlMessageClass: ...
 
 class Icon(GObject.GInterface, Protocol):
     """
@@ -14669,12 +14749,15 @@ class UnixFDList(GObject.Object):
     @property
     def priv(self) -> UnixFDListPrivate: ...
     def append(self, fd: int) -> int: ...
+    def append_take(self, fd: int) -> int: ...
     def get(self, index_: int) -> int: ...
     def get_length(self) -> int: ...
+    def lookup(self, index_: int) -> int: ...
     @classmethod
     def new(cls) -> UnixFDList: ...
     @classmethod
     def new_from_array(cls, fds: Sequence[int]) -> UnixFDList: ...
+    def peek(self, index_: int) -> int: ...
     def peek_fds(self) -> list[int]: ...
     def steal_fds(self) -> list[int]: ...
 
@@ -15826,6 +15909,22 @@ _FileQueryInfoFlagsValueType: TypeAlias = (
     | tuple[_FileQueryInfoFlagsLiteralType, ...]
 )
 
+class IOModuleScopeFlags(GObject.GFlags):
+    BLOCK_DUPLICATES = 1
+    NONE = 0
+
+_IOModuleScopeFlagsLiteralType: TypeAlias = Literal[
+    "G_IO_MODULE_SCOPE_BLOCK_DUPLICATES",
+    "G_IO_MODULE_SCOPE_NONE",
+    "block-duplicates",
+    "none",
+]
+_IOModuleScopeFlagsValueType: TypeAlias = (
+    IOModuleScopeFlags
+    | _IOModuleScopeFlagsLiteralType
+    | tuple[_IOModuleScopeFlagsLiteralType, ...]
+)
+
 class IOStreamSpliceFlags(GObject.GFlags):
     CLOSE_STREAM1 = 1
     CLOSE_STREAM2 = 2
@@ -16065,6 +16164,31 @@ _TlsCertificateFlagsValueType: TypeAlias = (
     | tuple[_TlsCertificateFlagsLiteralType, ...]
 )
 
+class TlsCertificateRequestFlags(GObject.GFlags):
+    NONE = 0
+
+_TlsCertificateRequestFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_CERTIFICATE_REQUEST_NONE", "none"
+]
+_TlsCertificateRequestFlagsValueType: TypeAlias = (
+    TlsCertificateRequestFlags
+    | _TlsCertificateRequestFlagsLiteralType
+    | tuple[_TlsCertificateRequestFlagsLiteralType, ...]
+)
+
+class TlsDatabaseLookupFlags(GObject.GFlags):
+    KEYPAIR = 1
+    NONE = 0
+
+_TlsDatabaseLookupFlagsLiteralType: TypeAlias = Literal[
+    "G_TLS_DATABASE_LOOKUP_KEYPAIR", "G_TLS_DATABASE_LOOKUP_NONE", "keypair", "none"
+]
+_TlsDatabaseLookupFlagsValueType: TypeAlias = (
+    TlsDatabaseLookupFlags
+    | _TlsDatabaseLookupFlagsLiteralType
+    | tuple[_TlsDatabaseLookupFlagsLiteralType, ...]
+)
+
 class TlsDatabaseVerifyFlags(GObject.GFlags):
     NONE = 0
 
@@ -16238,10 +16362,8 @@ class DBusError(GObject.GEnum):
     ) -> bool: ...
     @staticmethod
     def register_error_domain(
-        error_domain_quark_name: str,
-        quark_volatile: int,
-        entries: Sequence[DBusErrorEntry],
-    ) -> None: ...
+        error_domain_quark_name: str, entries: Sequence[DBusErrorEntry]
+    ) -> int: ...
     @staticmethod
     def strip_remote_error(error: GLib.Error) -> bool: ...
     @staticmethod
@@ -16475,6 +16597,24 @@ _DriveStartStopTypeLiteralType: TypeAlias = Literal[
 _DriveStartStopTypeValueType: TypeAlias = (
     DriveStartStopType | _DriveStartStopTypeLiteralType
 )
+
+class EcnCodePoint(GObject.GEnum):
+    ECT_0 = 2
+    ECT_1 = 1
+    ECT_CE = 3
+    NO_ECN = 0
+
+_EcnCodePointLiteralType: TypeAlias = Literal[
+    "G_ECN_ECT_0",
+    "G_ECN_ECT_1",
+    "G_ECN_ECT_CE",
+    "G_ECN_NO_ECN",
+    "ect-0",
+    "ect-1",
+    "ect-ce",
+    "no-ecn",
+]
+_EcnCodePointValueType: TypeAlias = EcnCodePoint | _EcnCodePointLiteralType
 
 class EmblemOrigin(GObject.GEnum):
     DEVICE = 1
@@ -16786,20 +16926,6 @@ _IOErrorEnumLiteralType: TypeAlias = Literal[
 ]
 _IOErrorEnumValueType: TypeAlias = IOErrorEnum | _IOErrorEnumLiteralType
 
-class IOModuleScopeFlags(GObject.GEnum):
-    BLOCK_DUPLICATES = 1
-    NONE = 0
-
-_IOModuleScopeFlagsLiteralType: TypeAlias = Literal[
-    "G_IO_MODULE_SCOPE_BLOCK_DUPLICATES",
-    "G_IO_MODULE_SCOPE_NONE",
-    "block-duplicates",
-    "none",
-]
-_IOModuleScopeFlagsValueType: TypeAlias = (
-    IOModuleScopeFlags | _IOModuleScopeFlagsLiteralType
-)
-
 class MemoryMonitorWarningLevel(GObject.GEnum):
     CRITICAL = 255
     LOW = 50
@@ -17084,16 +17210,6 @@ _TlsAuthenticationModeValueType: TypeAlias = (
     TlsAuthenticationMode | _TlsAuthenticationModeLiteralType
 )
 
-class TlsCertificateRequestFlags(GObject.GEnum):
-    NONE = 0
-
-_TlsCertificateRequestFlagsLiteralType: TypeAlias = Literal[
-    "G_TLS_CERTIFICATE_REQUEST_NONE", "none"
-]
-_TlsCertificateRequestFlagsValueType: TypeAlias = (
-    TlsCertificateRequestFlags | _TlsCertificateRequestFlagsLiteralType
-)
-
 class TlsChannelBindingError(GObject.GEnum):
     GENERAL_ERROR = 4
     INVALID_STATE = 1
@@ -17134,17 +17250,6 @@ _TlsChannelBindingTypeLiteralType: TypeAlias = Literal[
 ]
 _TlsChannelBindingTypeValueType: TypeAlias = (
     TlsChannelBindingType | _TlsChannelBindingTypeLiteralType
-)
-
-class TlsDatabaseLookupFlags(GObject.GEnum):
-    KEYPAIR = 1
-    NONE = 0
-
-_TlsDatabaseLookupFlagsLiteralType: TypeAlias = Literal[
-    "G_TLS_DATABASE_LOOKUP_KEYPAIR", "G_TLS_DATABASE_LOOKUP_NONE", "keypair", "none"
-]
-_TlsDatabaseLookupFlagsValueType: TypeAlias = (
-    TlsDatabaseLookupFlags | _TlsDatabaseLookupFlagsLiteralType
 )
 
 class TlsError(GObject.GEnum):
