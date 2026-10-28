@@ -5,6 +5,7 @@ from typing import overload
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -3408,6 +3409,7 @@ class Device(GObject.Object):
 
 class DeviceClass(_gi.Struct): ...
 
+@runtime_checkable
 class DevicePad(GObject.GInterface, Protocol):
     """
     Interface GdkDevicePad
@@ -3806,6 +3808,7 @@ class Drag(GObject.Object):
 
 class DragClass(_gi.Struct): ...
 
+@runtime_checkable
 class DragSurface(GObject.GInterface, Protocol):
     """
     Interface GdkDragSurface
@@ -4548,6 +4551,7 @@ class PadEvent(Event):
     def get_button(self) -> int: ...
     def get_group_mode(self) -> tuple[int, int]: ...
 
+@runtime_checkable
 class Paintable(GObject.GInterface, Protocol):
     """
     Interface GdkPaintable
@@ -4596,6 +4600,7 @@ class PaintableInterface(_gi.Struct):
     @property
     def get_intrinsic_aspect_ratio(self) -> Callable[[Paintable], float]: ...
 
+@runtime_checkable
 class Popup(GObject.GInterface, Protocol):
     """
     Interface GdkPopup
@@ -4984,6 +4989,7 @@ class TimeCoord(_gi.Struct):
     flags: AxisFlags
     axes: list[float]
 
+@runtime_checkable
 class Toplevel(GObject.GInterface, Protocol):
     """
     Interface GdkToplevel

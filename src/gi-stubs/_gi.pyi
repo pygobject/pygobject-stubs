@@ -5,6 +5,7 @@ from typing import final
 from typing import Generic
 from typing import Protocol
 from typing import type_check_only
+from typing_extensions import runtime_checkable
 from typing_extensions import Self
 from typing_extensions import TypeVar
 
@@ -208,6 +209,7 @@ class GFlags(IntFlag):
     @property
     def value_nicks(self) -> list[str]: ...
 
+@runtime_checkable
 class GInterface(ObjectProtocol, Protocol): ...
 
 @type_check_only

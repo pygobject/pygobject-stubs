@@ -1,4 +1,5 @@
 from typing import Protocol
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -62,6 +63,7 @@ def show_layout_line(
 def update_context(cr: cairo.Context[_SomeSurface], context: Pango.Context) -> None: ...
 def update_layout(cr: cairo.Context[_SomeSurface], layout: Pango.Layout) -> None: ...
 
+@runtime_checkable
 class Font(GObject.GInterface, Protocol):
     """
     Interface PangoCairoFont
@@ -71,6 +73,7 @@ class Font(GObject.GInterface, Protocol):
     """
     def get_scaled_font(self) -> cairo.ScaledFont | None: ...
 
+@runtime_checkable
 class FontMap(GObject.GInterface, Protocol):
     """
     Interface PangoCairoFontMap

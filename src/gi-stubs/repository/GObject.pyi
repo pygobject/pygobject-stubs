@@ -4,6 +4,7 @@ from typing import Literal
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -2233,6 +2234,7 @@ class TypeModuleClass(_gi.Struct):
     @_property
     def reserved4(self) -> Callable[[], None]: ...
 
+@runtime_checkable
 class TypePlugin(GInterface, Protocol):
     """
     Interface GTypePlugin
