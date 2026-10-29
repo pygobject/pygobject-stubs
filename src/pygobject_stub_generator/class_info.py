@@ -24,6 +24,7 @@ from .utils import generate_full_name
 from .utils import MISSING
 from .utils import MissingType
 
+gi.disable_legacy_autoinit()
 gi.require_version("GIRepository", "3.0")
 
 if TYPE_CHECKING:

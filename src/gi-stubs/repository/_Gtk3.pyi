@@ -1111,8 +1111,6 @@ class AboutDialog(Dialog):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -1136,12 +1134,14 @@ class AboutDialog(Dialog):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -1668,8 +1668,6 @@ class AccelLabel(Label):
         The amount of space to add on the top and bottom of the widget, in pixels
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -1693,12 +1691,14 @@ class AccelLabel(Label):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -2296,8 +2296,6 @@ class ActionBar(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -2321,12 +2319,14 @@ class ActionBar(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -2956,8 +2956,6 @@ class Alignment(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -2981,12 +2979,14 @@ class Alignment(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -3303,8 +3303,6 @@ class AppChooserButton(ComboBox, AppChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -3328,12 +3326,14 @@ class AppChooserButton(ComboBox, AppChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -3683,8 +3683,6 @@ class AppChooserDialog(Dialog, AppChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -3708,12 +3706,14 @@ class AppChooserDialog(Dialog, AppChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -4009,8 +4009,6 @@ class AppChooserWidget(Box, AppChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -4034,12 +4032,14 @@ class AppChooserWidget(Box, AppChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -4545,8 +4545,6 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -4570,12 +4568,14 @@ class ApplicationWindow(Window, Gio.ActionGroup, Gio.ActionMap):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -4832,8 +4832,6 @@ class Arrow(Misc):
         The amount of space to add on the top and bottom of the widget, in pixels
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -4857,12 +4855,14 @@ class Arrow(Misc):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -5224,8 +5224,6 @@ class AspectFrame(Frame):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -5249,12 +5247,14 @@ class AspectFrame(Frame):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -5580,8 +5580,6 @@ class Assistant(Window):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -5605,12 +5603,14 @@ class Assistant(Window):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -5907,8 +5907,6 @@ class Bin(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -5932,12 +5930,14 @@ class Bin(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -6387,8 +6387,6 @@ class Box(Container, Orientable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -6412,12 +6410,14 @@ class Box(Container, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -6906,8 +6906,6 @@ class Button(Bin, Actionable, Activatable, Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -6931,12 +6929,14 @@ class Button(Bin, Actionable, Activatable, Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -7339,8 +7339,6 @@ class ButtonBox(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -7364,12 +7362,14 @@ class ButtonBox(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -7649,8 +7649,6 @@ class Calendar(Widget):
         Details height in rows
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -7674,12 +7672,14 @@ class Calendar(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -10762,8 +10762,6 @@ class CellView(Widget, CellLayout, Orientable):
         Whether to request enough space for every row in the model
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -10787,12 +10785,14 @@ class CellView(Widget, CellLayout, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -11097,8 +11097,6 @@ class CheckButton(ToggleButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -11122,12 +11120,14 @@ class CheckButton(ToggleButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -11405,8 +11405,6 @@ class CheckMenuItem(MenuItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -11430,12 +11428,14 @@ class CheckMenuItem(MenuItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -11940,8 +11940,6 @@ class ColorButton(Button, ColorChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -11965,12 +11963,14 @@ class ColorButton(Button, ColorChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -12342,8 +12342,6 @@ class ColorChooserDialog(Dialog, ColorChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -12367,12 +12365,14 @@ class ColorChooserDialog(Dialog, ColorChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -12668,8 +12668,6 @@ class ColorChooserWidget(Box, ColorChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -12693,12 +12691,14 @@ class ColorChooserWidget(Box, ColorChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -12952,8 +12952,6 @@ class ColorSelection(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -12977,12 +12975,14 @@ class ColorSelection(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -13332,8 +13332,6 @@ class ColorSelectionDialog(Dialog):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -13357,12 +13355,14 @@ class ColorSelectionDialog(Dialog):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -13669,8 +13669,6 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -13694,12 +13692,14 @@ class ComboBox(Bin, CellEditable, CellLayout, Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -14177,8 +14177,6 @@ class ComboBoxText(ComboBox):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -14202,12 +14200,14 @@ class ComboBoxText(ComboBox):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -14452,8 +14452,6 @@ class Container(Widget):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -14477,12 +14475,14 @@ class Container(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -15202,8 +15202,6 @@ class Dialog(Window, Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -15227,12 +15225,14 @@ class Dialog(Window, Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -15504,8 +15504,6 @@ class DrawingArea(Widget):
     Object GtkDrawingArea
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -15529,12 +15527,14 @@ class DrawingArea(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -15911,8 +15911,6 @@ class Entry(Widget, CellEditable, Editable):
       remove-widget ()
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -15936,12 +15934,14 @@ class Entry(Widget, CellEditable, Editable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -16870,8 +16870,6 @@ class EventBox(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -16895,12 +16893,14 @@ class EventBox(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -17325,8 +17325,6 @@ class Expander(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -17350,12 +17348,14 @@ class Expander(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -17825,8 +17825,6 @@ class FileChooserButton(Box, FileChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -17850,12 +17848,14 @@ class FileChooserButton(Box, FileChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -18221,8 +18221,6 @@ class FileChooserDialog(Dialog, FileChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -18246,12 +18244,14 @@ class FileChooserDialog(Dialog, FileChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -18685,8 +18685,6 @@ class FileChooserWidget(Box, FileChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -18710,12 +18708,14 @@ class FileChooserWidget(Box, FileChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -19137,8 +19137,6 @@ class Fixed(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -19162,12 +19160,14 @@ class Fixed(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -19419,8 +19419,6 @@ class FlowBox(Container, Orientable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -19444,12 +19442,14 @@ class FlowBox(Container, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -19844,8 +19844,6 @@ class FlowBoxChild(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -19869,12 +19867,14 @@ class FlowBoxChild(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -20268,8 +20268,6 @@ class FontButton(Button, FontChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -20293,12 +20291,14 @@ class FontButton(Button, FontChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -20705,8 +20705,6 @@ class FontChooserDialog(Dialog, FontChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -20730,12 +20728,14 @@ class FontChooserDialog(Dialog, FontChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -21059,8 +21059,6 @@ class FontChooserWidget(Box, FontChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -21084,12 +21082,14 @@ class FontChooserWidget(Box, FontChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -21353,8 +21353,6 @@ class FontSelection(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -21378,12 +21376,14 @@ class FontSelection(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -21705,8 +21705,6 @@ class FontSelectionDialog(Dialog):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -21730,12 +21728,14 @@ class FontSelectionDialog(Dialog):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -21997,8 +21997,6 @@ class Frame(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -22022,12 +22020,14 @@ class Frame(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -22383,8 +22383,6 @@ class GLArea(Widget):
         Whether the GtkGLArea renders on each redraw
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -22408,12 +22406,14 @@ class GLArea(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -23353,8 +23353,6 @@ class Grid(Container, Orientable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -23378,12 +23376,14 @@ class Grid(Container, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -23654,8 +23654,6 @@ class HBox(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -23679,12 +23677,14 @@ class HBox(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -23917,8 +23917,6 @@ class HButtonBox(ButtonBox):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -23942,12 +23940,14 @@ class HButtonBox(ButtonBox):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -24189,8 +24189,6 @@ class HPaned(Paned):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -24214,12 +24212,14 @@ class HPaned(Paned):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -24430,8 +24430,6 @@ class HSV(Widget):
       move (GtkDirectionType)
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -24455,12 +24453,14 @@ class HSV(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -24706,8 +24706,6 @@ class HScale(Scale):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -24731,12 +24729,14 @@ class HScale(Scale):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -24975,8 +24975,6 @@ class HScrollbar(Scrollbar):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -25000,12 +24998,14 @@ class HScrollbar(Scrollbar):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -25214,8 +25214,6 @@ class HSeparator(Separator):
     Object GtkHSeparator
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -25239,12 +25237,14 @@ class HSeparator(Separator):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -25475,8 +25475,6 @@ class HandleBox(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -25500,12 +25498,14 @@ class HandleBox(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -25772,8 +25772,6 @@ class HeaderBar(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -25797,12 +25795,14 @@ class HeaderBar(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -26789,8 +26789,6 @@ class IconView(Container, CellLayout, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -26814,12 +26812,14 @@ class IconView(Container, CellLayout, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -27364,8 +27364,6 @@ class Image(Misc):
         The amount of space to add on the top and bottom of the widget, in pixels
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -27389,12 +27387,14 @@ class Image(Misc):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -27940,8 +27940,6 @@ class ImageMenuItem(MenuItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -27965,12 +27963,14 @@ class ImageMenuItem(MenuItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -28253,8 +28253,6 @@ class InfoBar(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -28278,12 +28276,14 @@ class InfoBar(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -28527,8 +28527,6 @@ class Invisible(Widget):
         The screen where this window will be displayed
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -28552,12 +28550,14 @@ class Invisible(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -28827,8 +28827,6 @@ class Label(Misc):
         The amount of space to add on the top and bottom of the widget, in pixels
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -28852,12 +28850,14 @@ class Label(Misc):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -29320,8 +29320,6 @@ class Layout(Container, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -29345,12 +29343,14 @@ class Layout(Container, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -29606,8 +29606,6 @@ class LevelBar(Widget, Orientable):
         Invert the direction in which the level bar grows
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -29631,12 +29629,14 @@ class LevelBar(Widget, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -30036,8 +30036,6 @@ class LinkButton(Button):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -30061,12 +30059,14 @@ class LinkButton(Button):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -30445,8 +30445,6 @@ class ListBox(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -30470,12 +30468,14 @@ class ListBox(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -30892,8 +30892,6 @@ class ListBoxRow(Bin, Actionable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -30917,12 +30915,14 @@ class ListBoxRow(Bin, Actionable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -31393,8 +31393,6 @@ class LockButton(Button):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -31418,12 +31416,14 @@ class LockButton(Button):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -31851,8 +31851,6 @@ class Menu(MenuShell):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -31876,12 +31874,14 @@ class Menu(MenuShell):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -32339,8 +32339,6 @@ class MenuBar(MenuShell):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -32364,12 +32362,14 @@ class MenuBar(MenuShell):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -32658,8 +32658,6 @@ class MenuButton(ToggleButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -32683,12 +32681,14 @@ class MenuButton(ToggleButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -33104,8 +33104,6 @@ class MenuItem(Bin, Actionable, Activatable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -33129,12 +33127,14 @@ class MenuItem(Bin, Actionable, Activatable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -33546,8 +33546,6 @@ class MenuShell(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -33571,12 +33569,14 @@ class MenuShell(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -33993,8 +33993,6 @@ class MenuToolButton(ToolButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -34018,12 +34016,14 @@ class MenuToolButton(ToolButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -34373,8 +34373,6 @@ class MessageDialog(Dialog):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -34398,12 +34396,14 @@ class MessageDialog(Dialog):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -34669,8 +34669,6 @@ class Misc(Widget):
         The amount of space to add on the top and bottom of the widget, in pixels
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -34694,12 +34692,14 @@ class Misc(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -34971,8 +34971,6 @@ class ModelButton(Button):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -34996,12 +34994,14 @@ class ModelButton(Button):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -35443,8 +35443,6 @@ class Notebook(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -35468,12 +35466,14 @@ class Notebook(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -36190,8 +36190,6 @@ class OffscreenWindow(Window):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -36215,12 +36213,14 @@ class OffscreenWindow(Window):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -36483,8 +36483,6 @@ class Overlay(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -36508,12 +36506,14 @@ class Overlay(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -36897,8 +36897,6 @@ class Paned(Container, Orientable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -36922,12 +36920,14 @@ class Paned(Container, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -37443,8 +37443,6 @@ class PlacesSidebar(ScrolledWindow):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -37468,12 +37466,14 @@ class PlacesSidebar(ScrolledWindow):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -37827,8 +37827,6 @@ class Plug(Window):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -37852,12 +37850,14 @@ class Plug(Window):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -38271,8 +38271,6 @@ class Popover(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -38296,12 +38294,14 @@ class Popover(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -38692,8 +38692,6 @@ class PopoverMenu(Popover):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -38717,12 +38715,14 @@ class PopoverMenu(Popover):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -39349,8 +39349,6 @@ class ProgressBar(Widget, Orientable):
         The preferred place to ellipsize the string, if the progress bar does not have enough room to display the entire string, if at all.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -39374,12 +39372,14 @@ class ProgressBar(Widget, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -39946,8 +39946,6 @@ class RadioButton(CheckButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -39971,12 +39969,14 @@ class RadioButton(CheckButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -40406,8 +40406,6 @@ class RadioMenuItem(CheckMenuItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -40431,12 +40429,14 @@ class RadioMenuItem(CheckMenuItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -40869,8 +40869,6 @@ class RadioToolButton(ToggleToolButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -40894,12 +40892,14 @@ class RadioToolButton(ToggleToolButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -41161,8 +41161,6 @@ class Range(Widget, Orientable):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -41186,12 +41184,14 @@ class Range(Widget, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -41986,8 +41986,6 @@ class RecentChooserDialog(Dialog, RecentChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -42011,12 +42009,14 @@ class RecentChooserDialog(Dialog, RecentChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -42388,8 +42388,6 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -42413,12 +42411,14 @@ class RecentChooserMenu(Menu, Activatable, RecentChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -42704,8 +42704,6 @@ class RecentChooserWidget(Box, RecentChooser):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -42729,12 +42727,14 @@ class RecentChooserWidget(Box, RecentChooser):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -43311,8 +43311,6 @@ class Revealer(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -43336,12 +43334,14 @@ class Revealer(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -43598,8 +43598,6 @@ class Scale(Range):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -43623,12 +43621,14 @@ class Scale(Range):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -44035,8 +44035,6 @@ class ScaleButton(Button, Orientable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -44060,12 +44058,14 @@ class ScaleButton(Button, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -44514,8 +44514,6 @@ class Scrollbar(Range):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -44539,12 +44537,14 @@ class Scrollbar(Range):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -44807,8 +44807,6 @@ class ScrolledWindow(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -44832,12 +44830,14 @@ class ScrolledWindow(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -45272,8 +45272,6 @@ class SearchBar(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -45297,12 +45295,14 @@ class SearchBar(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -45656,8 +45656,6 @@ class SearchEntry(Entry):
       remove-widget ()
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -45681,12 +45679,14 @@ class SearchEntry(Entry):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -45965,8 +45965,6 @@ class Separator(Widget, Orientable):
     Object GtkSeparator
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -45990,12 +45988,14 @@ class Separator(Widget, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -46232,8 +46232,6 @@ class SeparatorMenuItem(MenuItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -46257,12 +46255,14 @@ class SeparatorMenuItem(MenuItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -46509,8 +46509,6 @@ class SeparatorToolItem(ToolItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -46534,12 +46532,14 @@ class SeparatorToolItem(ToolItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -47214,8 +47214,6 @@ class ShortcutLabel(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -47239,12 +47237,14 @@ class ShortcutLabel(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -47487,8 +47487,6 @@ class ShortcutsGroup(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -47512,12 +47510,14 @@ class ShortcutsGroup(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -47761,8 +47761,6 @@ class ShortcutsSection(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -47786,12 +47784,14 @@ class ShortcutsSection(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -48038,8 +48038,6 @@ class ShortcutsShortcut(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -48063,12 +48061,14 @@ class ShortcutsShortcut(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -48394,8 +48394,6 @@ class ShortcutsWindow(Window):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -48419,12 +48417,14 @@ class ShortcutsWindow(Window):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -48738,8 +48738,6 @@ class Socket(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -48763,12 +48761,14 @@ class Socket(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -49251,8 +49251,6 @@ class SpinButton(Entry, Orientable):
       remove-widget ()
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -49276,12 +49274,14 @@ class SpinButton(Entry, Orientable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -49728,8 +49728,6 @@ class Spinner(Widget):
         Whether the spinner is active
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -49753,12 +49751,14 @@ class Spinner(Widget):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -50103,8 +50103,6 @@ class Stack(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -50128,12 +50126,14 @@ class Stack(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -50508,8 +50508,6 @@ class StackSidebar(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -50533,12 +50531,14 @@ class StackSidebar(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -50774,8 +50774,6 @@ class StackSwitcher(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -50799,12 +50797,14 @@ class StackSwitcher(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -51022,13 +51022,13 @@ class StatusIcon(GObject.Object):
     Object GtkStatusIcon
 
     Signals from GtkStatusIcon:
-      size-changed (gint) -> gboolean
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean
       popup-menu (guint, guint)
       activate ()
+      size-changed (gint) -> gboolean
 
     Properties from GtkStatusIcon:
       pixbuf -> GdkPixbuf: Pixbuf
@@ -51238,8 +51238,6 @@ class Statusbar(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -51263,12 +51261,14 @@ class Statusbar(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -52636,8 +52636,6 @@ class Switch(Widget, Actionable, Activatable):
         The backend state
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -52661,12 +52659,14 @@ class Switch(Widget, Actionable, Activatable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -53058,8 +53058,6 @@ class Table(Container):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -53083,12 +53081,14 @@ class Table(Container):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -53464,8 +53464,6 @@ class TearoffMenuItem(MenuItem):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -53489,12 +53487,14 @@ class TearoffMenuItem(MenuItem):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -54934,8 +54934,6 @@ class TextView(Container, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -54959,12 +54957,14 @@ class TextView(Container, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -56069,8 +56069,6 @@ class ToggleButton(Button):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -56094,12 +56092,14 @@ class ToggleButton(Button):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -56506,8 +56506,6 @@ class ToggleToolButton(ToolButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -56531,12 +56529,14 @@ class ToggleToolButton(ToolButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -56812,8 +56812,6 @@ class ToolButton(ToolItem, Actionable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -56837,12 +56835,14 @@ class ToolButton(ToolItem, Actionable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -57121,8 +57121,6 @@ class ToolItem(Bin, Activatable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -57146,12 +57144,14 @@ class ToolItem(Bin, Activatable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -57423,8 +57423,6 @@ class ToolItemGroup(Container, ToolShell):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -57448,12 +57446,14 @@ class ToolItemGroup(Container, ToolShell):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -57711,8 +57711,6 @@ class ToolPalette(Container, Orientable, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -57736,12 +57734,14 @@ class ToolPalette(Container, Orientable, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -58086,8 +58086,6 @@ class Toolbar(Container, Orientable, ToolShell):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -58111,12 +58109,14 @@ class Toolbar(Container, Orientable, ToolShell):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -59264,8 +59264,6 @@ class TreeView(Container, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -59289,12 +59287,14 @@ class TreeView(Container, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -60284,8 +60284,6 @@ class VBox(Box):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -60309,12 +60307,14 @@ class VBox(Box):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -60547,8 +60547,6 @@ class VButtonBox(ButtonBox):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -60572,12 +60570,14 @@ class VButtonBox(ButtonBox):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -60819,8 +60819,6 @@ class VPaned(Paned):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -60844,12 +60842,14 @@ class VPaned(Paned):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -61094,8 +61094,6 @@ class VScale(Scale):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -61119,12 +61117,14 @@ class VScale(Scale):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -61363,8 +61363,6 @@ class VScrollbar(Scrollbar):
         The number of digits to round the value to.
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -61388,12 +61386,14 @@ class VScrollbar(Scrollbar):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -61602,8 +61602,6 @@ class VSeparator(Separator):
     Object GtkVSeparator
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -61627,12 +61625,14 @@ class VSeparator(Separator):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -61851,8 +61851,6 @@ class Viewport(Bin, Scrollable):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -61876,12 +61874,14 @@ class Viewport(Bin, Scrollable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -62182,8 +62182,6 @@ class VolumeButton(ScaleButton):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -62207,12 +62205,14 @@ class VolumeButton(ScaleButton):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -62441,8 +62441,6 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
     Object GtkWidget
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -62466,12 +62464,14 @@ class Widget(GObject.InitiallyUnowned, Atk.ImplementorIface, Buildable):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean
@@ -63759,8 +63759,6 @@ class Window(Bin):
         Can be used to add a new child to the container
 
     Signals from GtkWidget:
-      composited-changed ()
-      event (GdkEvent) -> gboolean
       destroy ()
       show ()
       hide ()
@@ -63784,12 +63782,14 @@ class Window(Bin):
       focus (GtkDirectionType) -> gboolean
       move-focus (GtkDirectionType)
       keynav-failed (GtkDirectionType) -> gboolean
+      event (GdkEvent) -> gboolean
       event-after (GdkEvent)
       button-press-event (GdkEvent) -> gboolean
       button-release-event (GdkEvent) -> gboolean
       touch-event (GdkEvent) -> gboolean
       scroll-event (GdkEvent) -> gboolean
       motion-notify-event (GdkEvent) -> gboolean
+      composited-changed ()
       delete-event (GdkEvent) -> gboolean
       destroy-event (GdkEvent) -> gboolean
       key-press-event (GdkEvent) -> gboolean

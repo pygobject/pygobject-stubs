@@ -17,6 +17,7 @@ from .parse import parse
 from .parse import TypeVars
 from .stub import Stub
 
+gi.disable_legacy_autoinit()
 gi.require_version("GIRepository", "3.0")
 
 if TYPE_CHECKING:
