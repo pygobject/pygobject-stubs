@@ -5,6 +5,7 @@ from typing import overload
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -10023,6 +10024,7 @@ class SwipeTrackerClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
+@runtime_checkable
 class Swipeable(GObject.GInterface, Protocol):
     """
     Interface AdwSwipeable

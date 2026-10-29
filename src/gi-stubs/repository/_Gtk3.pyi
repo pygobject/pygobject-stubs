@@ -6,6 +6,7 @@ from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
 from typing_extensions import Never
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -2733,6 +2734,7 @@ class ActionGroupClass(_gi.Struct):
 class ActionGroupPrivate(_gi.Struct): ...
 class ActionPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class Actionable(GObject.GInterface, Protocol):
     """
     Interface GtkActionable
@@ -2769,6 +2771,7 @@ class ActionableInterface(_gi.Struct):
         self,
     ) -> Callable[[Actionable, GLib.Variant | None], None]: ...
 
+@runtime_checkable
 class Activatable(GObject.GInterface, Protocol):
     """
     Interface GtkActivatable
@@ -3206,6 +3209,7 @@ class AlignmentClass(_gi.Struct):
 
 class AlignmentPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class AppChooser(GObject.GInterface, Protocol):
     """
     Interface GtkAppChooser
@@ -6648,6 +6652,7 @@ class BoxClass(_gi.Struct):
 
 class BoxPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class Buildable(GObject.GInterface, Protocol):
     """
     Interface GtkBuildable
@@ -8031,6 +8036,7 @@ class CellAccessibleClass(_gi.Struct):
     @property
     def update_cache(self) -> Callable[[CellAccessible, bool], None]: ...
 
+@runtime_checkable
 class CellAccessibleParent(GObject.GInterface, Protocol):
     """
     Interface GtkCellAccessibleParent
@@ -8673,6 +8679,7 @@ class CellAreaContextClass(_gi.Struct):
 class CellAreaContextPrivate(_gi.Struct): ...
 class CellAreaPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class CellEditable(GObject.GInterface, Protocol):
     """
     Interface GtkCellEditable
@@ -8701,6 +8708,7 @@ class CellEditableIface(_gi.Struct):
     @property
     def start_editing(self) -> Callable[[CellEditable, _Gdk3.Event | None], None]: ...
 
+@runtime_checkable
 class CellLayout(GObject.GInterface, Protocol):
     """
     Interface GtkCellLayout
@@ -12208,6 +12216,7 @@ class ColorButtonClass(_gi.Struct):
 
 class ColorButtonPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class ColorChooser(GObject.GInterface, Protocol):
     """
     Interface GtkColorChooser
@@ -15715,6 +15724,7 @@ class DrawingAreaClass(_gi.Struct):
     @property
     def parent_class(self) -> WidgetClass: ...
 
+@runtime_checkable
 class Editable(GObject.GInterface, Protocol):
     """
     Interface GtkEditable
@@ -17693,6 +17703,7 @@ class ExpanderClass(_gi.Struct):
 
 class ExpanderPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class FileChooser(GObject.GInterface, Protocol):
     """
     Interface GtkFileChooser
@@ -20561,6 +20572,7 @@ class FontButtonClass(_gi.Struct):
 
 class FontButtonPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class FontChooser(GObject.GInterface, Protocol):
     """
     Interface GtkFontChooser
@@ -36433,6 +36445,7 @@ class OffscreenWindowClass(_gi.Struct):
     @property
     def parent_class(self) -> WindowClass: ...
 
+@runtime_checkable
 class Orientable(GObject.GInterface, Protocol):
     """
     Interface GtkOrientable
@@ -39177,6 +39190,7 @@ class PrintOperationClass(_gi.Struct):
         self,
     ) -> Callable[[PrintOperation, Widget, PageSetup, PrintSettings], None]: ...
 
+@runtime_checkable
 class PrintOperationPreview(GObject.GInterface, Protocol):
     """
     Interface GtkPrintOperationPreview
@@ -41831,6 +41845,7 @@ class RecentActionClass(_gi.Struct):
 
 class RecentActionPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class RecentChooser(GObject.GInterface, Protocol):
     """
     Interface GtkRecentChooser
@@ -44448,6 +44463,7 @@ class ScaleClass(_gi.Struct):
 
 class ScalePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class Scrollable(GObject.GInterface, Protocol):
     """
     Interface GtkScrollable
@@ -52578,6 +52594,7 @@ class StylePropertiesClass(_gi.Struct):
 
 class StylePropertiesPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class StyleProvider(GObject.GInterface, Protocol):
     """
     Interface GtkStyleProvider
@@ -57998,6 +58015,7 @@ class ToolPaletteClass(_gi.Struct):
 
 class ToolPalettePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class ToolShell(GObject.GInterface, Protocol):
     """
     Interface GtkToolShell
@@ -58475,6 +58493,7 @@ class ToplevelAccessibleClass(_gi.Struct):
 
 class ToplevelAccessiblePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TreeDragDest(GObject.GInterface, Protocol):
     """
     Interface GtkTreeDragDest
@@ -58505,6 +58524,7 @@ class TreeDragDestIface(_gi.Struct):
         self,
     ) -> Callable[[TreeDragDest, TreePath, SelectionData], bool]: ...
 
+@runtime_checkable
 class TreeDragSource(GObject.GInterface, Protocol):
     """
     Interface GtkTreeDragSource
@@ -58548,6 +58568,7 @@ class TreeIter(GObject.GBoxed):
     def copy(self) -> TreeIter: ...
     def free(self) -> None: ...
 
+@runtime_checkable
 class TreeModel(GObject.GInterface, Protocol):
     """
     Interface GtkTreeModel
@@ -59021,6 +59042,7 @@ class TreeSelectionClass(_gi.Struct):
 
 class TreeSelectionPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TreeSortable(GObject.GInterface, Protocol):
     """
     Interface GtkTreeSortable

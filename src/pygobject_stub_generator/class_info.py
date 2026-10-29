@@ -190,7 +190,7 @@ class ClassInfo:
                     bases.append(base)
 
         if GI.GInterface in bases and not any(
-            get_origin(base) is Protocol for base in bases
+            (get_origin(base) or base) is Protocol for base in bases
         ):
             # Most overrides use Generic instead of Protocol for interfaces
             index = next(
@@ -446,7 +446,15 @@ class Props{parents_string}:
 
             string_parents = f"({', '.join(bases_strings)})"
 
-        lines = [f"class {self.name}{string_parents}:"]
+        lines: list[str] = []
+
+        if issubclass(self.cls, GI.GInterface) and any(
+            (get_origin(base) or base) is Protocol for base in self.bases
+        ):
+            decorator = self.stub.get_import("typing_extensions", "runtime_checkable")
+            lines.append(f"@{decorator}")
+
+        lines.append(f"class {self.name}{string_parents}:")
 
         if docs := self.__build_docstring():
             lines.append(textwrap.indent(docs, "    "))

@@ -4,6 +4,7 @@ from typing import Literal
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import runtime_checkable
 
 from collections.abc import Callable
 from collections.abc import Sequence
@@ -55,6 +56,7 @@ def text_free_ranges(ranges: Sequence[TextRange]) -> None: ...
 def value_type_get_localized_name(value_type: _ValueTypeValueType) -> str: ...
 def value_type_get_name(value_type: _ValueTypeValueType) -> str: ...
 
+@runtime_checkable
 class Action(GObject.GInterface, Protocol):
     """
     Interface AtkAction
@@ -106,6 +108,7 @@ class Attribute(_gi.Struct):
     @staticmethod
     def set_free(attrib_set: list[int | Any | None]) -> None: ...
 
+@runtime_checkable
 class Component(GObject.GInterface, Protocol):
     """
     Interface AtkComponent
@@ -191,6 +194,7 @@ class ComponentIface(_gi.Struct):
         self,
     ) -> Callable[[Component, _CoordTypeValueType, int, int], bool]: ...
 
+@runtime_checkable
 class Document(GObject.GInterface, Protocol):
     """
     Interface AtkDocument
@@ -241,6 +245,7 @@ class DocumentIface(_gi.Struct):
         self,
     ) -> Callable[[Document, Sequence[TextSelection]], bool]: ...
 
+@runtime_checkable
 class EditableText(GObject.GInterface, Protocol):
     """
     Interface AtkEditableText
@@ -471,6 +476,7 @@ class HyperlinkClass(_gi.Struct):
     @property
     def pad1(self) -> Callable[[Any | None], bool]: ...
 
+@runtime_checkable
 class HyperlinkImpl(GObject.GInterface, Protocol):
     """
     Interface AtkHyperlinkImpl
@@ -490,6 +496,7 @@ class HyperlinkImplIface(_gi.Struct):
     @property
     def get_hyperlink(self) -> Callable[[HyperlinkImpl], Hyperlink]: ...
 
+@runtime_checkable
 class Hypertext(GObject.GInterface, Protocol):
     """
     Interface AtkHypertext
@@ -517,6 +524,7 @@ class HypertextIface(_gi.Struct):
     @property
     def link_selected(self) -> Callable[[Hypertext, int], None]: ...
 
+@runtime_checkable
 class Image(GObject.GInterface, Protocol):
     """
     Interface AtkImage
@@ -555,6 +563,7 @@ class ImageIface(_gi.Struct):
 class Implementor(_gi.Struct):
     def ref_accessible(self) -> Object: ...
 
+@runtime_checkable
 class ImplementorIface(GObject.GInterface, Protocol):
     """
     Interface AtkImplementorIface
@@ -1384,6 +1393,7 @@ class RelationSetClass(_gi.Struct):
     @property
     def pad2(self) -> Callable[[Any | None], bool]: ...
 
+@runtime_checkable
 class Selection(GObject.GInterface, Protocol):
     """
     Interface AtkSelection
@@ -1568,6 +1578,7 @@ class StateSetClass(_gi.Struct):
     @property
     def parent(self) -> GObject.ObjectClass: ...
 
+@runtime_checkable
 class StreamableContent(GObject.GInterface, Protocol):
     """
     Interface AtkStreamableContent
@@ -1602,6 +1613,7 @@ class StreamableContentIface(_gi.Struct):
     @property
     def pad3(self) -> Callable[[Any | None], bool]: ...
 
+@runtime_checkable
 class Table(GObject.GInterface, Protocol):
     """
     Interface AtkTable
@@ -1636,6 +1648,7 @@ class Table(GObject.GInterface, Protocol):
     def set_row_header(self, row: int, header: Object) -> None: ...
     def set_summary(self, accessible: Object) -> None: ...
 
+@runtime_checkable
 class TableCell(GObject.GInterface, Protocol):
     """
     Interface AtkTableCell
@@ -1761,6 +1774,7 @@ class TableIface(_gi.Struct):
     @property
     def model_changed(self) -> Callable[[Table], None]: ...
 
+@runtime_checkable
 class Text(GObject.GInterface, Protocol):
     """
     Interface AtkText
@@ -2001,6 +2015,7 @@ class UtilClass(_gi.Struct):
     @property
     def get_toolkit_version(self) -> Callable[[], str]: ...
 
+@runtime_checkable
 class Value(GObject.GInterface, Protocol):
     """
     Interface AtkValue
@@ -2047,6 +2062,7 @@ class ValueIface(_gi.Struct):
     @property
     def set_value(self) -> Callable[[Value, float], None]: ...
 
+@runtime_checkable
 class Window(GObject.GInterface, Protocol):
     """
     Interface AtkWindow

@@ -4,6 +4,7 @@ from typing import Literal
 from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
@@ -2873,6 +2874,7 @@ class DeviceManager(GObject.Object):
     def get_display(self) -> Display | None: ...
     def list_devices(self, type: _DeviceTypeValueType) -> list[Device]: ...
 
+@runtime_checkable
 class DevicePad(GObject.GInterface, Protocol):
     """
     Interface GdkDevicePad

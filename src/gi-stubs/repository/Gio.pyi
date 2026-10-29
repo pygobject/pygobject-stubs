@@ -7,6 +7,7 @@ from typing import Protocol
 from typing import type_check_only
 from typing import TypeAlias
 from typing_extensions import Never
+from typing_extensions import runtime_checkable
 from typing_extensions import Self
 from typing_extensions import TypeVar
 from typing_extensions import TypeVarTuple
@@ -581,6 +582,7 @@ unix_mounts_changed_since: Final = GioUnix.mounts_changed_since
 unix_mounts_get: Final = GioUnix.mounts_get
 unix_mounts_get_from_file: Final = GioUnix.mounts_get_from_file
 
+@runtime_checkable
 class Action(GObject.GInterface, Protocol):
     """
     Interface GAction
@@ -628,6 +630,7 @@ class ActionEntry(_gi.Struct):
     @property
     def padding(self) -> list[int]: ...
 
+@runtime_checkable
 class ActionGroup(GObject.GInterface, Protocol):
     """
     Interface GActionGroup
@@ -743,6 +746,7 @@ class ActionInterface(_gi.Struct):
     @property
     def activate(self) -> Callable[[Action, GLib.Variant | None], None]: ...
 
+@runtime_checkable
 class ActionMap(GObject.GInterface, Protocol):
     """
     Interface GActionMap
@@ -805,6 +809,7 @@ class ActionMapInterface(_gi.Struct):
     @property
     def remove_action(self) -> Callable[[ActionMap, str], None]: ...
 
+@runtime_checkable
 class AppInfo(GObject.GInterface, Protocol):
     """
     Interface GAppInfo
@@ -1445,6 +1450,7 @@ class ApplicationCommandLineClass(_gi.Struct):
 class ApplicationCommandLinePrivate(_gi.Struct): ...
 class ApplicationPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class AsyncInitable(GObject.GInterface, Protocol):
     """
     Interface GAsyncInitable
@@ -1511,6 +1517,7 @@ class AsyncInitableIface(_gi.Struct):
     @property
     def init_finish(self) -> Callable[[AsyncInitable, AsyncResult], bool]: ...
 
+@runtime_checkable
 class AsyncResult(GObject.GInterface, Protocol):
     """
     Interface GAsyncResult
@@ -1859,6 +1866,7 @@ class CharsetConverterClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
+@runtime_checkable
 class Converter(GObject.GInterface, Protocol):
     """
     Interface GConverter
@@ -2570,6 +2578,7 @@ class DBusErrorEntry(_gi.Struct):
     error_code: int
     dbus_error_name: str
 
+@runtime_checkable
 class DBusInterface(GObject.GInterface, Protocol):
     """
     Interface GDBusInterface
@@ -2943,6 +2952,7 @@ class DBusNodeInfo(GObject.GBoxed):
     def ref(self) -> DBusNodeInfo: ...
     def unref(self) -> None: ...
 
+@runtime_checkable
 class DBusObject(GObject.GInterface, Protocol):
     """
     Interface GDBusObject
@@ -2975,6 +2985,7 @@ class DBusObjectIface(_gi.Struct):
     @property
     def interface_removed(self) -> Callable[[DBusObject, DBusInterface], None]: ...
 
+@runtime_checkable
 class DBusObjectManager(GObject.GInterface, Protocol):
     """
     Interface GDBusObjectManager
@@ -4200,6 +4211,7 @@ class DataOutputStreamClass(_gi.Struct):
 
 class DataOutputStreamPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class DatagramBased(GObject.GInterface, Protocol):
     """
     Interface GDatagramBased
@@ -4275,6 +4287,7 @@ class DatagramBasedInterface(_gi.Struct):
         [DatagramBased, GLib._IOConditionValueType, int, Cancellable | None], bool
     ]: ...
 
+@runtime_checkable
 class DebugController(GObject.GInterface, Protocol):
     """
     Interface GDebugController
@@ -4356,6 +4369,7 @@ class DebugControllerInterface(_gi.Struct):
 DesktopAppInfo = GioUnix.DesktopAppInfo
 DesktopAppInfoLookup = GioUnix.DesktopAppInfoLookup
 
+@runtime_checkable
 class Drive(GObject.GInterface, Protocol):
     """
     Interface GDrive
@@ -4632,6 +4646,7 @@ class DriveIface(_gi.Struct):
     @property
     def is_removable(self) -> Callable[[Drive], bool]: ...
 
+@runtime_checkable
 class DtlsClientConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsClientConnection
@@ -4660,6 +4675,7 @@ class DtlsClientConnectionInterface(_gi.Struct):
     @property
     def g_iface(self) -> GObject.TypeInterface: ...
 
+@runtime_checkable
 class DtlsConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsConnection
@@ -4838,6 +4854,7 @@ class DtlsConnectionInterface(_gi.Struct):
         [DtlsConnection, _TlsChannelBindingTypeValueType, Sequence[int]], bool
     ]: ...
 
+@runtime_checkable
 class DtlsServerConnection(GObject.GInterface, Protocol):
     """
     Interface GDtlsServerConnection
@@ -4959,6 +4976,7 @@ class EmblemedIconClass(_gi.Struct):
 
 class EmblemedIconPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class File(GObject.GInterface, Protocol):
     """
     Interface GFile
@@ -7812,6 +7830,7 @@ class IPv6TclassMessageClass(_gi.Struct):
     @property
     def parent_class(self) -> SocketControlMessageClass: ...
 
+@runtime_checkable
 class Icon(GObject.GInterface, Protocol):
     """
     Interface GIcon
@@ -8114,6 +8133,7 @@ class InetSocketAddressClass(_gi.Struct):
 
 class InetSocketAddressPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class Initable(GObject.GInterface, Protocol):
     """
     Interface GInitable
@@ -8388,6 +8408,7 @@ class InputVector(_gi.Struct):
     buffer: int
     size: int
 
+@runtime_checkable
 class ListModel(GObject.GInterface, Protocol[ObjectItemType]):
     """
     Interface GListModel
@@ -8517,6 +8538,7 @@ class ListStoreClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
+@runtime_checkable
 class LoadableIcon(GObject.GInterface, Protocol):
     """
     Interface GLoadableIcon
@@ -8627,6 +8649,7 @@ class MemoryInputStreamClass(_gi.Struct):
 
 class MemoryInputStreamPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class MemoryMonitor(GObject.GInterface, Protocol):
     """
     Interface GMemoryMonitor
@@ -8962,6 +8985,7 @@ class MenuModelClass(_gi.Struct):
 
 class MenuModelPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class Mount(GObject.GInterface, Protocol):
     """
     Interface GMount
@@ -9550,6 +9574,7 @@ class NetworkAddressClass(_gi.Struct):
 
 class NetworkAddressPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class NetworkMonitor(GObject.GInterface, Protocol):
     """
     Interface GNetworkMonitor
@@ -10324,6 +10349,7 @@ class PermissionClass(_gi.Struct):
 
 class PermissionPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class PollableInputStream(GObject.GInterface, Protocol):
     """
     Interface GPollableInputStream
@@ -10361,6 +10387,7 @@ class PollableInputStreamInterface(_gi.Struct):
         self,
     ) -> Callable[[PollableInputStream, int], tuple[int, bytes]]: ...
 
+@runtime_checkable
 class PollableOutputStream(GObject.GInterface, Protocol):
     """
     Interface GPollableOutputStream
@@ -10407,6 +10434,7 @@ class PollableOutputStreamInterface(_gi.Struct):
         [PollableOutputStream, Sequence[OutputVector], int], tuple[PollableReturn, int]
     ]: ...
 
+@runtime_checkable
 class PowerProfileMonitor(GObject.GInterface, Protocol):
     """
     Interface GPowerProfileMonitor
@@ -10483,6 +10511,7 @@ class PropertyAction(GObject.Object, Action):
         cls, name: str, object: GObject.Object, property_name: str
     ) -> PropertyAction: ...
 
+@runtime_checkable
 class Proxy(GObject.GInterface, Protocol):
     """
     Interface GProxy
@@ -10717,6 +10746,7 @@ class ProxyInterface(_gi.Struct):
     @property
     def supports_hostname(self) -> Callable[[Proxy], bool]: ...
 
+@runtime_checkable
 class ProxyResolver(GObject.GInterface, Protocol):
     """
     Interface GProxyResolver
@@ -10782,6 +10812,7 @@ class ProxyResolverInterface(_gi.Struct):
     @property
     def lookup_finish(self) -> Callable[[ProxyResolver, AsyncResult], list[str]]: ...
 
+@runtime_checkable
 class RemoteActionGroup(GObject.GInterface, Protocol):
     """
     Interface GRemoteActionGroup
@@ -11230,6 +11261,7 @@ class Resource(GObject.GBoxed):
     def ref(self) -> Resource: ...
     def unref(self) -> None: ...
 
+@runtime_checkable
 class Seekable(GObject.GInterface, Protocol):
     """
     Interface GSeekable
@@ -12461,6 +12493,7 @@ class SocketClientClass(_gi.Struct):
 
 class SocketClientPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class SocketConnectable(GObject.GInterface, Protocol):
     """
     Interface GSocketConnectable
@@ -13428,6 +13461,7 @@ class ThreadedSocketServiceClass(_gi.Struct):
 
 class ThreadedSocketServicePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TlsBackend(GObject.GInterface, Protocol):
     """
     Interface GTlsBackend
@@ -13621,6 +13655,7 @@ class TlsCertificateClass(_gi.Struct):
 
 class TlsCertificatePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TlsClientConnection(GObject.GInterface, Protocol):
     """
     Interface GTlsClientConnection
@@ -14270,6 +14305,7 @@ class TlsDatabaseClass(_gi.Struct):
 
 class TlsDatabasePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TlsFileDatabase(GObject.GInterface, Protocol):
     """
     Interface GTlsFileDatabase
@@ -14566,6 +14602,7 @@ class TlsPasswordClass(_gi.Struct):
 
 class TlsPasswordPrivate(_gi.Struct): ...
 
+@runtime_checkable
 class TlsServerConnection(GObject.GInterface, Protocol):
     """
     Interface GTlsServerConnection
@@ -14982,6 +15019,7 @@ class VfsClass(_gi.Struct):
     @property
     def deserialize_icon(self) -> int: ...
 
+@runtime_checkable
 class Volume(GObject.GInterface, Protocol):
     """
     Interface GVolume

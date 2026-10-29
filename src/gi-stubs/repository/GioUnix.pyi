@@ -2,6 +2,7 @@ from typing import Any
 from typing import Final
 from typing import Protocol
 from typing import type_check_only
+from typing_extensions import runtime_checkable
 from typing_extensions import TypeVarTuple
 from typing_extensions import Unpack
 
@@ -142,6 +143,7 @@ class DesktopAppInfoClass(_gi.Struct):
     @property
     def parent_class(self) -> GObject.ObjectClass: ...
 
+@runtime_checkable
 class DesktopAppInfoLookup(GObject.GInterface, Protocol):
     """
     Interface GDesktopAppInfoLookup
@@ -217,6 +219,7 @@ class FDMessageClass(_gi.Struct):
 
 class FDMessagePrivate(_gi.Struct): ...
 
+@runtime_checkable
 class FileDescriptorBased(GObject.GInterface, Protocol):
     """
     Interface GFileDescriptorBased
